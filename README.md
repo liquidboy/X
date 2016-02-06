@@ -1,10 +1,12 @@
 # X
-X UI framework for Universal Apps
+X.UI framework for Universal Apps
+
+Quickly build rich UI's in your Universal Application .. 
 
 
 
 
-Current Components : 
+Components still being fleshed out...
 
 1. LiteTab
 2. RichButton
