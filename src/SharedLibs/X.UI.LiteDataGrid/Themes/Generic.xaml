@@ -1,0 +1,17 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:X.UI.LiteDataGrid">
+
+    <Style TargetType="local:LiteDataGrid" >
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:LiteDataGrid">
+                    <ItemsControl x:Name="icMain" ItemsSource="{TemplateBinding ItemsSource}" HorizontalAlignment="Stretch" >
+                       
+                    </ItemsControl>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
