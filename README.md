@@ -1,4 +1,3 @@
-# X
 X.UI framework for Universal Apps
 
 Quickly build rich UI's in your Universal Application .. 
