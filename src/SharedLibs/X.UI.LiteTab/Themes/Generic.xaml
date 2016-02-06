@@ -4,7 +4,61 @@
     xmlns:local="using:X.UI.LiteTab">
     <local:LiteTabSelectedThinknessConverter  x:Key="LiteTabSelectedThinknessConverter" />
     <local:LiteTabSelectedFontSizeConverter  x:Key="LiteTabSelectedFontSizeConverter" />
-    
+    <Style x:Key="GeneralButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}"/>
+        <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+        <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundTransparentBrush}"/>
+        <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}"/>
+        <Setter Property="Padding" Value="8,4,8,4"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+        <Setter Property="UseSystemFocusVisuals" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid x:Name="RootGrid" Background="{TemplateBinding Background}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <Storyboard>
+                                        <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="PointerOver">
+                                    <Storyboard>
+                                        <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        
+                                        <PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="RootGrid">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ContentPresenter">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledTransparentBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentPresenter x:Name="ContentPresenter" AutomationProperties.AccessibilityView="Raw" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <Style TargetType="local:TabList" >
         <Setter Property="Template">
             <Setter.Value>
@@ -37,7 +91,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:TabListItem">
-                    <Button x:Name="tabButton" BorderBrush="{TemplateBinding BorderBrush}" Foreground="{TemplateBinding Foreground}"  BorderThickness="{Binding IsSelected, Converter={StaticResource LiteTabSelectedThinknessConverter} }" Padding="10,0,10,0" Background="Transparent" VerticalAlignment="Bottom">
+                    <Button x:Name="tabButton" BorderBrush="{TemplateBinding BorderBrush}" Foreground="{TemplateBinding Foreground}"  BorderThickness="{Binding IsSelected, Converter={StaticResource LiteTabSelectedThinknessConverter} }" Padding="10,0,10,0" Background="Transparent" VerticalAlignment="Bottom" Style="{StaticResource GeneralButtonStyle}">
                         <TextBlock Text="{Binding Name}" FontSize="{Binding IsSelected, Converter={StaticResource LiteTabSelectedFontSizeConverter} }" FontFamily="Segoe UI" Margin="0,0,0,0" VerticalAlignment="Bottom" ></TextBlock>
                     </Button>
                 </ControlTemplate>
