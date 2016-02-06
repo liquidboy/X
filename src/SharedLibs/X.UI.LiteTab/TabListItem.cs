@@ -46,14 +46,13 @@ namespace X.UI.LiteTab
 
         private TabList GetTabListParent(DependencyObject ctrl) {
 
-            var p1 = VisualTreeHelper.GetParent(ctrl);
-            var p2 = VisualTreeHelper.GetParent(p1);
-            var p3 = VisualTreeHelper.GetParent(p2);
-            var p4 = VisualTreeHelper.GetParent(p3);
-            var p5 = VisualTreeHelper.GetParent(p4);
-            var p6 = VisualTreeHelper.GetParent(p5) as TabList;
-
-            return p6;
+            TabList found = null;
+            DependencyObject current = ctrl;
+            while (found == null) {
+                current = VisualTreeHelper.GetParent(current);
+                if (current is TabList) found = (TabList)current;
+            }
+            return found;
         }
 
 
