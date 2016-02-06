@@ -47,6 +47,7 @@ namespace X.UI.RichInput
         Style _GeneralRadioButtonStyle;
         TextBox _udfTB1;
         TextBlock _udfTBL1;
+        Grid _udfg1;
 
         InputModel _model;
 
@@ -109,7 +110,7 @@ namespace X.UI.RichInput
                 _ccInput = GetTemplateChild("ccInput") as ContentControl;
                 
                 BuildControl(Type, Label, PlaceholderText, LabelFontSize, LabelTranslateY, GroupName, _ccInput);
-                SetColors(FocusColor, FocusHoverColor, _model);
+                SetColors(FocusColor, FocusHoverColor, FocusForegroundColor, _model);
             }
             
             base.OnApplyTemplate();
@@ -121,36 +122,44 @@ namespace X.UI.RichInput
 
             if (type == InputType.text)
             {
-                var gd = new Grid();
                 var tb = new TextBox();
                 tb.PlaceholderText = placeholderText;
                 tb.Style = _GeneralTextBoxStyle;
                 tb.KeyUp += ittext_KeyUp;
+
+                _udfg1 = new Grid() { Padding = new Thickness(2, 2, 2, 2), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment= VerticalAlignment.Top};
                 _udfTBL1 = new TextBlock();
                 _udfTBL1.Text = label;
                 _udfTBL1.FontSize = labelFontSize;
-                _udfTBL1.Margin = new Thickness(0, labelTranslateY, 0, 0);
-                _udfTBL1.Visibility = Visibility.Collapsed;
+                _udfg1.Margin = new Thickness(0, labelTranslateY, 0, 0);
+                _udfg1.Visibility = Visibility.Collapsed;
+                _udfg1.Children.Add(_udfTBL1);
 
-                gd.Children.Add(_udfTBL1);
+                var gd = new Grid();
+                gd.Children.Add(_udfg1);
                 gd.Children.Add(tb);
 
                 fe = gd;
             }
             else if (type == InputType.password)
             {
-                var gd = new Grid();
+                
+
                 var tb = new PasswordBox();
                 tb.PlaceholderText = placeholderText;
                 tb.Style = _GeneralPasswordBoxStyle;
                 tb.PasswordChanged += itpassword_PasswordChanged;
+
+                _udfg1 = new Grid() { Padding = new Thickness(2, 2, 2, 2), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Top };
                 _udfTBL1 = new TextBlock();
                 _udfTBL1.Text = label;
                 _udfTBL1.FontSize = labelFontSize;
-                _udfTBL1.Margin = new Thickness(0, labelTranslateY, 0, 0);
-                _udfTBL1.Visibility = Visibility.Collapsed;
+                _udfg1.Margin = new Thickness(0, labelTranslateY, 0, 0);
+                _udfg1.Visibility = Visibility.Collapsed;
+                _udfg1.Children.Add(_udfTBL1);
 
-                gd.Children.Add(_udfTBL1);
+                var gd = new Grid();
+                gd.Children.Add(_udfg1);
                 gd.Children.Add(tb);
 
                 fe = gd;
@@ -201,10 +210,16 @@ namespace X.UI.RichInput
         }
 
 
-        private void SetColors(Color focusColor, Color focusHoverColor,  InputModel model) {
+        private void SetColors(Color focusColor, Color focusHoverColor, Color focusForegroundColor, InputModel model) {
 
             model.FocusColor = focusColor;
             model.FocusHoverColor = focusHoverColor;
+            model.FocusForegroundColor = focusForegroundColor;
+
+            if (_udfg1 != null) {
+                _udfg1.Background = new SolidColorBrush(focusColor);
+                if (_udfTBL1 != null) _udfTBL1.Foreground = new SolidColorBrush(focusForegroundColor);
+            }
         }
 
         private void UpdateControl(InputType type, string label, string placeholderText, double labelFontSize, double labelTranslateY, string groupName, ContentControl ccInput)
@@ -240,8 +255,12 @@ namespace X.UI.RichInput
                 cb.Checked -= itradio_Checked;
             }
 
+            _udfg1.Children.Clear();
+            _udfg1 = null;
+
             _udfTB1 = null;
             _udfTBL1 = null;
+            
 
             _ccInput.Content = null;
 
@@ -284,10 +303,10 @@ namespace X.UI.RichInput
             {
                 if (((PasswordBox)sender).Password.Length > 0)
                 {
-                    _udfTBL1.Visibility = Visibility.Visible;
+                    _udfg1.Visibility = Visibility.Visible;
                 }
                 else {
-                    _udfTBL1.Visibility = Visibility.Collapsed;
+                    _udfg1.Visibility = Visibility.Collapsed;
                 }
 
                 Value = ((PasswordBox)sender).Password;
@@ -301,10 +320,10 @@ namespace X.UI.RichInput
             {
                 if (((TextBox)sender).Text.Length > 0)
                 {
-                    _udfTBL1.Visibility = Visibility.Visible;
+                    _udfg1.Visibility = Visibility.Visible;
                 }
                 else {
-                    _udfTBL1.Visibility = Visibility.Collapsed;
+                    _udfg1.Visibility = Visibility.Collapsed;
                 }
 
                 Value = ((TextBox)sender).Text;
@@ -380,6 +399,12 @@ namespace X.UI.RichInput
             get { return (Color)GetValue(FocusHoverColorProperty); }
             set { SetValue(FocusHoverColorProperty, value); }
         }
+        
+        public Color FocusForegroundColor
+        {
+            get { return (Color)GetValue(FocusForegroundColorProperty); }
+            set { SetValue(FocusForegroundColorProperty, value); }
+        }
 
 
 
@@ -390,6 +415,8 @@ namespace X.UI.RichInput
 
 
 
+
+        public static readonly DependencyProperty FocusForegroundColorProperty = DependencyProperty.Register("FocusForegroundColor", typeof(Color), typeof(Input), new PropertyMetadata(Colors.White));
 
         public static readonly DependencyProperty FocusHoverColorProperty = DependencyProperty.Register("FocusHoverColor", typeof(Color), typeof(Input), new PropertyMetadata(Colors.DarkGray));
 
@@ -438,6 +465,8 @@ namespace X.UI.RichInput
         public Color FocusColor { get; set; }
 
         public Color FocusHoverColor { get; set; }
+
+        public Color FocusForegroundColor { get; set; }
 
     }
 }
