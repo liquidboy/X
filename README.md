@@ -7,11 +7,11 @@ Quickly build rich UI's in your Universal Application ..
 
 Components still being fleshed out...
 
-1. LiteTab
-2. RichButton
-3. Path
-4. RichInput
-5. EffectLayer
+(1) LiteTab
+(2) RichButton
+(3) Path
+(4) RichInput
+(5) EffectLayer
 
 ![sample1]
 
