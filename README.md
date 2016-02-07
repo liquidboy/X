@@ -13,11 +13,11 @@ Components still being fleshed out...
 4. RichInput
 5. EffectLayer
 
-![sample]
-[sample]: http://officediscoverybeta.azurewebsites.net/wp-content/uploads/2016/02/1.png "Sample Components"
+![sample1]
+[sample1]: http://officediscoverybeta.azurewebsites.net/wp-content/uploads/2016/02/1.png "Sample Components"
 
 
 6. LiteDataGrid - A grid that lets you define several DataTemplates, corresponding for a different view for the grid ..
 
-![sample]
-[sample]: http://officediscoverybeta.azurewebsites.net/wp-content/uploads/2016/02/2.png "Sample LiteDataGrid"
+![sample2]
+[sample2]: http://officediscoverybeta.azurewebsites.net/wp-content/uploads/2016/02/2.png "Sample LiteDataGrid"
