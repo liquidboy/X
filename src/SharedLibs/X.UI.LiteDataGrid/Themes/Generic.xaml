@@ -7,9 +7,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:LiteDataGrid">
-                    <ItemsControl x:Name="icMain" ItemsSource="{TemplateBinding ItemsSource}" HorizontalAlignment="Stretch" >
+                    <ScrollViewer>
+                        <ItemsControl x:Name="icMain" ItemsSource="{TemplateBinding ItemsSource}" HorizontalAlignment="Stretch" >
                        
-                    </ItemsControl>
+                        </ItemsControl>
+                    </ScrollViewer>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

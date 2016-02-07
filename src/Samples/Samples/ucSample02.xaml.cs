@@ -1,9 +1,10 @@
-﻿using Octokit;
+﻿
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -18,29 +19,42 @@ namespace Samples
 {
     public sealed partial class ucSample02 : UserControl
     {
-        public GitHubClient GitClient { get; private set; }
 
-
+        bool isLoaded = false;
 
         public ucSample02()
         {
             this.InitializeComponent();
-            
-            GitClient = new GitHubClient(new ProductHeaderValue("X"));
-
-            
+      
         }
 
+   
 
-        private async void PopulateSampleData()
+        private async Task PopulateSampleData()
         {
-            var found = await GitClient.Repository.GetAllPublic(new PublicRepositoryRequest(0) { Since = DateTime.UtcNow.Subtract(TimeSpan.FromMinutes(5)).Ticks });
+            if (isLoaded) return;
 
-            dynamic data1 = null;
+            //http://higlabo.codeplex.com/documentation
+            var cl = new HigLabo.Net.Rss.RssClient();
+            var fd = await cl.GetRssFeedAsync(new Uri("https://channel9.msdn.com/Feeds/RSS"));
 
-            lbCommon.ItemsSource = data1;
+            lbCommon.ItemsSource = fd.Items;
             lbCommon.ItemTemplateToUse = 1;
+ 
 
+        }
+
+        public async void LoadSample() {
+            await PopulateSampleData();
+        }
+
+        private void cbLiteDG_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lbCommon == null) return;
+
+            var newIndex = int.Parse( (string) ((ComboBoxItem)(( (ComboBox)sender).SelectedItem )).Content);
+
+            lbCommon.ItemTemplateToUse = newIndex;
         }
     }
 }

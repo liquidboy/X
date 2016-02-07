@@ -16,37 +16,35 @@
 
     <Grid>
         <StackPanel Width="500">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                <TextBlock Margin="0,10,0,0">DataTemplate Index to use : </TextBlock>
+                <ComboBox x:Name="cbLiteDG" SelectionChanged="cbLiteDG_SelectionChanged" Margin="10,0,0,0">
+                    <ComboBoxItem IsSelected="True">1</ComboBoxItem>
+                    <ComboBoxItem>2</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
 
-
-            <xuildg:LiteDataGrid x:Name="lbCommon" HorizontalContentAlignment="Stretch" Margin="0,10,0,0">
-                <xuildg:LiteDataGrid.ItemTemplate1>
-                    <DataTemplate>
-                        <StackPanel Orientation="Vertical" BorderBrush="LightGray" BorderThickness="0,0,0,1" Margin="5" Padding="0,0,0,10">
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="{Binding Repository.OwnerAvatarUrl}" Width="30" Height="30" />
-                                <StackPanel Orientation="Vertical" Margin="10,0,0,0">
-                                    <TextBlock Text="{Binding Repository.FullName}" TextWrapping="WrapWholeWords" FontSize="10" ></TextBlock>
-                                    <TextBlock Text="{Binding Subject.Type}" TextWrapping="WrapWholeWords"></TextBlock>
-                                </StackPanel>
+            <Border BorderBrush="LightGray" BorderThickness="1">
+                <xuildg:LiteDataGrid x:Name="lbCommon" HorizontalContentAlignment="Stretch" Margin="0,10,0,0" Height="350">
+                    <xuildg:LiteDataGrid.ItemTemplate1>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical" BorderBrush="LightGray" BorderThickness="0,0,0,1" Margin="5" Padding="0,0,0,10">
+                                <TextBlock Text="{Binding Title}" TextWrapping="WrapWholeWords"></TextBlock>
+                                <HyperlinkButton Content="Watch" NavigateUri="{Binding Link}"></HyperlinkButton>
                             </StackPanel>
-
-                            <TextBlock Text="{Binding Subject.Title}" TextWrapping="WrapWholeWords"></TextBlock>
-                            <TextBlock Text="{Binding UpdatedAt, Converter={StaticResource StringDateToDaysAgoConverter}}" TextWrapping="WrapWholeWords" FontSize="10" ></TextBlock>
-                        </StackPanel>
-                    </DataTemplate>
-                </xuildg:LiteDataGrid.ItemTemplate1>
-                <xuildg:LiteDataGrid.ItemTemplate2>
-                    <DataTemplate>
-                        <Grid HorizontalAlignment="Stretch" Margin="5">
-                            <xuip:Path PathType="Book" Foreground="Gray" Width="20" Height="20" HorizontalAlignment="Left"></xuip:Path>
-                            <TextBlock Text="{Binding FullName}" TextWrapping="WrapWholeWords" HorizontalAlignment="Left" FontSize="12" Margin="30,5,0,0"></TextBlock>
-                            <Button Content="Unwatch" Background="Transparent" BorderBrush="#FFB9B9B9" BorderThickness="1" HorizontalAlignment="Right" FontSize="11" ></Button>
-                        </Grid>
-                    </DataTemplate>
-                </xuildg:LiteDataGrid.ItemTemplate2>
-            </xuildg:LiteDataGrid>
-
-
+                        </DataTemplate>
+                    </xuildg:LiteDataGrid.ItemTemplate1>
+                    <xuildg:LiteDataGrid.ItemTemplate2>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Stretch" Margin="5,5,20,0">
+                                <xuip:Path PathType="Book" Foreground="Gray" Width="20" Height="20" HorizontalAlignment="Left"></xuip:Path>
+                                <TextBlock Text="{Binding Title}" TextWrapping="WrapWholeWords" HorizontalAlignment="Left" FontSize="12" Margin="30,5,80,0"></TextBlock>
+                                <Button Content="Watch" Background="Transparent" BorderBrush="#FFB9B9B9" BorderThickness="1" HorizontalAlignment="Right" FontSize="11" ></Button>
+                            </Grid>
+                        </DataTemplate>
+                    </xuildg:LiteDataGrid.ItemTemplate2>
+                </xuildg:LiteDataGrid>
+            </Border>
 
         </StackPanel>
     </Grid>
