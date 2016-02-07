@@ -16,7 +16,7 @@ Components still being fleshed out...
 ![sample1]
 
 
-6. LiteDataGrid - A grid that lets you define several DataTemplates, corresponding for a different view for the grid ..
+(6) LiteDataGrid - A grid that lets you define several DataTemplates, each corresponding for a different unique view of the same grid data.
 
 ![sample2]
 
