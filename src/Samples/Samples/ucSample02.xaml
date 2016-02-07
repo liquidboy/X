@@ -1,0 +1,53 @@
+﻿<UserControl
+    x:Class="Samples.ucSample02"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Samples"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:xuiri="using:X.UI.RichInput"
+    xmlns:xuirb="using:X.UI.RichButton"
+    xmlns:xuilt="using:X.UI.LiteTab"
+    xmlns:xuip="using:X.UI.Path"
+    xmlns:xuildg="using:X.UI.LiteDataGrid"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid>
+        <StackPanel Width="500">
+
+
+            <xuildg:LiteDataGrid x:Name="lbCommon" HorizontalContentAlignment="Stretch" Margin="0,10,0,0">
+                <xuildg:LiteDataGrid.ItemTemplate1>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical" BorderBrush="LightGray" BorderThickness="0,0,0,1" Margin="5" Padding="0,0,0,10">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding Repository.OwnerAvatarUrl}" Width="30" Height="30" />
+                                <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+                                    <TextBlock Text="{Binding Repository.FullName}" TextWrapping="WrapWholeWords" FontSize="10" ></TextBlock>
+                                    <TextBlock Text="{Binding Subject.Type}" TextWrapping="WrapWholeWords"></TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <TextBlock Text="{Binding Subject.Title}" TextWrapping="WrapWholeWords"></TextBlock>
+                            <TextBlock Text="{Binding UpdatedAt, Converter={StaticResource StringDateToDaysAgoConverter}}" TextWrapping="WrapWholeWords" FontSize="10" ></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </xuildg:LiteDataGrid.ItemTemplate1>
+                <xuildg:LiteDataGrid.ItemTemplate2>
+                    <DataTemplate>
+                        <Grid HorizontalAlignment="Stretch" Margin="5">
+                            <xuip:Path PathType="Book" Foreground="Gray" Width="20" Height="20" HorizontalAlignment="Left"></xuip:Path>
+                            <TextBlock Text="{Binding FullName}" TextWrapping="WrapWholeWords" HorizontalAlignment="Left" FontSize="12" Margin="30,5,0,0"></TextBlock>
+                            <Button Content="Unwatch" Background="Transparent" BorderBrush="#FFB9B9B9" BorderThickness="1" HorizontalAlignment="Right" FontSize="11" ></Button>
+                        </Grid>
+                    </DataTemplate>
+                </xuildg:LiteDataGrid.ItemTemplate2>
+            </xuildg:LiteDataGrid>
+
+
+
+        </StackPanel>
+    </Grid>
+</UserControl>

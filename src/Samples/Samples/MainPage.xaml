@@ -8,23 +8,20 @@
     xmlns:xuiri="using:X.UI.RichInput"
     xmlns:xuirb="using:X.UI.RichButton"
     xmlns:xuilt="using:X.UI.LiteTab"
+    xmlns:xuip="using:X.UI.Path"
+    xmlns:xuildg="using:X.UI.LiteDataGrid"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel Orientation="Vertical" Width="500" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0">
 
-            <xuilt:TabList x:Name="tlMain" Orientation="Horizontal" Margin="0,10,0,20" Foreground="Purple" TabItemBorderColor="Purple" HorizontalAlignment="Stretch">
+            <xuilt:TabList x:Name="tlMain" Orientation="Horizontal" Margin="0,10,0,20" Foreground="Purple" TabItemBorderColor="Purple" HorizontalAlignment="Stretch" OnTabChanged="tlMain_OnTabChanged">
 
             </xuilt:TabList>
 
-            <xuiri:Input x:Name="ipUserid" Type="text" Label="UserID" LabelFontSize="9" LabelTranslateY="-15" PlaceholderText="enter your userid" FocusColor="Purple" FocusHoverColor="DarkViolet" FocusForegroundColor="White" HorizontalAlignment="Stretch" Height="35" Margin="0,20,0,0" ValueChanged="Input_ValueChanged"></xuiri:Input>
-            <xuiri:Input x:Name="ipPassword" Type="password" Label="Password" LabelFontSize="9" LabelTranslateY="-15" PlaceholderText="enter your password" FocusColor="Purple" FocusHoverColor="DarkViolet" FocusForegroundColor="White" HorizontalAlignment="Stretch" Height="35" Margin="0,20,0,0" ValueChanged="Input_ValueChanged"></xuiri:Input>
-            <xuiri:Input Type="text" Label="Mobile Phone" LabelFontSize="9" LabelTranslateY="-15" PlaceholderText="enter your mobile number" FocusColor="Purple" FocusHoverColor="DarkViolet" FocusForegroundColor="White" HorizontalAlignment="Stretch" Height="35" Margin="0,20,0,0"></xuiri:Input>
-            <xuiri:Input Type="checkbox" Label="I agree with the Terms and Conditions" LabelFontSize="10" LabelTranslateY="5" FocusColor="Purple" FocusHoverColor="DarkViolet" HorizontalAlignment="Stretch" Height="35" Margin="0,0,0,0"></xuiri:Input>
-            <xuiri:Input Type="radio" Label="Male" LabelFontSize="12" LabelTranslateY="3" GroupName="sex" FocusColor="Purple" FocusHoverColor="DarkViolet"  HorizontalAlignment="Stretch" Height="35" Margin="0,0,0,0"></xuiri:Input>
-            <xuiri:Input Type="radio" Label="Female" LabelFontSize="12" LabelTranslateY="3" GroupName="sex" FocusColor="Purple" FocusHoverColor="DarkViolet"  HorizontalAlignment="Stretch" Height="35" Margin="0,0,0,0"></xuiri:Input>
-
-            <xuirb:RichButton x:Name="butLogin" Label="Login" GlowAmount="5" GlowColor="#FFA437A4" PathType="Key" Click="AttemptLogin" Margin="0,10,0,0" Foreground="White" Background="#FF540078" Tooltip="Log into service X" TooltipBackground="DarkOrange"></xuirb:RichButton>
+            <local:ucSample01 x:Name="ctl1" HorizontalAlignment="Stretch" Width="500"></local:ucSample01>
+            <local:ucSample02 x:Name="ctl2" HorizontalAlignment="Stretch" Width="500" Visibility="Collapsed"></local:ucSample02>
+            <local:ucSample03 x:Name="ctl3" HorizontalAlignment="Stretch" Width="500" Visibility="Collapsed"></local:ucSample03>
         </StackPanel>
     </Grid>
 </Page>

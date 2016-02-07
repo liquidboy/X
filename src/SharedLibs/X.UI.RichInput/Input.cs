@@ -255,8 +255,12 @@ namespace X.UI.RichInput
                 cb.Checked -= itradio_Checked;
             }
 
-            _udfg1.Children.Clear();
-            _udfg1 = null;
+            if (_udfg1 != null)
+            {
+                _udfg1 = null;
+                _udfg1.Children.Clear();
+            }
+            
 
             _udfTB1 = null;
             _udfTBL1 = null;

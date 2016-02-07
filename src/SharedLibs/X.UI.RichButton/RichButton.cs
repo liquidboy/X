@@ -54,7 +54,8 @@ namespace X.UI.RichButton
         
         private void RichButton_Loaded(object sender, RoutedEventArgs e)
         {
-            _bkgLayer.InitLayer(_butRoot.ActualWidth, _butRoot.ActualHeight);
+            //Important : if _bkgLayer or _butRoot.ActualWidth == 0 then somehow the OnApplyTemplate did not trigger before the Loaded event .. 
+            if (_bkgLayer!=null) _bkgLayer.InitLayer(_butRoot.ActualWidth, _butRoot.ActualHeight);
         }
 
 
@@ -70,6 +71,8 @@ namespace X.UI.RichButton
                 _butRoot.PointerEntered += _butRoot_PointerEntered;
                 _butRoot.PointerExited += _butRoot_PointerExited;
             }
+
+            if (_bkgLayer != null && _butRoot != null && _butRoot.ActualWidth != 0) _bkgLayer.InitLayer(_butRoot.ActualWidth, _butRoot.ActualHeight);
 
             if (_tbContent == null) _tbContent = GetTemplateChild("tbContent") as TextBlock;
             
