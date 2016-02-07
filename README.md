@@ -16,7 +16,7 @@ Components still being fleshed out...
 ![sample1]
 
 
-* LiteDataGrid - A grid that lets you define several DataTemplates, each corresponding for a different unique view of the same grid data.
+* LiteDataGrid - A grid that lets you define several different DataTemplates and then alternate between them with a simple index value.
 
 ![sample2]
 
