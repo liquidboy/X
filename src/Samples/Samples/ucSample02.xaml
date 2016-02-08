@@ -17,11 +17,19 @@
     <Grid>
         <StackPanel Width="500">
             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                <TextBlock Margin="0,10,0,0">DataTemplate Index to use : </TextBlock>
+                <!--<TextBlock Margin="0,10,0,0">DataTemplate Index to use : </TextBlock>
                 <ComboBox x:Name="cbLiteDG" SelectionChanged="cbLiteDG_SelectionChanged" Margin="10,0,0,0">
-                    <ComboBoxItem IsSelected="True">1</ComboBoxItem>
-                    <ComboBoxItem>2</ComboBoxItem>
-                </ComboBox>
+                    <ComboBox.Items>
+                        <ComboBoxItem IsSelected="True">1</ComboBoxItem>
+                        <ComboBoxItem>2</ComboBoxItem>
+                    </ComboBox.Items>
+                </ComboBox>-->
+                <xuiri:Input Type="combobox" Label="DataTemplate Index to use" LabelFontSize="10" LabelTranslateY="5" FocusColor="Purple" FocusHoverColor="DarkViolet" HorizontalAlignment="Stretch" Height="35" Margin="0,0,0,0">
+                    <!--<xuiri:Input.Items>
+                        <ComboBoxItem IsSelected="True">1</ComboBoxItem>
+                        <ComboBoxItem>2</ComboBoxItem>
+                    </xuiri:Input.Items>-->
+                </xuiri:Input>
             </StackPanel>
 
             <Border BorderBrush="LightGray" BorderThickness="1">

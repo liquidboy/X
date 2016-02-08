@@ -16,6 +16,7 @@ namespace X.UI.RichInput
     {
         button,
         checkbox,
+        combobox,
         color,
         date,
         datetime,
@@ -45,6 +46,7 @@ namespace X.UI.RichInput
         Style _GeneralPasswordBoxStyle;
         Style _GeneralCheckBoxStyle;
         Style _GeneralRadioButtonStyle;
+        Style _GeneralComboBoxStyle;
         TextBox _udfTB1;
         TextBlock _udfTBL1;
         Grid _udfg1;
@@ -106,17 +108,23 @@ namespace X.UI.RichInput
                 _GeneralRadioButtonStyle = (Style)_grdRoot.Resources["GeneralRadioButtonStyle"];
             }
 
+            if (_GeneralComboBoxStyle == null)
+            {
+                _GeneralComboBoxStyle = (Style)_grdRoot.Resources["GeneralComboBoxStyle"];
+            }
+            
+
             if (_ccInput == null) {
                 _ccInput = GetTemplateChild("ccInput") as ContentControl;
                 
-                BuildControl(Type, Label, PlaceholderText, LabelFontSize, LabelTranslateY, GroupName, _ccInput);
+                BuildControl(Type, Label, PlaceholderText, LabelFontSize, LabelTranslateY, GroupName, Items, _ccInput);
                 SetColors(FocusColor, FocusHoverColor, FocusForegroundColor, _model);
             }
             
             base.OnApplyTemplate();
         }
         
-        private void BuildControl(InputType type, string label, string placeholderText, double labelFontSize, double labelTranslateY, string groupName, ContentControl ccInput) {
+        private void BuildControl(InputType type, string label, string placeholderText, double labelFontSize, double labelTranslateY, string groupName, ItemCollection items, ContentControl ccInput) {
 
             FrameworkElement fe = null;
 
@@ -201,6 +209,28 @@ namespace X.UI.RichInput
 
                 fe = sp;
             }
+            else if (type == InputType.combobox)
+            {
+                var sp = new StackPanel();
+                sp.Orientation = Orientation.Vertical;
+
+                var lb = new TextBlock();
+                lb.Text = label;
+                lb.FontSize = LabelFontSize;
+                lb.Margin = new Thickness(0, LabelTranslateY, 0, 0);
+
+                var cb = new ComboBox();
+                cb.Style = _GeneralComboBoxStyle;
+                if (Items != null && Items.Count > 0) {
+                    foreach(var item in Items)
+                    {
+                        cb.Items.Add(item);
+                    }
+                }
+                sp.Children.Add(cb);
+
+                fe = sp;
+            }
 
 
             fe.HorizontalAlignment = HorizontalAlignment.Stretch;
@@ -253,6 +283,13 @@ namespace X.UI.RichInput
                 var sp = (StackPanel)_ccInput.Content;
                 var cb = (RadioButton)sp.Children[0];
                 cb.Checked -= itradio_Checked;
+            }
+            else if (type == InputType.combobox)
+            {
+                var sp = (StackPanel)_ccInput.Content;
+                var cb = (ComboBox)sp.Children[0];
+                //cb.Checked -= itcheckbox_Checked;
+                if (cb.Items != null && cb.Items.Count > 0) cb.Items.Clear();
             }
 
             if (_udfg1 != null)
@@ -409,6 +446,12 @@ namespace X.UI.RichInput
             get { return (Color)GetValue(FocusForegroundColorProperty); }
             set { SetValue(FocusForegroundColorProperty, value); }
         }
+        
+        public ItemCollection Items
+        {
+            get { return (ItemCollection)GetValue(ItemsProperty); }
+            set { SetValue(ItemsProperty, value); }
+        }
 
 
 
@@ -419,6 +462,9 @@ namespace X.UI.RichInput
 
 
 
+
+
+        public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register("Items", typeof(ItemCollection), typeof(Input), new PropertyMetadata(null));
 
         public static readonly DependencyProperty FocusForegroundColorProperty = DependencyProperty.Register("FocusForegroundColor", typeof(Color), typeof(Input), new PropertyMetadata(Colors.White));
 
@@ -471,6 +517,7 @@ namespace X.UI.RichInput
         public Color FocusHoverColor { get; set; }
 
         public Color FocusForegroundColor { get; set; }
+        
 
     }
 }
