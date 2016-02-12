@@ -5,12 +5,16 @@
     xmlns:local="using:Samples"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xuiel="using:X.UI.EffectLayer"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid>
+    <Grid x:Name="layoutRoot">
         <StackPanel Width="500">
+            <Grid x:Name="grdRoot" Width="300" Height="300">
+                <xuiel:EffectLayer x:Name="bkgLayer" HorizontalAlignment="Left"  GlowFill="Black" VerticalAlignment="Top" GlowAmount="3" GlowColor="Gray" ShowGlowArea="False" ></xuiel:EffectLayer>
+            </Grid>
         </StackPanel>
     </Grid>
 </UserControl>

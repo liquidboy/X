@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="EffectLayer.cs" />
     <Compile Include="GlowEffectGraph.cs" />
+    <Compile Include="PathToD2DPathGeometryConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\X.UI.EffectLayer.rd.xml" />
   </ItemGroup>

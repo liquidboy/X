@@ -40,8 +40,8 @@ namespace Samples
 
             lbCommon.ItemsSource = fd.Items;
             lbCommon.ItemTemplateToUse = 1;
- 
 
+            isLoaded = true;
         }
 
         public async void LoadSample() {

@@ -39,7 +39,7 @@ namespace Samples
             var selected = (Tab)sender;
             if (selected.Name == "Samples 1") { ctl1.Visibility = Visibility.Visible; }
             else if (selected.Name == "Samples 2") { ctl2.Visibility = Visibility.Visible; ctl2.LoadSample(); }
-            else if (selected.Name == "Samples 3") { ctl3.Visibility = Visibility.Visible; }
+            else if (selected.Name == "Samples 3") { ctl3.Visibility = Visibility.Visible; ctl3.LoadSample(); }
         }
 
 

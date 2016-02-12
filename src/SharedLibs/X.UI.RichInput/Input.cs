@@ -507,6 +507,9 @@ namespace X.UI.RichInput
 
     }
 
+ 
+
+
 
     class InputModel : DependencyObject {
 

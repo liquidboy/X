@@ -29,6 +29,8 @@ namespace X.UI.EffectLayer
         double offsetY = 0;
         double offsetX = 0;
 
+        bool doDlayedInitBkgLayerLaterAfterOnApplyTemplate = false;
+
 
         public EffectLayer()
         {
@@ -41,7 +43,10 @@ namespace X.UI.EffectLayer
         protected override void OnApplyTemplate()
         {
             if (_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as ContentControl;
-            
+
+            if (doDlayedInitBkgLayerLaterAfterOnApplyTemplate) InitBkgLayer();
+
+
             base.OnApplyTemplate();
         }
         
@@ -65,7 +70,7 @@ namespace X.UI.EffectLayer
 
 
         public void InitLayer(double canvasWidth, double canvasHeight) {
-
+            
             ParentWidth = canvasWidth - offsetX;
             ParentHeight = canvasHeight - offsetY;
 
@@ -74,6 +79,18 @@ namespace X.UI.EffectLayer
             if (ShowGlowArea) canvas.ClearColor = Windows.UI.Colors.CornflowerBlue;
             canvas.Width = ParentWidth + ExpandAmount;
             canvas.Height = ParentWidth + ExpandAmount;
+
+            //if the control begins invisible or hidden then it will not have rendered its tree yet 
+            //we can only do this init if bkglayer exists, which means only after OnApplyTemplate
+            //.. this is such a hack BUT it's a chicken and egg problem, sometimes the InitLayer gets
+            //called too early :(
+            if (_bkgLayer == null) doDlayedInitBkgLayerLaterAfterOnApplyTemplate = true;
+            else InitBkgLayer();
+        }
+
+
+        private void InitBkgLayer() {
+            
             _bkgLayer.Width = canvas.Width;
             _bkgLayer.Height = canvas.Height;
 
@@ -86,12 +103,22 @@ namespace X.UI.EffectLayer
             //canvas.Visibility = Visibility.Collapsed;
         }
 
+        List<string> _paths = new List<string>();
+        public void DrawPath(string path)
+        {
+            _paths.Add(path);
+        }
 
         //x
         private void OnDraw(CanvasControl sender, CanvasDrawEventArgs args)
         {
             var sz = new Size(ParentWidth, ParentHeight);
-            DoEffect(args.DrawingSession, sz, (float)GlowAmount, GlowColor, ((SolidColorBrush)GlowFill).Color, ExpandAmount);
+
+            if(_paths.Count>0)
+                DoPathEffect(sender, args.DrawingSession);
+            else 
+                DoEffect(args.DrawingSession, sz, (float)GlowAmount, GlowColor, ((SolidColorBrush)GlowFill).Color, ExpandAmount);
+            
         }
         
 
@@ -109,6 +136,37 @@ namespace X.UI.EffectLayer
                 glowEffectGraph.Setup(cl, amount);
                 ds.DrawImage(glowEffectGraph.Output, offset, offset);
                 ds.FillRectangle(offset, offset, (float)size.Width, (float)size.Height, fillColor);
+            }
+        }
+
+
+        private void DoPathEffect(CanvasControl sender, CanvasDrawingSession ds ) {
+
+            var sz = new Size(ParentWidth, ParentHeight);
+
+            using (var thBuilder = new Microsoft.Graphics.Canvas.Geometry.CanvasPathBuilder(sender))
+            {
+                var pthConverter = new PathToD2DPathGeometryConverter();
+
+                foreach(var path in _paths)
+                {
+                    var offset = (float)ExpandAmount / 2;
+                    //using (var textLayout = CreateTextLayout(ds, size))
+                    using (var cl = new CanvasCommandList(ds))
+                    using (var pthGeo = pthConverter.parse(path, thBuilder))
+                    {
+                        using (var clds = cl.CreateDrawingSession())
+                        {
+                            clds.FillGeometry(pthGeo,0,0, GlowColor);
+                        }
+
+                        glowEffectGraph.Setup(cl, (float)GlowAmount);
+                        ds.DrawImage(glowEffectGraph.Output, offset, offset);
+                        ds.FillGeometry(pthGeo,offset, offset, ((SolidColorBrush)GlowFill).Color);
+                    }
+                    
+                }
+
             }
         }
 
