@@ -17,18 +17,11 @@
     <Grid>
         <StackPanel Width="500">
             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                <!--<TextBlock Margin="0,10,0,0">DataTemplate Index to use : </TextBlock>
-                <ComboBox x:Name="cbLiteDG" SelectionChanged="cbLiteDG_SelectionChanged" Margin="10,0,0,0">
-                    <ComboBox.Items>
-                        <ComboBoxItem IsSelected="True">1</ComboBoxItem>
-                        <ComboBoxItem>2</ComboBoxItem>
-                    </ComboBox.Items>
-                </ComboBox>-->
-                <xuiri:Input Type="combobox" Label="DataTemplate Index to use" LabelFontSize="10" LabelTranslateY="5" FocusColor="Purple" FocusHoverColor="DarkViolet" HorizontalAlignment="Stretch" Height="35" Margin="0,0,0,0">
-                    <!--<xuiri:Input.Items>
-                        <ComboBoxItem IsSelected="True">1</ComboBoxItem>
-                        <ComboBoxItem>2</ComboBoxItem>
-                    </xuiri:Input.Items>-->
+                <xuiri:Input x:Name="rcb" Width="200" Type="combobox" Label="DataTemplate Index to use" LabelFontSize="10" LabelTranslateY="5" FocusForegroundColor="White" FocusColor="Purple" FocusHoverColor="DarkViolet" HorizontalAlignment="Stretch" Margin="0,0,0,0" ValueChanged="rcb_ValueChanged">
+                    <xuiri:Input.Items>
+                        <ComboBoxItem IsSelected="True" Foreground="White">1</ComboBoxItem>
+                        <ComboBoxItem Foreground="White">2</ComboBoxItem>
+                    </xuiri:Input.Items>
                 </xuiri:Input>
             </StackPanel>
 

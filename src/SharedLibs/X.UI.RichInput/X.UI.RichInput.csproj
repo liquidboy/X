@@ -108,6 +108,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Input.cs" />
+    <Compile Include="InputModel.cs" />
+    <Compile Include="InputType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\X.UI.RichInput.rd.xml" />
   </ItemGroup>

@@ -12,33 +12,10 @@ using Windows.UI.Xaml.Media;
 
 namespace X.UI.RichInput
 {
-    public enum InputType
-    {
-        button,
-        checkbox,
-        combobox,
-        color,
-        date,
-        datetime,
-        datetimeLocal,
-        email,
-        month,
-        number,
-        password,
-        radio,
-        range,
-        search,
-        submit,
-        tel,
-        text,
-        time,
-        url,
-        week
-
-    }
+    
 
 
-    public sealed class Input : Control
+    public sealed class Input : ItemsControl
     {
         Grid _grdRoot;
         ContentControl _ccInput;
@@ -49,6 +26,7 @@ namespace X.UI.RichInput
         Style _GeneralComboBoxStyle;
         TextBox _udfTB1;
         TextBlock _udfTBL1;
+        ComboBox _udfCB1;
         Grid _udfg1;
 
         InputModel _model;
@@ -117,14 +95,14 @@ namespace X.UI.RichInput
             if (_ccInput == null) {
                 _ccInput = GetTemplateChild("ccInput") as ContentControl;
                 
-                BuildControl(Type, Label, PlaceholderText, LabelFontSize, LabelTranslateY, GroupName, Items, _ccInput);
+                BuildControl(Type, Label, PlaceholderText, LabelFontSize, LabelTranslateY, GroupName,  _ccInput);
                 SetColors(FocusColor, FocusHoverColor, FocusForegroundColor, _model);
             }
             
             base.OnApplyTemplate();
         }
         
-        private void BuildControl(InputType type, string label, string placeholderText, double labelFontSize, double labelTranslateY, string groupName, ItemCollection items, ContentControl ccInput) {
+        private void BuildControl(InputType type, string label, string placeholderText, double labelFontSize, double labelTranslateY, string groupName, ContentControl ccInput) {
 
             FrameworkElement fe = null;
 
@@ -214,20 +192,18 @@ namespace X.UI.RichInput
                 var sp = new StackPanel();
                 sp.Orientation = Orientation.Vertical;
 
-                var lb = new TextBlock();
-                lb.Text = label;
-                lb.FontSize = LabelFontSize;
-                lb.Margin = new Thickness(0, LabelTranslateY, 0, 0);
+                _udfTBL1 = new TextBlock();
+                _udfTBL1.Text = label;
+                _udfTBL1.FontSize = LabelFontSize;
+                _udfTBL1.Margin = new Thickness(0, LabelTranslateY, 0, 0);
+                sp.Children.Add(_udfTBL1);
 
-                var cb = new ComboBox();
-                cb.Style = _GeneralComboBoxStyle;
-                if (Items != null && Items.Count > 0) {
-                    foreach(var item in Items)
-                    {
-                        cb.Items.Add(item);
-                    }
-                }
-                sp.Children.Add(cb);
+                _udfCB1 = new ComboBox();
+                _udfCB1.Style = _GeneralComboBoxStyle;
+                _udfCB1.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = Items });
+                _udfCB1.Width = this.Width;
+                _udfCB1.SelectionChanged += itcombobox_SelectionChanged;
+                sp.Children.Add(_udfCB1);
 
                 fe = sp;
             }
@@ -240,6 +216,7 @@ namespace X.UI.RichInput
         }
 
 
+
         private void SetColors(Color focusColor, Color focusHoverColor, Color focusForegroundColor, InputModel model) {
 
             model.FocusColor = focusColor;
@@ -248,8 +225,9 @@ namespace X.UI.RichInput
 
             if (_udfg1 != null) {
                 _udfg1.Background = new SolidColorBrush(focusColor);
-                if (_udfTBL1 != null) _udfTBL1.Foreground = new SolidColorBrush(focusForegroundColor);
             }
+
+            if (_udfTBL1 != null) _udfTBL1.Foreground = new SolidColorBrush(focusColor);
         }
 
         private void UpdateControl(InputType type, string label, string placeholderText, double labelFontSize, double labelTranslateY, string groupName, ContentControl ccInput)
@@ -288,8 +266,9 @@ namespace X.UI.RichInput
             {
                 var sp = (StackPanel)_ccInput.Content;
                 var cb = (ComboBox)sp.Children[0];
-                //cb.Checked -= itcheckbox_Checked;
+                cb.SelectionChanged -= itcombobox_SelectionChanged;
                 if (cb.Items != null && cb.Items.Count > 0) cb.Items.Clear();
+                if (cb.ItemsSource != null) cb.ItemsSource = null;
             }
 
             if (_udfg1 != null)
@@ -301,7 +280,7 @@ namespace X.UI.RichInput
 
             _udfTB1 = null;
             _udfTBL1 = null;
-            
+            _udfCB1 = null;
 
             _ccInput.Content = null;
 
@@ -373,6 +352,13 @@ namespace X.UI.RichInput
             
         }
 
+        private void itcombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Type == InputType.combobox)
+            {
+                ValueChanged?.Invoke(sender, e);
+            }
+        }
 
 
 
@@ -389,7 +375,6 @@ namespace X.UI.RichInput
 
 
 
-        
 
 
 
@@ -447,11 +432,6 @@ namespace X.UI.RichInput
             set { SetValue(FocusForegroundColorProperty, value); }
         }
         
-        public ItemCollection Items
-        {
-            get { return (ItemCollection)GetValue(ItemsProperty); }
-            set { SetValue(ItemsProperty, value); }
-        }
 
 
 
@@ -461,10 +441,6 @@ namespace X.UI.RichInput
 
 
 
-
-
-
-        public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register("Items", typeof(ItemCollection), typeof(Input), new PropertyMetadata(null));
 
         public static readonly DependencyProperty FocusForegroundColorProperty = DependencyProperty.Register("FocusForegroundColor", typeof(Color), typeof(Input), new PropertyMetadata(Colors.White));
 
@@ -511,16 +487,5 @@ namespace X.UI.RichInput
 
 
 
-    class InputModel : DependencyObject {
 
-        public object Data { get; set; }
-
-        public Color FocusColor { get; set; }
-
-        public Color FocusHoverColor { get; set; }
-
-        public Color FocusForegroundColor { get; set; }
-        
-
-    }
 }

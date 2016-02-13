@@ -25,10 +25,9 @@ namespace Samples
         public ucSample02()
         {
             this.InitializeComponent();
-      
-        }
 
-   
+          
+        }
 
         private async Task PopulateSampleData()
         {
@@ -48,13 +47,15 @@ namespace Samples
             await PopulateSampleData();
         }
 
-        private void cbLiteDG_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void rcb_ValueChanged(object sender, RoutedEventArgs e)
         {
-            if (lbCommon == null) return;
+            var selectedItem = rcb.Items[((ComboBox)sender).SelectedIndex];
 
-            var newIndex = int.Parse( (string) ((ComboBoxItem)(( (ComboBox)sender).SelectedItem )).Content);
-
-            lbCommon.ItemTemplateToUse = newIndex;
+            if (selectedItem is ComboBoxItem) {
+                var newIndex = int.Parse((string)((ComboBoxItem)selectedItem).Content);
+                lbCommon.ItemTemplateToUse = newIndex;
+            }
+            
         }
     }
 }
