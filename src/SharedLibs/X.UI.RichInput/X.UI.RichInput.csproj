@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Input.cs" />
+    <Compile Include="InputComboBoxItem.cs" />
     <Compile Include="InputModel.cs" />
     <Compile Include="InputType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

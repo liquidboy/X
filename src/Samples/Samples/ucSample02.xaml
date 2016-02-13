@@ -19,8 +19,8 @@
             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                 <xuiri:Input x:Name="rcb" Width="200" Type="combobox" Label="DataTemplate Index to use" LabelFontSize="10" LabelTranslateY="5" FocusForegroundColor="White" FocusColor="Purple" FocusHoverColor="DarkViolet" HorizontalAlignment="Stretch" Margin="0,0,0,0" ValueChanged="rcb_ValueChanged">
                     <xuiri:Input.Items>
-                        <ComboBoxItem IsSelected="True" Foreground="White">1</ComboBoxItem>
-                        <ComboBoxItem Foreground="White">2</ComboBoxItem>
+                        <xuiri:InputComboBoxItem IsSelected="True" Foreground="Purple" >1</xuiri:InputComboBoxItem>
+                        <xuiri:InputComboBoxItem Foreground="Purple" >2</xuiri:InputComboBoxItem>
                     </xuiri:Input.Items>
                 </xuiri:Input>
             </StackPanel>
