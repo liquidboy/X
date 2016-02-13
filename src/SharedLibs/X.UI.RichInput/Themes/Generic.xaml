@@ -365,18 +365,16 @@
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="NormalRectangle">
                                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusHoverColor}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
-                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusHoverColor}"/>
-                                                                </ObjectAnimationUsingKeyFrames>
                                                             </Storyboard>
                                                         </VisualState>
                                                         <VisualState x:Name="UncheckedPressed">
                                                             <Storyboard>
-                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="NormalRectangle">
+                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="CheckedRectangle">
                                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusHoverColor}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
+                                                                <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckedRectangle"/>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="NormalRectangle">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusHoverColor}"/>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <DoubleAnimation Duration="0" To="{ThemeResource CheckBoxCheckedStrokeThickness}" Storyboard.TargetProperty="StrokeThickness" Storyboard.TargetName="NormalRectangle"/>
                                                             </Storyboard>
@@ -396,31 +394,27 @@
                                                         </VisualState>
                                                         <VisualState x:Name="CheckedNormal">
                                                             <Storyboard>
-                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="NormalRectangle">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusColor}"/>
-                                                                </ObjectAnimationUsingKeyFrames>
+                                                                <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="NormalRectangle">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAccentBrush}"/>
+                                                                </ObjectAnimationUsingKeyFrames>-->
+                                                                <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckedRectangle"/>
                                                                 <DoubleAnimation Duration="0" To="{ThemeResource CheckBoxCheckedStrokeThickness}" Storyboard.TargetProperty="StrokeThickness" Storyboard.TargetName="NormalRectangle"/>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="NormalRectangle">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusColor}"/>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltTransparentBrush}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckGlyph"/>
-                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="CheckGlyph">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusForegroundColor}"/>
-                                                                </ObjectAnimationUsingKeyFrames>
                                                             </Storyboard>
                                                         </VisualState>
                                                         <VisualState x:Name="CheckedPointerOver">
                                                             <Storyboard>
-                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="NormalRectangle">
+                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="CheckedRectangle">
                                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusHoverColor}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
+                                                                <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckedRectangle"/>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="NormalRectangle">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusHoverColor}"/>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseHighBrush}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckGlyph"/>
-                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="CheckGlyph">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusForegroundColor}"/>
-                                                                </ObjectAnimationUsingKeyFrames>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
                                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusHoverColor}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
@@ -428,16 +422,14 @@
                                                         </VisualState>
                                                         <VisualState x:Name="CheckedPressed">
                                                             <Storyboard>
-                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="NormalRectangle">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusHoverColor}"/>
-                                                                </ObjectAnimationUsingKeyFrames>
+                                                                <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="NormalRectangle">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumBrush}"/>
+                                                                </ObjectAnimationUsingKeyFrames>-->
+                                                                <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckedRectangle"/>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="NormalRectangle">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusHoverColor}"/>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <DoubleAnimation Duration="0" To="{ThemeResource CheckBoxCheckedStrokeThickness}" Storyboard.TargetProperty="StrokeThickness" Storyboard.TargetName="NormalRectangle"/>
-                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="CheckGlyph">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusForegroundColor}"/>
-                                                                </ObjectAnimationUsingKeyFrames>
                                                                 <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckGlyph"/>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
                                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusHoverColor}"/>
@@ -464,61 +456,52 @@
                                                         <VisualState x:Name="IndeterminateNormal">
                                                             <Storyboard>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="NormalRectangle">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusHoverColor}"/>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlForegroundAccentBrush}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="NormalRectangle">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusHoverColor}"/>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="CheckGlyph">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusForegroundColor}"/>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Glyph" Storyboard.TargetName="CheckGlyph">
                                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="&#xE73C;"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckGlyph"/>
-                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusHoverColor}"/>
-                                                                </ObjectAnimationUsingKeyFrames>
                                                             </Storyboard>
                                                         </VisualState>
                                                         <VisualState x:Name="IndeterminatePointerOver">
                                                             <Storyboard>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="NormalRectangle">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusHoverColor}"/>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAccentBrush}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="NormalRectangle">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusHoverColor}"/>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="CheckGlyph">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusForegroundColor}"/>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Glyph" Storyboard.TargetName="CheckGlyph">
                                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="&#xE73C;"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckGlyph"/>
-                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusHoverColor}"/>
-                                                                </ObjectAnimationUsingKeyFrames>
                                                             </Storyboard>
                                                         </VisualState>
                                                         <VisualState x:Name="IndeterminatePressed">
                                                             <Storyboard>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="NormalRectangle">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusHoverColor}"/>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumBrush}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="NormalRectangle">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusHoverColor}"/>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="CheckGlyph">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusForegroundColor}"/>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Glyph" Storyboard.TargetName="CheckGlyph">
                                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="&#xE73C;"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckGlyph"/>
-                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusHoverColor}"/>
-                                                                </ObjectAnimationUsingKeyFrames>
                                                             </Storyboard>
                                                         </VisualState>
                                                         <VisualState x:Name="IndeterminateDisabled">
@@ -545,7 +528,8 @@
                                                 </VisualStateManager.VisualStateGroups>
                                                 <Grid Height="32" VerticalAlignment="Top">
                                                     <Rectangle x:Name="NormalRectangle" Fill="Transparent" Height="20" Stroke="{TemplateBinding Foreground}" StrokeThickness="{ThemeResource CheckBoxBorderThemeThickness}" UseLayoutRounding="False" Width="20"/>
-                                                    <FontIcon x:Name="CheckGlyph" FontSize="20" FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE001;" Opacity="0"/>
+                                                    <Rectangle x:Name="CheckedRectangle" Fill="{TemplateBinding Foreground}" Height="20" UseLayoutRounding="False" Width="20" Opacity="0"/>
+                                                    <FontIcon x:Name="CheckGlyph" Foreground="{ThemeResource SystemControlHighlightAltChromeWhiteBrush}" FontSize="20" FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE001;" Opacity="0"/>
                                                 </Grid>
                                                 <ContentPresenter x:Name="ContentPresenter" AutomationProperties.AccessibilityView="Raw" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" Grid.Column="1" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" TextWrapping="Wrap" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                                             </Grid>
