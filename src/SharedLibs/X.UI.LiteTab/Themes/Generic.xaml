@@ -2,7 +2,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:X.UI.LiteTab">
-    <local:LiteTabSelectedThinknessConverter  x:Key="LiteTabSelectedThinknessConverter" />
+    <local:LiteTabSelectedThicknessConverter  x:Key="LiteTabSelectedThicknessConverter" />
     <local:LiteTabSelectedFontSizeConverter  x:Key="LiteTabSelectedFontSizeConverter" />
     <Style x:Key="GeneralButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}"/>
@@ -91,7 +91,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:TabListItem">
-                    <Button x:Name="tabButton" BorderBrush="{TemplateBinding BorderBrush}" Foreground="{TemplateBinding Foreground}"  BorderThickness="{Binding IsSelected, Converter={StaticResource LiteTabSelectedThinknessConverter} }" Padding="10,0,10,0" Background="Transparent" VerticalAlignment="Bottom" Style="{StaticResource GeneralButtonStyle}">
+                    <Button x:Name="tabButton" BorderBrush="{TemplateBinding BorderBrush}" Foreground="{TemplateBinding Foreground}"  BorderThickness="{Binding IsSelected, Converter={StaticResource LiteTabSelectedThicknessConverter} }" Padding="10,0,10,0" Background="Transparent" VerticalAlignment="Bottom" Style="{StaticResource GeneralButtonStyle}">
                         <TextBlock Text="{Binding Name}" FontSize="{Binding IsSelected, Converter={StaticResource LiteTabSelectedFontSizeConverter} }" FontFamily="Segoe UI" Margin="0,0,0,0" VerticalAlignment="Bottom" ></TextBlock>
                     </Button>
                 </ControlTemplate>

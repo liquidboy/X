@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace X.UI.LiteTab
 {
-    public class LiteTabSelectedThinknessConverter : IValueConverter
+    public class LiteTabSelectedThicknessConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
