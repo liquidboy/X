@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -33,7 +35,6 @@ namespace X.UI.RichInput
 
         public event Windows.UI.Xaml.RoutedEventHandler ValueChanged;
 
-
         public string Value { get; set; }
 
         public Input()
@@ -44,6 +45,7 @@ namespace X.UI.RichInput
             Unloaded += Input_Unloaded;
         }
 
+ 
         private void Input_Unloaded(object sender, RoutedEventArgs e)
         {
             UnloadControl(Type);
@@ -97,6 +99,7 @@ namespace X.UI.RichInput
                 
                 BuildControl(Type, Label, PlaceholderText, LabelFontSize, LabelTranslateY, GroupName,  _ccInput);
                 SetColors(FocusColor, FocusHoverColor, FocusForegroundColor, _model);
+                //SetColors();
             }
             
             base.OnApplyTemplate();
@@ -120,7 +123,7 @@ namespace X.UI.RichInput
                 _udfg1.Margin = new Thickness(0, labelTranslateY, 0, 0);
                 _udfg1.Visibility = Visibility.Collapsed;
                 _udfg1.Children.Add(_udfTBL1);
-
+                
                 var gd = new Grid();
                 gd.Children.Add(_udfg1);
                 gd.Children.Add(tb);
@@ -221,19 +224,28 @@ namespace X.UI.RichInput
 
 
 
-        private void SetColors(Color focusColor, Color focusHoverColor, Color focusForegroundColor, InputModel model) {
+        private void SetColors(Color focusColor, Color focusHoverColor, Color focusForegroundColor, InputModel model) 
+        {
 
             model.FocusColor = focusColor;
             model.FocusHoverColor = focusHoverColor;
             model.FocusForegroundColor = focusForegroundColor;
 
             if (_udfg1 != null) _udfg1.Background = new SolidColorBrush(focusColor);
-            if (_udfCB1 != null)  _udfCB1.Foreground = new SolidColorBrush(focusColor);
-            
-            if (Type == InputType.text || Type == InputType.password || Type == InputType.combobox) {
+            if (_udfCB1 != null) _udfCB1.Foreground = new SolidColorBrush(focusColor);
+
+            if (Type == InputType.text || Type == InputType.password || Type == InputType.combobox)
+            {
                 if (_udfTBL1 != null) _udfTBL1.Foreground = new SolidColorBrush(focusForegroundColor);
             }
-            
+
+            //if (_udfg1 != null) _udfg1.SetBinding(Grid.BackgroundProperty, new Binding() { Path = new PropertyPath("FocusColor") });
+            //if (_udfCB1 != null) _udfCB1.SetBinding(ComboBox.ForegroundProperty , new Binding() { Path = new PropertyPath("FocusColor") });
+
+            //if (Type == InputType.text || Type == InputType.password || Type == InputType.combobox)
+            //{
+            //    if (_udfTBL1 != null) _udfTBL1.SetBinding(TextBlock.ForegroundProperty, new Binding() { Path = new PropertyPath("FocusForegroundColor") });
+            //}
         }
 
         private void UpdateControl(InputType type, string label, string placeholderText, double labelFontSize, double labelTranslateY, string groupName, ContentControl ccInput)
@@ -427,13 +439,13 @@ namespace X.UI.RichInput
             get { return (string)GetValue(GroupNameProperty); }
             set { SetValue(GroupNameProperty, value); }
         }
-        
+
         public Color FocusColor
         {
             get { return (Color)GetValue(FocusColorProperty); }
             set { SetValue(FocusColorProperty, value); }
         }
-        
+
         public Color FocusHoverColor
         {
             get { return (Color)GetValue(FocusHoverColorProperty); }
@@ -445,22 +457,17 @@ namespace X.UI.RichInput
             get { return (Color)GetValue(FocusForegroundColorProperty); }
             set { SetValue(FocusForegroundColorProperty, value); }
         }
-        
 
 
 
 
 
 
+        public static readonly DependencyProperty FocusForegroundColorProperty = DependencyProperty.Register("FocusForegroundColor", typeof(Color), typeof(Input), new PropertyMetadata(Colors.White, OnPropertyChanged));
 
+        public static readonly DependencyProperty FocusHoverColorProperty = DependencyProperty.Register("FocusHoverColor", typeof(Color), typeof(Input), new PropertyMetadata(Colors.DarkGray, OnPropertyChanged));
 
-
-
-        public static readonly DependencyProperty FocusForegroundColorProperty = DependencyProperty.Register("FocusForegroundColor", typeof(Color), typeof(Input), new PropertyMetadata(Colors.White));
-
-        public static readonly DependencyProperty FocusHoverColorProperty = DependencyProperty.Register("FocusHoverColor", typeof(Color), typeof(Input), new PropertyMetadata(Colors.DarkGray));
-
-        public static readonly DependencyProperty FocusColorProperty = DependencyProperty.Register("FocusColor", typeof(Color), typeof(Input), new PropertyMetadata(Colors.DarkGray));
+        public static readonly DependencyProperty FocusColorProperty = DependencyProperty.Register("FocusColor", typeof(Color), typeof(Input), new PropertyMetadata(Colors.DarkGray, OnPropertyChanged));
 
         public static readonly DependencyProperty GroupNameProperty = DependencyProperty.Register("GroupName", typeof(string), typeof(Input), new PropertyMetadata(string.Empty, OnPropertyChanged));
         
@@ -488,7 +495,10 @@ namespace X.UI.RichInput
 
             if (instance._ccInput != null)
             {
-                instance.UpdateControl(instance.Type, instance.Label, instance.PlaceholderText, instance.LabelFontSize, instance.LabelTranslateY, instance.GroupName, instance._ccInput);
+                //instance.UpdateControl(instance.Type, instance.Label, instance.PlaceholderText, instance.LabelFontSize, instance.LabelTranslateY, instance.GroupName, instance._ccInput);
+                instance.SetColors( instance.FocusColor, instance.FocusHoverColor, instance.FocusForegroundColor, instance._model);
+
+                //((UIElement)d).UpdateLayout();
             }
         }
 

@@ -39,9 +39,9 @@ namespace X.UI.LiteTab
             _tb.Click += _tb_Click;
 
             var p1 = GetTabListParent(_tb);
-            _tb.BorderBrush = p1.TabItemBorderColor;
+            _tb.SetBinding(BorderBrushProperty, new Binding() { Path = new PropertyPath("TabItemBorderColor"), Source = p1 });  
+            //_tb.BorderBrush = p1.TabItemBorderColor;
             
-
         }
 
         private TabList GetTabListParent(DependencyObject ctrl) {

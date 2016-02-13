@@ -34,20 +34,29 @@ namespace Samples
             tlMain.AddTab("Samples 3");
 
 
-            SetTheme(1);
+            SetTheme("Orange");
 
         }
 
 
-        public void SetTheme(int theme) {
+        public void SetTheme(string theme) {
 
-            if (theme == 1) {
+            if (theme == "Purple") {
                 vm.Accent1 = Colors.Purple;
                 vm.Accent1Brush = new SolidColorBrush(Colors.Purple);
                 vm.Accent1Contrast = Colors.White;
                 vm.Accent1ContrastBrush = new SolidColorBrush(Colors.White);
                 vm.Accent2 = Colors.MediumPurple;
                 vm.Accent2Brush = new SolidColorBrush(Colors.MediumPurple);
+            }
+            else if (theme == "Orange")
+            {
+                vm.Accent1 = Colors.Orange;
+                vm.Accent1Brush = new SolidColorBrush(Colors.Orange);
+                vm.Accent1Contrast = Colors.White;
+                vm.Accent1ContrastBrush = new SolidColorBrush(Colors.White);
+                vm.Accent2 = Colors.DarkOrange;
+                vm.Accent2Brush = new SolidColorBrush(Colors.DarkOrange);
             }
         }
 
@@ -65,7 +74,19 @@ namespace Samples
             else if (selected.Name == "Samples 3") { ctl3.Visibility = Visibility.Visible; ctl3.LoadSample(); }
         }
 
+        private void rcbThemes_ValueChanged(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = rcbThemes.Items[((ComboBox)sender).SelectedIndex];
 
+            if (selectedItem is ComboBoxItem)
+            {
+                var theme = (string)((ComboBoxItem)selectedItem).Content;
+
+                SetTheme(theme);
+                
+
+            }
+        }
     }
 
     public class vmSamples : INotifyPropertyChanged
