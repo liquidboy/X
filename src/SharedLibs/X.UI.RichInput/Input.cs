@@ -223,11 +223,17 @@ namespace X.UI.RichInput
             model.FocusHoverColor = focusHoverColor;
             model.FocusForegroundColor = focusForegroundColor;
 
-            if (_udfg1 != null) {
-                _udfg1.Background = new SolidColorBrush(focusColor);
-            }
+            if (_udfg1 != null) _udfg1.Background = new SolidColorBrush(focusColor);
+            if (_udfCB1 != null)  _udfCB1.Foreground = new SolidColorBrush(focusColor);
 
-            if (_udfTBL1 != null) _udfTBL1.Foreground = new SolidColorBrush(focusColor);
+            if (Type == InputType.combobox)
+            {
+                if (_udfTBL1 != null) _udfTBL1.Foreground = new SolidColorBrush(focusColor);
+            }
+            else if (Type == InputType.text || Type == InputType.password) {
+                if (_udfTBL1 != null) _udfTBL1.Foreground = new SolidColorBrush(focusForegroundColor);
+            }
+            
         }
 
         private void UpdateControl(InputType type, string label, string placeholderText, double labelFontSize, double labelTranslateY, string groupName, ContentControl ccInput)

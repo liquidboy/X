@@ -23,8 +23,19 @@
             <xuiri:Input Type="checkbox" Label="I agree with the Terms and Conditions" LabelFontSize="10" LabelTranslateY="5" FocusColor="Purple" FocusHoverColor="DarkViolet" HorizontalAlignment="Stretch" Height="35" Margin="0,0,0,0"></xuiri:Input>
             <xuiri:Input Type="radio" Label="Male" LabelFontSize="12" LabelTranslateY="3" GroupName="sex" FocusColor="Purple" FocusHoverColor="DarkViolet"  HorizontalAlignment="Stretch" Height="35" Margin="0,0,0,0"></xuiri:Input>
             <xuiri:Input Type="radio" Label="Female" LabelFontSize="12" LabelTranslateY="3" GroupName="sex" FocusColor="Purple" FocusHoverColor="DarkViolet"  HorizontalAlignment="Stretch" Height="35" Margin="0,0,0,0"></xuiri:Input>
-
-            <xuirb:RichButton x:Name="butLogin" Label="Login" GlowAmount="8" GlowColor="#FFA437A4" PathType="Key" Click="AttemptLogin" Margin="0,10,0,0" Foreground="White" Background="#FF540078" Tooltip="Log into service X" TooltipBackground="DarkOrange"></xuirb:RichButton>
+            <xuiri:Input x:Name="rcb" Width="200" Type="combobox" Label="State" LabelFontSize="10" LabelTranslateY="5" FocusForegroundColor="White" FocusColor="Purple" FocusHoverColor="DarkViolet" Margin="0,0,0,0" HorizontalAlignment="Left" >
+                <xuiri:Input.Items>
+                    <xuiri:InputComboBoxItem IsSelected="True" Foreground="Purple" >New South Wales</xuiri:InputComboBoxItem>
+                    <xuiri:InputComboBoxItem Foreground="Purple" >Queensland</xuiri:InputComboBoxItem>
+                    <xuiri:InputComboBoxItem Foreground="Purple" >Perth</xuiri:InputComboBoxItem>
+                    <xuiri:InputComboBoxItem Foreground="Purple" >Western Australia</xuiri:InputComboBoxItem>
+                    <xuiri:InputComboBoxItem Foreground="Purple" >Victoria</xuiri:InputComboBoxItem>
+                    <xuiri:InputComboBoxItem Foreground="Purple" >Tasmania</xuiri:InputComboBoxItem>
+                    <xuiri:InputComboBoxItem Foreground="Purple" >Melbourne</xuiri:InputComboBoxItem>
+                    <xuiri:InputComboBoxItem Foreground="Purple" >Canberra</xuiri:InputComboBoxItem>
+                </xuiri:Input.Items>
+            </xuiri:Input>
+            <xuirb:RichButton x:Name="butLogin" Label="Login" GlowAmount="8" GlowColor="#FFA437A4" PathType="Key" Click="AttemptLogin" Margin="0,40,0,0" Foreground="White" Background="#FF540078" Tooltip="Log into service X" TooltipBackground="DarkOrange"></xuirb:RichButton>
 
 
         </StackPanel>
