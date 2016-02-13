@@ -29,7 +29,10 @@ namespace X.UI.RichInput
         TextBox _udfTB1;
         TextBlock _udfTBL1;
         ComboBox _udfCB1;
+        RadioButton _udfRB1;
+        CheckBox _udfChkB1;
         Grid _udfg1;
+        PasswordBox _udfPB1;
 
         InputModel _model;
 
@@ -111,10 +114,10 @@ namespace X.UI.RichInput
 
             if (type == InputType.text)
             {
-                var tb = new TextBox();
-                tb.PlaceholderText = placeholderText;
-                tb.Style = _GeneralTextBoxStyle;
-                tb.KeyUp += ittext_KeyUp;
+                _udfTB1 = new TextBox();
+                _udfTB1.PlaceholderText = placeholderText;
+                _udfTB1.Style = _GeneralTextBoxStyle;
+                _udfTB1.KeyUp += ittext_KeyUp;
 
                 _udfg1 = new Grid() { Padding = new Thickness(2, 2, 2, 2), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment= VerticalAlignment.Top};
                 _udfTBL1 = new TextBlock();
@@ -126,7 +129,7 @@ namespace X.UI.RichInput
                 
                 var gd = new Grid();
                 gd.Children.Add(_udfg1);
-                gd.Children.Add(tb);
+                gd.Children.Add(_udfTB1);
 
                 fe = gd;
             }
@@ -134,10 +137,10 @@ namespace X.UI.RichInput
             {
                 
 
-                var tb = new PasswordBox();
-                tb.PlaceholderText = placeholderText;
-                tb.Style = _GeneralPasswordBoxStyle;
-                tb.PasswordChanged += itpassword_PasswordChanged;
+                _udfPB1 = new PasswordBox();
+                _udfPB1.PlaceholderText = placeholderText;
+                _udfPB1.Style = _GeneralPasswordBoxStyle;
+                _udfPB1.PasswordChanged += itpassword_PasswordChanged;
 
                 _udfg1 = new Grid() { Padding = new Thickness(2, 2, 2, 2), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Top };
                 _udfTBL1 = new TextBlock();
@@ -149,7 +152,7 @@ namespace X.UI.RichInput
 
                 var gd = new Grid();
                 gd.Children.Add(_udfg1);
-                gd.Children.Add(tb);
+                gd.Children.Add(_udfPB1);
 
                 fe = gd;
             }
@@ -186,11 +189,11 @@ namespace X.UI.RichInput
                 lb.FontSize = LabelFontSize;
                 lb.Margin = new Thickness(0, LabelTranslateY, 0, 0);
 
-                var cb = new CheckBox();
-                cb.Checked += itcheckbox_Checked;
-                cb.Content = lb;
-                cb.Style = _GeneralCheckBoxStyle;
-                sp.Children.Add(cb);
+                _udfChkB1 = new CheckBox();
+                _udfChkB1.Checked += itcheckbox_Checked;
+                _udfChkB1.Content = lb;
+                _udfChkB1.Style = _GeneralCheckBoxStyle;
+                sp.Children.Add(_udfChkB1);
 
                 fe = sp;
             }
@@ -204,12 +207,12 @@ namespace X.UI.RichInput
                 lb.FontSize = LabelFontSize;
                 lb.Margin = new Thickness(0, LabelTranslateY, 0, 0);
 
-                var rb = new RadioButton();
-                rb.GroupName = groupName;
-                rb.Checked += itradio_Checked;
-                rb.Content = lb;
-                rb.Style = _GeneralRadioButtonStyle;
-                sp.Children.Add(rb);
+                _udfRB1 = new RadioButton();
+                _udfRB1.GroupName = groupName;
+                _udfRB1.Checked += itradio_Checked;
+                _udfRB1.Content = lb;
+                _udfRB1.Style = _GeneralRadioButtonStyle;
+                sp.Children.Add(_udfRB1);
 
                 fe = sp;
             }
@@ -235,15 +238,35 @@ namespace X.UI.RichInput
             {
                 _udfCB1.BorderBrush = new SolidColorBrush(focusColor);
                 _udfCB1.Foreground = new SolidColorBrush(focusColor);
-                var border = _udfCB1.FindName("PopupBorder") as Border;
-                if (border != null) {
-                    border.Background = new SolidColorBrush(focusColor);
-                    border.BorderBrush = new SolidColorBrush(focusColor);
-
-                }
-
-
+                //var border = _udfCB1.FindName("PopupBorder") as Border;
+                //if (border != null) {
+                //    border.Background = new SolidColorBrush(focusColor);
+                //    border.BorderBrush = new SolidColorBrush(focusColor);
+                //}                
             }
+
+            if (_udfTB1 != null)
+            {
+                _udfTB1.Foreground = new SolidColorBrush(focusColor);
+                _udfTB1.BorderBrush = new SolidColorBrush(focusColor);
+            }
+
+            if (_udfPB1!= null)
+            {
+                _udfPB1.Foreground = new SolidColorBrush(focusColor);
+                _udfPB1.BorderBrush = new SolidColorBrush(focusColor);
+            }
+
+            if (_udfChkB1 != null)
+            {
+                _udfChkB1.Foreground = new SolidColorBrush(focusColor);
+            }
+
+            if (_udfRB1 != null)
+            {
+                _udfRB1.Foreground = new SolidColorBrush(focusColor);
+            }
+
 
             if (Type == InputType.text || Type == InputType.password || Type == InputType.combobox)
             {
@@ -269,27 +292,19 @@ namespace X.UI.RichInput
 
             if (type == InputType.text)
             {
-                var gd = (Grid)_ccInput.Content;
-                var tb = (TextBox)gd.Children[1];
-                tb.KeyUp -= ittext_KeyUp;
+                _udfTB1.KeyUp -= ittext_KeyUp;
             }
             else if (type == InputType.password)
             {
-                var gd = (Grid)_ccInput.Content;
-                var tb = (PasswordBox)gd.Children[1];
-                tb.PasswordChanged -= itpassword_PasswordChanged;
+                _udfPB1.PasswordChanged -= itpassword_PasswordChanged;
             }
             else if (type == InputType.checkbox)
             {
-                var sp = (StackPanel)_ccInput.Content;
-                var cb = (CheckBox)sp.Children[0];
-                cb.Checked -= itcheckbox_Checked;
+
             }
             else if (type == InputType.radio)
             {
-                var sp = (StackPanel)_ccInput.Content;
-                var cb = (RadioButton)sp.Children[0];
-                cb.Checked -= itradio_Checked;
+                
             }
             else if (type == InputType.combobox)
             {
@@ -300,16 +315,28 @@ namespace X.UI.RichInput
                 if (cb.ItemsSource != null) cb.ItemsSource = null;
             }
 
+            if (_udfRB1 != null)
+            {
+                _udfRB1.Checked -= itradio_Checked;
+            }
+            if (_udfChkB1 != null)
+            {
+                _udfChkB1.Checked -= itcheckbox_Checked;
+            }
+
             if (_udfg1 != null)
             {
                 _udfg1 = null;
                 _udfg1.Children.Clear();
             }
-            
 
+
+            _udfPB1 = null;
             _udfTB1 = null;
             _udfTBL1 = null;
             _udfCB1 = null;
+            _udfChkB1 = null;
+            _udfRB1 = null;
 
             _ccInput.Content = null;
 
@@ -508,9 +535,9 @@ namespace X.UI.RichInput
             {
                 //instance.UpdateControl(instance.Type, instance.Label, instance.PlaceholderText, instance.LabelFontSize, instance.LabelTranslateY, instance.GroupName, instance._ccInput);
 
-                instance.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () => {
+                //instance.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () => {
                     instance.SetColors(instance.FocusColor, instance.FocusHoverColor, instance.FocusForegroundColor, instance._model);
-                });
+                //});
                 
 
                 //((UIElement)d).UpdateLayout();
