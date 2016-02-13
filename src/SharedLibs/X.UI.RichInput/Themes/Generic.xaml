@@ -754,10 +754,16 @@
                                                         <VisualState x:Name="Pressed">
                                                             <Storyboard>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Background">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundListMediumBrush}"/>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusColor}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="Background">
                                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusColor}"/>
+                                                                </ObjectAnimationUsingKeyFrames>
+                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="DropDownGlyph">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusForegroundColor}"/>
+                                                                </ObjectAnimationUsingKeyFrames>
+                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="PlaceholderTextBlock">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusForegroundColor}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                             </Storyboard>
                                                         </VisualState>
