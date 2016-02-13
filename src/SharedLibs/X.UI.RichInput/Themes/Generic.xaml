@@ -765,11 +765,14 @@
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="Background">
                                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusColor}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
+                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusForegroundColor}"/>
+                                                                </ObjectAnimationUsingKeyFrames>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="DropDownGlyph">
                                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusForegroundColor}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="PlaceholderTextBlock">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusColor}"/>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusForegroundColor}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                             </Storyboard>
                                                         </VisualState>
