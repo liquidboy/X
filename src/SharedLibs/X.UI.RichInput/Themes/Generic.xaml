@@ -681,7 +681,7 @@
                                 <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
                                 <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAltMediumLowBrush}"/>
                                 <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundBaseMediumLowBrush}"/>
-                                <Setter Property="BorderThickness" Value="1"/>
+                                <Setter Property="BorderThickness" Value="2"/>
                                 <Setter Property="TabNavigation" Value="Once"/>
                                 <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
                                 <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
@@ -850,8 +850,8 @@
                                                     </VisualStateGroup>
                                                 </VisualStateManager.VisualStateGroups>
                                                 <ContentPresenter x:Name="HeaderContentPresenter" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" FontWeight="{ThemeResource ComboBoxHeaderThemeFontWeight}" FlowDirection="{TemplateBinding FlowDirection}" Margin="{ThemeResource ComboBoxHeaderThemeMargin}" Visibility="Collapsed" x:DeferLoadStrategy="Lazy"/>
-                                                <Border x:Name="Background" BorderBrush="{Binding FocusColor}" BorderThickness="1" Background="{TemplateBinding Background}" Grid.ColumnSpan="2" Grid.Row="1"/>
-                                                <Border x:Name="HighlightBackground" BorderBrush="{Binding FocusHoverColor}" BorderThickness="1" Background="{ThemeResource SystemControlHighlightListAccentLowBrush}" Grid.ColumnSpan="2" Opacity="0" Grid.Row="1"/>
+                                                <Border x:Name="Background" BorderBrush="{Binding FocusColor}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.ColumnSpan="2" Grid.Row="1"/>
+                                                <Border x:Name="HighlightBackground" BorderBrush="{Binding FocusHoverColor}" BorderThickness="{TemplateBinding BorderThickness}" Background="{ThemeResource SystemControlHighlightListAccentLowBrush}" Grid.ColumnSpan="2" Opacity="0" Grid.Row="1"/>
                                                 <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" Grid.Row="1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                                                     <TextBlock x:Name="PlaceholderTextBlock" Foreground="{Binding FocusColor}" Text="{TemplateBinding PlaceholderText}"/>
                                                 </ContentPresenter>
