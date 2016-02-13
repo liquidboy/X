@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -18,14 +21,34 @@ namespace Samples
 {
     public sealed partial class MainPage : Page
     {
+        vmSamples vm = new vmSamples();
+
         public MainPage()
         {
             this.InitializeComponent();
+
+            this.DataContext = vm;
 
             tlMain.AddTab("Samples 1", true);
             tlMain.AddTab("Samples 2");
             tlMain.AddTab("Samples 3");
 
+
+            SetTheme(1);
+
+        }
+
+
+        public void SetTheme(int theme) {
+
+            if (theme == 1) {
+                vm.Accent1 = Colors.Purple;
+                vm.Accent1Brush = new SolidColorBrush(Colors.Purple);
+                vm.Accent1Contrast = Colors.White;
+                vm.Accent1ContrastBrush = new SolidColorBrush(Colors.White);
+                vm.Accent2 = Colors.MediumPurple;
+                vm.Accent2Brush = new SolidColorBrush(Colors.MediumPurple);
+            }
         }
 
 
@@ -45,6 +68,31 @@ namespace Samples
 
     }
 
+    public class vmSamples : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private Color _Accent1;
+        private Brush _Accent1Brush;
+        private Color _Accent1Contrast;
+        private Brush _Accent1ContrastBrush;
+        private Color _Accent2;
+        private Brush _Accent2Brush;
+
+        public Color Accent2 { get { return _Accent2; } set { _Accent2 = value; NotifyPropertyChanged(); } }
+        public Brush Accent2Brush { get { return _Accent2Brush; } set { _Accent2Brush = value; NotifyPropertyChanged(); } }
+        public Color Accent1 { get { return _Accent1; } set { _Accent1 = value; NotifyPropertyChanged(); } }
+        public Brush Accent1Brush { get { return _Accent1Brush; } set { _Accent1Brush = value; NotifyPropertyChanged(); } }
+        public Color Accent1Contrast { get { return _Accent1Contrast; } set { _Accent1Contrast = value; NotifyPropertyChanged(); } }
+        public Brush Accent1ContrastBrush { get { return _Accent1ContrastBrush; } set { _Accent1ContrastBrush = value; NotifyPropertyChanged(); } }
+
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+    }
 
     
+
 }

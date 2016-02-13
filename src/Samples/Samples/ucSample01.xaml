@@ -16,26 +16,26 @@
 
     <Grid>
         <StackPanel Width="500">
-            
-            <xuiri:Input x:Name="ipUserid" Type="text" Label="UserID" LabelFontSize="9" LabelTranslateY="-15" PlaceholderText="enter your userid" FocusColor="Purple" FocusHoverColor="DarkViolet" FocusForegroundColor="White" HorizontalAlignment="Stretch" Height="35" Margin="0,20,0,0" ValueChanged="Input_ValueChanged"></xuiri:Input>
-            <xuiri:Input x:Name="ipPassword" Type="password" Label="Password" LabelFontSize="9" LabelTranslateY="-15" PlaceholderText="enter your password" FocusColor="Purple" FocusHoverColor="DarkViolet" FocusForegroundColor="White" HorizontalAlignment="Stretch" Height="35" Margin="0,20,0,0" ValueChanged="Input_ValueChanged"></xuiri:Input>
-            <xuiri:Input Type="text" Label="Mobile Phone" LabelFontSize="9" LabelTranslateY="-15" PlaceholderText="enter your mobile number" FocusColor="Purple" FocusHoverColor="DarkViolet" FocusForegroundColor="White" HorizontalAlignment="Stretch" Height="35" Margin="0,20,0,0"></xuiri:Input>
-            <xuiri:Input Type="checkbox" Label="I agree with the Terms and Conditions" LabelFontSize="10" LabelTranslateY="5" FocusColor="Purple" FocusHoverColor="DarkViolet" HorizontalAlignment="Stretch" Height="35" Margin="0,0,0,0"></xuiri:Input>
-            <xuiri:Input Type="radio" Label="Male" LabelFontSize="12" LabelTranslateY="3" GroupName="sex" FocusColor="Purple" FocusHoverColor="DarkViolet"  HorizontalAlignment="Stretch" Height="35" Margin="0,0,0,0"></xuiri:Input>
-            <xuiri:Input Type="radio" Label="Female" LabelFontSize="12" LabelTranslateY="3" GroupName="sex" FocusColor="Purple" FocusHoverColor="DarkViolet"  HorizontalAlignment="Stretch" Height="35" Margin="0,0,0,0"></xuiri:Input>
-            <xuiri:Input x:Name="rcb" Width="200" Type="combobox" Label="State" LabelFontSize="9" LabelTranslateY="-15"  FocusForegroundColor="White" FocusColor="Purple" FocusHoverColor="DarkViolet" Margin="0,20,0,0" HorizontalAlignment="Left" PlaceholderText="choose a state">
+
+            <xuiri:Input x:Name="ipUserid" Type="text" Label="UserID" LabelFontSize="9" LabelTranslateY="-15" PlaceholderText="enter your userid" FocusColor="{Binding Accent1}" FocusHoverColor="{Binding Accent2}" FocusForegroundColor="{Binding Accent1Contrast}" HorizontalAlignment="Stretch" Height="35" Margin="0,20,0,0" ValueChanged="Input_ValueChanged"></xuiri:Input>
+            <xuiri:Input x:Name="ipPassword" Type="password" Label="Password" LabelFontSize="9" LabelTranslateY="-15" PlaceholderText="enter your password" FocusColor="{Binding Accent1}" FocusHoverColor="{Binding Accent2}" FocusForegroundColor="{Binding Accent1Contrast}" HorizontalAlignment="Stretch" Height="35" Margin="0,20,0,0" ValueChanged="Input_ValueChanged"></xuiri:Input>
+            <xuiri:Input Type="text" Label="Mobile Phone" LabelFontSize="9" LabelTranslateY="-15" PlaceholderText="enter your mobile number" FocusColor="{Binding Accent1}" FocusHoverColor="{Binding Accent2}" FocusForegroundColor="{Binding Accent1Contrast}" HorizontalAlignment="Stretch" Height="35" Margin="0,20,0,0"></xuiri:Input>
+            <xuiri:Input Type="checkbox" Label="I agree with the Terms and Conditions" LabelFontSize="10" LabelTranslateY="5" FocusColor="{Binding Accent1}" FocusHoverColor="{Binding Accent2}" HorizontalAlignment="Stretch" Height="35" Margin="0,0,0,0"></xuiri:Input>
+            <xuiri:Input Type="radio" Label="Male" LabelFontSize="12" LabelTranslateY="3" GroupName="sex" FocusColor="{Binding Accent1}" FocusHoverColor="{Binding Accent2}"  HorizontalAlignment="Stretch" Height="35" Margin="0,0,0,0"></xuiri:Input>
+            <xuiri:Input Type="radio" Label="Female" LabelFontSize="12" LabelTranslateY="3" GroupName="sex" FocusColor="{Binding Accent1}" FocusHoverColor="{Binding Accent2}"  HorizontalAlignment="Stretch" Height="35" Margin="0,0,0,0"></xuiri:Input>
+            <xuiri:Input x:Name="rcb" Width="200" Type="combobox" Label="State" LabelFontSize="9" LabelTranslateY="-15"  FocusForegroundColor="{Binding Accent1Contrast}" FocusColor="{Binding Accent1}" FocusHoverColor="{Binding Accent2}" Margin="0,20,0,0" HorizontalAlignment="Left" PlaceholderText="choose a state">
                 <xuiri:Input.Items>
-                    <xuiri:InputComboBoxItem IsSelected="True" Foreground="Purple" >New South Wales</xuiri:InputComboBoxItem>
-                    <xuiri:InputComboBoxItem Foreground="Purple" >Queensland</xuiri:InputComboBoxItem>
-                    <xuiri:InputComboBoxItem Foreground="Purple" >Perth</xuiri:InputComboBoxItem>
-                    <xuiri:InputComboBoxItem Foreground="Purple" >Western Australia</xuiri:InputComboBoxItem>
-                    <xuiri:InputComboBoxItem Foreground="Purple" >Victoria</xuiri:InputComboBoxItem>
-                    <xuiri:InputComboBoxItem Foreground="Purple" >Tasmania</xuiri:InputComboBoxItem>
-                    <xuiri:InputComboBoxItem Foreground="Purple" >Melbourne</xuiri:InputComboBoxItem>
-                    <xuiri:InputComboBoxItem Foreground="Purple" >Canberra</xuiri:InputComboBoxItem>
+                    <xuiri:InputComboBoxItem IsSelected="True" Foreground="{Binding Accent1}" >New South Wales</xuiri:InputComboBoxItem>
+                    <xuiri:InputComboBoxItem Foreground="{Binding Accent1}" >Queensland</xuiri:InputComboBoxItem>
+                    <xuiri:InputComboBoxItem Foreground="{Binding Accent1}" >Perth</xuiri:InputComboBoxItem>
+                    <xuiri:InputComboBoxItem Foreground="{Binding Accent1}" >Western Australia</xuiri:InputComboBoxItem>
+                    <xuiri:InputComboBoxItem Foreground="{Binding Accent1}" >Victoria</xuiri:InputComboBoxItem>
+                    <xuiri:InputComboBoxItem Foreground="{Binding Accent1}" >Tasmania</xuiri:InputComboBoxItem>
+                    <xuiri:InputComboBoxItem Foreground="{Binding Accent1}" >Melbourne</xuiri:InputComboBoxItem>
+                    <xuiri:InputComboBoxItem Foreground="{Binding Accent1}" >Canberra</xuiri:InputComboBoxItem>
                 </xuiri:Input.Items>
             </xuiri:Input>
-            <xuirb:RichButton x:Name="butLogin" Label="Login" GlowAmount="8" GlowColor="#FFA437A4" PathType="Key" Click="AttemptLogin" Margin="0,40,0,0" Foreground="White" Background="#FF540078" Tooltip="Log into service X" TooltipBackground="DarkOrange"></xuirb:RichButton>
+            <xuirb:RichButton x:Name="butLogin" Label="Login" GlowAmount="8" GlowColor="{Binding Accent2}" PathType="Key" Click="AttemptLogin" Margin="0,40,0,0" Foreground="{Binding Accent1ContrastBrush}" Background="{Binding Accent1Brush}" Tooltip="Log into service X" TooltipBackground="DarkOrange"></xuirb:RichButton>
 
 
         </StackPanel>
