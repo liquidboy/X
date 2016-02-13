@@ -222,9 +222,8 @@ namespace X.UI.RichInput
 
         }
 
-
-
-        private void SetColors(Color focusColor, Color focusHoverColor, Color focusForegroundColor, InputModel model) 
+        
+        private async void SetColors(Color focusColor, Color focusHoverColor, Color focusForegroundColor, InputModel model) 
         {
 
             model.FocusColor = focusColor;
@@ -232,7 +231,19 @@ namespace X.UI.RichInput
             model.FocusForegroundColor = focusForegroundColor;
 
             if (_udfg1 != null) _udfg1.Background = new SolidColorBrush(focusColor);
-            if (_udfCB1 != null) _udfCB1.Foreground = new SolidColorBrush(focusColor);
+            if (_udfCB1 != null)
+            {
+                _udfCB1.BorderBrush = new SolidColorBrush(focusColor);
+                _udfCB1.Foreground = new SolidColorBrush(focusColor);
+                var border = _udfCB1.FindName("PopupBorder") as Border;
+                if (border != null) {
+                    border.Background = new SolidColorBrush(focusColor);
+                    border.BorderBrush = new SolidColorBrush(focusColor);
+
+                }
+
+
+            }
 
             if (Type == InputType.text || Type == InputType.password || Type == InputType.combobox)
             {
@@ -496,7 +507,11 @@ namespace X.UI.RichInput
             if (instance._ccInput != null)
             {
                 //instance.UpdateControl(instance.Type, instance.Label, instance.PlaceholderText, instance.LabelFontSize, instance.LabelTranslateY, instance.GroupName, instance._ccInput);
-                instance.SetColors( instance.FocusColor, instance.FocusHoverColor, instance.FocusForegroundColor, instance._model);
+
+                instance.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () => {
+                    instance.SetColors(instance.FocusColor, instance.FocusHoverColor, instance.FocusForegroundColor, instance._model);
+                });
+                
 
                 //((UIElement)d).UpdateLayout();
             }
