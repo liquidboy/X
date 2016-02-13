@@ -17,7 +17,7 @@
     <Grid>
         <StackPanel Width="500">
             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                <xuiri:Input x:Name="rcb" Width="200" Type="combobox" Label="DataTemplate Index to use" LabelFontSize="10" LabelTranslateY="5" FocusForegroundColor="White" FocusColor="Purple" FocusHoverColor="DarkViolet" HorizontalAlignment="Stretch" Margin="0,0,0,0" ValueChanged="rcb_ValueChanged">
+                <xuiri:Input x:Name="rcb" Width="200" Type="combobox" Label="DataTemplate Index to use" LabelFontSize="9" LabelTranslateY="-15"  FocusForegroundColor="White" FocusColor="Purple" FocusHoverColor="DarkViolet" HorizontalAlignment="Stretch" Margin="0,0,0,0" ValueChanged="rcb_ValueChanged">
                     <xuiri:Input.Items>
                         <xuiri:InputComboBoxItem IsSelected="True" Foreground="Purple" >1</xuiri:InputComboBoxItem>
                         <xuiri:InputComboBoxItem Foreground="Purple" >2</xuiri:InputComboBoxItem>

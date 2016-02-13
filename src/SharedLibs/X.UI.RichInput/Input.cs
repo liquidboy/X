@@ -150,6 +150,29 @@ namespace X.UI.RichInput
 
                 fe = gd;
             }
+            else if (type == InputType.combobox)
+            {
+                _udfCB1 = new ComboBox();
+                _udfCB1.Style = _GeneralComboBoxStyle;
+                _udfCB1.PlaceholderText = placeholderText;
+                _udfCB1.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = Items });
+                _udfCB1.Width = this.Width;
+                _udfCB1.SelectionChanged += itcombobox_SelectionChanged;
+
+                _udfg1 = new Grid() { Padding = new Thickness(2, 2, 2, 2), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Top };
+                _udfTBL1 = new TextBlock();
+                _udfTBL1.Text = label;
+                _udfTBL1.FontSize = labelFontSize;
+                _udfg1.Margin = new Thickness(0, labelTranslateY, 0, 0);
+                _udfg1.Visibility = Visibility.Collapsed;
+                _udfg1.Children.Add(_udfTBL1);
+
+                var gd = new Grid();
+                gd.Children.Add(_udfg1);
+                gd.Children.Add(_udfCB1);
+
+                fe = gd;
+            }
             else if (type == InputType.checkbox)
             {
                 var sp = new StackPanel();
@@ -187,26 +210,7 @@ namespace X.UI.RichInput
 
                 fe = sp;
             }
-            else if (type == InputType.combobox)
-            {
-                var sp = new StackPanel();
-                sp.Orientation = Orientation.Vertical;
-
-                _udfTBL1 = new TextBlock();
-                _udfTBL1.Text = label;
-                _udfTBL1.FontSize = LabelFontSize;
-                _udfTBL1.Margin = new Thickness(0, LabelTranslateY, 0, 0);
-                sp.Children.Add(_udfTBL1);
-
-                _udfCB1 = new ComboBox();
-                _udfCB1.Style = _GeneralComboBoxStyle;
-                _udfCB1.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = Items });
-                _udfCB1.Width = this.Width;
-                _udfCB1.SelectionChanged += itcombobox_SelectionChanged;
-                sp.Children.Add(_udfCB1);
-
-                fe = sp;
-            }
+           
 
 
             fe.HorizontalAlignment = HorizontalAlignment.Stretch;
@@ -225,12 +229,8 @@ namespace X.UI.RichInput
 
             if (_udfg1 != null) _udfg1.Background = new SolidColorBrush(focusColor);
             if (_udfCB1 != null)  _udfCB1.Foreground = new SolidColorBrush(focusColor);
-
-            if (Type == InputType.combobox)
-            {
-                if (_udfTBL1 != null) _udfTBL1.Foreground = new SolidColorBrush(focusColor);
-            }
-            else if (Type == InputType.text || Type == InputType.password) {
+            
+            if (Type == InputType.text || Type == InputType.password || Type == InputType.combobox) {
                 if (_udfTBL1 != null) _udfTBL1.Foreground = new SolidColorBrush(focusForegroundColor);
             }
             
@@ -362,6 +362,14 @@ namespace X.UI.RichInput
         {
             if (Type == InputType.combobox)
             {
+                if (((ComboBox)sender).SelectedItem != null)
+                {
+                    _udfg1.Visibility = Visibility.Visible;
+                }
+                else {
+                    _udfg1.Visibility = Visibility.Collapsed;
+                }
+
                 ValueChanged?.Invoke(sender, e);
             }
         }

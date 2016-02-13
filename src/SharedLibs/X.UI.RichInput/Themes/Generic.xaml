@@ -730,6 +730,9 @@
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ScrollViewer">
                                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusColor}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
+                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="PlaceholderTextBlock">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusColor}"/>
+                                                                </ObjectAnimationUsingKeyFrames>
                                                             </Storyboard>
                                                         </VisualState>
                                                         <VisualState x:Name="PointerOver">
@@ -749,6 +752,9 @@
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ScrollViewer">
                                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusForegroundColor}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
+                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="PlaceholderTextBlock">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusHoverColor}"/>
+                                                                </ObjectAnimationUsingKeyFrames>
                                                             </Storyboard>
                                                         </VisualState>
                                                         <VisualState x:Name="Pressed">
@@ -763,7 +769,7 @@
                                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusForegroundColor}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="PlaceholderTextBlock">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusForegroundColor}"/>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusColor}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                             </Storyboard>
                                                         </VisualState>
@@ -801,7 +807,7 @@
                                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="PlaceholderTextBlock">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}"/>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusColor}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="DropDownGlyph">
                                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusColor}"/>
@@ -815,7 +821,7 @@
                                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="PlaceholderTextBlock">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}"/>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusColor}"/>
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="DropDownGlyph">
                                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusHoverColor}"/>

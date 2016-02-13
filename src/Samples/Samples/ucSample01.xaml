@@ -23,7 +23,7 @@
             <xuiri:Input Type="checkbox" Label="I agree with the Terms and Conditions" LabelFontSize="10" LabelTranslateY="5" FocusColor="Purple" FocusHoverColor="DarkViolet" HorizontalAlignment="Stretch" Height="35" Margin="0,0,0,0"></xuiri:Input>
             <xuiri:Input Type="radio" Label="Male" LabelFontSize="12" LabelTranslateY="3" GroupName="sex" FocusColor="Purple" FocusHoverColor="DarkViolet"  HorizontalAlignment="Stretch" Height="35" Margin="0,0,0,0"></xuiri:Input>
             <xuiri:Input Type="radio" Label="Female" LabelFontSize="12" LabelTranslateY="3" GroupName="sex" FocusColor="Purple" FocusHoverColor="DarkViolet"  HorizontalAlignment="Stretch" Height="35" Margin="0,0,0,0"></xuiri:Input>
-            <xuiri:Input x:Name="rcb" Width="200" Type="combobox" Label="State" LabelFontSize="10" LabelTranslateY="5" FocusForegroundColor="White" FocusColor="Purple" FocusHoverColor="DarkViolet" Margin="0,0,0,0" HorizontalAlignment="Left" >
+            <xuiri:Input x:Name="rcb" Width="200" Type="combobox" Label="State" LabelFontSize="9" LabelTranslateY="-15"  FocusForegroundColor="White" FocusColor="Purple" FocusHoverColor="DarkViolet" Margin="0,20,0,0" HorizontalAlignment="Left" PlaceholderText="choose a state">
                 <xuiri:Input.Items>
                     <xuiri:InputComboBoxItem IsSelected="True" Foreground="Purple" >New South Wales</xuiri:InputComboBoxItem>
                     <xuiri:InputComboBoxItem Foreground="Purple" >Queensland</xuiri:InputComboBoxItem>
