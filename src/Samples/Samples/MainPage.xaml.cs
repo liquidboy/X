@@ -58,6 +58,24 @@ namespace Samples
                 vm.Accent2 = Colors.DarkOrange;
                 vm.Accent2Brush = new SolidColorBrush(Colors.DarkOrange);
             }
+            else if (theme == "Black")
+            {
+                vm.Accent1 = Colors.Black;
+                vm.Accent1Brush = new SolidColorBrush(Colors.Black);
+                vm.Accent1Contrast = Colors.White;
+                vm.Accent1ContrastBrush = new SolidColorBrush(Colors.White);
+                vm.Accent2 = Colors.Gray;
+                vm.Accent2Brush = new SolidColorBrush(Colors.Gray);
+            }
+            else if (theme == "Blue")
+            {
+                vm.Accent1 = Colors.Blue;
+                vm.Accent1Brush = new SolidColorBrush(Colors.Blue);
+                vm.Accent1Contrast = Colors.White;
+                vm.Accent1ContrastBrush = new SolidColorBrush(Colors.White);
+                vm.Accent2 = Colors.DarkBlue;
+                vm.Accent2Brush = new SolidColorBrush(Colors.DarkBlue);
+            }
         }
 
 

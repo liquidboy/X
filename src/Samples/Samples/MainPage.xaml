@@ -27,8 +27,10 @@
 
         <xuiri:Input x:Name="rcbThemes" Width="300" Type="combobox" Label="Theme" PlaceholderText="Choose theme" LabelFontSize="9" LabelTranslateY="-15"  FocusForegroundColor="{Binding Accent1Contrast}" FocusColor="{Binding Accent1}" FocusHoverColor="{Binding Accent2}" HorizontalAlignment="Right" Margin="0,30,20,0" VerticalAlignment="Top" ValueChanged="rcbThemes_ValueChanged" >
             <xuiri:Input.Items>
-                <xuiri:InputComboBoxItem Foreground="{Binding Accent1}" >Purple</xuiri:InputComboBoxItem>
+                <xuiri:InputComboBoxItem Foreground="{Binding Accent1}" >Black</xuiri:InputComboBoxItem>
+                <xuiri:InputComboBoxItem Foreground="{Binding Accent1}" >Blue</xuiri:InputComboBoxItem>
                 <xuiri:InputComboBoxItem Foreground="{Binding Accent1}" >Orange</xuiri:InputComboBoxItem>
+                <xuiri:InputComboBoxItem Foreground="{Binding Accent1}" >Purple</xuiri:InputComboBoxItem>
             </xuiri:Input.Items>
         </xuiri:Input>
     </Grid>
