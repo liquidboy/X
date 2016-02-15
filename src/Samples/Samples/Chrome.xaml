@@ -13,13 +13,17 @@
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="90">
             <Rectangle Fill="{Binding Accent3Brush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Rectangle>
             <TextBlock Text="X.UI Samples (1.0.34)" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Foreground="White"></TextBlock>
-            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="40" Margin="3,3,3,0">
+            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="65" Margin="3,3,3,0">
                 <Rectangle.Fill>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Offset="1"/>
-                        <GradientStop Color="#33FFFFFF" Offset="0.335"/>
-                        <GradientStop Color="#28FFFFFF" Offset="0.588"/>
+                        <GradientStop Color="#33FFFFFF" Offset="0.06"/>
+                        <GradientStop Color="#14FFFFFF" Offset="0.721"/>
                         <GradientStop Color="#3FFFFFFF" Offset="0.236"/>
+                        <GradientStop Color="#2DFFFFFF" Offset="0.094"/>
+                        <GradientStop Color="#2DFEFEFE" Offset="0.245"/>
+                        <GradientStop Color="#19FEFEFE" Offset="0.545"/>
+                        <GradientStop Color="#14FEFEFE" Offset="0.532"/>
                     </LinearGradientBrush>
                 </Rectangle.Fill>
             </Rectangle>
