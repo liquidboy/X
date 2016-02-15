@@ -5,9 +5,11 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -27,6 +29,8 @@ namespace Samples
         {
             this.InitializeComponent();
 
+            chrome.InitChrome();
+
             this.DataContext = vm;
 
             tlMain.AddTab("Samples 1", true);
@@ -39,24 +43,30 @@ namespace Samples
         }
 
 
-        public void SetTheme(string theme) {
+        public void SetTheme(string theme)
+        {
 
-            if (theme == "Purple") {
-                vm.Accent1 = Colors.Purple;
-                vm.Accent1Brush = new SolidColorBrush(Colors.Purple);
+            if (theme == "Purple")
+            {
+                vm.Accent1 = Colors.Teal;
+                vm.Accent1Brush = new SolidColorBrush(Colors.Teal);
                 vm.Accent1Contrast = Colors.White;
                 vm.Accent1ContrastBrush = new SolidColorBrush(Colors.White);
                 vm.Accent2 = Colors.MediumPurple;
                 vm.Accent2Brush = new SolidColorBrush(Colors.MediumPurple);
+                vm.Accent3 = Colors.Teal;
+                vm.Accent3Brush = new SolidColorBrush(Colors.Teal);
             }
             else if (theme == "Orange")
             {
-                vm.Accent1 = Colors.Orange;
-                vm.Accent1Brush = new SolidColorBrush(Colors.Orange);
+                vm.Accent1 = Colors.OrangeRed;
+                vm.Accent1Brush = new SolidColorBrush(Colors.OrangeRed);
                 vm.Accent1Contrast = Colors.White;
                 vm.Accent1ContrastBrush = new SolidColorBrush(Colors.White);
                 vm.Accent2 = Colors.DarkOrange;
                 vm.Accent2Brush = new SolidColorBrush(Colors.DarkOrange);
+                vm.Accent3 = Colors.OrangeRed;
+                vm.Accent3Brush = new SolidColorBrush(Colors.OrangeRed);
             }
             else if (theme == "Black")
             {
@@ -66,15 +76,19 @@ namespace Samples
                 vm.Accent1ContrastBrush = new SolidColorBrush(Colors.White);
                 vm.Accent2 = Colors.Gray;
                 vm.Accent2Brush = new SolidColorBrush(Colors.Gray);
+                vm.Accent3 = Colors.Black;
+                vm.Accent3Brush = new SolidColorBrush(Colors.Black);
             }
             else if (theme == "Blue")
             {
-                vm.Accent1 = Colors.Blue;
-                vm.Accent1Brush = new SolidColorBrush(Colors.Blue);
+                vm.Accent1 = Colors.DarkSlateBlue;
+                vm.Accent1Brush = new SolidColorBrush(Colors.DarkSlateBlue);
                 vm.Accent1Contrast = Colors.White;
                 vm.Accent1ContrastBrush = new SolidColorBrush(Colors.White);
-                vm.Accent2 = Colors.DarkBlue;
-                vm.Accent2Brush = new SolidColorBrush(Colors.DarkBlue);
+                vm.Accent2 = Colors.BlueViolet;
+                vm.Accent2Brush = new SolidColorBrush(Colors.BlueViolet);
+                vm.Accent3 = Colors.DarkSlateBlue;
+                vm.Accent3Brush = new SolidColorBrush(Colors.DarkSlateBlue);
             }
         }
 
@@ -101,10 +115,12 @@ namespace Samples
                 var theme = (string)((ComboBoxItem)selectedItem).Content;
 
                 SetTheme(theme);
-                
+
 
             }
         }
+    
+
     }
 
     public class vmSamples : INotifyPropertyChanged
@@ -117,7 +133,11 @@ namespace Samples
         private Brush _Accent1ContrastBrush;
         private Color _Accent2;
         private Brush _Accent2Brush;
+        private Color _Accent3;
+        private Brush _Accent3Brush;
 
+        public Color Accent3 { get { return _Accent3; } set { _Accent3 = value; NotifyPropertyChanged(); } }
+        public Brush Accent3Brush { get { return _Accent3Brush; } set { _Accent3Brush = value; NotifyPropertyChanged(); } }
         public Color Accent2 { get { return _Accent2; } set { _Accent2 = value; NotifyPropertyChanged(); } }
         public Brush Accent2Brush { get { return _Accent2Brush; } set { _Accent2Brush = value; NotifyPropertyChanged(); } }
         public Color Accent1 { get { return _Accent1; } set { _Accent1 = value; NotifyPropertyChanged(); } }

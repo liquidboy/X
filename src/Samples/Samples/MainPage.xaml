@@ -13,7 +13,10 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0">
+
+        <local:Chrome x:Name="chrome" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="90"></local:Chrome>
+        
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,80,10,0">
 
             <xuilt:TabList x:Name="tlMain" Orientation="Horizontal" Margin="0,10,0,20" Foreground="{Binding Accent1Brush}" TabItemBorderColor="{Binding Accent1Brush}" HorizontalAlignment="Stretch" OnTabChanged="tlMain_OnTabChanged">
 
@@ -25,7 +28,7 @@
 
         </StackPanel>
 
-        <xuiri:Input x:Name="rcbThemes" Width="300" Type="combobox" Label="Theme" PlaceholderText="Choose theme" LabelFontSize="9" LabelTranslateY="-15"  FocusForegroundColor="{Binding Accent1Contrast}" FocusColor="{Binding Accent1}" FocusHoverColor="{Binding Accent2}" HorizontalAlignment="Right" Margin="0,30,20,0" VerticalAlignment="Top" ValueChanged="rcbThemes_ValueChanged" >
+        <xuiri:Input x:Name="rcbThemes" Width="300" Type="combobox" Label="Theme" PlaceholderText="Choose theme" LabelFontSize="9" LabelTranslateY="-15"  FocusForegroundColor="{Binding Accent1Contrast}" FocusColor="{Binding Accent1}" FocusHoverColor="{Binding Accent2}" HorizontalAlignment="Right" Margin="0,110,10,0" VerticalAlignment="Top" ValueChanged="rcbThemes_ValueChanged" >
             <xuiri:Input.Items>
                 <xuiri:InputComboBoxItem Foreground="{Binding Accent1}" >Black</xuiri:InputComboBoxItem>
                 <xuiri:InputComboBoxItem Foreground="{Binding Accent1}" >Blue</xuiri:InputComboBoxItem>
