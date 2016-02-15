@@ -48,14 +48,14 @@ namespace Samples
 
             if (theme == "Purple")
             {
-                vm.Accent1 = Colors.Teal;
-                vm.Accent1Brush = new SolidColorBrush(Colors.Teal);
+                vm.Accent1 = Colors.DarkSlateBlue;
+                vm.Accent1Brush = new SolidColorBrush(Colors.DarkSlateBlue);
                 vm.Accent1Contrast = Colors.White;
                 vm.Accent1ContrastBrush = new SolidColorBrush(Colors.White);
-                vm.Accent2 = Colors.MediumPurple;
-                vm.Accent2Brush = new SolidColorBrush(Colors.MediumPurple);
-                vm.Accent3 = Colors.Teal;
-                vm.Accent3Brush = new SolidColorBrush(Colors.Teal);
+                vm.Accent2 = Colors.BlueViolet;
+                vm.Accent2Brush = new SolidColorBrush(Colors.BlueViolet);
+                vm.Accent3 = Colors.DarkSlateBlue;
+                vm.Accent3Brush = new SolidColorBrush(Colors.DarkSlateBlue);
             }
             else if (theme == "Orange")
             {
@@ -81,14 +81,16 @@ namespace Samples
             }
             else if (theme == "Blue")
             {
-                vm.Accent1 = Colors.DarkSlateBlue;
-                vm.Accent1Brush = new SolidColorBrush(Colors.DarkSlateBlue);
+                vm.Accent1 = Colors.Teal;
+                vm.Accent1Brush = new SolidColorBrush(Colors.Teal);
                 vm.Accent1Contrast = Colors.White;
                 vm.Accent1ContrastBrush = new SolidColorBrush(Colors.White);
-                vm.Accent2 = Colors.BlueViolet;
-                vm.Accent2Brush = new SolidColorBrush(Colors.BlueViolet);
-                vm.Accent3 = Colors.DarkSlateBlue;
-                vm.Accent3Brush = new SolidColorBrush(Colors.DarkSlateBlue);
+                vm.Accent2 = Colors.MediumPurple;
+                vm.Accent2Brush = new SolidColorBrush(Colors.MediumPurple);
+                vm.Accent3 = Colors.Teal;
+                vm.Accent3Brush = new SolidColorBrush(Colors.Teal);
+
+             
             }
         }
 
