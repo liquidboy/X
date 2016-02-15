@@ -15,6 +15,8 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
 
         <local:Chrome x:Name="chrome" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="90"></local:Chrome>
+        <local:UserCard x:Name="usercard" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,35,12,0"></local:UserCard>
+        
         
         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,80,10,0">
 
