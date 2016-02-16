@@ -65,7 +65,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="local:TabList">
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                        <xuiel:EffectLayer x:Name="bkgLayer" HorizontalAlignment="Left"  GlowFill="Transparent" VerticalAlignment="Stretch" GlowAmount="5" GlowColor="Transparent" ShowGlowArea="False" ></xuiel:EffectLayer>
+                        <xuiel:EffectLayer x:Name="bkgLayer" HorizontalAlignment="Left"  GlowFill="Transparent" VerticalAlignment="Stretch" GlowAmount="5" GlowColor="Yellow" ShowGlowArea="False"  Margin="{TemplateBinding Margin}"></xuiel:EffectLayer>
                         <ItemsControl 
                             x:Name="icTabList"
                             Margin="{TemplateBinding Margin}">
@@ -93,7 +93,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:TabListItem">
-                    <Button x:Name="tabButton" BorderBrush="{TemplateBinding BorderBrush}" Foreground="{TemplateBinding Foreground}"  BorderThickness="{Binding IsSelected, Converter={StaticResource LiteTabSelectedThicknessConverter} }" Padding="10,0,10,0" Background="Transparent" VerticalAlignment="Bottom" Style="{StaticResource GeneralButtonStyle}">
+                    <Button x:Name="tabButton" BorderBrush="{TemplateBinding BorderBrush}" Foreground="{TemplateBinding Foreground}" MinHeight="30" BorderThickness="{Binding IsSelected, Converter={StaticResource LiteTabSelectedThicknessConverter} }" Padding="10,0,10,0" Background="Transparent" VerticalAlignment="Top" Style="{StaticResource GeneralButtonStyle}">
                         <TextBlock Text="{Binding Name}" FontSize="{Binding IsSelected, Converter={StaticResource LiteTabSelectedFontSizeConverter} }" FontFamily="Segoe UI" Margin="0,0,0,0" VerticalAlignment="Bottom" ></TextBlock>
                     </Button>
                 </ControlTemplate>
