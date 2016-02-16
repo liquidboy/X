@@ -1,6 +1,7 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:xuiel="using:X.UI.EffectLayer"
     xmlns:local="using:X.UI.LiteTab">
     <local:LiteTabSelectedThicknessConverter  x:Key="LiteTabSelectedThicknessConverter" />
     <local:LiteTabSelectedFontSizeConverter  x:Key="LiteTabSelectedFontSizeConverter" />
@@ -63,24 +64,25 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:TabList">
-                    <ItemsControl 
-                        x:Name="icTabList"
-                        HorizontalContentAlignment="Stretch" 
-                        VerticalAlignment="Stretch"
-                        Margin="{TemplateBinding Margin}"
-                        >
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate x:Name="inlineDT">
-                                <!--  Turned into a ControlTemplate so as to get to the Buttons click event -->
-                                <local:TabListItem BorderBrush="{TemplateBinding TabItemBorderColor}" Foreground="{TemplateBinding Foreground}" ></local:TabListItem>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal"></StackPanel>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <xuiel:EffectLayer x:Name="bkgLayer" HorizontalAlignment="Left"  GlowFill="Transparent" VerticalAlignment="Stretch" GlowAmount="5" GlowColor="Transparent" ShowGlowArea="False" ></xuiel:EffectLayer>
+                        <ItemsControl 
+                            x:Name="icTabList"
+                            Margin="{TemplateBinding Margin}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:Name="inlineDT">
+                                    <!--  Turned into a ControlTemplate so as to get to the Buttons click event -->
+                                    <local:TabListItem BorderBrush="{TemplateBinding TabItemBorderColor}" Foreground="{TemplateBinding Foreground}" ></local:TabListItem>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"></StackPanel>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </Grid>
+                    
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

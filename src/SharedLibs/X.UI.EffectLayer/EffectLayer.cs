@@ -78,7 +78,7 @@ namespace X.UI.EffectLayer
             canvas = new CanvasControl();
             if (ShowGlowArea) canvas.ClearColor = Windows.UI.Colors.CornflowerBlue;
             canvas.Width = ParentWidth + ExpandAmount;
-            canvas.Height = ParentWidth + ExpandAmount;
+            canvas.Height = ParentHeight + ExpandAmount;
 
             //if the control begins invisible or hidden then it will not have rendered its tree yet 
             //we can only do this init if bkglayer exists, which means only after OnApplyTemplate

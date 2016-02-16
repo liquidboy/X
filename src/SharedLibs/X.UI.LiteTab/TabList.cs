@@ -15,6 +15,9 @@ namespace X.UI.LiteTab
 {
     public sealed class TabList : Control
     {
+
+        EffectLayer.EffectLayer _bkgLayer;//x
+
         public Orientation Orientation { get; set; }
 
 
@@ -89,13 +92,27 @@ namespace X.UI.LiteTab
         public TabList()
         {
             this.DefaultStyleKey = typeof(TabList);
-   
+
+            this.Loaded += TabList_Loaded;
+            this.Unloaded += TabList_Unloaded;
         }
 
+        private void TabList_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (_icTabList != null)
+            {
+
+            }
+        }
+
+        private void TabList_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (_bkgLayer != null) _bkgLayer.InitLayer(_icTabList.ActualWidth, _icTabList.ActualHeight);
+        }
 
         protected override void OnApplyTemplate()
         {
-            base.OnApplyTemplate();
+            if (_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
 
             if (_icTabList == null) { 
 
@@ -109,7 +126,9 @@ namespace X.UI.LiteTab
                 
             }
 
+            if (_bkgLayer != null && _icTabList != null && _icTabList.ActualWidth != 0) _bkgLayer.InitLayer(_icTabList.ActualWidth, _icTabList.ActualHeight);
 
+            base.OnApplyTemplate();
         }
 
 
