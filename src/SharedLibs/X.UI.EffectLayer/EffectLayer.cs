@@ -4,12 +4,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Graphics.Display;
 using Windows.Graphics.Imaging;
+using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI;
+using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
@@ -65,8 +69,10 @@ namespace X.UI.EffectLayer
                 canvas.RemoveFromVisualTree();
                 canvas = null;
             }
+
         }
-        
+
+        public void Invalidate() { canvas?.Invalidate(); }
 
         private void EffectLayer_Loaded(object sender, RoutedEventArgs e)
         {
@@ -115,16 +121,22 @@ namespace X.UI.EffectLayer
         }
 
         List<IRandomAccessStream> _streams = new List<IRandomAccessStream>();
-        public void DrawStreams(IRandomAccessStream stream)
+        public void DrawStreams(IRandomAccessStream stream, int? index = 0)
         {
-            _streams.Add(stream);
+            if (!index.HasValue) _streams.Add(stream);
+            else _streams[index.Value] = stream;
         }
 
 
-        List<UIElement> _uielements = new List<UIElement>();
-        public void DrawUIElements(UIElement elm)
+        List<Tuple<byte[], int, int>> _uielements = new List<Tuple<byte[], int, int>>();
+        public async void DrawUIElements(UIElement elm, int index = -1)
         {
-            _uielements.Add(elm);
+            var bitmap = await GetUIElementBitmapPixels(elm);
+            if (index == -1) _uielements.Add(bitmap);
+            else {
+                _uielements[index] = bitmap;
+                canvas.Invalidate();
+            }
         }
 
 
@@ -134,57 +146,73 @@ namespace X.UI.EffectLayer
         {
             var sz = new Size(ParentWidth, ParentHeight);
 
-            if(_paths.Count>0)
+            if (_paths.Count > 0)
                 DoPathEffect(sender, args.DrawingSession);
             else if (_streams.Count > 0)
                 DoStreamsEffect(sender, args.DrawingSession);
             else if (_uielements.Count > 0)
-                DoUIElementsEffect(sender, args.DrawingSession);
+            {
+                
+                    DoUIElementsEffect(sender, args.DrawingSession);
+                
+            }
             else 
                 DoEffect(args.DrawingSession, sz, (float)GlowAmount, GlowColor, ((SolidColorBrush)GlowFill).Color, ExpandAmount);
             
         }
 
-        private void DoUIElementsEffect(CanvasControl sender, CanvasDrawingSession ds)
+        private async void DoUIElementsEffect(CanvasControl sender, CanvasDrawingSession ds)
         {
             var sz = new Size(ParentWidth, ParentHeight);
 
             foreach (var elm in _uielements)
             {
+                //var rtbitmap = AsyncHelpers.RunSync<RenderTargetBitmap>( ()=> GetUIElementBitmap(elm));
 
-                var bitmap = GetUIElementBitmap(elm);
-                var pixels = bitmap.GetPixelsAsync().GetResults();
-                //var offset = (float)ExpandAmount / 2;
-                ////using (var textLayout = CreateTextLayout(ds, size))
-                //using (var cl = new CanvasCommandList(ds))
+                //var bitmap = await GetUIElementBitmapPixels(elm);
+
+
+                var offset = (float)ExpandAmount / 2;
+                //using (var textLayout = CreateTextLayout(ds, size))
+                using (var cl = new CanvasCommandList(ds))
+                {
+                    using (var clds = cl.CreateDrawingSession())
+                    {
+                        using (var canvasbmp = CanvasBitmap.CreateFromBytes(sender.Device, elm.Item1, elm.Item2, elm.Item3, Windows.Graphics.DirectX.DirectXPixelFormat.B8G8R8A8UIntNormalized))  //B8G8R8A8UIntNormalized
+                        {
+                            clds.DrawImage(canvasbmp, 0, 0);
+                        }
+
+                    }
+
+                    
+                    glowEffectGraph.Setup(cl, (float)GlowAmount);
+                    ds.DrawImage(glowEffectGraph.Output, offset, offset);
+                }
+                //try
                 //{
-                //    using (var clds = cl.CreateDrawingSession())
+
+                //    using (var canvasbmp = CanvasBitmap.CreateFromBytes(sender.Device, elm.Item1, elm.Item2, elm.Item3, Windows.Graphics.DirectX.DirectXPixelFormat.B8G8R8A8UIntNormalized))  //B8G8R8A8UIntNormalized
                 //    {
-                //        stream.Seek(0);
-                //        var canvasbmp = await CanvasBitmap.LoadAsync(sender, stream);
-                //        clds.DrawImage(canvasbmp,0,0);   
+                //        ds.DrawImage(canvasbmp, 0, 0);
                 //    }
 
-                //    glowEffectGraph.Setup(cl, (float)GlowAmount);
-                //    ds.DrawImage(glowEffectGraph.Output, offset, offset);
-                //}
-                try
-                {
-                    using (var canvasbmp = CanvasBitmap.CreateFromBytes(sender.Device, pixels.ToArray(), bitmap.PixelHeight, bitmap.PixelHeight, Windows.Graphics.DirectX.DirectXPixelFormat.B8G8R8A8UIntNormalized))
-                    {
-                        ds.DrawImage(canvasbmp, 0, 0);
-                    }
-                        
-                    
-                }
-                catch (Exception ex)
-                {
 
-                }
+                //}
+                //catch (Exception ex)
+                //{
+
+                //}
+
 
 
             }
         }
+
+
+       
+
+
 
         private void DoEffect(CanvasDrawingSession ds, Size size, float amount, Windows.UI.Color glowColor, Windows.UI.Color fillColor, double expandAmount)
         {
@@ -358,11 +386,104 @@ namespace X.UI.EffectLayer
         //}
 
 
-        public RenderTargetBitmap GetUIElementBitmap(UIElement element)
+        public async Task<Tuple<byte[], int, int>> GetUIElementBitmapPixels(UIElement element)
         {
+            
             RenderTargetBitmap bitmap = new RenderTargetBitmap();
-            bitmap.RenderAsync(element).GetResults();            
-            return bitmap;
+            await bitmap.RenderAsync(element);            
+            var pixels = await bitmap.GetPixelsAsync();
+            return Tuple.Create(pixels.ToArray(), bitmap.PixelWidth, bitmap.PixelHeight);
         }
     }
+
+
+
+
+
+
+    //public sealed class TileUpdateTask : XamlRenderingBackgroundTask
+    //{
+    //    private static readonly int TileWidth = 150;
+    //    private static readonly int TileHeight = 150;
+    //    private static readonly string TileImageFilename = "MediumTile.png";
+
+    //    protected override async void OnRun(IBackgroundTaskInstance taskInstance)
+    //    {
+    //        var deferral = taskInstance.GetDeferral();
+
+    //        // Create instance of the control that contains the layout of the Live Tile
+    //        MediumTileControl control = new MediumTileControl();
+    //        control.Width = TileWidth;
+    //        control.Height = TileHeight;
+
+    //        // If we have received a message in the parameters, overwrite the default "Hello, Live Tile!" one
+    //        var triggerDetails = taskInstance.TriggerDetails as ApplicationTriggerDetails;
+    //        if (triggerDetails != null)
+    //        {
+    //            object tileMessage = null;
+    //            if (triggerDetails.Arguments.TryGetValue("Message", out tileMessage))
+    //            {
+    //                if (tileMessage is string)
+    //                {
+    //                    control.Message = (string)tileMessage;
+    //                }
+    //            }
+    //        }
+
+    //        // Render the tile control to a RenderTargetBitmap
+    //        RenderTargetBitmap bitmap = new RenderTargetBitmap();
+    //        await bitmap.RenderAsync(control, TileWidth, TileHeight);
+
+    //        // Now we are going to save it to a PNG file, so create/open it on local storage
+    //        var file = await ApplicationData.Current.LocalFolder.CreateFileAsync(TileImageFilename, CreationCollisionOption.ReplaceExisting);
+    //        using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
+    //        {
+    //            // Create a BitmapEncoder for encoding to PNG
+    //            BitmapEncoder encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, stream);
+
+    //            // Create a SoftwareBitmap from the RenderTargetBitmap, as it will be easier to save to disk
+    //            using (var softwareBitmap = new SoftwareBitmap(BitmapPixelFormat.Bgra8, TileWidth, TileHeight, BitmapAlphaMode.Premultiplied))
+    //            {
+    //                // Copy bitmap data
+    //                softwareBitmap.CopyFromBuffer(await bitmap.GetPixelsAsync());
+
+    //                // Encode and save to file
+    //                encoder.SetSoftwareBitmap(softwareBitmap);
+    //                await encoder.FlushAsync();
+    //            }
+    //        }
+
+    //        // Use the NotificationsExtensions library to easily configure a tile update
+    //        TileContent mediumTileContent = new TileContent()
+    //        {
+    //            Visual = new TileVisual()
+    //            {
+    //                TileMedium = new TileBinding()
+    //                {
+    //                    Content = new TileBindingContentAdaptive()
+    //                    {
+    //                        BackgroundImage = new TileBackgroundImage()
+    //                        {
+    //                            Overlay = 0,
+    //                            Source = new TileImageSource("ms-appdata:///local/" + TileImageFilename),
+    //                        }
+    //                    }
+    //                }
+    //            }
+    //        };
+
+    //        // Clean previous update from Live Tile and update with the new parameters
+    //        var tileUpdater = TileUpdateManager.CreateTileUpdaterForApplication();
+    //        tileUpdater.Clear();
+    //        tileUpdater.Update(new TileNotification(mediumTileContent.GetXml()));
+
+    //        deferral.Complete();
+    //    }
+    //}
+
+
 }
+
+
+
+//http://www.blendrocks.com/code-blend/2016/1/3/gif-rendering-on-winrt-and-uwp
