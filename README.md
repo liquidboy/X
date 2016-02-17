@@ -2,7 +2,7 @@
 
 Quickly build rich UI's in your Universal Application .. 
 
-
+[IMPORTANT : im currently implementing effectlayer across the Input controls SO it is very buggy with lots of redraw/invalidate issues]
 
 
 Components still being fleshed out...
