@@ -440,8 +440,12 @@ namespace X.UI.RichInput
                 }
 
                 ValueChanged?.Invoke(sender, e);
-
-                Invalidate();
+                try {
+                    Invalidate();
+                } catch (Exception ex){
+                    //todo: handle this error
+                }
+                
             }
         }
 

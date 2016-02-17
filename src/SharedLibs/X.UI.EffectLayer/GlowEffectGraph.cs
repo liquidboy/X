@@ -38,6 +38,7 @@ namespace X.UI.EffectLayer
 
         public void Setup(ICanvasImage source, float amount)
         {
+            if (amount == 0) return;
             morphology.Source = source;
 
             var halfAmount = Math.Min(amount / 2, 100);

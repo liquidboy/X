@@ -131,11 +131,15 @@ namespace X.UI.EffectLayer
         List<Tuple<byte[], int, int>> _uielements = new List<Tuple<byte[], int, int>>();
         public async void DrawUIElements(UIElement elm, int index = -1)
         {
-            var bitmap = await GetUIElementBitmapPixels(elm);
-            if (index == -1) _uielements.Add(bitmap);
-            else {
-                _uielements[index] = bitmap;
-                canvas.Invalidate();
+            try { 
+                var bitmap = await GetUIElementBitmapPixels(elm);
+                if (index == -1) _uielements.Add(bitmap);
+                else {
+                    _uielements[index] = bitmap;
+                    canvas.Invalidate();
+                }
+            }catch(Exception ex){
+                //todo: errors here are catastrphic need to work out how to clean up and handle these
             }
         }
 
@@ -144,6 +148,8 @@ namespace X.UI.EffectLayer
         //x
         private void OnDraw(CanvasControl sender, CanvasDrawEventArgs args)
         {
+            if (GlowAmount == 0) return;
+
             var sz = new Size(ParentWidth, ParentHeight);
 
             if (_paths.Count > 0)
