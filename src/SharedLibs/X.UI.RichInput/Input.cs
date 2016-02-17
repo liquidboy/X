@@ -20,6 +20,7 @@ namespace X.UI.RichInput
     public sealed class Input : ItemsControl
     {
         Grid _grdRoot;
+        int RenderTargetIndexFor_grdRoot = 0;
         ContentControl _ccInput;
         Style _GeneralTextBoxStyle;
         Style _GeneralPasswordBoxStyle;
@@ -33,8 +34,10 @@ namespace X.UI.RichInput
         CheckBox _udfChkB1;
         Grid _udfg1;
         PasswordBox _udfPB1;
+        EffectLayer.EffectLayer _bkgLayer;//x
 
         InputModel _model;
+
 
         public event Windows.UI.Xaml.RoutedEventHandler ValueChanged;
 
@@ -48,7 +51,9 @@ namespace X.UI.RichInput
             Unloaded += Input_Unloaded;
         }
 
- 
+        public void Invalidate() { _bkgLayer?.DrawUIElements(_grdRoot, RenderTargetIndexFor_grdRoot); }
+
+
         private void Input_Unloaded(object sender, RoutedEventArgs e)
         {
             UnloadControl(Type);
@@ -56,7 +61,11 @@ namespace X.UI.RichInput
 
         private void Input_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            if (_bkgLayer != null)
+            {
+                _bkgLayer.DrawUIElements(_grdRoot);  //will draw at index 0 (RenderTargetIndexFor_icTabList)
+                _bkgLayer.InitLayer(_grdRoot.ActualWidth, _grdRoot.ActualHeight);
+            }
         }
 
         protected override void OnApplyTemplate()
@@ -65,6 +74,8 @@ namespace X.UI.RichInput
             {
                 _model = new InputModel();
             }
+
+            if (_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
 
             if (_grdRoot == null) {
                 _grdRoot = GetTemplateChild("grdRoot") as Grid;
@@ -104,7 +115,9 @@ namespace X.UI.RichInput
                 SetColors(FocusColor, FocusHoverColor, FocusForegroundColor, _model);
                 //SetColors();
             }
-            
+
+            if (_bkgLayer != null && _grdRoot != null && _grdRoot.ActualWidth != 0) _bkgLayer.InitLayer(_grdRoot.ActualWidth, _grdRoot.ActualHeight);
+
             base.OnApplyTemplate();
         }
         
@@ -135,8 +148,6 @@ namespace X.UI.RichInput
             }
             else if (type == InputType.password)
             {
-                
-
                 _udfPB1 = new PasswordBox();
                 _udfPB1.PlaceholderText = placeholderText;
                 _udfPB1.Style = _GeneralPasswordBoxStyle;
@@ -361,6 +372,8 @@ namespace X.UI.RichInput
             {
                 Value = ((RadioButton)sender).IsChecked.ToString();
                 ValueChanged?.Invoke(sender, e);
+
+                Invalidate();
             }
         }
 
@@ -370,6 +383,8 @@ namespace X.UI.RichInput
             {
                 Value = ((CheckBox)sender).IsChecked.ToString();
                 ValueChanged?.Invoke(sender, e);
+
+                Invalidate();
             }
         }
 
@@ -387,6 +402,8 @@ namespace X.UI.RichInput
 
                 Value = ((PasswordBox)sender).Password;
                 ValueChanged?.Invoke(sender, e);
+
+                Invalidate();
             }
         }
 
@@ -404,6 +421,8 @@ namespace X.UI.RichInput
 
                 Value = ((TextBox)sender).Text;
                 ValueChanged?.Invoke(sender, e);
+
+                Invalidate();
             }
             
         }
@@ -421,6 +440,8 @@ namespace X.UI.RichInput
                 }
 
                 ValueChanged?.Invoke(sender, e);
+
+                Invalidate();
             }
         }
 

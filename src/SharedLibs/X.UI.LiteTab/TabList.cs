@@ -89,7 +89,9 @@ namespace X.UI.LiteTab
             }
 
             _selectedTab = tab;
-            
+
+            Invalidate();
+
             if (this.OnTabChanged != null) this.OnTabChanged(_selectedTab, EventArgs.Empty);
         }
 

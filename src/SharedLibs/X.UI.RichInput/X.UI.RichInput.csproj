@@ -120,6 +120,12 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\X.UI.EffectLayer\X.UI.EffectLayer.csproj">
+      <Project>{5470d5d0-10cb-4d3d-8026-0a49254a21be}</Project>
+      <Name>X.UI.EffectLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

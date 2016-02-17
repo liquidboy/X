@@ -150,28 +150,20 @@ namespace X.UI.EffectLayer
                 DoPathEffect(sender, args.DrawingSession);
             else if (_streams.Count > 0)
                 DoStreamsEffect(sender, args.DrawingSession);
-            else if (_uielements.Count > 0)
-            {
-                
-                    DoUIElementsEffect(sender, args.DrawingSession);
-                
-            }
+            else if (_uielements.Count > 0)   
+                DoUIElementsEffect(sender, args.DrawingSession);
             else 
                 DoEffect(args.DrawingSession, sz, (float)GlowAmount, GlowColor, ((SolidColorBrush)GlowFill).Color, ExpandAmount);
             
         }
 
-        private async void DoUIElementsEffect(CanvasControl sender, CanvasDrawingSession ds)
+        private void DoUIElementsEffect(CanvasControl sender, CanvasDrawingSession ds)
         {
             var sz = new Size(ParentWidth, ParentHeight);
 
             foreach (var elm in _uielements)
             {
-                //var rtbitmap = AsyncHelpers.RunSync<RenderTargetBitmap>( ()=> GetUIElementBitmap(elm));
-
-                //var bitmap = await GetUIElementBitmapPixels(elm);
-
-
+        
                 var offset = (float)ExpandAmount / 2;
                 //using (var textLayout = CreateTextLayout(ds, size))
                 using (var cl = new CanvasCommandList(ds))
@@ -189,23 +181,7 @@ namespace X.UI.EffectLayer
                     glowEffectGraph.Setup(cl, (float)GlowAmount);
                     ds.DrawImage(glowEffectGraph.Output, offset, offset);
                 }
-                //try
-                //{
-
-                //    using (var canvasbmp = CanvasBitmap.CreateFromBytes(sender.Device, elm.Item1, elm.Item2, elm.Item3, Windows.Graphics.DirectX.DirectXPixelFormat.B8G8R8A8UIntNormalized))  //B8G8R8A8UIntNormalized
-                //    {
-                //        ds.DrawImage(canvasbmp, 0, 0);
-                //    }
-
-
-                //}
-                //catch (Exception ex)
-                //{
-
-                //}
-
-
-
+              
             }
         }
 

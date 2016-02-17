@@ -107,7 +107,7 @@ namespace Samples
             else if (selected.Name == "Samples 2") { ctl2.Visibility = Visibility.Visible; ctl2.LoadSample(); }
             else if (selected.Name == "Samples 3") { ctl3.Visibility = Visibility.Visible; ctl3.LoadSample(); }
 
-            tlMain.Invalidate();
+            //tlMain.Invalidate();
         }
 
         private void rcbThemes_ValueChanged(object sender, RoutedEventArgs e)
