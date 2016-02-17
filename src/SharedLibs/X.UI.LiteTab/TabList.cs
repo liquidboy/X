@@ -119,39 +119,7 @@ namespace X.UI.LiteTab
                 _bkgLayer.InitLayer(_icTabList.ActualWidth, _icTabList.ActualHeight);
             }
         }
-
-
-        //private async Task<bool> RenderUIElement() {
-
-        //    using (var stream = await RenderToRandomAccessStream())
-        //    {
-        //        var device = new CanvasDevice();
-        //        var bitmap = await CanvasBitmap.LoadAsync(device, stream);
-
-        //        var renderer = new CanvasRenderTarget(device,
-        //                                              bitmap.SizeInPixels.Width,
-        //                                              bitmap.SizeInPixels.Height, bitmap.Dpi);
-
-        //        using (var ds = renderer.CreateDrawingSession())
-        //        {
-        //            var blur = new GaussianBlurEffect();
-        //            blur.BlurAmount = 5.0f;
-        //            blur.Source = bitmap;
-        //            ds.DrawImage(blur);
-        //        }
-
-        //        stream.Seek(0);
-        //        await renderer.SaveAsync(stream, CanvasBitmapFileFormat.Png);
-
-        //        BitmapImage image = new BitmapImage();
-        //        image.SetSource(stream);
-        //        paneBackground.ImageSource = image;
-        //    }
-
-        //    return true;
-        //}
-
-
+        
 
         protected override void OnApplyTemplate()
         {
