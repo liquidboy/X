@@ -201,7 +201,8 @@ namespace X.UI.RichInput
                 lb.Margin = new Thickness(0, LabelTranslateY, 0, 0);
 
                 _udfChkB1 = new CheckBox();
-                _udfChkB1.Checked += itcheckbox_Checked;
+                _udfChkB1.Checked += itcheckbox_Changed;
+                _udfChkB1.Unchecked += itcheckbox_Changed;
                 _udfChkB1.Content = lb;
                 _udfChkB1.Style = _GeneralCheckBoxStyle;
                 sp.Children.Add(_udfChkB1);
@@ -220,7 +221,8 @@ namespace X.UI.RichInput
 
                 _udfRB1 = new RadioButton();
                 _udfRB1.GroupName = groupName;
-                _udfRB1.Checked += itradio_Checked;
+                _udfRB1.Checked += itradio_Changed;
+                _udfRB1.Unchecked += itradio_Changed;
                 _udfRB1.Content = lb;
                 _udfRB1.Style = _GeneralRadioButtonStyle;
                 sp.Children.Add(_udfRB1);
@@ -328,11 +330,13 @@ namespace X.UI.RichInput
 
             if (_udfRB1 != null)
             {
-                _udfRB1.Checked -= itradio_Checked;
+                _udfRB1.Checked -= itradio_Changed;
+                _udfRB1.Unchecked -= itradio_Changed;
             }
             if (_udfChkB1 != null)
             {
-                _udfChkB1.Checked -= itcheckbox_Checked;
+                _udfChkB1.Checked -= itcheckbox_Changed;
+                _udfChkB1.Unchecked -= itcheckbox_Changed;
             }
 
             if (_udfg1 != null)
@@ -366,7 +370,7 @@ namespace X.UI.RichInput
         // EVENTS
         //==============================
 
-        private void itradio_Checked(object sender, RoutedEventArgs e)
+        private void itradio_Changed(object sender, RoutedEventArgs e)
         {
             if (Type == InputType.radio)
             {
@@ -377,7 +381,8 @@ namespace X.UI.RichInput
             }
         }
 
-        private void itcheckbox_Checked(object sender, RoutedEventArgs e)
+
+        private void itcheckbox_Changed(object sender, RoutedEventArgs e)
         {
             if (Type == InputType.checkbox)
             {
@@ -387,6 +392,7 @@ namespace X.UI.RichInput
                 Invalidate();
             }
         }
+
 
         private void itpassword_PasswordChanged(object sender, RoutedEventArgs e)
         {
