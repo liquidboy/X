@@ -33,7 +33,12 @@ namespace X.UI.EffectLayer
         double ParentWidth;
         double ParentHeight;
         private double MaxGlowAmount = 2;
-        private double ExpandAmount { get { return Math.Max(GlowAmount, MaxGlowAmount) * 2; } }
+        private double ExpandAmount { get
+            {
+                var ret = 0d;
+                try { ret = Math.Max(GlowAmount, MaxGlowAmount) * 2; } catch { }
+                return ret;
+            } }
 
         double offsetY = 0;
         double offsetX = 0;
@@ -148,7 +153,8 @@ namespace X.UI.EffectLayer
         //x
         private void OnDraw(CanvasControl sender, CanvasDrawEventArgs args)
         {
-            if (GlowAmount == 0) return;
+            try { if (GlowAmount == 0d) return; } catch { return; }
+            
 
             var sz = new Size(ParentWidth, ParentHeight);
 

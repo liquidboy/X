@@ -520,11 +520,32 @@ namespace X.UI.RichInput
             get { return (Color)GetValue(FocusForegroundColorProperty); }
             set { SetValue(FocusForegroundColorProperty, value); }
         }
+        
+        public Color GlowColor
+        {
+            get { return (Color)GetValue(GlowColorProperty); }
+            set { SetValue(GlowColorProperty, value); }
+        }
+
+
+
+        public double GlowAmount
+        {
+            get { return (double)GetValue(GlowAmountProperty); }
+            set { SetValue(GlowAmountProperty, value); }
+        }
 
 
 
 
 
+
+
+
+
+        public static readonly DependencyProperty GlowAmountProperty = DependencyProperty.Register("GlowAmount", typeof(double), typeof(Input), new PropertyMetadata(2));
+
+        public static readonly DependencyProperty GlowColorProperty = DependencyProperty.Register("GlowColor", typeof(Color), typeof(Input), new PropertyMetadata(Colors.Black));
 
         public static readonly DependencyProperty FocusForegroundColorProperty = DependencyProperty.Register("FocusForegroundColor", typeof(Color), typeof(Input), new PropertyMetadata(Colors.White, OnPropertyChanged));
 

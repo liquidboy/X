@@ -30,7 +30,7 @@
 
         </StackPanel>
 
-        <xuiri:Input x:Name="rcbThemes" Width="300" Type="combobox" Label="Theme" PlaceholderText="Choose theme" LabelFontSize="9" LabelTranslateY="-15"  FocusForegroundColor="{Binding Accent1Contrast}" FocusColor="{Binding Accent1}" FocusHoverColor="{Binding Accent2}" HorizontalAlignment="Right" Margin="0,110,10,0" VerticalAlignment="Top" ValueChanged="rcbThemes_ValueChanged" >
+        <xuiri:Input x:Name="rcbThemes" Width="300" Type="combobox" Label="Theme" PlaceholderText="Choose theme" LabelFontSize="9" LabelTranslateY="-15"  FocusForegroundColor="{Binding Accent1Contrast}" FocusColor="{Binding Accent1}" FocusHoverColor="{Binding Accent2}" HorizontalAlignment="Right" Margin="0,110,10,0" VerticalAlignment="Top" ValueChanged="rcbThemes_ValueChanged" GlowAmount="2" GlowColor="{Binding Accent2}" >
             <xuiri:Input.Items>
                 <xuiri:InputComboBoxItem Foreground="{Binding Accent1}" >Black</xuiri:InputComboBoxItem>
                 <xuiri:InputComboBoxItem Foreground="{Binding Accent1}" >Blue</xuiri:InputComboBoxItem>
