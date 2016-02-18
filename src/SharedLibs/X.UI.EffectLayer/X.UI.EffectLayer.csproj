@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="AsyncHelpers.cs" />
     <Compile Include="EffectLayer.cs" />
+    <Compile Include="ShadowEffectGraph.cs" />
     <Compile Include="GlowEffectGraph.cs" />
     <Compile Include="PathToD2DPathGeometryConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -35,7 +35,7 @@
                     <xuiri:InputComboBoxItem Foreground="{Binding Accent1}" >Canberra</xuiri:InputComboBoxItem>
                 </xuiri:Input.Items>
             </xuiri:Input>
-            <xuirb:RichButton x:Name="butLogin" Label="Login" GlowAmount="8" GlowColor="{Binding Accent2}" PathType="Key" Click="AttemptLogin" Margin="0,40,0,0" Foreground="{Binding Accent1ContrastBrush}" Background="{Binding Accent1Brush}" Tooltip="Log into service X" TooltipBackground="DarkOrange"></xuirb:RichButton>
+            <xuirb:RichButton x:Name="butLogin" Label="Login" GlowAmount="3" GlowColor="{Binding Accent2}" PathType="Key" Click="AttemptLogin" Margin="0,40,0,0" Foreground="{Binding Accent1ContrastBrush}" Background="{Binding Accent1Brush}" Tooltip="Log into service X" TooltipBackground="DarkOrange"></xuirb:RichButton>
 
 
         </StackPanel>

@@ -20,7 +20,7 @@
         
         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,80,10,0">
 
-            <xuilt:TabList x:Name="tlMain" Orientation="Horizontal" Margin="0,10,0,20" Foreground="{Binding Accent1Brush}" TabItemBorderColor="{Binding Accent1Brush}" HorizontalAlignment="Stretch" OnTabChanged="tlMain_OnTabChanged">
+            <xuilt:TabList x:Name="tlMain" Orientation="Horizontal" Margin="0,10,0,20" Foreground="{Binding Accent1Brush}" GlowColor="{Binding Accent2}" TabItemBorderColor="{Binding Accent1Brush}" HorizontalAlignment="Stretch" OnTabChanged="tlMain_OnTabChanged">
 
             </xuilt:TabList>
 

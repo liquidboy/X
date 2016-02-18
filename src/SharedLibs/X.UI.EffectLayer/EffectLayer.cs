@@ -27,7 +27,7 @@ namespace X.UI.EffectLayer
     public sealed class EffectLayer : Control
     {
         ContentControl _bkgLayer;
-        private GlowEffectGraph glowEffectGraph = new GlowEffectGraph();
+        private ShadowEffectGraph glowEffectGraph = new ShadowEffectGraph();
         private CanvasControl canvas;
 
         double ParentWidth;
@@ -184,7 +184,7 @@ namespace X.UI.EffectLayer
                     }
 
                     
-                    glowEffectGraph.Setup(cl, (float)GlowAmount);
+                    glowEffectGraph.Setup(cl, (float)GlowAmount, GlowColor);
                     ds.DrawImage(glowEffectGraph.Output, offset, offset);
                 }
               
@@ -207,7 +207,7 @@ namespace X.UI.EffectLayer
                     clds.FillRectangle(0, 0, (float)size.Width, (float)size.Height, glowColor);
                 }
 
-                glowEffectGraph.Setup(cl, amount);
+                glowEffectGraph.Setup(cl, amount, GlowColor);
                 ds.DrawImage(glowEffectGraph.Output, offset, offset);
                 ds.FillRectangle(offset, offset, (float)size.Width, (float)size.Height, fillColor);
             }
@@ -230,7 +230,7 @@ namespace X.UI.EffectLayer
                         clds.DrawImage(canvasbmp, 0, 0);
                     }
 
-                    glowEffectGraph.Setup(cl, (float)GlowAmount);
+                    glowEffectGraph.Setup(cl, (float)GlowAmount, GlowColor);
                     ds.DrawImage(glowEffectGraph.Output, offset, offset);
                 }
                 //try {
@@ -268,7 +268,7 @@ namespace X.UI.EffectLayer
                             clds.FillGeometry(pthGeo,0,0, GlowColor);
                         }
 
-                        glowEffectGraph.Setup(cl, (float)GlowAmount);
+                        glowEffectGraph.Setup(cl, (float)GlowAmount, GlowColor);
                         ds.DrawImage(glowEffectGraph.Output, offset, offset);
                         ds.FillGeometry(pthGeo,offset, offset, ((SolidColorBrush)GlowFill).Color);
                     }

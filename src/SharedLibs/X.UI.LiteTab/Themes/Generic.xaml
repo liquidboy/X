@@ -65,7 +65,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="local:TabList">
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                        <xuiel:EffectLayer x:Name="bkgLayer" HorizontalAlignment="Left"  GlowFill="Transparent" VerticalAlignment="Stretch" GlowAmount="3" GlowColor="Black" ShowGlowArea="False"  Margin="{TemplateBinding Margin}"></xuiel:EffectLayer>
+                        <xuiel:EffectLayer x:Name="bkgLayer" HorizontalAlignment="Left"  GlowFill="Transparent" VerticalAlignment="Stretch" GlowAmount="2" GlowColor="{TemplateBinding GlowColor}" ShowGlowArea="False"  Margin="{TemplateBinding Margin}"></xuiel:EffectLayer>
                         <ItemsControl 
                             x:Name="icTabList"
                             Margin="{TemplateBinding Margin}">

@@ -57,10 +57,23 @@ namespace X.UI.LiteTab
             set { SetValue(TabItemBorderColorProperty, value); }
         }
 
-        
-        
 
 
+        public Color GlowColor
+        {
+            get { return (Color)GetValue(GlowColorProperty); }
+            set { SetValue(GlowColorProperty, value); }
+        }
+
+
+
+
+
+
+
+
+        public static readonly DependencyProperty GlowColorProperty =
+            DependencyProperty.Register("GlowColor", typeof(Color), typeof(TabList), new PropertyMetadata(Colors.Black));
 
         public static readonly DependencyProperty TabItemBorderColorProperty =
             DependencyProperty.Register("TabItemBorderColor", typeof(Brush), typeof(TabList), new PropertyMetadata(Colors.LightGray));
