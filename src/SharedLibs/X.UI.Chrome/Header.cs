@@ -120,12 +120,22 @@ namespace X.UI.Chrome
             get { return (double)GetValue(GlowAmountProperty); }
             set { SetValue(GlowAmountProperty, value); }
         }
+        
+        public ImageSource IconUri
+        {
+            get { return (ImageSource)GetValue(IconUriProperty); }
+            set { SetValue(IconUriProperty, value); }
+        }
 
 
 
 
 
 
+
+
+
+        public static readonly DependencyProperty IconUriProperty = DependencyProperty.Register("IconUri", typeof(ImageSource), typeof(Header), new PropertyMetadata(null, OnPropertyChanged));
 
         public static readonly DependencyProperty TitleProperty =
             DependencyProperty.Register("Title", typeof(string), typeof(Header), new PropertyMetadata(string.Empty, OnPropertyChanged));
