@@ -22,7 +22,7 @@
                                     <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAltHighBrush}"/>
                                     <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundChromeDisabledLowBrush}"/>
                                     <Setter Property="SelectionHighlightColor" Value="{Binding FocusColor}"/>
-                                    <Setter Property="BorderThickness" Value="{ThemeResource TextControlBorderThemeThickness}"/>
+                                    <Setter Property="BorderThickness" Value="1"/>
                                     <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
                                     <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
                                     <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Auto"/>
@@ -186,7 +186,7 @@
                                     <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAltHighBrush}"/>
                                     <Setter Property="SelectionHighlightColor" Value="{ThemeResource SystemControlHighlightAccentBrush}"/>
                                     <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundChromeDisabledLowBrush}"/>
-                                    <Setter Property="BorderThickness" Value="{ThemeResource TextControlBorderThemeThickness}"/>
+                                    <Setter Property="BorderThickness" Value="1"/>
                                     <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
                                     <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
                                     <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Auto"/>
@@ -350,6 +350,7 @@
                                     <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
                                     <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
                                     <Setter Property="MinWidth" Value="120"/>
+                                    <Setter Property="BorderThickness" Value="1"/>
                                     <Setter Property="MinHeight" Value="32"/>
                                     <Setter Property="UseSystemFocusVisuals" Value="True"/>
                                     <Setter Property="Template">
@@ -530,130 +531,11 @@
                                                         </VisualStateGroup>
                                                     </VisualStateManager.VisualStateGroups>
                                                     <Grid Height="32" VerticalAlignment="Top">
-                                                        <Rectangle x:Name="NormalRectangle" Fill="Transparent" Height="20" Stroke="{TemplateBinding Foreground}" StrokeThickness="{ThemeResource CheckBoxBorderThemeThickness}" UseLayoutRounding="False" Width="20"/>
+                                                        <Rectangle x:Name="NormalRectangle" Fill="Transparent" Height="20" Stroke="{TemplateBinding Foreground}" StrokeThickness="1" UseLayoutRounding="False" Width="20"/>
                                                         <Rectangle x:Name="CheckedRectangle" Fill="{TemplateBinding Foreground}" Height="20" UseLayoutRounding="False" Width="20" Opacity="0"/>
                                                         <FontIcon x:Name="CheckGlyph" Foreground="{ThemeResource SystemControlHighlightAltChromeWhiteBrush}" FontSize="20" FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE001;" Opacity="0"/>
                                                     </Grid>
-                                                    <ContentPresenter x:Name="ContentPresenter" AutomationProperties.AccessibilityView="Raw" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" Grid.Column="1" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" TextWrapping="Wrap" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                                </Grid>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                                <Style x:Key="GeneralRadioButtonStyleOld" TargetType="RadioButton">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
-                                    <Setter Property="Padding" Value="8,6,0,0"/>
-                                    <Setter Property="HorizontalAlignment" Value="Left"/>
-                                    <Setter Property="VerticalAlignment" Value="Center"/>
-                                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                                    <Setter Property="VerticalContentAlignment" Value="Top"/>
-                                    <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
-                                    <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
-                                    <Setter Property="MinWidth" Value="120"/>
-                                    <Setter Property="UseSystemFocusVisuals" Value="True"/>
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="RadioButton">
-                                                <Grid BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="20"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <VisualStateManager.VisualStateGroups>
-                                                        <VisualStateGroup x:Name="CommonStates">
-                                                            <VisualState x:Name="Normal">
-                                                                <Storyboard>
-                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="OuterEllipse">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusColor}"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
-                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="CheckOuterEllipse">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusColor}"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
-                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="CheckGlyph">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusColor}"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
-                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusColor}"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
-                                                                </Storyboard>
-                                                            </VisualState>
-                                                            <VisualState x:Name="PointerOver">
-                                                                <Storyboard>
-                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="OuterEllipse">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusHoverColor}"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
-                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="CheckOuterEllipse">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusHoverColor}"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
-                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="CheckOuterEllipse">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
-                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="CheckGlyph">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusHoverColor}"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
-                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusHoverColor}"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
-                                                                </Storyboard>
-                                                            </VisualState>
-                                                            <VisualState x:Name="Pressed">
-                                                                <Storyboard>
-                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="OuterEllipse">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusColor}"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
-                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="CheckOuterEllipse">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusColor}"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
-                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="CheckOuterEllipse">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
-                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="CheckGlyph">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusColor}"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
-                                                                </Storyboard>
-                                                            </VisualState>
-                                                            <VisualState x:Name="Disabled">
-                                                                <Storyboard>
-                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="OuterEllipse">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
-                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="CheckOuterEllipse">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
-                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="CheckOuterEllipse">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
-                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="CheckGlyph">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
-                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
-                                                                </Storyboard>
-                                                            </VisualState>
-                                                        </VisualStateGroup>
-                                                        <VisualStateGroup x:Name="CheckStates">
-                                                            <VisualState x:Name="Checked">
-                                                                <Storyboard>
-                                                                    <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckGlyph"/>
-                                                                    <DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="OuterEllipse"/>
-                                                                    <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckOuterEllipse"/>
-                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="CheckGlyph">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding FocusColor}"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
-                                                                </Storyboard>
-                                                            </VisualState>
-                                                            <VisualState x:Name="Unchecked"/>
-                                                            <VisualState x:Name="Indeterminate"/>
-                                                        </VisualStateGroup>
-                                                    </VisualStateManager.VisualStateGroups>
-                                                    <Grid Height="32" VerticalAlignment="Top">
-                                                        <Ellipse x:Name="OuterEllipse" Height="20" Stroke="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" StrokeThickness="{ThemeResource RadioButtonBorderThemeThickness}" UseLayoutRounding="False" Width="20"/>
-                                                        <Ellipse x:Name="CheckOuterEllipse" Fill="{ThemeResource SystemControlHighlightTransparentBrush}" Height="20" Opacity="0" Stroke="{ThemeResource SystemControlHighlightAltAccentBrush}" StrokeThickness="{ThemeResource RadioButtonBorderThemeThickness}" UseLayoutRounding="False" Width="20"/>
-                                                        <Ellipse x:Name="CheckGlyph" Fill="{ThemeResource SystemControlHighlightAltBaseMediumHighBrush}" Height="10" Opacity="0" UseLayoutRounding="False" Width="10"/>
-                                                    </Grid>
-                                                    <ContentPresenter x:Name="ContentPresenter" AutomationProperties.AccessibilityView="Raw" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Foreground="{TemplateBinding Foreground}" Content="{TemplateBinding Content}" Grid.Column="1" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" TextWrapping="Wrap" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                                    <ContentPresenter x:Name="ContentPresenter" AutomationProperties.AccessibilityView="Raw" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" Grid.Column="1" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" BorderThickness="{TemplateBinding BorderThickness}" TextWrapping="Wrap" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                                                 </Grid>
                                             </ControlTemplate>
                                         </Setter.Value>
@@ -671,6 +553,7 @@
                                     <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
                                     <Setter Property="MinWidth" Value="120"/>
                                     <Setter Property="UseSystemFocusVisuals" Value="True"/>
+                                    <Setter Property="BorderThickness" Value="1"/>
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="RadioButton">
@@ -747,11 +630,11 @@
                                                         </VisualStateGroup>
                                                     </VisualStateManager.VisualStateGroups>
                                                     <Grid Height="32" VerticalAlignment="Top">
-                                                        <Ellipse x:Name="OuterEllipse" Height="20" Stroke="{TemplateBinding Foreground}" StrokeThickness="{ThemeResource RadioButtonBorderThemeThickness}" UseLayoutRounding="False" Width="20"/>
-                                                        <Ellipse x:Name="CheckOuterEllipse" Fill="Transparent" Height="20" Opacity="0" Stroke="{TemplateBinding Foreground}" StrokeThickness="{ThemeResource RadioButtonBorderThemeThickness}" UseLayoutRounding="False" Width="20"/>
+                                                        <Ellipse x:Name="OuterEllipse" Height="20" Stroke="{TemplateBinding Foreground}" StrokeThickness="1" UseLayoutRounding="False" Width="20"/>
+                                                        <Ellipse x:Name="CheckOuterEllipse" Fill="Transparent" Height="20" Opacity="0" Stroke="{TemplateBinding Foreground}" StrokeThickness="1" UseLayoutRounding="False" Width="20"/>
                                                         <Ellipse x:Name="CheckGlyph" Height="10" Fill="{TemplateBinding Foreground}" Opacity="0" UseLayoutRounding="False" Width="10"/>
                                                     </Grid>
-                                                    <ContentPresenter x:Name="ContentPresenter" AutomationProperties.AccessibilityView="Raw" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Foreground="{TemplateBinding Foreground}" Content="{TemplateBinding Content}" Grid.Column="1" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" TextWrapping="Wrap" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                                    <ContentPresenter x:Name="ContentPresenter" AutomationProperties.AccessibilityView="Raw" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Foreground="{TemplateBinding Foreground}" Content="{TemplateBinding Content}" Grid.Column="1" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" BorderThickness="{TemplateBinding BorderThickness}" Margin="{TemplateBinding Padding}" TextWrapping="Wrap" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                                                 </Grid>
                                             </ControlTemplate>
                                         </Setter.Value>
@@ -763,7 +646,7 @@
                                     <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
                                     <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAltMediumLowBrush}"/>
                                     <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundBaseMediumLowBrush}"/>
-                                    <Setter Property="BorderThickness" Value="{ThemeResource ComboBoxBorderThemeThickness}"/>
+                                    <Setter Property="BorderThickness" Value="1"/>
                                     <Setter Property="TabNavigation" Value="Once"/>
                                     <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
                                     <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
