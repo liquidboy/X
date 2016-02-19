@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace X.UI.EffectLayer
 {
-    class GlowEffectGraph
+    class GlowEffectGraph : IEffectGraph
     {
         public ICanvasImage Output
         {
@@ -36,7 +36,7 @@ namespace X.UI.EffectLayer
             blur.Source = morphology;
         }
 
-        public void Setup(ICanvasImage source, float amount)
+        private void _setup(ICanvasImage source, float amount)
         {
             if (amount == 0) return;
             morphology.Source = source;
@@ -45,6 +45,11 @@ namespace X.UI.EffectLayer
             morphology.Width = (int)Math.Ceiling(halfAmount);
             morphology.Height = (int)Math.Ceiling(halfAmount);
             blur.BlurAmount = halfAmount;
+        }
+
+        public void Setup(ICanvasImage source, params dynamic[] args)
+        {
+            _setup(source, args[0]);
         }
     }
 }

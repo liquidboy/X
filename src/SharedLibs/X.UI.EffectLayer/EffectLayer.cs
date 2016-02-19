@@ -24,10 +24,17 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace X.UI.EffectLayer
 {
+    public enum EffectGraphType
+    {
+        Shadow,
+        Glow
+    }
+
+
     public sealed class EffectLayer : Control
     {
         ContentControl _bkgLayer;
-        private ShadowEffectGraph glowEffectGraph = new ShadowEffectGraph();
+        private IEffectGraph glowEffectGraph;
         private CanvasControl canvas;
 
         double ParentWidth;
@@ -90,8 +97,11 @@ namespace X.UI.EffectLayer
         }
 
 
-        public void InitLayer(double canvasWidth, double canvasHeight, double offsetX = 0, double offsetY = 0) {
-            
+        public void InitLayer(double canvasWidth, double canvasHeight, double offsetX = 0, double offsetY = 0, EffectGraphType graphType = EffectGraphType.Shadow) {
+
+            if(graphType == EffectGraphType.Shadow) glowEffectGraph = new ShadowEffectGraph();
+            else if (graphType == EffectGraphType.Glow) glowEffectGraph = new GlowEffectGraph();
+
             ParentWidth = canvasWidth - offsetX;
             ParentHeight = canvasHeight - offsetY;
 

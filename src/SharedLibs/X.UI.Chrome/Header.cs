@@ -17,6 +17,15 @@ namespace X.UI.Chrome
 {
     public sealed class Header : Control
     {
+        EffectLayer.EffectLayer _bkgLayer;//x
+        TextBlock _tbTitle;
+        int RenderTargetIndexFor_tbTitle = 0;
+        Grid _root;
+
+        double bkgOffsetX = 0;
+        double bkgOffsetY = 0;
+
+
         public Header()
         {
             this.DefaultStyleKey = typeof(Header);
@@ -27,21 +36,46 @@ namespace X.UI.Chrome
 
         private void Header_Unloaded(object sender, RoutedEventArgs e)
         {
-            
+           
         }
 
         private void Header_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            if (_bkgLayer != null)
+            {
+                var gt = _tbTitle.TransformToVisual(_bkgLayer);
+                var pt = gt.TransformPoint(new Windows.Foundation.Point(0, 0));
+                _bkgLayer.DrawUIElements(_tbTitle, offsetX: pt.X, offsetY: pt.Y);
+                _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY, EffectLayer.EffectGraphType.Glow);
+            }
         }
 
         protected override void OnApplyTemplate()
         {
+            if(_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
 
+            if (_root == null) _root = GetTemplateChild("root") as Grid; 
+
+            if (_tbTitle == null)
+            {
+                _tbTitle = GetTemplateChild("tbTitle") as TextBlock;
+                _tbTitle.DataContext = this;
+            }
+
+            if (_bkgLayer != null && _tbTitle != null && _tbTitle.ActualWidth != 0) _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY);
 
 
             base.OnApplyTemplate();
         }
+
+        public void Invalidate(double offsetX = 0, double offsetY = 0) {
+            if (_bkgLayer != null) { 
+                var gt = _tbTitle.TransformToVisual(_bkgLayer);
+                var pt = gt.TransformPoint(new Windows.Foundation.Point(0, 0));
+                _bkgLayer.DrawUIElements(_tbTitle, RenderTargetIndexFor_tbTitle, offsetX + pt.X, offsetY + pt.Y);
+            }
+        }
+
 
         public void InitChrome(Application app, ApplicationView applicationView)
         {
@@ -74,6 +108,19 @@ namespace X.UI.Chrome
             get { return (string)GetValue(TitleProperty); }
             set { SetValue(TitleProperty, value); }
         }
+        
+        public Color GlowColor
+        {
+            get { return (Color)GetValue(GlowColorProperty); }
+            set { SetValue(GlowColorProperty, value); }
+        }
+
+        public double GlowAmount
+        {
+            get { return (double)GetValue(GlowAmountProperty); }
+            set { SetValue(GlowAmountProperty, value); }
+        }
+
 
 
 
@@ -83,6 +130,9 @@ namespace X.UI.Chrome
         public static readonly DependencyProperty TitleProperty =
             DependencyProperty.Register("Title", typeof(string), typeof(Header), new PropertyMetadata(string.Empty, OnPropertyChanged));
 
+        public static readonly DependencyProperty GlowAmountProperty = DependencyProperty.Register("GlowAmount", typeof(double), typeof(Header), new PropertyMetadata(2, OnPropertyChanged));
+
+        public static readonly DependencyProperty GlowColorProperty = DependencyProperty.Register("GlowColor", typeof(Color), typeof(Header), new PropertyMetadata(Colors.Black, OnPropertyChanged));
 
         private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -90,10 +140,10 @@ namespace X.UI.Chrome
             if (d == null)
                 return;
 
-            //if (instance._root != null)
-            //{
-            //    instance.Invalidate();
-            //}
+            if (instance._root != null)
+            {
+                instance.Invalidate();
+            }
         }
 
     }

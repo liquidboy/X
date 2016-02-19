@@ -9,7 +9,7 @@ using Windows.UI;
 
 namespace X.UI.EffectLayer
 {
-    class ShadowEffectGraph
+    class ShadowEffectGraph : IEffectGraph
     {
         public ICanvasImage Output
         {
@@ -24,20 +24,22 @@ namespace X.UI.EffectLayer
             ShadowColor = Colors.Black,
             BlurAmount = 3f
         };
-
-      
-
+        
         public ShadowEffectGraph()
         {
 
         }
 
-        public void Setup(ICanvasImage source, float amount, Color shadowColor)
+        private void _setup(ICanvasImage source, float amount, Color shadowColor)
         {
-
             shadow.Source = source;
             shadow.BlurAmount = amount;
             shadow.ShadowColor = shadowColor;
+        }
+
+        public void Setup(ICanvasImage source, params dynamic[] args)
+        {
+            _setup(source, args[0], args[1]);
         }
     }
 }
