@@ -9,7 +9,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="local:Input">
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                        <xuiel:EffectLayer x:Name="bkgLayer" HorizontalAlignment="Left"  GlowFill="Transparent" VerticalAlignment="Stretch" GlowAmount="{TemplateBinding GlowAmount}" GlowColor="{TemplateBinding GlowColor}" ShowGlowArea="False" ></xuiel:EffectLayer>
+                        <xuiel:EffectLayer x:Name="bkgLayer" HorizontalAlignment="Left"  GlowFill="Transparent" VerticalAlignment="Stretch" GlowAmount="{TemplateBinding GlowAmount}" GlowColor="{TemplateBinding GlowColor}" ShowGlowArea="False" Margin="0,0,-15,-15"></xuiel:EffectLayer>
                         <Grid
                         x:Name="grdRoot"
                         HorizontalAlignment="Stretch" 
