@@ -40,10 +40,12 @@ namespace X.UI.EffectLayer
                 return ret;
             } }
 
-        double offsetY = 0;
-        double offsetX = 0;
+
 
         bool doDlayedInitBkgLayerLaterAfterOnApplyTemplate = false;
+
+        //double _offsetX = 0;
+        //double _offsetY = 0;
 
 
         public EffectLayer()
@@ -77,7 +79,7 @@ namespace X.UI.EffectLayer
 
         }
 
-        public void Invalidate() { canvas?.Invalidate(); }
+        //public void Invalidate(double offsetX = 0, double offsetY=0) { _offsetX = 0; _offsetY = 0; canvas?.Invalidate(); }
 
         private void EffectLayer_Loaded(object sender, RoutedEventArgs e)
         {
@@ -85,7 +87,7 @@ namespace X.UI.EffectLayer
         }
 
 
-        public void InitLayer(double canvasWidth, double canvasHeight) {
+        public void InitLayer(double canvasWidth, double canvasHeight, double offsetX = 0, double offsetY = 0) {
             
             ParentWidth = canvasWidth - offsetX;
             ParentHeight = canvasHeight - offsetY;
@@ -101,11 +103,11 @@ namespace X.UI.EffectLayer
             //.. this is such a hack BUT it's a chicken and egg problem, sometimes the InitLayer gets
             //called too early :(
             if (_bkgLayer == null) doDlayedInitBkgLayerLaterAfterOnApplyTemplate = true;
-            else InitBkgLayer();
+            else InitBkgLayer(offsetX, offsetY);
         }
 
 
-        private void InitBkgLayer() {
+        private void InitBkgLayer(double offsetX = 0, double offsetY = 0) {
             
             _bkgLayer.Width = canvas.Width;
             _bkgLayer.Height = canvas.Height;
@@ -133,11 +135,11 @@ namespace X.UI.EffectLayer
         }
 
 
-        List<Tuple<byte[], int, int>> _uielements = new List<Tuple<byte[], int, int>>();
-        public async void DrawUIElements(UIElement elm, int index = -1)
+        List<Tuple<byte[], int, int, double, double>> _uielements = new List<Tuple<byte[], int, int, double, double>>();
+        public async void DrawUIElements(UIElement elm, int index = -1, double offsetX = 0, double offsetY = 0)
         {
             try { 
-                var bitmap = await GetUIElementBitmapPixels(elm);
+                var bitmap = await GetUIElementBitmapPixels(elm, offsetX, offsetY);
                 if (index == -1) _uielements.Add(bitmap);
                 else {
                     _uielements[index] = bitmap;
@@ -191,10 +193,11 @@ namespace X.UI.EffectLayer
 
                     
                     glowEffectGraph.Setup(cl, (float)GlowAmount, GlowColor);
-                    ds.DrawImage(glowEffectGraph.Output, offset, offset);
+                    ds.DrawImage(glowEffectGraph.Output, offset + (float)elm.Item4, offset + (float)elm.Item5);
                 }
               
             }
+            
         }
 
 
@@ -374,13 +377,13 @@ namespace X.UI.EffectLayer
         //}
 
 
-        public async Task<Tuple<byte[], int, int>> GetUIElementBitmapPixels(UIElement element)
+        public async Task<Tuple<byte[], int, int, double, double>> GetUIElementBitmapPixels(UIElement element, double offsetX, double offsetY)
         {
             
             RenderTargetBitmap bitmap = new RenderTargetBitmap();
             await bitmap.RenderAsync(element);            
             var pixels = await bitmap.GetPixelsAsync();
-            return Tuple.Create(pixels.ToArray(), bitmap.PixelWidth, bitmap.PixelHeight);
+            return Tuple.Create(pixels.ToArray(), bitmap.PixelWidth, bitmap.PixelHeight, offsetX, offsetY);
         }
     }
 

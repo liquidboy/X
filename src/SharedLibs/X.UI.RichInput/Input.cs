@@ -38,6 +38,8 @@ namespace X.UI.RichInput
 
         InputModel _model;
 
+        double bkgOffsetX = 0;
+        double bkgOffsetY = 0;
 
         public event Windows.UI.Xaml.RoutedEventHandler ValueChanged;
 
@@ -51,7 +53,7 @@ namespace X.UI.RichInput
             Unloaded += Input_Unloaded;
         }
 
-        public void Invalidate() { _bkgLayer?.DrawUIElements(_grdRoot, RenderTargetIndexFor_grdRoot); }
+        public void Invalidate(double offsetX = 0, double offsetY = 0) { _bkgLayer?.DrawUIElements(_grdRoot, RenderTargetIndexFor_grdRoot, offsetX, offsetY); }
 
 
         private void Input_Unloaded(object sender, RoutedEventArgs e)
@@ -63,8 +65,14 @@ namespace X.UI.RichInput
         {
             if (_bkgLayer != null)
             {
+                if (Type == InputType.radio || Type == InputType.checkbox)
+                {
+                    bkgOffsetY = 2;
+                    bkgOffsetX = 0;
+                }
+
                 _bkgLayer.DrawUIElements(_grdRoot);  //will draw at index 0 (RenderTargetIndexFor_icTabList)
-                _bkgLayer.InitLayer(_grdRoot.ActualWidth, _grdRoot.ActualHeight);
+                _bkgLayer.InitLayer(_grdRoot.ActualWidth, _grdRoot.ActualHeight, bkgOffsetX, bkgOffsetY);
             }
         }
 
@@ -116,7 +124,13 @@ namespace X.UI.RichInput
                 //SetColors();
             }
 
-            if (_bkgLayer != null && _grdRoot != null && _grdRoot.ActualWidth != 0) _bkgLayer.InitLayer(_grdRoot.ActualWidth, _grdRoot.ActualHeight);
+
+            if (Type == InputType.radio || Type == InputType.checkbox) {
+                bkgOffsetY = 2;
+                bkgOffsetX = 0;
+            }
+
+            if (_bkgLayer != null && _grdRoot != null && _grdRoot.ActualWidth != 0) _bkgLayer.InitLayer(_grdRoot.ActualWidth, _grdRoot.ActualHeight, bkgOffsetX, bkgOffsetY);
 
             base.OnApplyTemplate();
         }
@@ -398,9 +412,13 @@ namespace X.UI.RichInput
         {
             if (Type == InputType.password)
             {
+                var offsetX = 0;
+                var offsetY = 0;
+
                 if (((PasswordBox)sender).Password.Length > 0)
                 {
                     _udfg1.Visibility = Visibility.Visible;
+                    offsetY = -15;
                 }
                 else {
                     _udfg1.Visibility = Visibility.Collapsed;
@@ -408,8 +426,8 @@ namespace X.UI.RichInput
 
                 Value = ((PasswordBox)sender).Password;
                 ValueChanged?.Invoke(sender, e);
-
-                Invalidate();
+                
+                Invalidate(offsetX, offsetY);
             }
         }
 
@@ -417,9 +435,13 @@ namespace X.UI.RichInput
         {
             if(Type == InputType.text)
             {
+                var offsetX = 0;
+                var offsetY = 0;
+
                 if (((TextBox)sender).Text.Length > 0)
                 {
                     _udfg1.Visibility = Visibility.Visible;
+                    offsetY = -15;
                 }
                 else {
                     _udfg1.Visibility = Visibility.Collapsed;
@@ -428,7 +450,7 @@ namespace X.UI.RichInput
                 Value = ((TextBox)sender).Text;
                 ValueChanged?.Invoke(sender, e);
 
-                Invalidate();
+                Invalidate(offsetX, offsetY);
             }
             
         }
@@ -437,17 +459,22 @@ namespace X.UI.RichInput
         {
             if (Type == InputType.combobox)
             {
+                var offsetX = 0;
+                var offsetY = 0;
+
                 if (((ComboBox)sender).SelectedItem != null)
                 {
                     _udfg1.Visibility = Visibility.Visible;
+                    offsetY = -15;
                 }
                 else {
                     _udfg1.Visibility = Visibility.Collapsed;
                 }
 
                 ValueChanged?.Invoke(sender, e);
+
                 try {
-                    Invalidate();
+                    Invalidate(offsetX, offsetY);
                 } catch (Exception ex){
                     //todo: handle this error
                 }
