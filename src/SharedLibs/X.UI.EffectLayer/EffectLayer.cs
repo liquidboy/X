@@ -77,6 +77,9 @@ namespace X.UI.EffectLayer
                 canvas = null;
             }
 
+            _paths.Clear();
+            _uielements.Clear();
+            
         }
 
         //public void Invalidate(double offsetX = 0, double offsetY=0) { _offsetX = 0; _offsetY = 0; canvas?.Invalidate(); }
@@ -157,7 +160,8 @@ namespace X.UI.EffectLayer
         {
             try { if (GlowAmount == 0d) return; } catch { return; }
             
-
+            args.DrawingSession.Clear(Colors.Transparent);
+            
             var sz = new Size(ParentWidth, ParentHeight);
 
             if (_paths.Count > 0)
@@ -173,11 +177,8 @@ namespace X.UI.EffectLayer
 
         private void DoUIElementsEffect(CanvasControl sender, CanvasDrawingSession ds)
         {
-            var sz = new Size(ParentWidth, ParentHeight);
-
             foreach (var elm in _uielements)
             {
-        
                 var offset = (float)ExpandAmount / 2;
                 //using (var textLayout = CreateTextLayout(ds, size))
                 using (var cl = new CanvasCommandList(ds))
@@ -190,7 +191,6 @@ namespace X.UI.EffectLayer
                         }
 
                     }
-
                     
                     glowEffectGraph.Setup(cl, (float)GlowAmount, GlowColor);
                     ds.DrawImage(glowEffectGraph.Output, offset + (float)elm.Item4, offset + (float)elm.Item5);
@@ -224,8 +224,6 @@ namespace X.UI.EffectLayer
 
         private async void DoStreamsEffect(CanvasControl sender, CanvasDrawingSession ds)
         {
-            var sz = new Size(ParentWidth, ParentHeight);
-
             foreach (var stream in _streams)
             {
                 var offset = (float)ExpandAmount / 2;
@@ -257,10 +255,8 @@ namespace X.UI.EffectLayer
             }
         }
 
-        private void DoPathEffect(CanvasControl sender, CanvasDrawingSession ds ) {
-
-            var sz = new Size(ParentWidth, ParentHeight);
-
+        private void DoPathEffect(CanvasControl sender, CanvasDrawingSession ds )
+        {    
             using (var thBuilder = new Microsoft.Graphics.Canvas.Geometry.CanvasPathBuilder(sender))
             {
                 var pthConverter = new PathToD2DPathGeometryConverter();
@@ -347,34 +343,7 @@ namespace X.UI.EffectLayer
             }
         }
 
-
-
-        //public async Task<IRandomAccessStream> RenderToRandomAccessStream(UIElement element)
-        //{
-        //    RenderTargetBitmap rtb = new RenderTargetBitmap();
-        //    await rtb.RenderAsync(element);
-
-        //    var pixelBuffer = await rtb.GetPixelsAsync();
-        //    var pixels = pixelBuffer.ToArray();
-
-        //    // Useful for rendering in the correct DPI
-        //    var displayInformation = DisplayInformation.GetForCurrentView();
-
-        //    var stream = new InMemoryRandomAccessStream();
-        //    var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, stream);
-        //    encoder.SetPixelData(BitmapPixelFormat.Bgra8,
-        //                         BitmapAlphaMode.Premultiplied,
-        //                         (uint)rtb.PixelWidth,
-        //                         (uint)rtb.PixelHeight,
-        //                         displayInformation.RawDpiX,
-        //                         displayInformation.RawDpiY,
-        //                         pixels);
-
-        //    await encoder.FlushAsync();
-        //    stream.Seek(0);
-
-        //    return stream;
-        //}
+        
 
 
         public async Task<Tuple<byte[], int, int, double, double>> GetUIElementBitmapPixels(UIElement element, double offsetX, double offsetY)
@@ -391,86 +360,7 @@ namespace X.UI.EffectLayer
 
 
 
-
-    //public sealed class TileUpdateTask : XamlRenderingBackgroundTask
-    //{
-    //    private static readonly int TileWidth = 150;
-    //    private static readonly int TileHeight = 150;
-    //    private static readonly string TileImageFilename = "MediumTile.png";
-
-    //    protected override async void OnRun(IBackgroundTaskInstance taskInstance)
-    //    {
-    //        var deferral = taskInstance.GetDeferral();
-
-    //        // Create instance of the control that contains the layout of the Live Tile
-    //        MediumTileControl control = new MediumTileControl();
-    //        control.Width = TileWidth;
-    //        control.Height = TileHeight;
-
-    //        // If we have received a message in the parameters, overwrite the default "Hello, Live Tile!" one
-    //        var triggerDetails = taskInstance.TriggerDetails as ApplicationTriggerDetails;
-    //        if (triggerDetails != null)
-    //        {
-    //            object tileMessage = null;
-    //            if (triggerDetails.Arguments.TryGetValue("Message", out tileMessage))
-    //            {
-    //                if (tileMessage is string)
-    //                {
-    //                    control.Message = (string)tileMessage;
-    //                }
-    //            }
-    //        }
-
-    //        // Render the tile control to a RenderTargetBitmap
-    //        RenderTargetBitmap bitmap = new RenderTargetBitmap();
-    //        await bitmap.RenderAsync(control, TileWidth, TileHeight);
-
-    //        // Now we are going to save it to a PNG file, so create/open it on local storage
-    //        var file = await ApplicationData.Current.LocalFolder.CreateFileAsync(TileImageFilename, CreationCollisionOption.ReplaceExisting);
-    //        using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
-    //        {
-    //            // Create a BitmapEncoder for encoding to PNG
-    //            BitmapEncoder encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, stream);
-
-    //            // Create a SoftwareBitmap from the RenderTargetBitmap, as it will be easier to save to disk
-    //            using (var softwareBitmap = new SoftwareBitmap(BitmapPixelFormat.Bgra8, TileWidth, TileHeight, BitmapAlphaMode.Premultiplied))
-    //            {
-    //                // Copy bitmap data
-    //                softwareBitmap.CopyFromBuffer(await bitmap.GetPixelsAsync());
-
-    //                // Encode and save to file
-    //                encoder.SetSoftwareBitmap(softwareBitmap);
-    //                await encoder.FlushAsync();
-    //            }
-    //        }
-
-    //        // Use the NotificationsExtensions library to easily configure a tile update
-    //        TileContent mediumTileContent = new TileContent()
-    //        {
-    //            Visual = new TileVisual()
-    //            {
-    //                TileMedium = new TileBinding()
-    //                {
-    //                    Content = new TileBindingContentAdaptive()
-    //                    {
-    //                        BackgroundImage = new TileBackgroundImage()
-    //                        {
-    //                            Overlay = 0,
-    //                            Source = new TileImageSource("ms-appdata:///local/" + TileImageFilename),
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //        };
-
-    //        // Clean previous update from Live Tile and update with the new parameters
-    //        var tileUpdater = TileUpdateManager.CreateTileUpdaterForApplication();
-    //        tileUpdater.Clear();
-    //        tileUpdater.Update(new TileNotification(mediumTileContent.GetXml()));
-
-    //        deferral.Complete();
-    //    }
-    //}
+    
 
 
 }

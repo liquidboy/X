@@ -40,6 +40,8 @@ namespace Samples
             lbCommon.ItemsSource = fd.Items;
             lbCommon.ItemTemplateToUse = 1;
 
+            rcb.Invalidate();
+
             isLoaded = true;
         }
 
@@ -54,6 +56,8 @@ namespace Samples
             if (selectedItem is ComboBoxItem) {
                 var newIndex = int.Parse((string)((ComboBoxItem)selectedItem).Content);
                 lbCommon.ItemTemplateToUse = newIndex;
+
+                rcb.Invalidate();
             }
             
         }
