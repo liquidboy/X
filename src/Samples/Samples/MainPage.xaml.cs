@@ -29,7 +29,7 @@ namespace Samples
         {
             this.InitializeComponent();
 
-            chrome.InitChrome();
+            header.InitChrome(App.Current, ApplicationView.GetForCurrentView());
 
             this.DataContext = vm;
 

@@ -11,11 +11,12 @@
     xmlns:xuip="using:X.UI.Path"
     xmlns:xuildg="using:X.UI.LiteDataGrid"
     xmlns:xuiuc="using:X.UI.UserCard"
+    xmlns:xuichrome="using:X.UI.Chrome"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
 
-        <local:Chrome x:Name="chrome" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="90"></local:Chrome>
+        <xuichrome:Header x:Name="header" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="{Binding Accent3Brush}" Foreground="White" Title="X.UI Samples (1.0.54)" Height="90"></xuichrome:Header>
         <xuiuc:SmallCard x:Name="usercard" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,35,12,0" PrimaryName="Jose Fajardo" SecondaryName="jose@supersecret.com.au" GlowColor="{Binding Accent2}" GlowAmount="3" AvatarUri="ms-appx:///assets/avatar1.png" IsAvatarOnRight="True"></xuiuc:SmallCard>
         
         
