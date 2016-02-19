@@ -114,9 +114,6 @@
     <Compile Include="ucSample03.xaml.cs">
       <DependentUpon>ucSample03.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserCard.xaml.cs">
-      <DependentUpon>UserCard.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -157,10 +154,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ucSample03.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
