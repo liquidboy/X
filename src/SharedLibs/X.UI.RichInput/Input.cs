@@ -559,9 +559,7 @@ namespace X.UI.RichInput
             get { return (Color)GetValue(GlowColorProperty); }
             set { SetValue(GlowColorProperty, value); }
         }
-
-
-
+        
         public double GlowAmount
         {
             get { return (double)GetValue(GlowAmountProperty); }
@@ -576,7 +574,7 @@ namespace X.UI.RichInput
 
 
 
-        public static readonly DependencyProperty GlowAmountProperty = DependencyProperty.Register("GlowAmount", typeof(double), typeof(Input), new PropertyMetadata(2));
+        public static readonly DependencyProperty GlowAmountProperty = DependencyProperty.Register("GlowAmount", typeof(double), typeof(Input), new PropertyMetadata(3));
 
         public static readonly DependencyProperty GlowColorProperty = DependencyProperty.Register("GlowColor", typeof(Color), typeof(Input), new PropertyMetadata(Colors.Black));
 

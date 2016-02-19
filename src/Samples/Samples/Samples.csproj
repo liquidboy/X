@@ -190,6 +190,10 @@
       <Project>{1ddc0313-f305-4091-ad21-2b3d99bb5550}</Project>
       <Name>X.UI.RichInput</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SharedLibs\X.UI.UserCard\X.UI.UserCard.csproj">
+      <Project>{5020ec7c-3018-4af2-9481-8b0efe491170}</Project>
+      <Name>X.UI.UserCard</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
