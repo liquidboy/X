@@ -22,6 +22,27 @@ namespace Samples
         public UserCard()
         {
             this.InitializeComponent();
+
+            Loaded += UserCard_Loaded;
+            Unloaded += UserCard_Unloaded;
+
+
         }
+
+        private void UserCard_Unloaded(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void UserCard_Loaded(object sender, RoutedEventArgs e)
+        {
+            //throw new NotImplementedException();
+
+            bkgLayer.DrawUIElements(root);  //will draw at index 0 (RenderTargetIndexFor_icTabList)
+            bkgLayer.InitLayer(root.ActualWidth, root.ActualHeight, 0, 0);
+        }
+
+
+     
     }
 }

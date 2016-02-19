@@ -6,11 +6,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:xuiel="using:X.UI.EffectLayer"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
     <Grid>
-        <StackPanel Orientation="Horizontal">
+        <xuiel:EffectLayer x:Name="bkgLayer" HorizontalAlignment="Stretch"  GlowFill="Transparent" VerticalAlignment="Stretch" GlowAmount="3" GlowColor="{Binding Accent2}" ShowGlowArea="False" ></xuiel:EffectLayer>
+        <StackPanel x:Name="root" Orientation="Horizontal">
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="jose.fajardo@supersecret.com.au" FontSize="12" HorizontalAlignment="Right" Foreground="White"></TextBlock>
                 <TextBlock Text="Jose Fajardo" FontSize="20" HorizontalAlignment="Right" Foreground="White"></TextBlock>
