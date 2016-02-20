@@ -28,6 +28,7 @@ namespace X.UI.RichInput
         time,
         url,
         week,
-        toggleSwitch
+        toggleSwitch,
+        progress
     }
 }

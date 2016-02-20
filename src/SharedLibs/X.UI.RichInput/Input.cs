@@ -30,12 +30,14 @@ namespace X.UI.RichInput
         Style _GeneralRadioButtonStyle;
         Style _GeneralComboBoxStyle;
         Style _GeneralToggleSwitchStyle;
+        Style _GeneralProgressBarStyle;
         TextBox _udfTB1;
         TextBlock _udfTBL1;
         ComboBox _udfCB1;
         RadioButton _udfRB1;
         CheckBox _udfChkB1;
         ToggleSwitch _udfTS1;
+        ProgressBar _udfProgBr1;
         Grid _udfg1;
         PasswordBox _udfPB1;
         EffectLayer.EffectLayer _bkgLayer;//x
@@ -83,6 +85,12 @@ namespace X.UI.RichInput
                 _bkgLayer.DrawUIElements(_grdRoot);  //will draw at index 0 (RenderTargetIndexFor_icTabList)
                 _bkgLayer.InitLayer(_grdRoot.ActualWidth, _grdRoot.ActualHeight, bkgOffsetX, bkgOffsetY);
             }
+
+
+            //if(Type== InputType.progress)
+            //{
+
+            //}
         }
 
         protected override void OnApplyTemplate()
@@ -103,6 +111,8 @@ namespace X.UI.RichInput
             if (_GeneralRadioButtonStyle == null) _GeneralRadioButtonStyle = (Style)_grdRoot.Resources["GeneralRadioButtonStyle"];
             if (_GeneralComboBoxStyle == null) _GeneralComboBoxStyle = (Style)_grdRoot.Resources["GeneralComboBoxStyle"];
             if (_GeneralToggleSwitchStyle == null) _GeneralToggleSwitchStyle = (Style)_grdRoot.Resources["GeneralToggleSwitchStyle"];
+            if (_GeneralProgressBarStyle == null) _GeneralProgressBarStyle = (Style)_grdRoot.Resources["GeneralProgressBarStyle"];
+            
             if (_sbHideBgLayer == null)
             {
                 _sbHideBgLayer = (Storyboard)_grdContainer.Resources["sbHideBgLayer"];
@@ -126,7 +136,7 @@ namespace X.UI.RichInput
                 bkgOffsetY = 2;
                 bkgOffsetX = 0;
             }
-            else if (Type == InputType.toggleSwitch) {
+            else if (Type == InputType.toggleSwitch || Type == InputType.progress) {
 
                 dtInvalidate = new DispatcherTimer();
                 dtInvalidate.Interval = TimeSpan.FromMilliseconds(500);
@@ -257,7 +267,22 @@ namespace X.UI.RichInput
 
                 fe = sp;
             }
-           
+            else if (type == InputType.progress)
+            {
+                _udfProgBr1 = new ProgressBar();
+                _udfProgBr1.Style = _GeneralProgressBarStyle;
+                _udfProgBr1.ValueChanged += itProgBr_ValueChanged;
+                _udfProgBr1.FontSize = FontSize;
+                _udfProgBr1.DataContext = this;
+                _udfProgBr1.SetBinding(ProgressBar.MaximumProperty, new Binding() { Path= new PropertyPath("Maximum1") });
+                _udfProgBr1.SetBinding(ProgressBar.MinimumProperty, new Binding() { Path = new PropertyPath("Minimum1") });
+                _udfProgBr1.SetBinding(ProgressBar.ValueProperty, new Binding() { Path = new PropertyPath("Value1")  });
+                _udfProgBr1.SetBinding(ProgressBar.SmallChangeProperty, new Binding() { Path = new PropertyPath("SmallChange1") });
+                _udfProgBr1.SetBinding(ProgressBar.LargeChangeProperty, new Binding() { Path = new PropertyPath("LargeChange1") });
+                
+                fe = _udfProgBr1;
+            }
+
 
 
             fe.HorizontalAlignment = HorizontalAlignment.Stretch;
@@ -359,6 +384,12 @@ namespace X.UI.RichInput
             else if (type == InputType.toggleSwitch) {
                 _udfTS1.Toggled -= ittoggleswitch_Toggled;
             }
+            else if (type == InputType.progress)
+            {
+                _udfProgBr1.ValueChanged -= itProgBr_ValueChanged;
+            }
+            
+
 
             if (_udfRB1 != null)
             {
@@ -387,7 +418,7 @@ namespace X.UI.RichInput
             _sbShowBgLayer?.Stop();
             _sbShowBgLayer = null;
 
-
+            _udfProgBr1 = null;
             _udfPB1 = null;
             _udfTB1 = null;
             _udfTBL1 = null;
@@ -409,9 +440,22 @@ namespace X.UI.RichInput
 
 
 
+
+
         //==============================
         // EVENTS
         //==============================
+        private void itProgBr_ValueChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
+        {
+            if (dtInvalidate!= null)
+            {
+                //throw new NotImplementedException();
+                //_sbHideBgLayer?.Begin();
+                //dtInvalidate.Start();
+                Invalidate();
+            }
+        }
+
         private void DtInvalidate_Tick(object sender, object e)
         {
             dtInvalidate.Stop();
@@ -626,6 +670,36 @@ namespace X.UI.RichInput
             get { return (Object)GetValue(Content2Property); }
             set { SetValue(Content2Property, value); }
         }
+        
+        public double Minimum1
+        {
+            get { return (double)GetValue(Minimum1Property); }
+            set { SetValue(Minimum1Property, value); }
+        }
+        
+        public double Maximum1
+        {
+            get { return (double)GetValue(Maximum1Property); }
+            set { SetValue(Maximum1Property, value); }
+        }
+        
+        public double SmallChange1
+        {
+            get { return (double)GetValue(SmallChange1Property); }
+            set { SetValue(SmallChange1Property, value); }
+        }
+        
+        public double LargeChange1
+        {
+            get { return (double)GetValue(LargeChange1Property); }
+            set { SetValue(LargeChange1Property, value); }
+        }
+        
+        public double Value1
+        {
+            get { return (double)GetValue(Value1Property); }
+            set { SetValue(Value1Property, value); }
+        }
 
 
 
@@ -638,6 +712,26 @@ namespace X.UI.RichInput
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+        public static readonly DependencyProperty Value1Property = DependencyProperty.Register("Value1", typeof(double), typeof(Input), new PropertyMetadata(0, OnPropertyChanged));
+
+        public static readonly DependencyProperty LargeChange1Property = DependencyProperty.Register("LargeChange1", typeof(double), typeof(Input), new PropertyMetadata(0, OnPropertyChanged));
+
+        public static readonly DependencyProperty SmallChange1Property = DependencyProperty.Register("SmallChange1", typeof(double), typeof(Input), new PropertyMetadata(0, OnPropertyChanged));
+
+        public static readonly DependencyProperty Maximum1Property = DependencyProperty.Register("Maximum1", typeof(double), typeof(Input), new PropertyMetadata(0, OnPropertyChanged));
+
+        public static readonly DependencyProperty Minimum1Property = DependencyProperty.Register("Minimum1", typeof(double), typeof(Input), new PropertyMetadata(0, OnPropertyChanged));
 
         public static readonly DependencyProperty Content2Property = DependencyProperty.Register("Content2", typeof(Object), typeof(Input), new PropertyMetadata(null, OnPropertyChanged));
 

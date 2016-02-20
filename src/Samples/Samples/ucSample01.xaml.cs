@@ -20,13 +20,29 @@ namespace Samples
     public sealed partial class ucSample01 : UserControl
     {
 
+        DispatcherTimer dt;
 
         public ucSample01()
         {
             this.InitializeComponent();
 
+            dt = new DispatcherTimer();
+            dt.Tick += Dt_Tick;
+            dt.Interval = TimeSpan.FromMilliseconds(50);
+            dt.Start();
 
-            
+        }
+
+        private async void Dt_Tick(object sender, object e)
+        {
+
+            var current = ipProgress.Value1 + 20;
+            current = current > ipProgress.Maximum1 ? 0 : current;
+            //ipProgress.Value1 = current;
+            //ipProgress.Invalidate();
+
+            ipProgress.SetValue(X.UI.RichInput.Input.Value1Property, current);
+
         }
 
         private void Input_ValueChanged(object sender, RoutedEventArgs e)
@@ -36,6 +52,10 @@ namespace Samples
 
         private void AttemptLogin(object sender, RoutedEventArgs e)
         {
+            //var current = ipProgress.Value1 + 50;
+            //current = current > ipProgress.Maximum1 ? 0 : current;
+
+            //ipProgress.SetValue(X.UI.RichInput.Input.Value1Property, current);
 
         }
     }
