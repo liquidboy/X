@@ -233,6 +233,8 @@ namespace X.UI.RichInput
                 _udfTS1.Style = _GeneralToggleSwitchStyle;
                 _udfTS1.Toggled += ittoggleswitch_Toggled;
                 _udfTS1.FontSize = FontSize;
+                _udfTS1.OnContent = Content1;
+                _udfTS1.OffContent = Content2;
                 fe = _udfTS1;
             }
             else if (type == InputType.radio)
@@ -613,6 +615,18 @@ namespace X.UI.RichInput
             get { return (double)GetValue(GlowAmountProperty); }
             set { SetValue(GlowAmountProperty, value); }
         }
+        
+        public Object Content1
+        {
+            get { return (Object)GetValue(Content1Property); }
+            set { SetValue(Content1Property, value); }
+        }
+        
+        public Object Content2
+        {
+            get { return (Object)GetValue(Content2Property); }
+            set { SetValue(Content2Property, value); }
+        }
 
 
 
@@ -621,6 +635,14 @@ namespace X.UI.RichInput
 
 
 
+
+
+
+
+
+        public static readonly DependencyProperty Content2Property = DependencyProperty.Register("Content2", typeof(Object), typeof(Input), new PropertyMetadata(null, OnPropertyChanged));
+
+        public static readonly DependencyProperty Content1Property = DependencyProperty.Register("Content1", typeof(Object), typeof(Input), new PropertyMetadata(null, OnPropertyChanged));
 
         public static readonly DependencyProperty GlowAmountProperty = DependencyProperty.Register("GlowAmount", typeof(double), typeof(Input), new PropertyMetadata(3));
 
