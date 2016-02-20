@@ -27,7 +27,7 @@ namespace X.UI.RichInput
         text,
         time,
         url,
-        week
-
+        week,
+        toggleSwitch
     }
 }

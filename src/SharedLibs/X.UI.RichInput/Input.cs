@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 
 namespace X.UI.RichInput
 {
@@ -19,6 +20,7 @@ namespace X.UI.RichInput
 
     public sealed class Input : ItemsControl
     {
+        Grid _grdContainer;
         Grid _grdRoot;
         int RenderTargetIndexFor_grdRoot = 0;
         ContentControl _ccInput;
@@ -27,14 +29,19 @@ namespace X.UI.RichInput
         Style _GeneralCheckBoxStyle;
         Style _GeneralRadioButtonStyle;
         Style _GeneralComboBoxStyle;
+        Style _GeneralToggleSwitchStyle;
         TextBox _udfTB1;
         TextBlock _udfTBL1;
         ComboBox _udfCB1;
         RadioButton _udfRB1;
         CheckBox _udfChkB1;
+        ToggleSwitch _udfTS1;
         Grid _udfg1;
         PasswordBox _udfPB1;
         EffectLayer.EffectLayer _bkgLayer;//x
+
+        Storyboard _sbHideBgLayer;
+        Storyboard _sbShowBgLayer;
 
         InputModel _model;
 
@@ -42,6 +49,8 @@ namespace X.UI.RichInput
         double bkgOffsetY = 0;
 
         public event Windows.UI.Xaml.RoutedEventHandler ValueChanged;
+
+        DispatcherTimer dtInvalidate;
 
         public string Value { get; set; }
 
@@ -78,43 +87,30 @@ namespace X.UI.RichInput
 
         protected override void OnApplyTemplate()
         {
-            if (_model == null)
-            {
-                _model = new InputModel();
-            }
+            if (_model == null) _model = new InputModel(); 
 
             if (_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
-
+            if (_grdContainer == null) _grdContainer = GetTemplateChild("grdContainer") as Grid;
+            
             if (_grdRoot == null) {
                 _grdRoot = GetTemplateChild("grdRoot") as Grid;
                 _grdRoot.DataContext = _model;
             }
 
-            if (_GeneralTextBoxStyle == null)
+            if (_GeneralTextBoxStyle == null) _GeneralTextBoxStyle = (Style)_grdRoot.Resources["GeneralTextBoxStyle"]; 
+            if (_GeneralPasswordBoxStyle == null) _GeneralPasswordBoxStyle = (Style)_grdRoot.Resources["GeneralPasswordBoxStyle"]; 
+            if (_GeneralCheckBoxStyle == null) _GeneralCheckBoxStyle = (Style)_grdRoot.Resources["GeneralCheckBoxStyle"];
+            if (_GeneralRadioButtonStyle == null) _GeneralRadioButtonStyle = (Style)_grdRoot.Resources["GeneralRadioButtonStyle"];
+            if (_GeneralComboBoxStyle == null) _GeneralComboBoxStyle = (Style)_grdRoot.Resources["GeneralComboBoxStyle"];
+            if (_GeneralToggleSwitchStyle == null) _GeneralToggleSwitchStyle = (Style)_grdRoot.Resources["GeneralToggleSwitchStyle"];
+            if (_sbHideBgLayer == null)
             {
-                _GeneralTextBoxStyle = (Style)_grdRoot.Resources["GeneralTextBoxStyle"];
-            }
-
-            if (_GeneralPasswordBoxStyle == null)
-            {
-                _GeneralPasswordBoxStyle = (Style)_grdRoot.Resources["GeneralPasswordBoxStyle"];
-            }
-
-            if (_GeneralCheckBoxStyle == null)
-            {
-                _GeneralCheckBoxStyle = (Style)_grdRoot.Resources["GeneralCheckBoxStyle"];
-            }
-
-            if (_GeneralRadioButtonStyle == null)
-            {
-                _GeneralRadioButtonStyle = (Style)_grdRoot.Resources["GeneralRadioButtonStyle"];
-            }
-
-            if (_GeneralComboBoxStyle == null)
-            {
-                _GeneralComboBoxStyle = (Style)_grdRoot.Resources["GeneralComboBoxStyle"];
+                _sbHideBgLayer = (Storyboard)_grdContainer.Resources["sbHideBgLayer"];
+                _sbShowBgLayer = (Storyboard)_grdContainer.Resources["sbShowBgLayer"];
             }
             
+
+
 
             if (_ccInput == null) {
                 _ccInput = GetTemplateChild("ccInput") as ContentControl;
@@ -125,16 +121,24 @@ namespace X.UI.RichInput
             }
 
 
-            if (Type == InputType.radio || Type == InputType.checkbox) {
+            if (Type == InputType.radio || Type == InputType.checkbox)
+            {
                 bkgOffsetY = 2;
                 bkgOffsetX = 0;
+            }
+            else if (Type == InputType.toggleSwitch) {
+
+                dtInvalidate = new DispatcherTimer();
+                dtInvalidate.Interval = TimeSpan.FromMilliseconds(500);
+                dtInvalidate.Tick += DtInvalidate_Tick;
             }
 
             if (_bkgLayer != null && _grdRoot != null && _grdRoot.ActualWidth != 0) _bkgLayer.InitLayer(_grdRoot.ActualWidth, _grdRoot.ActualHeight, bkgOffsetX, bkgOffsetY);
 
             base.OnApplyTemplate();
         }
-        
+
+ 
         private void BuildControl(InputType type, string label, string placeholderText, double labelFontSize, double labelTranslateY, string groupName, ContentControl ccInput) {
 
             FrameworkElement fe = null;
@@ -223,6 +227,13 @@ namespace X.UI.RichInput
 
                 fe = sp;
             }
+            else if (type == InputType.toggleSwitch)
+            {
+                _udfTS1 = new ToggleSwitch();
+                _udfTS1.Style = _GeneralToggleSwitchStyle;
+                _udfTS1.Toggled += ittoggleswitch_Toggled;
+                fe = _udfTS1;
+            }
             else if (type == InputType.radio)
             {
                 var sp = new StackPanel();
@@ -252,7 +263,8 @@ namespace X.UI.RichInput
 
         }
 
-        
+
+
         private async void SetColors(Color focusColor, Color focusHoverColor, Color focusForegroundColor, InputModel model) 
         {
 
@@ -331,7 +343,7 @@ namespace X.UI.RichInput
             }
             else if (type == InputType.radio)
             {
-                
+
             }
             else if (type == InputType.combobox)
             {
@@ -340,6 +352,9 @@ namespace X.UI.RichInput
                 cb.SelectionChanged -= itcombobox_SelectionChanged;
                 if (cb.Items != null && cb.Items.Count > 0) cb.Items.Clear();
                 if (cb.ItemsSource != null) cb.ItemsSource = null;
+            }
+            else if (type == InputType.toggleSwitch) {
+                _udfTS1.Toggled -= ittoggleswitch_Toggled;
             }
 
             if (_udfRB1 != null)
@@ -359,6 +374,16 @@ namespace X.UI.RichInput
                 _udfg1.Children.Clear();
             }
 
+            if (dtInvalidate != null) {
+                dtInvalidate.Stop();
+                dtInvalidate.Tick += DtInvalidate_Tick;
+            }
+
+            _sbHideBgLayer?.Stop();
+            _sbHideBgLayer = null;
+            _sbShowBgLayer?.Stop();
+            _sbShowBgLayer = null;
+
 
             _udfPB1 = null;
             _udfTB1 = null;
@@ -366,9 +391,10 @@ namespace X.UI.RichInput
             _udfCB1 = null;
             _udfChkB1 = null;
             _udfRB1 = null;
-
+            _udfTS1 = null;
+            dtInvalidate = null;
             _ccInput.Content = null;
-
+            _grdContainer = null;
             _model = null;
 
         }
@@ -383,6 +409,26 @@ namespace X.UI.RichInput
         //==============================
         // EVENTS
         //==============================
+        private void DtInvalidate_Tick(object sender, object e)
+        {
+            dtInvalidate.Stop();
+            _sbShowBgLayer?.Begin();
+            Invalidate();
+        }
+
+
+        private void ittoggleswitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (Type == InputType.toggleSwitch)
+            {
+                Value = ((ToggleSwitch)sender).IsOn.ToString();
+                ValueChanged?.Invoke(sender, e);
+                _sbHideBgLayer?.Begin();
+                dtInvalidate.Start();
+                Invalidate();
+            }
+        }
+
 
         private void itradio_Changed(object sender, RoutedEventArgs e)
         {
@@ -391,7 +437,8 @@ namespace X.UI.RichInput
                 Value = ((RadioButton)sender).IsChecked.ToString();
                 ValueChanged?.Invoke(sender, e);
 
-                Invalidate();
+                _bkgLayer.Visibility = Visibility.Collapsed;
+                //Invalidate();
             }
         }
 
