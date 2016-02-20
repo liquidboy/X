@@ -53,9 +53,10 @@ namespace X.UI.RichInput
 
         double bkgOffsetX = 0;
         double bkgOffsetY = 0;
-
+        
         public event Windows.UI.Xaml.RoutedEventHandler ValueChanged;
 
+        bool dtInvalidateForever = false;
         DispatcherTimer dtInvalidate;
 
         public string Value { get; set; }
@@ -91,10 +92,12 @@ namespace X.UI.RichInput
             }
 
 
-            //if(Type== InputType.progress)
-            //{
-
-            //}
+            if(Type== InputType.progressRing && dtInvalidate != null)
+            {
+                if (IsActive) { dtInvalidateForever = true; dtInvalidate.Start(); }
+                else { dtInvalidate.Stop(); }
+                
+            }
         }
 
         protected override void OnApplyTemplate()
@@ -142,10 +145,10 @@ namespace X.UI.RichInput
                 bkgOffsetY = 2;
                 bkgOffsetX = 0;
             }
-            else if (Type == InputType.toggleSwitch || Type == InputType.progress || Type== InputType.progressRing || Type == InputType.slider) {
+            else if (Type == InputType.toggleSwitch || Type == InputType.progress || Type== InputType.progressRing || Type == InputType.slider || Type == InputType.progressRing) {
 
                 dtInvalidate = new DispatcherTimer();
-                dtInvalidate.Interval = TimeSpan.FromMilliseconds(500);
+                dtInvalidate.Interval = TimeSpan.FromMilliseconds(InvalidateUpdateInterval);
                 dtInvalidate.Tick += DtInvalidate_Tick;
             }
 
@@ -295,7 +298,7 @@ namespace X.UI.RichInput
                 //_udfProgRn1.val += itProgBr_ValueChanged;
                 _udfProgRn1.FontSize = FontSize;
                 _udfProgRn1.DataContext = this;
-                
+                _udfProgRn1.SetBinding(ProgressRing.IsActiveProperty, new Binding() { Path = new PropertyPath("IsActive") });
 
                 fe = _udfProgRn1;
             }
@@ -379,6 +382,10 @@ namespace X.UI.RichInput
                 _udfSl1.Background = new SolidColorBrush(focusHoverColor);
             }
 
+            if (_udfProgRn1 != null)
+            {
+                _udfProgRn1.Foreground = new SolidColorBrush(focusColor);
+            }
 
             if (Type == InputType.text || Type == InputType.password || Type == InputType.combobox)
             {
@@ -447,7 +454,10 @@ namespace X.UI.RichInput
                 _udfChkB1.Checked -= itcheckbox_Changed;
                 _udfChkB1.Unchecked -= itcheckbox_Changed;
             }
-
+            if (_udfProgRn1 != null)
+            {
+                _udfProgRn1.IsActive = false;
+            }
             if (_udfg1 != null)
             {
                 _udfg1 = null;
@@ -472,6 +482,7 @@ namespace X.UI.RichInput
             _udfChkB1 = null;
             _udfRB1 = null;
             _udfTS1 = null;
+            _udfProgRn1 = null;
             dtInvalidate = null;
             _ccInput.Content = null;
             _grdContainer = null;
@@ -513,7 +524,7 @@ namespace X.UI.RichInput
 
         private void DtInvalidate_Tick(object sender, object e)
         {
-            dtInvalidate.Stop();
+            if(!dtInvalidateForever) dtInvalidate.Stop();
             _sbShowBgLayer?.Begin();
             Invalidate();
         }
@@ -755,6 +766,18 @@ namespace X.UI.RichInput
             get { return (double)GetValue(Value1Property); }
             set { SetValue(Value1Property, value); }
         }
+        
+        public bool IsActive
+        {
+            get { return (bool)GetValue(IsActiveProperty); }
+            set { SetValue(IsActiveProperty, value); }
+        }
+        
+        public double InvalidateUpdateInterval
+        {
+            get { return (double)GetValue(InvalidateUpdateIntervalProperty); }
+            set { SetValue(InvalidateUpdateIntervalProperty, value); }
+        }
 
 
 
@@ -777,6 +800,12 @@ namespace X.UI.RichInput
 
 
 
+
+
+
+        public static readonly DependencyProperty InvalidateUpdateIntervalProperty = DependencyProperty.Register("InvalidateUpdateInterval", typeof(double), typeof(Input), new PropertyMetadata(500d));
+
+        public static readonly DependencyProperty IsActiveProperty = DependencyProperty.Register("IsActive", typeof(bool), typeof(Input), new PropertyMetadata(false, OnPropertyChanged));
 
         public static readonly DependencyProperty Value1Property = DependencyProperty.Register("Value1", typeof(double), typeof(Input), new PropertyMetadata(0, OnPropertyChanged));
 
@@ -838,9 +867,7 @@ namespace X.UI.RichInput
                 //((UIElement)d).UpdateLayout();
             }
         }
-
-
-     
+        
 
     }
 
