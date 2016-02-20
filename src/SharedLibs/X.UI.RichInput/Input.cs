@@ -439,9 +439,8 @@ namespace X.UI.RichInput
             {
                 Value = ((RadioButton)sender).IsChecked.ToString();
                 ValueChanged?.Invoke(sender, e);
-
-                _bkgLayer.Visibility = Visibility.Collapsed;
-                //Invalidate();
+                
+                Invalidate();
             }
         }
 
