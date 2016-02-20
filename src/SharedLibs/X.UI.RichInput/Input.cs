@@ -142,7 +142,7 @@ namespace X.UI.RichInput
                 bkgOffsetY = 2;
                 bkgOffsetX = 0;
             }
-            else if (Type == InputType.toggleSwitch || Type == InputType.progress || Type== InputType.progressRing) {
+            else if (Type == InputType.toggleSwitch || Type == InputType.progress || Type== InputType.progressRing || Type == InputType.slider) {
 
                 dtInvalidate = new DispatcherTimer();
                 dtInvalidate.Interval = TimeSpan.FromMilliseconds(500);
@@ -306,11 +306,12 @@ namespace X.UI.RichInput
                 _udfSl1.ValueChanged += itSl_ValueChanged;
                 _udfSl1.FontSize = FontSize;
                 _udfSl1.DataContext = this;
-                _udfSl1.SetBinding(ProgressBar.MaximumProperty, new Binding() { Path = new PropertyPath("Maximum1") });
-                _udfSl1.SetBinding(ProgressBar.MinimumProperty, new Binding() { Path = new PropertyPath("Minimum1") });
-                _udfSl1.SetBinding(ProgressBar.ValueProperty, new Binding() { Path = new PropertyPath("Value1") });
-                _udfSl1.SetBinding(ProgressBar.SmallChangeProperty, new Binding() { Path = new PropertyPath("SmallChange1") });
-                _udfSl1.SetBinding(ProgressBar.LargeChangeProperty, new Binding() { Path = new PropertyPath("LargeChange1") });
+                _udfSl1.SetBinding(Slider.MaximumProperty, new Binding() { Path = new PropertyPath("Maximum1") });
+                _udfSl1.SetBinding(Slider.MinimumProperty, new Binding() { Path = new PropertyPath("Minimum1") });
+                _udfSl1.SetBinding(Slider.ValueProperty, new Binding() { Path = new PropertyPath("Value1") });
+                _udfSl1.SetBinding(Slider.SmallChangeProperty, new Binding() { Path = new PropertyPath("SmallChange1") });
+                _udfSl1.SetBinding(Slider.StepFrequencyProperty, new Binding() { Path = new PropertyPath("SmallChange1") });
+                _udfSl1.SetBinding(Slider.LargeChangeProperty, new Binding() { Path = new PropertyPath("LargeChange1") });
 
                 fe = _udfSl1;
             }
@@ -372,7 +373,11 @@ namespace X.UI.RichInput
                 _udfProgBr1.Background = new SolidColorBrush(focusHoverColor);
             }
 
-
+            if (_udfSl1 != null)
+            {
+                _udfSl1.Foreground = new SolidColorBrush(focusColor);
+                _udfSl1.Background = new SolidColorBrush(focusHoverColor);
+            }
 
 
             if (Type == InputType.text || Type == InputType.password || Type == InputType.combobox)
@@ -421,16 +426,17 @@ namespace X.UI.RichInput
                 if (cb.Items != null && cb.Items.Count > 0) cb.Items.Clear();
                 if (cb.ItemsSource != null) cb.ItemsSource = null;
             }
-            else if (type == InputType.toggleSwitch) {
+            if (_udfTS1 != null) {
                 _udfTS1.Toggled -= ittoggleswitch_Toggled;
             }
-            else if (type == InputType.progress)
+            if (_udfProgBr1 != null)
             {
                 _udfProgBr1.ValueChanged -= itProgBr_ValueChanged;
             }
-            
-
-
+            if (_udfSl1 != null)
+            {
+                _udfSl1.ValueChanged -= itSl_ValueChanged;
+            }
             if (_udfRB1 != null)
             {
                 _udfRB1.Checked -= itradio_Changed;
@@ -487,14 +493,18 @@ namespace X.UI.RichInput
         //==============================
         private void itSl_ValueChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (dtInvalidate != null)
+            {
+                _sbHideBgLayer?.Begin();
+                dtInvalidate.Start();
+                //Invalidate();
+            }
         }
 
         private void itProgBr_ValueChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
         {
             if (dtInvalidate!= null)
             {
-                //throw new NotImplementedException();
                 //_sbHideBgLayer?.Begin();
                 //dtInvalidate.Start();
                 Invalidate();
@@ -794,9 +804,9 @@ namespace X.UI.RichInput
 
         public static readonly DependencyProperty GroupNameProperty = DependencyProperty.Register("GroupName", typeof(string), typeof(Input), new PropertyMetadata(string.Empty, OnPropertyChanged));
         
-        public static readonly DependencyProperty LabelTranslateYProperty = DependencyProperty.Register("LabelTranslateY", typeof(double), typeof(Input), new PropertyMetadata(0, OnPropertyChanged));
+        public static readonly DependencyProperty LabelTranslateYProperty = DependencyProperty.Register("LabelTranslateY", typeof(double), typeof(Input), new PropertyMetadata(0d, OnPropertyChanged));
         
-        public static readonly DependencyProperty LabelFontSizeProperty = DependencyProperty.Register("LabelFontSize", typeof(double), typeof(Input), new PropertyMetadata(9, OnPropertyChanged));
+        public static readonly DependencyProperty LabelFontSizeProperty = DependencyProperty.Register("LabelFontSize", typeof(double), typeof(Input), new PropertyMetadata(9d, OnPropertyChanged));
 
         public static readonly DependencyProperty PlaceholderTextProperty = DependencyProperty.Register("PlaceholderText", typeof(string), typeof(Input), new PropertyMetadata(string.Empty, OnPropertyChanged));
 
