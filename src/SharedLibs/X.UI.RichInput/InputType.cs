@@ -29,6 +29,7 @@ namespace X.UI.RichInput
         tel,
         text,
         time,
+        toggleButton,
         toggleSwitch,
         url,
         week

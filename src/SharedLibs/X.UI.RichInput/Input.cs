@@ -7,6 +7,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
@@ -33,6 +34,7 @@ namespace X.UI.RichInput
         Style _GeneralProgressBarStyle;
         Style _GeneralProgressRingStyle;
         Style _GeneralSliderStyle;
+        Style _GeneralToggleButtonStyle;
         TextBox _udfTB1;
         TextBlock _udfTBL1;
         ComboBox _udfCB1;
@@ -43,6 +45,7 @@ namespace X.UI.RichInput
         ProgressRing _udfProgRn1;
         Slider _udfSl1;
         Grid _udfg1;
+        ToggleButton _udfTBut1;
         PasswordBox _udfPB1;
         EffectLayer.EffectLayer _bkgLayer;//x
 
@@ -121,6 +124,7 @@ namespace X.UI.RichInput
             if (_GeneralProgressBarStyle == null) _GeneralProgressBarStyle = (Style)_grdRoot.Resources["GeneralProgressBarStyle"];
             if (_GeneralProgressRingStyle == null) _GeneralProgressRingStyle = (Style)_grdRoot.Resources["GeneralProgressRingStyle"];
             if (_GeneralSliderStyle == null) _GeneralSliderStyle = (Style)_grdRoot.Resources["GeneralSliderStyle"];
+            if (_GeneralToggleButtonStyle == null) _GeneralToggleButtonStyle = (Style)_grdRoot.Resources["GeneralToggleButtonStyle"];
             
             if (_sbHideBgLayer == null)
             {
@@ -246,6 +250,16 @@ namespace X.UI.RichInput
 
                 fe = sp;
             }
+            else if (type == InputType.toggleButton)
+            {
+                _udfTBut1 = new ToggleButton();
+                _udfTBut1.Style = _GeneralToggleButtonStyle;
+                _udfTBut1.Checked += ittogglebutton_changed;
+                _udfTBut1.Unchecked += ittogglebutton_changed;
+                _udfTBut1.FontSize = FontSize;
+                _udfTBut1.Content = Content1;
+                fe = _udfTBut1;
+            }
             else if (type == InputType.toggleSwitch)
             {
                 _udfTS1 = new ToggleSwitch();
@@ -327,7 +341,8 @@ namespace X.UI.RichInput
 
         }
 
- 
+
+
 
         private async void SetColors(Color focusColor, Color focusHoverColor, Color focusForegroundColor, InputModel model) 
         {
@@ -375,7 +390,16 @@ namespace X.UI.RichInput
                 _udfProgBr1.Foreground = new SolidColorBrush(focusColor);
                 _udfProgBr1.Background = new SolidColorBrush(focusHoverColor);
             }
-
+            if (_udfTBut1 != null)
+            {
+                _udfTBut1.Foreground = new SolidColorBrush(focusColor);
+                _udfTBut1.Background = new SolidColorBrush(focusHoverColor);
+            }
+            if (_udfTS1 != null)
+            {
+                _udfTS1.Foreground = new SolidColorBrush(focusColor);
+                _udfTS1.Background = new SolidColorBrush(focusHoverColor);
+            }
             if (_udfSl1 != null)
             {
                 _udfSl1.Foreground = new SolidColorBrush(focusColor);
@@ -454,6 +478,11 @@ namespace X.UI.RichInput
                 _udfChkB1.Checked -= itcheckbox_Changed;
                 _udfChkB1.Unchecked -= itcheckbox_Changed;
             }
+            if (_udfTBut1 != null)
+            {
+                _udfTBut1.Checked -= ittogglebutton_changed;
+                _udfTBut1.Unchecked -= ittogglebutton_changed;
+            }
             if (_udfProgRn1 != null)
             {
                 _udfProgRn1.IsActive = false;
@@ -483,6 +512,7 @@ namespace X.UI.RichInput
             _udfRB1 = null;
             _udfTS1 = null;
             _udfProgRn1 = null;
+            _udfTBut1 = null;
             dtInvalidate = null;
             _ccInput.Content = null;
             _grdContainer = null;
@@ -550,6 +580,17 @@ namespace X.UI.RichInput
                 Value = ((RadioButton)sender).IsChecked.ToString();
                 ValueChanged?.Invoke(sender, e);
                 
+                Invalidate();
+            }
+        }
+
+        private void ittogglebutton_changed(object sender, RoutedEventArgs e)
+        {
+            if (Type == InputType.toggleButton)
+            {
+                Value = ((ToggleButton)sender).IsChecked.ToString();
+                ValueChanged?.Invoke(sender, e);
+
                 Invalidate();
             }
         }

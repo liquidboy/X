@@ -31,7 +31,7 @@
 
             <xuiri:Input x:Name="ipSlider" Type="slider" FocusColor="{Binding Accent1}" FocusHoverColor="{Binding Accent2}" Foreground="{Binding Accent1}"  HorizontalAlignment="Left" Width="400" Value1="40" Minimum1="0" Maximum1="2000" SmallChange1="1" LargeChange1="1" Height="35" Margin="0,10,0,0" GlowAmount="3" GlowColor="{Binding Accent2}" FontSize="12" ></xuiri:Input>
 
-            <xuiri:Input Type="progressRing" HorizontalAlignment="Left"  Width="60" Height="60" FocusColor="{Binding Accent1}" FocusHoverColor="{Binding Accent2}" Foreground="{Binding Accent1Brush}" Background="{Binding Accent1Contrast}" IsActive="True" GlowAmount="3" GlowColor="{Binding Accent2}" InvalidateUpdateInterval="12"></xuiri:Input>
+            <xuiri:Input Type="progressRing" HorizontalAlignment="Left"  Width="60" Height="60" FocusColor="{Binding Accent1}" FocusHoverColor="{Binding Accent2}" Foreground="{Binding Accent1Brush}" Background="{Binding Accent1Contrast}" IsActive="True" GlowAmount="3" GlowColor="{Binding Accent2}" InvalidateUpdateInterval="15"></xuiri:Input>
             
             <xuiri:Input x:Name="rcb" Width="200" Type="combobox" Label="State" LabelFontSize="9" LabelTranslateY="-15"  FocusForegroundColor="{Binding Accent1Contrast}" FocusColor="{Binding Accent1}" FocusHoverColor="{Binding Accent2}" Margin="0,20,0,0" HorizontalAlignment="Left" PlaceholderText="choose a state" GlowAmount="2" GlowColor="{Binding Accent2}" >
                 <xuiri:Input.Items>
@@ -45,7 +45,13 @@
                     <xuiri:InputComboBoxItem Foreground="{Binding Accent1}" >Canberra</xuiri:InputComboBoxItem>
                 </xuiri:Input.Items>
             </xuiri:Input>
-            <xuirb:RichButton x:Name="butLogin" Label="Login" GlowAmount="3" GlowColor="{Binding Accent2}" PathType="Key" Click="AttemptLogin" Margin="0,40,0,0" Foreground="{Binding Accent1ContrastBrush}" Background="{Binding Accent1Brush}" Tooltip="Log into service X" TooltipBackground="DarkOrange"></xuirb:RichButton>
+
+            <StackPanel Orientation="Horizontal" Margin="0,40,0,0" >
+                <xuirb:RichButton x:Name="butLogin" Label="Login" GlowAmount="3" GlowColor="{Binding Accent2}" PathType="Key" Click="AttemptLogin" Foreground="{Binding Accent1ContrastBrush}" Background="{Binding Accent1Brush}" Tooltip="Log into service X" TooltipBackground="DarkOrange"></xuirb:RichButton>
+                
+                <ToggleButton Content="Are you OK?" Margin="50,0,0,0" Visibility="Collapsed"></ToggleButton>
+                
+            </StackPanel>
 
 
         </StackPanel>
