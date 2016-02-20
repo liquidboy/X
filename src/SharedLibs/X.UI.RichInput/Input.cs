@@ -84,14 +84,22 @@ namespace X.UI.RichInput
         {
             if (_bkgLayer != null)
             {
+                var effectType = EffectLayer.EffectGraphType.Glow;
+
                 if (Type == InputType.radio || Type == InputType.checkbox)
                 {
                     bkgOffsetY = 2;
                     bkgOffsetX = 0;
                 }
+                else if (Type == InputType.toggleButton)
+                {
+                    bkgOffsetY = 2;
+                    bkgOffsetX = 2;
+                    effectType = EffectLayer.EffectGraphType.Shadow;
+                }
 
                 _bkgLayer.DrawUIElements(_grdRoot);  //will draw at index 0 (RenderTargetIndexFor_icTabList)
-                _bkgLayer.InitLayer(_grdRoot.ActualWidth, _grdRoot.ActualHeight, bkgOffsetX, bkgOffsetY);
+                _bkgLayer.InitLayer(_grdRoot.ActualWidth, _grdRoot.ActualHeight, bkgOffsetX, bkgOffsetY, effectType);
             }
 
 
@@ -143,20 +151,28 @@ namespace X.UI.RichInput
                 //SetColors();
             }
 
+            if (Type == InputType.toggleSwitch || Type == InputType.toggleButton || Type == InputType.progress || Type == InputType.progressRing || Type == InputType.slider || Type == InputType.progressRing)
+            {
+                dtInvalidate = new DispatcherTimer();
+                dtInvalidate.Interval = TimeSpan.FromMilliseconds(InvalidateUpdateInterval);
+                dtInvalidate.Tick += DtInvalidate_Tick;
+            }
+            
+            var effectType = EffectLayer.EffectGraphType.Glow;
 
             if (Type == InputType.radio || Type == InputType.checkbox)
             {
                 bkgOffsetY = 2;
                 bkgOffsetX = 0;
             }
-            else if (Type == InputType.toggleSwitch || Type == InputType.progress || Type== InputType.progressRing || Type == InputType.slider || Type == InputType.progressRing) {
-
-                dtInvalidate = new DispatcherTimer();
-                dtInvalidate.Interval = TimeSpan.FromMilliseconds(InvalidateUpdateInterval);
-                dtInvalidate.Tick += DtInvalidate_Tick;
+            else if (Type == InputType.toggleButton)
+            {
+                bkgOffsetY = 2;
+                bkgOffsetX = 2;
+                effectType = EffectLayer.EffectGraphType.Shadow;
             }
-
-            if (_bkgLayer != null && _grdRoot != null && _grdRoot.ActualWidth != 0) _bkgLayer.InitLayer(_grdRoot.ActualWidth, _grdRoot.ActualHeight, bkgOffsetX, bkgOffsetY);
+            
+            if (_bkgLayer != null && _grdRoot != null && _grdRoot.ActualWidth != 0) _bkgLayer.InitLayer(_grdRoot.ActualWidth, _grdRoot.ActualHeight, bkgOffsetX, bkgOffsetY, effectType);
 
             base.OnApplyTemplate();
         }
@@ -392,8 +408,8 @@ namespace X.UI.RichInput
             }
             if (_udfTBut1 != null)
             {
-                _udfTBut1.Foreground = new SolidColorBrush(focusColor);
-                _udfTBut1.Background = new SolidColorBrush(focusHoverColor);
+                _udfTBut1.Foreground = new SolidColorBrush(focusForegroundColor);
+                _udfTBut1.Background = new SolidColorBrush(focusColor);
             }
             if (_udfTS1 != null)
             {
@@ -591,7 +607,9 @@ namespace X.UI.RichInput
                 Value = ((ToggleButton)sender).IsChecked.ToString();
                 ValueChanged?.Invoke(sender, e);
 
-                Invalidate();
+                _sbHideBgLayer?.Begin();
+                dtInvalidate.Start();
+                //Invalidate();
             }
         }
 

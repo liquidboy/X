@@ -34,7 +34,7 @@ namespace X.UI.EffectLayer
     public sealed class EffectLayer : Control
     {
         ContentControl _bkgLayer;
-        private IEffectGraph glowEffectGraph;
+        private IEffectGraph _eg;
         private CanvasControl canvas;
 
         double ParentWidth;
@@ -99,8 +99,8 @@ namespace X.UI.EffectLayer
 
         public void InitLayer(double canvasWidth, double canvasHeight, double offsetX = 0, double offsetY = 0, EffectGraphType graphType = EffectGraphType.Shadow) {
 
-            if(graphType == EffectGraphType.Shadow) glowEffectGraph = new ShadowEffectGraph();
-            else if (graphType == EffectGraphType.Glow) glowEffectGraph = new GlowEffectGraph();
+            if(graphType == EffectGraphType.Shadow) _eg = new ShadowEffectGraph();
+            else if (graphType == EffectGraphType.Glow) _eg = new GlowEffectGraph();
 
             ParentWidth = canvasWidth - offsetX;
             ParentHeight = canvasHeight - offsetY;
@@ -201,9 +201,9 @@ namespace X.UI.EffectLayer
                         }
 
                     }
-                    
-                    glowEffectGraph.Setup(cl, (float)GlowAmount, GlowColor);
-                    ds.DrawImage(glowEffectGraph.Output, offset + (float)elm.Item4, offset + (float)elm.Item5);
+
+                    _eg.Setup(cl, (float)GlowAmount, GlowColor);
+                    ds.DrawImage(_eg.Output, offset + (float)elm.Item4, offset + (float)elm.Item5);
                 }
               
             }
@@ -226,8 +226,8 @@ namespace X.UI.EffectLayer
                     clds.FillRectangle(0, 0, (float)size.Width, (float)size.Height, glowColor);
                 }
 
-                glowEffectGraph.Setup(cl, amount, GlowColor);
-                ds.DrawImage(glowEffectGraph.Output, offset, offset);
+                _eg.Setup(cl, amount, GlowColor);
+                ds.DrawImage(_eg.Output, offset, offset);
                 ds.FillRectangle(offset, offset, (float)size.Width, (float)size.Height, fillColor);
             }
         }
@@ -247,8 +247,8 @@ namespace X.UI.EffectLayer
                         clds.DrawImage(canvasbmp, 0, 0);
                     }
 
-                    glowEffectGraph.Setup(cl, (float)GlowAmount, GlowColor);
-                    ds.DrawImage(glowEffectGraph.Output, offset, offset);
+                    _eg.Setup(cl, (float)GlowAmount, GlowColor);
+                    ds.DrawImage(_eg.Output, offset, offset);
                 }
                 //try {
                 //    if (stream.CanRead)
@@ -283,8 +283,8 @@ namespace X.UI.EffectLayer
                             clds.FillGeometry(pthGeo,0,0, GlowColor);
                         }
 
-                        glowEffectGraph.Setup(cl, (float)GlowAmount, GlowColor);
-                        ds.DrawImage(glowEffectGraph.Output, offset, offset);
+                        _eg.Setup(cl, (float)GlowAmount, GlowColor);
+                        ds.DrawImage(_eg.Output, offset, offset);
                         ds.FillGeometry(pthGeo,offset, offset, ((SolidColorBrush)GlowFill).Color);
                     }
                     
