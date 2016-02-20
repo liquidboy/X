@@ -93,9 +93,8 @@ namespace X.UI.RichInput
                 }
                 else if (Type == InputType.toggleButton)
                 {
-                    bkgOffsetY = 2;
-                    bkgOffsetX = 2;
-                    effectType = EffectLayer.EffectGraphType.Shadow;
+                    bkgOffsetY = 1;
+                    bkgOffsetX = 1;
                 }
 
                 _bkgLayer.DrawUIElements(_grdRoot);  //will draw at index 0 (RenderTargetIndexFor_icTabList)
@@ -159,7 +158,6 @@ namespace X.UI.RichInput
             }
             
             var effectType = EffectLayer.EffectGraphType.Glow;
-
             if (Type == InputType.radio || Type == InputType.checkbox)
             {
                 bkgOffsetY = 2;
@@ -167,9 +165,8 @@ namespace X.UI.RichInput
             }
             else if (Type == InputType.toggleButton)
             {
-                bkgOffsetY = 2;
-                bkgOffsetX = 2;
-                effectType = EffectLayer.EffectGraphType.Shadow;
+                bkgOffsetY = 1;
+                bkgOffsetX = 1;
             }
             
             if (_bkgLayer != null && _grdRoot != null && _grdRoot.ActualWidth != 0) _bkgLayer.InitLayer(_grdRoot.ActualWidth, _grdRoot.ActualHeight, bkgOffsetX, bkgOffsetY, effectType);
