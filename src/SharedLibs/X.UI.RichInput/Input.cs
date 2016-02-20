@@ -232,6 +232,7 @@ namespace X.UI.RichInput
                 _udfTS1 = new ToggleSwitch();
                 _udfTS1.Style = _GeneralToggleSwitchStyle;
                 _udfTS1.Toggled += ittoggleswitch_Toggled;
+                _udfTS1.FontSize = FontSize;
                 fe = _udfTS1;
             }
             else if (type == InputType.radio)
