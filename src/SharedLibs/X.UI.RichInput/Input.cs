@@ -31,6 +31,8 @@ namespace X.UI.RichInput
         Style _GeneralComboBoxStyle;
         Style _GeneralToggleSwitchStyle;
         Style _GeneralProgressBarStyle;
+        Style _GeneralProgressRingStyle;
+        Style _GeneralSliderStyle;
         TextBox _udfTB1;
         TextBlock _udfTBL1;
         ComboBox _udfCB1;
@@ -38,6 +40,8 @@ namespace X.UI.RichInput
         CheckBox _udfChkB1;
         ToggleSwitch _udfTS1;
         ProgressBar _udfProgBr1;
+        ProgressRing _udfProgRn1;
+        Slider _udfSl1;
         Grid _udfg1;
         PasswordBox _udfPB1;
         EffectLayer.EffectLayer _bkgLayer;//x
@@ -112,6 +116,8 @@ namespace X.UI.RichInput
             if (_GeneralComboBoxStyle == null) _GeneralComboBoxStyle = (Style)_grdRoot.Resources["GeneralComboBoxStyle"];
             if (_GeneralToggleSwitchStyle == null) _GeneralToggleSwitchStyle = (Style)_grdRoot.Resources["GeneralToggleSwitchStyle"];
             if (_GeneralProgressBarStyle == null) _GeneralProgressBarStyle = (Style)_grdRoot.Resources["GeneralProgressBarStyle"];
+            if (_GeneralProgressRingStyle == null) _GeneralProgressRingStyle = (Style)_grdRoot.Resources["GeneralProgressRingStyle"];
+            if (_GeneralSliderStyle == null) _GeneralSliderStyle = (Style)_grdRoot.Resources["GeneralSliderStyle"];
             
             if (_sbHideBgLayer == null)
             {
@@ -136,7 +142,7 @@ namespace X.UI.RichInput
                 bkgOffsetY = 2;
                 bkgOffsetX = 0;
             }
-            else if (Type == InputType.toggleSwitch || Type == InputType.progress) {
+            else if (Type == InputType.toggleSwitch || Type == InputType.progress || Type== InputType.progressRing) {
 
                 dtInvalidate = new DispatcherTimer();
                 dtInvalidate.Interval = TimeSpan.FromMilliseconds(500);
@@ -282,6 +288,32 @@ namespace X.UI.RichInput
                 
                 fe = _udfProgBr1;
             }
+            else if (type == InputType.progressRing)
+            {
+                _udfProgRn1 = new ProgressRing();
+                _udfProgRn1.Style = _GeneralProgressRingStyle;
+                //_udfProgRn1.val += itProgBr_ValueChanged;
+                _udfProgRn1.FontSize = FontSize;
+                _udfProgRn1.DataContext = this;
+                
+
+                fe = _udfProgRn1;
+            }
+            else if (type == InputType.slider)
+            {
+                _udfSl1 = new Slider();
+                _udfSl1.Style = _GeneralSliderStyle;
+                _udfSl1.ValueChanged += itSl_ValueChanged;
+                _udfSl1.FontSize = FontSize;
+                _udfSl1.DataContext = this;
+                _udfSl1.SetBinding(ProgressBar.MaximumProperty, new Binding() { Path = new PropertyPath("Maximum1") });
+                _udfSl1.SetBinding(ProgressBar.MinimumProperty, new Binding() { Path = new PropertyPath("Minimum1") });
+                _udfSl1.SetBinding(ProgressBar.ValueProperty, new Binding() { Path = new PropertyPath("Value1") });
+                _udfSl1.SetBinding(ProgressBar.SmallChangeProperty, new Binding() { Path = new PropertyPath("SmallChange1") });
+                _udfSl1.SetBinding(ProgressBar.LargeChangeProperty, new Binding() { Path = new PropertyPath("LargeChange1") });
+
+                fe = _udfSl1;
+            }
 
 
 
@@ -291,7 +323,7 @@ namespace X.UI.RichInput
 
         }
 
-
+ 
 
         private async void SetColors(Color focusColor, Color focusHoverColor, Color focusForegroundColor, InputModel model) 
         {
@@ -333,6 +365,14 @@ namespace X.UI.RichInput
             {
                 _udfRB1.Foreground = new SolidColorBrush(focusColor);
             }
+
+            if (_udfProgBr1 != null)
+            {
+                _udfProgBr1.Foreground = new SolidColorBrush(focusColor);
+                _udfProgBr1.Background = new SolidColorBrush(focusHoverColor);
+            }
+
+
 
 
             if (Type == InputType.text || Type == InputType.password || Type == InputType.combobox)
@@ -445,6 +485,11 @@ namespace X.UI.RichInput
         //==============================
         // EVENTS
         //==============================
+        private void itSl_ValueChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         private void itProgBr_ValueChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
         {
             if (dtInvalidate!= null)

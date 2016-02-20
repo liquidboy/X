@@ -19,16 +19,18 @@ namespace X.UI.RichInput
         month,
         number,
         password,
+        progress,
+        progressRing,
         radio,
         range,
         search,
+        slider,
         submit,
         tel,
         text,
         time,
-        url,
-        week,
         toggleSwitch,
-        progress
+        url,
+        week
     }
 }
