@@ -81,14 +81,14 @@ namespace Samples
             }
             else if (theme == "Blue")
             {
-                vm.Accent1 = Colors.Teal;
-                vm.Accent1Brush = new SolidColorBrush(Colors.Teal);
+                vm.Accent1 = new Color() { R = 4, G = 69, B = 124, A = 255 };
+                vm.Accent1Brush = new SolidColorBrush(vm.Accent1);
                 vm.Accent1Contrast = Colors.White;
                 vm.Accent1ContrastBrush = new SolidColorBrush(Colors.White);
-                vm.Accent2 = Colors.MediumPurple;
-                vm.Accent2Brush = new SolidColorBrush(Colors.MediumPurple);
-                vm.Accent3 = Colors.Teal;
-                vm.Accent3Brush = new SolidColorBrush(Colors.Teal);
+                vm.Accent2 = new Color() { R = 0, G = 139, B = 255, A = 255 };
+                vm.Accent2Brush = new SolidColorBrush(vm.Accent2);
+                vm.Accent3 = vm.Accent1;
+                vm.Accent3Brush = new SolidColorBrush(vm.Accent1);
 
              
             }
