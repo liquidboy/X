@@ -72,7 +72,7 @@ namespace X.UI.RichScrollViewer
 
 
             if (_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
-            if (_rootContainer == null) _rootContainer = GetTemplateChild("rootContainer") as Grid;
+            if (_rootContainer == null) { _rootContainer = GetTemplateChild("rootContainer") as Grid; _rootContainer.DataContext = this; }
 
             if (_root == null)
             {
