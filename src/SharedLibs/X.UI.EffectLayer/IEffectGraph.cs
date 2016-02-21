@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace X.UI.EffectLayer
 {
-    interface IEffectGraph
+    interface IEffectGraph : IDisposable
     {
         ICanvasImage Output { get; }
         void Setup(ICanvasImage source, params dynamic[] args);

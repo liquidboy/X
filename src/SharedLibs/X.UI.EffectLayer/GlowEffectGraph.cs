@@ -10,6 +10,8 @@ namespace X.UI.EffectLayer
 {
     class GlowEffectGraph : IEffectGraph
     {
+        ICanvasImage _cl;
+
         public ICanvasImage Output
         {
             get
@@ -39,8 +41,12 @@ namespace X.UI.EffectLayer
         private void _setup(ICanvasImage source, float amount)
         {
             if (amount == 0) return;
-            morphology.Source = source;
 
+            if (_cl != null) { _cl.Dispose(); _cl = null; }
+            _cl = source;
+
+            morphology.Source = _cl;
+            
             var halfAmount = Math.Min(amount / 2, 100);
             morphology.Width = (int)Math.Ceiling(halfAmount);
             morphology.Height = (int)Math.Ceiling(halfAmount);
@@ -50,6 +56,16 @@ namespace X.UI.EffectLayer
         public void Setup(ICanvasImage source, params dynamic[] args)
         {
             _setup(source, args[0]);
+        }
+
+        public void Dispose()
+        {
+            _cl?.Dispose();
+            _cl = null;
+            morphology?.Dispose();
+            morphology = null;
+            blur?.Dispose();
+            blur = null;
         }
     }
 }

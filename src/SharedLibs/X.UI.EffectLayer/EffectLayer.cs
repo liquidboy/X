@@ -31,7 +31,7 @@ namespace X.UI.EffectLayer
     }
 
 
-    public sealed class EffectLayer : Control
+    public sealed class EffectLayer : Control, IDisposable
     {
         ContentControl _bkgLayer;
         private IEffectGraph _eg;
@@ -363,6 +363,13 @@ namespace X.UI.EffectLayer
             await bitmap.RenderAsync(element);            
             var pixels = await bitmap.GetPixelsAsync();
             return Tuple.Create(pixels.ToArray(), bitmap.PixelWidth, bitmap.PixelHeight, offsetX, offsetY);
+        }
+
+        public void Dispose()
+        {
+            _eg?.Dispose();
+            canvas.RemoveFromVisualTree();
+            canvas = null;
         }
     }
 
