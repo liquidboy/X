@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-
+using Windows.UI.Xaml.Media.Animation;
 
 namespace X.UI.RichScrollViewer
 {
@@ -21,9 +21,14 @@ namespace X.UI.RichScrollViewer
         ContentControl _root;  //wtf : see above
         int RenderTargetIndexFor_root = 0;
         EffectLayer.EffectLayer _bkgLayer;
+        Storyboard _sbHideBgLayer;
+        Storyboard _sbShowBgLayer;
+
 
         double bkgOffsetX = 0;
         double bkgOffsetY = 0;
+
+        DispatcherTimer dtInvalidate;
 
         public ScrollViewer()
         {
@@ -31,6 +36,10 @@ namespace X.UI.RichScrollViewer
 
             this.Loaded += ScrollViewer_Loaded;
             this.Unloaded += ScrollViewer_Unloaded;
+
+            dtInvalidate = new DispatcherTimer();
+            dtInvalidate.Interval = TimeSpan.FromMilliseconds(1000);
+            dtInvalidate.Tick += DtInvalidate_Tick;
         }
 
         public void Invalidate(double offsetX = 0, double offsetY = 0) { _bkgLayer?.DrawUIElements(_root, RenderTargetIndexFor_root, offsetX, offsetY); }
@@ -50,10 +59,17 @@ namespace X.UI.RichScrollViewer
                 _bkgLayer.DrawUIElements(_root);  //will draw at index 0 (RenderTargetIndexFor_icTabList)
                 _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY, effectType);
             }
+
+
+
+
+            _sbHideBgLayer?.Begin();
+            dtInvalidate.Start();
         }
 
         protected override void OnApplyTemplate()
         {
+
 
             if (_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
             if (_rootContainer == null) _rootContainer = GetTemplateChild("rootContainer") as Grid;
@@ -68,6 +84,12 @@ namespace X.UI.RichScrollViewer
                 _root = GetTemplateChild("root") as ContentControl;
             }
 
+            if (_sbHideBgLayer == null)
+            {
+                _sbHideBgLayer = (Storyboard)_rootContainer.Resources["sbHideBgLayer"];
+                _sbShowBgLayer = (Storyboard)_rootContainer.Resources["sbShowBgLayer"];
+            }
+
             var effectType = EffectLayer.EffectGraphType.Glow;
 
             if (_bkgLayer != null && _root != null && _root.ActualWidth != 0) _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY, effectType);
@@ -76,7 +98,12 @@ namespace X.UI.RichScrollViewer
             base.OnApplyTemplate();
         }
 
-
+        private void DtInvalidate_Tick(object sender, object e)
+        {
+            dtInvalidate.Stop();
+            _sbShowBgLayer?.Begin();
+            Invalidate();
+        }
 
 
 
@@ -142,6 +169,8 @@ namespace X.UI.RichScrollViewer
 
             if (instance._bkgLayer != null)
             {
+                instance._sbHideBgLayer?.Begin();
+                instance.dtInvalidate.Start();
                 instance.Invalidate();
             }
         }

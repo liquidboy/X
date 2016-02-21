@@ -26,7 +26,7 @@
             </StackPanel>
 
             
-            <xuildg:LiteDataGrid x:Name="lbCommon" HorizontalContentAlignment="Stretch" Margin="0,0,0,0" Height="350" FocusForegroundColor="{Binding Accent1ContrastBrush}" FocusColor="{Binding Accent1Brush}" FocusHoverColor="{Binding Accent2Brush}" BorderThickness="1" GlowAmount="2" GlowColor="{Binding Accent2Brush}">
+            <xuildg:LiteDataGrid x:Name="lbCommon" HorizontalContentAlignment="Stretch" Margin="0,0,0,0" Height="350" FocusForegroundColor="{Binding Accent1ContrastBrush}" FocusColor="{Binding Accent1Brush}" FocusHoverColor="{Binding Accent2Brush}" BorderThickness="1" GlowAmount="3" GlowColor="{Binding Accent2Brush}">
                 <xuildg:LiteDataGrid.ItemTemplate1>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical" BorderBrush="LightGray" BorderThickness="0,0,0,1" Margin="5" Padding="0,0,0,10">
