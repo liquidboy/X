@@ -45,7 +45,7 @@ namespace X.UI.RichScrollViewer
         {
             if (_bkgLayer != null)
             {
-                var effectType = EffectLayer.EffectGraphType.Shadow;
+                var effectType = EffectLayer.EffectGraphType.Glow;
                 
                 _bkgLayer.DrawUIElements(_root);  //will draw at index 0 (RenderTargetIndexFor_icTabList)
                 _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY, effectType);
@@ -68,7 +68,7 @@ namespace X.UI.RichScrollViewer
                 _root = GetTemplateChild("root") as ContentControl;
             }
 
-            var effectType = EffectLayer.EffectGraphType.Shadow;
+            var effectType = EffectLayer.EffectGraphType.Glow;
 
             if (_bkgLayer != null && _root != null && _root.ActualWidth != 0) _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY, effectType);
 
