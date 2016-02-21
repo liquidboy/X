@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DBAFFCC8-1AC5-4A13-8CD8-57A3D1D4E243}</ProjectGuid>
+    <ProjectGuid>{EF4B51C0-F174-4799-9D52-8957B86BD9B9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>X.UI.LiteDataGrid</RootNamespace>
-    <AssemblyName>X.UI.LiteDataGrid</AssemblyName>
+    <RootNamespace>X.UI.RichScrollViewer</RootNamespace>
+    <AssemblyName>X.UI.RichScrollViewer</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
@@ -107,9 +107,9 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LiteDataGrid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\X.UI.LiteDataGrid.rd.xml" />
+    <Compile Include="ScrollViewer.cs" />
+    <EmbeddedResource Include="Properties\X.UI.RichScrollViewer.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Themes\Generic.xaml">
@@ -118,9 +118,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\X.UI.RichScrollViewer\X.UI.RichScrollViewer.csproj">
-      <Project>{ef4b51c0-f174-4799-9d52-8957b86bd9b9}</Project>
-      <Name>X.UI.RichScrollViewer</Name>
+    <ProjectReference Include="..\X.UI.EffectLayer\X.UI.EffectLayer.csproj">
+      <Project>{5470d5d0-10cb-4d3d-8026-0a49254a21be}</Project>
+      <Name>X.UI.EffectLayer</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
@@ -74,6 +75,43 @@ namespace X.UI.LiteDataGrid
 
 
 
+        public Brush FocusColor
+        {
+            get { return (Brush)GetValue(FocusColorProperty); }
+            set { SetValue(FocusColorProperty, value); }
+        }
+
+        public Brush FocusHoverColor
+        {
+            get { return (Brush)GetValue(FocusHoverColorProperty); }
+            set { SetValue(FocusHoverColorProperty, value); }
+        }
+
+        public Brush FocusForegroundColor
+        {
+            get { return (Brush)GetValue(FocusForegroundColorProperty); }
+            set { SetValue(FocusForegroundColorProperty, value); }
+        }
+
+
+        public Brush GlowColor
+        {
+            get { return (Brush)GetValue(GlowColorProperty); }
+            set { SetValue(GlowColorProperty, value); }
+        }
+
+        public double GlowAmount
+        {
+            get { return (double)GetValue(GlowAmountProperty); }
+            set { SetValue(GlowAmountProperty, value); }
+        }
+
+
+
+
+
+
+
 
 
         public static readonly DependencyProperty ItemTemplateToUseProperty =
@@ -84,8 +122,17 @@ namespace X.UI.LiteDataGrid
         public static readonly DependencyProperty ItemTemplate2Property = DependencyProperty.Register("ItemTemplate2", typeof(DataTemplate), typeof(LiteDataGrid), new PropertyMetadata(null));
 
         public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(object), typeof(LiteDataGrid), new PropertyMetadata(null));
-
         
+        public static readonly DependencyProperty GlowAmountProperty = DependencyProperty.Register("GlowAmount", typeof(double), typeof(LiteDataGrid), new PropertyMetadata(3));
+
+        public static readonly DependencyProperty GlowColorProperty = DependencyProperty.Register("GlowColor", typeof(Brush), typeof(LiteDataGrid), new PropertyMetadata(Colors.Black));
+
+        public static readonly DependencyProperty FocusForegroundColorProperty = DependencyProperty.Register("FocusForegroundColor", typeof(Brush), typeof(LiteDataGrid), new PropertyMetadata(Colors.White, OnPropertyChanged));
+
+        public static readonly DependencyProperty FocusHoverColorProperty = DependencyProperty.Register("FocusHoverColor", typeof(Brush), typeof(LiteDataGrid), new PropertyMetadata(Colors.DarkGray, OnPropertyChanged));
+
+        public static readonly DependencyProperty FocusColorProperty = DependencyProperty.Register("FocusColor", typeof(Brush), typeof(LiteDataGrid), new PropertyMetadata(Colors.DarkGray, OnPropertyChanged));
+
 
 
 
@@ -107,6 +154,13 @@ namespace X.UI.LiteDataGrid
 
         }
 
+        private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var instance = d as ScrollViewer;
+            if (d == null)
+                return;
 
+           
+        }
     }
 }

@@ -1,0 +1,43 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:xuiel="using:X.UI.EffectLayer"
+    xmlns:local="using:X.UI.RichScrollViewer">
+
+    <Style TargetType="local:ScrollViewer" >
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:ScrollViewer">
+                    <Grid x:Name="rootContainer">
+                        <Grid.Resources>
+                            <Storyboard x:Key="sbHideBgLayer">
+                                <DoubleAnimation Duration="0:0:0.1" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="bkgLayer" />
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="bkgLayer">
+                                    <DiscreteObjectKeyFrame KeyTime="0:0:0.1">
+                                        <DiscreteObjectKeyFrame.Value>
+                                            <Visibility>Collapsed</Visibility>
+                                        </DiscreteObjectKeyFrame.Value>
+                                    </DiscreteObjectKeyFrame>
+                                </ObjectAnimationUsingKeyFrames>
+                            </Storyboard>
+                            <Storyboard x:Key="sbShowBgLayer">
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="bkgLayer">
+                                    <DiscreteObjectKeyFrame KeyTime="0:0:0.0">
+                                        <DiscreteObjectKeyFrame.Value>
+                                            <Visibility>Visible</Visibility>
+                                        </DiscreteObjectKeyFrame.Value>
+                                    </DiscreteObjectKeyFrame>
+                                </ObjectAnimationUsingKeyFrames>
+                                <DoubleAnimation Duration="0:0:0.5" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="bkgLayer" />
+                            </Storyboard>
+                        </Grid.Resources>
+                        <xuiel:EffectLayer x:Name="bkgLayer" HorizontalAlignment="Left"  GlowFill="Transparent" VerticalAlignment="Stretch" GlowAmount="{TemplateBinding GlowAmount}" GlowColor="{TemplateBinding GlowColor}" ShowGlowArea="False" Margin="0,0,-15,-15"></xuiel:EffectLayer>
+                        <ScrollViewer x:Name="root" BorderBrush="{TemplateBinding FocusColor}" BorderThickness="{TemplateBinding BorderThickness}" Background="White" Content="{TemplateBinding Content}">
+                            
+                        </ScrollViewer>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

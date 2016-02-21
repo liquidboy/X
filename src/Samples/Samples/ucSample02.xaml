@@ -25,27 +25,27 @@
                 </xuiri:Input>
             </StackPanel>
 
-            <Border BorderBrush="LightGray" BorderThickness="1">
-                <xuildg:LiteDataGrid x:Name="lbCommon" HorizontalContentAlignment="Stretch" Margin="0,0,0,0" Height="350">
-                    <xuildg:LiteDataGrid.ItemTemplate1>
-                        <DataTemplate>
-                            <StackPanel Orientation="Vertical" BorderBrush="LightGray" BorderThickness="0,0,0,1" Margin="5" Padding="0,0,0,10">
-                                <TextBlock Text="{Binding Title}" TextWrapping="WrapWholeWords"></TextBlock>
-                                <HyperlinkButton Content="Watch" NavigateUri="{Binding Link}"></HyperlinkButton>
-                            </StackPanel>
-                        </DataTemplate>
-                    </xuildg:LiteDataGrid.ItemTemplate1>
-                    <xuildg:LiteDataGrid.ItemTemplate2>
-                        <DataTemplate>
-                            <Grid HorizontalAlignment="Stretch" Margin="5,5,20,0">
-                                <xuip:Path PathType="Book" Foreground="Gray" Width="20" Height="20" HorizontalAlignment="Left"></xuip:Path>
-                                <TextBlock Text="{Binding Title}" TextWrapping="WrapWholeWords" HorizontalAlignment="Left" FontSize="12" Margin="30,5,80,0"></TextBlock>
-                                <Button Content="Watch" Background="Transparent" BorderBrush="#FFB9B9B9" BorderThickness="1" HorizontalAlignment="Right" FontSize="11" ></Button>
-                            </Grid>
-                        </DataTemplate>
-                    </xuildg:LiteDataGrid.ItemTemplate2>
-                </xuildg:LiteDataGrid>
-            </Border>
+            
+            <xuildg:LiteDataGrid x:Name="lbCommon" HorizontalContentAlignment="Stretch" Margin="0,0,0,0" Height="350" FocusForegroundColor="{Binding Accent1ContrastBrush}" FocusColor="{Binding Accent1Brush}" FocusHoverColor="{Binding Accent2Brush}" BorderThickness="1" GlowAmount="2" GlowColor="{Binding Accent2Brush}">
+                <xuildg:LiteDataGrid.ItemTemplate1>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical" BorderBrush="LightGray" BorderThickness="0,0,0,1" Margin="5" Padding="0,0,0,10">
+                            <TextBlock Text="{Binding Title}" TextWrapping="WrapWholeWords"></TextBlock>
+                            <HyperlinkButton Content="Watch" NavigateUri="{Binding Link}"></HyperlinkButton>
+                        </StackPanel>
+                    </DataTemplate>
+                </xuildg:LiteDataGrid.ItemTemplate1>
+                <xuildg:LiteDataGrid.ItemTemplate2>
+                    <DataTemplate>
+                        <Grid HorizontalAlignment="Stretch" Margin="5,5,20,0">
+                            <xuip:Path PathType="Book" Foreground="Gray" Width="20" Height="20" HorizontalAlignment="Left"></xuip:Path>
+                            <TextBlock Text="{Binding Title}" TextWrapping="WrapWholeWords" HorizontalAlignment="Left" FontSize="12" Margin="30,5,80,0"></TextBlock>
+                            <Button Content="Watch" Background="Transparent" BorderBrush="#FFB9B9B9" BorderThickness="1" HorizontalAlignment="Right" FontSize="11" ></Button>
+                        </Grid>
+                    </DataTemplate>
+                </xuildg:LiteDataGrid.ItemTemplate2>
+            </xuildg:LiteDataGrid>
+            
 
         </StackPanel>
     </Grid>
