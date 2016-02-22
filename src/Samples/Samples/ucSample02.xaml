@@ -31,7 +31,7 @@
                     <DataTemplate>
                         <StackPanel Orientation="Vertical" BorderBrush="LightGray" BorderThickness="0,0,0,1" Margin="5" Padding="0,0,0,10">
                             <TextBlock Text="{Binding Title}" TextWrapping="WrapWholeWords"></TextBlock>
-                            <HyperlinkButton Content="Watch" NavigateUri="{Binding Link}"></HyperlinkButton>
+                            <HyperlinkButton Content="Watch" NavigateUri="{Binding Link}" BorderBrush="{Binding Accent1}"></HyperlinkButton>
                         </StackPanel>
                     </DataTemplate>
                 </xuildg:LiteDataGrid.ItemTemplate1>
@@ -40,7 +40,7 @@
                         <Grid HorizontalAlignment="Stretch" Margin="5,5,20,0">
                             <xuip:Path PathType="Book" Foreground="Gray" Width="20" Height="20" HorizontalAlignment="Left"></xuip:Path>
                             <TextBlock Text="{Binding Title}" TextWrapping="WrapWholeWords" HorizontalAlignment="Left" FontSize="12" Margin="30,5,80,0"></TextBlock>
-                            <Button Content="Watch" Background="Transparent" BorderBrush="#FFB9B9B9" BorderThickness="1" HorizontalAlignment="Right" FontSize="11" ></Button>
+                            <Button Content="Watch" Background="Transparent" BorderBrush="{Binding Accent1Brush}" BorderThickness="1" HorizontalAlignment="Right" FontSize="11" ></Button>
                         </Grid>
                     </DataTemplate>
                 </xuildg:LiteDataGrid.ItemTemplate2>

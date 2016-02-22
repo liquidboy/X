@@ -24,4 +24,26 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style TargetType="local:CircularCard" >
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:CircularCard">
+                    <Grid>
+                        <xuiel:EffectLayer x:Name="bkgLayer" HorizontalAlignment="Stretch"  GlowFill="Transparent" VerticalAlignment="Stretch" GlowAmount="{TemplateBinding GlowAmount}" GlowColor="{TemplateBinding GlowColor}" ShowGlowArea="False" ></xuiel:EffectLayer>
+                        <StackPanel x:Name="root" Orientation="Vertical" >
+                            <Ellipse  Width="40" Height="40" IsHitTestVisible="False" VerticalAlignment="Top">
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="{TemplateBinding AvatarUri}" Stretch="UniformToFill" />
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="{TemplateBinding PrimaryName}" FontSize="20" HorizontalAlignment="Right" Foreground="White"></TextBlock>
+                                <TextBlock Text="{TemplateBinding SecondaryName}" FontSize="12" HorizontalAlignment="Right" Foreground="White"></TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

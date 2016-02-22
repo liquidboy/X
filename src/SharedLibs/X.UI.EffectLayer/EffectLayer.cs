@@ -169,7 +169,7 @@ namespace X.UI.EffectLayer
         private void OnDraw(CanvasControl sender, CanvasDrawEventArgs args)
         {
             try { if (GlowAmount == 0d) return; } catch { return; }
-            
+
             args.DrawingSession.Clear(Colors.Transparent);
             
             var sz = new Size(ParentWidth, ParentHeight);
@@ -190,12 +190,11 @@ namespace X.UI.EffectLayer
             foreach (var elm in _uielements)
             {
                 var offset = (float)ExpandAmount / 2;
-                //using (var textLayout = CreateTextLayout(ds, size))
                 using (var cl = new CanvasCommandList(ds))
                 {
                     using (var clds = cl.CreateDrawingSession())
                     {
-                        using (var canvasbmp = CanvasBitmap.CreateFromBytes(sender.Device, elm.Item1, elm.Item2, elm.Item3, Windows.Graphics.DirectX.DirectXPixelFormat.B8G8R8A8UIntNormalized))  //B8G8R8A8UIntNormalized
+                        using (var canvasbmp = CanvasBitmap.CreateFromBytes(sender.Device, elm.Item1, elm.Item2, elm.Item3, Windows.Graphics.DirectX.DirectXPixelFormat.B8G8R8A8UIntNormalized))
                         {
                             clds.DrawImage(canvasbmp, 0, 0);
                         }
@@ -218,7 +217,6 @@ namespace X.UI.EffectLayer
         private void DoEffect(CanvasDrawingSession ds, Size size, float amount, Windows.UI.Color glowColor, Windows.UI.Color fillColor, double expandAmount)
         {
             var offset = (float)expandAmount / 2;
-            //using (var textLayout = CreateTextLayout(ds, size))
             using (var cl = new CanvasCommandList(ds))
             {
                 using (var clds = cl.CreateDrawingSession())
@@ -237,7 +235,6 @@ namespace X.UI.EffectLayer
             foreach (var stream in _streams)
             {
                 var offset = (float)ExpandAmount / 2;
-                //using (var textLayout = CreateTextLayout(ds, size))
                 using (var cl = new CanvasCommandList(ds))
                 {
                     using (var clds = cl.CreateDrawingSession())
@@ -250,17 +247,7 @@ namespace X.UI.EffectLayer
                     _eg.Setup(cl, (float)GlowAmount, GlowColor);
                     ds.DrawImage(_eg.Output, offset, offset);
                 }
-                //try {
-                //    if (stream.CanRead)
-                //    {
-                //        stream.Seek(0);
-                //        var canvasbmp = await CanvasBitmap.LoadAsync(sender, stream);
-                //        ds.DrawImage(canvasbmp, 0, 0);
-                //    }
-                //}
-                //catch (Exception ex) {
 
-                //}
                 
             }
         }
@@ -274,7 +261,6 @@ namespace X.UI.EffectLayer
                 foreach(var path in _paths)
                 {
                     var offset = (float)ExpandAmount / 2;
-                    //using (var textLayout = CreateTextLayout(ds, size))
                     using (var cl = new CanvasCommandList(ds))
                     using (var pthGeo = pthConverter.parse(path, thBuilder))
                     {
