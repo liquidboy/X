@@ -19,6 +19,7 @@ namespace X.UI.UserCard
 
         StackPanel _root;
         int RenderTargetIndexFor_Root = 0;
+        //DispatcherTimer dtInvalidate;
 
         double bkgOffsetX = 0;
         double bkgOffsetY = 0;
@@ -27,9 +28,20 @@ namespace X.UI.UserCard
         {
             this.DefaultStyleKey = typeof(CircularCard);
 
+            //dtInvalidate = new DispatcherTimer();
+            //dtInvalidate.Tick += DtInvalidate_Tick;
+            //dtInvalidate.Interval = TimeSpan.FromMilliseconds(100);
+
             Loaded += CircularCard_Loaded;
             Unloaded += CircularCard_Unloaded;
+
         }
+
+        //private void DtInvalidate_Tick(object sender, object e)
+        //{
+        //    //dtInvalidate.Stop();
+        //    Invalidate();
+        //}
 
         private void CircularCard_Unloaded(object sender, RoutedEventArgs e)
         {
@@ -40,8 +52,9 @@ namespace X.UI.UserCard
         {
             if (_bkgLayer != null)
             {
-                _bkgLayer.DrawUIElements(_root); 
-                _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY);
+                _bkgLayer.DrawUIElements(_root, offsetX: 3);
+                _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY, EffectLayer.EffectGraphType.Glow);
+                //dtInvalidate.Start();
             }
         }
 
@@ -55,12 +68,12 @@ namespace X.UI.UserCard
                 _root.DataContext = this;
             }
 
-            if (_bkgLayer != null && _root != null && _root.ActualWidth != 0) _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY);
+            if (_bkgLayer != null && _root != null && _root.ActualWidth != 0) _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY, EffectLayer.EffectGraphType.Glow);
 
             base.OnApplyTemplate();
         }
         
-        public void Invalidate(double offsetX = 0, double offsetY = 0) { _bkgLayer?.DrawUIElements(_root, RenderTargetIndexFor_Root, offsetX, offsetY); }
+        public void Invalidate(double offsetX = 3, double offsetY = 0) { _bkgLayer?.DrawUIElements(_root, RenderTargetIndexFor_Root, offsetX, offsetY); }
 
 
 
@@ -117,7 +130,7 @@ namespace X.UI.UserCard
 
         public static readonly DependencyProperty IsAvatarOnRightProperty = DependencyProperty.Register("IsAvatarOnRight", typeof(bool), typeof(CircularCard), new PropertyMetadata(true, OnPropertyChanged));
 
-        public static readonly DependencyProperty AvatarUriProperty = DependencyProperty.Register("AvatarUri", typeof(ImageSource), typeof(CircularCard), new PropertyMetadata(null));
+        public static readonly DependencyProperty AvatarUriProperty = DependencyProperty.Register("AvatarUri", typeof(ImageSource), typeof(CircularCard), new PropertyMetadata(null, OnPropertyChanged));
         
         public static readonly DependencyProperty GlowAmountProperty = DependencyProperty.Register("GlowAmount", typeof(double), typeof(CircularCard), new PropertyMetadata(2, OnPropertyChanged));
 
@@ -139,7 +152,6 @@ namespace X.UI.UserCard
             }
         }
 
-      
-
+        
     }
 }

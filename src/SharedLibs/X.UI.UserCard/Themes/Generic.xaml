@@ -4,6 +4,7 @@
     xmlns:xuiel="using:X.UI.EffectLayer"
     xmlns:local="using:X.UI.UserCard">
     <local:RightToFlowDirectionConverter x:Key="RightToFlowDirectionConverter" />
+
     <Style TargetType="local:SmallCard" >
         <Setter Property="Template">
             <Setter.Value>
@@ -30,15 +31,15 @@
                 <ControlTemplate TargetType="local:CircularCard">
                     <Grid>
                         <xuiel:EffectLayer x:Name="bkgLayer" HorizontalAlignment="Stretch"  GlowFill="Transparent" VerticalAlignment="Stretch" GlowAmount="{TemplateBinding GlowAmount}" GlowColor="{TemplateBinding GlowColor}" ShowGlowArea="False" ></xuiel:EffectLayer>
-                        <StackPanel x:Name="root" Orientation="Vertical" >
-                            <Ellipse  Width="40" Height="40" IsHitTestVisible="False" VerticalAlignment="Top">
+                        <StackPanel x:Name="root" Orientation="Vertical">
+                            <Ellipse  Width="40" Height="40" IsHitTestVisible="False" VerticalAlignment="Top" >
                                 <Ellipse.Fill>
-                                    <ImageBrush ImageSource="{TemplateBinding AvatarUri}" Stretch="UniformToFill" />
+                                    <ImageBrush ImageSource="{Binding AvatarUri}" Stretch="UniformToFill" />
                                 </Ellipse.Fill>
                             </Ellipse>
                             <StackPanel Orientation="Vertical">
-                                <TextBlock Text="{TemplateBinding PrimaryName}" FontSize="20" HorizontalAlignment="Right" Foreground="White"></TextBlock>
-                                <TextBlock Text="{TemplateBinding SecondaryName}" FontSize="12" HorizontalAlignment="Right" Foreground="White"></TextBlock>
+                                <TextBlock Text="{TemplateBinding PrimaryName}" FontSize="16" HorizontalAlignment="Center" Foreground="White"></TextBlock>
+                                <TextBlock Text="{TemplateBinding SecondaryName}" FontSize="9" HorizontalAlignment="Center" Foreground="White"></TextBlock>
                             </StackPanel>
                         </StackPanel>
                     </Grid>
