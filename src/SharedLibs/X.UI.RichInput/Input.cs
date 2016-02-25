@@ -917,8 +917,9 @@ namespace X.UI.RichInput
 
                 //instance.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () => {
                     instance.SetColors(instance.FocusColor, instance.FocusHoverColor, instance.FocusForegroundColor, instance._model);
+                    instance.Invalidate();
                 //});
-                
+
 
                 //((UIElement)d).UpdateLayout();
             }
