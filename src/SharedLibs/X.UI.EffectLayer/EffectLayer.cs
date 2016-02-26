@@ -81,12 +81,18 @@ namespace X.UI.EffectLayer
             {
                 canvas.Draw -= OnDraw;
                 canvas.RemoveFromVisualTree();
+                
                 canvas = null;
             }
 
+            if (_eg != null) { _eg.Dispose(); _eg = null; }
             _paths.Clear();
             _uielements.Clear();
-            
+            _uielements.Clear();
+
+            _bkgLayer.Content = null;
+
+
         }
 
         //public void Invalidate(double offsetX = 0, double offsetY=0) { _offsetX = 0; _offsetY = 0; canvas?.Invalidate(); }

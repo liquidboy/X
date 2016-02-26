@@ -40,8 +40,12 @@ namespace Samples
 
             SetTheme("Orange");
 
+
+            SetTabContent("Samples 1");
+
         }
 
+     
 
         public void SetTheme(string theme)
         {
@@ -94,20 +98,33 @@ namespace Samples
             }
         }
 
+           private void SetTabContent(string name) {
 
+            ccTabContent.Content = null;
+            
+            if (name == "Samples 1") {
+                var nt = new ucSample01();
+                ccTabContent.Content = nt;
+            }
+            else if (name == "Samples 2")
+            {
+                
+                var nt = new ucSample02();
+                ccTabContent.Content = nt;
+                nt.LoadSample();
+            }
+            else if (name == "Samples 3")
+            {
+                var nt = new ucSample03();
+                ccTabContent.Content = nt;
+                nt.LoadSample();
+            }
+        }
 
         private void tlMain_OnTabChanged(object sender, EventArgs e)
         {
-            ctl1.Visibility = Visibility.Collapsed;
-            ctl2.Visibility = Visibility.Collapsed;
-            ctl3.Visibility = Visibility.Collapsed;
-
             var selected = (Tab)sender;
-            if (selected.Name == "Samples 1") { ctl1.Visibility = Visibility.Visible; }
-            else if (selected.Name == "Samples 2") { ctl2.Visibility = Visibility.Visible; ctl2.LoadSample(); }
-            else if (selected.Name == "Samples 3") { ctl3.Visibility = Visibility.Visible; ctl3.LoadSample(); }
-
-            //tlMain.Invalidate();
+            SetTabContent(selected.Name);
         }
 
         private void rcbThemes_ValueChanged(object sender, RoutedEventArgs e)

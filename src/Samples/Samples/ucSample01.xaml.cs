@@ -31,6 +31,15 @@ namespace Samples
             dt.Interval = TimeSpan.FromMilliseconds(50);
             dt.Start();
 
+            this.Unloaded += UcSample01_Unloaded;
+        }
+
+        private void UcSample01_Unloaded(object sender, RoutedEventArgs e)
+        {
+
+            this.Unloaded -= UcSample01_Unloaded;
+            dt.Stop();
+            dt.Tick -= Dt_Tick;
         }
 
         private async void Dt_Tick(object sender, object e)

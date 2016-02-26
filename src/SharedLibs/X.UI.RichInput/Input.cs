@@ -102,12 +102,12 @@ namespace X.UI.RichInput
             }
 
 
-            if(Type== InputType.progressRing && dtInvalidate != null)
-            {
-                if (IsActive) { dtInvalidateForever = true; dtInvalidate.Start(); }
-                else { dtInvalidate.Stop(); }
+            //if(Type== InputType.progressRing && dtInvalidate != null)
+            //{
+            //    if (IsActive) { dtInvalidateForever = true; dtInvalidate.Start(); }
+            //    else { dtInvalidate.Stop(); }
                 
-            }
+            //}
         }
 
         protected override void OnApplyTemplate()
@@ -359,83 +359,88 @@ namespace X.UI.RichInput
 
         private async void SetColors(Color focusColor, Color focusHoverColor, Color focusForegroundColor, InputModel model) 
         {
+            try {
+                model.FocusColor = focusColor;
+                model.FocusHoverColor = focusHoverColor;
+                model.FocusForegroundColor = focusForegroundColor;
 
-            model.FocusColor = focusColor;
-            model.FocusHoverColor = focusHoverColor;
-            model.FocusForegroundColor = focusForegroundColor;
+                if (_udfg1 != null) _udfg1.Background = new SolidColorBrush(focusColor);
+                if (_udfCB1 != null)
+                {
+                    _udfCB1.BorderBrush = new SolidColorBrush(focusColor);
+                    _udfCB1.Foreground = new SolidColorBrush(focusColor);
+                    //var border = _udfCB1.FindName("PopupBorder") as Border;
+                    //if (border != null) {
+                    //    border.Background = new SolidColorBrush(focusColor);
+                    //    border.BorderBrush = new SolidColorBrush(focusColor);
+                    //}                
+                }
 
-            if (_udfg1 != null) _udfg1.Background = new SolidColorBrush(focusColor);
-            if (_udfCB1 != null)
-            {
-                _udfCB1.BorderBrush = new SolidColorBrush(focusColor);
-                _udfCB1.Foreground = new SolidColorBrush(focusColor);
-                //var border = _udfCB1.FindName("PopupBorder") as Border;
-                //if (border != null) {
-                //    border.Background = new SolidColorBrush(focusColor);
-                //    border.BorderBrush = new SolidColorBrush(focusColor);
-                //}                
-            }
+                if (_udfTB1 != null)
+                {
+                    _udfTB1.Foreground = new SolidColorBrush(focusColor);
+                    _udfTB1.BorderBrush = new SolidColorBrush(focusColor);
+                }
 
-            if (_udfTB1 != null)
-            {
-                _udfTB1.Foreground = new SolidColorBrush(focusColor);
-                _udfTB1.BorderBrush = new SolidColorBrush(focusColor);
-            }
+                if (_udfPB1 != null)
+                {
+                    _udfPB1.Foreground = new SolidColorBrush(focusColor);
+                    _udfPB1.BorderBrush = new SolidColorBrush(focusColor);
+                }
 
-            if (_udfPB1!= null)
-            {
-                _udfPB1.Foreground = new SolidColorBrush(focusColor);
-                _udfPB1.BorderBrush = new SolidColorBrush(focusColor);
-            }
+                if (_udfChkB1 != null)
+                {
+                    _udfChkB1.Foreground = new SolidColorBrush(focusColor);
+                }
 
-            if (_udfChkB1 != null)
-            {
-                _udfChkB1.Foreground = new SolidColorBrush(focusColor);
-            }
+                if (_udfRB1 != null)
+                {
+                    _udfRB1.Foreground = new SolidColorBrush(focusColor);
+                }
 
-            if (_udfRB1 != null)
-            {
-                _udfRB1.Foreground = new SolidColorBrush(focusColor);
-            }
+                if (_udfProgBr1 != null)
+                {
+                    _udfProgBr1.Foreground = new SolidColorBrush(focusColor);
+                    _udfProgBr1.Background = new SolidColorBrush(focusHoverColor);
+                }
+                if (_udfTBut1 != null)
+                {
+                    _udfTBut1.Foreground = new SolidColorBrush(focusForegroundColor);
+                    _udfTBut1.Background = new SolidColorBrush(focusColor);
+                }
+                if (_udfTS1 != null)
+                {
+                    _udfTS1.Foreground = new SolidColorBrush(focusColor);
+                    _udfTS1.Background = new SolidColorBrush(focusHoverColor);
+                }
+                if (_udfSl1 != null)
+                {
+                    _udfSl1.Foreground = new SolidColorBrush(focusColor);
+                    _udfSl1.Background = new SolidColorBrush(focusHoverColor);
+                }
 
-            if (_udfProgBr1 != null)
-            {
-                _udfProgBr1.Foreground = new SolidColorBrush(focusColor);
-                _udfProgBr1.Background = new SolidColorBrush(focusHoverColor);
-            }
-            if (_udfTBut1 != null)
-            {
-                _udfTBut1.Foreground = new SolidColorBrush(focusForegroundColor);
-                _udfTBut1.Background = new SolidColorBrush(focusColor);
-            }
-            if (_udfTS1 != null)
-            {
-                _udfTS1.Foreground = new SolidColorBrush(focusColor);
-                _udfTS1.Background = new SolidColorBrush(focusHoverColor);
-            }
-            if (_udfSl1 != null)
-            {
-                _udfSl1.Foreground = new SolidColorBrush(focusColor);
-                _udfSl1.Background = new SolidColorBrush(focusHoverColor);
-            }
+                if (_udfProgRn1 != null)
+                {
+                    _udfProgRn1.Foreground = new SolidColorBrush(focusColor);
+                }
 
-            if (_udfProgRn1 != null)
-            {
-                _udfProgRn1.Foreground = new SolidColorBrush(focusColor);
+                if (Type == InputType.text || Type == InputType.password || Type == InputType.combobox)
+                {
+                    if (_udfTBL1 != null) _udfTBL1.Foreground = new SolidColorBrush(focusForegroundColor);
+                }
+
+                //if (_udfg1 != null) _udfg1.SetBinding(Grid.BackgroundProperty, new Binding() { Path = new PropertyPath("FocusColor") });
+                //if (_udfCB1 != null) _udfCB1.SetBinding(ComboBox.ForegroundProperty , new Binding() { Path = new PropertyPath("FocusColor") });
+
+                //if (Type == InputType.text || Type == InputType.password || Type == InputType.combobox)
+                //{
+                //    if (_udfTBL1 != null) _udfTBL1.SetBinding(TextBlock.ForegroundProperty, new Binding() { Path = new PropertyPath("FocusForegroundColor") });
+                //}
             }
+            catch (Exception ex){
 
-            if (Type == InputType.text || Type == InputType.password || Type == InputType.combobox)
-            {
-                if (_udfTBL1 != null) _udfTBL1.Foreground = new SolidColorBrush(focusForegroundColor);
             }
-
-            //if (_udfg1 != null) _udfg1.SetBinding(Grid.BackgroundProperty, new Binding() { Path = new PropertyPath("FocusColor") });
-            //if (_udfCB1 != null) _udfCB1.SetBinding(ComboBox.ForegroundProperty , new Binding() { Path = new PropertyPath("FocusColor") });
-
-            //if (Type == InputType.text || Type == InputType.password || Type == InputType.combobox)
-            //{
-            //    if (_udfTBL1 != null) _udfTBL1.SetBinding(TextBlock.ForegroundProperty, new Binding() { Path = new PropertyPath("FocusForegroundColor") });
-            //}
+            
         }
 
         private void UpdateControl(InputType type, string label, string placeholderText, double labelFontSize, double labelTranslateY, string groupName, ContentControl ccInput)
@@ -464,11 +469,12 @@ namespace X.UI.RichInput
             }
             else if (type == InputType.combobox)
             {
-                var sp = (StackPanel)_ccInput.Content;
-                var cb = (ComboBox)sp.Children[0];
+                var sp = (Grid)_ccInput.Content;
+                var cb = (ComboBox)sp.Children[1];
                 cb.SelectionChanged -= itcombobox_SelectionChanged;
-                if (cb.Items != null && cb.Items.Count > 0) cb.Items.Clear();
-                if (cb.ItemsSource != null) cb.ItemsSource = null;
+                //if (cb.Items != null && cb.Items.Count > 0) cb.Items.Clear();
+                //if (cb.ItemsSource != null) cb.ItemsSource = null;
+                
             }
             if (_udfTS1 != null) {
                 _udfTS1.Toggled -= ittoggleswitch_Toggled;
@@ -502,8 +508,8 @@ namespace X.UI.RichInput
             }
             if (_udfg1 != null)
             {
-                _udfg1 = null;
                 _udfg1.Children.Clear();
+                _udfg1 = null;
             }
 
             if (dtInvalidate != null) {

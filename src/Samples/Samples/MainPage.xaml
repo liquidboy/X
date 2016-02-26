@@ -27,9 +27,10 @@
 
             </xuilt:TabList>
 
-            <local:ucSample01 x:Name="ctl1" HorizontalAlignment="Stretch" Width="500"></local:ucSample01>
+            <ContentControl x:Name="ccTabContent" Width="500"></ContentControl>
+            <!--<local:ucSample01 x:Name="ctl1" HorizontalAlignment="Stretch" Width="500"></local:ucSample01>
             <local:ucSample02 x:Name="ctl2" HorizontalAlignment="Stretch" Width="500" Visibility="Collapsed"></local:ucSample02>
-            <local:ucSample03 x:Name="ctl3" HorizontalAlignment="Stretch" Width="500" Visibility="Collapsed"></local:ucSample03>
+            <local:ucSample03 x:Name="ctl3" HorizontalAlignment="Stretch" Width="500" Visibility="Collapsed"></local:ucSample03>-->
 
         </StackPanel>
 

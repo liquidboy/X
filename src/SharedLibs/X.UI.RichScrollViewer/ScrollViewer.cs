@@ -47,7 +47,12 @@ namespace X.UI.RichScrollViewer
 
         private void ScrollViewer_Unloaded(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (dtInvalidate != null) dtInvalidate.Tick -= DtInvalidate_Tick;
+
+            this.Loaded -= ScrollViewer_Loaded;
+            this.Unloaded -= ScrollViewer_Unloaded;
+            
+            //throw new NotImplementedException();
         }
 
         private void ScrollViewer_Loaded(object sender, RoutedEventArgs e)
