@@ -500,6 +500,9 @@
     <Compile Include="Shared\MVVM\Views\GlobalState.cs" />
     <Compile Include="Shared\MVVM\Views\IPopupUserControl.cs" />
     <Compile Include="Shared\MVVM\Views\IToolbarUserControl.cs" />
+    <Compile Include="Sprites\IVisualTree.cs" />
+    <Compile Include="Sprites\IVisualTreeElement.cs" />
+    <Compile Include="Sprites\SpriteBatch.cs" />
     <Compile Include="Viewer\ContentViewEventArgs.cs" />
     <Compile Include="Viewer\IContentRenderer.cs" />
     <Compile Include="WriteableBitmapExtensions.cs" />
