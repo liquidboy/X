@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tab.cs" />
     <EmbeddedResource Include="Properties\X.UI.MoreTab.rd.xml" />
   </ItemGroup>
   <ItemGroup>
