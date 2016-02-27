@@ -1,0 +1,27 @@
+﻿<UserControl
+    x:Class="X.Viewer.MediaControls"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:X.Viewer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <Grid>
+                <Slider x:Name="sldMain" HorizontalAlignment="Stretch" Margin="50,0,50,0" Value="{Binding Position.TotalMinutes, Mode=OneWay}" Maximum="{Binding NaturalDuration.TimeSpan.TotalMinutes}" IsEnabled="False" />
+                <Slider x:Name="sldMainMover" HorizontalAlignment="Stretch" Margin="50,0,50,0" Maximum="{Binding NaturalDuration.TimeSpan.TotalMinutes}" ValueChanged="sldMainMover_ValueChanged"  />
+            </Grid>
+            
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button x:Name="butPlay" Content="Play" Height="40" Click="butPlay_Click"></Button>
+                <Button x:Name="butPause" Content="Pause" Height="40" Click="butPause_Click"></Button>
+                <Button x:Name="butStop" Content="Stop" Height="40" Click="butStop_Click"></Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>
+
+    
