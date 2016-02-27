@@ -126,6 +126,19 @@
     <Compile Include="Converters\StripHtmlTagsConverter.cs" />
     <Compile Include="Converters\SurroundStringConverter.cs" />
     <Compile Include="Converters\UriToBitmapImageConverter.cs" />
+    <Compile Include="Effects\CompositionExtensions.cs" />
+    <Compile Include="Effects\CompositionManager.cs" />
+    <Compile Include="Effects\ContrastEffect.cs" />
+    <Compile Include="Effects\ExposureEffect.cs" />
+    <Compile Include="Effects\GammaTransferEffect.cs" />
+    <Compile Include="Effects\GrayscaleEffect.cs" />
+    <Compile Include="Effects\HueRotationEffect.cs" />
+    <Compile Include="Effects\ICompositionEffect.cs" />
+    <Compile Include="Effects\InvertEffect.cs" />
+    <Compile Include="Effects\SaturationEffect.cs" />
+    <Compile Include="Effects\SepiaEffect.cs" />
+    <Compile Include="Effects\ShadowEffect.cs" />
+    <Compile Include="Effects\TemperatureAndTintEffect.cs" />
     <Compile Include="Extensions\ExtensionInToolbarPositions.cs" />
     <Compile Include="Extensions\ExtensionManifest.cs" />
     <Compile Include="Extensions\ExtensionPosition.cs" />
@@ -492,7 +505,12 @@
     <Compile Include="WriteableBitmapExtensions.cs" />
     <EmbeddedResource Include="Properties\X.CoreLib.rd.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.UI.Composition.Toolkit\Microsoft.UI.Composition.Toolkit.vcxproj">
+      <Project>{08a7d060-593a-4978-8dcc-b2029aca7c95}</Project>
+      <Name>Microsoft.UI.Composition.Toolkit</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Shared\F12\ConsoleUI.xaml">
       <Generator>MSBuild:Compile</Generator>
