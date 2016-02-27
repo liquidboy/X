@@ -113,7 +113,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TabButton.cs" />
     <Compile Include="TabList.cs" />
-    <Compile Include="test.cs" />
     <EmbeddedResource Include="Properties\X.UI.RichTab.rd.xml" />
   </ItemGroup>
   <ItemGroup>
