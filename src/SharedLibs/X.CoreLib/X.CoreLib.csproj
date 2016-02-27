@@ -107,6 +107,25 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityInvertedConverter.cs" />
+    <Compile Include="Converters\CleanStatusConverter.cs" />
+    <Compile Include="Converters\DataToPathConverter.cs" />
+    <Compile Include="Converters\DebugStepIntoPropertyConverter.cs" />
+    <Compile Include="Converters\EnumTypeToListConverter.cs" />
+    <Compile Include="Converters\ImageConverter.cs" />
+    <Compile Include="Converters\ImageTypeToStringConverter.cs" />
+    <Compile Include="Converters\InverseBooleanConverter.cs" />
+    <Compile Include="Converters\StringDateToDaysAgoConverter.cs" />
+    <Compile Include="Converters\StringEmptyToSmileyConverter.cs" />
+    <Compile Include="Converters\StringEmptyToVisibilityConverter.cs" />
+    <Compile Include="Converters\StringEmptyToVisibilityInvertedConverter.cs" />
+    <Compile Include="Converters\StringFormatConverter.cs" />
+    <Compile Include="Converters\StringFromDictionaryConverter.cs" />
+    <Compile Include="Converters\StripHtmlTagsConverter.cs" />
+    <Compile Include="Converters\SurroundStringConverter.cs" />
+    <Compile Include="Converters\UriToBitmapImageConverter.cs" />
     <Compile Include="Extensions\ExtensionInToolbarPositions.cs" />
     <Compile Include="Extensions\ExtensionManifest.cs" />
     <Compile Include="Extensions\ExtensionPosition.cs" />
@@ -473,9 +492,7 @@
     <Compile Include="WriteableBitmapExtensions.cs" />
     <EmbeddedResource Include="Properties\X.CoreLib.rd.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Converters\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="Shared\F12\ConsoleUI.xaml">
       <Generator>MSBuild:Compile</Generator>
