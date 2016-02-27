@@ -1,0 +1,103 @@
+﻿<UserControl
+    x:Class="SumoNinjaMonkey.Framework.Controls.PopupView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SumoNinjaMonkey.Framework.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400" >
+	<UserControl.Resources>
+		<Storyboard x:Name="sbShow">
+			<DoubleAnimation Duration="0:0:0.2" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="layoutRoot" d:IsOptimized="True"/>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="layoutRoot">
+				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="-13"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="layoutRoot">
+				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+        <Storyboard x:Name="sbMove">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="layoutRoot">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ExponentialEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="layoutRoot">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+		<Storyboard x:Name="sbHide">
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="layoutRoot">
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="150">
+        			<EasingDoubleKeyFrame.EasingFunction>
+        				<ExponentialEase/>
+        			</EasingDoubleKeyFrame.EasingFunction>
+        		</EasingDoubleKeyFrame>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="layoutRoot">
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+        	</DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+		<Storyboard x:Name="sbCountdown">
+			<DoubleAnimation Duration="0:0:5" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="recTimeLeft" d:IsOptimized="True"/>
+		</Storyboard>
+        
+        
+        <Storyboard x:Name="sbShowToolbar">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="grdToolbar">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ExponentialEase/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="grdToolbar">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Name="sbHideToolbar">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="grdToolbar">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="-20">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ExponentialEase/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="grdToolbar">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+	</UserControl.Resources>
+    
+    <Grid x:Name="layoutRoot" Opacity="0" RenderTransformOrigin="0,0">
+    	<Grid.RenderTransform>
+    		<CompositeTransform TranslateX="0" TranslateY="0" />
+    	</Grid.RenderTransform>
+
+        <Rectangle x:Name="recBackground" Margin="0,0,0,15"  Fill="{Binding MessageBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <Rectangle x:Name="recInnerBorder" Margin="5,5,5,20"  Fill="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <Grid x:Name="grdCustomControl"  HorizontalAlignment="Stretch" Margin="10,10,10,30" VerticalAlignment="Stretch">
+            <!--<Grid.Clip>
+                <RectangleGeometry x:Name="ggClip" Rect="0,0,399,299"/>
+            </Grid.Clip>-->
+        </Grid>
+        <Rectangle x:Name="recTimeLeft" Fill="{Binding CountdownBackgroundColor}" Stroke="{Binding CountdownBackgroundColor}" Grid.ColumnSpan="2" Height="3" VerticalAlignment="Bottom" Opacity="1" RenderTransformOrigin="1,0.5" Margin="0,0,0,20">
+        	<Rectangle.RenderTransform>
+        		<CompositeTransform/>
+        	</Rectangle.RenderTransform>
+        </Rectangle>
+        <Grid x:Name="grdToolbar" HorizontalAlignment="Left" VerticalAlignment="Top" Opacity="0">
+            <Grid.RenderTransform>
+                <CompositeTransform TranslateY="-20"/>
+            </Grid.RenderTransform>
+        </Grid>
+        <local:GlowingButton x:Name="butTopRight1" HorizontalAlignment="Right" Height="40" VerticalAlignment="Top" Width="40"/>
+        <local:GlowingButton x:Name="butTopRight2" HorizontalAlignment="Right" Height="40" VerticalAlignment="Top" Width="40" Margin="0,0,40,0" />
+        <Rectangle x:Name="pthCallout" Fill="{Binding MessageBackgroundColor}" HorizontalAlignment="Left" Height="15" VerticalAlignment="Bottom" Width="40" Margin="0,0,0,5" />
+        
+    </Grid>
+</UserControl>

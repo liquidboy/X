@@ -1,0 +1,97 @@
+﻿<UserControl
+    x:Class="SumoNinjaMonkey.Framework.Controls.Arc"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SumoNinjaMonkey.Framework.Framework.RadialMenu"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+
+    	<Storyboard x:Name="sbShowArc">
+    		<DoubleAnimation Duration="0:0:0.2" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="layoutRoot" d:IsOptimized="True">
+    			<DoubleAnimation.EasingFunction>
+    				<QuadraticEase/>
+    			</DoubleAnimation.EasingFunction>
+    		</DoubleAnimation>
+    		<DoubleAnimation Duration="0:0:0.2" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="layoutRoot" d:IsOptimized="True">
+    			<DoubleAnimation.EasingFunction>
+    				<QuadraticEase/>
+    			</DoubleAnimation.EasingFunction>
+    		</DoubleAnimation>
+    		<DoubleAnimation Duration="0:0:0.2" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="layoutRoot" d:IsOptimized="True">
+    			<DoubleAnimation.EasingFunction>
+    				<QuadraticEase/>
+    			</DoubleAnimation.EasingFunction>
+    		</DoubleAnimation>
+    		<DoubleAnimation Duration="0:0:0.2" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="layoutRoot" d:IsOptimized="True">
+    			<DoubleAnimation.EasingFunction>
+    				<QuadraticEase/>
+    			</DoubleAnimation.EasingFunction>
+    		</DoubleAnimation>
+    	</Storyboard>
+        
+        <Storyboard x:Name="sbHideArc">
+            <DoubleAnimation Duration="0:0:0.2" To="-80" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="layoutRoot" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Duration="0:0:0.2" To="0.5" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="layoutRoot" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Duration="0:0:0.2" To="0.5" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="layoutRoot" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Duration="0:0:0.2" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="layoutRoot" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+        
+        <Storyboard x:Name="sbPressButton">
+            
+    		<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="layoutRoot">
+    			<EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1.1">
+    				<EasingDoubleKeyFrame.EasingFunction>
+    					<BackEase Amplitude="1"/>
+    				</EasingDoubleKeyFrame.EasingFunction>
+    			</EasingDoubleKeyFrame>
+    			<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1"/>
+    		</DoubleAnimationUsingKeyFrames>
+    		<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="layoutRoot">
+    			<EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1.1">
+    				<EasingDoubleKeyFrame.EasingFunction>
+    					<BackEase Amplitude="1"/>
+    				</EasingDoubleKeyFrame.EasingFunction>
+    			</EasingDoubleKeyFrame>
+    			<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1"/>
+    		</DoubleAnimationUsingKeyFrames>
+    	</Storyboard>
+    </UserControl.Resources>
+    <Grid x:Name="layoutRoot" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RenderTransformOrigin="0.5,0.5" Opacity="0" >
+    	<Grid.RenderTransform>
+    		<CompositeTransform ScaleX="0.5" ScaleY="0.5" Rotation="-80"/>
+    	</Grid.RenderTransform>
+
+        <Grid x:Name="grdTriangle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RenderTransformOrigin="0.5,0.5" Canvas.ZIndex="10">
+            <Grid.RenderTransform>
+                <CompositeTransform TranslateX="0" TranslateY="0" Rotation="0"/>
+            </Grid.RenderTransform>
+            <Path x:Name="pthTriangle" Data="M176.1194,125.37313 L176.1194,162.68669 L194.8833,143.49992 z" Fill="White"  Height="20" Stretch="Fill" UseLayoutRounding="False"  Width="14.048" Stroke="White" >
+                <Path.RenderTransform>
+                    <CompositeTransform TranslateX="0" TranslateY="0" ScaleX="0.5" ScaleY="0.5" />
+                </Path.RenderTransform>             
+            </Path>
+        </Grid>
+    </Grid>
+</UserControl>
