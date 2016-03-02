@@ -1,0 +1,88 @@
+﻿<UserControl
+    x:Class="X.Extensions.ThirdParty.GitX.Profile"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:X.Extensions.ThirdParty.GitX"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid >
+        <StackPanel Orientation="Vertical" Margin="10">
+
+            <Ellipse  Width="50" Height="50" IsHitTestVisible="False" VerticalAlignment="Top" HorizontalAlignment="Center">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="{Binding AvatarUrl}" Stretch="Uniform" />
+                </Ellipse.Fill>
+            </Ellipse>
+
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                <TextBlock Text="{Binding Login}" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock Text="{Binding Name}" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock Text="{Binding Location}" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock Text="{Binding Email}" HorizontalAlignment="Center"></TextBlock>
+            </StackPanel>
+
+            
+
+            <StackPanel Orientation="Vertical" Margin="0,15,0,0">
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Followers : " Opacity="0.3"></TextBlock>
+                    <TextBlock Text="{Binding Followers}" Margin="5,0,0,0"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Following : " Opacity="0.3"></TextBlock>
+                    <TextBlock Text="{Binding Following}" Margin="5,0,0,0"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Disk Usage : " Opacity="0.3"></TextBlock>
+                    <TextBlock Text="{Binding DiskUsage}" Margin="5,0,0,0"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Collaborators : " Opacity="0.3"></TextBlock>
+                    <TextBlock Text="{Binding Collaborators}" Margin="5,0,0,0"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Private Gists : " Opacity="0.3"></TextBlock>
+                    <TextBlock Text="{Binding PrivateGists}" Margin="5,0,0,0"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Public Gists : " Opacity="0.3"></TextBlock>
+                    <TextBlock Text="{Binding PublicGists}" Margin="5,0,0,0"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Public Repos : " Opacity="0.3"></TextBlock>
+                    <TextBlock Text="{Binding PublicRepos}" Margin="5,0,0,0"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Owned Private Repos : " Opacity="0.3"></TextBlock>
+                    <TextBlock Text="{Binding OwnedPrivateRepos}" Margin="5,0,0,0"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Total Private Repos : " Opacity="0.3"></TextBlock>
+                    <TextBlock Text="{Binding TotalPrivateRepos}" Margin="5,0,0,0"></TextBlock>
+                </StackPanel>
+
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Margin="0,15,0,0">
+                <TextBlock Text="{Binding Id}"></TextBlock>
+                <TextBlock Text="{Binding CreatedAt}"></TextBlock>
+                <TextBlock Text="{Binding Bio}"></TextBlock>
+                <TextBlock Text="{Binding Company}"></TextBlock>
+                <TextBlock Text="{Binding Blog}"></TextBlock>
+
+                <TextBlock Text="{Binding Url}"></TextBlock>
+                <TextBlock Text="{Binding Type}"></TextBlock>
+                <TextBlock Text="{Binding Plan}"></TextBlock>
+
+            </StackPanel>
+
+
+
+        </StackPanel>
+    </Grid>
+</UserControl>
