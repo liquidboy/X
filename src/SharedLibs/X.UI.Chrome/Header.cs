@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using X.Win32;
 
 
 namespace X.UI.Chrome
@@ -24,36 +25,14 @@ namespace X.UI.Chrome
         int RenderTargetIndexFor_tbTitle = 0;
         Grid _root;
         Windows.UI.Xaml.Shapes.Rectangle _recSmallTitle;
+        Button _tlMain;
 
         double bkgOffsetX = 0;
         double bkgOffsetY = 0;
 
-
-
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct Win32Point
-        {
-            internal int x;
-            internal int y;
-
-            internal Win32Point(int x, int y)
-            {
-                this.x = x;
-                this.y = y;
-            }
-
-            static public explicit operator Win32Point(Point pt)
-            {
-                return checked(new Win32Point((int)pt.X, (int)pt.Y));
-            }
-        }
-
-        [DllImport("user32.dll")]
-        private static extern bool GetCursorPos(ref Win32Point pt);
-
-
+        
         DispatcherTimer _dtChrome;
-        Win32Point _curPos = new Win32Point();
+        NativeLib.Win32Point _curPos = new NativeLib.Win32Point();
 
 
 
@@ -68,7 +47,7 @@ namespace X.UI.Chrome
 
         private void Header_Unloaded(object sender, RoutedEventArgs e)
         {
-           
+            if (_tlMain != null) _tlMain.Click -= _tlMain_Click;
         }
 
         private void Header_Loaded(object sender, RoutedEventArgs e)
@@ -87,6 +66,7 @@ namespace X.UI.Chrome
             if(_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
 
             if (_root == null) _root = GetTemplateChild("root") as Grid;
+            if (_tlMain == null) { _tlMain = GetTemplateChild("tlMain") as Button; _tlMain.DataContext = this; _tlMain.Click += _tlMain_Click; }
             if (_recSmallTitle == null)
             {
                 _recSmallTitle = GetTemplateChild("recSmallTitle") as Windows.UI.Xaml.Shapes.Rectangle;
@@ -96,10 +76,11 @@ namespace X.UI.Chrome
                 _dtChrome.Interval = new TimeSpan(0, 0, 0, 0, 15);
                 _dtChrome.Tick += (object sender, object e) =>
                 {
-                    GetCursorPos(ref _curPos);
+                    NativeLib.GetCursorPos(ref _curPos);
                     ChromeUpdate(_curPos);
                 };
                 if (EnableResizeFix) _dtChrome.Start();
+                else _dtChrome.Stop();
             }
 
             if (_tbTitle == null)
@@ -112,6 +93,14 @@ namespace X.UI.Chrome
 
 
             base.OnApplyTemplate();
+        }
+
+        private void _tlMain_Click(object sender, RoutedEventArgs e)
+        {
+            EnableResizeFix = !EnableResizeFix;
+
+            if (EnableResizeFix) _dtChrome.Start();
+            else _dtChrome.Stop();
         }
 
         public void Invalidate(double offsetX = 0, double offsetY = 0) {
@@ -142,14 +131,6 @@ namespace X.UI.Chrome
             titleBar.InactiveBackgroundColor = Colors.Transparent;
             titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
 
-            //_dtChrome = new DispatcherTimer();
-            //_dtChrome.Interval = new TimeSpan(0, 0, 0, 0, 15);
-            //_dtChrome.Tick += (object sender, object e) =>
-            //{
-            //    GetCursorPos(ref _curPos);
-            //    ChromeUpdate(_curPos);
-            //};
-            //_dtChrome.Start();
         }
 
 
@@ -223,11 +204,12 @@ namespace X.UI.Chrome
             if (d == null)
                 return;
 
+
             instance._dtChrome?.Start();
         }
 
 
-        private void ChromeUpdate(Win32Point pt)
+        private void ChromeUpdate(NativeLib.Win32Point pt)
         {
             var xRightMost = Window.Current.Bounds.Left + Window.Current.Bounds.Width - 200;
 

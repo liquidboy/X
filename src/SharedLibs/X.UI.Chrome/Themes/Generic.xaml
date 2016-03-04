@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:xuiel="using:X.UI.EffectLayer"
     xmlns:local="using:X.UI.Chrome">
-
+    <local:BooleanToStringConverter x:Key="BooleanToStringConverter" />
     <Style TargetType="local:Header" >
         <Setter Property="Template">
             <Setter.Value>
@@ -30,7 +30,7 @@
                             </Rectangle.Fill>
                         </Rectangle>
 
-                        <Button x:Name="tlMain" Margin="0,0,140,0" Height="50" VerticalAlignment="Top" HorizontalAlignment="Stretch" ></Button>
+                        <Button x:Name="tlMain" Margin="0,0,140,0" Height="50" VerticalAlignment="Top" HorizontalAlignment="Stretch" Content="{Binding EnableResizeFix, Converter={StaticResource BooleanToStringConverter}, ConverterParameter='EnableResizeFix'}" HorizontalContentAlignment="Right" Foreground="White" ></Button>
 
 
                         <Rectangle  x:Name="recSmallTitle" Height="15" Fill="White" HorizontalAlignment="Stretch" VerticalAlignment="Top" Opacity="0.01"  ></Rectangle>

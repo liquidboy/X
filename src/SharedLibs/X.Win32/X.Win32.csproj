@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5EBC59CA-877F-4446-8D8B-7A18B1FFD3DD}</ProjectGuid>
+    <ProjectGuid>{32E4DCEC-47A1-4F66-9200-A57E5AAF8F0E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>X.UI.Chrome</RootNamespace>
-    <AssemblyName>X.UI.Chrome</AssemblyName>
+    <RootNamespace>X.Win32</RootNamespace>
+    <AssemblyName>X.Win32</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
@@ -107,26 +107,9 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BooleanToStringConverter.cs" />
-    <Compile Include="Header.cs" />
+    <Compile Include="NativeLib.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\X.UI.Chrome.rd.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\X.UI.EffectLayer\X.UI.EffectLayer.csproj">
-      <Project>{5470d5d0-10cb-4d3d-8026-0a49254a21be}</Project>
-      <Name>X.UI.EffectLayer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.Win32\X.Win32.csproj">
-      <Project>{32e4dcec-47a1-4f66-9200-a57e5aaf8f0e}</Project>
-      <Name>X.Win32</Name>
-    </ProjectReference>
+    <EmbeddedResource Include="Properties\X.Win32.rd.xml" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
