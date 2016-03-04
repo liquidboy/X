@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.Core;
+using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -21,9 +23,39 @@ namespace X.UI.Chrome
         TextBlock _tbTitle;
         int RenderTargetIndexFor_tbTitle = 0;
         Grid _root;
+        Windows.UI.Xaml.Shapes.Rectangle _recSmallTitle;
 
         double bkgOffsetX = 0;
         double bkgOffsetY = 0;
+
+
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct Win32Point
+        {
+            internal int x;
+            internal int y;
+
+            internal Win32Point(int x, int y)
+            {
+                this.x = x;
+                this.y = y;
+            }
+
+            static public explicit operator Win32Point(Point pt)
+            {
+                return checked(new Win32Point((int)pt.X, (int)pt.Y));
+            }
+        }
+
+        [DllImport("user32.dll")]
+        private static extern bool GetCursorPos(ref Win32Point pt);
+
+
+        DispatcherTimer _dtChrome;
+        Win32Point _curPos = new Win32Point();
+
+
 
 
         public Header()
@@ -54,7 +86,21 @@ namespace X.UI.Chrome
         {
             if(_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
 
-            if (_root == null) _root = GetTemplateChild("root") as Grid; 
+            if (_root == null) _root = GetTemplateChild("root") as Grid;
+            if (_recSmallTitle == null)
+            {
+                _recSmallTitle = GetTemplateChild("recSmallTitle") as Windows.UI.Xaml.Shapes.Rectangle;
+                Window.Current.SetTitleBar(_recSmallTitle);
+
+                _dtChrome = new DispatcherTimer();
+                _dtChrome.Interval = new TimeSpan(0, 0, 0, 0, 15);
+                _dtChrome.Tick += (object sender, object e) =>
+                {
+                    GetCursorPos(ref _curPos);
+                    ChromeUpdate(_curPos);
+                };
+                if (EnableResizeFix) _dtChrome.Start();
+            }
 
             if (_tbTitle == null)
             {
@@ -96,7 +142,14 @@ namespace X.UI.Chrome
             titleBar.InactiveBackgroundColor = Colors.Transparent;
             titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
 
-            //Window.Current.SetTitleBar(recSmallTitle);
+            //_dtChrome = new DispatcherTimer();
+            //_dtChrome.Interval = new TimeSpan(0, 0, 0, 0, 15);
+            //_dtChrome.Tick += (object sender, object e) =>
+            //{
+            //    GetCursorPos(ref _curPos);
+            //    ChromeUpdate(_curPos);
+            //};
+            //_dtChrome.Start();
         }
 
 
@@ -127,6 +180,11 @@ namespace X.UI.Chrome
             set { SetValue(IconUriProperty, value); }
         }
 
+        public bool EnableResizeFix
+        {
+            get { return (bool)GetValue(EnableResizeFixProperty); }
+            set { SetValue(EnableResizeFixProperty, value); }
+        }
 
 
 
@@ -135,6 +193,9 @@ namespace X.UI.Chrome
 
 
 
+
+        public static readonly DependencyProperty EnableResizeFixProperty = DependencyProperty.Register("EnableResizeFix", typeof(bool), typeof(Header), new PropertyMetadata(false, OnEnableResizeFix));
+        
         public static readonly DependencyProperty IconUriProperty = DependencyProperty.Register("IconUri", typeof(ImageSource), typeof(Header), new PropertyMetadata(null, OnPropertyChanged));
 
         public static readonly DependencyProperty TitleProperty =
@@ -155,6 +216,31 @@ namespace X.UI.Chrome
                 instance.Invalidate();
             }
         }
+
+        private static void OnEnableResizeFix(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var instance = d as Header;
+            if (d == null)
+                return;
+
+            instance._dtChrome?.Start();
+        }
+
+
+        private void ChromeUpdate(Win32Point pt)
+        {
+            var xRightMost = Window.Current.Bounds.Left + Window.Current.Bounds.Width - 200;
+
+            if (pt.x > xRightMost) return;
+
+            if (pt.y < Window.Current.Bounds.Top + 4)
+                Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.SizeNorthSouth, 66651);
+            else if (pt.y < Window.Current.Bounds.Top + 15)
+                Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.SizeAll, 66652);
+            else if (pt.y < Window.Current.Bounds.Top + 45)
+                Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Arrow, 66653);
+        }
+
 
     }
 }
