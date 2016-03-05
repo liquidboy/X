@@ -5,6 +5,7 @@
     xmlns:local="using:X.Browser.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:extcontrols="using:X.Extensions.UIComponentExtensions"
     xmlns:xuiri="using:X.UI.RichInput"
     xmlns:xuirb="using:X.UI.RichButton"
     xmlns:xuirt="using:X.UI.RichTab"
@@ -13,6 +14,7 @@
     xmlns:xuildg="using:X.UI.LiteDataGrid"
     xmlns:xuiuc="using:X.UI.UserCard"
     xmlns:xuichrome="using:X.UI.Chrome"
+    xmlns:xviewer="using:X.Viewer"
     mc:Ignorable="d">
 
     <Grid x:Name="layoutRoot" Background="{Binding Accent1Brush}">
@@ -51,7 +53,32 @@
             <Grid Grid.Row="0" Grid.ColumnSpan="3">
                 <StackPanel x:Name="spOnebox" VerticalAlignment="Top" Orientation="Horizontal" Height="40" Background="Black">
                 </StackPanel>
+                <StackPanel x:Name="spRightToolbar" HorizontalAlignment="Right" Orientation="Horizontal">
+                    <extcontrols:ExtensionsIconBarTop x:Name="ctlExtensionsBarTop" Margin="0,0,0,0"></extcontrols:ExtensionsIconBarTop>
+                </StackPanel>
             </Grid>
+
+            <Grid Grid.Row="1"
+                    Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel x:Name="grdDockedExtensionTop" Orientation="Vertical" Grid.Row="0" >
+                    <!-- Background="{StaticResource ExtensionAccent2}" -->
+                </StackPanel>
+                <xviewer:ContentView x:Name="wvMain" Grid.Row="1" Uri="{Binding SelectedTab.Uri}"  >
+                    <!-- SendMessage="wvMain_SendMessage"  -->
+
+                </xviewer:ContentView>
+
+                <StackPanel x:Name="grdDockedExtensionBottom" Orientation="Vertical" Grid.Row="2" >
+                    <!-- Background="{StaticResource ExtensionAccent2}" -->
+                </StackPanel>
+            </Grid>
+
+
         </Grid>
 
         <!-- DX LAYER -->

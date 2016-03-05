@@ -150,6 +150,10 @@
       <Project>{ccab5d7d-4fc3-4e60-9a9d-e63b1d5c8be5}</Project>
       <Name>X.Extensions.ThirdParty</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.Extensions.UI\X.Extensions.UI.csproj">
+      <Project>{3a18b195-5375-4952-b3a6-af0d14cde6a6}</Project>
+      <Name>X.Extensions.UI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharedLibs\X.Extensions\X.Extensions.csproj">
       <Project>{bd6d553a-4777-4d54-9289-3e9e4289604f}</Project>
       <Name>X.Extensions</Name>
