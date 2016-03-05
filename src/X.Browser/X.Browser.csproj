@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{BF9B630F-91C4-44EF-BEDA-10773154A594}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>X.Browser</RootNamespace>
+    <AssemblyName>X.Browser</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <PackageCertificateKeyFile>X.Browser_TemporaryKey.pfx</PackageCertificateKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="project.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\BrowserVM.cs" />
+    <Compile Include="ViewModels\TabViewModel.cs" />
+    <Compile Include="ViewModels\WebPageModel.cs" />
+    <Compile Include="Views\MainLayout.xaml.cs">
+      <DependentUpon>MainLayout.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+    <None Include="X.Browser_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Properties\Default.rd.xml" />
+    <Content Include="Assets\LockScreenLogo.scale-200.png" />
+    <Content Include="Assets\SplashScreen.scale-200.png" />
+    <Content Include="Assets\Square150x150Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="Assets\StoreLogo.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="Views\MainLayout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\SharedLibs\X.CoreLib\X.CoreLib.csproj">
+      <Project>{d273509d-612c-47c3-b2a6-c203d96b90d3}</Project>
+      <Name>X.CoreLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.Extensions.ThirdParty.GitX\X.Extensions.ThirdParty.GitX.csproj">
+      <Project>{fd5c1993-3366-4f69-8fea-d6738b2cffa7}</Project>
+      <Name>X.Extensions.ThirdParty.GitX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.Extensions.ThirdParty\X.Extensions.ThirdParty.csproj">
+      <Project>{ccab5d7d-4fc3-4e60-9a9d-e63b1d5c8be5}</Project>
+      <Name>X.Extensions.ThirdParty</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.Extensions\X.Extensions.csproj">
+      <Project>{bd6d553a-4777-4d54-9289-3e9e4289604f}</Project>
+      <Name>X.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.UI.AddTab\X.UI.AddTab.csproj">
+      <Project>{38d73f3e-3477-436f-a501-1b9f9f762719}</Project>
+      <Name>X.UI.AddTab</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.UI.Chrome\X.UI.Chrome.csproj">
+      <Project>{5ebc59ca-877f-4446-8d8b-7a18b1ffd3dd}</Project>
+      <Name>X.UI.Chrome</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.UI.EffectLayer\X.UI.EffectLayer.csproj">
+      <Project>{5470d5d0-10cb-4d3d-8026-0a49254a21be}</Project>
+      <Name>X.UI.EffectLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.UI.LiteDataGrid\X.UI.LiteDataGrid.csproj">
+      <Project>{dbaffcc8-1ac5-4a13-8cd8-57a3d1d4e243}</Project>
+      <Name>X.UI.LiteDataGrid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.UI.LiteTab\X.UI.LiteTab.csproj">
+      <Project>{7564864b-e139-42a3-b53f-0714d118edae}</Project>
+      <Name>X.UI.LiteTab</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.UI.MoreTab\X.UI.MoreTab.csproj">
+      <Project>{0bae1a84-c60d-4ad9-b779-c6fb5b439f12}</Project>
+      <Name>X.UI.MoreTab</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.UI.Path\X.UI.Path.csproj">
+      <Project>{9da51ef4-2dae-40d8-92ec-cc81162669df}</Project>
+      <Name>X.UI.Path</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.UI.RichButton\X.UI.RichButton.csproj">
+      <Project>{9e6a2f9c-a1f8-4d56-af2b-cb323a841e2e}</Project>
+      <Name>X.UI.RichButton</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.UI.RichInput\X.UI.RichInput.csproj">
+      <Project>{1ddc0313-f305-4091-ad21-2b3d99bb5550}</Project>
+      <Name>X.UI.RichInput</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.UI.RichScrollViewer\X.UI.RichScrollViewer.csproj">
+      <Project>{ef4b51c0-f174-4799-9d52-8957b86bd9b9}</Project>
+      <Name>X.UI.RichScrollViewer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.UI.RichTab\X.UI.RichTab.csproj">
+      <Project>{1f02dc50-9fbb-49ab-968a-db4a5e09006d}</Project>
+      <Name>X.UI.RichTab</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.UI.Toolbar\X.UI.Toolbar.csproj">
+      <Project>{3d1b671c-1cd1-424e-bfea-14c28b0f1938}</Project>
+      <Name>X.UI.Toolbar</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.UI.UserCard\X.UI.UserCard.csproj">
+      <Project>{5020ec7c-3018-4af2-9481-8b0efe491170}</Project>
+      <Name>X.UI.UserCard</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.Viewer\X.Viewer.csproj">
+      <Project>{a705ecff-11e6-4d30-8fbb-bf1224cdf22d}</Project>
+      <Name>X.Viewer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

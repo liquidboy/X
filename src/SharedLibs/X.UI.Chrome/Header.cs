@@ -128,7 +128,7 @@ namespace X.UI.Chrome
 
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
             titleBar.ButtonBackgroundColor = Colors.Transparent;
-            titleBar.ButtonForegroundColor = Colors.White;
+            titleBar.ButtonForegroundColor = Colors.Black;
             titleBar.InactiveBackgroundColor = Colors.Transparent;
             titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
 

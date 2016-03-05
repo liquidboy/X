@@ -1,0 +1,36 @@
+﻿<Page
+    x:Class="X.Browser.Views.MainLayout"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:X.Browser.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xuiri="using:X.UI.RichInput"
+    xmlns:xuirb="using:X.UI.RichButton"
+    xmlns:xuirt="using:X.UI.RichTab"
+    xmlns:xuilt="using:X.UI.LiteTab"
+    xmlns:xuip="using:X.UI.Path"
+    xmlns:xuildg="using:X.UI.LiteDataGrid"
+    xmlns:xuiuc="using:X.UI.UserCard"
+    xmlns:xuichrome="using:X.UI.Chrome"
+    mc:Ignorable="d">
+
+    <Grid Background="{Binding Accent1Brush}">
+        <xuichrome:Header x:Name="header" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="{Binding Accent1Brush}" Foreground="{Binding Accent1ContrastBrush}" Height="40" GlowColor="{Binding Accent1}" GlowAmount="1" EnableResizeFix="True" >
+            <xuichrome:Header.TitleContent>
+                <ContentControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" >
+                    <Grid>
+                        <!--title header background guides for mouse cursor-->
+                        <Rectangle Fill="{Binding Accent1Brush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Rectangle>
+                        <Rectangle x:Name="recResizeTop" Height="5" HorizontalAlignment="Stretch" Fill="White" Opacity="0.3" VerticalAlignment="Top"  />
+                        <Rectangle x:Name="recDragTop" Height="15" HorizontalAlignment="Stretch" Fill="White" Opacity="0.1" VerticalAlignment="Top" IsHitTestVisible="True" />
+
+                        
+                        <!--tabs-->  
+                        <xuirt:TabList x:Name="tlMainTabs" Margin="0,0,140,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  TabPointerEntered="tlMainTabs_TabPointerEntered" TabPointerExited="tlMainTabs_TabPointerExited" ></xuirt:TabList>
+                    </Grid>
+                </ContentControl>
+            </xuichrome:Header.TitleContent>
+        </xuichrome:Header>
+    </Grid>
+</Page>

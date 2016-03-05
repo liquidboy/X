@@ -314,8 +314,8 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>-->
                     <ScrollViewer x:Name="svTabs" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden">
-                        <StackPanel x:Name="grdTabs" Margin="0,0,0,0" Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" Orientation="Horizontal">
-                            <ItemsControl x:Name="icTabs" Height="50" VerticalAlignment="Bottom" ItemsSource="{Binding Tabs}">
+                        <StackPanel x:Name="grdTabs" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Orientation="Horizontal">
+                            <ItemsControl x:Name="icTabs" VerticalAlignment="Stretch" ItemsSource="{Binding Tabs}">
                                 <ItemsControl.Resources>
                                     <DataTemplate x:Key="dtTile">
                                         <local:TabButton HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></local:TabButton>
