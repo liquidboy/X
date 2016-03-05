@@ -122,6 +122,10 @@
       <Project>{5470d5d0-10cb-4d3d-8026-0a49254a21be}</Project>
       <Name>X.UI.EffectLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\X.UI.RichTab\X.UI.RichTab.csproj">
+      <Project>{1f02dc50-9fbb-49ab-968a-db4a5e09006d}</Project>
+      <Name>X.UI.RichTab</Name>
+    </ProjectReference>
     <ProjectReference Include="..\X.Win32\X.Win32.csproj">
       <Project>{32e4dcec-47a1-4f66-9200-a57e5aaf8f0e}</Project>
       <Name>X.Win32</Name>

@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:xuiri="using:X.UI.RichInput"
     xmlns:xuirb="using:X.UI.RichButton"
+    xmlns:xuirt="using:X.UI.RichTab"
     xmlns:xuilt="using:X.UI.LiteTab"
     xmlns:xuip="using:X.UI.Path"
     xmlns:xuildg="using:X.UI.LiteDataGrid"
@@ -18,15 +19,26 @@
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
 
-
-        <xuichrome:Header x:Name="header" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="{Binding Accent3Brush}" Foreground="{Binding Accent1ContrastBrush}" Title="X.UI Samples (1.0.54)" Height="90" GlowColor="{Binding Accent1}" GlowAmount="1" IconUri="ms-appx:///assets/hearts-01.png" EnableResizeFix="False">
+        
+        <xuichrome:Header x:Name="header" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="{Binding Accent3Brush}" Foreground="{Binding Accent1ContrastBrush}" Height="90" GlowColor="{Binding Accent1}" GlowAmount="1" IconUri="ms-appx:///assets/hearts-01.png" EnableResizeFix="False" Title="X.UI.Samples v 1.0.79">
             <xuichrome:Header.TitleContent>
-                <Button x:Name="butEnableDisableChromeResizeFix" Margin="0,0,140,0" Height="50" VerticalAlignment="Top" HorizontalAlignment="Stretch" Content="{Binding EnableResizeFix, Converter={StaticResource BooleanToStringConverter}, ConverterParameter='EnableResizeFix'}" HorizontalContentAlignment="Right" Foreground="White" Click="butEnableDisableChromeResizeFix_Click" ></Button>
+                <Button x:Name="butEnableDisableChromeResizeFix" Margin="0,0,140,0" Height="50" VerticalAlignment="Top" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Content="{Binding ElementName=header, Path=EnableResizeFix, Converter={StaticResource BooleanToStringConverter}, ConverterParameter='EnableResizeFix'}"  Foreground="White" Click="butEnableDisableChromeResizeFix_Click" ></Button>
+                <!--<ContentControl>
+                    <Grid>
+                        --><!-- Top Header --><!--
+                        <Rectangle Fill="#FFCCCCCC" Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Top"></Rectangle>
+                        <Rectangle x:Name="recResizeTop" Height="5" HorizontalAlignment="Stretch" Fill="White" Opacity="0.3" VerticalAlignment="Top"  />
+                        <Rectangle x:Name="recDragTop" Height="15" HorizontalAlignment="Stretch" Fill="White" Opacity="0.1" VerticalAlignment="Top" IsHitTestVisible="True" />
+
+                        --><!-- Tabs  --><!--
+                        <xuirt:TabList x:Name="tlMainTabs" Margin="0,0,140,0" VerticalAlignment="Top" HorizontalAlignment="Stretch"  TabPointerEntered="tlMainTabs_TabPointerEntered" TabPointerExited="tlMainTabs_TabPointerExited" ></xuirt:TabList>
+                    </Grid>
+                </ContentControl>-->
             </xuichrome:Header.TitleContent>
         </xuichrome:Header>
         <xuiuc:SmallCard x:Name="usercard" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,35,12,0" PrimaryName="Jose Fajardo" SecondaryName="jose@supersecret.com.au" GlowColor="{Binding Accent2}" GlowAmount="2" AvatarUri="ms-appx:///assets/avatar1.png" IsAvatarOnRight="True"></xuiuc:SmallCard>
 
-        <xuiuc:CircularCard x:Name="usercard2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" PrimaryName="Jose Fajardo" SecondaryName="jose@supersecret.com.au" GlowColor="{Binding Accent2}" GlowAmount="3" AvatarUri="ms-appx:///assets/avatar1.png" ></xuiuc:CircularCard>
+        <!--<xuiuc:CircularCard x:Name="usercard2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" PrimaryName="Jose Fajardo" SecondaryName="jose@supersecret.com.au" GlowColor="{Binding Accent2}" GlowAmount="3" AvatarUri="ms-appx:///assets/avatar1.png" ></xuiuc:CircularCard>-->
 
 
 

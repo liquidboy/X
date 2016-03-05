@@ -1,5 +1,8 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Command;
+using Samples.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -17,7 +20,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using X.UI.LiteTab;
+
 
 namespace Samples
 {
@@ -37,7 +40,7 @@ namespace Samples
             tlMain.AddTab("Samples 2");
             tlMain.AddTab("Samples 3");
 
-            butEnableDisableChromeResizeFix.DataContext = header;
+            //butEnableDisableChromeResizeFix.DataContext = header;
 
             SetTheme("Orange");
 
@@ -99,7 +102,7 @@ namespace Samples
             }
         }
 
-           private void SetTabContent(string name) {
+        private void SetTabContent(string name) {
 
             ccTabContent.Content = null;
             
@@ -124,7 +127,7 @@ namespace Samples
 
         private void tlMain_OnTabChanged(object sender, EventArgs e)
         {
-            var selected = (Tab)sender;
+            var selected = (X.UI.LiteTab.Tab)sender;
             SetTabContent(selected.Name);
         }
 
@@ -146,11 +149,28 @@ namespace Samples
         {
             header.EnableResizeFix = !header.EnableResizeFix;
         }
+
+        private void tlMainTabs_TabPointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+
+        }
+
+        private void tlMainTabs_TabPointerExited(object sender, PointerRoutedEventArgs e)
+        {
+
+        }
+
+        
+
     }
 
     public class vmSamples : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public ObservableCollection<TabViewModel> Tabs { get; set; }
+        public TabViewModel SelectedTab { get; set; }
+
 
         private Color _Accent1;
         private Brush _Accent1Brush;
@@ -170,13 +190,156 @@ namespace Samples
         public Color Accent1Contrast { get { return _Accent1Contrast; } set { _Accent1Contrast = value; NotifyPropertyChanged(); } }
         public Brush Accent1ContrastBrush { get { return _Accent1ContrastBrush; } set { _Accent1ContrastBrush = value; NotifyPropertyChanged(); } }
 
+        private RelayCommand<object> _tabChangedCommand;
+        public RelayCommand<object> TabChangedCommand { get { return _tabChangedCommand ?? (_tabChangedCommand = new RelayCommand<object>(ExecuteTabChangedCommand)); } }
+
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private void ExecuteTabChangedCommand(object obj)
+        {
+
+            TabViewModel previousTab = null;
+
+            foreach (var tab in this.Tabs)
+            {
+                if (((TabViewModel)obj).DisplayTitle == tab.DisplayTitle)
+                {
+                    tab.HasFocus = true;
+                    tab.Foreground = "White";
+                    if (previousTab != null)
+                    {
+                        previousTab.RightBorderColor = "";
+                        previousTab.RaisePropChangeOnUIThread("RightBorderColor");
+                    }
+                    tab.RightBorderColor = "black";
+                }
+                else
+                {
+                    tab.HasFocus = false;
+                    tab.Foreground = "Black";
+                    tab.RightBorderColor = "#FFB8B8B8";
+                }
+                tab.RaisePropChangeOnUIThread("HasFocus");
+                tab.RaisePropChangeOnUIThread("Foreground");
+                tab.RaisePropChangeOnUIThread("RightBorderColor");
+
+                previousTab = tab;
+            }
+
+            this.SelectedTab = obj as TabViewModel;
+            this.NotifyPropertyChanged("SelectedTab");
+
+        }
+
+        public vmSamples()
+        {
+            Tabs = new ObservableCollection<TabViewModel>();
+            RetrieveDummyTabs();
+        }
+
+
+        private void RetrieveDummyTabs()
+        {
+
+            var tempTab = new TabViewModel() { DisplayTitle = "Microsoft", FaviconUri = "http://www.microsoft.com/favicon.ico?v2", HasFocus = true, Uri = "http://www.microsoft.com?test=1", TabChangedCommand = this.TabChangedCommand };
+            tempTab.PrimaryFontFamily = DetermineFontFamily(tempTab.DisplayTitle);
+            tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
+            tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);
+            tempTab.Foreground = "White";
+            tempTab.RightBorderColor = "Black";
+            Tabs.Add(tempTab);
+            this.SelectedTab = tempTab;
+
+
+            tempTab = new TabViewModel() { DisplayTitle = "Twitter", FaviconUri = "http://www.twitter.com/favicon.ico?v2", HasFocus = false, Uri = "http://www.twitter.com:80?a=1&b=2", TabChangedCommand = this.TabChangedCommand };
+            tempTab.PrimaryFontFamily = DetermineFontFamily(tempTab.DisplayTitle);
+            tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
+            tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);
+            tempTab.RightBorderColor = "#FFB8B8B8";
+            Tabs.Add(tempTab);
+
+            tempTab = new TabViewModel() { DisplayTitle = "airbnb", FaviconUri = "http://www.airbnb.com/favicon.ico?v2", HasFocus = false, Uri = "http://www.airbnb.com", TabChangedCommand = this.TabChangedCommand };
+            tempTab.PrimaryFontFamily = DetermineFontFamily(tempTab.DisplayTitle);
+            tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
+            tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);
+            tempTab.RightBorderColor = "#FFB8B8B8";
+            Tabs.Add(tempTab);
+
+            tempTab = new TabViewModel() { DisplayTitle = "Flickr", FaviconUri = "http://www.flickr.com/favicon.ico?v2", HasFocus = false, Uri = "http://www.flickr.com", TabChangedCommand = this.TabChangedCommand };
+            tempTab.PrimaryFontFamily = DetermineFontFamily(tempTab.DisplayTitle);
+            tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
+            tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);
+            tempTab.RightBorderColor = "#FFB8B8B8";
+            Tabs.Add(tempTab);
+
+            tempTab = new TabViewModel() { DisplayTitle = "Bing", FaviconUri = "http://www.bing.com/favicon.ico?v2", HasFocus = false, Uri = "http://www.bing.com", TabChangedCommand = this.TabChangedCommand };
+            tempTab.PrimaryFontFamily = DetermineFontFamily(tempTab.DisplayTitle);
+            tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
+            tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);
+            tempTab.RightBorderColor = "#FFB8B8B8";
+            Tabs.Add(tempTab);
+
+            tempTab = new TabViewModel() { DisplayTitle = "Azure", FaviconUri = "http://www.windowsazure.com/favicon.ico?v2", HasFocus = false, Uri = "http://www.windowsazure.com", TabChangedCommand = this.TabChangedCommand };
+            tempTab.PrimaryFontFamily = DetermineFontFamily(tempTab.DisplayTitle);
+            tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
+            tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);
+            tempTab.RightBorderColor = "#FFB8B8B8";
+            Tabs.Add(tempTab);
+
+            tempTab = new TabViewModel() { DisplayTitle = "Apple", FaviconUri = "http://www.apple.com/favicon.ico?v2", HasFocus = false, Uri = "http://www.apple.com", TabChangedCommand = this.TabChangedCommand };
+            tempTab.PrimaryFontFamily = DetermineFontFamily(tempTab.DisplayTitle);
+            tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
+            tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);
+            tempTab.RightBorderColor = "#FFB8B8B8";
+            Tabs.Add(tempTab);
+
+            tempTab = new TabViewModel() { DisplayTitle = "Google", FaviconUri = "http://www.google.com/favicon.ico?v2", HasFocus = false, Uri = "http://www.google.com", TabChangedCommand = this.TabChangedCommand };
+            tempTab.PrimaryFontFamily = DetermineFontFamily(tempTab.DisplayTitle);
+            tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
+            tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);
+            tempTab.RightBorderColor = "#FFB8B8B8";
+            Tabs.Add(tempTab);
+
+        }
+
+        private string DetermineFontFamily(string title)
+        {
+            switch (title)
+            {
+                case "Microsoft": return "Segoe UI";
+                case "Apple": return "Calibri";
+                case "Google": return "Arial";
+                case "Uber": return "Felix Titling";
+                default: return "Segoe UI";
+            }
+        }
+
+        private string DeterminePrimaryBackgroundColor(string title)
+        {
+            switch (title)
+            {
+                //case "Microsoft": return "White";
+                //case "Apple": return "White";
+                case "Group": return "#FF007CF9";
+                default: return "Black";
+            }
+        }
+
+        private string DeterminePrimaryForegroundColor(string title)
+        {
+            switch (title)
+            {
+                //case "Microsoft": return "Black";
+                //case "Apple": return "Black";
+                case "Group": return "White";
+                default: return "White";
+            }
+        }
     }
 
-    
+
 
 }

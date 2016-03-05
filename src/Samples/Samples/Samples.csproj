@@ -103,6 +103,8 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\TabViewModel.cs" />
+    <Compile Include="Models\WebPageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ucSample01.xaml.cs">
       <DependentUpon>ucSample01.xaml</DependentUpon>
@@ -182,6 +184,10 @@
     <ProjectReference Include="..\..\SharedLibs\X.UI.RichInput\X.UI.RichInput.csproj">
       <Project>{1ddc0313-f305-4091-ad21-2b3d99bb5550}</Project>
       <Name>X.UI.RichInput</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SharedLibs\X.UI.RichTab\X.UI.RichTab.csproj">
+      <Project>{1f02dc50-9fbb-49ab-968a-db4a5e09006d}</Project>
+      <Name>X.UI.RichTab</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\SharedLibs\X.UI.UserCard\X.UI.UserCard.csproj">
       <Project>{5020ec7c-3018-4af2-9481-8b0efe491170}</Project>
