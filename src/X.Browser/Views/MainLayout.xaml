@@ -15,7 +15,7 @@
     xmlns:xuichrome="using:X.UI.Chrome"
     mc:Ignorable="d">
 
-    <Grid Background="{Binding Accent1Brush}">
+    <Grid x:Name="layoutRoot" Background="{Binding Accent1Brush}">
         <xuichrome:Header x:Name="header" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="{Binding Accent1Brush}" Foreground="{Binding Accent1ContrastBrush}" Height="40" GlowColor="{Binding Accent1}" GlowAmount="1" EnableResizeFix="True" >
             <xuichrome:Header.TitleContent>
                 <ContentControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" >
@@ -32,5 +32,11 @@
                 </ContentControl>
             </xuichrome:Header.TitleContent>
         </xuichrome:Header>
+
+
+
+        <!-- DX LAYER -->
+        <Canvas x:Name="canvasDXLayer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed" />
+
     </Grid>
 </Page>
