@@ -16,6 +16,8 @@
     mc:Ignorable="d">
 
     <Grid x:Name="layoutRoot" Background="{Binding Accent1Brush}">
+        
+        <!-- HEADHER and TABS -->
         <xuichrome:Header x:Name="header" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="{Binding Accent1Brush}" Foreground="{Binding Accent1ContrastBrush}" Height="40" GlowColor="{Binding Accent1}" GlowAmount="1" EnableResizeFix="True" >
             <xuichrome:Header.TitleContent>
                 <ContentControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" >
@@ -33,7 +35,24 @@
             </xuichrome:Header.TitleContent>
         </xuichrome:Header>
 
+        <!-- WEBPAGE & ONEBOX -->
+        <Grid x:Name="grid" Margin="0,40,0,0" Background="{Binding Accent1Brush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition ></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
 
+            <Grid Grid.Row="0" Grid.ColumnSpan="3">
+                <StackPanel x:Name="spOnebox" VerticalAlignment="Top" Orientation="Horizontal" Height="40" Background="Black">
+                </StackPanel>
+            </Grid>
+        </Grid>
 
         <!-- DX LAYER -->
         <Canvas x:Name="canvasDXLayer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed" />

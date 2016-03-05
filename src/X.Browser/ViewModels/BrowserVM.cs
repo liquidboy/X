@@ -14,7 +14,6 @@ namespace X.Browser.ViewModels
 {
     class BrowserVM : INotifyPropertyChanged
     {
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<TabViewModel> Tabs { get; set; }
