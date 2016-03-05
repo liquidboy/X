@@ -3,7 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:xuiel="using:X.UI.EffectLayer"
     xmlns:local="using:X.UI.Chrome">
-    <local:BooleanToStringConverter x:Key="BooleanToStringConverter" />
     <Style TargetType="local:Header" >
         <Setter Property="Template">
             <Setter.Value>

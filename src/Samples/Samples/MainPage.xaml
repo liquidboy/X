@@ -14,7 +14,7 @@
     xmlns:xuichrome="using:X.UI.Chrome"
     mc:Ignorable="d">
     <Page.Resources>
-        <local:BooleanToStringConverter x:Key="BooleanToStringConverter" />
+        <local:BooleanToStringConverter x:Key="BooleanToStringConverter" IsOnOff="True" />
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
 
