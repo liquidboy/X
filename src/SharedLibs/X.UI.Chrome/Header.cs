@@ -24,8 +24,9 @@ namespace X.UI.Chrome
         TextBlock _tbTitle;
         int RenderTargetIndexFor_tbTitle = 0;
         Grid _root;
+        ContentControl _ccTitle;
         Windows.UI.Xaml.Shapes.Rectangle _recSmallTitle;
-        Button _tlMain;
+
 
         double bkgOffsetX = 0;
         double bkgOffsetY = 0;
@@ -47,7 +48,7 @@ namespace X.UI.Chrome
 
         private void Header_Unloaded(object sender, RoutedEventArgs e)
         {
-            if (_tlMain != null) _tlMain.Click -= _tlMain_Click;
+
         }
 
         private void Header_Loaded(object sender, RoutedEventArgs e)
@@ -66,7 +67,7 @@ namespace X.UI.Chrome
             if(_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
 
             if (_root == null) _root = GetTemplateChild("root") as Grid;
-            if (_tlMain == null) { _tlMain = GetTemplateChild("tlMain") as Button; _tlMain.DataContext = this; _tlMain.Click += _tlMain_Click; }
+            if (_ccTitle == null) { _ccTitle = GetTemplateChild("ccTitle") as ContentControl; _ccTitle.Content = TitleContent; }
             if (_recSmallTitle == null)
             {
                 _recSmallTitle = GetTemplateChild("recSmallTitle") as Windows.UI.Xaml.Shapes.Rectangle;
@@ -169,11 +170,23 @@ namespace X.UI.Chrome
 
 
 
+        public ContentControl TitleContent
+        {
+            get { return (ContentControl)GetValue(TitleContentProperty); }
+            set { SetValue(TitleContentProperty, value); }
+        }
 
 
 
 
 
+
+
+
+
+
+
+        public static readonly DependencyProperty TitleContentProperty = DependencyProperty.Register("TitleContent", typeof(ContentControl), typeof(Header), new PropertyMetadata(null, OnTitleContentChanged));
 
         public static readonly DependencyProperty EnableResizeFixProperty = DependencyProperty.Register("EnableResizeFix", typeof(bool), typeof(Header), new PropertyMetadata(false, OnEnableResizeFix));
         
@@ -203,9 +216,20 @@ namespace X.UI.Chrome
             var instance = d as Header;
             if (d == null)
                 return;
+            
+            if (instance.EnableResizeFix) instance._dtChrome?.Start();
+            else instance._dtChrome?.Stop();
 
+            //instance._dtChrome?.Start();
+        }
 
-            instance._dtChrome?.Start();
+        private static void OnTitleContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var instance = d as Header;
+            if (d == null)
+                return;
+
+            if (instance._ccTitle != null) instance._ccTitle.Content = e.NewValue;
         }
 
 

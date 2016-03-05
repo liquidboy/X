@@ -30,8 +30,7 @@
                             </Rectangle.Fill>
                         </Rectangle>
 
-                        <Button x:Name="tlMain" Margin="0,0,140,0" Height="50" VerticalAlignment="Top" HorizontalAlignment="Stretch" Content="{Binding EnableResizeFix, Converter={StaticResource BooleanToStringConverter}, ConverterParameter='EnableResizeFix'}" HorizontalContentAlignment="Right" Foreground="White" ></Button>
-
+                        <ContentControl x:Name="ccTitle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
 
                         <Rectangle  x:Name="recSmallTitle" Height="15" Fill="White" HorizontalAlignment="Stretch" VerticalAlignment="Top" Opacity="0.01"  ></Rectangle>
                     </Grid>

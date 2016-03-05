@@ -37,6 +37,7 @@ namespace Samples
             tlMain.AddTab("Samples 2");
             tlMain.AddTab("Samples 3");
 
+            butEnableDisableChromeResizeFix.DataContext = header;
 
             SetTheme("Orange");
 
@@ -140,8 +141,11 @@ namespace Samples
 
             }
         }
-    
 
+        private void butEnableDisableChromeResizeFix_Click(object sender, RoutedEventArgs e)
+        {
+            header.EnableResizeFix = !header.EnableResizeFix;
+        }
     }
 
     public class vmSamples : INotifyPropertyChanged

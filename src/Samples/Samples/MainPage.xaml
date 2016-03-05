@@ -13,13 +13,24 @@
     xmlns:xuiuc="using:X.UI.UserCard"
     xmlns:xuichrome="using:X.UI.Chrome"
     mc:Ignorable="d">
-
+    <Page.Resources>
+        <local:BooleanToStringConverter x:Key="BooleanToStringConverter" />
+    </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
 
-        <xuichrome:Header x:Name="header" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="{Binding Accent3Brush}" Foreground="{Binding Accent1ContrastBrush}" Title="X.UI Samples (1.0.54)" Height="90" GlowColor="{Binding Accent1}" GlowAmount="1" IconUri="ms-appx:///assets/hearts-01.png" EnableResizeFix="False"></xuichrome:Header>
+
+        <xuichrome:Header x:Name="header" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="{Binding Accent3Brush}" Foreground="{Binding Accent1ContrastBrush}" Title="X.UI Samples (1.0.54)" Height="90" GlowColor="{Binding Accent1}" GlowAmount="1" IconUri="ms-appx:///assets/hearts-01.png" EnableResizeFix="False">
+            <xuichrome:Header.TitleContent>
+                <Button x:Name="butEnableDisableChromeResizeFix" Margin="0,0,140,0" Height="50" VerticalAlignment="Top" HorizontalAlignment="Stretch" Content="{Binding EnableResizeFix, Converter={StaticResource BooleanToStringConverter}, ConverterParameter='EnableResizeFix'}" HorizontalContentAlignment="Right" Foreground="White" Click="butEnableDisableChromeResizeFix_Click" ></Button>
+            </xuichrome:Header.TitleContent>
+        </xuichrome:Header>
         <xuiuc:SmallCard x:Name="usercard" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,35,12,0" PrimaryName="Jose Fajardo" SecondaryName="jose@supersecret.com.au" GlowColor="{Binding Accent2}" GlowAmount="2" AvatarUri="ms-appx:///assets/avatar1.png" IsAvatarOnRight="True"></xuiuc:SmallCard>
 
         <xuiuc:CircularCard x:Name="usercard2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" PrimaryName="Jose Fajardo" SecondaryName="jose@supersecret.com.au" GlowColor="{Binding Accent2}" GlowAmount="3" AvatarUri="ms-appx:///assets/avatar1.png" ></xuiuc:CircularCard>
+
+
+
+
 
         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,80,10,0">
 
