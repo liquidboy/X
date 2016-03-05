@@ -78,7 +78,30 @@
                 </StackPanel>
             </Grid>
 
+            <Grid Grid.Column="2" Grid.Row="1"  >
+                <!-- Background="{StaticResource ExtensionAccent2}" -->
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel x:Name="grdDockedExtensionRight" Orientation="Horizontal">
+                        <extcontrols:ExtensionsIconBarRight x:Name="ctlExtensionsBarRight" Margin="0,0,0,0" Background="{Binding SelectedTab.PrimaryBackgroundColor}" VerticalAlignment="Stretch" ></extcontrols:ExtensionsIconBarRight>
+                    </StackPanel>
 
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Column="0" Grid.Row="1" >
+                <!-- Background="{StaticResource ExtensionAccent2}" -->
+                <StackPanel x:Name="grdDockedExtensionLeft"  Orientation="Horizontal" >
+                    <extcontrols:ExtensionsIconBarLeft x:Name="ctlExtensionsBarLeft" Margin="0,0,0,0" Background="{Binding SelectedTab.PrimaryBackgroundColor}" VerticalAlignment="Stretch"></extcontrols:ExtensionsIconBarLeft>
+                </StackPanel>
+
+            </Grid>
+            <Grid Grid.ColumnSpan="3" Grid.Row="2" >
+                <!-- Background="{StaticResource ExtensionAccent2}" -->
+                <StackPanel x:Name="grdDockedExtensionBottomFull" Orientation="Vertical">
+                    <extcontrols:ExtensionsIconBarBottom x:Name="ctlExtensionsBarBottom" Background="{Binding SelectedTab.PrimaryBackgroundColor}" HorizontalAlignment="Stretch"></extcontrols:ExtensionsIconBarBottom>
+                </StackPanel>
+
+            </Grid>
         </Grid>
 
         <!-- DX LAYER -->
