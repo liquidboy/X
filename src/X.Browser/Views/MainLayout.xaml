@@ -15,6 +15,7 @@
     xmlns:xuiuc="using:X.UI.UserCard"
     xmlns:xuichrome="using:X.UI.Chrome"
     xmlns:xviewer="using:X.Viewer"
+    xmlns:xonebox="using:X.UI.OneBox"
     mc:Ignorable="d">
 
     <Grid x:Name="layoutRoot" Background="{Binding Accent1Brush}">
@@ -52,6 +53,13 @@
 
             <Grid Grid.Row="0" Grid.ColumnSpan="3">
                 <StackPanel x:Name="spOnebox" VerticalAlignment="Top" Orientation="Horizontal" Height="40" Background="Black">
+                    <xonebox:ModernUri
+                        x:Name="ctrlModernUri"
+                        VerticalAlignment="Center"
+                        DataContext="{Binding SelectedTab}"
+                        Margin="10,0,0,0" HorizontalAlignment="Left"
+                    />
+                    <!-- PointerReleased="ctrlModernUri_PointerReleased" -->
                 </StackPanel>
                 <StackPanel x:Name="spRightToolbar" HorizontalAlignment="Right" Orientation="Horizontal">
                     <extcontrols:ExtensionsIconBarTop x:Name="ctlExtensionsBarTop" Margin="0,0,0,0"></extcontrols:ExtensionsIconBarTop>

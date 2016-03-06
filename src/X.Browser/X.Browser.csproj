@@ -197,6 +197,10 @@
       <Project>{0bae1a84-c60d-4ad9-b779-c6fb5b439f12}</Project>
       <Name>X.UI.MoreTab</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.UI.OneBox\X.UI.OneBox.csproj">
+      <Project>{d893fe4b-799d-4b11-a98e-2cede79a51bd}</Project>
+      <Name>X.UI.OneBox</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharedLibs\X.UI.Path\X.UI.Path.csproj">
       <Project>{9da51ef4-2dae-40d8-92ec-cc81162669df}</Project>
       <Name>X.UI.Path</Name>

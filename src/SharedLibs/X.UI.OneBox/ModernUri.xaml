@@ -1,0 +1,71 @@
+﻿<UserControl
+    x:Class="X.UI.OneBox.ModernUri"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:X.UI.OneBox"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+        <local:BooleanToVisibilityConverter x:Key="TrueToVisibleConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <StackPanel Orientation="Horizontal">
+            <Grid Margin="0,0,5,0" Visibility="{Binding ShowPadlock, Converter={StaticResource TrueToVisibleConverter}}">
+                <Path Data="M2.0010067,16.565002L2.0010067,30.118042 26.066001,30.118042 26.066001,16.565002z M14.033992,1.882019C9.6719941,1.882019,6.1240061,5.2210083,6.1240061,9.3250122L6.1240061,14.682007 21.941995,14.682007 21.941995,9.3250122C21.941995,5.2210083,18.39399,1.882019,14.033992,1.882019z M14.033992,0C19.497002,0,23.941993,4.184021,23.941993,9.3250122L23.941993,14.682007 28.065999,14.682007 28.065999,32 0,32 0,14.682007 4.1240066,14.682007 4.1240066,9.3250122C4.1240066,4.184021,8.5700043,0,14.033992,0z" Stretch="Uniform" Fill="#FFFFFFFF" Width="16" Height="16" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <TransformGroup.Children>
+                                <RotateTransform Angle="0" />
+                                <ScaleTransform ScaleX="1" ScaleY="1" />
+                            </TransformGroup.Children>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+            </Grid>
+            <Grid HorizontalAlignment="Left" Background="Transparent" VerticalAlignment="Bottom">
+                <TextBlock
+                    x:Name="tbUriPart1"
+                    Foreground="{Binding PrimaryForegroundColor}"
+                    FontFamily="{Binding PrimaryFontFamily}"
+                    Text="{Binding UriPart1}" Padding="2" FontSize="14.667"/>
+            </Grid>
+            <Image
+                Width="20"
+                Source="{Binding FaviconUri}"
+                Height="20"
+                Stretch="Uniform"
+                Margin="3,-10,0,0" VerticalAlignment="Bottom"></Image>
+            <Grid
+                HorizontalAlignment="Left"
+                Background="Transparent"
+                Margin="3,0,0,0"
+                VerticalAlignment="Bottom">
+            	<TextBlock
+                    x:Name="tbUriPart2"
+                    Text="{Binding UriPart2}"
+                    FontFamily="{Binding PrimaryFontFamily}"
+                    Foreground="{Binding PrimaryForegroundColor}" SelectionHighlightColor="{x:Null}" Padding="2"  FontSize="14.667"/>
+            </Grid>
+
+            <!--<Grid
+                HorizontalAlignment="Left"
+      
+                Background="White"
+                Margin="3,0,0,0"
+                VerticalAlignment="Bottom">
+                <TextBlock
+                    x:Name="tbUriQueryString"
+                    Text="{Binding UriQueryString}"
+                    Foreground="Black"
+                    SelectionHighlightColor="{x:Null}"
+                    Padding="2"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    FontSize="14.667" />
+            </Grid>-->
+        </StackPanel>
+    </Grid>
+</UserControl>
