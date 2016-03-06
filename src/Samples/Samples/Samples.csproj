@@ -123,6 +123,9 @@
     <None Include="Samples_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\stilltobegenerated.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\avatar1.png" />
     <Content Include="Assets\hearts-01.png" />
     <Content Include="Properties\Default.rd.xml" />

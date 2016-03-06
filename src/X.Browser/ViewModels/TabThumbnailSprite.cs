@@ -59,16 +59,19 @@ namespace X.Browser.ViewModels
                 grd.Children.Add(rec);
 
 
-                if (!string.IsNullOrEmpty(TextureBackgroundUri))
+                var imageUriToUse = TextureBackgroundUri;
+                if (string.IsNullOrEmpty(imageUriToUse)) imageUriToUse = "ms-appx:///Assets/stilltobegenerated.png";
+
+                if (!string.IsNullOrEmpty(imageUriToUse))
                 {
                     var img = new Image();
                     img.HorizontalAlignment = HorizontalAlignment.Stretch;
                     img.VerticalAlignment = VerticalAlignment.Stretch;
                     img.Margin = new Thickness(10, 15, 10, 15);
-                    img.Source = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(TextureBackgroundUri));
+                    img.Source = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(imageUriToUse));
                     grd.Children.Add(img);
                 }
-
+                
                 _rootElement = grd;
 
                 var _this = this;
