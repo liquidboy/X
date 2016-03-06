@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using X.Browser.Views;
+using X.Extensions;
 using X.Services;
 
 namespace X.Browser
@@ -36,7 +37,7 @@ namespace X.Browser
 
 
             ImageService = new ImageService();
-
+            ExtensionsSvc = new ExtensionsService();
 
             this.InitializeComponent();
             this.Suspending += OnSuspending;
@@ -110,6 +111,7 @@ namespace X.Browser
 
 
             ImageService.Dispose();
+            //ExtensionsSvc.Dispose();
 
 
             var deferral = e.SuspendingOperation.GetDeferral();
@@ -123,5 +125,6 @@ namespace X.Browser
 
 
         public static ImageService ImageService;
+        public static ExtensionsService ExtensionsSvc;
     }
 }

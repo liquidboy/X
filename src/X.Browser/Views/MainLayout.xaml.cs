@@ -1,4 +1,5 @@
-﻿using CoreLib.Sprites;
+﻿using CoreLib.Extensions;
+using CoreLib.Sprites;
 using System.Linq;
 using Windows.Foundation;
 using Windows.UI.ViewManagement;
@@ -8,7 +9,7 @@ using X.Browser.ViewModels;
 
 namespace X.Browser.Views
 {
-    public sealed partial class MainLayout : Page
+    public sealed partial class MainLayout : Page, IExtension
     {
         ViewModels.BrowserVM vm = new ViewModels.BrowserVM();
        
@@ -20,6 +21,7 @@ namespace X.Browser.Views
             this.DataContext = vm;
             header.InitChrome(App.Current, ApplicationView.GetForCurrentView());
             InitTabs();
+            InitExtensions();
         }
 
        
