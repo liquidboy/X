@@ -28,6 +28,8 @@ namespace X.Browser.ViewModels
         private Brush _Accent2Brush;
         private Color _Accent3;
         private Brush _Accent3Brush;
+        private Color _Accent4;
+        private Brush _Accent4Brush;
 
         public Color Accent3 { get { return _Accent3; } set { _Accent3 = value; NotifyPropertyChanged(); } }
         public Brush Accent3Brush { get { return _Accent3Brush; } set { _Accent3Brush = value; NotifyPropertyChanged(); } }
@@ -37,6 +39,9 @@ namespace X.Browser.ViewModels
         public Brush Accent1Brush { get { return _Accent1Brush; } set { _Accent1Brush = value; NotifyPropertyChanged(); } }
         public Color Accent1Contrast { get { return _Accent1Contrast; } set { _Accent1Contrast = value; NotifyPropertyChanged(); } }
         public Brush Accent1ContrastBrush { get { return _Accent1ContrastBrush; } set { _Accent1ContrastBrush = value; NotifyPropertyChanged(); } }
+        public Color Accent4 { get { return _Accent4; } set { _Accent4 = value; NotifyPropertyChanged(); } }
+        public Brush Accent4Brush { get { return _Accent4Brush; } set { _Accent4Brush = value; NotifyPropertyChanged(); } }
+
 
         private RelayCommand<object> _tabChangedCommand;
         public RelayCommand<object> TabChangedCommand { get { return _tabChangedCommand ?? (_tabChangedCommand = new RelayCommand<object>(ExecuteTabChangedCommand)); } }
@@ -163,6 +168,8 @@ namespace X.Browser.ViewModels
             Accent2Brush = new SolidColorBrush(Accent2);
             Accent3 = Accent1;
             Accent3Brush = new SolidColorBrush(Accent1);
+            Accent4 = new Color() { R = 230, G = 230, B = 230, A = 255 };
+            Accent4Brush = new SolidColorBrush(Accent4);
         }
 
         private string DetermineFontFamily(string title)
