@@ -21,7 +21,7 @@ namespace X.UI.LiteTab
     public sealed class TabList : Control
     {
 
-        EffectLayer.EffectLayer _bkgLayer;//x
+        //EffectLayer.EffectLayer _bkgLayer;//x
 
         public Orientation Orientation { get; set; }
 
@@ -35,7 +35,9 @@ namespace X.UI.LiteTab
 
 
 
-        public void Invalidate() { _bkgLayer?.DrawUIElements(_icTabList, RenderTargetIndexFor_icTabList); }
+        public void Invalidate() { 
+            //_bkgLayer?.DrawUIElements(_icTabList, RenderTargetIndexFor_icTabList); 
+        }
 
 
 
@@ -128,17 +130,17 @@ namespace X.UI.LiteTab
 
         private async void TabList_Loaded(object sender, RoutedEventArgs e)
         {
-            if (_bkgLayer != null)
-            {
-                _bkgLayer.DrawUIElements(_icTabList);  //will draw at index 0 (RenderTargetIndexFor_icTabList)
-                _bkgLayer.InitLayer(_icTabList.ActualWidth, _icTabList.ActualHeight);
-            }
+            //if (_bkgLayer != null)
+            //{
+            //    _bkgLayer.DrawUIElements(_icTabList);  //will draw at index 0 (RenderTargetIndexFor_icTabList)
+            //    _bkgLayer.InitLayer(_icTabList.ActualWidth, _icTabList.ActualHeight);
+            //}
         }
         
 
         protected override void OnApplyTemplate()
         {
-            if (_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
+            //if (_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
 
             if (_icTabList == null) { 
 
@@ -152,7 +154,7 @@ namespace X.UI.LiteTab
                 
             }
 
-            if (_bkgLayer != null && _icTabList != null && _icTabList.ActualWidth != 0) _bkgLayer.InitLayer(_icTabList.ActualWidth, _icTabList.ActualHeight);
+            //if (_bkgLayer != null && _icTabList != null && _icTabList.ActualWidth != 0) _bkgLayer.InitLayer(_icTabList.ActualWidth, _icTabList.ActualHeight);
 
             base.OnApplyTemplate();
         }
