@@ -112,147 +112,147 @@
     <EmbeddedResource Include="Properties\X.Extensions.ThirdParty.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\ABP\abp.png">
+    <Content Include="Assets\Extensions\ThirdParty\ABP\abp.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\AdvancedRestClient\AdvancedRestClient.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\AdvancedRestClient\AdvancedRestClient.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\AssistantTo\AssistantTo.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\AssistantTo\AssistantTo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\AwesomeScreenshot\AwesomeScreenshot.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\AwesomeScreenshot\AwesomeScreenshot.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\BlackMenu\BlackMenu.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\BlackMenu\BlackMenu.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\Chrometana\Chrometana.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\Chrometana\Chrometana.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\ColorHexa\ColorHexa.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\ColorHexa\ColorHexa.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\CustomFieldsShopify\CustomFieldsShopify.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\CustomFieldsShopify\CustomFieldsShopify.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\DrawIO\drawio.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\DrawIO\drawio.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\DuckDuckGo\DuckDuckGo.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\DuckDuckGo\DuckDuckGo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\DuoLingo\DuoLingo.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\DuoLingo\DuoLingo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\F12\F12-full.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\F12\F12-full.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\F12\F12.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\F12\F12.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\Feedly\feedly.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\Feedly\feedly.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\GoogleHangouts\GoogleHangouts.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\GoogleHangouts\GoogleHangouts.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\GoogleKeep\GoogleKeep.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\GoogleKeep\GoogleKeep.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\HistoryEraser\HistoryEraser.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\HistoryEraser\HistoryEraser.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\HtmlFire\HtmlFire.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\HtmlFire\HtmlFire.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\Koding\Koding.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\Koding\Koding.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\LastPass\LastPass.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\LastPass\LastPass.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\LittleAlchemy\LittleAlchemy.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\LittleAlchemy\LittleAlchemy.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\Nitrous\Nitrous.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\Nitrous\Nitrous.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\OneNote\OneNote.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\OneNote\OneNote.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\ooVoo\ooVoo.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\ooVoo\ooVoo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\Padlet\Padlet.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\Padlet\Padlet.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\Pixlr\Pixlr.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\Pixlr\Pixlr.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\Pixta\pixta.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\Pixta\pixta.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\Plex\Plex.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\Plex\Plex.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\Polarr\Polarr.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\Polarr\Polarr.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\Quant\Quant.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\Quant\Quant.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\RatingsPreview\RatingsPreview.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\RatingsPreview\RatingsPreview.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\Rdio\Rdio.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\Rdio\Rdio.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\SecureShell\SecureShell.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\SecureShell\SecureShell.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\SessionBuddy\SessionBuddy.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\SessionBuddy\SessionBuddy.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\SketchboardIO\SketchboardIO.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\SketchboardIO\SketchboardIO.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\SmartHeader\SmartHeader.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\SmartHeader\SmartHeader.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\Songist\Songist.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\Songist\Songist.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\Spotify\Spotify.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\Spotify\Spotify.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\Stitcher\stitcher.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\Stitcher\stitcher.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\Storybird\Storybird.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\Storybird\Storybird.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\Teamviewer\Teamviewer.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\Teamviewer\Teamviewer.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\Twerk\Twerk.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\Twerk\Twerk.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\Twitch\Twitch.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\Twitch\Twitch.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\WordOnline\WordOnline.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\WordOnline\WordOnline.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\WorkFlowy\WorkFlowy.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\WorkFlowy\WorkFlowy.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\Wunderlist\wunderlist.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\Wunderlist\wunderlist.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\Zoo\Zoo.png">
+    </Content>
+    <Content Include="Assets\Extensions\ThirdParty\Zoo\Zoo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\X.CoreLib\X.CoreLib.csproj">

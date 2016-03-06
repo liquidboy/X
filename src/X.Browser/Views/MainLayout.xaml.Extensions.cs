@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WeakEvent;
+using Windows.UI.Xaml.Controls;
+using X.Browser.ViewModels;
+using X.Extensions;
 using X.Extensions.ThirdParty;
 
 namespace X.Browser.Views
@@ -62,6 +65,131 @@ namespace X.Browser.Views
 
         public void RecieveMessage(object message)
         {
+            if (message is LoadWebViewEventArgs)
+            {
+                //doing this kills the binding to it hence breaks the tabs
+                //wvMain.Source = ((LoadWebViewEventArgs)message).Uri;
+
+
+                var vm = (BrowserVM)this.DataContext;
+                var uri = ((LoadWebViewEventArgs)message).Uri;
+
+                TabViewModel tempTab = new TabViewModel()
+                {
+                    DisplayTitle = uri.Host,
+                    FaviconUri = "http://" + uri.Host + "//favicon.ico",
+                    HasFocus = false,
+                    Uri = uri.OriginalString,
+                    Id = 999,
+                    Uid = Guid.NewGuid().ToString(),
+                    PrimaryBackgroundColor = "Black",
+                    PrimaryForegroundColor = "White",
+                    PrimaryFontFamily = "Segoe UI"
+                };
+
+                vm.SelectedTab = tempTab;
+                //vm.ExposedRaisePropertyChanged("SelectedTab");
+            }
+            else if (message is RequestListOfInstalledExtensionsEventArgs)
+            {
+                var extensions = App.ExtensionsSvc.GetExtensionsMetadata();
+                _SendMessageSource?.Raise(this, new ResponseListOfInstalledExtensionsEventArgs() { ExtensionsMetadata = extensions, ReceiverType = ExtensionType.UIComponent });
+            }
+            else if (message is RequestListOfTopToolbarExtensionsEventArgs)
+            {
+                var extensions = App.ExtensionsSvc.GetToolbarExtensionsMetadata(ExtensionInToolbarPositions.Top);
+                _SendMessageSource?.Raise(this, new ResponseListOfTopToolbarExtensionsEventArgs() { ExtensionsMetadata = extensions, ReceiverType = ExtensionType.UIComponent });
+            }
+            else if (message is RequestListOfBottomToolbarExtensionsEventArgs)
+            {
+                var extensions = App.ExtensionsSvc.GetToolbarExtensionsMetadata(ExtensionInToolbarPositions.Bottom);
+                _SendMessageSource?.Raise(this, new ResponseListOfBottomToolbarExtensionsEventArgs() { ExtensionsMetadata = extensions, ReceiverType = ExtensionType.UIComponent });
+            }
+            else if (message is RequestListOfLeftToolbarExtensionsEventArgs)
+            {
+                var extensions = App.ExtensionsSvc.GetToolbarExtensionsMetadata(ExtensionInToolbarPositions.Left);
+                _SendMessageSource?.Raise(this, new ResponseListOfLeftToolbarExtensionsEventArgs() { ExtensionsMetadata = extensions, ReceiverType = ExtensionType.UIComponent });
+            }
+            else if (message is RequestListOfRightToolbarExtensionsEventArgs)
+            {
+                var extensions = App.ExtensionsSvc.GetToolbarExtensionsMetadata(ExtensionInToolbarPositions.Right);
+                _SendMessageSource?.Raise(this, new ResponseListOfRightToolbarExtensionsEventArgs() { ExtensionsMetadata = extensions, ReceiverType = ExtensionType.UIComponent });
+            }
+            else if (message is LaunchExtensionEventArgs)
+            {
+                var extGuid = ((LaunchExtensionEventArgs)message).ExtensionUniqueGuid;
+                var extMetaData = App.ExtensionsSvc.GetExtensionMetadata(extGuid);
+                var newExtensionInstance = App.ExtensionsSvc.CreateInstance(extMetaData);
+
+                if (newExtensionInstance != null)
+                {
+                    if ((string)extMetaData.LaunchInDockPositions == ExtensionInToolbarPositions.Left.ToString())
+                        grdDockedExtensionLeft.Children.Insert(grdDockedExtensionLeft.Children.Count, (UserControl)newExtensionInstance);
+                    else if ((string)extMetaData.LaunchInDockPositions == ExtensionInToolbarPositions.Top.ToString())
+                        grdDockedExtensionTop.Children.Insert(grdDockedExtensionTop.Children.Count, (UserControl)newExtensionInstance);
+                    else if ((string)extMetaData.LaunchInDockPositions == ExtensionInToolbarPositions.Right.ToString())
+                        grdDockedExtensionRight.Children.Insert(0, (UserControl)newExtensionInstance);
+                    else if ((string)extMetaData.LaunchInDockPositions == ExtensionInToolbarPositions.Bottom.ToString())
+                        grdDockedExtensionBottom.Children.Insert(grdDockedExtensionBottom.Children.Count, (UserControl)newExtensionInstance);
+                    else if ((string)extMetaData.LaunchInDockPositions == ExtensionInToolbarPositions.BottomFull.ToString())
+                        grdDockedExtensionBottomFull.Children.Insert(grdDockedExtensionBottomFull.Children.Count, (UserControl)newExtensionInstance);
+
+                    newExtensionInstance.OnPaneLoad();
+                }
+
+
+            }
+            else if (message is CloseExtensionEventArgs)
+            {
+                var extGuid = ((CloseExtensionEventArgs)message).ExtensionUniqueGuid;
+                var md = App.ExtensionsSvc.GetExtensionMetadata(extGuid);
+
+                foreach (dynamic child in grdDockedExtensionBottomFull.Children)
+                {
+                    if (((Guid)child.ExtensionManifest.UniqueID).ToString() == extGuid.ToString())
+                    {
+                        App.ExtensionsSvc.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
+                        grdDockedExtensionBottomFull.Children.Remove(child);
+                    }
+                }
+
+                foreach (dynamic child in grdDockedExtensionBottom.Children)
+                {
+                    if (((Guid)child.ExtensionManifest.UniqueID).ToString() == extGuid.ToString())
+                    {
+                        App.ExtensionsSvc.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
+                        grdDockedExtensionBottom.Children.Remove(child);
+                    }
+                }
+
+                foreach (dynamic child in grdDockedExtensionTop.Children)
+                {
+                    if (((Guid)child.ExtensionManifest.UniqueID).ToString() == extGuid.ToString())
+                    {
+                        App.ExtensionsSvc.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
+                        grdDockedExtensionTop.Children.Remove(child);
+                    }
+                }
+
+                foreach (dynamic child in grdDockedExtensionLeft.Children)
+                {
+                    if (((Guid)child.ExtensionManifest.UniqueID).ToString() == extGuid.ToString())
+                    {
+                        App.ExtensionsSvc.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
+                        grdDockedExtensionLeft.Children.Remove(child);
+                    }
+                }
+
+                foreach (dynamic child in grdDockedExtensionRight.Children)
+                {
+                    if (((Guid)child.ExtensionManifest.UniqueID).ToString() == extGuid.ToString())
+                    {
+                        App.ExtensionsSvc.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
+                        grdDockedExtensionRight.Children.Remove(child);
+                    }
+                }
+
+            }
         }
 
 

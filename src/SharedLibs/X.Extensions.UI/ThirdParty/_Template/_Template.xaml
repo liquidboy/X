@@ -27,7 +27,7 @@
                 <Image Source="{Binding ExtensionManifest.IconUrl}" Height="30" MaxWidth="80" Stretch="Uniform" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,10,10,0" HorizontalAlignment="Right">
-                <xuitb:ImageButton x:Name="butClose" IconUri="ms-appx:///ThirdParty/_SharedAssets/close4.png" Width="20" Height="20" PointerReleased="butClose_PointerReleased"/>
+                <xuitb:ImageButton x:Name="butClose" IconUri="ms-appx:///X.Extensions.UI/ThirdParty/_SharedAssets/close4.png" Width="20" Height="20" PointerReleased="butClose_PointerReleased"/>
             </StackPanel>
 
 

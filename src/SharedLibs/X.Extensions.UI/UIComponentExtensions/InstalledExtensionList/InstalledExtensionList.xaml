@@ -6,10 +6,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:xuitl="using:X.UI.LiteTab"
+    xmlns:xextui="using:X.Extensions.UI"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-
+    <UserControl.Resources>
+        <xextui:StringEmptyToVisibilityConverter x:Key="StringEmptyToVisibilityConverter" />
+        <xextui:StringEmptyToVisibilityInvertedConverter x:Key="StringEmptyToVisibilityInvertedConverter" />
+        <xextui:ToolbarPositionToImageConverter x:Key="ToolbarPositionToImageConverter" />
+        <xextui:BooleanToVisibilityConverter x:Key="TrueToVisibleConverter" />
+        <xextui:BooleanToVisibilityConverter x:Key="FalseToVisibleConverter" IsReversed="True" />
+    </UserControl.Resources>
     <Grid x:Name="layoutRoot" Width="350" Loaded="layoutRoot_Loaded" >
         <Grid.RowDefinitions>
             <RowDefinition Height="40"></RowDefinition>
@@ -17,7 +24,7 @@
             <RowDefinition Height="20"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <xuitl:TabList x:Name="tlMain" Grid.Row="0"  Orientation="Horizontal" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+        <xuitl:TabList x:Name="tlMain" Grid.Row="0"  Orientation="Horizontal" Margin="0,0,0,0" TabItemBorderColor="DarkGray" GlowColor="Black" HorizontalAlignment="Center" VerticalAlignment="Bottom">
 
         </xuitl:TabList>
 
