@@ -88,7 +88,7 @@ namespace X.Browser.Views
                 };
 
                 vm.SelectedTab = tempTab;
-                //vm.ExposedRaisePropertyChanged("SelectedTab");
+                vm.ExposedNotifyPropertyChanged("SelectedTab");
             }
             else if (message is RequestListOfInstalledExtensionsEventArgs)
             {

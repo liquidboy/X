@@ -51,6 +51,11 @@ namespace X.Browser.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public void ExposedNotifyPropertyChanged(string propertyName)
+        {
+            this.NotifyPropertyChanged(propertyName);
+        }
+
         private void ExecuteTabChangedCommand(object obj)
         {
 
