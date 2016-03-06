@@ -68,8 +68,7 @@
                 <StackPanel x:Name="grdDockedExtensionTop" Orientation="Vertical" Grid.Row="0" >
                     <!-- Background="{StaticResource ExtensionAccent2}" -->
                 </StackPanel>
-                <xviewer:ContentView x:Name="wvMain" Grid.Row="1" Uri="{Binding SelectedTab.Uri}"  >
-                    <!-- SendMessage="wvMain_SendMessage"  -->
+                <xviewer:ContentView x:Name="wvMain" Grid.Row="1" Uri="{Binding SelectedTab.Uri}" SendMessage="wvMain_SendMessage" >
 
                 </xviewer:ContentView>
 

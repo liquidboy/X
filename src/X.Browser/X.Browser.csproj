@@ -109,6 +109,9 @@
     <Compile Include="Views\MainLayout.xaml.Tabs.cs">
       <DependentUpon>MainLayout.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Mainlayout.xaml.WebView.cs">
+      <DependentUpon>MainLayout.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -136,7 +139,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharedLibs\X.CoreLib\X.CoreLib.csproj">
       <Project>{d273509d-612c-47c3-b2a6-c203d96b90d3}</Project>
@@ -157,6 +162,10 @@
     <ProjectReference Include="..\SharedLibs\X.Extensions\X.Extensions.csproj">
       <Project>{bd6d553a-4777-4d54-9289-3e9e4289604f}</Project>
       <Name>X.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.Services.Image\X.Services.Image.csproj">
+      <Project>{9d98bf69-e061-4f8c-b8c9-ce65116374b8}</Project>
+      <Name>X.Services.Image</Name>
     </ProjectReference>
     <ProjectReference Include="..\SharedLibs\X.UI.AddTab\X.UI.AddTab.csproj">
       <Project>{38d73f3e-3477-436f-a501-1b9f9f762719}</Project>

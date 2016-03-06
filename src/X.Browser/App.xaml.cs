@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using X.Browser.Views;
+using X.Services;
 
 namespace X.Browser
 {
@@ -32,6 +33,11 @@ namespace X.Browser
             Microsoft.ApplicationInsights.WindowsAppInitializer.InitializeAsync(
                 Microsoft.ApplicationInsights.WindowsCollectors.Metadata |
                 Microsoft.ApplicationInsights.WindowsCollectors.Session);
+
+
+            ImageService = new ImageService();
+
+
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }
@@ -101,9 +107,21 @@ namespace X.Browser
         /// <param name="e">Details about the suspend request.</param>
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
+
+
+            ImageService.Dispose();
+
+
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
+
+
+            
+
         }
+
+
+        public static ImageService ImageService;
     }
 }
