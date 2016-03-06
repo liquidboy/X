@@ -346,7 +346,7 @@
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
                         <Button x:Name="butTab" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" Padding="10,0,5,0"   CommandParameter="{Binding }" ClickMode="Release" Canvas.ZIndex="10" UseLayoutRounding="False" Command="{Binding TabChangedCommand}" Style="{StaticResource TabButtonStyle}" IsEnabled="{Binding HasFocus, Converter={StaticResource InverseBooleanConverter}}"></Button>
                         <!--PointerExited="Button_PointerExited" Command="{Binding TabChangedCommand}" PointerEntered="Button_PointerEntered" -->
-                        <StackPanel IsHitTestVisible="False" HorizontalAlignment="Stretch" VerticalAlignment="Center" Orientation="Horizontal" Padding="10,0,10,5" BorderBrush="{Binding RightBorderColor}" BorderThickness="0,0,1,0" Canvas.ZIndex="11">
+                        <StackPanel IsHitTestVisible="False" HorizontalAlignment="Stretch" VerticalAlignment="Center" Orientation="Horizontal" Padding="10,5,10,5" BorderBrush="{Binding RightBorderColor}" BorderThickness="0,0,1,0" Canvas.ZIndex="11">
                             <Image Height="20" Width="20" IsHitTestVisible="False"  Source="{Binding FaviconUri}" Stretch="Uniform"  />
                             <!-- Visibility="{Binding HasFocus, Converter={StaticResource FalseToVisibleConverter}}" -->
                             <TextBlock TextWrapping="Wrap" Text="{Binding DisplayTitle}" IsHitTestVisible="False"  FontSize="12" FontFamily="Segoe UI" Foreground="{Binding Foreground}" Margin="5,2,5,0" />

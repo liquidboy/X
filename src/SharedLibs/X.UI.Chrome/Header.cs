@@ -245,6 +245,8 @@ namespace X.UI.Chrome
                 Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.SizeAll, 66652);
             else if (pt.y < Window.Current.Bounds.Top + 45)
                 Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Arrow, 66653);
+            else  //some monitors, like my freaking 4K dogy one , reports coordinates from the center of the screen .. so for the time being just return back arrow
+                Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Arrow, 66653);
         }
 
 
