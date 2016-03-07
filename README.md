@@ -12,13 +12,13 @@ Components still being fleshed out...
 * Path
 * RichInput
 * EffectLayer
-
-![sample1]
-
-
+* Chrome
+* RichTab
+* OneBox
+* RichScrollViewer
 * LiteDataGrid - A grid that lets you define several different DataTemplates and then alternate between them with a simple index value.
 
-![sample2]
+And implementing them in a demo app "X.Browser" .. Which is a demonstration browser application, that lets you browse web pages, media content, filesystem... 
 
 
 
