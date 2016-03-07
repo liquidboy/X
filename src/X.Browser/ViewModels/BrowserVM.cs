@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,8 +18,13 @@ namespace X.Browser.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<TabViewModel> Tabs { get; set; }
-        public TabViewModel SelectedTab { get; set; }
 
+
+
+
+        public TabViewModel SelectedTab { get; set; }
+        public bool IsShowingAddTab { get; set; }
+        public bool IsShowingMoreTab { get; set; }
 
         private Color _Accent1;
         private Brush _Accent1Brush;
@@ -44,6 +50,9 @@ namespace X.Browser.ViewModels
 
 
         private RelayCommand<object> _tabChangedCommand;
+        private RelayCommand<object> _tabAddCommand;
+        private RelayCommand<object> _tabMoreCommand;
+
         public RelayCommand<object> TabChangedCommand { get { return _tabChangedCommand ?? (_tabChangedCommand = new RelayCommand<object>(ExecuteTabChangedCommand)); } }
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
@@ -58,6 +67,17 @@ namespace X.Browser.ViewModels
 
         private void ExecuteTabChangedCommand(object obj)
         {
+            if (this.IsShowingAddTab)
+            {
+               // Messenger.Default.Send(new CloseAddTabFlyout());
+            }
+
+            this.IsShowingAddTab = false;
+            this.NotifyPropertyChanged("IsShowingAddTab");
+
+            this.IsShowingMoreTab = false;
+            this.NotifyPropertyChanged("IsShowingMoreTab");
+
 
             TabViewModel previousTab = null;
 
@@ -91,6 +111,42 @@ namespace X.Browser.ViewModels
             this.NotifyPropertyChanged("SelectedTab");
 
         }
+
+        public RelayCommand<object> TabAddCommand { get { return _tabAddCommand ?? (_tabAddCommand = new RelayCommand<object>(ExecuteTabAddCommand)); } }
+        private void ExecuteTabAddCommand(object obj)
+        {
+            this.IsShowingAddTab = true;
+            this.NotifyPropertyChanged("IsShowingAddTab");
+
+            this.IsShowingMoreTab = false;
+            this.NotifyPropertyChanged("IsShowingMoreTab");
+
+            //HideOneBox();
+
+            //Messenger.Default.Send(new SetAddTabSearchBoxFocus());
+
+        }
+
+        public RelayCommand<object> TabMoreCommand { get { return _tabMoreCommand ?? (_tabMoreCommand = new RelayCommand<object>(ExecuteTabMoreCommand)); } }
+        private void ExecuteTabMoreCommand(object obj)
+        {
+            if (this.IsShowingAddTab)
+            {
+                //Messenger.Default.Send(new CloseAddTabFlyout());
+            }
+
+            this.IsShowingAddTab = false;
+            this.NotifyPropertyChanged("IsShowingAddTab");
+
+            this.IsShowingMoreTab = true;
+            this.NotifyPropertyChanged("IsShowingMoreTab");
+
+            //HideOneBox();
+
+            //Messenger.Default.Send(new SetMoreTabSearchBoxFocus());
+        }
+
+
 
         public BrowserVM()
         {

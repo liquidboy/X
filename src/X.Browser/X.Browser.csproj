@@ -99,6 +99,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\InverseBooleanConverter.cs" />
+    <Compile Include="Converters\MoreTabBorderThicknessConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\BrowserVM.cs" />
     <Compile Include="ViewModels\TabThumbnailSprite.cs" />

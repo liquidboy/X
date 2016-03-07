@@ -20,6 +20,8 @@
     mc:Ignorable="d">
     <Page.Resources>
         <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        <converters:MoreTabBorderThicknessConverter x:Key="MoreTabBorderThicknessConverter" />
+        
         <SolidColorBrush x:Key="AddTabAccent1" Color="#FFFFD000"/>
         <SolidColorBrush x:Key="AddTabAccent2" Color="#FFBF9C00"/>
         <SolidColorBrush x:Key="AddTabAccent3" Color="#FFDCB400"/>
@@ -108,6 +110,97 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <SolidColorBrush x:Key="MoreTabAccent1" Color="#FFFFD000"/>
+        <SolidColorBrush x:Key="MoreTabAccent2" Color="#FFBF9C00"/>
+        <SolidColorBrush x:Key="MoreTabAccent3" Color="#FFDCB400"/>
+        <SolidColorBrush x:Key="MoreTabAccent4" Color="#FFDCAA00"/>
+        <SolidColorBrush x:Key="MoreTabAccent5" Color="#FFB08F00"/>
+        <SolidColorBrush x:Key="MoreTabViewBackground" Color="#FFE6E6E6"/>
+        <SolidColorBrush x:Key="MoreTabViewContextMenuBackground" Color="#FFE6E6E6"/>
+        <SolidColorBrush x:Key="MoreTabViewContextMenuForeground" Color="Black"/>
+        <SolidColorBrush x:Key="MoreTabViewContextMenuBorderBrush" Color="#FF646464"/>
+        <Style x:Key="TabMoreButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{ThemeResource ButtonBackgroundThemeBrush}"/>
+            <Setter Property="Foreground" Value="{ThemeResource ButtonForegroundThemeBrush}"/>
+            <Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderThemeBrush}"/>
+            <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}"/>
+            <Setter Property="Padding" Value="12,4,12,4"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Border" d:IsOptimized="True"/>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.Background)" Storyboard.TargetName="Border">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MoreTabAccent2}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonPointerOverForegroundThemeBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.Background)" Storyboard.TargetName="Border">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MoreTabAccent4}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonPressedForegroundThemeBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Border" d:IsOptimized="True"/>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.Background)" Storyboard.TargetName="Border">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MoreTabAccent3}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="Border">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledBorderThemeBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledForegroundThemeBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.Background)" Storyboard.TargetName="Border">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MoreTabAccent1}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="FocusStates">
+                                    <VisualState x:Name="Focused">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="FocusVisualWhite"/>
+                                            <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="FocusVisualBlack"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Unfocused"/>
+                                    <VisualState x:Name="PointerFocused"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Margin="0">
+                                <ContentPresenter x:Name="ContentPresenter" AutomationProperties.AccessibilityView="Raw" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Border>
+                            <Rectangle x:Name="FocusVisualWhite" IsHitTestVisible="False" Opacity="0" StrokeDashOffset="1.5" StrokeEndLineCap="Square" Stroke="{ThemeResource FocusVisualWhiteStrokeThemeBrush}" StrokeDashArray="1,1"/>
+                            <Rectangle x:Name="FocusVisualBlack" IsHitTestVisible="False" Opacity="0" StrokeDashOffset="0.5" StrokeEndLineCap="Square" Stroke="{ThemeResource FocusVisualBlackStrokeThemeBrush}" StrokeDashArray="1,1"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Page.Resources>
     <Grid x:Name="layoutRoot" Background="{Binding Accent1Brush}">
         
@@ -130,7 +223,7 @@
         </xuichrome:Header>
 
         <!-- MORE TAB -->
-        <!--<Button
+        <Button
                 x:Name="tabButtonMore"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
@@ -148,7 +241,7 @@
                 <Path Data="M285.305,0L285.305,75.710529 189.82141,152.64609 189.01901,153.30347 189.42913,153.64473 142.45632,191.5 95.465693,153.64473 0,76.69482 0,0.98785392 108.34008,88.30862 142.03731,115.4374 142.84418,114.79439 176.94702,87.302791z" Stretch="Uniform" Fill="White" Width="16" Height="16" Margin="0,5,0,0" RenderTransformOrigin="0.5,0.5">
                 </Path>
             </Grid>
-        </Button>-->
+        </Button>
 
         <!-- NEW TAB -->
         <Button
