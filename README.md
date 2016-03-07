@@ -22,5 +22,4 @@ And implementing them in a demo app "X.Browser" .. Which is a demonstration brow
 
 
 
-[sample1]: http://officediscoverybeta.azurewebsites.net/wp-content/uploads/2016/02/1.png "Sample Components"
-[sample2]: http://officediscoverybeta.azurewebsites.net/wp-content/uploads/2016/02/2.png "Sample LiteDataGrid"
+[xbrowser01]: https://pbs.twimg.com/media/Cc3G7ufUUAQS6qK.jpg:large "demo browser app 1"
