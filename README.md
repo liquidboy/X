@@ -17,6 +17,23 @@ Components still being fleshed out...
 * OneBox
 * RichScrollViewer
 * LiteDataGrid - A grid that lets you define several different DataTemplates and then alternate between them with a simple index value.
+* Viewer
+* Toolbar
+* UserCard
+
+The following components are less generic, possibly designed with the intention of modularizing the monolithic X.Browser app.
+
+* AddTab
+* MoreTab
+* Extensions.*
+* OneBox
+
+The following components are reused across one or more components
+
+* CoreLib
+* Win32
+* Services.*
+
 
 And implementing them in a demo app "X.Browser" .. Which is a demonstration browser application, that lets you browse web pages, media content, filesystem... 
 
