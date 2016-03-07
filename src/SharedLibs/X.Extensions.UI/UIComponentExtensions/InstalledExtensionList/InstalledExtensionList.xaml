@@ -24,7 +24,7 @@
             <RowDefinition Height="20"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <xuitl:TabList x:Name="tlMain" Grid.Row="0"  Orientation="Horizontal" Margin="0,0,0,0" TabItemBorderColor="DarkGray" GlowColor="White" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+        <xuitl:TabList x:Name="tlMain" Grid.Row="0"  Orientation="Horizontal" Margin="0,0,0,0" TabItemBorderColor="DarkGray" GlowColor="White" HorizontalAlignment="Center" VerticalAlignment="Top">
 
         </xuitl:TabList>
 
