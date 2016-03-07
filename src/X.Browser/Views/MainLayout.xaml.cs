@@ -24,6 +24,6 @@ namespace X.Browser.Views
             InitExtensions();
         }
 
-       
+
     }
 }

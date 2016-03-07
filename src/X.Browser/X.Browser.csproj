@@ -98,8 +98,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Converters\MoreTabBorderThicknessConverter.cs" />
+    <Compile Include="Messages\SetAddTabSearchBoxFocus.cs" />
+    <Compile Include="Messages\SetMoreTabSearchBoxFocus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\BrowserVM.cs" />
     <Compile Include="ViewModels\TabThumbnailSprite.cs" />

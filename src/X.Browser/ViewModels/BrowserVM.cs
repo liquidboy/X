@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
+using X.Browser.Messages;
 
 namespace X.Browser.ViewModels
 {
@@ -123,7 +124,7 @@ namespace X.Browser.ViewModels
 
             //HideOneBox();
 
-            //Messenger.Default.Send(new SetAddTabSearchBoxFocus());
+            Messenger.Default.Send(new SetAddTabSearchBoxFocus());
 
         }
 
@@ -143,7 +144,7 @@ namespace X.Browser.ViewModels
 
             //HideOneBox();
 
-            //Messenger.Default.Send(new SetMoreTabSearchBoxFocus());
+            Messenger.Default.Send(new SetMoreTabSearchBoxFocus());
         }
 
 

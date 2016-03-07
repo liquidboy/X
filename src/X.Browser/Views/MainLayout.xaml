@@ -17,8 +17,11 @@
     xmlns:xviewer="using:X.Viewer"
     xmlns:xonebox="using:X.UI.OneBox"
     xmlns:converters="using:X.Browser.Converters"
+    xmlns:xuiat="using:X.UI.AddTab"
+    xmlns:xuimt="using:X.UI.MoreTab"
     mc:Ignorable="d">
     <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="TrueToVisibleConverter" />
         <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         <converters:MoreTabBorderThicknessConverter x:Key="MoreTabBorderThicknessConverter" />
         
@@ -327,6 +330,27 @@
                 <StackPanel x:Name="grdDockedExtensionBottom" Orientation="Vertical" Grid.Row="2" Background="{Binding Accent4Brush}" >
                 </StackPanel>
             </Grid>
+
+            <Grid x:Name="grdAddView" 
+                Margin="0,0,0,0" 
+                Visibility="{Binding IsShowingAddTab, Converter={StaticResource TrueToVisibleConverter}}" 
+                Grid.Row="1"
+                Grid.Column="1">
+                <xuiat:Tab x:Name="AddTab" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Accent1="{StaticResource MoreTabAccent1}" Accent2="{StaticResource MoreTabAccent2}" Background="{StaticResource MoreTabViewBackground}" LoadCompleted="AddTab_LoadCompleted" DoSearch="AddTab_DoSearch" >
+                    <!--<xuiat:Tab.DataContext>
+                        <Binding Path="AddTab" Source="{StaticResource Locator}" />
+                    </xuiat:Tab.DataContext>-->
+                </xuiat:Tab>
+            </Grid>
+            <Grid x:Name="grdMoreView" 
+                Margin="0,0,0,0" 
+                Visibility="{Binding IsShowingMoreTab, Converter={StaticResource TrueToVisibleConverter}}" 
+                Grid.Row="1"
+                Grid.Column="1">
+                <xuimt:Tab HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{Binding }" Accent1="{StaticResource MoreTabAccent1}" Accent2="{StaticResource MoreTabAccent2}" Background="{StaticResource MoreTabViewBackground}" TabCount="{Binding Tabs.Count}" ></xuimt:Tab>
+                <!--<views:MoreTabView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{Binding }" OnDrawContextMenu="MoreTabView_OnDrawContextMenu"  />-->
+            </Grid>
+
 
             <Grid Grid.Column="2" Grid.Row="1"  Background="{Binding Accent4Brush}" >
                 <StackPanel Orientation="Horizontal">

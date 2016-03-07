@@ -1,9 +1,11 @@
 ﻿using CoreLib.Sprites;
+using GalaSoft.MvvmLight.Messaging;
 using System.Linq;
 using Windows.Foundation;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using X.Browser.Messages;
 using X.Browser.ViewModels;
 
 namespace X.Browser.Views
@@ -17,6 +19,8 @@ namespace X.Browser.Views
 
         private void InitTabs() {
             _spriteBatch = new SpriteBatch(canvasDXLayer);
+            Messenger.Default.Register<SetAddTabSearchBoxFocus>(this, SetAddTabSearchBoxFocus);
+            //Messenger.Default.Register<CloseAddTabFlyout>(this, CloseAddTabFlyout);
         }
 
         private void tlMainTabs_TabPointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
@@ -57,12 +61,28 @@ namespace X.Browser.Views
             CanvasInvalidate();
         }
 
+        private void SetAddTabSearchBoxFocus(SetAddTabSearchBoxFocus message)
+        {
+            //AddTab.FocusOnSearchBox();
 
+            //var vm = (ViewModel.AddTabViewModel)AddTab.DataContext;
+            //vm.SearchCommand.Execute("http://www.msn.com/spartan/ntp?dpir=1");
 
+        }
 
         private void CanvasInvalidate()
         {
             _spriteBatch.Draw();
+        }
+
+        private void AddTab_LoadCompleted(object sender, System.EventArgs e)
+        {
+
+        }
+
+        private void AddTab_DoSearch(object sender, System.EventArgs e)
+        {
+
         }
     }
 }
