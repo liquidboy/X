@@ -20,6 +20,5 @@ Components still being fleshed out...
 
 And implementing them in a demo app "X.Browser" .. Which is a demonstration browser application, that lets you browse web pages, media content, filesystem... 
 
+![X.Browser 001](https://pbs.twimg.com/media/Cc3G7ufUUAQS6qK.jpg:large)
 
-
-[xbrowser01]: https://pbs.twimg.com/media/Cc3G7ufUUAQS6qK.jpg:large "demo browser app 1"
