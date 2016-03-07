@@ -74,19 +74,16 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
                 <StackPanel x:Name="grdDockedExtensionTop" Orientation="Vertical" Grid.Row="0" Background="{Binding Accent4Brush}" >
-                    <!-- Background="{StaticResource ExtensionAccent2}" -->
                 </StackPanel>
                 <xviewer:ContentView x:Name="wvMain" Grid.Row="1" Uri="{Binding SelectedTab.Uri}" SendMessage="wvMain_SendMessage" >
 
                 </xviewer:ContentView>
 
                 <StackPanel x:Name="grdDockedExtensionBottom" Orientation="Vertical" Grid.Row="2" Background="{Binding Accent4Brush}" >
-                    <!-- Background="{StaticResource ExtensionAccent2}" -->
                 </StackPanel>
             </Grid>
 
             <Grid Grid.Column="2" Grid.Row="1"  Background="{Binding Accent4Brush}" >
-                <!-- Background="{StaticResource ExtensionAccent2}" -->
                 <StackPanel Orientation="Horizontal">
                     <StackPanel x:Name="grdDockedExtensionRight" Orientation="Horizontal">
                         <extcontrols:ExtensionsIconBarRight x:Name="ctlExtensionsBarRight" Margin="0,0,0,0" Background="{Binding SelectedTab.PrimaryBackgroundColor}" VerticalAlignment="Stretch" ></extcontrols:ExtensionsIconBarRight>
@@ -96,14 +93,12 @@
             </Grid>
 
             <Grid Grid.Column="0" Grid.Row="1" Background="{Binding Accent4Brush}" >
-                <!-- Background="{StaticResource ExtensionAccent2}" -->
                 <StackPanel x:Name="grdDockedExtensionLeft"  Orientation="Horizontal" >
                     <extcontrols:ExtensionsIconBarLeft x:Name="ctlExtensionsBarLeft" Margin="0,0,0,0" Background="{Binding SelectedTab.PrimaryBackgroundColor}" VerticalAlignment="Stretch"></extcontrols:ExtensionsIconBarLeft>
                 </StackPanel>
 
             </Grid>
             <Grid Grid.ColumnSpan="3" Grid.Row="2" Background="{Binding Accent4Brush}" >
-                <!-- Background="{StaticResource ExtensionAccent2}" -->
                 <StackPanel x:Name="grdDockedExtensionBottomFull" Orientation="Vertical">
                     <extcontrols:ExtensionsIconBarBottom x:Name="ctlExtensionsBarBottom" Background="{Binding SelectedTab.PrimaryBackgroundColor}" HorizontalAlignment="Stretch"></extcontrols:ExtensionsIconBarBottom>
                 </StackPanel>

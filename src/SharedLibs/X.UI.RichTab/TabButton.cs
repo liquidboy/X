@@ -56,7 +56,7 @@ namespace X.UI.RichTab
         {
             //get TabList parent and call RaiseTabPointerEntered 
             var p1 = GetTabListParent((DependencyObject)sender);
-            p1.RaiseTabPointerEntered(sender, e);
+            p1.RaiseTabPointerExited(sender, e);
         }
 
         private void _butTab_PointerEntered(object sender, PointerRoutedEventArgs e)
