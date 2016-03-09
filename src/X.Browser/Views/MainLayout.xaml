@@ -205,6 +205,11 @@
             </Setter>
         </Style>
     </Page.Resources>
+    <!--<Page.DataContext>
+        <Binding
+            Path="Main"
+            Source="{StaticResource Locator}" />
+    </Page.DataContext>-->
     <Grid x:Name="layoutRoot" Background="{Binding Accent1Brush}">
         
         <!-- HEADHER and TABS -->

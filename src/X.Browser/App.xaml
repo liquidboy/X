@@ -3,6 +3,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:X.Browser"
+    xmlns:vm="using:X.Browser.ViewModels"
     RequestedTheme="Light">
 
+    <Application.Resources>
+        <ResourceDictionary>
+            <!--<vm:ViewModelLocator x:Key="Locator" />-->
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>

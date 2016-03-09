@@ -63,10 +63,10 @@ namespace X.Browser.Views
 
         private void SetAddTabSearchBoxFocus(SetAddTabSearchBoxFocus message)
         {
-            //AddTab.FocusOnSearchBox();
+            AddTab.FocusOnSearchBox();
 
-            //var vm = (ViewModel.AddTabViewModel)AddTab.DataContext;
-            //vm.SearchCommand.Execute("http://www.msn.com/spartan/ntp?dpir=1");
+            var vm = (AddTabVM)AddTab.DataContext;
+            vm.SearchCommand.Execute("http://www.msn.com/spartan/ntp?dpir=1");
 
         }
 
@@ -77,12 +77,21 @@ namespace X.Browser.Views
 
         private void AddTab_LoadCompleted(object sender, System.EventArgs e)
         {
+            if (e is UI.AddTab.LoadCompletedEventArgs)
+            {
+                //var vm = (ViewModel.AddTabViewModel)((FrameworkElement)sender).DataContext;
+                //vm.SearchQuery = ((LoadCompletedEventArgs)e).SearchQuery;
 
+            }
         }
 
         private void AddTab_DoSearch(object sender, System.EventArgs e)
         {
-
+            if (e is UI.AddTab.DoSearchEventArgs)
+            {
+                //var vm = (ViewModel.AddTabViewModel)((FrameworkElement)sender).DataContext;
+                //vm.SearchCommand.Execute(((DoSearchEventArgs)e).SearchQuery);
+            }
         }
     }
 }
