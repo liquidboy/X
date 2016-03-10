@@ -213,7 +213,7 @@
     <Grid x:Name="layoutRoot" Background="{Binding Accent1Brush}">
         
         <!-- HEADHER and TABS -->
-        <xuichrome:Header x:Name="header" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="{Binding Accent1Brush}" Foreground="{Binding Accent1ContrastBrush}" Height="40" GlowColor="{Binding Accent1}" GlowAmount="1" EnableResizeFix="True" >
+        <xuichrome:Header x:Name="header" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="{Binding Accent1Brush}" Foreground="{Binding Accent1ContrastBrush}" Height="40" GlowColor="{Binding Accent1}" GlowAmount="1" EnableResizeFix="True" PointerEntered="header_PointerEntered" >
             <xuichrome:Header.TitleContent>
                 <ContentControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" >
                     <Grid>
@@ -292,7 +292,7 @@
 
 
         <!-- WEBPAGE & ONEBOX -->
-        <Grid x:Name="grid" Margin="0,40,0,0" Background="{Binding Accent1Brush}">
+        <Grid x:Name="grid" Margin="0,40,0,0" Background="{Binding Accent1Brush}" PointerEntered="grid_PointerEntered">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition ></RowDefinition>

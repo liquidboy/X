@@ -26,5 +26,15 @@ namespace X.Browser.Views
         }
 
 
+        //chrome
+        private void grid_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            header.EnableResizeFix = false;
+        }
+
+        private void header_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            header.EnableResizeFix = true;
+        }
     }
 }
