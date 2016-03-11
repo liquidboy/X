@@ -183,8 +183,11 @@
                                             </Grid.RowDefinitions>
 
 
-                                            <Border BorderBrush="LightGray" BorderThickness="1" Width="220" Height="140" Margin="0" Grid.Row="1" >
-                                                <Image Source="{Binding ThumbUri}" Stretch="UniformToFill" />
+                                            <Border BorderBrush="LightGray" BorderThickness="1" Width="220" Height="140" Margin="0" Grid.Row="1" Background="LightGray">
+                                                <Grid>
+                                                    <Image Source="ms-appx:///assets/MissingImage.png" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.2" Width="50" />
+                                                    <Image Source="{Binding ThumbUri}" Stretch="UniformToFill" />
+                                                </Grid>
                                             </Border>
                                         </Grid>
                                     </DataTemplate>
