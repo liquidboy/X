@@ -182,10 +182,10 @@
                                                 <RowDefinition></RowDefinition>
                                             </Grid.RowDefinitions>
 
-                                            <Grid Width="220" Height="140" Margin="8,5,8,15" Grid.Row="1"  >
-                                                <Image Source="{Binding ThumbUri}" Stretch="UniformToFill" />
 
-                                            </Grid>
+                                            <Border BorderBrush="LightGray" BorderThickness="1" Width="220" Height="140" Margin="0" Grid.Row="1" >
+                                                <Image Source="{Binding ThumbUri}" Stretch="UniformToFill" />
+                                            </Border>
                                         </Grid>
                                     </DataTemplate>
                                 </GridView.ItemTemplate>
