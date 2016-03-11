@@ -21,6 +21,7 @@ namespace X.Browser.Views
             this.DataContext = vm;
             AddTab.DataContext = atvm;
             header.InitChrome(App.Current, ApplicationView.GetForCurrentView());
+            InitOneBox();
             InitTabs();
             InitExtensions();
         }
@@ -36,5 +37,8 @@ namespace X.Browser.Views
         {
             header.EnableResizeFix = true;
         }
+
+
+
     }
 }

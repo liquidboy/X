@@ -70,7 +70,7 @@ namespace X.Browser.ViewModels
         {
             if (this.IsShowingAddTab)
             {
-               // Messenger.Default.Send(new CloseAddTabFlyout());
+                Messenger.Default.Send(new CloseAddTabFlyout());
             }
 
             this.IsShowingAddTab = false;
@@ -111,6 +111,7 @@ namespace X.Browser.ViewModels
             this.SelectedTab = obj as TabViewModel;
             this.NotifyPropertyChanged("SelectedTab");
 
+            Messenger.Default.Send(new ShowOnebox());
         }
 
         public RelayCommand<object> TabAddCommand { get { return _tabAddCommand ?? (_tabAddCommand = new RelayCommand<object>(ExecuteTabAddCommand)); } }
@@ -122,7 +123,7 @@ namespace X.Browser.ViewModels
             this.IsShowingMoreTab = false;
             this.NotifyPropertyChanged("IsShowingMoreTab");
 
-            //HideOneBox();
+            HideOneBox();
 
             Messenger.Default.Send(new SetAddTabSearchBoxFocus());
 
@@ -133,7 +134,7 @@ namespace X.Browser.ViewModels
         {
             if (this.IsShowingAddTab)
             {
-                //Messenger.Default.Send(new CloseAddTabFlyout());
+                Messenger.Default.Send(new CloseAddTabFlyout());
             }
 
             this.IsShowingAddTab = false;
@@ -142,12 +143,30 @@ namespace X.Browser.ViewModels
             this.IsShowingMoreTab = true;
             this.NotifyPropertyChanged("IsShowingMoreTab");
 
-            //HideOneBox();
+            HideOneBox();
 
             Messenger.Default.Send(new SetMoreTabSearchBoxFocus());
         }
 
+        private void HideOneBox()
+        {
 
+            foreach (var tab in this.Tabs)
+            {
+                tab.HasFocus = false;
+                tab.RaisePropChangeOnUIThread("HasFocus");
+
+                tab.Foreground = "Black";
+                tab.RightBorderColor = "#FFB8B8B8";
+                tab.RaisePropChangeOnUIThread("Foreground");
+                tab.RaisePropChangeOnUIThread("RightBorderColor");
+            }
+
+            this.SelectedTab = null;
+            this.NotifyPropertyChanged("SelectedTab");
+
+            Messenger.Default.Send(new HideOnebox());
+        }
 
         public BrowserVM()
         {

@@ -310,7 +310,9 @@
                         x:Name="ctrlModernUri"
                         VerticalAlignment="Center"
                         DataContext="{Binding SelectedTab}"
-                        Margin="10,0,0,0" HorizontalAlignment="Left"
+                        Margin="10,0,0,0" 
+                        HorizontalAlignment="Left"
+                        PointerReleased="ctrlModernUri_PointerReleased"
                     />
                     <!-- PointerReleased="ctrlModernUri_PointerReleased" -->
                 </StackPanel>
