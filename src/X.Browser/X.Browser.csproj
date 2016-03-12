@@ -110,9 +110,7 @@
     <Compile Include="ViewModels\AddTabVM.cs" />
     <Compile Include="ViewModels\BrowserVM.cs" />
     <Compile Include="ViewModels\TabThumbnailSprite.cs" />
-    <Compile Include="ViewModels\TabViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
-    <Compile Include="ViewModels\WebPageModel.cs" />
     <Compile Include="Views\MainLayout.xaml.cs">
       <DependentUpon>MainLayout.xaml</DependentUpon>
     </Compile>
@@ -163,6 +161,10 @@
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SharedLibs\X.Browser.ViewModels\X.Browser.ViewModels.csproj">
+      <Project>{8f44d040-4e29-4f15-9134-4fa93b192cfa}</Project>
+      <Name>X.Browser.ViewModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharedLibs\X.CoreLib\X.CoreLib.csproj">
       <Project>{d273509d-612c-47c3-b2a6-c203d96b90d3}</Project>
       <Name>X.CoreLib</Name>
@@ -222,6 +224,10 @@
     <ProjectReference Include="..\SharedLibs\X.UI.RichButton\X.UI.RichButton.csproj">
       <Project>{9e6a2f9c-a1f8-4d56-af2b-cb323a841e2e}</Project>
       <Name>X.UI.RichButton</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.UI.RichImage\X.UI.RichImage.csproj">
+      <Project>{f2134120-5202-432d-b943-d1f26d096be0}</Project>
+      <Name>X.UI.RichImage</Name>
     </ProjectReference>
     <ProjectReference Include="..\SharedLibs\X.UI.RichInput\X.UI.RichInput.csproj">
       <Project>{1ddc0313-f305-4091-ad21-2b3d99bb5550}</Project>
