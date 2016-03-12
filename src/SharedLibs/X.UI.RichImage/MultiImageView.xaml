@@ -17,6 +17,7 @@
         <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="#FFBDAAAA" ></Rectangle>
 
         <!-- XAML IMAGE -->
+        <Image Source="ms-appx:///assets/MissingImage.png" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.2" Width="50" />
         <Image x:Name="imgMain" Source="{Binding DefaultUri, ElementName=layoutRoot}" Stretch="Fill" />
 
         <!-- Windows.UI.Composition Visuals : draing an image and applying Effects -->

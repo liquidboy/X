@@ -100,14 +100,14 @@ namespace X.UI.RichImage
         }
 
         public static readonly DependencyProperty DefaultUriProperty =
-            DependencyProperty.Register("DefaultUri", typeof(string), typeof(MultiImageView), new PropertyMetadata(string.Empty, DefaultUriChanged));
-
+            DependencyProperty.Register("DefaultUri", typeof(string), typeof(MultiImageView), new PropertyMetadata("", DefaultUriChanged));
+        
         private static void DefaultUriChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
             MultiImageView el = (MultiImageView)d;
 
-            if (!string.IsNullOrEmpty(el.DefaultUri))
+            if (string.IsNullOrEmpty(el.DefaultUri))
             {
                 //el.LoadGridEffect(el);  // <== DANGEROUS as this can cause memory leaks if effects arnt correctly disposed
                 //there is a known issue with virtualized items in the gridview, where reordered items are causing the same
