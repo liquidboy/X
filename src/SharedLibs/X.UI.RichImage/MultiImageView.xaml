@@ -14,7 +14,7 @@
         <!--<local:IdToEffectDataTemplateConverter x:Key="IdToEffectDataTemplateConverter" />-->
     </UserControl.Resources>
     <Grid x:Name="rootElement" Loaded="rootElement_Loaded" Unloaded="rootElement_Unloaded">
-        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="#FFBDAAAA" ></Rectangle>
+        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="LightGray" ></Rectangle>
 
         <!-- XAML IMAGE -->
         <Image Source="ms-appx:///assets/MissingImage.png" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.2" Width="50" />

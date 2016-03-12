@@ -249,12 +249,9 @@
                                                     <Border BorderBrush="{Binding PrimaryBackgroundColor}" BorderThickness="0,0,0,1" Width="15" ></Border>
                                                     <Border BorderBrush="{Binding PrimaryBackgroundColor}" BorderThickness="0,0,0,1" Width="5" Visibility="{Binding ChildTabs.Count, Converter={StaticResource TrueToVisibleConverter}}"></Border>
                                                 </StackPanel>
-
-                         
                                             </Grid>
 
                                             <Grid Width="220" Height="140" Margin="8,5,8,15" Grid.Row="1"  PointerPressed="Grid_PointerPressed">
-                                                <!--<Image Source="{Binding ThumbUri}" Stretch="UniformToFill" Visibility="{Binding IsTabGroup, Converter={StaticResource FalseToVisibleConverter}}" />-->
                                                 <xuiri:MultiImageView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DefaultUri="{Binding ThumbUri}" ChildrenTabs="{Binding ChildTabs}" BackgroundColor="{Binding PrimaryBackgroundColor}" ThumbTemplateToUse="2" ></xuiri:MultiImageView>
                                             </Grid>
                                         </Grid>
