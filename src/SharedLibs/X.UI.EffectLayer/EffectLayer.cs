@@ -164,7 +164,8 @@ namespace X.UI.EffectLayer
                     _uielements[index] = bitmap;
                     canvas.Invalidate();
                 }
-            }catch(Exception ex){
+            }catch(Exception ex)
+            {
                 //todo: errors here are catastrphic need to work out how to clean up and handle these
             }
         }

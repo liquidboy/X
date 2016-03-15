@@ -20,7 +20,7 @@ namespace X.UI.Chrome
 {
     public sealed class Header : Control
     {
-        EffectLayer.EffectLayer _bkgLayer;//x
+        //EffectLayer.EffectLayer _bkgLayer;//x
         TextBlock _tbTitle;
         int RenderTargetIndexFor_tbTitle = 0;
         Grid _root;
@@ -53,18 +53,18 @@ namespace X.UI.Chrome
 
         private void Header_Loaded(object sender, RoutedEventArgs e)
         {
-            if (_bkgLayer != null)
-            {
-                var gt = _tbTitle.TransformToVisual(_bkgLayer);
-                var pt = gt.TransformPoint(new Windows.Foundation.Point(0, 0));
-                _bkgLayer.DrawUIElements(_tbTitle, offsetX: pt.X, offsetY: pt.Y);
-                _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY, EffectLayer.EffectGraphType.Glow);
-            }
+            //if (_bkgLayer != null)
+            //{
+            //    var gt = _tbTitle.TransformToVisual(_bkgLayer);
+            //    var pt = gt.TransformPoint(new Windows.Foundation.Point(0, 0));
+            //    _bkgLayer.DrawUIElements(_tbTitle, offsetX: pt.X, offsetY: pt.Y);
+            //    _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY, EffectLayer.EffectGraphType.Glow);
+            //}
         }
 
         protected override void OnApplyTemplate()
         {
-            if(_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
+            //if(_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
 
             if (_root == null) _root = GetTemplateChild("root") as Grid;
             if (_ccTitle == null) { _ccTitle = GetTemplateChild("ccTitle") as ContentControl; _ccTitle.Content = TitleContent; }
@@ -90,7 +90,7 @@ namespace X.UI.Chrome
                 _tbTitle.DataContext = this;
             }
 
-            if (_bkgLayer != null && _tbTitle != null && _tbTitle.ActualWidth != 0) _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY);
+            //if (_bkgLayer != null && _tbTitle != null && _tbTitle.ActualWidth != 0) _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY);
 
 
             base.OnApplyTemplate();
@@ -105,11 +105,11 @@ namespace X.UI.Chrome
         }
 
         public void Invalidate(double offsetX = 0, double offsetY = 0) {
-            if (_bkgLayer != null) { 
-                var gt = _tbTitle.TransformToVisual(_bkgLayer);
-                var pt = gt.TransformPoint(new Windows.Foundation.Point(0, 0));
-                _bkgLayer.DrawUIElements(_tbTitle, RenderTargetIndexFor_tbTitle, offsetX + pt.X, offsetY + pt.Y);
-            }
+            //if (_bkgLayer != null) { 
+            //    var gt = _tbTitle.TransformToVisual(_bkgLayer);
+            //    var pt = gt.TransformPoint(new Windows.Foundation.Point(0, 0));
+            //    _bkgLayer.DrawUIElements(_tbTitle, RenderTargetIndexFor_tbTitle, offsetX + pt.X, offsetY + pt.Y);
+            //}
         }
 
 

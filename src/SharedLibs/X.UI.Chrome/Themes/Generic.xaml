@@ -9,7 +9,7 @@
                 <ControlTemplate TargetType="local:Header">
                     <Grid x:Name="root" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="{TemplateBinding Height}">
                         <Rectangle Fill="{TemplateBinding Background}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Rectangle>
-                        <xuiel:EffectLayer x:Name="bkgLayer" HorizontalAlignment="Stretch"  GlowFill="Transparent" VerticalAlignment="Stretch" GlowAmount="{TemplateBinding GlowAmount}" GlowColor="{TemplateBinding GlowColor}" ShowGlowArea="False" ></xuiel:EffectLayer>
+                        <!--<xuiel:EffectLayer x:Name="bkgLayer" HorizontalAlignment="Stretch"  GlowFill="Transparent" VerticalAlignment="Stretch" GlowAmount="{TemplateBinding GlowAmount}" GlowColor="{TemplateBinding GlowColor}" ShowGlowArea="False" ></xuiel:EffectLayer>-->
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Height="25">
                             <Image HorizontalAlignment="Left" Stretch="UniformToFill" Source="{TemplateBinding IconUri}" Width="20" Height="20" Margin="4,4,0,0" />
                             <TextBlock x:Name="tbTitle" Text="{TemplateBinding Title}" FontSize="13" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0" Foreground="{TemplateBinding Foreground}"></TextBlock>
