@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace X.Services.Data
 {
-    internal class StorageDatabase : SqliteDatabase, IDisposable
+    public class StorageDatabase : SqliteDatabase, IDisposable
     {
         private const string database_name = "Storage.db";
 

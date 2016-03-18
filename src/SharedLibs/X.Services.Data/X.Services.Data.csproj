@@ -107,6 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommunityTabModel.cs" />
     <Compile Include="ISqliteBase.cs" />
     <Compile Include="IWebPageModel.cs" />
     <Compile Include="NameValue.cs" />

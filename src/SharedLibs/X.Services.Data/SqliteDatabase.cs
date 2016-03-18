@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace X.Services.Data
 {
-    internal abstract class SqliteDatabase
+    public abstract class SqliteDatabase
     {
         private SQLiteConnection _sqlitedb;
         public static object lockobj = new object();

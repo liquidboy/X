@@ -6,7 +6,38 @@ using System.Threading.Tasks;
 
 namespace X.Services.Data
 {
-    public class StorageService
+    public class StorageService : IDisposable
     {
+        public StorageDatabase Storage { get; set; }
+
+        public StorageService()
+        {
+            lock (SqliteDatabase.lockobj)
+            {
+                if (Storage == null)
+                {
+                    Storage = new StorageDatabase();
+                }
+            }
+        }
+
+        public void Dispose()
+        {
+            if (Storage != null) Storage.Dispose();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
