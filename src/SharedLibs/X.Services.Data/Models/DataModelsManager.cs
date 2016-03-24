@@ -26,10 +26,33 @@ namespace X.Services.Data
 
         public static IList<T> RetrieveList<T>(SQLiteConnection sqliteDb)
         {
-            var result =  sqliteDb.Query<WebPageDataModel>("SELECT * FROM " + typeof(T).Name);
+            object result = null;
+
+            if(typeof(T).Equals(typeof(WebPageDataModel)))
+                result = sqliteDb.Query<WebPageDataModel>("SELECT * FROM " + typeof(T).Name);
+            
             return result as IList<T>;
         }
 
+        public static IList<T> RetrieveByUid<T>(SQLiteConnection sqliteDb, string uid)
+        {
+            object result = null;
 
+            if (typeof(T).Equals(typeof(WebPageDataModel)))
+                result =  sqliteDb.Query<WebPageDataModel>("SELECT * FROM " + typeof(T).Name + " WHERE Uid = ?", uid);
+
+            return result as IList<T>;
+        }
+
+        public static IList<T> RetrieveListByIndex<T>(SQLiteConnection sqliteDb, string index1)
+        {
+            object result = null;
+
+            if (typeof(T).Equals(typeof(WebPageDataModel)))
+                result = sqliteDb.Query<WebPageDataModel>("SELECT * FROM " + typeof(T).Name + " WHERE index1 = ?", index1);
+
+            return result as IList<T>;
+
+        }
     }
 }

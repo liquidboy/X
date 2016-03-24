@@ -32,14 +32,14 @@ namespace X.Services.Data
             return DataModelsManager.RetrieveList<T>(this.SqliteDb);
         }
 
-        public List<object> RetrieveListByIndex<T>(string index1, string tableName)
+        public IList<T> RetrieveListByIndex<T>(string index1)
         {
-            return this.SqliteDb.Query<object>("SELECT * FROM " + tableName + " WHERE index1 = ?", index1);
+            return DataModelsManager.RetrieveListByIndex<T>(this.SqliteDb, index1);
         }
 
-        public List<WebPageDataModel> RetrieveByUid(string uid)
+        public IList<T> RetrieveByUid<T>(string uid)
         {
-            return this.SqliteDb.Query<WebPageDataModel>("SELECT * FROM WebPageModel WHERE Uid = ?", uid);
+            return DataModelsManager.RetrieveByUid<T>( this.SqliteDb, uid);
         }
 
         public List<object> RetrieveByUid<T>(string uid, string tableName)
