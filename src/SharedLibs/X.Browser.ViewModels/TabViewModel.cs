@@ -9,7 +9,7 @@ using X.Services.Data;
 
 namespace X.Browser
 {
-    public class TabViewModel : WebPageModel
+    public class TabViewModel : WebPageViewModel
     {
         public RelayCommand<object> TabChangedCommand { get; set; }
         

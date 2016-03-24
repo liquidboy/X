@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace X.Services.Data
 {
-    public interface IWebPageModel : ISqliteBase
+    public interface IWebPageDataModel : ISqliteBase
     {
         bool HasFocus { get; set; }
         string DisplayTitle { get; set; }

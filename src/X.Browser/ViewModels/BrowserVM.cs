@@ -178,10 +178,10 @@ namespace X.Browser.ViewModels
 
         private void LoadTabs() {
 
-            var data = App.StorageSvc.Storage.RetrieveList("WebPageModel");
+            var data = App.StorageSvc.Storage.RetrieveList("WebPageDataModel");
             if (data.Count == 0)
             {
-                LoadDummyTabs();
+                LoadDefaultTabs();
                 SaveTabs(Tabs);
             }
             else {
@@ -209,7 +209,7 @@ namespace X.Browser.ViewModels
 
             foreach (var t in TabsToSave)
             {
-                var wpm = new WebPageModel() { DisplayTitle = t.DisplayTitle, Uid = Guid.NewGuid().ToString(), Uri = t.Uri, FaviconUri = t.FaviconUri, HasFocus = t.HasFocus };
+                var wpm = new WebPageDataModel() { DisplayTitle = t.DisplayTitle, Uid = Guid.NewGuid().ToString(), Uri = t.Uri, FaviconUri = t.FaviconUri, HasFocus = t.HasFocus };
 
                 App.StorageSvc.Storage.Insert(wpm);
 
@@ -217,7 +217,7 @@ namespace X.Browser.ViewModels
         }
 
 
-        private void LoadDummyTabs()
+        private void LoadDefaultTabs()
         {
 
             var tempTab = new TabViewModel() { DisplayTitle = "Microsoft", FaviconUri = "http://www.microsoft.com/favicon.ico?v2", HasFocus = true, Uri = "http://www.microsoft.com?test=1", TabChangedCommand = this.TabChangedCommand };

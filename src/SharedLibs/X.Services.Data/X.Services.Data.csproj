@@ -109,13 +109,12 @@
   <ItemGroup>
     <Compile Include="CommunityTabModel.cs" />
     <Compile Include="ISqliteBase.cs" />
-    <Compile Include="IWebPageModel.cs" />
-    <Compile Include="NameValue.cs" />
+    <Compile Include="Models\IWebPageDataModel.cs" />
     <Compile Include="StorageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqliteDatabase.cs" />
     <Compile Include="StorageDatabase.cs" />
-    <Compile Include="WebPageModel.cs" />
+    <Compile Include="Models\WebPageDataModel.cs" />
     <EmbeddedResource Include="Properties\X.Services.Data.rd.xml" />
   </ItemGroup>
   <ItemGroup>

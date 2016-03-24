@@ -17,7 +17,7 @@ namespace X.Services.Data
 
         public StorageDatabase() : base(database_name)
         {
-            this.SqliteDb.CreateTable<WebPageModel>();
+            this.SqliteDb.CreateTable<WebPageDataModel>();
         }
 
         public bool DoesExist(string UID, string tableName)
@@ -31,10 +31,10 @@ namespace X.Services.Data
             return false;
         }
 
-        public List<WebPageModel> RetrieveList(string tableName)
+        public List<WebPageDataModel> RetrieveList(string tableName)
         {
             //UpdateUIOfAction();
-            return this.SqliteDb.Query<WebPageModel>("SELECT * FROM " + tableName);
+            return this.SqliteDb.Query<WebPageDataModel>("SELECT * FROM " + tableName);
         }
 
         public List<object> RetrieveListByIndex<T>(string index1, string tableName)
@@ -43,10 +43,10 @@ namespace X.Services.Data
             return this.SqliteDb.Query<object>("SELECT * FROM " + tableName + " WHERE index1 = ?", index1);
         }
 
-        public List<WebPageModel> RetrieveByUid(string uid)
+        public List<WebPageDataModel> RetrieveByUid(string uid)
         {
             //UpdateUIOfAction();
-            return this.SqliteDb.Query<WebPageModel>("SELECT * FROM WebPageModel WHERE Uid = ?", uid);
+            return this.SqliteDb.Query<WebPageDataModel>("SELECT * FROM WebPageModel WHERE Uid = ?", uid);
         }
 
         public List<object> RetrieveByUid<T>(string uid, string tableName)

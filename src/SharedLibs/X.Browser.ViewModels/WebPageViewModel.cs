@@ -1,5 +1,4 @@
 ﻿using GalaSoft.MvvmLight;
-using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,42 +6,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace X.Services.Data
+namespace X.Browser
 {
-    public class WebPageModel : ViewModelBase, IWebPageModel
+    public class WebPageViewModel : ViewModelBase
     {
-        [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         public string Uid { get; set; }
         public string Index1 { get; set; }
-
         public bool HasFocus { get; set; }
         public string DisplayTitle { get; set; }
         public string FaviconUri { get; set; }
         public bool ShowPadlock { get; set; }
-
-        [IgnoreAttribute]
         public string UriQueryString { get; set; }
-        [IgnoreAttribute]
         public string UriPart1 { get; set; }
-        [IgnoreAttribute]
         public string UriPart2 { get; set; }
-        [IgnoreAttribute]
         public string UriPart3 { get; set; }
-        [IgnoreAttribute]
         public string UriPart4 { get; set; }
-        [IgnoreAttribute]
         public string PrimaryFontFamily { get; set; }
-
-        [IgnoreAttribute]
         public string PrimaryBackgroundColor { get; set; }
-
-
-        [IgnoreAttribute]
         public string PrimaryForegroundColor { get; set; }
-
-        [IgnoreAttribute]
         public ObservableCollection<NameValue> QueryNames { get; set; }
+        public string OriginalUri { get; set; }
 
         private string _uri;
         public string Uri
@@ -93,9 +77,7 @@ namespace X.Services.Data
             }
 
         }
-
-        [IgnoreAttribute]
-        public string OriginalUri { get; set; }
+        
 
         public void ExternalRaisePropertyChanged(string propName) { RaisePropertyChanged(propName); }
 
