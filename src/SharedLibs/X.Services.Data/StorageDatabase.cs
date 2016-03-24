@@ -28,14 +28,8 @@ namespace X.Services.Data
         }
 
         public IList<T> RetrieveList<T>()
-        {
-            object result = null;
-            var typeName = typeof(T).GetType().Name;
-
-            if (typeof(T).Equals(typeof(WebPageDataModel)))
-                result = DataModelsManager.RetrieveWebPageDataModels(this.SqliteDb);
-
-            return result as IList<T>;
+        {             
+            return DataModelsManager.RetrieveList<T>(this.SqliteDb);
         }
 
         public List<object> RetrieveListByIndex<T>(string index1, string tableName)

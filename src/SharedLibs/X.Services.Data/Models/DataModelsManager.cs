@@ -24,9 +24,10 @@ namespace X.Services.Data
             sqliteDb.DeleteAll<WebPageDataModel>();
         }
 
-        public static IList<WebPageDataModel> RetrieveWebPageDataModels(SQLiteConnection sqliteDb)
+        public static IList<T> RetrieveList<T>(SQLiteConnection sqliteDb)
         {
-            return sqliteDb.Query<WebPageDataModel>("SELECT * FROM " + typeof(WebPageDataModel).Name);
+            var result =  sqliteDb.Query<WebPageDataModel>("SELECT * FROM " + typeof(T).Name);
+            return result as IList<T>;
         }
 
 
