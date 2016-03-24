@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Navigation;
 using X.Browser.Views;
 using X.Extensions;
 using X.Services;
+using X.Services.Data;
 
 namespace X.Browser
 {
@@ -38,6 +39,7 @@ namespace X.Browser
 
             ImageService = new ImageService();
             ExtensionsSvc = new ExtensionsService();
+            StorageSvc = new StorageService();
 
             this.InitializeComponent();
             this.Suspending += OnSuspending;
@@ -112,7 +114,7 @@ namespace X.Browser
 
             ImageService.Dispose();
             //ExtensionsSvc.Dispose();
-
+            StorageSvc.Dispose();
 
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
@@ -126,5 +128,6 @@ namespace X.Browser
 
         public static ImageService ImageService;
         public static ExtensionsService ExtensionsSvc;
+        public static StorageService StorageSvc;
     }
 }

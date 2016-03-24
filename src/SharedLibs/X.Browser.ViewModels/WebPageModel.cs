@@ -109,17 +109,5 @@ namespace X.Browser
         public string Value { get; set; }
     }
 
-    public interface IWebPageModel 
-    {
-
-
-        bool HasFocus { get; set; }
-        string DisplayTitle { get; set; }
-        string FaviconUri { get; set; }
-        bool ShowPadlock { get; set; }
-
-
-        string Uri { get; set; }
-
-    }
+   
 }

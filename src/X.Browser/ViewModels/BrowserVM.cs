@@ -172,7 +172,26 @@ namespace X.Browser.ViewModels
         {
             Tabs = new ObservableCollection<TabViewModel>();
             LoadTheme();
+            LoadTabs();
+        }
+
+        private void LoadTabs() {
+
+            var data = App.StorageSvc.Storage.RetrieveList("WebPageModel");
+
             LoadDummyTabs();
+        }
+
+        public void SaveTabs(ObservableCollection<TabViewModel> TabsToSave)
+        {
+
+            foreach (var t in TabsToSave)
+            {
+                var wpm = new WebPageModel() { DisplayTitle = t.DisplayTitle, Uid = Guid.NewGuid().ToString(), Uri = t.Uri, FaviconUri = t.FaviconUri, HasFocus = t.HasFocus };
+
+                App.StorageSvc.Storage.Insert(wpm);
+
+            }
         }
 
 
