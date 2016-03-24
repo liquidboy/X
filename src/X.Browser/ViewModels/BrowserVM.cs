@@ -178,10 +178,11 @@ namespace X.Browser.ViewModels
 
         private void LoadTabs() {
 
-            var data = App.StorageSvc.Storage.RetrieveList("WebPageDataModel");
+            var data = App.StorageSvc.Storage.RetrieveList<WebPageDataModel>();
             if (data.Count == 0)
             {
                 LoadDefaultTabs();
+                DeleteTabs();
                 SaveTabs(Tabs);
             }
             else {
@@ -214,6 +215,10 @@ namespace X.Browser.ViewModels
                 App.StorageSvc.Storage.Insert(wpm);
 
             }
+        }
+
+        public void DeleteTabs() {
+            App.StorageSvc.Storage.TruncateAll();
         }
 
 

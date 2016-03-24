@@ -9,13 +9,10 @@ using System.Threading.Tasks;
 
 namespace X.Services.Data
 {
-    public class WebPageDataModel : IWebPageDataModel
+    public class WebPageDataModel : BaseDataModel, IWebPageDataModel , IDataModel
     {
-        [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
-        public string Uid { get; set; }
-        public string Index1 { get; set; }
 
+        public string Index1 { get; set; }
         public bool HasFocus { get; set; }
         public string DisplayTitle { get; set; }
         public string FaviconUri { get; set; }
@@ -35,6 +32,8 @@ namespace X.Services.Data
             }
 
         }
+
+
         
     }
 }

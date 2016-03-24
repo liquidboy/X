@@ -72,8 +72,8 @@ namespace SQLite
 	/// <summary>
 	/// Represents an open connection to a SQLite database.
 	/// </summary>
-	public class SQLiteConnection : IDisposable
-	{
+	public class SQLiteConnection  : IDisposable
+    {
 		private bool _open;
 		private TimeSpan _busyTimeout;
 		private Dictionary<string, TableMapping> _mappings = null;
@@ -1549,7 +1549,7 @@ namespace SQLite
 		}
 	}
 
-	public class SQLiteCommand
+	public class SQLiteCommand 
 	{
 		SQLiteConnection _conn;
 		private List<Binding> _bindings;
@@ -1617,7 +1617,7 @@ namespace SQLite
 		}
 
 		public IEnumerable<T> ExecuteDeferredQuery<T> (TableMapping map)
-		{
+        {
 			if (_conn.Trace) {
 				Debug.WriteLine ("Executing Query: " + this);
 			}

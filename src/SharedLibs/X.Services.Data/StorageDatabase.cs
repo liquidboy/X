@@ -10,14 +10,10 @@ namespace X.Services.Data
     {
         private const string database_name = "Storage.db";
 
-        //private void UpdateUIOfAction()
-        //{
-        //    Messenger.Default.Send<BeatHeartMessage>(new BeatHeartMessage() { });
-        //}
-
+        
         public StorageDatabase() : base(database_name)
         {
-            this.SqliteDb.CreateTable<WebPageDataModel>();
+            DataModelsManager.InitInDatabase(this.SqliteDb);
         }
 
         public bool DoesExist(string UID, string tableName)
@@ -31,57 +27,54 @@ namespace X.Services.Data
             return false;
         }
 
-        public List<WebPageDataModel> RetrieveList(string tableName)
+        public IList<T> RetrieveList<T>()
         {
-            //UpdateUIOfAction();
-            return this.SqliteDb.Query<WebPageDataModel>("SELECT * FROM " + tableName);
+            object result = null;
+            var typeName = typeof(T).GetType().Name;
+
+            if (typeof(T).Equals(typeof(WebPageDataModel)))
+                result = DataModelsManager.RetrieveWebPageDataModels(this.SqliteDb);
+
+            return result as IList<T>;
         }
 
         public List<object> RetrieveListByIndex<T>(string index1, string tableName)
         {
-            //UpdateUIOfAction();
             return this.SqliteDb.Query<object>("SELECT * FROM " + tableName + " WHERE index1 = ?", index1);
         }
 
         public List<WebPageDataModel> RetrieveByUid(string uid)
         {
-            //UpdateUIOfAction();
             return this.SqliteDb.Query<WebPageDataModel>("SELECT * FROM WebPageModel WHERE Uid = ?", uid);
         }
 
         public List<object> RetrieveByUid<T>(string uid, string tableName)
         {
-            //UpdateUIOfAction();
             return this.SqliteDb.Query<object>("SELECT * FROM " + tableName + " WHERE Uid = ?", uid);
         }
 
         public void DeleteByUid(string uid, string tableName)
         {
-            //UpdateUIOfAction();
             this.SqliteDb.Execute("delete from " + tableName + " where Uid = '" + uid + "'");
         }
 
         public void DeleteById(string id, string tableName)
         {
-            //UpdateUIOfAction();
             this.SqliteDb.Execute("delete from ? where id = ?", tableName, id);
         }
 
         public void UpdateFieldByUid(string uid, string tableName, string fieldName, object value)
         {
-            //UpdateUIOfAction();
             this.SqliteDb.Execute("UPDATE ? set ? = ? where uid = ?", tableName, fieldName, value, uid);
         }
 
         public void Update<T>(T value)
         {
-            //UpdateUIOfAction();
             this.SqliteDb.Update(value);
         }
 
         public async void Insert(ISqliteBase item)
         {
-            //UpdateUIOfAction();
             try
             {
                 var newId = this.SqliteDb.Insert(item);
@@ -91,8 +84,12 @@ namespace X.Services.Data
 
         public void Truncate(string tableName)
         {
-            //UpdateUIOfAction();
             this.SqliteDb.Execute("delete from " + tableName);
+        }
+
+        public void TruncateAll()
+        {
+            DataModelsManager.TruncateDatabase(SqliteDb);
         }
 
 
