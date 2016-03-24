@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
 using X.Browser.Messages;
+using X.Services.Data;
 
 namespace X.Browser.ViewModels
 {
@@ -177,9 +178,29 @@ namespace X.Browser.ViewModels
 
         private void LoadTabs() {
 
-            var data = App.StorageSvc.Storage.RetrieveList("WebPageModel");
+            //var data = App.StorageSvc.Storage.RetrieveList("WebPageModel");
+            //if (data.Count == 0)
+            //{
+                LoadDummyTabs();
+            //    SaveTabs(Tabs);
+            //}
+            //else {
+            //    bool hasSetFirstItem = false;
+            //    foreach (var d in data) {
+            //        var tempTab = new TabViewModel() { DisplayTitle = d.DisplayTitle, FaviconUri = d.FaviconUri, HasFocus = !hasSetFirstItem, Uri = d.Uri, TabChangedCommand = this.TabChangedCommand };
+            //        tempTab.PrimaryFontFamily = DetermineFontFamily(tempTab.DisplayTitle);
+            //        tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
+            //        tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);
+            //        if(!hasSetFirstItem) tempTab.Foreground = "White";
+            //        tempTab.RightBorderColor = hasSetFirstItem ?  "#FFB8B8B8" : "Black";
 
-            LoadDummyTabs();
+            //        Tabs.Add(tempTab);
+
+            //        hasSetFirstItem = true;
+            //    }
+                
+            //}
+            
         }
 
         public void SaveTabs(ObservableCollection<TabViewModel> TabsToSave)

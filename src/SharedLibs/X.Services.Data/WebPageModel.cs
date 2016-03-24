@@ -30,7 +30,6 @@ namespace X.Services.Data
         public string UriPart3 { get; set; }
         [IgnoreAttribute]
         public string UriPart4 { get; set; }
-
         [IgnoreAttribute]
         public string PrimaryFontFamily { get; set; }
 
