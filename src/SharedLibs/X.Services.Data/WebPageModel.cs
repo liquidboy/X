@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using GalaSoft.MvvmLight;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace X.Services.Data
 {
-    public class WebPageModel : IWebPageModel //ViewModelBase, IWebPageModel
+    public class WebPageModel : ViewModelBase, IWebPageModel
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
@@ -76,11 +77,11 @@ namespace X.Services.Data
                 this.UriPart3 = tempUri.Authority;
                 this.UriPart4 = tempUri.Port.ToString();
                 this.UriPart1 = tempUri.Scheme;
-                RaisePropChangeOnUIThread("UriPart1");
+                RaisePropertyChanged("UriPart1");
 
 
                 this.ShowPadlock = tempUri.Scheme == "https" ? true : false;
-                RaisePropChangeOnUIThread("ShowPadlock");
+                RaisePropertyChanged("ShowPadlock");
 
                 //hrm
                 string ua = "Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X)" + "AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25";
@@ -90,19 +91,13 @@ namespace X.Services.Data
 
                 if (!string.IsNullOrEmpty(Uri) && string.IsNullOrEmpty(OriginalUri)) OriginalUri = Uri;
             }
+
         }
 
         [IgnoreAttribute]
         public string OriginalUri { get; set; }
 
-
-        public async void RaisePropChangeOnUIThread(string propName)
-        {
-            //await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
-            //    Windows.UI.Core.CoreDispatcherPriority.Normal,
-            //    () => { this.RaisePropertyChanged(propName); });
-        }
-
+        public void ExternalRaisePropertyChanged(string propName) { RaisePropertyChanged(propName); }
 
 
     }

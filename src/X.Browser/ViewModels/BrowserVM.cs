@@ -92,7 +92,7 @@ namespace X.Browser.ViewModels
                     if (previousTab != null)
                     {
                         previousTab.RightBorderColor = "";
-                        previousTab.RaisePropChangeOnUIThread("RightBorderColor");
+                        previousTab.ExternalRaisePropertyChanged("RightBorderColor");
                     }
                     tab.RightBorderColor = "black";
                 }
@@ -102,9 +102,9 @@ namespace X.Browser.ViewModels
                     tab.Foreground = "Black";
                     tab.RightBorderColor = "#FFB8B8B8";
                 }
-                tab.RaisePropChangeOnUIThread("HasFocus");
-                tab.RaisePropChangeOnUIThread("Foreground");
-                tab.RaisePropChangeOnUIThread("RightBorderColor");
+                tab.ExternalRaisePropertyChanged("HasFocus");
+                tab.ExternalRaisePropertyChanged("Foreground");
+                tab.ExternalRaisePropertyChanged("RightBorderColor");
 
                 previousTab = tab;
             }
@@ -155,12 +155,12 @@ namespace X.Browser.ViewModels
             foreach (var tab in this.Tabs)
             {
                 tab.HasFocus = false;
-                tab.RaisePropChangeOnUIThread("HasFocus");
+                tab.ExternalRaisePropertyChanged("HasFocus");
 
                 tab.Foreground = "Black";
                 tab.RightBorderColor = "#FFB8B8B8";
-                tab.RaisePropChangeOnUIThread("Foreground");
-                tab.RaisePropChangeOnUIThread("RightBorderColor");
+                tab.ExternalRaisePropertyChanged("Foreground");
+                tab.ExternalRaisePropertyChanged("RightBorderColor");
             }
 
             this.SelectedTab = null;
@@ -178,29 +178,30 @@ namespace X.Browser.ViewModels
 
         private void LoadTabs() {
 
-            //var data = App.StorageSvc.Storage.RetrieveList("WebPageModel");
-            //if (data.Count == 0)
-            //{
+            var data = App.StorageSvc.Storage.RetrieveList("WebPageModel");
+            if (data.Count == 0)
+            {
                 LoadDummyTabs();
-            //    SaveTabs(Tabs);
-            //}
-            //else {
-            //    bool hasSetFirstItem = false;
-            //    foreach (var d in data) {
-            //        var tempTab = new TabViewModel() { DisplayTitle = d.DisplayTitle, FaviconUri = d.FaviconUri, HasFocus = !hasSetFirstItem, Uri = d.Uri, TabChangedCommand = this.TabChangedCommand };
-            //        tempTab.PrimaryFontFamily = DetermineFontFamily(tempTab.DisplayTitle);
-            //        tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
-            //        tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);
-            //        if(!hasSetFirstItem) tempTab.Foreground = "White";
-            //        tempTab.RightBorderColor = hasSetFirstItem ?  "#FFB8B8B8" : "Black";
+                SaveTabs(Tabs);
+            }
+            else {
+                bool hasSetFirstItem = false;
+                foreach (var d in data)
+                {
+                    var tempTab = new TabViewModel() { DisplayTitle = d.DisplayTitle, FaviconUri = d.FaviconUri, HasFocus = !hasSetFirstItem, Uri = d.Uri, TabChangedCommand = this.TabChangedCommand };
+                    tempTab.PrimaryFontFamily = DetermineFontFamily(tempTab.DisplayTitle);
+                    tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
+                    tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);
+                    if (!hasSetFirstItem) tempTab.Foreground = "White";
+                    tempTab.RightBorderColor = hasSetFirstItem ? "#FFB8B8B8" : "Black";
 
-            //        Tabs.Add(tempTab);
+                    Tabs.Add(tempTab);
 
-            //        hasSetFirstItem = true;
-            //    }
-                
-            //}
-            
+                    hasSetFirstItem = true;
+                }
+
+            }
+
         }
 
         public void SaveTabs(ObservableCollection<TabViewModel> TabsToSave)

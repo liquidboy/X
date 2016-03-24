@@ -66,7 +66,7 @@ namespace X.Browser.Views
                 BrowserVM vm = this.DataContext as BrowserVM;
 
                 vm.SelectedTab.FaviconUri = ea.Favicon;
-                vm.SelectedTab.RaisePropChangeOnUIThread("FaviconUri");
+                vm.SelectedTab.ExternalRaisePropertyChanged("FaviconUri");
                 //vm.ExposedRaisePropertyChanged("SelectedTab");
 
 
@@ -131,7 +131,7 @@ namespace X.Browser.Views
                 var fullUriHash = string.Concat(App.ImageService.MediumLocation, "\\", uriHash, ".png");
                 //if (!vm.SelectedTab.ThumbUri.Equals(fullUriHash)) {
                 vm.SelectedTab.ThumbUri = fullUriHash + "?v=" + Guid.NewGuid().ToString();
-                vm.SelectedTab.RaisePropChangeOnUIThread("ThumbUri");
+                vm.SelectedTab.ExternalRaisePropertyChanged("ThumbUri");
                 //}
 
 
