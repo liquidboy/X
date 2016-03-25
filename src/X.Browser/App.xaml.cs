@@ -1,22 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using X.Browser.Views;
 using X.Extensions;
-using X.Services;
 using X.Services.Data;
 
 namespace X.Browser
@@ -35,9 +24,7 @@ namespace X.Browser
             Microsoft.ApplicationInsights.WindowsAppInitializer.InitializeAsync(
                 Microsoft.ApplicationInsights.WindowsCollectors.Metadata |
                 Microsoft.ApplicationInsights.WindowsCollectors.Session);
-
-
-            ImageService = new ImageService();
+            
             ExtensionsSvc = new ExtensionsService();
             StorageSvc = new StorageService();
 
@@ -110,9 +97,6 @@ namespace X.Browser
         /// <param name="e">Details about the suspend request.</param>
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
-
-
-            ImageService.Dispose();
             //ExtensionsSvc.Dispose();
             StorageSvc.Dispose();
 
@@ -126,7 +110,6 @@ namespace X.Browser
         }
 
 
-        public static ImageService ImageService;
         public static ExtensionsService ExtensionsSvc;
         public static StorageService StorageSvc;
     }

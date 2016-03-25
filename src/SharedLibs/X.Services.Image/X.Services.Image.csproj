@@ -116,10 +116,6 @@
       <Project>{d273509d-612c-47c3-b2a6-c203d96b90d3}</Project>
       <Name>X.CoreLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\X.Services.Tile\X.Services.Tile.csproj">
-      <Project>{91685706-d8a2-42be-b5d9-f862cc855bf9}</Project>
-      <Name>X.Services.Tile</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

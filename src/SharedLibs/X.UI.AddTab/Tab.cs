@@ -22,9 +22,7 @@ namespace X.UI.AddTab
         TextBox _tbSearchUrl;
         TextBlock _tbText;
         Button _butAddTab;
-
-        Services.ImageService _imageSvc = new Services.ImageService();
-
+        
 
         private readonly WeakEventSource<EventArgs> _DoSearchSource = new WeakEventSource<EventArgs>();
         private readonly WeakEventSource<EventArgs> _LoadCompletedSource = new WeakEventSource<EventArgs>();
@@ -70,9 +68,7 @@ namespace X.UI.AddTab
 
             this.Loaded -= Tab_Loaded;
             this.Unloaded -= Tab_Unloaded;
-
-            _imageSvc.Dispose();
-            _imageSvc = null;
+            
         }
 
         private void Tab_Loaded(object sender, RoutedEventArgs e)
@@ -156,15 +152,22 @@ namespace X.UI.AddTab
 
                     await _cvMain.Renderer?.CaptureThumbnail(ms);
 
-                    //Banner 400 width
+                    //img: Banner 400 width
                     //ms.Seek(0);
-                    await _imageSvc.GenerateResizedImageAsync(400, _cvMain.ActualWidth, _cvMain.ActualHeight, ms, uriHash + ".png", Services.ImageService.location.MediumFolder);
-
-
-                    //Thumbnail
+                    await X.Services.Image.Service.GenerateResizedImageAsync(400, _cvMain.ActualWidth, _cvMain.ActualHeight, ms, uriHash + ".png", X.Services.Image.Service.location.MediumFolder);
+                    
+                    //img: Thumbnail
                     ms.Seek(0);
-                    await _imageSvc.GenerateResizedImageAsync(180, _cvMain.ActualWidth, _cvMain.ActualHeight, ms, uriHash + ".png", Services.ImageService.location.ThumbFolder);
+                    await X.Services.Image.Service.GenerateResizedImageAsync(180, _cvMain.ActualWidth, _cvMain.ActualHeight, ms, uriHash + ".png", X.Services.Image.Service.location.ThumbFolder);
 
+                    //img: Tile
+                    ms.Seek(0);
+                    await X.Services.Image.Service.GenerateResizedImageAsync(310, _cvMain.ActualWidth, _cvMain.ActualHeight, ms, uriHash + ".png", X.Services.Image.Service.location.TileFolder, 150);
+                    
+                    //update tile
+                    var localImageUri = "ms-appdata:///local/tile/" + uriHash + ".png";
+                    //var sxxxxx = Windows.Storage.ApplicationData.Current.LocalFolder;
+                    X.Services.Tile.Service.UpdatePrimaryTile(string.Empty, localImageUri, string.Empty);
                 }
             }
             else if (cv.Type == "NavigationFailed")

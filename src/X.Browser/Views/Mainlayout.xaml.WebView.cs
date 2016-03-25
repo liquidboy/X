@@ -113,20 +113,23 @@ namespace X.Browser.Views
                     await wvMain.Renderer?.CaptureThumbnail(ms);
                     //await wvMain.CapturePreviewToStreamAsync(ms);
 
-                    //Banner 400 width
+                    //img: Banner 400 width
                     //ms.Seek(0);
-
-                    await App.ImageService.GenerateResizedImageAsync(400, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + ".png", Services.ImageService.location.MediumFolder);
-
-
-                    //Thumbnail
+                    await X.Services.Image.Service.GenerateResizedImageAsync(400, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + ".png", X.Services.Image.Service.location.MediumFolder);
+                    
+                    //img: Thumbnail
                     ms.Seek(0);
-                    await App.ImageService.GenerateResizedImageAsync(180, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + ".png", Services.ImageService.location.ThumbFolder);
-
-
-                    //Tile
+                    await X.Services.Image.Service.GenerateResizedImageAsync(180, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + ".png", X.Services.Image.Service.location.ThumbFolder);
+                    
+                    //img: Tile
                     ms.Seek(0);
-                    await App.ImageService.GenerateResizedImageAsync(310, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + ".png", Services.ImageService.location.TileFolder, 150);
+                    await X.Services.Image.Service.GenerateResizedImageAsync(310, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + ".png", X.Services.Image.Service.location.TileFolder, 150);
+                    
+                    //update tile
+                    var localImageUri = "ms-appdata:///local/tile/" + uriHash + ".png";
+                    //var sxxxxx = Windows.Storage.ApplicationData.Current.LocalFolder;
+                    X.Services.Tile.Service.UpdatePrimaryTile(string.Empty, localImageUri, string.Empty);
+
 
 
                     ms.Dispose();
@@ -135,7 +138,7 @@ namespace X.Browser.Views
 
 
                 //update thumb in VM
-                var fullUriHash = string.Concat(App.ImageService.MediumLocation, "\\", uriHash, ".png");
+                var fullUriHash = string.Concat(X.Services.Image.Service.MediumLocation, "\\", uriHash, ".png");
                 //if (!vm.SelectedTab.ThumbUri.Equals(fullUriHash)) {
                 vm.SelectedTab.ThumbUri = fullUriHash + "?v=" + Guid.NewGuid().ToString();
                 vm.SelectedTab.ExternalRaisePropertyChanged("ThumbUri");

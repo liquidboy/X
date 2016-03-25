@@ -236,6 +236,10 @@
       <Project>{9d98bf69-e061-4f8c-b8c9-ce65116374b8}</Project>
       <Name>X.Services.Image</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.Services.Tile\X.Services.Tile.csproj">
+      <Project>{91685706-d8a2-42be-b5d9-f862cc855bf9}</Project>
+      <Name>X.Services.Tile</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharedLibs\X.UI.AddTab\X.UI.AddTab.csproj">
       <Project>{38d73f3e-3477-436f-a501-1b9f9f762719}</Project>
       <Name>X.UI.AddTab</Name>
