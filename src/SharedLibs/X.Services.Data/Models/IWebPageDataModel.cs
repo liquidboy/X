@@ -12,7 +12,7 @@ namespace X.Services.Data
         string DisplayTitle { get; set; }
         string FaviconUri { get; set; }
         bool ShowPadlock { get; set; }
-
+        DateTime LastRefreshedDate { get; set; }
 
         string Uri { get; set; }
 

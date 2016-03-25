@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
+using Windows.UI.StartScreen;
 
 namespace X.Services.Tile
 {
@@ -61,7 +62,15 @@ namespace X.Services.Tile
 
         }
 
+        public static async void UpdateSecondaryTile(string guid, string text, string imgSrc, string imgAlt, TileTemplateType templateType) {
 
+            if (Windows.UI.StartScreen.SecondaryTile.Exists(guid))
+            {
+                SecondaryTile secondaryTile = new SecondaryTile(guid);
+                secondaryTile.VisualElements.Square150x150Logo = new Uri(imgSrc);
+                bool isUpdated = await secondaryTile.UpdateAsync();
+            }
+        }
 
 
         

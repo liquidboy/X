@@ -27,6 +27,9 @@ namespace X.Browser
         public string PrimaryForegroundColor { get; set; }
         public ObservableCollection<NameValue> QueryNames { get; set; }
         public string OriginalUri { get; set; }
+        
+        DateTime _LastRefreshedDate;
+        public DateTime LastRefreshedDate { get { return _LastRefreshedDate; } set { _LastRefreshedDate = value; RaisePropertyChanged(); } }
 
         private string _uri;
         public string Uri

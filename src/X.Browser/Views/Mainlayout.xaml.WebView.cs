@@ -156,7 +156,7 @@ namespace X.Browser.Views
                 vm.SelectedTab.ExternalRaisePropertyChanged("ThumbUri");
                 //}
 
-
+                vm.SelectedTab.LastRefreshedDate = DateTime.UtcNow;
 
                 ////update UI
                 //prLoading.IsActive = false;

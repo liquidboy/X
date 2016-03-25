@@ -109,6 +109,8 @@ namespace X.Browser.ViewModels
 
             HideOneBox();
 
+            foreach (var tab in Tabs) { tab.ExternalRaisePropertyChanged("LastRefreshedDate");  }
+
             Messenger.Default.Send(new SetMoreTabSearchBoxFocus());
         }
 
@@ -128,7 +130,7 @@ namespace X.Browser.ViewModels
                 bool hasSetFirstItem = false;
                 foreach (var d in data)
                 {
-                    var tempTab = new TabViewModel() { DisplayTitle = d.DisplayTitle, FaviconUri = d.FaviconUri, HasFocus = !hasSetFirstItem, Uri = d.Uri, TabChangedCommand = this.TabChangedCommand };
+                    var tempTab = new TabViewModel() { DisplayTitle = d.DisplayTitle, FaviconUri = d.FaviconUri, HasFocus = !hasSetFirstItem, Uri = d.Uri, TabChangedCommand = this.TabChangedCommand, LastRefreshedDate = d.LastRefreshedDate };
                     tempTab.PrimaryFontFamily = DetermineFontFamily(tempTab.DisplayTitle);
                     tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
                     tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);
@@ -150,7 +152,7 @@ namespace X.Browser.ViewModels
         {
             foreach (var t in TabsToSave)
             {
-                var wpm = new WebPageDataModel() { DisplayTitle = t.DisplayTitle, Uid = Guid.NewGuid().ToString(), Uri = t.Uri, FaviconUri = t.FaviconUri, HasFocus = t.HasFocus };
+                var wpm = new WebPageDataModel() { DisplayTitle = t.DisplayTitle, Uid = Guid.NewGuid().ToString(), Uri = t.Uri, FaviconUri = t.FaviconUri, HasFocus = t.HasFocus, LastRefreshedDate = t.LastRefreshedDate };
 
                 App.StorageSvc.Storage.Insert(wpm);
 

@@ -4,6 +4,7 @@
     xmlns:xuiri="using:X.UI.RichImage"
     xmlns:local="using:X.UI.MoreTab">
     <local:BooleanToVisibilityConverter x:Key="TrueToVisibleConverter" ></local:BooleanToVisibilityConverter>
+    <local:LastRefreshedDateConverter x:Key="LastRefreshedDateConverter" ></local:LastRefreshedDateConverter>
     <Style x:Key="GeneralRadioButtonStyle" TargetType="RadioButton">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
@@ -207,6 +208,7 @@
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto"></RowDefinition>
                                                 <RowDefinition></RowDefinition>
+                                                <RowDefinition Height="Auto"></RowDefinition>
                                             </Grid.RowDefinitions>
 
 
@@ -253,6 +255,13 @@
 
                                             <Grid Width="220" Height="140" Margin="8,5,8,15" Grid.Row="1"  PointerPressed="Grid_PointerPressed">
                                                 <xuiri:MultiImageView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DefaultUri="{Binding ThumbUri}" ChildrenTabs="{Binding ChildTabs}" BackgroundColor="{Binding PrimaryBackgroundColor}" ThumbTemplateToUse="2" ></xuiri:MultiImageView>
+                                            </Grid>
+
+                                            <Grid Grid.Row="2">
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,8,0">
+                                                    <TextBlock Text="last visited :" FontSize="10" Foreground="DarkGray" Margin="0,0,5,0"></TextBlock>
+                                                    <TextBlock Text="{Binding LastRefreshedDate, Converter={StaticResource LastRefreshedDateConverter}}" FontSize="10" ></TextBlock>
+                                                </StackPanel>
                                             </Grid>
                                         </Grid>
                                     </DataTemplate>
