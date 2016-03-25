@@ -18,15 +18,46 @@ namespace X.Browser.ViewModels
     class BrowserVM : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
-        public ObservableCollection<TabViewModel> Tabs { get; set; }
+        public void ExposedNotifyPropertyChanged(string propertyName)
+        {
+            this.NotifyPropertyChanged(propertyName);
+        }
+        
+        private void HideOneBox()
+        {
 
+            foreach (var tab in this.Tabs)
+            {
+                tab.HasFocus = false;
+                tab.ExternalRaisePropertyChanged("HasFocus");
 
+                tab.Foreground = "Black";
+                tab.RightBorderColor = "#FFB8B8B8";
+                tab.ExternalRaisePropertyChanged("Foreground");
+                tab.ExternalRaisePropertyChanged("RightBorderColor");
+            }
 
+            this.SelectedTab = null;
+            this.NotifyPropertyChanged("SelectedTab");
 
-        public TabViewModel SelectedTab { get; set; }
-        public bool IsShowingAddTab { get; set; }
-        public bool IsShowingMoreTab { get; set; }
+            Messenger.Default.Send(new HideOnebox());
+        }
+
+        public BrowserVM()
+        {
+            Tabs = new ObservableCollection<TabViewModel>();
+            LoadTheme();
+            LoadTabs();
+        }
+
+        #region Themes
+
 
         private Color _Accent1;
         private Brush _Accent1Brush;
@@ -51,22 +82,37 @@ namespace X.Browser.ViewModels
         public Brush Accent4Brush { get { return _Accent4Brush; } set { _Accent4Brush = value; NotifyPropertyChanged(); } }
 
 
+
+        private void LoadTheme()
+        {
+            Accent1 = new Color() { R = 204, G = 204, B = 204, A = 255 };
+            Accent1Brush = new SolidColorBrush(Accent1);
+            Accent1Contrast = Colors.Black;
+            Accent1ContrastBrush = new SolidColorBrush(Colors.Black);
+            Accent2 = new Color() { R = 133, G = 133, B = 133, A = 255 };
+            Accent2Brush = new SolidColorBrush(Accent2);
+            Accent3 = Accent1;
+            Accent3Brush = new SolidColorBrush(Accent1);
+            Accent4 = new Color() { R = 230, G = 230, B = 230, A = 255 };
+            Accent4Brush = new SolidColorBrush(Accent4);
+        }
+        #endregion
+
+        #region Tabs
+        
+        public ObservableCollection<TabViewModel> Tabs { get; set; }
+        public TabViewModel SelectedTab { get; set; }
+        public bool IsShowingAddTab { get; set; }
+        public bool IsShowingMoreTab { get; set; }
+
         private RelayCommand<object> _tabChangedCommand;
+
         private RelayCommand<object> _tabAddCommand;
+
         private RelayCommand<object> _tabMoreCommand;
 
         public RelayCommand<object> TabChangedCommand { get { return _tabChangedCommand ?? (_tabChangedCommand = new RelayCommand<object>(ExecuteTabChangedCommand)); } }
-
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public void ExposedNotifyPropertyChanged(string propertyName)
-        {
-            this.NotifyPropertyChanged(propertyName);
-        }
-
+        
         private void ExecuteTabChangedCommand(object obj)
         {
             if (this.IsShowingAddTab)
@@ -149,32 +195,6 @@ namespace X.Browser.ViewModels
             Messenger.Default.Send(new SetMoreTabSearchBoxFocus());
         }
 
-        private void HideOneBox()
-        {
-
-            foreach (var tab in this.Tabs)
-            {
-                tab.HasFocus = false;
-                tab.ExternalRaisePropertyChanged("HasFocus");
-
-                tab.Foreground = "Black";
-                tab.RightBorderColor = "#FFB8B8B8";
-                tab.ExternalRaisePropertyChanged("Foreground");
-                tab.ExternalRaisePropertyChanged("RightBorderColor");
-            }
-
-            this.SelectedTab = null;
-            this.NotifyPropertyChanged("SelectedTab");
-
-            Messenger.Default.Send(new HideOnebox());
-        }
-
-        public BrowserVM()
-        {
-            Tabs = new ObservableCollection<TabViewModel>();
-            LoadTheme();
-            LoadTabs();
-        }
 
         private void LoadTabs() {
 
@@ -207,9 +227,8 @@ namespace X.Browser.ViewModels
 
         }
 
-        public void SaveTabs(ObservableCollection<TabViewModel> TabsToSave)
+        private void SaveTabs(ObservableCollection<TabViewModel> TabsToSave)
         {
-
             foreach (var t in TabsToSave)
             {
                 var wpm = new WebPageDataModel() { DisplayTitle = t.DisplayTitle, Uid = Guid.NewGuid().ToString(), Uri = t.Uri, FaviconUri = t.FaviconUri, HasFocus = t.HasFocus };
@@ -219,11 +238,10 @@ namespace X.Browser.ViewModels
             }
         }
 
-        public void DeleteTabs() {
+        private void DeleteTabs() {
             App.StorageSvc.Storage.TruncateAll();
         }
-
-
+        
         private void LoadDefaultTabs()
         {
 
@@ -288,19 +306,6 @@ namespace X.Browser.ViewModels
 
         }
 
-        private void LoadTheme() {
-            Accent1 = new Color() { R = 204, G = 204, B = 204, A = 255 };
-            Accent1Brush = new SolidColorBrush(Accent1);
-            Accent1Contrast = Colors.Black;
-            Accent1ContrastBrush = new SolidColorBrush(Colors.Black);
-            Accent2 = new Color() { R = 133, G = 133, B = 133, A = 255 };
-            Accent2Brush = new SolidColorBrush(Accent2);
-            Accent3 = Accent1;
-            Accent3Brush = new SolidColorBrush(Accent1);
-            Accent4 = new Color() { R = 230, G = 230, B = 230, A = 255 };
-            Accent4Brush = new SolidColorBrush(Accent4);
-        }
-
         private string DetermineFontFamily(string title)
         {
             switch (title)
@@ -334,5 +339,8 @@ namespace X.Browser.ViewModels
                 default: return "White";
             }
         }
+
+        #endregion
+        
     }
 }
