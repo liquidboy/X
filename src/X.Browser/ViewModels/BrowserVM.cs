@@ -198,6 +198,8 @@ namespace X.Browser.ViewModels
 
                     Tabs.Add(tempTab);
 
+                    if (!hasSetFirstItem) this.SelectedTab = tempTab;
+
                     hasSetFirstItem = true;
                 }
 
