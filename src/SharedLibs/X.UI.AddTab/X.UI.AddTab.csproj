@@ -125,6 +125,10 @@
       <Project>{d273509d-612c-47c3-b2a6-c203d96b90d3}</Project>
       <Name>X.CoreLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\X.Services.Tile\X.Services.Tile.csproj">
+      <Project>{91685706-d8a2-42be-b5d9-f862cc855bf9}</Project>
+      <Name>X.Services.Tile</Name>
+    </ProjectReference>
     <ProjectReference Include="..\X.Viewer\X.Viewer.csproj">
       <Project>{a705ecff-11e6-4d30-8fbb-bf1224cdf22d}</Project>
       <Name>X.Viewer</Name>

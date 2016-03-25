@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9D98BF69-E061-4F8C-B8C9-CE65116374B8}</ProjectGuid>
+    <ProjectGuid>{91685706-D8A2-42BE-B5D9-F862CC855BF9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>X.Services.Image</RootNamespace>
-    <AssemblyName>X.Services.Image</AssemblyName>
+    <RootNamespace>X.Services.Tile</RootNamespace>
+    <AssemblyName>X.Services.Tile</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
@@ -109,17 +109,7 @@
   <ItemGroup>
     <Compile Include="Service.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\X.Services.Image.rd.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\X.CoreLib\X.CoreLib.csproj">
-      <Project>{d273509d-612c-47c3-b2a6-c203d96b90d3}</Project>
-      <Name>X.CoreLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.Services.Tile\X.Services.Tile.csproj">
-      <Project>{91685706-d8a2-42be-b5d9-f862cc855bf9}</Project>
-      <Name>X.Services.Tile</Name>
-    </ProjectReference>
+    <EmbeddedResource Include="Properties\X.Services.Tile.rd.xml" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -17,6 +17,7 @@ namespace X.Services.Image
         Windows.Storage.StorageFolder _localFolder;
         Windows.Storage.StorageFolder _mediumFolder;
         Windows.Storage.StorageFolder _thumbFolder;
+        Windows.Storage.StorageFolder _tileFolder;
         Windows.Storage.StorageFolder _originalFolder;
 
         //public string MediumLocation { get { return System.IO.Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "medium"); } private set { } }
@@ -26,7 +27,8 @@ namespace X.Services.Image
         {
             MediumFolder,
             ThumbFolder,
-            Original
+            Original,
+            TileFolder
         }
 
         public Service()
@@ -85,6 +87,16 @@ namespace X.Services.Image
             }
 
 
+            try
+            {
+                _tileFolder = await _localFolder.GetFolderAsync("tile");
+            }
+            catch (System.IO.FileNotFoundException ex)
+            {
+
+            }
+            if (_tileFolder == null) _tileFolder = _localFolder.CreateFolderAsync("tile").GetResults();
+
         }
 
 
@@ -101,7 +113,7 @@ namespace X.Services.Image
             return true;
         }
 
-        public async Task<bool> GenerateResizedImageAsync(int longlength, double srcWidth, double srcHeight, InMemoryRandomAccessStream srcMemoryStream, string newImageName, location subFolder)
+        public async Task<bool> GenerateResizedImageAsync(int longWidth, double srcWidth, double srcHeight, InMemoryRandomAccessStream srcMemoryStream, string newImageName, location subFolder, int longHeight = 0)
         {
             try
             {
@@ -109,33 +121,48 @@ namespace X.Services.Image
                 double factor = srcWidth / srcHeight;
                 if (factor < 1)
                 {
-                    height = longlength;
-                    width = (int)(longlength * factor);
+                    height = longWidth;
+                    width = (int)(longWidth * factor);
                 }
                 else
                 {
-                    width = longlength;
-                    height = (int)(longlength / factor);
+                    width = longWidth;
+                    height = (int)(longWidth / factor);
                 }
 
-
+                if (longHeight > 0)
+                {
+                    width = longWidth;
+                    height = longHeight;
+                }
+                
                 WriteableBitmap wb = await BitmapFactory.New((int)srcWidth, (int)srcHeight).FromStream(srcMemoryStream);
-
-
+                
                 //WRITEABLE BITMAP IS THROWING AN ERROR
 
                 var wbthumbnail = wb.Resize(width, height, Windows.UI.Xaml.Media.Imaging.WriteableBitmapExtensions.Interpolation.Bilinear);
-
+                var localImageUri = "";
 
                 switch (subFolder)
                 {
                     case location.MediumFolder:
                         StorageFile sampleFile1 = await _mediumFolder.CreateFileAsync(newImageName, CreationCollisionOption.ReplaceExisting);
                         await wbthumbnail.SaveToFile(sampleFile1, BitmapEncoder.PngEncoderId);
+                        localImageUri = "ms-appdata:///local/medium/" + sampleFile1.Name;
                         break;
                     case location.ThumbFolder:
                         StorageFile sampleFile2 = await _thumbFolder.CreateFileAsync(newImageName, CreationCollisionOption.ReplaceExisting);
                         await wbthumbnail.SaveToFile(sampleFile2, BitmapEncoder.PngEncoderId);
+                        localImageUri = "ms-appdata:///local/thumb/" + sampleFile2.Name;
+                        break;
+                    case location.TileFolder:
+                        StorageFile sampleFile3 = await _tileFolder.CreateFileAsync(newImageName, CreationCollisionOption.ReplaceExisting);
+                        await wbthumbnail.SaveToFile(sampleFile3, BitmapEncoder.PngEncoderId);
+                        localImageUri = "ms-appdata:///local/tile/" + sampleFile3.Name;
+
+                        //var sxxxxx = Windows.Storage.ApplicationData.Current.LocalFolder;
+                        X.Services.Tile.Service.UpdatePrimaryTile(string.Empty, localImageUri, string.Empty);
+
                         break;
                 }
 

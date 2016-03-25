@@ -123,6 +123,12 @@ namespace X.Browser.Views
                     ms.Seek(0);
                     await App.ImageService.GenerateResizedImageAsync(180, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + ".png", Services.ImageService.location.ThumbFolder);
 
+
+                    //Tile
+                    ms.Seek(0);
+                    await App.ImageService.GenerateResizedImageAsync(310, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + ".png", Services.ImageService.location.TileFolder, 150);
+
+
                     ms.Dispose();
 
                 }
