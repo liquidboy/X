@@ -39,3 +39,4 @@ And implementing them in a demo app "X.Browser" .. Which is a demonstration brow
 
 ![X.Browser 001](https://pbs.twimg.com/media/Cc3G7ufUUAQS6qK.jpg:large)
 
+![lastrefreshed](https://cloud.githubusercontent.com/assets/599657/14053572/4296637c-f326-11e5-8f86-9e10027e6e62.PNG)
