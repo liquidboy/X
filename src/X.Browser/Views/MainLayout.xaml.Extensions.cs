@@ -37,7 +37,7 @@ namespace X.Browser.Views
 
 
             App.ExtensionsSvc.Install(this);
-            //App.ExtensionsSvc.Install(ctlToast);
+            App.ExtensionsSvc.Install(ctlToast);
 
 
             //Find a way to reflect this in

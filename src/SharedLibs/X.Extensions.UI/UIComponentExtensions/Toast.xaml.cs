@@ -16,7 +16,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using X.Extensions;
 
-namespace X.Controls
+namespace X.Extensions.UIComponentExtensions
 {
     public sealed partial class Toast : UserControl, IExtension
     {

@@ -385,5 +385,8 @@
         <!-- DX LAYER -->
         <Canvas x:Name="canvasDXLayer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed" />
 
+        <!-- Toast -->
+        <extcontrols:Toast x:Name="ctlToast" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="60,100,0,0" Width="280" Height="90" />
+
     </Grid>
 </Page>
