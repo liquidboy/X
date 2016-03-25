@@ -16,9 +16,9 @@ namespace X.Services.Data
             DataModelsManager.InitInDatabase(this.SqliteDb);
         }
 
-        public bool DoesExist(string UID, string tableName)
+        public bool DoesExist<T>(string UID)
         {
-            var found = this.SqliteDb.Query<object>("SELECT * FROM " + tableName + " WHERE Uid = ?", UID);
+            var found = this.SqliteDb.Query<object>("SELECT * FROM " + typeof(T).Name + " WHERE Uid = ?", UID);
             if (found != null && found.Count() > 0)
             {
                 return true;
@@ -42,24 +42,19 @@ namespace X.Services.Data
             return DataModelsManager.RetrieveByUid<T>( this.SqliteDb, uid);
         }
 
-        public List<object> RetrieveByUid<T>(string uid, string tableName)
+        public void DeleteByUid<T>(string uid)
         {
-            return this.SqliteDb.Query<object>("SELECT * FROM " + tableName + " WHERE Uid = ?", uid);
+            this.SqliteDb.Execute("delete from " + typeof(T).Name + " where Uid = '" + uid + "'");
         }
 
-        public void DeleteByUid(string uid, string tableName)
+        public void DeleteById<T>(string id)
         {
-            this.SqliteDb.Execute("delete from " + tableName + " where Uid = '" + uid + "'");
+            this.SqliteDb.Execute("delete from ? where id = ?", typeof(T).Name, id);
         }
 
-        public void DeleteById(string id, string tableName)
+        public void UpdateFieldByUid<T>(string uid, string fieldName, object value)
         {
-            this.SqliteDb.Execute("delete from ? where id = ?", tableName, id);
-        }
-
-        public void UpdateFieldByUid(string uid, string tableName, string fieldName, object value)
-        {
-            this.SqliteDb.Execute("UPDATE ? set ? = ? where uid = ?", tableName, fieldName, value, uid);
+            this.SqliteDb.Execute("UPDATE ? set ? = ? where uid = ?", typeof(T).Name, fieldName, value, uid);
         }
 
         public void Update<T>(T value)
@@ -76,9 +71,9 @@ namespace X.Services.Data
             catch (Exception ex) { }
         }
 
-        public void Truncate(string tableName)
+        public void Truncate<T>()
         {
-            this.SqliteDb.Execute("delete from " + tableName);
+            this.SqliteDb.Execute("delete from " + typeof(T).Name);
         }
 
         public void TruncateAll()
