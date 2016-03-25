@@ -25,7 +25,7 @@ namespace X.Services.Tile
 
             //text
             XmlNodeList tileTextAttributes = tileXml.GetElementsByTagName("text");
-            tileTextAttributes[0].InnerText = text;
+            if(tileTextAttributes.Count > 0) tileTextAttributes[0].InnerText = text;
             //tileTextAttributes[1].InnerText = "xxxxx";
 
             //image

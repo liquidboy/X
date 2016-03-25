@@ -120,8 +120,14 @@ namespace X.Browser.Views
                     //img: Thumbnail
                     ms.Seek(0);
                     await X.Services.Image.Service.GenerateResizedImageAsync(180, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + ".png", X.Services.Image.Service.location.ThumbFolder);
-                    
+
                     //img: Tile
+                    ms.Seek(0);
+                    await X.Services.Image.Service.GenerateResizedImageAsync(71, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + ".png", X.Services.Image.Service.location.TileFolder, 71);
+
+                    ms.Seek(0);
+                    await X.Services.Image.Service.GenerateResizedImageAsync(150, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + "-150x150.png", X.Services.Image.Service.location.TileFolder, 150);
+
                     ms.Seek(0);
                     await X.Services.Image.Service.GenerateResizedImageAsync(310, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + "-310x150.png", X.Services.Image.Service.location.TileFolder, 150);
 
@@ -134,8 +140,10 @@ namespace X.Browser.Views
                     X.Services.Tile.Service.UpdatePrimaryTile(string.Empty, "ms-appdata:///local/tile/" + uriHash + "-310x150.png", string.Empty, Windows.UI.Notifications.TileTemplateType.TileWide310x150ImageAndText01);
 
                     X.Services.Tile.Service.UpdatePrimaryTile(string.Empty, "ms-appdata:///local/tile/" + uriHash + "-310x310.png", string.Empty, Windows.UI.Notifications.TileTemplateType.TileSquare310x310ImageAndText01);
+                    
+                    X.Services.Tile.Service.UpdatePrimaryTile(string.Empty, "ms-appdata:///local/tile/" + uriHash + "-150x150.png", string.Empty, Windows.UI.Notifications.TileTemplateType.TileSquare150x150PeekImageAndText01);
 
-
+                    X.Services.Tile.Service.UpdatePrimaryTile(string.Empty, "ms-appdata:///local/tile/" + uriHash + ".png", string.Empty, Windows.UI.Notifications.TileTemplateType.TileSquare71x71Image);
                     ms.Dispose();
 
                 }
