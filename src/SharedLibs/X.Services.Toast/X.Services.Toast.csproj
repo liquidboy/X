@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BD6D553A-4777-4D54-9289-3E9E4289604F}</ProjectGuid>
+    <ProjectGuid>{3BF0E9C5-16AE-472A-97D9-0A0F037E31AB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>X.Extensions</RootNamespace>
-    <AssemblyName>X.Extensions</AssemblyName>
+    <RootNamespace>X.Services.Toast</RootNamespace>
+    <AssemblyName>X.Services.Toast</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
@@ -107,37 +107,9 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contracts\BaseEventArgs.cs" />
-    <Compile Include="Contracts\CloseExtensionEventArgs.cs" />
-    <Compile Include="Contracts\InlineToastEventArgs.cs" />
-    <Compile Include="Contracts\LaunchExtensionEventArgs.cs" />
-    <Compile Include="Contracts\LoadInstalledExtensionsEventArgs.cs" />
-    <Compile Include="Contracts\LoadWebViewEventArgs.cs" />
-    <Compile Include="Contracts\OSToastEventArgs.cs" />
-    <Compile Include="Contracts\RequestListOfBottomToolbarExtensionsEventArgs.cs" />
-    <Compile Include="Contracts\RequestListOfInstalledExtensionsEventArgs.cs" />
-    <Compile Include="Contracts\RequestListOfLeftToolbarExtensionsEventArgs.cs" />
-    <Compile Include="Contracts\RequestListOfRightToolbarExtensionsEventArgs.cs" />
-    <Compile Include="Contracts\RequestListOfTopToolbarExtensionsEventArgs.cs" />
-    <Compile Include="Contracts\ResponseListOfBottomToolbarExtensionsEventArgs.cs" />
-    <Compile Include="Contracts\ResponseListOfInstalledExtensionsEventArgs.cs" />
-    <Compile Include="Contracts\ResponseListOfLeftToolbarExtensionsEventArgs.cs" />
-    <Compile Include="Contracts\ResponseListOfRightToolbarExtensionsEventArgs.cs" />
-    <Compile Include="Contracts\ResponseListOfTopToolbarExtensionsEventArgs.cs" />
-    <Compile Include="NewWindowRequestExtensions\HandleNewWindowAsInlineLink.cs" />
-    <Compile Include="OSShellExtensions\OSToast.cs" />
+    <Compile Include="Service.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\X.Extensions.rd.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\X.CoreLib\X.CoreLib.csproj">
-      <Project>{d273509d-612c-47c3-b2a6-c203d96b90d3}</Project>
-      <Name>X.CoreLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.Services.Toast\X.Services.Toast.csproj">
-      <Project>{3bf0e9c5-16ae-472a-97d9-0a0f037e31ab}</Project>
-      <Name>X.Services.Toast</Name>
-    </ProjectReference>
+    <EmbeddedResource Include="Properties\X.Services.Toast.rd.xml" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

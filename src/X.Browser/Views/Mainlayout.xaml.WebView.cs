@@ -52,6 +52,7 @@ namespace X.Browser.Views
             {
                 App.ExtensionsSvc.SendMessage(ea.Uri, ExtensionType.WVNewWindowRequest);
                 //args.Handled = true;
+                
             }
             else if (ea.Type == "LongRunningScriptDetected")
             {
