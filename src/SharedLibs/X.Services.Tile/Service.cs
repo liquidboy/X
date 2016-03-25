@@ -11,10 +11,12 @@ namespace X.Services.Tile
     public class Service
     {
         //https://msdn.microsoft.com/en-us/library/windows/apps/xaml/hh868253.aspx
+        
+        public static void UpdatePrimaryTile(string text, string imgSrc, string imgAlt, TileTemplateType templateType) {
 
-        public static void UpdatePrimaryTile(string text, string imgSrc, string imgAlt) {
+            TileUpdateManager.CreateTileUpdaterForApplication().EnableNotificationQueue(true);
 
-            XmlDocument tileXml = TileUpdateManager.GetTemplateContent(TileTemplateType.TileWide310x150ImageAndText01);  //TileWide310x150ImageAndText01
+            XmlDocument tileXml = TileUpdateManager.GetTemplateContent(templateType);  //TileWide310x150ImageAndText01
 
             //version
             XmlNodeList tileVersionAttributes = tileXml.GetElementsByTagName("visual");
@@ -44,7 +46,8 @@ namespace X.Services.Tile
             //((XmlElement)tileImageAttributes[0]).SetAttribute("alt", "red graphic");
 
             //create notifcation
-            TileNotification tileNotification = new TileNotification(tileXml);
+            //TileNotification tileNotification = new TileNotification(tileXml);
+            ScheduledTileNotification stn = new ScheduledTileNotification(tileXml, DateTimeOffset.Now.AddSeconds(8));
 
             //notification expires in 
             //tileNotification.ExpirationTime = DateTimeOffset.UtcNow.AddMinutes(10);
@@ -53,11 +56,14 @@ namespace X.Services.Tile
             //Windows.UI.Notifications.TileUpdateManager.CreateTileUpdaterForApplication().Clear();
 
             //send notification to app tile
-            TileUpdateManager.CreateTileUpdaterForApplication().Update(tileNotification);
-
-            //var found = TileUpdateManager.CreateTileUpdaterForApplication().GetScheduledTileNotifications().ToList();
+            //TileUpdateManager.CreateTileUpdaterForApplication().Update(tileNotification);
+            TileUpdateManager.CreateTileUpdaterForApplication().AddToSchedule(stn);
 
         }
 
+
+
+
+        
     }
 }

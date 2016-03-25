@@ -162,12 +162,16 @@ namespace X.UI.AddTab
 
                     //img: Tile
                     ms.Seek(0);
-                    await X.Services.Image.Service.GenerateResizedImageAsync(310, _cvMain.ActualWidth, _cvMain.ActualHeight, ms, uriHash + ".png", X.Services.Image.Service.location.TileFolder, 150);
-                    
+                    await X.Services.Image.Service.GenerateResizedImageAsync(310, _cvMain.ActualWidth, _cvMain.ActualHeight, ms, uriHash + "-310x150.png", X.Services.Image.Service.location.TileFolder, 150);
+
+                    ms.Seek(0);
+                    await X.Services.Image.Service.GenerateResizedImageAsync(310, _cvMain.ActualWidth, _cvMain.ActualHeight, ms, uriHash + "-310x310.png", X.Services.Image.Service.location.TileFolder, 310);
+
                     //update tile
-                    var localImageUri = "ms-appdata:///local/tile/" + uriHash + ".png";
-                    //var sxxxxx = Windows.Storage.ApplicationData.Current.LocalFolder;
-                    X.Services.Tile.Service.UpdatePrimaryTile(string.Empty, localImageUri, string.Empty);
+                    X.Services.Tile.Service.UpdatePrimaryTile(string.Empty, "ms-appdata:///local/tile/" + uriHash + "-310x150.png", string.Empty, Windows.UI.Notifications.TileTemplateType.TileWide310x150ImageAndText01);
+
+                    X.Services.Tile.Service.UpdatePrimaryTile(string.Empty, "ms-appdata:///local/tile/" + uriHash + "-310x310.png", string.Empty, Windows.UI.Notifications.TileTemplateType.TileSquare310x310ImageAndText01);
+
                 }
             }
             else if (cv.Type == "NavigationFailed")
