@@ -130,7 +130,7 @@ namespace X.Browser.ViewModels
                 bool hasSetFirstItem = false;
                 foreach (var d in data)
                 {
-                    var tempTab = new TabViewModel() { DisplayTitle = d.DisplayTitle, FaviconUri = d.FaviconUri, HasFocus = !hasSetFirstItem, Uri = d.Uri, TabChangedCommand = this.TabChangedCommand, LastRefreshedDate = d.LastRefreshedDate };
+                    var tempTab = new TabViewModel() { DisplayTitle = d.DisplayTitle, FaviconUri = d.FaviconUri, HasFocus = !hasSetFirstItem, Uri = d.Uri, TabChangedCommand = this.TabChangedCommand, LastRefreshedDate = d.LastRefreshedDate, IsPinned = d.IsPinned };
                     tempTab.PrimaryFontFamily = DetermineFontFamily(tempTab.DisplayTitle);
                     tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
                     tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);

@@ -107,6 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IsPinnedToImageUriConverter.cs" />
     <Compile Include="LastRefreshedDateConverter.cs" />
     <Compile Include="BooleanToVisibilityConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -132,6 +133,14 @@
       <Project>{f2134120-5202-432d-b943-d1f26d096be0}</Project>
       <Name>X.UI.RichImage</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Pinned-nor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Pinned-sel.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

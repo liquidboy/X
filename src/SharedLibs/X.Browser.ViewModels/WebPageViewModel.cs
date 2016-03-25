@@ -27,7 +27,11 @@ namespace X.Browser
         public string PrimaryForegroundColor { get; set; }
         public ObservableCollection<NameValue> QueryNames { get; set; }
         public string OriginalUri { get; set; }
-        
+
+
+        bool _IsPinned;
+        public bool IsPinned { get { return _IsPinned; } set { _IsPinned = value; RaisePropertyChanged(); } }
+
         DateTime _LastRefreshedDate;
         public DateTime LastRefreshedDate { get { return _LastRefreshedDate; } set { _LastRefreshedDate = value; RaisePropertyChanged(); } }
 

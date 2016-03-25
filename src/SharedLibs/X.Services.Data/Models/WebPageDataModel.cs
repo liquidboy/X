@@ -18,6 +18,7 @@ namespace X.Services.Data
         public string FaviconUri { get; set; }
         public bool ShowPadlock { get; set; }
         public DateTime LastRefreshedDate { get; set; }
+        public bool IsPinned { get; set; }
 
         private string _uri;
         public string Uri

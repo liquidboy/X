@@ -5,6 +5,7 @@
     xmlns:local="using:X.UI.MoreTab">
     <local:BooleanToVisibilityConverter x:Key="TrueToVisibleConverter" ></local:BooleanToVisibilityConverter>
     <local:LastRefreshedDateConverter x:Key="LastRefreshedDateConverter" ></local:LastRefreshedDateConverter>
+    <local:IsPinnedToImageUriConverter x:Key="IsPinnedToImageUriConverter" ></local:IsPinnedToImageUriConverter>
     <Style x:Key="GeneralRadioButtonStyle" TargetType="RadioButton">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
@@ -251,6 +252,10 @@
                                                     <Border BorderBrush="{Binding PrimaryBackgroundColor}" BorderThickness="0,0,0,1" Width="15" ></Border>
                                                     <Border BorderBrush="{Binding PrimaryBackgroundColor}" BorderThickness="0,0,0,1" Width="5" Visibility="{Binding ChildTabs.Count, Converter={StaticResource TrueToVisibleConverter}}"></Border>
                                                 </StackPanel>
+                                                <Button HorizontalAlignment="Right" Margin="0,0,8,0" Background="Transparent" BorderThickness="0" Command="{Binding TogglePinCommand}">
+                                                    <Image Source="{Binding IsPinned, Converter={StaticResource IsPinnedToImageUriConverter}}"  Width="20" Height="20" ></Image>
+                                                </Button>
+                                      
                                             </Grid>
 
                                             <Grid Width="220" Height="140" Margin="8,5,8,15" Grid.Row="1"  PointerPressed="Grid_PointerPressed">

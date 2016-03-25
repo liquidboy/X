@@ -13,7 +13,7 @@ namespace X.Services.Data
         string FaviconUri { get; set; }
         bool ShowPadlock { get; set; }
         DateTime LastRefreshedDate { get; set; }
-
+        bool IsPinned { get; set; }
         string Uri { get; set; }
 
     }
