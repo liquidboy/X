@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using X.Services.Data;
 
 namespace X.Browser
 {
@@ -115,7 +116,7 @@ namespace X.Browser
                 X.Services.Tile.Service.DeleteSecondaryTile(uriHash);
             }
 
-            //if(Id >0) X.Services.Data.StorageService
+            if (Id > 0) X.Services.Data.StorageService.Instance.Storage.UpdateFieldById<WebPageDataModel>(Id, "IsPinned", IsPinned? 1: 0);
 
         }
 

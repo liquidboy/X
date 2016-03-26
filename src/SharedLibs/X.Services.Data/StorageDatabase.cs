@@ -57,6 +57,12 @@ namespace X.Services.Data
             this.SqliteDb.Execute("UPDATE ? set ? = ? where uid = ?", typeof(T).Name, fieldName, value, uid);
         }
 
+        public void UpdateFieldById<T>(int id, string fieldName, object value)
+        {
+            this.SqliteDb.Execute( $"UPDATE {typeof(T).Name} set {fieldName} = ? where id = ?", value, id);
+            //this.SqliteDb.Execute($"UPDATE {typeof(T).Name} set {fieldName} = {value} where id = {id}");
+        }
+
         public void Update<T>(T value)
         {
             this.SqliteDb.Update(value);
