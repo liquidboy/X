@@ -174,13 +174,14 @@ namespace X.UI.AddTab
                     await X.Services.Image.Service.Instance.GenerateResizedImageAsync(310, _cvMain.ActualWidth, _cvMain.ActualHeight, ms, uriHash + "-310x310.png", X.Services.Image.Service.location.TileFolder, 310);
 
                     //update tile
-                    X.Services.Tile.Service.UpdatePrimaryTile("X.Browser", "ms-appdata:///local/tile/" + uriHash + "-310x150.png", string.Empty, Windows.UI.Notifications.TileTemplateType.TileWide310x150ImageAndText01);
+                    X.Services.Tile.Service.UpdatePrimaryTile("X.Browser", 
+                        "ms-appdata:///local/tile/" + uriHash + "-150x150.png",
+                        "ms-appdata:///local/tile/" + uriHash + "-310x150.png",
+                        "ms-appdata:///local/tile/" + uriHash + "-310x310.png",
+                        "ms-appdata:///local/tile/" + uriHash + ".png"
+                        );
 
-                    X.Services.Tile.Service.UpdatePrimaryTile("X.Browser", "ms-appdata:///local/tile/" + uriHash + "-310x310.png", string.Empty, Windows.UI.Notifications.TileTemplateType.TileSquare310x310ImageAndText01);
-
-                    X.Services.Tile.Service.UpdatePrimaryTile("X.Browser", "ms-appdata:///local/tile/" + uriHash + "-150x150.png", string.Empty, Windows.UI.Notifications.TileTemplateType.TileSquare150x150PeekImageAndText01);
-
-                    X.Services.Tile.Service.UpdatePrimaryTile("X.Browser", "ms-appdata:///local/tile/" + uriHash + ".png", string.Empty, Windows.UI.Notifications.TileTemplateType.TileSquare71x71Image);
+                    
                 }
             }
             else if (cv.Type == "NavigationFailed")

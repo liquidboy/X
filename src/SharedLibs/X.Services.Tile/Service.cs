@@ -12,8 +12,17 @@ namespace X.Services.Tile
     public class Service
     {
         //https://msdn.microsoft.com/en-us/library/windows/apps/xaml/hh868253.aspx
-        
-        public static void UpdatePrimaryTile(string text, string imgSrc, string imgAlt, TileTemplateType templateType) {
+
+        public static void UpdatePrimaryTile(string text, string imgSrc150x150, string imgSrc310x150, string imgSrc310x310, string imgSrc71x71)
+        {
+            _updatePrimaryTile(text, imgSrc150x150, string.Empty, Windows.UI.Notifications.TileTemplateType.TileSquare150x150PeekImageAndText01);
+            _updatePrimaryTile(text, imgSrc310x150, string.Empty, Windows.UI.Notifications.TileTemplateType.TileWide310x150ImageAndText01);
+            _updatePrimaryTile(text, imgSrc310x310, string.Empty, Windows.UI.Notifications.TileTemplateType.TileSquare310x310ImageAndText01);
+            _updatePrimaryTile(text, imgSrc71x71, string.Empty, Windows.UI.Notifications.TileTemplateType.TileSquare71x71Image);
+        }
+
+
+        private static void _updatePrimaryTile(string text, string imgSrc, string imgAlt, TileTemplateType templateType) {
 
             TileUpdateManager.CreateTileUpdaterForApplication().EnableNotificationQueue(true);
 
