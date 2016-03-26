@@ -33,7 +33,7 @@ namespace X.UI.Chrome
 
         
         DispatcherTimer _dtChrome;
-        NativeLib.Win32Point _curPos = new NativeLib.Win32Point();
+        //NativeLib.Win32Point _curPos = new NativeLib.Win32Point();
 
 
 
@@ -73,15 +73,15 @@ namespace X.UI.Chrome
                 _recSmallTitle = GetTemplateChild("recSmallTitle") as Windows.UI.Xaml.Shapes.Rectangle;
                 Window.Current.SetTitleBar(_recSmallTitle);
 
-                _dtChrome = new DispatcherTimer();
-                _dtChrome.Interval = new TimeSpan(0, 0, 0, 0, 15);
-                _dtChrome.Tick += (object sender, object e) =>
-                {
-                    NativeLib.GetCursorPos(ref _curPos);
-                    ChromeUpdate(_curPos);
-                };
-                if (EnableResizeFix) _dtChrome.Start();
-                else _dtChrome.Stop();
+                //_dtChrome = new DispatcherTimer();
+                //_dtChrome.Interval = new TimeSpan(0, 0, 0, 0, 15);
+                //_dtChrome.Tick += (object sender, object e) =>
+                //{
+                //    //NativeLib.GetCursorPos(ref _curPos);
+                //    //ChromeUpdate(_curPos);
+                //};
+                //if (EnableResizeFix) _dtChrome.Start();
+                //else _dtChrome.Stop();
             }
 
             if (_tbTitle == null)
@@ -100,8 +100,8 @@ namespace X.UI.Chrome
         {
             EnableResizeFix = !EnableResizeFix;
 
-            if (EnableResizeFix) _dtChrome.Start();
-            else _dtChrome.Stop();
+            //if (EnableResizeFix) _dtChrome.Start();
+            //else _dtChrome.Stop();
         }
 
         public void Invalidate(double offsetX = 0, double offsetY = 0) {
@@ -217,8 +217,8 @@ namespace X.UI.Chrome
             if (d == null)
                 return;
             
-            if (instance.EnableResizeFix) instance._dtChrome?.Start();
-            else instance._dtChrome?.Stop();
+            //if (instance.EnableResizeFix) instance._dtChrome?.Start();
+            //else instance._dtChrome?.Stop();
 
             //instance._dtChrome?.Start();
         }
@@ -233,21 +233,21 @@ namespace X.UI.Chrome
         }
 
 
-        private void ChromeUpdate(NativeLib.Win32Point pt)
-        {
-            var xRightMost = Window.Current.Bounds.Left + Window.Current.Bounds.Width - 200;
+        //private void ChromeUpdate(NativeLib.Win32Point pt)
+        //{
+        //    var xRightMost = Window.Current.Bounds.Left + Window.Current.Bounds.Width - 200;
 
-            if (pt.x > xRightMost) return;
+        //    if (pt.x > xRightMost) return;
 
-            if (pt.y < Window.Current.Bounds.Top + 4)
-                Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.SizeNorthSouth, 66651);
-            else if (pt.y < Window.Current.Bounds.Top + 15)
-                Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.SizeAll, 66652);
-            else if (pt.y < Window.Current.Bounds.Top + 45)
-                Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Arrow, 66653);
-            else  //some monitors, like my freaking 4K dogy one , reports coordinates from the center of the screen .. so for the time being just return back arrow
-                Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Arrow, 66653);
-        }
+        //    if (pt.y < Window.Current.Bounds.Top + 4)
+        //        Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.SizeNorthSouth, 66651);
+        //    else if (pt.y < Window.Current.Bounds.Top + 15)
+        //        Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.SizeAll, 66652);
+        //    else if (pt.y < Window.Current.Bounds.Top + 45)
+        //        Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Arrow, 66653);
+        //    else  //some monitors, like my freaking 4K dogy one , reports coordinates from the center of the screen .. so for the time being just return back arrow
+        //        Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Arrow, 66653);
+        //}
 
 
     }

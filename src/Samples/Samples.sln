@@ -148,8 +148,6 @@ Global
 		{400F7F35-7034-41B6-80CD-F5F916BD039C}.Release|iPhone.ActiveCfg = Release|x86
 		{400F7F35-7034-41B6-80CD-F5F916BD039C}.Release|iPhoneSimulator.ActiveCfg = Release|x86
 		{400F7F35-7034-41B6-80CD-F5F916BD039C}.Release|x64.ActiveCfg = Release|x64
-		{400F7F35-7034-41B6-80CD-F5F916BD039C}.Release|x64.Build.0 = Release|x64
-		{400F7F35-7034-41B6-80CD-F5F916BD039C}.Release|x64.Deploy.0 = Release|x64
 		{400F7F35-7034-41B6-80CD-F5F916BD039C}.Release|x86.ActiveCfg = Release|x86
 		{400F7F35-7034-41B6-80CD-F5F916BD039C}.Release|x86.Build.0 = Release|x86
 		{400F7F35-7034-41B6-80CD-F5F916BD039C}.Release|x86.Deploy.0 = Release|x86
