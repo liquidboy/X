@@ -35,7 +35,14 @@ namespace X.Browser
         public bool IsPinned { get { return _IsPinned; } set { _IsPinned = value; RaisePropertyChanged(); } }
 
         DateTime _LastRefreshedDate;
-        public DateTime LastRefreshedDate { get { return _LastRefreshedDate; } set { _LastRefreshedDate = value; RaisePropertyChanged(); } }
+        public DateTime LastRefreshedDate {
+            get { return _LastRefreshedDate; }
+            set {
+                _LastRefreshedDate = value;
+                RaisePropertyChanged();
+
+                if (Id > 0 && _LastRefreshedDate != DateTime.MinValue) X.Services.Data.StorageService.Instance.Storage.UpdateFieldById<WebPageDataModel>(Id, "LastRefreshedDate", LastRefreshedDate.ToUniversalTime());
+            } }
 
         private string _uri;
         public string Uri
@@ -89,9 +96,6 @@ namespace X.Browser
             }
 
         }
-
-
-
 
 
         private RelayCommand<object> _togglePinCommand;
