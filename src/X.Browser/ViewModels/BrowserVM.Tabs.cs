@@ -189,7 +189,9 @@ namespace X.Browser.ViewModels
             tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
             tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);
             tempTab.RightBorderColor = "#FFB8B8B8";
-            
+
+            if(id >0) tempTab.ThumbUri = string.Concat(X.Services.Image.Service.Instance.MediumLocation, "\\", tempTab.Uid, ".png") + "?v=" + Guid.NewGuid().ToString();
+
             return tempTab;
         }
 

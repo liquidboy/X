@@ -10,18 +10,18 @@ using CoreLib;
 
 namespace X.Services.Image
 {
-    public static class Service 
+    public class Service 
     {
         //string tempFolderLocation;
 
-        static Windows.Storage.StorageFolder _localFolder;
-        static Windows.Storage.StorageFolder _mediumFolder;
-        static Windows.Storage.StorageFolder _thumbFolder;
-        static Windows.Storage.StorageFolder _tileFolder;
-        static Windows.Storage.StorageFolder _originalFolder;
+        Windows.Storage.StorageFolder _localFolder;
+        Windows.Storage.StorageFolder _mediumFolder;
+        Windows.Storage.StorageFolder _thumbFolder;
+        Windows.Storage.StorageFolder _tileFolder;
+        Windows.Storage.StorageFolder _originalFolder;
 
         //public string MediumLocation { get { return System.IO.Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "medium"); } private set { } }
-        public static string MediumLocation { get { return _mediumFolder.Path; } private set { } }
+        public  string MediumLocation { get { return _mediumFolder.Path; } private set { } }
 
         public enum location
         {
@@ -30,10 +30,18 @@ namespace X.Services.Image
             Original,
             TileFolder
         }
-        
-        private static async void InitFolders()
+
+
+        public Service() {
+            
+        }
+
+
+        public async void InitFolders()
         {
             _localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+
+
 
             try
             {
@@ -53,7 +61,7 @@ namespace X.Services.Image
             {
 
             }
-            if (_thumbFolder == null) _thumbFolder = _localFolder.CreateFolderAsync("thumb").GetResults();
+            if (_thumbFolder == null) _thumbFolder = await _localFolder.CreateFolderAsync("thumb");
 
             try
             {
@@ -66,7 +74,7 @@ namespace X.Services.Image
 
             try
             {
-                if (_originalFolder == null) _originalFolder = _localFolder.CreateFolderAsync("original").GetResults();
+                if (_originalFolder == null) _originalFolder = await _localFolder.CreateFolderAsync("original");
             }
             catch
             {
@@ -82,7 +90,11 @@ namespace X.Services.Image
             {
 
             }
-            if (_tileFolder == null) _tileFolder = _localFolder.CreateFolderAsync("tile").GetResults();
+            if (_tileFolder == null) _tileFolder = await _localFolder.CreateFolderAsync("tile");
+
+
+
+
 
         }
 
@@ -100,7 +112,7 @@ namespace X.Services.Image
         //    return true;
         //}
 
-        public static async Task<bool> GenerateResizedImageAsync(int longWidth, double srcWidth, double srcHeight, InMemoryRandomAccessStream srcMemoryStream, string newImageName, location subFolder, int longHeight = 0)
+        public async Task<bool> GenerateResizedImageAsync(int longWidth, double srcWidth, double srcHeight, InMemoryRandomAccessStream srcMemoryStream, string newImageName, location subFolder, int longHeight = 0)
         {
             if (_localFolder == null) InitFolders();
 
@@ -157,5 +169,31 @@ namespace X.Services.Image
 
         }
 
+
+
+
+
+
+
+
+
+
+
+        //=========================
+        //singleton
+        //=========================
+        private static Service instance;
+
+        public static Service Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new Service();
+                }
+                return instance;
+            }
+        }
     }
 }

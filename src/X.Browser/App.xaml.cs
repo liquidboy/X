@@ -26,6 +26,7 @@ namespace X.Browser
                 Microsoft.ApplicationInsights.WindowsCollectors.Session);
             
             ExtensionsSvc = new ExtensionsService();
+            X.Services.Image.Service.Instance.InitFolders();
             //StorageSvc = new StorageService();
 
             this.InitializeComponent();

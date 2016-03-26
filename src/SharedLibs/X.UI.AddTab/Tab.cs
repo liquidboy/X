@@ -154,24 +154,24 @@ namespace X.UI.AddTab
 
                     //img: Banner 400 width
                     //ms.Seek(0);
-                    await X.Services.Image.Service.GenerateResizedImageAsync(400, _cvMain.ActualWidth, _cvMain.ActualHeight, ms, uriHash + ".png", X.Services.Image.Service.location.MediumFolder);
+                    await X.Services.Image.Service.Instance.GenerateResizedImageAsync(400, _cvMain.ActualWidth, _cvMain.ActualHeight, ms, uriHash + ".png", X.Services.Image.Service.location.MediumFolder);
                     
                     //img: Thumbnail
                     ms.Seek(0);
-                    await X.Services.Image.Service.GenerateResizedImageAsync(180, _cvMain.ActualWidth, _cvMain.ActualHeight, ms, uriHash + ".png", X.Services.Image.Service.location.ThumbFolder);
+                    await X.Services.Image.Service.Instance.GenerateResizedImageAsync(180, _cvMain.ActualWidth, _cvMain.ActualHeight, ms, uriHash + ".png", X.Services.Image.Service.location.ThumbFolder);
 
                     //img: Tile
                     ms.Seek(0);
-                    await X.Services.Image.Service.GenerateResizedImageAsync(71, _cvMain.ActualWidth, _cvMain.ActualHeight, ms, uriHash + ".png", X.Services.Image.Service.location.TileFolder, 71);
+                    await X.Services.Image.Service.Instance.GenerateResizedImageAsync(71, _cvMain.ActualWidth, _cvMain.ActualHeight, ms, uriHash + ".png", X.Services.Image.Service.location.TileFolder, 71);
 
                     ms.Seek(0);
-                    await X.Services.Image.Service.GenerateResizedImageAsync(150, _cvMain.ActualWidth, _cvMain.ActualHeight, ms, uriHash + "-150x150.png", X.Services.Image.Service.location.TileFolder, 150);
+                    await X.Services.Image.Service.Instance.GenerateResizedImageAsync(150, _cvMain.ActualWidth, _cvMain.ActualHeight, ms, uriHash + "-150x150.png", X.Services.Image.Service.location.TileFolder, 150);
 
                     ms.Seek(0);
-                    await X.Services.Image.Service.GenerateResizedImageAsync(310, _cvMain.ActualWidth, _cvMain.ActualHeight, ms, uriHash + "-310x150.png", X.Services.Image.Service.location.TileFolder, 150);
+                    await X.Services.Image.Service.Instance.GenerateResizedImageAsync(310, _cvMain.ActualWidth, _cvMain.ActualHeight, ms, uriHash + "-310x150.png", X.Services.Image.Service.location.TileFolder, 150);
 
                     ms.Seek(0);
-                    await X.Services.Image.Service.GenerateResizedImageAsync(310, _cvMain.ActualWidth, _cvMain.ActualHeight, ms, uriHash + "-310x310.png", X.Services.Image.Service.location.TileFolder, 310);
+                    await X.Services.Image.Service.Instance.GenerateResizedImageAsync(310, _cvMain.ActualWidth, _cvMain.ActualHeight, ms, uriHash + "-310x310.png", X.Services.Image.Service.location.TileFolder, 310);
 
                     //update tile
                     X.Services.Tile.Service.UpdatePrimaryTile(string.Empty, "ms-appdata:///local/tile/" + uriHash + "-310x150.png", string.Empty, Windows.UI.Notifications.TileTemplateType.TileWide310x150ImageAndText01);
