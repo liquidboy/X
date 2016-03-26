@@ -114,9 +114,17 @@
     <EmbeddedResource Include="Properties\X.Browser.ViewModels.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\X.CoreLib\X.CoreLib.csproj">
+      <Project>{d273509d-612c-47c3-b2a6-c203d96b90d3}</Project>
+      <Name>X.CoreLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\X.Services.Data\X.Services.Data.csproj">
       <Project>{9cf3fa6f-8edd-4c98-a505-a6614aa214cd}</Project>
       <Name>X.Services.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\X.Services.Tile\X.Services.Tile.csproj">
+      <Project>{91685706-d8a2-42be-b5d9-f862cc855bf9}</Project>
+      <Name>X.Services.Tile</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

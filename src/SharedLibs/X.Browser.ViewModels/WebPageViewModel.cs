@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -84,7 +85,40 @@ namespace X.Browser
             }
 
         }
-        
+
+
+
+
+
+        private RelayCommand<object> _togglePinCommand;
+
+        public RelayCommand<object> TogglePinCommand { get { return _togglePinCommand ?? (_togglePinCommand = new RelayCommand<object>(ExecuteTogglePinCommand)); } }
+
+
+        private void ExecuteTogglePinCommand(object obj)
+        {
+            IsPinned = !IsPinned;
+
+            var uriHash = FlickrNet.UtilityMethods.MD5Hash(OriginalUri); //   e.Uri);
+
+            if (IsPinned)
+            {
+                X.Services.Tile.Service.UpdateSecondaryTile(uriHash, DisplayTitle, FaviconUri,
+                    "ms-appdata:///local/tile/" + uriHash + "-150x150.png",
+                    "ms-appdata:///local/tile/" + uriHash + "-310x150.png",
+                    "ms-appdata:///local/tile/" + uriHash + "-310x310.png");
+            }
+            else {
+                X.Services.Tile.Service.DeleteSecondaryTile(uriHash);
+            }
+
+        }
+
+
+
+
+
+
 
         public void ExternalRaisePropertyChanged(string propName) { RaisePropertyChanged(propName); }
 

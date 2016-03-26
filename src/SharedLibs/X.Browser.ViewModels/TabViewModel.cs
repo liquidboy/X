@@ -23,21 +23,13 @@ namespace X.Browser
         public ObservableCollection<TabViewModel> ChildTabs { get; set; }
 
 
-        private RelayCommand<object> _togglePinCommand;
-
+      
 
         public TabViewModel()
         {
             ChildTabs = new ObservableCollection<TabViewModel>();
         }
 
-        public RelayCommand<object> TogglePinCommand { get { return _togglePinCommand ?? (_togglePinCommand = new RelayCommand<object>(ExecuteTogglePinCommand)); } }
-
-
-        private void ExecuteTogglePinCommand(object obj)
-        {
-            IsPinned = !IsPinned;
-        }
 
     }
 }
