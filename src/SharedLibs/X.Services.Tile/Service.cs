@@ -91,6 +91,7 @@ namespace X.Services.Tile
                 // If set to TileSize.Wide310x150, then the asset for the wide size must be supplied as well.
                 // TileSize.Default will default to the wide size if a wide size is provided, and to the medium size otherwise. 
                 SecondaryTile secondaryTile = new SecondaryTile(guid, text, tileActivationArguments, new Uri(imgSrc150x150),  TileSize.Square150x150);
+                secondaryTile.BackgroundColor = Windows.UI.Colors.Black;
                 secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
 
                 secondaryTile.VisualElements.Wide310x150Logo = new Uri(imgSrc310x150);

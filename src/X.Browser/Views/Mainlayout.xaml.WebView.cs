@@ -139,13 +139,13 @@ namespace X.Browser.Views
 
                         //update tile
                         //var sxxxxx = Windows.Storage.ApplicationData.Current.LocalFolder;
-                        X.Services.Tile.Service.UpdatePrimaryTile(string.Empty, "ms-appdata:///local/tile/" + uriHash + "-310x150.png", string.Empty, Windows.UI.Notifications.TileTemplateType.TileWide310x150ImageAndText01);
+                        X.Services.Tile.Service.UpdatePrimaryTile("X.Browser", "ms-appdata:///local/tile/" + uriHash + "-310x150.png", string.Empty, Windows.UI.Notifications.TileTemplateType.TileWide310x150ImageAndText01);
 
-                        X.Services.Tile.Service.UpdatePrimaryTile(string.Empty, "ms-appdata:///local/tile/" + uriHash + "-310x310.png", string.Empty, Windows.UI.Notifications.TileTemplateType.TileSquare310x310ImageAndText01);
+                        X.Services.Tile.Service.UpdatePrimaryTile("X.Browser", "ms-appdata:///local/tile/" + uriHash + "-310x310.png", string.Empty, Windows.UI.Notifications.TileTemplateType.TileSquare310x310ImageAndText01);
 
-                        X.Services.Tile.Service.UpdatePrimaryTile(string.Empty, "ms-appdata:///local/tile/" + uriHash + "-150x150.png", string.Empty, Windows.UI.Notifications.TileTemplateType.TileSquare150x150PeekImageAndText01);
+                        X.Services.Tile.Service.UpdatePrimaryTile("X.Browser", "ms-appdata:///local/tile/" + uriHash + "-150x150.png", string.Empty, Windows.UI.Notifications.TileTemplateType.TileSquare150x150PeekImageAndText01);
 
-                        X.Services.Tile.Service.UpdatePrimaryTile(string.Empty, "ms-appdata:///local/tile/" + uriHash + ".png", string.Empty, Windows.UI.Notifications.TileTemplateType.TileSquare71x71Image);
+                        X.Services.Tile.Service.UpdatePrimaryTile("X.Browser", "ms-appdata:///local/tile/" + uriHash + ".png", string.Empty, Windows.UI.Notifications.TileTemplateType.TileSquare71x71Image);
                         ms.Dispose();
 
                     }
