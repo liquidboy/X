@@ -133,7 +133,7 @@ namespace X.Browser.ViewModels
 
                 foreach (var d in data)
                 {
-                    Tabs.Add(CreateDefaultTab(d.DisplayTitle, d.FaviconUri, d.Uri, d.LastRefreshedDate, d.IsPinned));
+                    Tabs.Add(CreateDefaultTab(d.DisplayTitle, d.FaviconUri, d.Uri, d.LastRefreshedDate, d.IsPinned, d.Id));
                 }
 
                 if (!string.IsNullOrEmpty( defaultTabUid))
@@ -182,9 +182,9 @@ namespace X.Browser.ViewModels
 
         }
 
-        private TabViewModel CreateDefaultTab(string title, string faviconUrl, string url,DateTime lastRefreshDate, bool isPinned = false) {
+        private TabViewModel CreateDefaultTab(string title, string faviconUrl, string url,DateTime lastRefreshDate, bool isPinned = false, int id = 0) {
 
-            var tempTab = new TabViewModel() { DisplayTitle = title, FaviconUri = faviconUrl, HasFocus = false, Uri = url, TabChangedCommand = this.TabChangedCommand, LastRefreshedDate = lastRefreshDate, IsPinned = isPinned };
+            var tempTab = new TabViewModel() {Id = id, DisplayTitle = title, FaviconUri = faviconUrl, HasFocus = false, Uri = url, TabChangedCommand = this.TabChangedCommand, LastRefreshedDate = lastRefreshDate, IsPinned = isPinned };
             tempTab.PrimaryFontFamily = DetermineFontFamily(tempTab.DisplayTitle);
             tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
             tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);
