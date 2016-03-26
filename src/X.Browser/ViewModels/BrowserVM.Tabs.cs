@@ -18,7 +18,42 @@ namespace X.Browser.ViewModels
     partial class BrowserVM
     {
         public ObservableCollection<TabViewModel> Tabs { get; set; }
-        public TabViewModel SelectedTab { get; set; }
+
+        TabViewModel _selectedTab;
+        public TabViewModel SelectedTab {
+            get { return _selectedTab; }
+            set {
+
+                //unselect previous one
+                if (_selectedTab != null && _selectedTab != value) {
+                    _selectedTab.HasFocus = false;
+                    _selectedTab.ExternalRaisePropertyChanged("HasFocus");
+
+                    _selectedTab.Foreground = "Black";
+                    _selectedTab.ExternalRaisePropertyChanged("Foreground");
+
+                    _selectedTab.RightBorderColor = "#FFB8B8B8";
+                    _selectedTab.ExternalRaisePropertyChanged("RightBorderColor");
+                }
+
+                //select the new one
+                _selectedTab = value;
+                if (_selectedTab != null) {
+                    _selectedTab.HasFocus = true;
+                    _selectedTab.ExternalRaisePropertyChanged("HasFocus");
+
+                    _selectedTab.Foreground = "White";
+                    _selectedTab.ExternalRaisePropertyChanged("Foreground");
+
+                    _selectedTab.RightBorderColor = "Black";
+                    _selectedTab.ExternalRaisePropertyChanged("RightBorderColor");
+                }
+
+
+               
+                ExposedNotifyPropertyChanged("SelectedTab"); }
+        }
+
         public bool IsShowingAddTab { get; set; }
         public bool IsShowingMoreTab { get; set; }
 
@@ -115,7 +150,7 @@ namespace X.Browser.ViewModels
         }
 
 
-        private void LoadTabs()
+        private void LoadTabs(string defaultTabUid, Uri defaultUri)
         {
             Tabs = new ObservableCollection<TabViewModel>();
 
@@ -127,25 +162,32 @@ namespace X.Browser.ViewModels
                 SaveTabs(Tabs);
             }
             else {
-                bool hasSetFirstItem = false;
+
                 foreach (var d in data)
                 {
-                    var tempTab = new TabViewModel() { DisplayTitle = d.DisplayTitle, FaviconUri = d.FaviconUri, HasFocus = !hasSetFirstItem, Uri = d.Uri, TabChangedCommand = this.TabChangedCommand, LastRefreshedDate = d.LastRefreshedDate, IsPinned = d.IsPinned };
+                    var tempTab = new TabViewModel() { DisplayTitle = d.DisplayTitle, FaviconUri = d.FaviconUri, HasFocus = false, Uri = d.Uri, TabChangedCommand = this.TabChangedCommand, LastRefreshedDate = d.LastRefreshedDate, IsPinned = d.IsPinned };
                     tempTab.PrimaryFontFamily = DetermineFontFamily(tempTab.DisplayTitle);
                     tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
                     tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);
-                    if (!hasSetFirstItem) tempTab.Foreground = "White";
-                    tempTab.RightBorderColor = hasSetFirstItem ? "#FFB8B8B8" : "Black";
+                    tempTab.Foreground = "Black";
+                    tempTab.RightBorderColor = "#FFB8B8B8";
 
                     Tabs.Add(tempTab);
+                    
 
-                    if (!hasSetFirstItem) this.SelectedTab = tempTab;
-
-                    hasSetFirstItem = true;
                 }
+
+                if (!string.IsNullOrEmpty( defaultTabUid))
+                {
+                    var found = Tabs.Where(x => x.Uid == defaultTabUid).First();
+                    if (found != null ) this.SelectedTab = found;
+                    else this.SelectedTab = Tabs[0];
+                }
+                else this.SelectedTab = Tabs[0];
 
             }
 
+            ExposedNotifyPropertyChanged("SelectedTab");
         }
 
         private void SaveTabs(ObservableCollection<TabViewModel> TabsToSave)
@@ -167,12 +209,11 @@ namespace X.Browser.ViewModels
         private void LoadDefaultTabs()
         {
 
-            var tempTab = new TabViewModel() { DisplayTitle = "Microsoft", FaviconUri = "http://www.microsoft.com/favicon.ico?v2", HasFocus = true, Uri = "http://www.microsoft.com?test=1", TabChangedCommand = this.TabChangedCommand };
+            var tempTab = new TabViewModel() { DisplayTitle = "Microsoft", FaviconUri = "http://www.microsoft.com/favicon.ico?v2", HasFocus = false, Uri = "http://www.microsoft.com?test=1", TabChangedCommand = this.TabChangedCommand };
             tempTab.PrimaryFontFamily = DetermineFontFamily(tempTab.DisplayTitle);
             tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
             tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);
-            tempTab.Foreground = "White";
-            tempTab.RightBorderColor = "Black";
+            tempTab.RightBorderColor = "#FFB8B8B8";
             Tabs.Add(tempTab);
             this.SelectedTab = tempTab;
 

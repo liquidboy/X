@@ -93,5 +93,15 @@ namespace X.Browser.Views
                 //vm.SearchCommand.Execute(((DoSearchEventArgs)e).SearchQuery);
             }
         }
+
+        public void SetSelectedTab(string tileId) {
+
+            var found = vm.Tabs.Where(x => x.Uid == tileId).First();
+            if (found != null) {
+                vm.SelectedTab = found;
+                vm.ExposedNotifyPropertyChanged("SelectedTab");
+            }
+            
+        }
     }
 }

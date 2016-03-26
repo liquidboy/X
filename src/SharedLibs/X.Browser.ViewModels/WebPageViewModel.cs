@@ -82,6 +82,9 @@ namespace X.Browser
                 //webView1.NavigateWithHttpRequestMessage(hrm);
 
                 if (!string.IsNullOrEmpty(Uri) && string.IsNullOrEmpty(OriginalUri)) OriginalUri = Uri;
+
+                Uid = FlickrNet.UtilityMethods.MD5Hash(OriginalUri);
+
             }
 
         }

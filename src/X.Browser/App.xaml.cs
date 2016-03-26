@@ -32,6 +32,8 @@ namespace X.Browser
             this.Suspending += OnSuspending;
         }
 
+
+
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -39,6 +41,7 @@ namespace X.Browser
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+
 
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
@@ -73,9 +76,18 @@ namespace X.Browser
                 // configuring the new page by passing required information as a navigation
                 // parameter
                 rootFrame.Navigate(typeof(MainLayout), e.Arguments);
+                ((MainLayout)rootFrame.Content).ProcessArguments("DefaultTabTo", e.TileId);
+            }
+            else {
+                //app is already running and has been activated (like from a secondary tile)
+                if (rootFrame.Content is MainLayout)
+                    ((MainLayout)rootFrame.Content).ProcessArguments(e.Arguments, e.TileId);
             }
             // Ensure the current window is active
             Window.Current.Activate();
+
+
+            
         }
 
         /// <summary>

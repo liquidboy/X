@@ -31,10 +31,10 @@ namespace X.Browser.ViewModels
         
      
 
-        public BrowserVM()
+        public BrowserVM(string defaultTabUid = null, Uri defaultUri = null)
         {
             LoadTheme();
-            LoadTabs();
+            LoadTabs(defaultTabUid, defaultUri);
         }
 
 
