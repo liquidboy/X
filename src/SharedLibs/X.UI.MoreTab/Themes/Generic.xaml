@@ -2,10 +2,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:xuiri="using:X.UI.RichImage"
+    xmlns:xuip="using:X.UI.Path"
     xmlns:local="using:X.UI.MoreTab">
     <local:BooleanToVisibilityConverter x:Key="TrueToVisibleConverter" ></local:BooleanToVisibilityConverter>
     <local:LastRefreshedDateConverter x:Key="LastRefreshedDateConverter" ></local:LastRefreshedDateConverter>
     <local:IsPinnedToImageUriConverter x:Key="IsPinnedToImageUriConverter" ></local:IsPinnedToImageUriConverter>
+    <local:IsPinnedToColorConverter x:Key="IsPinnedToColorConverter" ></local:IsPinnedToColorConverter>
     <Style x:Key="GeneralRadioButtonStyle" TargetType="RadioButton">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
@@ -252,8 +254,11 @@
                                                     <Border BorderBrush="{Binding PrimaryBackgroundColor}" BorderThickness="0,0,0,1" Width="15" ></Border>
                                                     <Border BorderBrush="{Binding PrimaryBackgroundColor}" BorderThickness="0,0,0,1" Width="5" Visibility="{Binding ChildTabs.Count, Converter={StaticResource TrueToVisibleConverter}}"></Border>
                                                 </StackPanel>
+
+                           
                                                 <Button HorizontalAlignment="Right" Margin="0,0,8,0" Background="Transparent" BorderThickness="0" Command="{Binding TogglePinCommand}">
-                                                    <Image Source="{Binding IsPinned, Converter={StaticResource IsPinnedToImageUriConverter}}"  Width="20" Height="20" ></Image>
+                                                    <xuip:Path PathType="Pin"  Width="20" Height="20" Foreground="{Binding IsPinned, Converter={StaticResource IsPinnedToColorConverter}}"></xuip:Path>
+                                                    <!--<Image Source="{Binding IsPinned, Converter={StaticResource IsPinnedToImageUriConverter}}"  Width="20" Height="20" ></Image>-->
                                                 </Button>
                                       
                                             </Grid>

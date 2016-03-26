@@ -141,8 +141,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\MissingImage.png" />
-    <Content Include="Assets\Pinned-nor.png" />
-    <Content Include="Assets\Pinned-sel.png" />
     <Content Include="Assets\stilltobegenerated.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

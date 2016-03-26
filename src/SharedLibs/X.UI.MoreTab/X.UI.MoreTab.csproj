@@ -107,6 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IsPinnedToColorConverter.cs" />
     <Compile Include="IsPinnedToImageUriConverter.cs" />
     <Compile Include="LastRefreshedDateConverter.cs" />
     <Compile Include="BooleanToVisibilityConverter.cs" />
@@ -128,6 +129,10 @@
     <ProjectReference Include="..\X.Services.Data\X.Services.Data.csproj">
       <Project>{9cf3fa6f-8edd-4c98-a505-a6614aa214cd}</Project>
       <Name>X.Services.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\X.UI.Path\X.UI.Path.csproj">
+      <Project>{9da51ef4-2dae-40d8-92ec-cc81162669df}</Project>
+      <Name>X.UI.Path</Name>
     </ProjectReference>
     <ProjectReference Include="..\X.UI.RichImage\X.UI.RichImage.csproj">
       <Project>{f2134120-5202-432d-b943-d1f26d096be0}</Project>
