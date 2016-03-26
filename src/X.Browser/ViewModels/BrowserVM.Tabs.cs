@@ -121,8 +121,8 @@ namespace X.Browser.ViewModels
         private void LoadTabs(string defaultTabUid, Uri defaultUri)
         {
             Tabs = new ObservableCollection<TabViewModel>();
-
-            var data = App.StorageSvc.Storage.RetrieveList<WebPageDataModel>();
+            
+            var data = X.Services.Data.StorageService.Instance.Storage.RetrieveList<WebPageDataModel>();
             if (data.Count == 0)
             {
                 LoadDefaultTabs();
@@ -155,14 +155,14 @@ namespace X.Browser.ViewModels
             {
                 var wpm = new WebPageDataModel() { DisplayTitle = t.DisplayTitle, Uid = Guid.NewGuid().ToString(), Uri = t.Uri, FaviconUri = t.FaviconUri, HasFocus = t.HasFocus, LastRefreshedDate = t.LastRefreshedDate };
 
-                App.StorageSvc.Storage.Insert(wpm);
+                X.Services.Data.StorageService.Instance.Storage.Insert(wpm);
 
             }
         }
 
         private void DeleteTabs()
         {
-            App.StorageSvc.Storage.TruncateAll();
+            X.Services.Data.StorageService.Instance.Storage.TruncateAll();
         }
 
         private void LoadDefaultTabs()

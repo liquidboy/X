@@ -26,7 +26,7 @@ namespace X.Browser
                 Microsoft.ApplicationInsights.WindowsCollectors.Session);
             
             ExtensionsSvc = new ExtensionsService();
-            StorageSvc = new StorageService();
+            //StorageSvc = new StorageService();
 
             this.InitializeComponent();
             this.Suspending += OnSuspending;
@@ -110,7 +110,7 @@ namespace X.Browser
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             //ExtensionsSvc.Dispose();
-            StorageSvc.Dispose();
+            //StorageSvc.Dispose();
 
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
@@ -123,6 +123,6 @@ namespace X.Browser
 
 
         public static ExtensionsService ExtensionsSvc;
-        public static StorageService StorageSvc;
+        //public static StorageService StorageSvc;
     }
 }

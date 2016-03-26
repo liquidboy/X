@@ -8,6 +8,7 @@ namespace X.Services.Data
 {
     public class StorageService : IDisposable
     {
+
         public StorageDatabase Storage { get; set; }
 
         public StorageService()
@@ -31,13 +32,21 @@ namespace X.Services.Data
 
 
 
-
-
-
-
-
-
-
-
+        //=========================
+        //singleton
+        //=========================
+        private static StorageService instance;
+        
+        public static StorageService Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new StorageService();
+                }
+                return instance;
+            }
+        }
     }
 }
