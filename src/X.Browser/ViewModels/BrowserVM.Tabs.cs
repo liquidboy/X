@@ -75,39 +75,9 @@ namespace X.Browser.ViewModels
 
             this.IsShowingMoreTab = false;
             this.NotifyPropertyChanged("IsShowingMoreTab");
-
             
-            //TabViewModel previousTab = null;
-
-            //foreach (var tab in this.Tabs)
-            //{
-            //    if (((TabViewModel)obj).DisplayTitle == tab.DisplayTitle)
-            //    {
-            //        tab.HasFocus = true;
-            //        tab.Foreground = "White";
-            //        if (previousTab != null)
-            //        {
-            //            previousTab.RightBorderColor = "";
-            //            previousTab.ExternalRaisePropertyChanged("RightBorderColor");
-            //        }
-            //        tab.RightBorderColor = "black";
-            //    }
-            //    else
-            //    {
-            //        tab.HasFocus = false;
-            //        tab.Foreground = "Black";
-            //        tab.RightBorderColor = "#FFB8B8B8";
-            //    }
-            //    tab.ExternalRaisePropertyChanged("HasFocus");
-            //    tab.ExternalRaisePropertyChanged("Foreground");
-            //    tab.ExternalRaisePropertyChanged("RightBorderColor");
-
-            //    previousTab = tab;
-            //}
-
             this.SelectedTab = obj as TabViewModel;
-            //this.NotifyPropertyChanged("SelectedTab");
-
+            
             Messenger.Default.Send(new ShowOnebox());
         }
 
