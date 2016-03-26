@@ -48,10 +48,8 @@ namespace X.Browser.ViewModels
                     _selectedTab.RightBorderColor = "Black";
                     _selectedTab.ExternalRaisePropertyChanged("RightBorderColor");
                 }
-
-
-               
-                ExposedNotifyPropertyChanged("SelectedTab"); }
+                
+                NotifyPropertyChanged("SelectedTab"); }
         }
 
         public bool IsShowingAddTab { get; set; }
@@ -78,37 +76,37 @@ namespace X.Browser.ViewModels
             this.IsShowingMoreTab = false;
             this.NotifyPropertyChanged("IsShowingMoreTab");
 
+            
+            //TabViewModel previousTab = null;
 
-            TabViewModel previousTab = null;
+            //foreach (var tab in this.Tabs)
+            //{
+            //    if (((TabViewModel)obj).DisplayTitle == tab.DisplayTitle)
+            //    {
+            //        tab.HasFocus = true;
+            //        tab.Foreground = "White";
+            //        if (previousTab != null)
+            //        {
+            //            previousTab.RightBorderColor = "";
+            //            previousTab.ExternalRaisePropertyChanged("RightBorderColor");
+            //        }
+            //        tab.RightBorderColor = "black";
+            //    }
+            //    else
+            //    {
+            //        tab.HasFocus = false;
+            //        tab.Foreground = "Black";
+            //        tab.RightBorderColor = "#FFB8B8B8";
+            //    }
+            //    tab.ExternalRaisePropertyChanged("HasFocus");
+            //    tab.ExternalRaisePropertyChanged("Foreground");
+            //    tab.ExternalRaisePropertyChanged("RightBorderColor");
 
-            foreach (var tab in this.Tabs)
-            {
-                if (((TabViewModel)obj).DisplayTitle == tab.DisplayTitle)
-                {
-                    tab.HasFocus = true;
-                    tab.Foreground = "White";
-                    if (previousTab != null)
-                    {
-                        previousTab.RightBorderColor = "";
-                        previousTab.ExternalRaisePropertyChanged("RightBorderColor");
-                    }
-                    tab.RightBorderColor = "black";
-                }
-                else
-                {
-                    tab.HasFocus = false;
-                    tab.Foreground = "Black";
-                    tab.RightBorderColor = "#FFB8B8B8";
-                }
-                tab.ExternalRaisePropertyChanged("HasFocus");
-                tab.ExternalRaisePropertyChanged("Foreground");
-                tab.ExternalRaisePropertyChanged("RightBorderColor");
-
-                previousTab = tab;
-            }
+            //    previousTab = tab;
+            //}
 
             this.SelectedTab = obj as TabViewModel;
-            this.NotifyPropertyChanged("SelectedTab");
+            //this.NotifyPropertyChanged("SelectedTab");
 
             Messenger.Default.Send(new ShowOnebox());
         }
@@ -165,16 +163,7 @@ namespace X.Browser.ViewModels
 
                 foreach (var d in data)
                 {
-                    var tempTab = new TabViewModel() { DisplayTitle = d.DisplayTitle, FaviconUri = d.FaviconUri, HasFocus = false, Uri = d.Uri, TabChangedCommand = this.TabChangedCommand, LastRefreshedDate = d.LastRefreshedDate, IsPinned = d.IsPinned };
-                    tempTab.PrimaryFontFamily = DetermineFontFamily(tempTab.DisplayTitle);
-                    tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
-                    tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);
-                    tempTab.Foreground = "Black";
-                    tempTab.RightBorderColor = "#FFB8B8B8";
-
-                    Tabs.Add(tempTab);
-                    
-
+                    Tabs.Add(CreateDefaultTab(d.DisplayTitle, d.FaviconUri, d.Uri, d.LastRefreshedDate, d.IsPinned));
                 }
 
                 if (!string.IsNullOrEmpty( defaultTabUid))
@@ -187,7 +176,7 @@ namespace X.Browser.ViewModels
 
             }
 
-            ExposedNotifyPropertyChanged("SelectedTab");
+            //ExposedNotifyPropertyChanged("SelectedTab");
         }
 
         private void SaveTabs(ObservableCollection<TabViewModel> TabsToSave)
@@ -209,64 +198,29 @@ namespace X.Browser.ViewModels
         private void LoadDefaultTabs()
         {
 
-            var tempTab = new TabViewModel() { DisplayTitle = "Microsoft", FaviconUri = "http://www.microsoft.com/favicon.ico?v2", HasFocus = false, Uri = "http://www.microsoft.com?test=1", TabChangedCommand = this.TabChangedCommand };
-            tempTab.PrimaryFontFamily = DetermineFontFamily(tempTab.DisplayTitle);
-            tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
-            tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);
-            tempTab.RightBorderColor = "#FFB8B8B8";
-            Tabs.Add(tempTab);
+            var tempTab = CreateDefaultTab("Microsoft", "http://www.microsoft.com/favicon.ico?v2", "http://www.microsoft.com?test=1", DateTime.MinValue);
             this.SelectedTab = tempTab;
+            Tabs.Add(tempTab);
 
+            Tabs.Add(CreateDefaultTab("Twitter", "http://www.twitter.com/favicon.ico?v2", "http://www.twitter.com:80?a=1&b=2", DateTime.MinValue));
+            Tabs.Add(CreateDefaultTab("airbnb", "http://www.airbnb.com/favicon.ico?v2", "http://www.airbnb.com", DateTime.MinValue));
+            Tabs.Add(CreateDefaultTab("Flickr", "http://www.flickr.com/favicon.ico?v2", "http://www.flickr.com", DateTime.MinValue));
+            Tabs.Add(CreateDefaultTab("Bing", "http://www.bing.com/favicon.ico?v2", "http://www.bing.com", DateTime.MinValue));
+            Tabs.Add(CreateDefaultTab("Azure", "http://www.windowsazure.com/favicon.ico?v2", "http://www.windowsazure.com", DateTime.MinValue));
+            Tabs.Add(CreateDefaultTab("Apple", "http://www.apple.com/favicon.ico?v2", "http://www.apple.com", DateTime.MinValue));
+            Tabs.Add(CreateDefaultTab("Google", "http://www.google.com/favicon.ico?v2", "http://www.google.com", DateTime.MinValue));
 
-            tempTab = new TabViewModel() { DisplayTitle = "Twitter", FaviconUri = "http://www.twitter.com/favicon.ico?v2", HasFocus = false, Uri = "http://www.twitter.com:80?a=1&b=2", TabChangedCommand = this.TabChangedCommand };
+        }
+
+        private TabViewModel CreateDefaultTab(string title, string faviconUrl, string url,DateTime lastRefreshDate, bool isPinned = false) {
+
+            var tempTab = new TabViewModel() { DisplayTitle = title, FaviconUri = faviconUrl, HasFocus = false, Uri = url, TabChangedCommand = this.TabChangedCommand, LastRefreshedDate = lastRefreshDate, IsPinned = isPinned };
             tempTab.PrimaryFontFamily = DetermineFontFamily(tempTab.DisplayTitle);
             tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
             tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);
             tempTab.RightBorderColor = "#FFB8B8B8";
-            Tabs.Add(tempTab);
-
-            tempTab = new TabViewModel() { DisplayTitle = "airbnb", FaviconUri = "http://www.airbnb.com/favicon.ico?v2", HasFocus = false, Uri = "http://www.airbnb.com", TabChangedCommand = this.TabChangedCommand };
-            tempTab.PrimaryFontFamily = DetermineFontFamily(tempTab.DisplayTitle);
-            tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
-            tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);
-            tempTab.RightBorderColor = "#FFB8B8B8";
-            Tabs.Add(tempTab);
-
-            tempTab = new TabViewModel() { DisplayTitle = "Flickr", FaviconUri = "http://www.flickr.com/favicon.ico?v2", HasFocus = false, Uri = "http://www.flickr.com", TabChangedCommand = this.TabChangedCommand };
-            tempTab.PrimaryFontFamily = DetermineFontFamily(tempTab.DisplayTitle);
-            tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
-            tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);
-            tempTab.RightBorderColor = "#FFB8B8B8";
-            Tabs.Add(tempTab);
-
-            tempTab = new TabViewModel() { DisplayTitle = "Bing", FaviconUri = "http://www.bing.com/favicon.ico?v2", HasFocus = false, Uri = "http://www.bing.com", TabChangedCommand = this.TabChangedCommand };
-            tempTab.PrimaryFontFamily = DetermineFontFamily(tempTab.DisplayTitle);
-            tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
-            tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);
-            tempTab.RightBorderColor = "#FFB8B8B8";
-            Tabs.Add(tempTab);
-
-            tempTab = new TabViewModel() { DisplayTitle = "Azure", FaviconUri = "http://www.windowsazure.com/favicon.ico?v2", HasFocus = false, Uri = "http://www.windowsazure.com", TabChangedCommand = this.TabChangedCommand };
-            tempTab.PrimaryFontFamily = DetermineFontFamily(tempTab.DisplayTitle);
-            tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
-            tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);
-            tempTab.RightBorderColor = "#FFB8B8B8";
-            Tabs.Add(tempTab);
-
-            tempTab = new TabViewModel() { DisplayTitle = "Apple", FaviconUri = "http://www.apple.com/favicon.ico?v2", HasFocus = false, Uri = "http://www.apple.com", TabChangedCommand = this.TabChangedCommand };
-            tempTab.PrimaryFontFamily = DetermineFontFamily(tempTab.DisplayTitle);
-            tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
-            tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);
-            tempTab.RightBorderColor = "#FFB8B8B8";
-            Tabs.Add(tempTab);
-
-            tempTab = new TabViewModel() { DisplayTitle = "Google", FaviconUri = "http://www.google.com/favicon.ico?v2", HasFocus = false, Uri = "http://www.google.com", TabChangedCommand = this.TabChangedCommand };
-            tempTab.PrimaryFontFamily = DetermineFontFamily(tempTab.DisplayTitle);
-            tempTab.PrimaryBackgroundColor = DeterminePrimaryBackgroundColor(tempTab.DisplayTitle);
-            tempTab.PrimaryForegroundColor = DeterminePrimaryForegroundColor(tempTab.DisplayTitle);
-            tempTab.RightBorderColor = "#FFB8B8B8";
-            Tabs.Add(tempTab);
-
+            
+            return tempTab;
         }
 
         private string DetermineFontFamily(string title)
