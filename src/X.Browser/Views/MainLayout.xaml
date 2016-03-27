@@ -222,9 +222,8 @@
                         <Rectangle x:Name="recResizeTop" Height="5" HorizontalAlignment="Stretch" Fill="White" Opacity="0.3" VerticalAlignment="Top"  />
                         <Rectangle x:Name="recDragTop" Height="15" HorizontalAlignment="Stretch" Fill="White" Opacity="0.1" VerticalAlignment="Top" IsHitTestVisible="True" />
 
-                        
-                        <!--tabs-->  
-                        <xuirt:TabList x:Name="tlMainTabs" Margin="0,0,260,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  TabPointerEntered="tlMainTabs_TabPointerEntered" TabPointerExited="tlMainTabs_TabPointerExited" ></xuirt:TabList>
+                        <!--tabs-->
+                        <xuirt:TabList x:Name="tlMainTabs" Margin="0,0,260,0"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  TabPointerEntered="tlMainTabs_TabPointerEntered" TabPointerExited="tlMainTabs_TabPointerExited" ></xuirt:TabList>
                     </Grid>
                 </ContentControl>
             </xuichrome:Header.TitleContent>

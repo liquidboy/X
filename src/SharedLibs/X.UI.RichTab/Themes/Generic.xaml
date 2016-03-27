@@ -313,9 +313,9 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>-->
-                    <ScrollViewer x:Name="svTabs" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden">
-                        <StackPanel x:Name="grdTabs" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Orientation="Horizontal">
-                            <ItemsControl x:Name="icTabs" VerticalAlignment="Stretch" ItemsSource="{Binding Tabs}">
+                    <Grid >
+                        <StackPanel x:Name="grdLockedTabs" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Orientation="Horizontal">
+                            <ItemsControl x:Name="icLockedTabs" VerticalAlignment="Stretch" ItemsSource="{Binding TabsLocked}">
                                 <ItemsControl.Resources>
                                     <DataTemplate x:Key="dtTile">
                                         <local:TabButton HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></local:TabButton>
@@ -330,10 +330,28 @@
                                     <StaticResource ResourceKey="dtTile" />
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-
                         </StackPanel>
-                    </ScrollViewer>
-                    <!--</Grid>-->
+                        <ScrollViewer x:Name="svTabs" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden">
+                            <StackPanel x:Name="grdTabs" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Orientation="Horizontal">
+                                <ItemsControl x:Name="icTabs" VerticalAlignment="Stretch" ItemsSource="{Binding Tabs}">
+                                    <ItemsControl.Resources>
+                                        <DataTemplate x:Key="dtTile">
+                                            <local:TabButton HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></local:TabButton>
+                                        </DataTemplate>
+                                    </ItemsControl.Resources>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"></StackPanel>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <StaticResource ResourceKey="dtTile" />
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
