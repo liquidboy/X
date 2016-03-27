@@ -33,6 +33,11 @@ namespace X.Services.Tile
             ((XmlElement)tileVersionAttributes[0]).SetAttribute("version", "2");
             //tileXml.FirstChild.FirstChild.Attributes[0].NodeValue = "2";
 
+            ////branding
+            //XmlNodeList tileBindingAttributes = tileXml.GetElementsByTagName("binding");
+            //((XmlElement)tileBindingAttributes[0]).SetAttribute("branding", "logo");
+
+
             //text
             XmlNodeList tileTextAttributes = tileXml.GetElementsByTagName("text");
             if(tileTextAttributes.Count > 0) tileTextAttributes[0].InnerText = text;

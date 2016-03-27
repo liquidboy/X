@@ -14,7 +14,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
+using X.Viewer.Tiles;
 
 namespace X.Viewer
 {
@@ -87,6 +87,14 @@ namespace X.Viewer
 
                     //cv.Renderer.UpdateSource(new Uri("ms-appx:///Assets/Videos/sample01.mp4"));
                     cv.Renderer.UpdateSource(uriNew);
+                }
+                else if (uriNew.Contains(".tile")){
+                    cv.Renderer = new TileRenderer();
+                    cv.Renderer.SendMessage += (s, ea) => { cv._SendMessageSource.Raise(s, ea); };
+                    cv.Renderer.Load();
+                    cv.layoutRoot.Children.Add(cv.Renderer.RenderElement);
+
+                    cv.Renderer.UpdateSource((string)e.NewValue);
                 }
                 else
                 {

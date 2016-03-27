@@ -1,8 +1,7 @@
 ﻿{
   "dependencies": {
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
-    "Win2D.uwp": "1.16.0",
-    "WriteableBitmapEx": "1.5.0"
+    "MvvmLightLibs": "5.2.0"
   },
   "frameworks": {
     "uap10.0": {}
