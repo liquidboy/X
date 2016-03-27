@@ -210,32 +210,36 @@ namespace X.Services.Image
                     await wbthumbnail.SaveToFile(sampleFile2, BitmapEncoder.PngEncoderId);
                 }
                 else if (subFolder == location.TileFolder) {
-                    
-                    //using (var fileStream = await sampleFile3.OpenAsync(Windows.Storage.FileAccessMode.Read))
-                    //{
+
+                    //https://social.msdn.microsoft.com/Forums/en-US/490b9c01-db4b-434f-8aff-d5c495e67e55/how-to-crop-an-image-using-bitmaptransform?forum=winappswithcsharp
+
                     BitmapDecoder decoder = await BitmapDecoder.CreateAsync(srcMemoryStream);
 
                     using (InMemoryRandomAccessStream ras = new InMemoryRandomAccessStream()) { 
                         BitmapEncoder enc = await BitmapEncoder.CreateForTranscodingAsync(ras, decoder);
 
-                        enc.BitmapTransform.ScaledHeight = (uint)(longWidth > longHeight ? longWidth : longHeight);
-                        enc.BitmapTransform.ScaledWidth = (uint)(longWidth > longHeight ? longWidth : longHeight);
-
+                        var h = longHeight / srcHeight;
+                        var w = longWidth / srcWidth;
+                        var r = Math.Max(h, w);
+                        
+                        enc.BitmapTransform.ScaledWidth = (uint)(srcWidth * r);
+                        enc.BitmapTransform.ScaledHeight = (uint)(srcHeight * r);
+                    
                         BitmapBounds bounds = new BitmapBounds();
-                        bounds.Height = (uint)height;
-                        bounds.Width = (uint)width;
+                        bounds.Width = (uint)longWidth;
+                        bounds.Height = (uint)longHeight;
                         bounds.X = 0;
                         bounds.Y = 0;
                         enc.BitmapTransform.Bounds = bounds;
 
                         await enc.FlushAsync();
 
-                        WriteableBitmap wb = await BitmapFactory.New(width, height).FromStream(ras);
+                        WriteableBitmap wb = await BitmapFactory.New(longWidth, longHeight).FromStream(ras);
 
                         StorageFile sampleFile3 = await _tileFolder.CreateFileAsync(newImageName, CreationCollisionOption.ReplaceExisting);
                         await wb.SaveToFile(sampleFile3, BitmapEncoder.PngEncoderId);
                     }
-                    //}
+                    
                 }
                 
             
