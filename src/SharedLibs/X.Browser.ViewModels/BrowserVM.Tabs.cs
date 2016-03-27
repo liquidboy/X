@@ -18,6 +18,7 @@ namespace X.Browser.ViewModels
     public partial class BrowserVM
     {
         public ObservableCollection<TabViewModel> Tabs { get; set; }
+        public ObservableCollection<TabViewModel> LockedTabs { get; set; }
 
         TabViewModel _selectedTab;
         public TabViewModel SelectedTab {
@@ -121,7 +122,8 @@ namespace X.Browser.ViewModels
         private void LoadTabs(string defaultTabUid, Uri defaultUri)
         {
             Tabs = new ObservableCollection<TabViewModel>();
-            
+            LockedTabs = new ObservableCollection<TabViewModel>();
+
             var data = X.Services.Data.StorageService.Instance.Storage.RetrieveList<WebPageDataModel>();
             if (data.Count == 0)
             {
@@ -133,7 +135,8 @@ namespace X.Browser.ViewModels
 
                 foreach (var d in data)
                 {
-                    Tabs.Add(CreateDefaultTab(d.DisplayTitle, d.FaviconUri, d.Uri, d.LastRefreshedDate, d.IsPinned, d.Id));
+                    if(d.IsPinned) LockedTabs.Add(CreateDefaultTab(d.DisplayTitle, d.FaviconUri, d.Uri, d.LastRefreshedDate, d.IsPinned, d.Id));
+                    else Tabs.Add(CreateDefaultTab(d.DisplayTitle, d.FaviconUri, d.Uri, d.LastRefreshedDate, d.IsPinned, d.Id));
                 }
 
                 if (!string.IsNullOrEmpty( defaultTabUid))

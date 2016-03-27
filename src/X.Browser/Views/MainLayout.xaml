@@ -223,7 +223,7 @@
                         <Rectangle x:Name="recDragTop" Height="15" HorizontalAlignment="Stretch" Fill="White" Opacity="0.1" VerticalAlignment="Top" IsHitTestVisible="True" />
 
                         <!--tabs-->
-                        <xuirt:TabList x:Name="tlMainTabs" Margin="0,0,260,0"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  TabPointerEntered="tlMainTabs_TabPointerEntered" TabPointerExited="tlMainTabs_TabPointerExited" ></xuirt:TabList>
+                        <xuirt:TabList x:Name="tlMainTabs" Margin="0,0,260,0"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  TabPointerEntered="tlMainTabs_TabPointerEntered" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" TabPointerExited="tlMainTabs_TabPointerExited" ></xuirt:TabList>
                     </Grid>
                 </ContentControl>
             </xuichrome:Header.TitleContent>
@@ -353,7 +353,7 @@
                 Visibility="{Binding IsShowingMoreTab, Converter={StaticResource TrueToVisibleConverter}}" 
                 Grid.Row="1"
                 Grid.Column="1">
-                <xuimt:Tab HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{Binding }" Accent1="{StaticResource MoreTabAccent1}" Accent2="{StaticResource MoreTabAccent2}" Background="{StaticResource MoreTabViewBackground}" TabCount="{Binding Tabs.Count}" ></xuimt:Tab>
+                <xuimt:Tab HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{Binding }" Accent1="{StaticResource MoreTabAccent1}" Accent2="{StaticResource MoreTabAccent2}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="{StaticResource MoreTabViewBackground}" TabCount="{Binding Tabs.Count}" ></xuimt:Tab>
                 <!--<views:MoreTabView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{Binding }" OnDrawContextMenu="MoreTabView_OnDrawContextMenu"  />-->
             </Grid>
 

@@ -186,60 +186,48 @@
                                 <TextBlock Text=" tabs open" FontSize="14" Foreground="{TemplateBinding Accent2}" VerticalAlignment="Bottom"></TextBlock>
                             </StackPanel>
 
+                            <StackPanel>
+                                <GridView x:Name="gvLocked" 
+                                    ItemsSource="{Binding LockedTabs}" 
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"  
+                                    ItemContainerStyle="{StaticResource GridViewItemStyle1}" 
+                                    CanReorderItems="True" 
+                                    AllowDrop="True"
+                                    CanDrag="True" 
+                                    VirtualizingStackPanel.VirtualizationMode="Standard"
+                                    >
+                                    <GridView.ItemsPanel>
+                                        <ItemsPanelTemplate VirtualizingStackPanel.VirtualizationMode="Standard">
+                                            <ItemsWrapGrid Orientation="Horizontal" Margin="0,50,0,0"/>
+                                        </ItemsPanelTemplate>
+                                    </GridView.ItemsPanel>
+                                    <GridView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid x:Name="grdTabItem" Margin="0,0,0,0" >
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                </Grid.RowDefinitions>
 
-                            <GridView x:Name="gv" 
-                              ItemsSource="{Binding Tabs}" 
-                              Margin="10,5,0,0" 
-                              HorizontalAlignment="Stretch"
-                              VerticalAlignment="Stretch"  
-                              ItemContainerStyle="{StaticResource GridViewItemStyle1}" 
-                              CanReorderItems="True" 
-                              AllowDrop="True"
-                              CanDrag="True" 
-                              VirtualizingStackPanel.VirtualizationMode="Standard"
-                              >
-                                <GridView.ItemsPanel>
-                                    <ItemsPanelTemplate VirtualizingStackPanel.VirtualizationMode="Standard">
-                                        <ItemsWrapGrid Orientation="Horizontal" Margin="0,50,0,0"/>
-                                        <!--<VariableSizedWrapGrid Margin="0,50,0,0" ItemWidth="300" ItemHeight="200" Orientation="Horizontal" AllowDrop="True" CanDrag="True" />-->
-                                        <!--<WrapGrid Margin="0,50,0,0" ItemWidth="300" ItemHeight="200" Orientation="Horizontal"></WrapGrid>-->
-                                    </ItemsPanelTemplate>
-                                </GridView.ItemsPanel>
-                                <GridView.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid x:Name="grdTabItem" Margin="0,0,0,0" >
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto"></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition Height="Auto"></RowDefinition>
-                                            </Grid.RowDefinitions>
-
-
-                                            <!--<Border BorderBrush="LightGray" BorderThickness="1" Width="220" Height="140" Margin="0" Grid.Row="1" Background="LightGray">
-                                                <Grid>
-                                                    <Image Source="ms-appx:///assets/MissingImage.png" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.2" Width="50" />
-                                                    --><!--<Image Source="{Binding ThumbUri}" Stretch="UniformToFill" />--><!--
-                                                    <xuiri:MultiImageView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DefaultUri="{Binding ThumbUri}" ChildrenTabs="{Binding ChildTabs}" BackgroundColor="{Binding PrimaryBackgroundColor}" ThumbTemplateToUse="2" ></xuiri:MultiImageView>
-                                                </Grid>
-                                            </Border>-->
-                        
-                                            <Grid HorizontalAlignment="Stretch" Grid.Row="0" Margin="0,10,0,0">
-                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                    <Border BorderBrush="{Binding PrimaryBackgroundColor}" BorderThickness="0,0,0,1" Width="15" ></Border>
-                                                    <Grid>
-                                                        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{Binding PrimaryBackgroundColor}" Opacity="0.5" Margin="6,-6,-6,0" Visibility="{Binding ChildTabs.Count, Converter={StaticResource TrueToVisibleConverter}}"></Rectangle>
-                                                        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{Binding PrimaryBackgroundColor}" Opacity="0.7" Margin="3,-3,-3,0" Visibility="{Binding ChildTabs.Count, Converter={StaticResource TrueToVisibleConverter}}"></Rectangle>
-                                                        <Border BorderBrush="{Binding PrimaryBackgroundColor}" BorderThickness="1" Background="{Binding PrimaryBackgroundColor}" >
-                                                            <Grid Padding="3" >
-                                                                <StackPanel Orientation="Horizontal" >
-                                                                    <Image
+                                                <Grid HorizontalAlignment="Stretch" Grid.Row="0" Margin="0,10,0,0">
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                        <Border BorderBrush="{Binding PrimaryBackgroundColor}" BorderThickness="0,0,0,1" Width="15" ></Border>
+                                                        <Grid>
+                                                            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{Binding PrimaryBackgroundColor}" Opacity="0.5" Margin="6,-6,-6,0" Visibility="{Binding ChildTabs.Count, Converter={StaticResource TrueToVisibleConverter}}"></Rectangle>
+                                                            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{Binding PrimaryBackgroundColor}" Opacity="0.7" Margin="3,-3,-3,0" Visibility="{Binding ChildTabs.Count, Converter={StaticResource TrueToVisibleConverter}}"></Rectangle>
+                                                            <Border BorderBrush="{Binding PrimaryBackgroundColor}" BorderThickness="1" Background="{Binding PrimaryBackgroundColor}" >
+                                                                <Grid Padding="3" >
+                                                                    <StackPanel Orientation="Horizontal" >
+                                                                        <Image
                                                                         Height="20"
                                                                         Width="20"
                                                                         IsHitTestVisible="False" 
                                                                         Source="{Binding FaviconUri}"
                                                                         Stretch="Uniform"
                                                                     />
-                                                                    <TextBlock
+                                                                        <TextBlock
                                                                         TextWrapping="Wrap"
                                                                         Text="{Binding DisplayTitle}"
                                                                         IsHitTestVisible="False" 
@@ -247,38 +235,129 @@
                                                                         FontFamily="Segoe UI"
                                                                         Foreground="{Binding PrimaryForegroundColor}"
                                                                         Margin="5,2,5,0" />
-                                                                </StackPanel>
-                                                            </Grid>
-                                                        </Border>
-                                                    </Grid>
-                                                    <Border BorderBrush="{Binding PrimaryBackgroundColor}" BorderThickness="0,0,0,1" Width="15" ></Border>
-                                                    <Border BorderBrush="{Binding PrimaryBackgroundColor}" BorderThickness="0,0,0,1" Width="5" Visibility="{Binding ChildTabs.Count, Converter={StaticResource TrueToVisibleConverter}}"></Border>
-                                                </StackPanel>
+                                                                    </StackPanel>
+                                                                </Grid>
+                                                            </Border>
+                                                        </Grid>
+                                                        <Border BorderBrush="{Binding PrimaryBackgroundColor}" BorderThickness="0,0,0,1" Width="15" ></Border>
+                                                        <Border BorderBrush="{Binding PrimaryBackgroundColor}" BorderThickness="0,0,0,1" Width="5" Visibility="{Binding ChildTabs.Count, Converter={StaticResource TrueToVisibleConverter}}"></Border>
+                                                    </StackPanel>
 
-                           
-                                                <Button HorizontalAlignment="Right" Margin="0,0,8,0" Background="Transparent" BorderThickness="0" Command="{Binding TogglePinCommand}">
-                                                    <xuip:Path PathType="Pin"  Width="20" Height="20" Foreground="{Binding IsPinned, Converter={StaticResource IsPinnedToColorConverter}}"></xuip:Path>
-                                                    <!--<Image Source="{Binding IsPinned, Converter={StaticResource IsPinnedToImageUriConverter}}"  Width="20" Height="20" ></Image>-->
-                                                </Button>
-                                      
+
+                                                    <Button HorizontalAlignment="Right" Margin="0,0,8,0" Background="Transparent" BorderThickness="0" Command="{Binding TogglePinCommand}" CommandParameter="{Binding ElementName=gv, Path=DataContext}">
+                                                        <xuip:Path PathType="Pin"  Width="20" Height="20" Foreground="{Binding IsPinned, Converter={StaticResource IsPinnedToColorConverter}}"></xuip:Path>
+
+                                                    </Button>
+
+                                                </Grid>
+
+                                                <Grid Width="220" Height="140" Margin="8,5,8,15" Grid.Row="1"  PointerPressed="Grid_PointerPressed">
+                                                    <xuiri:MultiImageView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DefaultUri="{Binding ThumbUri}" ChildrenTabs="{Binding ChildTabs}" BackgroundColor="{Binding PrimaryBackgroundColor}" ThumbTemplateToUse="2" ></xuiri:MultiImageView>
+                                                </Grid>
+
+                                                <Grid Grid.Row="2">
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,8,0">
+                                                        <TextBlock Text="last visited :" FontSize="10" Foreground="DarkGray" Margin="0,0,5,0"></TextBlock>
+                                                        <TextBlock Text="{Binding LastRefreshedDate, Converter={StaticResource LastRefreshedDateConverter}}" FontSize="10" ></TextBlock>
+                                                    </StackPanel>
+                                                </Grid>
                                             </Grid>
+                                        </DataTemplate>
+                                    </GridView.ItemTemplate>
+                                </GridView>
+                                <GridView x:Name="gv" 
+                                    ItemsSource="{Binding Tabs}" 
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"  
+                                    ItemContainerStyle="{StaticResource GridViewItemStyle1}" 
+                                    CanReorderItems="True" 
+                                    AllowDrop="True"
+                                    CanDrag="True" 
+                                    VirtualizingStackPanel.VirtualizationMode="Standard"
+                                    >
+                                    <GridView.ItemsPanel>
+                                        <ItemsPanelTemplate VirtualizingStackPanel.VirtualizationMode="Standard">
+                                            <ItemsWrapGrid Orientation="Horizontal" Margin="0,10,0,0"/>
+                                            <!--<VariableSizedWrapGrid Margin="0,50,0,0" ItemWidth="300" ItemHeight="200" Orientation="Horizontal" AllowDrop="True" CanDrag="True" />-->
+                                            <!--<WrapGrid Margin="0,50,0,0" ItemWidth="300" ItemHeight="200" Orientation="Horizontal"></WrapGrid>-->
+                                        </ItemsPanelTemplate>
+                                    </GridView.ItemsPanel>
+                                    <GridView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid x:Name="grdTabItem" Margin="0,0,0,0" >
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                </Grid.RowDefinitions>
 
-                                            <Grid Width="220" Height="140" Margin="8,5,8,15" Grid.Row="1"  PointerPressed="Grid_PointerPressed">
-                                                <xuiri:MultiImageView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DefaultUri="{Binding ThumbUri}" ChildrenTabs="{Binding ChildTabs}" BackgroundColor="{Binding PrimaryBackgroundColor}" ThumbTemplateToUse="2" ></xuiri:MultiImageView>
+
+                                                <!--<Border BorderBrush="LightGray" BorderThickness="1" Width="220" Height="140" Margin="0" Grid.Row="1" Background="LightGray">
+                                                <Grid>
+                                                    <Image Source="ms-appx:///assets/MissingImage.png" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.2" Width="50" />
+                                                    -->
+                                                <!--<Image Source="{Binding ThumbUri}" Stretch="UniformToFill" />-->
+                                                <!--
+                                                    <xuiri:MultiImageView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DefaultUri="{Binding ThumbUri}" ChildrenTabs="{Binding ChildTabs}" BackgroundColor="{Binding PrimaryBackgroundColor}" ThumbTemplateToUse="2" ></xuiri:MultiImageView>
+                                                </Grid>
+                                            </Border>-->
+
+                                                <Grid HorizontalAlignment="Stretch" Grid.Row="0" Margin="0,10,0,0">
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                        <Border BorderBrush="{Binding PrimaryBackgroundColor}" BorderThickness="0,0,0,1" Width="15" ></Border>
+                                                        <Grid>
+                                                            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{Binding PrimaryBackgroundColor}" Opacity="0.5" Margin="6,-6,-6,0" Visibility="{Binding ChildTabs.Count, Converter={StaticResource TrueToVisibleConverter}}"></Rectangle>
+                                                            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{Binding PrimaryBackgroundColor}" Opacity="0.7" Margin="3,-3,-3,0" Visibility="{Binding ChildTabs.Count, Converter={StaticResource TrueToVisibleConverter}}"></Rectangle>
+                                                            <Border BorderBrush="{Binding PrimaryBackgroundColor}" BorderThickness="1" Background="{Binding PrimaryBackgroundColor}" >
+                                                                <Grid Padding="3" >
+                                                                    <StackPanel Orientation="Horizontal" >
+                                                                        <Image
+                                                                        Height="20"
+                                                                        Width="20"
+                                                                        IsHitTestVisible="False" 
+                                                                        Source="{Binding FaviconUri}"
+                                                                        Stretch="Uniform"
+                                                                    />
+                                                                        <TextBlock
+                                                                        TextWrapping="Wrap"
+                                                                        Text="{Binding DisplayTitle}"
+                                                                        IsHitTestVisible="False" 
+                                                                        FontSize="12"
+                                                                        FontFamily="Segoe UI"
+                                                                        Foreground="{Binding PrimaryForegroundColor}"
+                                                                        Margin="5,2,5,0" />
+                                                                    </StackPanel>
+                                                                </Grid>
+                                                            </Border>
+                                                        </Grid>
+                                                        <Border BorderBrush="{Binding PrimaryBackgroundColor}" BorderThickness="0,0,0,1" Width="15" ></Border>
+                                                        <Border BorderBrush="{Binding PrimaryBackgroundColor}" BorderThickness="0,0,0,1" Width="5" Visibility="{Binding ChildTabs.Count, Converter={StaticResource TrueToVisibleConverter}}"></Border>
+                                                    </StackPanel>
+
+
+                                                    <Button HorizontalAlignment="Right" Margin="0,0,8,0" Background="Transparent" BorderThickness="0" Command="{Binding TogglePinCommand}" CommandParameter="{Binding ElementName=gv, Path=DataContext}">
+                                                        <xuip:Path PathType="Pin"  Width="20" Height="20" Foreground="{Binding IsPinned, Converter={StaticResource IsPinnedToColorConverter}}"></xuip:Path>
+                                                        <!--<Image Source="{Binding IsPinned, Converter={StaticResource IsPinnedToImageUriConverter}}"  Width="20" Height="20" ></Image>-->
+                                                    </Button>
+
+                                                </Grid>
+
+                                                <Grid Width="220" Height="140" Margin="8,5,8,15" Grid.Row="1"  PointerPressed="Grid_PointerPressed">
+                                                    <xuiri:MultiImageView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DefaultUri="{Binding ThumbUri}" ChildrenTabs="{Binding ChildTabs}" BackgroundColor="{Binding PrimaryBackgroundColor}" ThumbTemplateToUse="2" ></xuiri:MultiImageView>
+                                                </Grid>
+
+                                                <Grid Grid.Row="2">
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,8,0">
+                                                        <TextBlock Text="last visited :" FontSize="10" Foreground="DarkGray" Margin="0,0,5,0"></TextBlock>
+                                                        <TextBlock Text="{Binding LastRefreshedDate, Converter={StaticResource LastRefreshedDateConverter}}" FontSize="10" ></TextBlock>
+                                                    </StackPanel>
+                                                </Grid>
                                             </Grid>
-
-                                            <Grid Grid.Row="2">
-                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,8,0">
-                                                    <TextBlock Text="last visited :" FontSize="10" Foreground="DarkGray" Margin="0,0,5,0"></TextBlock>
-                                                    <TextBlock Text="{Binding LastRefreshedDate, Converter={StaticResource LastRefreshedDateConverter}}" FontSize="10" ></TextBlock>
-                                                </StackPanel>
-                                            </Grid>
-                                        </Grid>
-                                    </DataTemplate>
-                                </GridView.ItemTemplate>
-                            </GridView>
-
-
+                                        </DataTemplate>
+                                    </GridView.ItemTemplate>
+                                </GridView>
+                            </StackPanel>
+                            
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,200,0" Background="{TemplateBinding Accent1}" Padding="5">
                                 <RadioButton x:Name="checkDragGrouping" GroupName="dragtype" Content="Grouping" Foreground="White" Margin="15,0,0,0" Style="{StaticResource GeneralRadioButtonStyle}"></RadioButton>
                                 <RadioButton x:Name="checkDragReordering" GroupName="dragtype" Content="Reordering" IsChecked="True" Foreground="White"  Style="{StaticResource GeneralRadioButtonStyle}"></RadioButton>

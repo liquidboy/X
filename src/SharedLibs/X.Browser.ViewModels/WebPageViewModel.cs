@@ -105,9 +105,13 @@ namespace X.Browser
 
         private void ExecuteTogglePinCommand(object obj)
         {
+
+            var vm = (ViewModels.BrowserVM)obj;
+            var uriHash = FlickrNet.UtilityMethods.MD5Hash(OriginalUri); //   e.Uri);
+            
+
             IsPinned = !IsPinned;
 
-            var uriHash = FlickrNet.UtilityMethods.MD5Hash(OriginalUri); //   e.Uri);
 
             if (IsPinned)
             {
@@ -120,7 +124,28 @@ namespace X.Browser
                 X.Services.Tile.Service.DeleteSecondaryTile(uriHash);
             }
 
-            if (Id > 0) X.Services.Data.StorageService.Instance.Storage.UpdateFieldById<WebPageDataModel>(Id, "IsPinned", IsPinned? 1: 0);
+            if (Id > 0) X.Services.Data.StorageService.Instance.Storage.UpdateFieldById<WebPageDataModel>(Id, "IsPinned", IsPinned ? 1 : 0);
+
+            //locked stuff
+            if (IsPinned)
+            {
+                var tabFoundInTabs = vm.Tabs.Where(x => x.Id == Id).First();
+                if (tabFoundInTabs != null)
+                {
+                    vm.Tabs.Remove(tabFoundInTabs);
+                    vm.LockedTabs.Add(tabFoundInTabs);
+                }
+            }
+            else {
+                var tabFoundInLocked = vm.LockedTabs.Where(x => x.Id == Id).First();
+                if (tabFoundInLocked != null)
+                {
+                    vm.Tabs.Add(tabFoundInLocked);
+                    vm.LockedTabs.Remove(tabFoundInLocked);
+                }
+
+            }
+
 
         }
 

@@ -5,6 +5,7 @@
     xmlns:local="using:X.UI.RichTab">
     <localc:InverseBooleanConverter x:Key="InverseBooleanConverter" ></localc:InverseBooleanConverter>
     <localc:BooleanToVisibilityConverter x:Key="FalseToVisibleConverter" IsReversed="True" />
+    <localc:TabsMarginLeftConverter x:Key="TabsMarginLeftConverter" ></localc:TabsMarginLeftConverter>
     <Style x:Key="TabButtonStyle" TargetType="Button">
         <Setter
 			Property="Background"
@@ -220,119 +221,27 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:TabList">
-                    <!--<Grid>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="Orientations">
-                                <VisualState x:Name="LandscapeUp">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.VerticalAlignment)" Storyboard.TargetName="grdTabs">
-                            <DiscreteObjectKeyFrame KeyTime="0">
-                                <DiscreteObjectKeyFrame.Value>
-                                    <VerticalAlignment>Top</VerticalAlignment>
-                                </DiscreteObjectKeyFrame.Value>
-                            </DiscreteObjectKeyFrame>
-                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="LandscapeDown">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.VerticalAlignment)" Storyboard.TargetName="grdTabs">
-                            <DiscreteObjectKeyFrame KeyTime="0">
-                                <DiscreteObjectKeyFrame.Value>
-                                    <VerticalAlignment>Bottom</VerticalAlignment>
-                                </DiscreteObjectKeyFrame.Value>
-                            </DiscreteObjectKeyFrame>
-                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="PortraitUp">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.HorizontalAlignment)" Storyboard.TargetName="grdTabs">
-                            <DiscreteObjectKeyFrame KeyTime="0">
-                                <DiscreteObjectKeyFrame.Value>
-                                    <HorizontalAlignment>Right</HorizontalAlignment>
-                                </DiscreteObjectKeyFrame.Value>
-                            </DiscreteObjectKeyFrame>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.VerticalAlignment)" Storyboard.TargetName="grdTabs">
-                            <DiscreteObjectKeyFrame KeyTime="0">
-                                <DiscreteObjectKeyFrame.Value>
-                                    <VerticalAlignment>Stretch</VerticalAlignment>
-                                </DiscreteObjectKeyFrame.Value>
-                            </DiscreteObjectKeyFrame>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="grdTabs">
-                            <DiscreteObjectKeyFrame KeyTime="0">
-                                <DiscreteObjectKeyFrame.Value>
-                                    <x:Double>70</x:Double>
-                                </DiscreteObjectKeyFrame.Value>
-                            </DiscreteObjectKeyFrame>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="grdTabs">
-                            <DiscreteObjectKeyFrame KeyTime="0">
-                                <DiscreteObjectKeyFrame.Value>
-                                    <x:Double>NaN</x:Double>
-                                </DiscreteObjectKeyFrame.Value>
-                            </DiscreteObjectKeyFrame>
-                        </ObjectAnimationUsingKeyFrames>
-                                        
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="PortraitDown">
-                                    <Storyboard>
-                                       
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.VerticalAlignment)" Storyboard.TargetName="grdTabs">
-                            <DiscreteObjectKeyFrame KeyTime="0">
-                                <DiscreteObjectKeyFrame.Value>
-                                    <VerticalAlignment>Stretch</VerticalAlignment>
-                                </DiscreteObjectKeyFrame.Value>
-                            </DiscreteObjectKeyFrame>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.HorizontalAlignment)" Storyboard.TargetName="grdTabs">
-                            <DiscreteObjectKeyFrame KeyTime="0">
-                                <DiscreteObjectKeyFrame.Value>
-                                    <HorizontalAlignment>Left</HorizontalAlignment>
-                                </DiscreteObjectKeyFrame.Value>
-                            </DiscreteObjectKeyFrame>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="grdTabs">
-                            <DiscreteObjectKeyFrame KeyTime="0">
-                                <DiscreteObjectKeyFrame.Value>
-                                    <x:Double>70</x:Double>
-                                </DiscreteObjectKeyFrame.Value>
-                            </DiscreteObjectKeyFrame>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="grdTabs">
-                            <DiscreteObjectKeyFrame KeyTime="0">
-                                <DiscreteObjectKeyFrame.Value>
-                                    <x:Double>NaN</x:Double>
-                                </DiscreteObjectKeyFrame.Value>
-                            </DiscreteObjectKeyFrame>
-                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>-->
-                    <Grid >
-                        <StackPanel x:Name="grdLockedTabs" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Orientation="Horizontal">
-                            <ItemsControl x:Name="icLockedTabs" VerticalAlignment="Stretch" ItemsSource="{Binding TabsLocked}">
-                                <ItemsControl.Resources>
-                                    <DataTemplate x:Key="dtTile">
-                                        <local:TabButton HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></local:TabButton>
-                                    </DataTemplate>
-                                </ItemsControl.Resources>
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal"></StackPanel>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <StaticResource ResourceKey="dtTile" />
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </StackPanel>
-                        <ScrollViewer x:Name="svTabs" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden">
-                            <StackPanel x:Name="grdTabs" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Orientation="Horizontal">
+
+                    <ScrollViewer x:Name="svTabs" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden">
+                        <Grid>
+                            <StackPanel x:Name="grdLockedTabs" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Orientation="Horizontal">
+                                <ItemsControl x:Name="icLockedTabs" VerticalAlignment="Stretch" ItemsSource="{Binding LockedTabs}">
+                                    <ItemsControl.Resources>
+                                        <DataTemplate x:Key="dtTile">
+                                            <local:TabButton HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></local:TabButton>
+                                        </DataTemplate>
+                                    </ItemsControl.Resources>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"></StackPanel>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <StaticResource ResourceKey="dtTile" />
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                            <StackPanel x:Name="grdTabs" Margin="{Binding LockedTabs.Count, Converter={StaticResource TabsMarginLeftConverter}}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Orientation="Horizontal">
                                 <ItemsControl x:Name="icTabs" VerticalAlignment="Stretch" ItemsSource="{Binding Tabs}">
                                     <ItemsControl.Resources>
                                         <DataTemplate x:Key="dtTile">
@@ -348,10 +257,10 @@
                                         <StaticResource ResourceKey="dtTile" />
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
-
                             </StackPanel>
-                        </ScrollViewer>
-                    </Grid>
+                        </Grid>
+                    </ScrollViewer>
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -367,7 +276,7 @@
                         <StackPanel IsHitTestVisible="False" HorizontalAlignment="Stretch" VerticalAlignment="Center" Orientation="Horizontal" Padding="10,5,10,5" BorderBrush="{Binding RightBorderColor}" BorderThickness="0,0,1,0" Canvas.ZIndex="11">
                             <Image Height="20" Width="20" IsHitTestVisible="False"  Source="{Binding FaviconUri}" Stretch="Uniform"  />
                             <!-- Visibility="{Binding HasFocus, Converter={StaticResource FalseToVisibleConverter}}" -->
-                            <TextBlock TextWrapping="Wrap" Text="{Binding DisplayTitle}" IsHitTestVisible="False"  FontSize="12" FontFamily="Segoe UI" Foreground="{Binding Foreground}" Margin="5,2,5,0" />
+                            <TextBlock TextWrapping="Wrap" Text="{Binding DisplayTitle}" IsHitTestVisible="False"  FontSize="12" FontFamily="Segoe UI" Foreground="{Binding Foreground}" Margin="5,2,5,0" Visibility="{Binding IsPinned, Converter={StaticResource FalseToVisibleConverter}}" />
                         </StackPanel>
                     </Grid>
                 </ControlTemplate>

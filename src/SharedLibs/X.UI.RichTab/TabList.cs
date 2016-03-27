@@ -15,6 +15,7 @@ namespace X.UI.RichTab
     {
 
         StackPanel _grdTabs;
+        StackPanel _grdLockedTabs;
         ScrollViewer _svTabs;
 
         public event PointerEventHandler TabPointerExited;
@@ -45,6 +46,11 @@ namespace X.UI.RichTab
             if (_grdTabs == null) {
                 _grdTabs = GetTemplateChild("grdTabs") as StackPanel;
                 _grdTabs.PointerWheelChanged += _grdTabs_PointerWheelChanged;
+            }
+
+            if (_grdLockedTabs == null)
+            {
+                _grdLockedTabs = GetTemplateChild("grdLockedTabs") as StackPanel;
             }
 
             if (_svTabs == null) {
