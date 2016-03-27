@@ -107,6 +107,18 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BrowserVM.cs" />
+    <Compile Include="BrowserVM.Tabs.cs">
+      <DependentUpon>BrowserVM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BrowserVM.Themes.cs">
+      <DependentUpon>BrowserVM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Messages\CloseAddTabFlyout.cs" />
+    <Compile Include="Messages\HideOnebox.cs" />
+    <Compile Include="Messages\SetAddTabSearchBoxFocus.cs" />
+    <Compile Include="Messages\SetMoreTabSearchBoxFocus.cs" />
+    <Compile Include="Messages\ShowOnebox.cs" />
     <Compile Include="NameValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TabViewModel.cs" />
@@ -121,6 +133,10 @@
     <ProjectReference Include="..\X.Services.Data\X.Services.Data.csproj">
       <Project>{9cf3fa6f-8edd-4c98-a505-a6614aa214cd}</Project>
       <Name>X.Services.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\X.Services.Image\X.Services.Image.csproj">
+      <Project>{9d98bf69-e061-4f8c-b8c9-ce65116374b8}</Project>
+      <Name>X.Services.Image</Name>
     </ProjectReference>
     <ProjectReference Include="..\X.Services.Tile\X.Services.Tile.csproj">
       <Project>{91685706-d8a2-42be-b5d9-f862cc855bf9}</Project>

@@ -15,7 +15,7 @@ using X.Services.Data;
 
 namespace X.Browser.ViewModels
 {
-    partial class BrowserVM
+    public partial class BrowserVM
     {
         public ObservableCollection<TabViewModel> Tabs { get; set; }
 

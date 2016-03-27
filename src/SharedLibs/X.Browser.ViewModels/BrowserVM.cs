@@ -1,21 +1,10 @@
-﻿using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI;
-using Windows.UI.Xaml.Media;
-using X.Browser.Messages;
-using X.Services.Data;
 
 namespace X.Browser.ViewModels
 {
-    partial class BrowserVM : INotifyPropertyChanged
+    public partial class BrowserVM : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         
