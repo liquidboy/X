@@ -112,7 +112,7 @@ namespace X.Services.Image
         //    return true;
         //}
 
-        public async Task<bool> GenerateResizedImageAsync(int longWidth, double srcWidth, double srcHeight, InMemoryRandomAccessStream srcMemoryStream, string newImageName, location subFolder, int longHeight = 0)
+        public async Task<bool> GenerateResizedImageAsyncOld(int longWidth, double srcWidth, double srcHeight, InMemoryRandomAccessStream srcMemoryStream, string newImageName, location subFolder, int longHeight = 0)
         {
             if (_localFolder == null) InitFolders();
 
@@ -142,7 +142,7 @@ namespace X.Services.Image
                 //WRITEABLE BITMAP IS THROWING AN ERROR
 
                 var wbthumbnail = wb.Resize(width, height, Windows.UI.Xaml.Media.Imaging.WriteableBitmapExtensions.Interpolation.Bilinear);
-                
+
                 switch (subFolder)
                 {
                     case location.MediumFolder:
@@ -169,6 +169,87 @@ namespace X.Services.Image
 
         }
 
+        public async Task<bool> GenerateResizedImageAsync(int longWidth, double srcWidth, double srcHeight, InMemoryRandomAccessStream srcMemoryStream, string newImageName, location subFolder, int longHeight = 0)
+        {
+            if (_localFolder == null) InitFolders();
+
+            try
+            {
+                int width = 0, height = 0;
+                double factor = srcWidth / srcHeight;
+                if (factor < 1)
+                {
+                    height = longWidth;
+                    width = (int)(longWidth * factor);
+                }
+                else
+                {
+                    width = longWidth;
+                    height = (int)(longWidth / factor);
+                }
+
+                if (longHeight > 0)
+                {
+                    width = longWidth;
+                    height = longHeight;
+                }
+
+
+
+                if (subFolder == location.MediumFolder) {
+                    WriteableBitmap wb = await BitmapFactory.New((int)srcWidth, (int)srcHeight).FromStream(srcMemoryStream);
+                    var wbthumbnail = wb.Resize(width, height, Windows.UI.Xaml.Media.Imaging.WriteableBitmapExtensions.Interpolation.Bilinear);
+                    StorageFile sampleFile1 = await _mediumFolder.CreateFileAsync(newImageName, CreationCollisionOption.ReplaceExisting);
+                    await wbthumbnail.SaveToFile(sampleFile1, BitmapEncoder.PngEncoderId);
+                }
+                else if (subFolder == location.ThumbFolder)
+                {
+                    WriteableBitmap wb = await BitmapFactory.New((int)srcWidth, (int)srcHeight).FromStream(srcMemoryStream);
+                    var wbthumbnail = wb.Resize(width, height, Windows.UI.Xaml.Media.Imaging.WriteableBitmapExtensions.Interpolation.Bilinear);
+                    StorageFile sampleFile2 = await _thumbFolder.CreateFileAsync(newImageName, CreationCollisionOption.ReplaceExisting);
+                    await wbthumbnail.SaveToFile(sampleFile2, BitmapEncoder.PngEncoderId);
+                }
+                else if (subFolder == location.TileFolder) {
+                    
+                    //using (var fileStream = await sampleFile3.OpenAsync(Windows.Storage.FileAccessMode.Read))
+                    //{
+                    BitmapDecoder decoder = await BitmapDecoder.CreateAsync(srcMemoryStream);
+
+                    using (InMemoryRandomAccessStream ras = new InMemoryRandomAccessStream()) { 
+                        BitmapEncoder enc = await BitmapEncoder.CreateForTranscodingAsync(ras, decoder);
+
+                        enc.BitmapTransform.ScaledHeight = (uint)(longWidth > longHeight ? longWidth : longHeight);
+                        enc.BitmapTransform.ScaledWidth = (uint)(longWidth > longHeight ? longWidth : longHeight);
+
+                        BitmapBounds bounds = new BitmapBounds();
+                        bounds.Height = (uint)height;
+                        bounds.Width = (uint)width;
+                        bounds.X = 0;
+                        bounds.Y = 0;
+                        enc.BitmapTransform.Bounds = bounds;
+
+                        await enc.FlushAsync();
+
+                        WriteableBitmap wb = await BitmapFactory.New(width, height).FromStream(ras);
+
+                        StorageFile sampleFile3 = await _tileFolder.CreateFileAsync(newImageName, CreationCollisionOption.ReplaceExisting);
+                        await wb.SaveToFile(sampleFile3, BitmapEncoder.PngEncoderId);
+                    }
+                    //}
+                }
+                
+            
+            
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+
+        }
 
 
 
