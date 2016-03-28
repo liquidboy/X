@@ -10,15 +10,15 @@ using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using X.Viewer.MediaView;
 
 namespace X.Viewer
 {
-    public class FFmpegRenderer : IContentRenderer
+    public class MediaElementRenderer : IContentRenderer
     {
-        //private FFmpegInteropMSS FFmpegMSS;
         Grid _renderElement;
         MediaElement _media;
-        MediaControls _mediaControls;
+        Viewer.MediaView.MediaControls _mediaControls;
 
         public FrameworkElement RenderElement
         {
@@ -49,7 +49,7 @@ namespace X.Viewer
             _media = new MediaElement() { Margin= new Thickness(0,0,0,80)};
             //_media.SetValue(Canvas.ZIndexProperty, 10);
 
-            _mediaControls = new MediaControls() { HorizontalAlignment  = HorizontalAlignment.Stretch, VerticalAlignment = VerticalAlignment.Bottom, Height = 80 };
+            _mediaControls = new Viewer.MediaView.MediaControls() { HorizontalAlignment  = HorizontalAlignment.Stretch, VerticalAlignment = VerticalAlignment.Bottom, Height = 80 };
             //_mediaControls.SetValue(Canvas.ZIndexProperty, 11);
             _mediaControls.DataContext = _media;
 
@@ -102,6 +102,9 @@ namespace X.Viewer
                 
                 PropertySet options = new PropertySet();
                 //FFmpegMSS = FFmpegInteropMSS.CreateFFmpegInteropMSSFromUri(uriToUse.ToString(), false, false, options);
+                _media.AutoPlay = false;
+                _media.PlaybackRate = 3;
+                _media.Source = new Uri(uriToUse.ToString());
             }
             else {
                 var file = await Windows.Storage.StorageFile.GetFileFromPathAsync(uriToUse);

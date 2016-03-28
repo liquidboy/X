@@ -14,7 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 
-namespace X.Viewer
+namespace X.Viewer.MediaView
 {
     public sealed partial class MediaControls : UserControl
     {

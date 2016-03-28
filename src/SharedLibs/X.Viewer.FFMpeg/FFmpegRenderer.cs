@@ -10,11 +10,13 @@ using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using X.Viewer.FFmpeg;
 
 namespace X.Viewer
 {
-    public class MediaElementRenderer : IContentRenderer
+    public class FFmpegRenderer : IContentRenderer
     {
+        //private FFmpegInteropMSS FFmpegMSS;
         Grid _renderElement;
         MediaElement _media;
         MediaControls _mediaControls;
@@ -101,9 +103,6 @@ namespace X.Viewer
                 
                 PropertySet options = new PropertySet();
                 //FFmpegMSS = FFmpegInteropMSS.CreateFFmpegInteropMSSFromUri(uriToUse.ToString(), false, false, options);
-                _media.AutoPlay = false;
-                _media.PlaybackRate = 3;
-                _media.Source = new Uri(uriToUse.ToString());
             }
             else {
                 var file = await Windows.Storage.StorageFile.GetFileFromPathAsync(uriToUse);
