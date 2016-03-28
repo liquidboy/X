@@ -179,7 +179,7 @@ namespace X.Browser.ViewModels
             Tabs.Add(CreateDefaultTab("airbnb", "http://www.airbnb.com/favicon.ico?v2", "http://www.airbnb.com", DateTime.MinValue));
             Tabs.Add(CreateDefaultTab("Flickr", "http://www.flickr.com/favicon.ico?v2", "http://www.flickr.com", DateTime.MinValue));
             Tabs.Add(CreateDefaultTab("Bing", "http://www.bing.com/favicon.ico?v2", "http://www.bing.com", DateTime.MinValue));
-            Tabs.Add(CreateDefaultTab("Azure", "http://www.windowsazure.com/favicon.ico?v2", "http://www.windowsazure.com", DateTime.MinValue));
+            Tabs.Add(CreateDefaultTab("Azure", "http://www.windowsazure.com/favicon.ico?v2", "https://www.azure.com", DateTime.MinValue));
             Tabs.Add(CreateDefaultTab("Apple", "http://www.apple.com/favicon.ico?v2", "http://www.apple.com", DateTime.MinValue));
             Tabs.Add(CreateDefaultTab("Google", "http://www.google.com/favicon.ico?v2", "http://www.google.com", DateTime.MinValue));
             Tabs.Add(CreateDefaultTab("YouTube", "http://www.youtube.com/favicon.ico?v2", "http://www.youtube.com", DateTime.MinValue));

@@ -14,10 +14,10 @@ namespace X.UI.RichTab.Converters
 
             var val = (string)value;
 
-            if (val.Contains("twitter"))
+            if (val.Contains("azure"))
             {
                 //twitter returns an svg from its favicon hence it breaks the image element as it doesn't support that
-                return "ms-appx:///assets/favicon/twitter.png";
+                return "http://www.windowsazure.com/favicon.ico?v2";
             }
 
             return val;
