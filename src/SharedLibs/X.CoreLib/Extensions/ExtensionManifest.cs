@@ -25,6 +25,7 @@ namespace CoreLib.Extensions
 
         public Guid UniqueID { get; set; } = Guid.NewGuid();
         public string Title { get; set; }
+        public string TitleHashed { get { return FlickrNet.UtilityMethods.MD5Hash(Title); } private set { } }
         public string Path { get { return "//"; } set { } }
         public string IconUrl { get; set; }
         public string Publisher { get; set; }

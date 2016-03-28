@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="ISqliteBase.cs" />
     <Compile Include="Models\DataModelsManager.cs" />
+    <Compile Include="Models\ExtensionManifestDataModel.cs" />
     <Compile Include="Models\IDataModel.cs" />
     <Compile Include="Models\IWebPageDataModel.cs" />
     <Compile Include="Models\BaseDataModel.cs" />

@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 namespace X.Services.Data
 {
     public enum eDataModels {
-        WebPageDataModel
+        WebPageDataModel,
+        ExtensionManifestDataModel
     }
 
 
@@ -18,10 +19,12 @@ namespace X.Services.Data
         public static void InitInDatabase(SQLiteConnection sqliteDb)
         {
             sqliteDb.CreateTable<WebPageDataModel>();
+            sqliteDb.CreateTable<ExtensionManifestDataModel>();
         }
 
         public static void TruncateDatabase(SQLiteConnection sqliteDb) {
             sqliteDb.DeleteAll<WebPageDataModel>();
+            sqliteDb.DeleteAll<ExtensionManifestDataModel>();
         }
 
         public static IList<T> RetrieveList<T>(SQLiteConnection sqliteDb)
@@ -30,7 +33,10 @@ namespace X.Services.Data
 
             if(typeof(T).Equals(typeof(WebPageDataModel)))
                 result = sqliteDb.Query<WebPageDataModel>("SELECT * FROM " + typeof(T).Name);
-            
+            else if (typeof(T).Equals(typeof(ExtensionManifestDataModel)))
+                result = sqliteDb.Query<ExtensionManifestDataModel>("SELECT * FROM " + typeof(T).Name);
+
+
             return result as IList<T>;
         }
 
@@ -40,6 +46,8 @@ namespace X.Services.Data
 
             if (typeof(T).Equals(typeof(WebPageDataModel)))
                 result =  sqliteDb.Query<WebPageDataModel>("SELECT * FROM " + typeof(T).Name + " WHERE Uid = ?", uid);
+            else if (typeof(T).Equals(typeof(ExtensionManifestDataModel)))
+                result = sqliteDb.Query<ExtensionManifestDataModel>("SELECT * FROM " + typeof(T).Name + " WHERE Uid = ?", uid);
 
             return result as IList<T>;
         }
@@ -50,6 +58,8 @@ namespace X.Services.Data
 
             if (typeof(T).Equals(typeof(WebPageDataModel)))
                 result = sqliteDb.Query<WebPageDataModel>("SELECT * FROM " + typeof(T).Name + " WHERE index1 = ?", index1);
+            else if (typeof(T).Equals(typeof(ExtensionManifestDataModel)))
+                result = sqliteDb.Query<ExtensionManifestDataModel>("SELECT * FROM " + typeof(T).Name + " WHERE index1 = ?", index1);
 
             return result as IList<T>;
 
