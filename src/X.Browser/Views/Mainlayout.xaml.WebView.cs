@@ -27,7 +27,7 @@ namespace X.Browser.Views
                 }
                 else if (ea.Type == "NavigationFailed")
                 {
-                    App.ExtensionsSvc.SendMessage(ea.Uri, ExtensionType.WVNavigationFailed);
+                    App.ExtensionsSvc.SendMessage(ea, ExtensionType.WVNavigationFailed);
                 }
                 else if (ea.Type == "DOMContentLoaded")
                 {

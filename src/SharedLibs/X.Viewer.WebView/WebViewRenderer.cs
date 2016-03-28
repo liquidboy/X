@@ -205,7 +205,7 @@ namespace X.Viewer
         private void wvMain_NavigationFailed(object sender, WebViewNavigationFailedEventArgs e)
         {
             dtMaxLoadTime.Stop();
-            SendMessage?.Invoke(null, new ContentViewEventArgs() { Type = "NavigationFailed", Uri = e.Uri });
+            SendMessage?.Invoke(null, new ContentViewEventArgs() { Type = "NavigationFailed", Uri = e.Uri, ExtraDetails1 = e.WebErrorStatus.ToString() });
         }
 
         private void wvMain_NewWindowRequested(Windows.UI.Xaml.Controls.WebView sender, WebViewNewWindowRequestedEventArgs args)

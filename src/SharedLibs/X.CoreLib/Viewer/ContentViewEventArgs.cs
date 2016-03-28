@@ -17,7 +17,7 @@ namespace X.Viewer
 
         public string Favicon { get; set; }
 
-
+        public string ExtraDetails1 { get; set; }
  
 
     }

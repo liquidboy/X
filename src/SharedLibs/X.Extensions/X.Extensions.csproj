@@ -124,6 +124,7 @@
     <Compile Include="Contracts\ResponseListOfLeftToolbarExtensionsEventArgs.cs" />
     <Compile Include="Contracts\ResponseListOfRightToolbarExtensionsEventArgs.cs" />
     <Compile Include="Contracts\ResponseListOfTopToolbarExtensionsEventArgs.cs" />
+    <Compile Include="NavigationFailedExtensioin\HandleNavigationFailedAsInlineToast.cs" />
     <Compile Include="NewWindowRequestExtensions\HandleNewWindowAsInlineLink.cs" />
     <Compile Include="OSShellExtensions\OSToast.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

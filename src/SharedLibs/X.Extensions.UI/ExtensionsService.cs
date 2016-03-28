@@ -72,6 +72,7 @@ namespace X.Extensions
 
         private void CreateDefaultExtensions() {
             Install(new HandleNewWindowAsInlineLink()).Wait();
+            Install(new HandleNavigationFailedAsInlineToast()).Wait();
             Install(new OSToast()).Wait();
         }
 
