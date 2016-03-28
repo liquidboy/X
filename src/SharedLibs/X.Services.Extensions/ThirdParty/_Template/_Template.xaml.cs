@@ -55,7 +55,7 @@ namespace X.Services.ThirdParty
 
                 Type type = null;
                 if (!string.IsNullOrEmpty(ExtensionManifest.AssemblyName)) {
-                    var an = new System.Reflection.AssemblyName("X.Extensions.ThirdParty.GitX");
+                    var an = new System.Reflection.AssemblyName(ExtensionManifest.AssemblyName);
                     var ass = System.Reflection.Assembly.Load(an);
                     type = ass.GetType(ExtensionManifest.ContentControl);
                 }
