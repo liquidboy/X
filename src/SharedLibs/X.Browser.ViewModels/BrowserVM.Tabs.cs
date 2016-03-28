@@ -182,6 +182,7 @@ namespace X.Browser.ViewModels
             Tabs.Add(CreateDefaultTab("Azure", "http://www.windowsazure.com/favicon.ico?v2", "http://www.windowsazure.com", DateTime.MinValue));
             Tabs.Add(CreateDefaultTab("Apple", "http://www.apple.com/favicon.ico?v2", "http://www.apple.com", DateTime.MinValue));
             Tabs.Add(CreateDefaultTab("Google", "http://www.google.com/favicon.ico?v2", "http://www.google.com", DateTime.MinValue));
+            Tabs.Add(CreateDefaultTab("YouTube", "http://www.youtube.com/favicon.ico?v2", "http://www.youtube.com", DateTime.MinValue));
 
         }
 
