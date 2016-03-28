@@ -1,30 +1,17 @@
 ﻿using CoreLib.Extensions;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using WeakEvent;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using X.Extensions;
-using X.Extensions.ThirdParty;
+using X.Services.ThirdParty;
 using X.UI.Toolbar;
 
 namespace X.Extensions.UIComponentExtensions
 {
     public sealed partial class ExtensionsIconBarTop : UserControl, IExtension
     {
-        private static ExtensionsService _extensionsService;
-
-
+        
         public ExtensionsIconBarTop()
         {
             this.InitializeComponent();
@@ -38,14 +25,13 @@ namespace X.Extensions.UIComponentExtensions
             
         }
 
-        public async void InstallMyself(ExtensionsService extensionsService) {
+        public async void InstallMyself() {
             
-            _extensionsService = extensionsService;
-            await _extensionsService.Install(this);
+            await X.Services.Extensions.ExtensionsService.Instance.Install(this);
 
 
             var el = new _Template(new ExtensionManifest("Installed Extensions UI", "ms-appx:///Extensions/UIComponentExtensions/InstalledExtensionList/InstalledExtensionList.png", "Sample Extensions", "1.0", "A UI to manage all the installed extensions", ExtensionInToolbarPositions.None, ExtensionInToolbarPositions.Right) { ContentControl = "X.Extensions.UIComponentExtensions.InstalledExtensionList" });
-            _extensionsService.Install(el);
+            X.Services.Extensions.ExtensionsService.Instance.Install(el);
             butExtensionStore.ExtensionUniqueId = el.ExtensionManifest.UniqueID;
 
 

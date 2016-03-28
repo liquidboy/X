@@ -3,14 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using X.Extensions.Popups;
 using System.Reflection;
-using X.Extensions.ThirdParty;
 using WeakEvent;
 
-namespace X.Extensions
+namespace X.Services.Extensions
 {
 
 
@@ -242,7 +240,7 @@ namespace X.Extensions
             if (found.Extension == null)
             {
                 ExtensionInToolbarPositions launchPosition = GetExtensionPositionFromString(md.LaunchInDockPositions);
-                var newElExt = new _Template(found.Manifest);
+                var newElExt = new Services.ThirdParty._Template(found.Manifest);
                 newElExt.SendMessage += DoSendMessage;
 
                 if (launchPosition == ExtensionInToolbarPositions.Left || launchPosition == ExtensionInToolbarPositions.Right)
@@ -331,6 +329,31 @@ namespace X.Extensions
         public IExtension[] GetInstalled()
         {
             throw new NotImplementedException();
+        }
+
+
+
+
+
+
+
+
+
+        //=========================
+        //singleton
+        //=========================
+        private static ExtensionsService instance;
+
+        public static ExtensionsService Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new ExtensionsService();
+                }
+                return instance;
+            }
         }
     }
 }

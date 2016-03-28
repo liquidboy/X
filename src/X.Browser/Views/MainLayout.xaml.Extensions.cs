@@ -36,19 +36,19 @@ namespace X.Browser.Views
 
 
 
-            App.ExtensionsSvc.Install(this);
-            App.ExtensionsSvc.Install(ctlToast);
+            X.Services.Extensions.ExtensionsService.Instance.Install(this);
+            X.Services.Extensions.ExtensionsService.Instance.Install(ctlToast);
 
 
             //Find a way to reflect this in
-            Installer.GetExtensionManifests().ForEach(x => { App.ExtensionsSvc.Install(x); });
-            App.ExtensionsSvc.Install(X.Extensions.ThirdParty.GitX.Installer.GetManifest());
+            Installer.GetExtensionManifests().ForEach(x => { X.Services.Extensions.ExtensionsService.Instance.Install(x); });
+            X.Services.Extensions.ExtensionsService.Instance.Install(X.Extensions.ThirdParty.GitX.Installer.GetManifest());
 
 
-            ctlExtensionsBarTop.InstallMyself(App.ExtensionsSvc); // does Install + LoadExtensions
-            ctlExtensionsBarLeft.InstallMyself(App.ExtensionsSvc); // does Install + LoadExtensions
-            ctlExtensionsBarRight.InstallMyself(App.ExtensionsSvc); // does Install + LoadExtensions
-            ctlExtensionsBarBottom.InstallMyself(App.ExtensionsSvc); // does Install + LoadExtensions
+            ctlExtensionsBarTop.InstallMyself(); // does Install + LoadExtensions
+            ctlExtensionsBarLeft.InstallMyself(); // does Install + LoadExtensions
+            ctlExtensionsBarRight.InstallMyself(); // does Install + LoadExtensions
+            ctlExtensionsBarBottom.InstallMyself(); // does Install + LoadExtensions
 
             //Messenger.Default.Register<ShowInstalledExtensionsMessage>(this, ShowInstalledExtensionsMessage);
 
@@ -56,7 +56,7 @@ namespace X.Browser.Views
 
         void UnInitExtensions()
         {
-            App.ExtensionsSvc.UnloadExtensions();
+            X.Services.Extensions.ExtensionsService.Instance.UnloadExtensions();
             ctlExtensionsBarTop.UnloadExtensions();
             ctlExtensionsBarLeft.UnloadExtensions();
             ctlExtensionsBarRight.UnloadExtensions();
@@ -92,34 +92,34 @@ namespace X.Browser.Views
             }
             else if (message is RequestListOfInstalledExtensionsEventArgs)
             {
-                var extensions = App.ExtensionsSvc.GetExtensionsMetadata();
+                var extensions = X.Services.Extensions.ExtensionsService.Instance.GetExtensionsMetadata();
                 _SendMessageSource?.Raise(this, new ResponseListOfInstalledExtensionsEventArgs() { ExtensionsMetadata = extensions, ReceiverType = ExtensionType.UIComponent });
             }
             else if (message is RequestListOfTopToolbarExtensionsEventArgs)
             {
-                var extensions = App.ExtensionsSvc.GetToolbarExtensionsMetadata(ExtensionInToolbarPositions.Top);
+                var extensions = X.Services.Extensions.ExtensionsService.Instance.GetToolbarExtensionsMetadata(ExtensionInToolbarPositions.Top);
                 _SendMessageSource?.Raise(this, new ResponseListOfTopToolbarExtensionsEventArgs() { ExtensionsMetadata = extensions, ReceiverType = ExtensionType.UIComponent });
             }
             else if (message is RequestListOfBottomToolbarExtensionsEventArgs)
             {
-                var extensions = App.ExtensionsSvc.GetToolbarExtensionsMetadata(ExtensionInToolbarPositions.Bottom);
+                var extensions = X.Services.Extensions.ExtensionsService.Instance.GetToolbarExtensionsMetadata(ExtensionInToolbarPositions.Bottom);
                 _SendMessageSource?.Raise(this, new ResponseListOfBottomToolbarExtensionsEventArgs() { ExtensionsMetadata = extensions, ReceiverType = ExtensionType.UIComponent });
             }
             else if (message is RequestListOfLeftToolbarExtensionsEventArgs)
             {
-                var extensions = App.ExtensionsSvc.GetToolbarExtensionsMetadata(ExtensionInToolbarPositions.Left);
+                var extensions = X.Services.Extensions.ExtensionsService.Instance.GetToolbarExtensionsMetadata(ExtensionInToolbarPositions.Left);
                 _SendMessageSource?.Raise(this, new ResponseListOfLeftToolbarExtensionsEventArgs() { ExtensionsMetadata = extensions, ReceiverType = ExtensionType.UIComponent });
             }
             else if (message is RequestListOfRightToolbarExtensionsEventArgs)
             {
-                var extensions = App.ExtensionsSvc.GetToolbarExtensionsMetadata(ExtensionInToolbarPositions.Right);
+                var extensions = X.Services.Extensions.ExtensionsService.Instance.GetToolbarExtensionsMetadata(ExtensionInToolbarPositions.Right);
                 _SendMessageSource?.Raise(this, new ResponseListOfRightToolbarExtensionsEventArgs() { ExtensionsMetadata = extensions, ReceiverType = ExtensionType.UIComponent });
             }
             else if (message is LaunchExtensionEventArgs)
             {
                 var extGuid = ((LaunchExtensionEventArgs)message).ExtensionUniqueGuid;
-                var extMetaData = App.ExtensionsSvc.GetExtensionMetadata(extGuid);
-                var newExtensionInstance = App.ExtensionsSvc.CreateInstance(extMetaData);
+                var extMetaData = X.Services.Extensions.ExtensionsService.Instance.GetExtensionMetadata(extGuid);
+                var newExtensionInstance = X.Services.Extensions.ExtensionsService.Instance.CreateInstance(extMetaData);
 
                 if (newExtensionInstance != null)
                 {
@@ -142,13 +142,13 @@ namespace X.Browser.Views
             else if (message is CloseExtensionEventArgs)
             {
                 var extGuid = ((CloseExtensionEventArgs)message).ExtensionUniqueGuid;
-                var md = App.ExtensionsSvc.GetExtensionMetadata(extGuid);
+                var md = X.Services.Extensions.ExtensionsService.Instance.GetExtensionMetadata(extGuid);
 
                 foreach (dynamic child in grdDockedExtensionBottomFull.Children)
                 {
                     if (((Guid)child.ExtensionManifest.UniqueID).ToString() == extGuid.ToString())
                     {
-                        App.ExtensionsSvc.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
+                        X.Services.Extensions.ExtensionsService.Instance.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
                         grdDockedExtensionBottomFull.Children.Remove(child);
                     }
                 }
@@ -157,7 +157,7 @@ namespace X.Browser.Views
                 {
                     if (((Guid)child.ExtensionManifest.UniqueID).ToString() == extGuid.ToString())
                     {
-                        App.ExtensionsSvc.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
+                        X.Services.Extensions.ExtensionsService.Instance.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
                         grdDockedExtensionBottom.Children.Remove(child);
                     }
                 }
@@ -166,7 +166,7 @@ namespace X.Browser.Views
                 {
                     if (((Guid)child.ExtensionManifest.UniqueID).ToString() == extGuid.ToString())
                     {
-                        App.ExtensionsSvc.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
+                        X.Services.Extensions.ExtensionsService.Instance.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
                         grdDockedExtensionTop.Children.Remove(child);
                     }
                 }
@@ -175,7 +175,7 @@ namespace X.Browser.Views
                 {
                     if (((Guid)child.ExtensionManifest.UniqueID).ToString() == extGuid.ToString())
                     {
-                        App.ExtensionsSvc.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
+                        X.Services.Extensions.ExtensionsService.Instance.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
                         grdDockedExtensionLeft.Children.Remove(child);
                     }
                 }
@@ -184,7 +184,7 @@ namespace X.Browser.Views
                 {
                     if (((Guid)child.ExtensionManifest.UniqueID).ToString() == extGuid.ToString())
                     {
-                        App.ExtensionsSvc.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
+                        X.Services.Extensions.ExtensionsService.Instance.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
                         grdDockedExtensionRight.Children.Remove(child);
                     }
                 }

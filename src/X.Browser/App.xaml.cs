@@ -25,10 +25,8 @@ namespace X.Browser
                 Microsoft.ApplicationInsights.WindowsCollectors.Metadata |
                 Microsoft.ApplicationInsights.WindowsCollectors.Session);
             
-            ExtensionsSvc = new ExtensionsService();
             X.Services.Image.Service.Instance.InitFolders();
-            //StorageSvc = new StorageService();
-
+            
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }
@@ -121,9 +119,7 @@ namespace X.Browser
             
 
         }
-
-
-        public static ExtensionsService ExtensionsSvc;
+        
         //public static StorageService StorageSvc;
     }
 }

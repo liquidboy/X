@@ -218,6 +218,10 @@
       <Project>{9cf3fa6f-8edd-4c98-a505-a6614aa214cd}</Project>
       <Name>X.Services.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.Services.Extensions\X.Services.Extensions.csproj">
+      <Project>{6ef45f7f-fc6b-49f3-ab26-3ae0678fae05}</Project>
+      <Name>X.Services.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharedLibs\X.Services.Image\X.Services.Image.csproj">
       <Project>{9d98bf69-e061-4f8c-b8c9-ce65116374b8}</Project>
       <Name>X.Services.Image</Name>

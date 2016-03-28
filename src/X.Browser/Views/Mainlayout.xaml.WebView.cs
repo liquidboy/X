@@ -27,15 +27,15 @@ namespace X.Browser.Views
                 }
                 else if (ea.Type == "NavigationFailed")
                 {
-                    App.ExtensionsSvc.SendMessage(ea, ExtensionType.WVNavigationFailed);
+                    X.Services.Extensions.ExtensionsService.Instance.SendMessage(ea, ExtensionType.WVNavigationFailed);
                 }
                 else if (ea.Type == "DOMContentLoaded")
                 {
-                    App.ExtensionsSvc.SendMessage(ea.Uri, ExtensionType.WVDOMContentLoaded);
+                    X.Services.Extensions.ExtensionsService.Instance.SendMessage(ea.Uri, ExtensionType.WVDOMContentLoaded);
                 }
                 else if (ea.Type == "NavigationCompleted")
                 {
-                    App.ExtensionsSvc.SendMessage(ea.Uri, ExtensionType.WVNavigationCompleted);
+                    X.Services.Extensions.ExtensionsService.Instance.SendMessage(ea.Uri, ExtensionType.WVNavigationCompleted);
                 }
                 else if (ea.Type == "NavigationStarting")
                 {
@@ -43,26 +43,26 @@ namespace X.Browser.Views
                     {
                         BrowserVM vm = this.DataContext as BrowserVM;
                         vm.SelectedTab.Uri = ea.Uri.OriginalString;
-                        App.ExtensionsSvc.SendMessage(ea.Uri, ExtensionType.WVNavigationStarting);
+                        X.Services.Extensions.ExtensionsService.Instance.SendMessage(ea.Uri, ExtensionType.WVNavigationStarting);
                     }
                     catch (Exception ex)
                     {
-                        App.ExtensionsSvc.SendMessage(ea.Uri, ExtensionType.WVNavigationFailed);
+                        X.Services.Extensions.ExtensionsService.Instance.SendMessage(ea.Uri, ExtensionType.WVNavigationFailed);
                     }
                 }
                 else if (ea.Type == "NewWindowRequested")
                 {
-                    App.ExtensionsSvc.SendMessage(ea.Uri, ExtensionType.WVNewWindowRequest);
+                    X.Services.Extensions.ExtensionsService.Instance.SendMessage(ea.Uri, ExtensionType.WVNewWindowRequest);
                     //args.Handled = true;
 
                 }
                 else if (ea.Type == "LongRunningScriptDetected")
                 {
-                    App.ExtensionsSvc.SendMessage(null, ExtensionType.WVLongRunningScriptDetected);
+                    X.Services.Extensions.ExtensionsService.Instance.SendMessage(null, ExtensionType.WVLongRunningScriptDetected);
                 }
                 else if (ea.Type == "ScriptNotify")
                 {
-                    App.ExtensionsSvc.SendMessage(ea.CallingUri, ExtensionType.WVScriptNotify);
+                    X.Services.Extensions.ExtensionsService.Instance.SendMessage(ea.CallingUri, ExtensionType.WVScriptNotify);
                 }
                 else if (ea.Type == "FoundFavicon")
                 {
@@ -94,7 +94,7 @@ namespace X.Browser.Views
                 else if (ea.Type == "LoadCompleted")
                 {
 
-                    App.ExtensionsSvc.SendMessage(ea.Uri, ExtensionType.WVLoadCompleted);
+                    X.Services.Extensions.ExtensionsService.Instance.SendMessage(ea.Uri, ExtensionType.WVLoadCompleted);
 
                     BrowserVM vm = this.DataContext as BrowserVM;
 
