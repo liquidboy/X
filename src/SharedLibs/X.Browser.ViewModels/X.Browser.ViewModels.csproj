@@ -125,6 +125,7 @@
     <Compile Include="TabThumbnailSprite.cs" />
     <Compile Include="TabViewModel.cs" />
     <Compile Include="ViewModelLocator.cs" />
+    <Compile Include="ExtensionViewModel.cs" />
     <Compile Include="WebPageViewModel.cs" />
     <EmbeddedResource Include="Properties\X.Browser.ViewModels.rd.xml" />
   </ItemGroup>

@@ -16,12 +16,16 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using X.Browser;
 using X.Services.Data;
 
 namespace X.Extensions.UIComponentExtensions
 {
     public sealed partial class InstalledExtensionList : UserControl, IExtensionContent
     {
+
+        public ObservableCollection<ExtensionViewModel> Extensions { get; set; }
+
         public InstalledExtensionList()
         {
             this.InitializeComponent();
@@ -45,18 +49,28 @@ namespace X.Extensions.UIComponentExtensions
                 var ea = (ResponseListOfInstalledExtensionsEventArgs)message;
                 tbExtensionCount.Text = ea.ExtensionsMetadata.Count() + " extensions";
 
+
+                if (Extensions == null) Extensions = new ObservableCollection<ExtensionViewModel>();
+                else Extensions.Clear();
+
                 var extensionsInStorage = X.Services.Data.StorageService.Instance.Storage.RetrieveList<ExtensionManifestDataModel>();
                 foreach (dynamic emd in ea.ExtensionsMetadata) {
+
+                    var evm = new ExtensionViewModel();
+                    evm.Load(emd);
+                    
                     var uid = emd.TitleHashed;
                     var found = extensionsInStorage.Where(x => x.Uid == uid).ToList();
                     if (found != null && found.Count() > 0) {
-                        emd.Id = found.First().Id;
-                        emd.IsExtEnabled = found.First().IsExtEnabled;
+                        evm.Load(found.First());
                     }
+
+                    Extensions.Add(evm);
                 }
 
 
-                icMain.ItemsSource = ea.ExtensionsMetadata;
+                //icMain.ItemsSource = ea.ExtensionsMetadata;
+                icMain.ItemsSource = Extensions;
             }
         }
 
@@ -74,47 +88,36 @@ namespace X.Extensions.UIComponentExtensions
 
         private void butEnable_Click(object sender, RoutedEventArgs e)
         {
-            dynamic item = ((Button)sender).DataContext;
-            var uid = FlickrNet.UtilityMethods.MD5Hash(item.Title);
-            var id = 0;
-            try
-            {
-                id = item.Id;
-            }
-            catch (Exception ex)
-            {
-                //id doesnt exist so create a new one
-            }
-            if (id > 0)
-                X.Services.Data.StorageService.Instance.Storage.UpdateFieldById<ExtensionManifestDataModel>(id, "IsExtEnabled", 1);
+            ExtensionViewModel item = ((Button)sender).DataContext as ExtensionViewModel;
+            if (item.Id > 0)
+                X.Services.Data.StorageService.Instance.Storage.UpdateFieldById<ExtensionManifestDataModel>(item.Id, "IsExtEnabled", 1);
             else
-                X.Services.Data.StorageService.Instance.Storage.Insert(new ExtensionManifestDataModel() { Uid = uid, IsExtEnabled = true });
+            {
+                var newItem = new ExtensionManifestDataModel() { Uid = item.TitleHashed, IsExtEnabled = true };
+                X.Services.Data.StorageService.Instance.Storage.Insert(newItem);
+                item.Id = newItem.Id;
+            }
 
             item.IsExtEnabled = true;
+            item.ExternalRaisePropertyChanged("IsExtEnabled");
         }
 
 
         private void butDisable_Click(object sender, RoutedEventArgs e)
         {
-            dynamic item = ((Button)sender).DataContext;
-            var uid = FlickrNet.UtilityMethods.MD5Hash(item.Title);
-            var id = 0;
-            try
-            {
-                id = item.Id;
-            }
-            catch (Exception ex){
-                //id doesnt exist so create a new one
-            }
-
-            
-            if(id>0)
-                X.Services.Data.StorageService.Instance.Storage.UpdateFieldById<ExtensionManifestDataModel>(id, "IsExtEnabled", 0);
+            ExtensionViewModel item = ((Button)sender).DataContext as ExtensionViewModel;
+            if (item.Id > 0)
+                X.Services.Data.StorageService.Instance.Storage.UpdateFieldById<ExtensionManifestDataModel>(item.Id, "IsExtEnabled", 0);
             else
-                X.Services.Data.StorageService.Instance.Storage.Insert(new ExtensionManifestDataModel() { Uid = uid, IsExtEnabled = false });
+            {
+                var newItem = new ExtensionManifestDataModel() { Uid = item.TitleHashed, IsExtEnabled = false };
+                X.Services.Data.StorageService.Instance.Storage.Insert(newItem);
+                item.Id = newItem.Id;
+            }
+                
 
             item.IsExtEnabled = false;
-
+            item.ExternalRaisePropertyChanged("IsExtEnabled");
         }
 
         //private void butClose_PointerReleased(object sender, PointerRoutedEventArgs e)

@@ -68,13 +68,9 @@ namespace X.Services.Data
             this.SqliteDb.Update(value);
         }
 
-        public async void Insert(ISqliteBase item)
+        public int Insert(ISqliteBase item)
         {
-            try
-            {
-                var newId = this.SqliteDb.Insert(item);
-            }
-            catch (Exception ex) { }
+            return this.SqliteDb.Insert(item);
         }
 
         public void Truncate<T>()

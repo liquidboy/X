@@ -13,24 +13,24 @@ namespace X.Extensions.UI
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var toolbarPosition = (string)value;
+            var toolbarPosition = (ExtensionInToolbarPositions)value;
 
             var positions = "";
             
-            if (toolbarPosition.Contains(ExtensionInToolbarPositions.Left.ToString())) {
+            if (toolbarPosition.Equals(ExtensionInToolbarPositions.Left)) {
                 positions += "left";
             }
-            if (toolbarPosition.Contains(ExtensionInToolbarPositions.Top.ToString()))
+            if (toolbarPosition.Equals(ExtensionInToolbarPositions.Top))
             {
                 positions += "top";
             }
-            if (toolbarPosition.Contains(ExtensionInToolbarPositions.Right.ToString()))
+            if (toolbarPosition.Equals(ExtensionInToolbarPositions.Right))
             {
                 positions += "right";
             }
-            if (toolbarPosition.Contains(ExtensionInToolbarPositions.Bottom.ToString()))
+            if (toolbarPosition.Equals(ExtensionInToolbarPositions.Bottom))
             {
-                if (toolbarPosition.Contains(ExtensionInToolbarPositions.BottomFull.ToString()))
+                if (toolbarPosition.Equals(ExtensionInToolbarPositions.BottomFull))
                     positions += "bottom-full";
                 else 
                     positions += "bottom";

@@ -126,6 +126,10 @@
       <Project>{8f44d040-4e29-4f15-9134-4fa93b192cfa}</Project>
       <Name>X.Browser.ViewModels</Name>
     </ProjectReference>
+    <ProjectReference Include="..\X.CoreLib\X.CoreLib.csproj">
+      <Project>{d273509d-612c-47c3-b2a6-c203d96b90d3}</Project>
+      <Name>X.CoreLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\X.Services.Data\X.Services.Data.csproj">
       <Project>{9cf3fa6f-8edd-4c98-a505-a6614aa214cd}</Project>
       <Name>X.Services.Data</Name>
