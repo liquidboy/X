@@ -6,6 +6,7 @@
     <localc:InverseBooleanConverter x:Key="InverseBooleanConverter" ></localc:InverseBooleanConverter>
     <localc:BooleanToVisibilityConverter x:Key="FalseToVisibleConverter" IsReversed="True" />
     <localc:TabsMarginLeftConverter x:Key="TabsMarginLeftConverter" ></localc:TabsMarginLeftConverter>
+    <localc:CleanFaviconConverter x:Key="CleanFaviconConverter" ></localc:CleanFaviconConverter>
     <Style x:Key="TabButtonStyle" TargetType="Button">
         <Setter
 			Property="Background"

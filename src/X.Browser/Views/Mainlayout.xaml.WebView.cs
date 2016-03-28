@@ -68,7 +68,7 @@ namespace X.Browser.Views
                 {
                     BrowserVM vm = this.DataContext as BrowserVM;
 
-                    vm.SelectedTab.FaviconUri = ea.Favicon;
+                    vm.SelectedTab.FaviconUri = ea.Favicon.Replace(".svg",".ico");
                     vm.SelectedTab.ExternalRaisePropertyChanged("FaviconUri");
                     //vm.ExposedRaisePropertyChanged("SelectedTab");
 
