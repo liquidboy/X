@@ -16,7 +16,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
+using X.Services.Data;
 
 namespace X.Extensions.UIComponentExtensions
 {
@@ -44,6 +44,18 @@ namespace X.Extensions.UIComponentExtensions
             if (message is ResponseListOfInstalledExtensionsEventArgs ) {
                 var ea = (ResponseListOfInstalledExtensionsEventArgs)message;
                 tbExtensionCount.Text = ea.ExtensionsMetadata.Count() + " extensions";
+
+                var extensionsInStorage = X.Services.Data.StorageService.Instance.Storage.RetrieveList<ExtensionManifestDataModel>();
+                foreach (dynamic emd in ea.ExtensionsMetadata) {
+                    var uid = emd.TitleHashed;
+                    var found = extensionsInStorage.Where(x => x.Uid == uid).ToList();
+                    if (found != null && found.Count() > 0) {
+                        emd.Id = found.First().Id;
+                        emd.IsExtEnabled = found.First().IsExtEnabled;
+                    }
+                }
+
+
                 icMain.ItemsSource = ea.ExtensionsMetadata;
             }
         }
@@ -57,6 +69,51 @@ namespace X.Extensions.UIComponentExtensions
         {
             _SendMessageSource?.Raise(this, new RequestListOfInstalledExtensionsEventArgs() { ReceiverType = ExtensionType.UIComponent });
 
+
+        }
+
+        private void butEnable_Click(object sender, RoutedEventArgs e)
+        {
+            dynamic item = ((Button)sender).DataContext;
+            var uid = FlickrNet.UtilityMethods.MD5Hash(item.Title);
+            var id = 0;
+            try
+            {
+                id = item.Id;
+            }
+            catch (Exception ex)
+            {
+                //id doesnt exist so create a new one
+            }
+            if (id > 0)
+                X.Services.Data.StorageService.Instance.Storage.UpdateFieldById<ExtensionManifestDataModel>(id, "IsExtEnabled", 1);
+            else
+                X.Services.Data.StorageService.Instance.Storage.Insert(new ExtensionManifestDataModel() { Uid = uid, IsExtEnabled = true });
+
+            item.IsExtEnabled = true;
+        }
+
+
+        private void butDisable_Click(object sender, RoutedEventArgs e)
+        {
+            dynamic item = ((Button)sender).DataContext;
+            var uid = FlickrNet.UtilityMethods.MD5Hash(item.Title);
+            var id = 0;
+            try
+            {
+                id = item.Id;
+            }
+            catch (Exception ex){
+                //id doesnt exist so create a new one
+            }
+
+            
+            if(id>0)
+                X.Services.Data.StorageService.Instance.Storage.UpdateFieldById<ExtensionManifestDataModel>(id, "IsExtEnabled", 0);
+            else
+                X.Services.Data.StorageService.Instance.Storage.Insert(new ExtensionManifestDataModel() { Uid = uid, IsExtEnabled = false });
+
+            item.IsExtEnabled = false;
 
         }
 

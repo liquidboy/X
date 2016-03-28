@@ -43,7 +43,7 @@
         </StackPanel>-->
 
         <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,10,0,10" Grid.Row="1">
-            <ItemsControl x:Name="icMain" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding ExtensionsMetadata}" >
+            <ItemsControl x:Name="icMain" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  >
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border BorderBrush="LightGray" BorderThickness="0,0,0,1">
@@ -82,8 +82,8 @@
                                         </StackPanel>
                                         
                                         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" >
-                                            <Button Content="Enable" Background="Transparent" BorderBrush="#FFB9B9B9" BorderThickness="1" Padding="5" FontSize="12" Margin="5" Visibility="{Binding IsExtEnabled, Converter={StaticResource FalseToVisibleConverter}}"></Button>
-                                            <Button Content="Disable" Background="Transparent" BorderBrush="#FFB9B9B9" BorderThickness="1" Padding="5" FontSize="12" Margin="5" Visibility="{Binding IsExtEnabled, Converter={StaticResource TrueToVisibleConverter}}"></Button>
+                                            <Button x:Name="butEnable" Content="Enable" Click="butEnable_Click" Background="Transparent" BorderBrush="#FFB9B9B9" BorderThickness="1" Padding="5" FontSize="12" Margin="5" Visibility="{Binding IsExtEnabled, Converter={StaticResource FalseToVisibleConverter}}"></Button>
+                                            <Button x:Name="butDisable" Content="Disable" Click="butDisable_Click" Background="Transparent" BorderBrush="#FFB9B9B9" BorderThickness="1" Padding="5" FontSize="12" Margin="5" Visibility="{Binding IsExtEnabled, Converter={StaticResource TrueToVisibleConverter}}"></Button>
                                             <Button Content="Uninstall" Background="Transparent" BorderBrush="#FFB9B9B9" BorderThickness="1" Padding="5" FontSize="12" Visibility="{Binding CanUninstall, Converter={StaticResource TrueToVisibleConverter}}"></Button>
                                         </StackPanel>
                                     </Grid>

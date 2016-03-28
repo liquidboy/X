@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace X.Services.Data
 {
-    public class ExtensionManifestDataModel : BaseDataModel, IDataModel
+    public class ExtensionManifestDataModel : BaseDataModel, IDataModel, ISqliteBase
     {
         public int FoundInToolbarPositions { get; set; }
         public int LaunchInDockPositions { get; set; }
         public bool IsExtEnabled { get; set; }
-
+        public string Index1 { get; set; }
     }
 }

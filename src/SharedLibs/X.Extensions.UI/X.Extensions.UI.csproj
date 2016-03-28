@@ -184,6 +184,10 @@
       <Project>{bd6d553a-4777-4d54-9289-3e9e4289604f}</Project>
       <Name>X.Extensions</Name>
     </ProjectReference>
+    <ProjectReference Include="..\X.Services.Data\X.Services.Data.csproj">
+      <Project>{9cf3fa6f-8edd-4c98-a505-a6614aa214cd}</Project>
+      <Name>X.Services.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\X.Services.Extensions\X.Services.Extensions.csproj">
       <Project>{6ef45f7f-fc6b-49f3-ab26-3ae0678fae05}</Project>
       <Name>X.Services.Extensions</Name>
