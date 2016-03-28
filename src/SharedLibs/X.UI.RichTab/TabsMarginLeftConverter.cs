@@ -5,9 +5,7 @@ using Windows.UI.Xaml.Data;
 
 namespace X.UI.RichTab.Converters
 {
-    /// <summary>
-    /// Inverts a Boolean .
-    /// </summary>
+
     public class TabsMarginLeftConverter : IValueConverter
     {
    
