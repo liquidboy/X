@@ -107,6 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddTabVM.cs" />
     <Compile Include="BrowserVM.cs" />
     <Compile Include="BrowserVM.Tabs.cs">
       <DependentUpon>BrowserVM.cs</DependentUpon>
@@ -121,7 +122,9 @@
     <Compile Include="Messages\ShowOnebox.cs" />
     <Compile Include="NameValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TabThumbnailSprite.cs" />
     <Compile Include="TabViewModel.cs" />
+    <Compile Include="ViewModelLocator.cs" />
     <Compile Include="WebPageViewModel.cs" />
     <EmbeddedResource Include="Properties\X.Browser.ViewModels.rd.xml" />
   </ItemGroup>

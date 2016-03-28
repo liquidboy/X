@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A705ECFF-11E6-4D30-8FBB-BF1224CDF22D}</ProjectGuid>
+    <ProjectGuid>{5942B71D-E165-4F37-B51C-E4CA49ED6EE6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>X.Viewer</RootNamespace>
-    <AssemblyName>X.Viewer</AssemblyName>
+    <RootNamespace>X.Viewer.DotnetCLI</RootNamespace>
+    <AssemblyName>X.Viewer.DotnetCLI</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
@@ -107,63 +107,24 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContentView.xaml.cs">
-      <DependentUpon>ContentView.xaml</DependentUpon>
+    <Compile Include="CommandLine.xaml.cs">
+      <DependentUpon>CommandLine.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\X.Viewer.rd.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="ContentView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <Compile Include="DotnetCLIRenderer.cs" />
+    <EmbeddedResource Include="Properties\X.Viewer.DotnetCLI.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\X.CoreLib\X.CoreLib.csproj">
       <Project>{d273509d-612c-47c3-b2a6-c203d96b90d3}</Project>
       <Name>X.CoreLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\X.Viewer.Direct2D\X.Viewer.Direct2D.csproj">
-      <Project>{eb771d7b-a35e-4421-b0ae-6e0eac23cc1d}</Project>
-      <Name>X.Viewer.Direct2D</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.Viewer.DotnetCLI\X.Viewer.DotnetCLI.csproj">
-      <Project>{5942b71d-e165-4f37-b51c-e4ca49ed6ee6}</Project>
-      <Name>X.Viewer.DotnetCLI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.Viewer.FFMpeg\X.Viewer.FFMpeg.csproj">
-      <Project>{7ced88a8-bde0-4784-9816-c694d24c628d}</Project>
-      <Name>X.Viewer.FFMpeg</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.Viewer.MediaView\X.Viewer.MediaView.csproj">
-      <Project>{f137a399-43b8-4a26-b2d5-d47bc002d549}</Project>
-      <Name>X.Viewer.MediaView</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.Viewer.Tiles\X.Viewer.Tiles.csproj">
-      <Project>{0ee8b5f2-bafc-4ba7-a6cb-80b35d89c7cc}</Project>
-      <Name>X.Viewer.Tiles</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.Viewer.WebView\X.Viewer.WebView.csproj">
-      <Project>{eeb55f2d-9afe-48f0-8d44-2ed3ed12e36d}</Project>
-      <Name>X.Viewer.WebView</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.Viewer.Win2D\X.Viewer.Win2D.csproj">
-      <Project>{ef311f83-d265-4c38-9ab4-364e002eb1ee}</Project>
-      <Name>X.Viewer.Win2D</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.Viewer.WinComposition\X.Viewer.WinComposition.csproj">
-      <Project>{fd4ba47d-972f-48b1-b87d-e95292027111}</Project>
-      <Name>X.Viewer.WinComposition</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.Viewer.XAML\X.Viewer.XAML.csproj">
-      <Project>{34bf0178-8597-43c8-8dad-509bb7085984}</Project>
-      <Name>X.Viewer.XAML</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="CommandLine.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

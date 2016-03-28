@@ -12,7 +12,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using X.Viewer.FFmpeg;
 
-namespace X.Viewer
+namespace X.Viewer.FFmpeg
 {
     public class FFmpegRenderer : IContentRenderer
     {

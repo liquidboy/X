@@ -103,9 +103,6 @@
     <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Converters\MoreTabBorderThicknessConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\AddTabVM.cs" />
-    <Compile Include="ViewModels\TabThumbnailSprite.cs" />
-    <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\MainLayout.xaml.cs">
       <DependentUpon>MainLayout.xaml</DependentUpon>
     </Compile>
@@ -190,7 +187,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Services\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharedLibs\X.Browser.ViewModels\X.Browser.ViewModels.csproj">

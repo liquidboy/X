@@ -14,7 +14,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using X.Viewer.Tiles;
 
 namespace X.Viewer
 {
@@ -78,7 +77,7 @@ namespace X.Viewer
 
                 if (uriNew.Contains(".mp4") || uriNew.Contains(".mpeg") || uriNew.Contains(".avi") || uriNew.Contains(".webm") || uriNew.Contains(".ogv") || uriNew.Contains(".3gp") || uriNew.Contains(".mkv"))
                 {
-                    cv.Renderer = new FFmpegRenderer();
+                    cv.Renderer = new FFmpeg.FFmpegRenderer();
 
                     //todo : need to find a way to light bind this so as to unbind when unloaded
                     cv.Renderer.SendMessage += (s, ea) => { cv._SendMessageSource.Raise(s, ea); };
@@ -89,7 +88,16 @@ namespace X.Viewer
                     cv.Renderer.UpdateSource(uriNew);
                 }
                 else if (uriNew.Contains(".tile")){
-                    cv.Renderer = new TileRenderer();
+                    cv.Renderer = new Tiles.TileRenderer();
+                    cv.Renderer.SendMessage += (s, ea) => { cv._SendMessageSource.Raise(s, ea); };
+                    cv.Renderer.Load();
+                    cv.layoutRoot.Children.Add(cv.Renderer.RenderElement);
+
+                    cv.Renderer.UpdateSource((string)e.NewValue);
+                }
+                else if (uriNew.Contains(".dotnet"))
+                {
+                    cv.Renderer = new DotnetCLI.DotnetCLIRenderer();
                     cv.Renderer.SendMessage += (s, ea) => { cv._SendMessageSource.Raise(s, ea); };
                     cv.Renderer.Load();
                     cv.layoutRoot.Children.Add(cv.Renderer.RenderElement);
