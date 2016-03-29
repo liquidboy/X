@@ -1,16 +1,21 @@
 ﻿using CoreLib.Extensions;
 using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using WeakEvent;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using X.Browser;
+using X.Services.Data;
 using X.UI.Toolbar;
 
 namespace X.Extensions.UIComponentExtensions
 {
     public sealed partial class ExtensionsIconBarRight : UserControl, IExtension
     {
-        
+        public ObservableCollection<ExtensionViewModel> Extensions { get; set; }
+
         public ExtensionsIconBarRight()
         {
             this.InitializeComponent();
@@ -63,9 +68,19 @@ namespace X.Extensions.UIComponentExtensions
             if (message is ResponseListOfRightToolbarExtensionsEventArgs)
             {
                 var ea = (ResponseListOfRightToolbarExtensionsEventArgs)message;
-                
+
+                if (Extensions == null) Extensions = new ObservableCollection<ExtensionViewModel>();
+                else Extensions.Clear();
+
+                var extensionsInStorage = X.Services.Data.StorageService.Instance.Storage.RetrieveList<ExtensionManifestDataModel>();
                 foreach (var ext in ea.ExtensionsMetadata) {
-                    spExtensions.AddItem(ext.IconUrl, 20, Guid.Parse((string)ext.UniqueID));
+                    var uid = FlickrNet.UtilityMethods.MD5Hash(ext.Title);
+                    var found = extensionsInStorage.Where(x => x.Uid == uid).ToList();
+                    if (found != null && found.Count() > 0)
+                    {
+                        if (found.First().IsExtEnabled) spExtensions.AddItem(ext.IconUrl, 20, Guid.Parse((string)ext.UniqueID));
+                    }
+                    else spExtensions.AddItem(ext.IconUrl, 20, Guid.Parse((string)ext.UniqueID));
                 }
 
                 if (ea.ExtensionsMetadata.Count > 0)
