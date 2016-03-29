@@ -1,5 +1,6 @@
 ﻿using CoreLib.Extensions;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using WeakEvent;
@@ -15,8 +16,6 @@ namespace X.Extensions.UIComponentExtensions
 {
     public sealed partial class ExtensionsIconBarTop : UserControl, IExtension
     {
-        public ObservableCollection<ExtensionViewModel> Extensions { get; set; }
-        
         public ExtensionsIconBarTop()
         {
             this.InitializeComponent();
@@ -76,29 +75,38 @@ namespace X.Extensions.UIComponentExtensions
 
         private bool _canUninstall = false;
         public bool CanUninstall { get { return _canUninstall; } set { _canUninstall = value; } }
-        
+
+        private IList<dynamic> _extensions;
 
         public void RecieveMessage(object message)
         {
             if (message is ResponseListOfTopToolbarExtensionsEventArgs)
             {
                 var ea = (ResponseListOfTopToolbarExtensionsEventArgs)message;
-
-                if (Extensions == null) Extensions = new ObservableCollection<ExtensionViewModel>();
-                else Extensions.Clear();
-
-                var extensionsInStorage = X.Services.Data.StorageService.Instance.Storage.RetrieveList<ExtensionManifestDataModel>();
-                foreach (var ext in ea.ExtensionsMetadata) {
-                    var uid = FlickrNet.UtilityMethods.MD5Hash(ext.Title);
-                    var found = extensionsInStorage.Where(x => x.Uid == uid).ToList();
-                    if (found != null && found.Count() > 0)
-                    {
-                        if (found.First().IsExtEnabled) spExtensions.AddItem(ext.IconUrl, 20, Guid.Parse((string)ext.UniqueID));
-                    }
-                    else spExtensions.AddItem(ext.IconUrl, 20, Guid.Parse((string)ext.UniqueID));
-                }
+                _extensions = ea.ExtensionsMetadata;
+                RefreshExtensionsFromStorage();
+            }
+            else if (message is RequestRefreshToolbarExtensionsEventArgs)
+            {
+                RefreshExtensionsFromStorage();
             }
         }
+
+        private void RefreshExtensionsFromStorage() {
+            spExtensions.ClearAll();
+            var extensionsInStorage = X.Services.Data.StorageService.Instance.Storage.RetrieveList<ExtensionManifestDataModel>();
+            foreach (var ext in _extensions)
+            {
+                var uid = FlickrNet.UtilityMethods.MD5Hash(ext.Title);
+                var found = extensionsInStorage.Where(x => x.Uid == uid).ToList();
+                if (found != null && found.Count() > 0)
+                {
+                    if (found.First().IsExtEnabled) spExtensions.AddItem(ext.IconUrl, 20, Guid.Parse((string)ext.UniqueID));
+                }
+                else spExtensions.AddItem(ext.IconUrl, 20, Guid.Parse((string)ext.UniqueID));
+            }
+        }
+
 
         public void OnPaneLoad()
         {

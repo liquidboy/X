@@ -100,6 +100,8 @@ namespace X.Extensions.UIComponentExtensions
 
             item.IsExtEnabled = true;
             item.ExternalRaisePropertyChanged("IsExtEnabled");
+
+            _SendMessageSource?.Raise(this, new RequestRefreshToolbarExtensionsEventArgs() { ReceiverType = ExtensionType.UIComponent });
         }
 
 
@@ -118,11 +120,14 @@ namespace X.Extensions.UIComponentExtensions
 
             item.IsExtEnabled = false;
             item.ExternalRaisePropertyChanged("IsExtEnabled");
+
+            _SendMessageSource?.Raise(this, new RequestRefreshToolbarExtensionsEventArgs() { ReceiverType = ExtensionType.UIComponent });
         }
 
         //private void butClose_PointerReleased(object sender, PointerRoutedEventArgs e)
         //{
         //    SendMessage?.Invoke(this, new CloseExtensionEventArgs() { ReceiverType = ExtensionType.UIComponent, ExtensionUniqueGuid = ExtensionManifest.UniqueID });
         //}
+
     }
 }

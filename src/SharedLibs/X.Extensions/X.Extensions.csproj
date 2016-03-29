@@ -114,6 +114,7 @@
     <Compile Include="Contracts\LoadInstalledExtensionsEventArgs.cs" />
     <Compile Include="Contracts\LoadWebViewEventArgs.cs" />
     <Compile Include="Contracts\OSToastEventArgs.cs" />
+    <Compile Include="Contracts\RequestRefreshToolbarExtensionsEventArgs.cs" />
     <Compile Include="Contracts\RequestListOfBottomToolbarExtensionsEventArgs.cs" />
     <Compile Include="Contracts\RequestListOfInstalledExtensionsEventArgs.cs" />
     <Compile Include="Contracts\RequestListOfLeftToolbarExtensionsEventArgs.cs" />

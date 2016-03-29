@@ -64,7 +64,14 @@ namespace X.UI.Toolbar
         }
 
         List<ImageButton> _itemsToDraw = new List<ImageButton>();
-
+        public void ClearAll() {
+            if (_spExtensions == null) return;
+            if (_spExtensions.Children == null) return;
+            foreach (var ext in _spExtensions.Children) {
+                ((ImageButton)ext).Click -= NewIcon_Click;
+            }
+            _spExtensions.Children.Clear();
+        }
         public void AddItem(string iconUrl, double height, Guid uniqueId) {
 
             
