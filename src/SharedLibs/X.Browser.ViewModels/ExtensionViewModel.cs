@@ -41,7 +41,7 @@ namespace X.Browser
             CanUninstall = bool.Parse(extensionManifest.CanUninstall);
 
             FoundInToolbarPositions = Enum.Parse(typeof(ExtensionInToolbarPositions), extensionManifest.FoundInToolbarPositions);
-            LaunchInDockPositions = Enum.Parse(typeof(ExtensionInToolbarPositions), extensionManifest.FoundInToolbarPositions);
+            LaunchInDockPositions = Enum.Parse(typeof(ExtensionInToolbarPositions), extensionManifest.LaunchInDockPositions);
         }
 
         public void Load(ExtensionManifestDataModel extensionManifest) {
