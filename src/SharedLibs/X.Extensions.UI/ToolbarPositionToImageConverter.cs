@@ -17,26 +17,12 @@ namespace X.Extensions.UI
 
             var positions = "";
             
-            if (toolbarPosition.Equals(ExtensionInToolbarPositions.Left)) {
-                positions += "left";
-            }
-            if (toolbarPosition.Equals(ExtensionInToolbarPositions.Top))
-            {
-                positions += "top";
-            }
-            if (toolbarPosition.Equals(ExtensionInToolbarPositions.Right))
-            {
-                positions += "right";
-            }
-            if (toolbarPosition.Equals(ExtensionInToolbarPositions.Bottom))
-            {
-                if (toolbarPosition.Equals(ExtensionInToolbarPositions.BottomFull))
-                    positions += "bottom-full";
-                else 
-                    positions += "bottom";
-            }
+            if (toolbarPosition.Equals(ExtensionInToolbarPositions.Left)) positions += "left";
+            if (toolbarPosition.Equals(ExtensionInToolbarPositions.Top)) positions += "top";
+            if (toolbarPosition.Equals(ExtensionInToolbarPositions.Right)) positions += "right";
+            if (toolbarPosition.Equals(ExtensionInToolbarPositions.Bottom)) positions += "bottom";
+            if (toolbarPosition.Equals(ExtensionInToolbarPositions.BottomFull)) positions += "bottom-full";
             
-
             if (positions.Length == 0) return "ms-appx:///X.Extensions.UI/Assets/Extensions/tb-none.png";
             else return "ms-appx:///X.Extensions.UI/Assets/Extensions/tb-" + positions + ".png";
 

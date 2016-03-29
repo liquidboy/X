@@ -47,6 +47,8 @@ namespace X.Browser
         public void Load(ExtensionManifestDataModel extensionManifest) {
             Id = extensionManifest.Id;
             IsExtEnabled = extensionManifest.IsExtEnabled;
+            LaunchInDockPositions = (ExtensionInToolbarPositions)extensionManifest.LaunchInDockPositions;
+            FoundInToolbarPositions = (ExtensionInToolbarPositions)extensionManifest.FoundInToolbarPositions;
         }
 
         public void ExternalRaisePropertyChanged(string propName) { RaisePropertyChanged(propName); }

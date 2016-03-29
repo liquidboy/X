@@ -93,7 +93,7 @@ namespace X.Extensions.UIComponentExtensions
                 X.Services.Data.StorageService.Instance.Storage.UpdateFieldById<ExtensionManifestDataModel>(item.Id, "IsExtEnabled", 1);
             else
             {
-                var newItem = new ExtensionManifestDataModel() { Uid = item.TitleHashed, IsExtEnabled = true };
+                var newItem = new ExtensionManifestDataModel() { Uid = item.TitleHashed, IsExtEnabled = true , FoundInToolbarPositions = (int)item.FoundInToolbarPositions , LaunchInDockPositions = (int)item.LaunchInDockPositions };
                 X.Services.Data.StorageService.Instance.Storage.Insert(newItem);
                 item.Id = newItem.Id;
             }
@@ -112,7 +112,7 @@ namespace X.Extensions.UIComponentExtensions
                 X.Services.Data.StorageService.Instance.Storage.UpdateFieldById<ExtensionManifestDataModel>(item.Id, "IsExtEnabled", 0);
             else
             {
-                var newItem = new ExtensionManifestDataModel() { Uid = item.TitleHashed, IsExtEnabled = false };
+                var newItem = new ExtensionManifestDataModel() { Uid = item.TitleHashed, IsExtEnabled = false , FoundInToolbarPositions = (int)item.FoundInToolbarPositions, LaunchInDockPositions = (int)item.LaunchInDockPositions };
                 X.Services.Data.StorageService.Instance.Storage.Insert(newItem);
                 item.Id = newItem.Id;
             }
@@ -120,6 +120,53 @@ namespace X.Extensions.UIComponentExtensions
 
             item.IsExtEnabled = false;
             item.ExternalRaisePropertyChanged("IsExtEnabled");
+
+            _SendMessageSource?.Raise(this, new RequestRefreshToolbarExtensionsEventArgs() { ReceiverType = ExtensionType.UIComponent });
+        }
+
+        private void butToggleFoundIn_Click(object sender, RoutedEventArgs e)
+        {
+            ExtensionViewModel item = ((Button)sender).DataContext as ExtensionViewModel;
+
+            if (item.FoundInToolbarPositions == ExtensionInToolbarPositions.Left) item.FoundInToolbarPositions = ExtensionInToolbarPositions.Top;
+            else if (item.FoundInToolbarPositions == ExtensionInToolbarPositions.Top) item.FoundInToolbarPositions = ExtensionInToolbarPositions.Right;
+            else if (item.FoundInToolbarPositions == ExtensionInToolbarPositions.Right) item.FoundInToolbarPositions = ExtensionInToolbarPositions.Bottom;
+            else item.FoundInToolbarPositions = ExtensionInToolbarPositions.Left;
+
+            item.ExternalRaisePropertyChanged("FoundInToolbarPositions");
+
+            if (item.Id > 0)
+                X.Services.Data.StorageService.Instance.Storage.UpdateFieldById<ExtensionManifestDataModel>(item.Id, "FoundInToolbarPositions", (int)item.FoundInToolbarPositions);
+            else
+            {
+                var newItem = new ExtensionManifestDataModel() { Uid = item.TitleHashed, IsExtEnabled = item.IsExtEnabled, FoundInToolbarPositions = (int)item.FoundInToolbarPositions, LaunchInDockPositions = (int)item.LaunchInDockPositions };
+                X.Services.Data.StorageService.Instance.Storage.Insert(newItem);
+                item.Id = newItem.Id;
+            }
+
+            _SendMessageSource?.Raise(this, new RequestRefreshToolbarExtensionsEventArgs() { ReceiverType = ExtensionType.UIComponent });
+        }
+
+        private void butToggleLaunchIn_Click(object sender, RoutedEventArgs e)
+        {
+            ExtensionViewModel item = ((Button)sender).DataContext as ExtensionViewModel;
+
+            if (item.LaunchInDockPositions == ExtensionInToolbarPositions.Left) item.LaunchInDockPositions = ExtensionInToolbarPositions.Top;
+            else if (item.LaunchInDockPositions == ExtensionInToolbarPositions.Top) item.LaunchInDockPositions = ExtensionInToolbarPositions.Right;
+            else if (item.LaunchInDockPositions == ExtensionInToolbarPositions.Right) item.LaunchInDockPositions = ExtensionInToolbarPositions.Bottom;
+            else if (item.LaunchInDockPositions == ExtensionInToolbarPositions.Bottom) item.LaunchInDockPositions = ExtensionInToolbarPositions.BottomFull;
+            else item.LaunchInDockPositions = ExtensionInToolbarPositions.Left;
+
+            item.ExternalRaisePropertyChanged("LaunchInDockPositions");
+
+            if (item.Id > 0)
+                X.Services.Data.StorageService.Instance.Storage.UpdateFieldById<ExtensionManifestDataModel>(item.Id, "LaunchInDockPositions", (int)item.LaunchInDockPositions);
+            else
+            {
+                var newItem = new ExtensionManifestDataModel() { Uid = item.TitleHashed, IsExtEnabled = item.IsExtEnabled, FoundInToolbarPositions = (int)item.FoundInToolbarPositions, LaunchInDockPositions = (int)item.LaunchInDockPositions };
+                X.Services.Data.StorageService.Instance.Storage.Insert(newItem);
+                item.Id = newItem.Id;
+            }
 
             _SendMessageSource?.Raise(this, new RequestRefreshToolbarExtensionsEventArgs() { ReceiverType = ExtensionType.UIComponent });
         }

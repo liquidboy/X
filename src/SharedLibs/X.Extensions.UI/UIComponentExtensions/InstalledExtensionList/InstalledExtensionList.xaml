@@ -77,11 +77,11 @@
                                             <TextBlock Text="Panel" Width="50" FontSize="9"  />
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
-                                            <Button Width="49" Height="34" Padding="0" Background="Transparent">
+                                            <Button x:Name="butToggleFoundIn" Width="49" Height="34" Padding="0" Background="Transparent" Click="butToggleFoundIn_Click">
                                                 <Image Source="{Binding FoundInToolbarPositions, Converter={StaticResource ToolbarPositionToImageConverter}}" VerticalAlignment="Top" Width="45" Height="40" Opacity="0.7" Stretch="Uniform" />
                                             </Button>
-                                            <Button Width="49" Height="34"  Margin="15,0,0,0" Padding="0"  Background="Transparent">
-                                                <Image Source="{Binding LaunchInDockPositions, Converter={StaticResource ToolbarPositionToImageConverter}}" VerticalAlignment="Top"  Width="45" Height="40" Opacity="0.7" Stretch="Uniform" />
+                                            <Button x:Name="butToggleLaunchIn" Width="49" Height="38"  Margin="15,5,0,0" Padding="0"  Background="Transparent" Click="butToggleLaunchIn_Click">
+                                                <Image Source="{Binding LaunchInDockPositions, Converter={StaticResource ToolbarPositionToImageConverter}}" VerticalAlignment="Top"  Width="45" Height="45" Opacity="0.7" Stretch="Uniform" />
                                             </Button>
                                         </StackPanel>
                                         
