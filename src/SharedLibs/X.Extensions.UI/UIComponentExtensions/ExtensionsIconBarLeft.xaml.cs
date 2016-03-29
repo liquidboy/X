@@ -19,7 +19,7 @@ namespace X.Extensions.UIComponentExtensions
         {
             this.InitializeComponent();
 
-            ExtensionManifest = new ExtensionManifest("Bottom Extensions Toolbar", string.Empty, "Sample Extensions", "1.0", "A UI to manage all the installed extensions in the Left Toolbar", ExtensionInToolbarPositions.None, ExtensionInToolbarPositions.None);
+            ExtensionManifest = new ExtensionManifest("Left Extensions Toolbar", string.Empty, "Sample Extensions", "1.0", "A UI to manage all the installed extensions in the Left Toolbar", ExtensionInToolbarPositions.None, ExtensionInToolbarPositions.None);
         }
 
         private void LoadExtensions()

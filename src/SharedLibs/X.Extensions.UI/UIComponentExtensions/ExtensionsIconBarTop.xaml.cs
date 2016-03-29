@@ -19,8 +19,8 @@ namespace X.Extensions.UIComponentExtensions
         public ExtensionsIconBarTop()
         {
             this.InitializeComponent();
-            ExtensionManifest = new ExtensionManifest("Bottom Extensions Toolbar", string.Empty, "Sample Extensions", "1.0", "A UI to manage all the installed extensions in the Top Toolbar", ExtensionInToolbarPositions.None, ExtensionInToolbarPositions.None);
-            layoutRoot.DataContext = this;
+            ExtensionManifest = new ExtensionManifest("Top Extensions Toolbar", string.Empty, "Sample Extensions", "1.0", "A UI to manage all the installed extensions in the Top Toolbar", ExtensionInToolbarPositions.None, ExtensionInToolbarPositions.None);
+            //layoutRoot.DataContext = this;
         }
 
         private void LoadExtensions()
