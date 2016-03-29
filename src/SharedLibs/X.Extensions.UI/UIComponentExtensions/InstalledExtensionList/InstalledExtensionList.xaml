@@ -77,8 +77,12 @@
                                             <TextBlock Text="Panel" Width="50" FontSize="9"  />
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
-                                            <Image Source="{Binding FoundInToolbarPositions, Converter={StaticResource ToolbarPositionToImageConverter}}" VerticalAlignment="Top" Width="45" Height="40" Opacity="0.7" Stretch="Uniform" />
-                                            <Image Source="{Binding LaunchInDockPositions, Converter={StaticResource ToolbarPositionToImageConverter}}" VerticalAlignment="Top"  Width="45" Height="40" Opacity="0.7" Stretch="Uniform" Margin="15,0,0,0" />
+                                            <Button Width="49" Height="34" Padding="0" Background="Transparent">
+                                                <Image Source="{Binding FoundInToolbarPositions, Converter={StaticResource ToolbarPositionToImageConverter}}" VerticalAlignment="Top" Width="45" Height="40" Opacity="0.7" Stretch="Uniform" />
+                                            </Button>
+                                            <Button Width="49" Height="34"  Margin="15,0,0,0" Padding="0"  Background="Transparent">
+                                                <Image Source="{Binding LaunchInDockPositions, Converter={StaticResource ToolbarPositionToImageConverter}}" VerticalAlignment="Top"  Width="45" Height="40" Opacity="0.7" Stretch="Uniform" />
+                                            </Button>
                                         </StackPanel>
                                         
                                         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" >
