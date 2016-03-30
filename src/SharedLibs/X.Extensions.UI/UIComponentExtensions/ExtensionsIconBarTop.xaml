@@ -6,17 +6,20 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:controls="using:X.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:X.Extensions.UI"
     mc:Ignorable="d"
     d:DesignHeight="30"
     d:DesignWidth="400">
-
+    <UserControl.Resources>
+        <local:BooleanToVisibilityConverter x:Key="FalseToVisibleConverter" IsReversed="False" ></local:BooleanToVisibilityConverter>
+    </UserControl.Resources>
     <Grid x:Name="layoutRoot">
         <StackPanel Orientation="Horizontal">
 
             <xuitb:Toolbar x:Name="spExtensions"  Orientation="Horizontal" Click="spExtensions_Click" />
 
 
-            <Image Source="ms-appx:///X.Extensions.UI/Assets/Extensions/Separator.png" Height="30" Width="20" Opacity="0.7" />
+            <Image Source="ms-appx:///X.Extensions.UI/Assets/Extensions/Separator.png" Height="30" Width="20" Opacity="0.7" Visibility="{Binding HasExtensions,ElementName=spExtensions, Converter={StaticResource FalseToVisibleConverter}}" />
 
             <xuitb:ImageButton x:Name="butExtensionStore"  IconUri="ms-appx:///X.Extensions.UI/UIComponentExtensions/InstalledExtensionList/InstalledExtensionList.png" Width="20" Height="20" Margin="0,0, 10,0" PointerReleased="butExtensionStore_PointerReleased" />
             

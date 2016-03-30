@@ -71,11 +71,9 @@ namespace X.UI.Toolbar
                 ((ImageButton)ext).Click -= NewIcon_Click;
             }
             _spExtensions.Children.Clear();
+            HasExtensions = false;
         }
         public void AddItem(string iconUrl, double height, Guid uniqueId) {
-
-            
-
             ImageButton newIcon;
 
             if (Orientation == Orientation.Horizontal)
@@ -87,7 +85,20 @@ namespace X.UI.Toolbar
 
             if (_spExtensions == null) _itemsToDraw.Add(newIcon);
             else  _spExtensions.Children.Add(newIcon);
+
+            HasExtensions = true; 
         }
+
+
+
+        public bool HasExtensions
+        {
+            get { return (bool)GetValue(HasExtensionsProperty); }
+            set { SetValue(HasExtensionsProperty, value); }
+        }
+
+        public static readonly DependencyProperty HasExtensionsProperty =
+            DependencyProperty.Register("HasExtensions", typeof(bool), typeof(Toolbar), new PropertyMetadata(false));
 
         private void NewIcon_Click(object sender, RoutedEventArgs e)
         {
