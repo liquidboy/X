@@ -49,7 +49,7 @@ namespace X.UI.Toolbar
                 rootLayout.PointerReleased += RootLayout_PointerReleased;
 
                 imgMain = (Image)GetTemplateChild("imgMain");
-                imgMain.Source = new BitmapImage(new Uri(IconUri));
+                if(!string.IsNullOrEmpty(IconUri))imgMain.Source = new BitmapImage(new Uri(IconUri));
             }
 
             base.OnApplyTemplate();

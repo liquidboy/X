@@ -42,9 +42,10 @@ namespace X.Browser.Views
 
             //Find a way to reflect this in
             //Installer.GetExtensionManifests().ForEach(x => { X.Services.Extensions.ExtensionsService.Instance.Install(x); });
-            LoadThirdPartyExtensions();
-
-            X.Services.Extensions.ExtensionsService.Instance.Install(X.Extensions.ThirdParty.GitX.Installer.GetManifest());
+            //X.Services.Extensions.ExtensionsService.Instance.Install(X.Extensions.ThirdParty.GitX.Installer.GetManifest());
+            LoadThirdPartyExtensions(Installer.GetExtensionManifests());
+            LoadThirdPartyExtensions(new List<ExtensionManifest>{ X.Extensions.ThirdParty.GitX.Installer.GetManifest() });
+            
 
 
             ctlExtensionsBarTop.InstallMyself(); // does Install + LoadExtensions
@@ -57,9 +58,8 @@ namespace X.Browser.Views
         }
 
 
-        private void LoadThirdPartyExtensions()
+        private void LoadThirdPartyExtensions(List<ExtensionManifest> thirdPartyExtensions)
         {
-            var thirdPartyExtensions = Installer.GetExtensionManifests();
             var extensionsInStorage = X.Services.Data.StorageService.Instance.Storage.RetrieveList<Services.Data.ExtensionManifestDataModel>();
             foreach (var ext in thirdPartyExtensions)
             {
@@ -171,8 +171,6 @@ namespace X.Browser.Views
 
                     newExtensionInstance.OnPaneLoad();
                 }
-
-
             }
             else if (message is CloseExtensionEventArgs)
             {
