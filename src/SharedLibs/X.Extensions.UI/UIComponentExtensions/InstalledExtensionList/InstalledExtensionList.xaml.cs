@@ -101,6 +101,8 @@ namespace X.Extensions.UIComponentExtensions
             item.IsExtEnabled = true;
             item.ExternalRaisePropertyChanged("IsExtEnabled");
 
+            X.Services.Extensions.ExtensionsService.Instance.UpdateExtension(item);
+
             _SendMessageSource?.Raise(this, new RequestRefreshToolbarExtensionsEventArgs() { ReceiverType = ExtensionType.UIComponent });
         }
 
@@ -120,6 +122,8 @@ namespace X.Extensions.UIComponentExtensions
 
             item.IsExtEnabled = false;
             item.ExternalRaisePropertyChanged("IsExtEnabled");
+
+            X.Services.Extensions.ExtensionsService.Instance.UpdateExtension(item);
 
             _SendMessageSource?.Raise(this, new RequestRefreshToolbarExtensionsEventArgs() { ReceiverType = ExtensionType.UIComponent });
         }
@@ -144,6 +148,8 @@ namespace X.Extensions.UIComponentExtensions
                 item.Id = newItem.Id;
             }
 
+            X.Services.Extensions.ExtensionsService.Instance.UpdateExtension(item);
+
             _SendMessageSource?.Raise(this, new RequestRefreshToolbarExtensionsEventArgs() { ReceiverType = ExtensionType.UIComponent });
         }
 
@@ -167,6 +173,8 @@ namespace X.Extensions.UIComponentExtensions
                 X.Services.Data.StorageService.Instance.Storage.Insert(newItem);
                 item.Id = newItem.Id;
             }
+
+            X.Services.Extensions.ExtensionsService.Instance.UpdateExtension(item);
 
             _SendMessageSource?.Raise(this, new RequestRefreshToolbarExtensionsEventArgs() { ReceiverType = ExtensionType.UIComponent });
         }

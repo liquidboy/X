@@ -331,7 +331,14 @@ namespace X.Services.Extensions
             throw new NotImplementedException();
         }
 
-
+        public void UpdateExtension(IExtensionManifest manifest) {
+            var found = _extensions.Where(x => x.Manifest.UniqueID.ToString() == manifest.UniqueID.ToString()).FirstOrDefault();
+            if (found != null) {
+                found.Manifest.IsExtEnabled = manifest.IsExtEnabled;
+                found.Manifest.LaunchInDockPositions = manifest.LaunchInDockPositions;
+                found.Manifest.FoundInToolbarPositions = manifest.FoundInToolbarPositions;
+            }
+        }
 
 
 
