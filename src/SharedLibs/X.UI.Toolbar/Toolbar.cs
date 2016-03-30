@@ -37,8 +37,18 @@ namespace X.UI.Toolbar
             set { SetValue(OrientationProperty, value); }
         }
 
-        public static readonly DependencyProperty OrientationProperty =
-            DependencyProperty.Register("Orientation", typeof(Orientation), typeof(Toolbar), new PropertyMetadata(Orientation.Horizontal));
+        public bool HasExtensions
+        {
+            get { return (bool)GetValue(HasExtensionsProperty); }
+            set { SetValue(HasExtensionsProperty, value); }
+        }
+
+
+
+
+        public static readonly DependencyProperty HasExtensionsProperty = DependencyProperty.Register("HasExtensions", typeof(bool), typeof(Toolbar), new PropertyMetadata(false));
+        
+        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register("Orientation", typeof(Orientation), typeof(Toolbar), new PropertyMetadata(Orientation.Horizontal));
 
         
 
@@ -91,14 +101,6 @@ namespace X.UI.Toolbar
 
 
 
-        public bool HasExtensions
-        {
-            get { return (bool)GetValue(HasExtensionsProperty); }
-            set { SetValue(HasExtensionsProperty, value); }
-        }
-
-        public static readonly DependencyProperty HasExtensionsProperty =
-            DependencyProperty.Register("HasExtensions", typeof(bool), typeof(Toolbar), new PropertyMetadata(false));
 
         private void NewIcon_Click(object sender, RoutedEventArgs e)
         {
