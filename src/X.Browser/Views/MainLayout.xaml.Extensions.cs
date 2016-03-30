@@ -41,7 +41,9 @@ namespace X.Browser.Views
 
 
             //Find a way to reflect this in
-            Installer.GetExtensionManifests().ForEach(x => { X.Services.Extensions.ExtensionsService.Instance.Install(x); });
+            //Installer.GetExtensionManifests().ForEach(x => { X.Services.Extensions.ExtensionsService.Instance.Install(x); });
+            LoadThirdPartyExtensions();
+
             X.Services.Extensions.ExtensionsService.Instance.Install(X.Extensions.ThirdParty.GitX.Installer.GetManifest());
 
 
@@ -53,6 +55,25 @@ namespace X.Browser.Views
             //Messenger.Default.Register<ShowInstalledExtensionsMessage>(this, ShowInstalledExtensionsMessage);
 
         }
+
+
+        private void LoadThirdPartyExtensions()
+        {
+            var thirdPartyExtensions = Installer.GetExtensionManifests();
+            var extensionsInStorage = X.Services.Data.StorageService.Instance.Storage.RetrieveList<Services.Data.ExtensionManifestDataModel>();
+            foreach (var ext in thirdPartyExtensions)
+            {
+                var found = extensionsInStorage.Where(x => x.Uid == ext.TitleHashed).ToList();
+                if (found != null && found.Count() > 0)
+                {
+                    ext.IsExtEnabled = found.First().IsExtEnabled;
+                    ext.LaunchInDockPositions = (ExtensionInToolbarPositions)found.First().LaunchInDockPositions;
+                    ext.FoundInToolbarPositions = (ExtensionInToolbarPositions)found.First().FoundInToolbarPositions;
+                }
+                X.Services.Extensions.ExtensionsService.Instance.Install(ext);
+            }
+        }
+
 
         void UnInitExtensions()
         {
