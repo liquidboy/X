@@ -12,8 +12,6 @@ namespace X.Extensions.ThirdParty.GitX
         public static ExtensionManifest GetManifest() {
 
             return new ExtensionManifest("Git X", "ms-appx:///Extensions/ThirdParty/gitx/gitx.png", "Sample Extensions", "1.0", "GitHub Client", ExtensionInToolbarPositions.Right, ExtensionInToolbarPositions.Right) { ContentControl = "X.Extensions.ThirdParty.GitX.Content", AssemblyName= "X.Extensions.ThirdParty.GitX" , IsExtEnabled = false };
-
-            
         }
     }
 }
