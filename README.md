@@ -41,4 +41,13 @@ And implementing them in a demo app "X.Browser" .. Which is a demonstration brow
 
 ![lastrefreshed](https://pbs.twimg.com/media/CegWtACWEAABrgZ.jpg:large)
 
+
+- Showing the startup time of a .NET Native compiled x64 version of the X.Browser app
+
 [![.NET Native startup time](http://img.youtube.com/vi/j_8Bx6TEX4w/0.jpg)](https://www.youtube.com/watch?v=j_8Bx6TEX4w ".NET Native startup time")
+
+
+- Showing how the extensions model works in the sample. Preparing for using the new extensions feature of the "aniversary" uwp application model
+
+[![Third-party Extensions model](http://img.youtube.com/vi/PP1sNBbdQx8/0.jpg)](https://www.youtube.com/watch?v=PP1sNBbdQx8 "Third-party Extensions model")
+
