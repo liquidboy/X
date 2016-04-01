@@ -186,9 +186,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\SharedLibs\X.Browser.ViewModels\X.Browser.ViewModels.csproj">
       <Project>{8f44d040-4e29-4f15-9134-4fa93b192cfa}</Project>
