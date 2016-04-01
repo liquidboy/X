@@ -41,6 +41,9 @@ And implementing them in a demo app "X.Browser" .. Which is a demonstration brow
 
 ![X.Browser 001](https://pbs.twimg.com/media/Cc3G7ufUUAQS6qK.jpg:large)
 
+
+- Below image shows how each tab can be "pinned" to the start menu and "docked" in the tab list on the left (like Edge)
+
 ![lastrefreshed](https://pbs.twimg.com/media/CegWtACWEAABrgZ.jpg:large)
 
 
