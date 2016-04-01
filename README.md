@@ -40,3 +40,5 @@ And implementing them in a demo app "X.Browser" .. Which is a demonstration brow
 ![X.Browser 001](https://pbs.twimg.com/media/Cc3G7ufUUAQS6qK.jpg:large)
 
 ![lastrefreshed](https://pbs.twimg.com/media/CegWtACWEAABrgZ.jpg:large)
+
+[![.NET Native startup time](http://img.youtube.com/vi/j_8Bx6TEX4w/0.jpg)](https://www.youtube.com/watch?v=j_8Bx6TEX4w ".NET Native startup time")
