@@ -22,11 +22,9 @@
     
     
     -->
-    <Grid>
-        <Canvas x:Name="cvMain" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White" Margin="0">
-            <controls:PageLayout Width="360" Height="640" Canvas.Left="100" Canvas.Top="100"></controls:PageLayout>
-            <controls:PageLayout Width="360" Height="640" Canvas.Left="560" Canvas.Top="100"></controls:PageLayout>
-            <controls:PageLayout Width="360" Height="640" Canvas.Left="1020" Canvas.Top="100"></controls:PageLayout>
+    <Grid x:Name="layoutRoot">
+        <Canvas x:Name="cvMain" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White" >
+            
         </Canvas>
         <controls:Toolbar x:Name="toolbar" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,20,0" PerformAction="toolbar_PerformAction" ></controls:Toolbar>
     </Grid>

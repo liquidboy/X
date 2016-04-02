@@ -16,5 +16,7 @@
         <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="LightGray" BorderThickness="1" ></Border>
         <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="LightGray" BorderThickness="0,1,0,0" Margin="-7,0,0,0" ></Border>
         <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="LightGray" BorderThickness="1,0,0,0" Margin="0,-7,0,0" ></Border>
+
+        <local:PageLayers HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-50, 0"></local:PageLayers>
     </Grid>
 </UserControl>

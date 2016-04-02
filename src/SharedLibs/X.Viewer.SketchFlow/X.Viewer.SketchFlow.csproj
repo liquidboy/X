@@ -107,6 +107,9 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\PageLayers.xaml.cs">
+      <DependentUpon>PageLayers.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PageLayout.xaml.cs">
       <DependentUpon>PageLayout.xaml</DependentUpon>
     </Compile>
@@ -118,6 +121,7 @@
     <Compile Include="SketchView.xaml.cs">
       <DependentUpon>SketchView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels.cs" />
     <EmbeddedResource Include="Properties\X.Viewer.SketchFlow.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +135,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\PageLayers.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\PageLayout.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
