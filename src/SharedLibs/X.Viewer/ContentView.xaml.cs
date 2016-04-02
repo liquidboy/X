@@ -113,6 +113,15 @@ namespace X.Viewer
 
                     cv.Renderer.UpdateSource((string)e.NewValue);
                 }
+                else if (uriNew.Contains(".sketch"))
+                {
+                    cv.Renderer = new SketchFlow.SketchFlowRenderer();
+                    cv.Renderer.SendMessage += (s, ea) => { cv._SendMessageSource.Raise(s, ea); };
+                    cv.Renderer.Load();
+                    cv.layoutRoot.Children.Add(cv.Renderer.RenderElement);
+
+                    cv.Renderer.UpdateSource((string)e.NewValue);
+                }
                 else
                 {
                     cv.Renderer = new WebViewRenderer();

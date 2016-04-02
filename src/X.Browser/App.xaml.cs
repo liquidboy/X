@@ -119,7 +119,6 @@ namespace X.Browser
             
 
         }
-        
-        //public static StorageService StorageSvc;
+   
     }
 }

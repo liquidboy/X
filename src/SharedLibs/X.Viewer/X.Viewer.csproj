@@ -148,6 +148,10 @@
       <Project>{f137a399-43b8-4a26-b2d5-d47bc002d549}</Project>
       <Name>X.Viewer.MediaView</Name>
     </ProjectReference>
+    <ProjectReference Include="..\X.Viewer.SketchFlow\X.Viewer.SketchFlow.csproj">
+      <Project>{76cbfc4c-bce1-4938-898c-1f570cc1314e}</Project>
+      <Name>X.Viewer.SketchFlow</Name>
+    </ProjectReference>
     <ProjectReference Include="..\X.Viewer.Tiles\X.Viewer.Tiles.csproj">
       <Project>{0ee8b5f2-bafc-4ba7-a6cb-80b35d89c7cc}</Project>
       <Name>X.Viewer.Tiles</Name>
