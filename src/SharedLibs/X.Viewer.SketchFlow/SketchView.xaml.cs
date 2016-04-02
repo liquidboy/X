@@ -2,6 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Media;
 
 namespace X.Viewer.SketchFlow
 {
@@ -65,7 +66,27 @@ namespace X.Viewer.SketchFlow
             _renderer.SendMessageThru(null, new ContentViewEventArgs() { Type = actionToPerform });
         }
 
-
+        private void layoutRoot_PointerWheelChanged(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            //var delta = 25;
+            var change = e.GetCurrentPoint(null).Properties.MouseWheelDelta;
+            var ct = cvMain.RenderTransform as CompositeTransform;
+            
+            if (change > 0)
+            {
+                ct.ScaleX += -0.05;
+                ct.ScaleY += -0.05;
+                if (ct.ScaleX <= 0.3) ct.ScaleX = 0.3;
+                if (ct.ScaleY <= 0.3) ct.ScaleY = 0.3;
+            }
+            else if (change < 0)
+            {
+                ct.ScaleX += 0.05;
+                ct.ScaleY += 0.05;
+                if (ct.ScaleX >= 2.0) ct.ScaleX = 2.0;
+                if (ct.ScaleY >= 2.0) ct.ScaleY = 2.0;
+            }
+        }
     }
 
 
