@@ -183,7 +183,8 @@ namespace X.Browser.ViewModels
             Tabs.Add(CreateDefaultTab("Apple", "http://www.apple.com/favicon.ico?v2", "http://www.apple.com", DateTime.MinValue));
             Tabs.Add(CreateDefaultTab("Google", "http://www.google.com/favicon.ico?v2", "http://www.google.com", DateTime.MinValue));
             Tabs.Add(CreateDefaultTab("YouTube", "http://www.youtube.com/favicon.ico?v2", "http://www.youtube.com", DateTime.MinValue));
-            Tabs.Add(CreateDefaultTab("Sketch", "https://www.sketchapp.com/favicon.ico?v2", "app://demo-application.sketch", DateTime.MinValue));
+            Tabs.Add(CreateDefaultTab("Sketch", "https://www.sketchapp.com/favicon.ico?v2", "viewer://sketchflow-application.sketch", DateTime.MinValue));
+            Tabs.Add(CreateDefaultTab("Flickr", "https://www.flickr.com/favicon.ico?v2", "viewer://flickr-application.flickr", DateTime.MinValue));
 
         }
 
