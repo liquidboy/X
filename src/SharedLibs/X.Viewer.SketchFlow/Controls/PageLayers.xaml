@@ -9,10 +9,13 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
+    <UserControl.Resources>
+        <converters:LayerEnabledToColorConverter x:Key="LayerEnabledToColorConverter" />
+    </UserControl.Resources>
     <ItemsControl ItemsSource="{Binding Layers}">
         <ItemsControl.ItemTemplate>
             <DataTemplate>
-                <Border BorderBrush="LightGray" BorderThickness="1" Width="40" Height="10" Margin="0,3,0,0"></Border>
+                <Border x:Name="butEnableDisable" BorderBrush="LightGray" BorderThickness="1" Width="40" Height="10" Background="{Binding IsEnabled,  Converter={StaticResource LayerEnabledToColorConverter}}" Margin="0,3,0,0" PointerPressed="butEnableDisable_PointerPressed"></Border>
             </DataTemplate>
         </ItemsControl.ItemTemplate>
     </ItemsControl>

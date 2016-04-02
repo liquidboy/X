@@ -13,15 +13,24 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace X.Viewer.SketchFlow.Controls
 {
     public sealed partial class PageLayers : UserControl
     {
+        public event EventHandler LayerChanged;
+
         public PageLayers()
         {
             this.InitializeComponent();
+        }
+
+        private void butEnableDisable_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            var pl = ((FrameworkElement)sender).DataContext as PageLayer;
+            pl.IsEnabled = !pl.IsEnabled;
+            pl.ExternalPC("IsEnabled");
+            LayerChanged?.Invoke(null, EventArgs.Empty);
         }
     }
 }

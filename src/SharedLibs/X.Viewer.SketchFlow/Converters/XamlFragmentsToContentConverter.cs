@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -18,7 +19,7 @@ namespace X.Viewer.SketchFlow.Converters
         {
             var layers = (IList<PageLayer>)value;
             
-            foreach (var layer in layers) {
+            foreach (var layer in layers.Where(x=>x.IsEnabled)) {
                 
                 var xaml = "";
                 foreach (var xamlFragment in layer.XamlFragments) {
