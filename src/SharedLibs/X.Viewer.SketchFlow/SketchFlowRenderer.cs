@@ -43,7 +43,7 @@ namespace X.Viewer.SketchFlow
 
         public void Unload()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public void UpdateSource(string uri)
