@@ -12,8 +12,6 @@ namespace X.Viewer.SketchFlow
 
         public SketchView(IContentRenderer renderer)
         {
-            
-
             this.InitializeComponent();
 
             vm = new Sketch();
@@ -51,6 +49,9 @@ namespace X.Viewer.SketchFlow
             nc.SetValue(Canvas.TopProperty, pg.Top);
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
+
+            vm.Pages[1].Layers[0].XamlFragments.Add(@"<Rectangle HorizontalAlignment=""Stretch"" VerticalAlignment=""Stretch"" Fill=""Black""></Rectangle>");
+            vm.Pages[1].ExternalPC("Layers");
         }
 
         public void Dispose()

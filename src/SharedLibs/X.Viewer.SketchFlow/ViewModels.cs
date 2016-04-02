@@ -30,11 +30,18 @@ namespace X.Viewer.SketchFlow
         {
             Layers = new ObservableCollection<PageLayer>();
         }
+        public void ExternalPC(string propertyName) {
+            RaisePropertyChanged(propertyName);
+        }
     }
 
     public class PageLayer : ViewModelBase
     {
+        public ObservableCollection<string> XamlFragments { get; set; }
 
+        public PageLayer() {
+            XamlFragments = new ObservableCollection<string>();
+        }
 
     }
 }
