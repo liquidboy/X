@@ -9,10 +9,24 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-
+<!--
+    PC-Mobile
+    
+    360 x 640
+    1366 x 768
+    1920 x 1080
+    
+    Console
+    
+    960 x 540
+    
+    
+    -->
     <Grid>
-        <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White" Margin="0">
-            <controls:PageLayout Width="640" Height="480" Canvas.Left="200" Canvas.Top="200"></controls:PageLayout>
+        <Canvas x:Name="cvMain" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White" Margin="0">
+            <controls:PageLayout Width="360" Height="640" Canvas.Left="100" Canvas.Top="100"></controls:PageLayout>
+            <controls:PageLayout Width="360" Height="640" Canvas.Left="560" Canvas.Top="100"></controls:PageLayout>
+            <controls:PageLayout Width="360" Height="640" Canvas.Left="1020" Canvas.Top="100"></controls:PageLayout>
         </Canvas>
         <controls:Toolbar x:Name="toolbar" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,20,0" PerformAction="toolbar_PerformAction" ></controls:Toolbar>
     </Grid>

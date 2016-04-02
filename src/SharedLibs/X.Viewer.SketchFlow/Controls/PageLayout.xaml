@@ -11,8 +11,10 @@
     d:DesignWidth="400">
 
     <Grid>
-        <TextBlock Text="{Binding ElementName=root, Path=Width}" Foreground="LightGray" FontSize="14" Margin="0,-23,0,0"></TextBlock>
+        <TextBlock Text="{Binding ElementName=root, Path=Width}" Foreground="LightGray" FontSize="14" Margin="4,-23,0,0"></TextBlock>
         <TextBlock Text="{Binding ElementName=root, Path=Height}" Foreground="LightGray" FontSize="14" Margin="-30,0,0,0"></TextBlock>
-        <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="LightGray" BorderThickness="1"></Border>
+        <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="LightGray" BorderThickness="1" ></Border>
+        <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="LightGray" BorderThickness="0,1,0,0" Margin="-7,0,0,0" ></Border>
+        <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="LightGray" BorderThickness="1,0,0,0" Margin="0,-7,0,0" ></Border>
     </Grid>
 </UserControl>

@@ -23,5 +23,7 @@ namespace X.Viewer.SketchFlow
             var actionToPerform = (string)sender;
             _renderer.SendMessageThru(null, new ContentViewEventArgs() { Type = actionToPerform });
         }
+
+
     }
 }
