@@ -2,7 +2,8 @@
 
 Quickly build rich UI's in your Universal Application .. 
 
-[IMPORTANT : im currently implementing effectlayer across the Input controls SO it is very buggy with lots of redraw/invalidate issues]
+
+[IMPORTANT : UAP SQLITE has a bug ...  (SQLite.UAP.2015, Version=3.10.2)   for x64 fails to pass thru the 64 bit dll's. RUN the application as an x86 platform app for the time being till the extension is resolved]
 
 
 Components still being fleshed out...
