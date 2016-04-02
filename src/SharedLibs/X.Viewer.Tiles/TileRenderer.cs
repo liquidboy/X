@@ -49,5 +49,10 @@ namespace X.Viewer.Tiles
         {
             
         }
+
+        public void SendMessageThru(object source, ContentViewEventArgs ea)
+        {
+            this.SendMessage?.Invoke(source, ea);
+        }
     }
 }

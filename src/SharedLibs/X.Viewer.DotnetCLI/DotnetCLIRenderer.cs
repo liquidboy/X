@@ -49,5 +49,10 @@ namespace X.Viewer.DotnetCLI
         {
             
         }
+
+        public void SendMessageThru(object source, ContentViewEventArgs ea)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

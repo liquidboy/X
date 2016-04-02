@@ -1,25 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace X.Viewer.SketchFlow
 {
-    public sealed partial class SketchView : UserControl
+    public sealed partial class SketchView : UserControl, IDisposable
     {
-        public SketchView()
+        IContentRenderer _renderer;
+
+        public SketchView(IContentRenderer renderer)
         {
+            _renderer = renderer;
             this.InitializeComponent();
+        }
+
+        public void Dispose()
+        {
+            _renderer = null;
+        }
+
+        private void toolbar_PerformAction(object sender, EventArgs e)
+        {
+            var actionToPerform = (string)sender;
+            _renderer.SendMessageThru(null, new ContentViewEventArgs() { Type = actionToPerform });
         }
     }
 }

@@ -138,5 +138,10 @@ namespace X.Viewer.FFmpeg
 
             return match.Success;
         }
+
+        public void SendMessageThru(object source, ContentViewEventArgs ea)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

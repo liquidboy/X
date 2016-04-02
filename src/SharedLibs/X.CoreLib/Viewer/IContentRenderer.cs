@@ -17,6 +17,7 @@ namespace X.Viewer
         void Load();
         void Unload();
         void UpdateSource(string uri);
+        void SendMessageThru(object source, ContentViewEventArgs ea);
 
         Task CaptureThumbnail(Windows.Storage.Streams.InMemoryRandomAccessStream ms);
         

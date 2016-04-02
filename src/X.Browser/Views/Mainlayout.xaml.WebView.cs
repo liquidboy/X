@@ -68,7 +68,7 @@ namespace X.Browser.Views
                 {
                     BrowserVM vm = this.DataContext as BrowserVM;
 
-                    vm.SelectedTab.FaviconUri = ea.Favicon.Replace(".svg",".ico");
+                    vm.SelectedTab.FaviconUri = ea.Favicon.Replace(".svg", ".ico");
                     vm.SelectedTab.ExternalRaisePropertyChanged("FaviconUri");
                     //vm.ExposedRaisePropertyChanged("SelectedTab");
 
@@ -164,6 +164,47 @@ namespace X.Browser.Views
                     //prLoading.IsActive = false;
                     //ShowHideUriArea(1);
                     //sbHideLoading.Begin();
+                }
+                else if (ea.Type == "SnapViewer")
+                {
+                    var uriHash = FlickrNet.UtilityMethods.MD5Hash(vm.SelectedTab.OriginalUri); //   e.Uri);
+                    using (InMemoryRandomAccessStream ms = new InMemoryRandomAccessStream())
+                    {
+                        await wvMain.Renderer?.CaptureThumbnail(ms);
+
+                        //img: Banner 400 width
+                        //ms.Seek(0);
+                        await X.Services.Image.Service.Instance.GenerateResizedImageAsync(400, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + ".png", X.Services.Image.Service.location.MediumFolder);
+
+                        //img: Thumbnail
+                        ms.Seek(0);
+                        await X.Services.Image.Service.Instance.GenerateResizedImageAsync(180, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + ".png", X.Services.Image.Service.location.ThumbFolder);
+
+                        //img: Tile
+                        ms.Seek(0);
+                        await X.Services.Image.Service.Instance.GenerateResizedImageAsync(71, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + ".png", X.Services.Image.Service.location.TileFolder, 71);
+
+                        ms.Seek(0);
+                        await X.Services.Image.Service.Instance.GenerateResizedImageAsync(150, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + "-150x150.png", X.Services.Image.Service.location.TileFolder, 150);
+
+                        ms.Seek(0);
+                        await X.Services.Image.Service.Instance.GenerateResizedImageAsync(310, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + "-310x150.png", X.Services.Image.Service.location.TileFolder, 150);
+
+                        ms.Seek(0);
+                        await X.Services.Image.Service.Instance.GenerateResizedImageAsync(310, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + "-310x310.png", X.Services.Image.Service.location.TileFolder, 310);
+
+
+                        //update tile
+                        //var sxxxxx = Windows.Storage.ApplicationData.Current.LocalFolder;
+                        X.Services.Tile.Service.UpdatePrimaryTile("X.Browser",
+                            "ms-appdata:///local/tile/" + uriHash + "-150x150.png",
+                            "ms-appdata:///local/tile/" + uriHash + "-310x150.png",
+                            "ms-appdata:///local/tile/" + uriHash + "-310x310.png",
+                            "ms-appdata:///local/tile/" + uriHash + ".png"
+                            );
+
+                        ms.Dispose();
+                    }
                 }
             }
             catch (Exception ex){

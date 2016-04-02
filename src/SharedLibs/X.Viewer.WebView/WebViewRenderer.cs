@@ -227,6 +227,9 @@ namespace X.Viewer
             await _renderElement.CapturePreviewToStreamAsync(ms);
         }
 
-
+        public void SendMessageThru(object source, ContentViewEventArgs ea)
+        {
+            this.SendMessage?.Invoke(source, ea);
+        }
     }
 }
