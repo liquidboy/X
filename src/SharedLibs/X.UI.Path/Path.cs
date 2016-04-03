@@ -35,8 +35,21 @@ namespace X.UI.Path
             get { return (double)GetValue(PathHeightProperty); }
             set { SetValue(PathHeightProperty, value); }
         }
+        
+        public double Rotation
+        {
+            get { return (double)GetValue(RotationProperty); }
+            set { SetValue(RotationProperty, value); }
+        }
 
 
+
+
+
+
+
+        public static readonly DependencyProperty RotationProperty =
+            DependencyProperty.Register("Rotation", typeof(double), typeof(Path), new PropertyMetadata(0));
 
         public static readonly DependencyProperty PathHeightProperty =
             DependencyProperty.Register("PathHeight", typeof(double), typeof(Path), new PropertyMetadata(20));
@@ -115,6 +128,10 @@ namespace X.UI.Path
             {
                 dataPath = "M0,42.393001L10.830997,42.393001 10.830997,55.657001 0,55.657001z M13.374001,31.669L24.205999,31.669 24.205999,55.658001 13.374001,55.658001z M26.639,21.056999L37.471,21.056999 37.471,55.658001 26.639,55.658001z M39.903999,10.446999L50.734999,10.446999 50.734999,55.657001 39.903999,55.657001z M53.167999,0L63.999,0 63.999,55.658001 53.167999,55.658001z";
             }
+            else if (typeOfPath == PathType.More)
+            {
+                dataPath = "M2.8150252,17.479C4.3696795,17.479 5.6300002,18.739332 5.6300002,20.29395 5.6300002,21.848667 4.3696795,23.109001 2.8150252,23.109001 1.2603809,23.109001 6.2182664E-08,21.848667 0,20.29395 6.2182664E-08,18.739332 1.2603809,17.479 2.8150252,17.479z M2.8150252,8.7399998C4.3696795,8.7399998 5.6300002,10.000317 5.6300002,11.55504 5.6300002,13.109663 4.3696795,14.37 2.8150252,14.37 1.260381,14.37 6.2182664E-08,13.109663 0,11.55504 6.2182664E-08,10.000317 1.260381,8.7399998 2.8150252,8.7399998z M2.8150252,0C4.3696795,0 5.6300002,1.2605648 5.6300002,2.8150654 5.6300002,4.3696756 4.3696795,5.6300001 2.8150252,5.6300001 1.260381,5.6300001 6.2182664E-08,4.3696756 0,2.8150654 6.2182664E-08,1.2605648 1.260381,0 2.8150252,0z";
+            }
 
             if (!string.IsNullOrEmpty(dataPath))
             {
@@ -138,6 +155,7 @@ namespace X.UI.Path
         BatteryLow,
         BatteryCharging,
         Wifi1,
-        Wifi2
+        Wifi2,
+        More
     }
 }

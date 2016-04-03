@@ -35,7 +35,17 @@ namespace X.Viewer.SketchFlow
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
 
-            pg = new SketchPage() { Width = 360, Height = 640, Top = 100, Left = 560 };
+            pg = new SketchPage() { Width = 360, Height = 640, Top = 100, Left = 600 };
+            pg.Layers.Add(new PageLayer());
+            pg.Layers.Add(new PageLayer());
+            pg.Layers.Add(new PageLayer());
+            nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
+            nc.SetValue(Canvas.LeftProperty, pg.Left);
+            nc.SetValue(Canvas.TopProperty, pg.Top); 
+            cvMain.Children.Add(nc);
+            vm.Pages.Add(pg);
+
+            pg = new SketchPage() { Width = 360, Height = 640, Top = 100, Left = 1100 };
             pg.Layers.Add(new PageLayer());
             pg.Layers.Add(new PageLayer());
             pg.Layers.Add(new PageLayer());
@@ -45,17 +55,7 @@ namespace X.Viewer.SketchFlow
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
 
-            pg = new SketchPage() { Width = 360, Height = 640, Top = 100, Left = 1020 };
-            pg.Layers.Add(new PageLayer());
-            pg.Layers.Add(new PageLayer());
-            pg.Layers.Add(new PageLayer());
-            nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
-            nc.SetValue(Canvas.LeftProperty, pg.Left);
-            nc.SetValue(Canvas.TopProperty, pg.Top);
-            cvMain.Children.Add(nc);
-            vm.Pages.Add(pg);
-
-            pg = new SketchPage() { Width = 360, Height = 640, Top = 100, Left = 1480 };
+            pg = new SketchPage() { Width = 360, Height = 640, Top = 100, Left = 1600 };
             pg.Layers.Add(new PageLayer());
             pg.Layers.Add(new PageLayer());
             nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
@@ -65,6 +65,7 @@ namespace X.Viewer.SketchFlow
             vm.Pages.Add(pg);
             
             vm.Pages[1].Layers[0].XamlFragments.Add(@"<Rectangle HorizontalAlignment=""Stretch"" VerticalAlignment=""Stretch"" Fill=""Black""></Rectangle>");
+            vm.Pages[1].Layers[1].XamlFragments.Add(@"<Rectangle Fill=""#FF252525"" Height=""40"" Opacity=""0.8"" HorizontalAlignment=""Stretch"" VerticalAlignment=""Bottom""/><StackPanel Orientation=""Horizontal"" HorizontalAlignment=""Right"" VerticalAlignment=""Bottom"" Margin=""0,0,5,5"" ><StackPanel Orientation=""Vertical""><TextBlock Text=""4:49 PM"" Margin=""7,0,0,0"" FontSize=""12"" Foreground=""White"" /><TextBlock Text=""3/04/2016"" FontSize=""12"" Foreground=""White"" /></StackPanel><xuip:Path PathType=""More"" Rotation=""90"" Width=""20"" Height=""30"" Foreground=""White"" /></StackPanel>");
             vm.Pages[1].ExternalPC("Layers");
             
             vm.Pages[2].Layers[0].XamlFragments.Add(@"<Rectangle Fill=""Black"" />");
@@ -73,7 +74,7 @@ namespace X.Viewer.SketchFlow
             vm.Pages[2].ExternalPC("Layers");
 
             vm.Pages[3].Layers[0].XamlFragments.Add(@"<Rectangle Fill=""Black"" />");
-            vm.Pages[3].Layers[0].XamlFragments.Add(@"<Rectangle Fill=""#FF252525"" Height=""160"" HorizontalAlignment=""Stretch"" VerticalAlignment=""Top""/>");
+            vm.Pages[3].Layers[0].XamlFragments.Add(@"<Rectangle Fill=""#FF252525"" Height=""30"" Opacity=""0.4"" HorizontalAlignment=""Stretch"" VerticalAlignment=""Top""/>");
             vm.Pages[3].Layers[1].XamlFragments.Add(@"<StackPanel Orientation=""Horizontal"" HorizontalAlignment=""Left"" VerticalAlignment=""Top"" Margin=""10,5,0,0""><xuip:Path PathType=""Wifi2"" PathWidth=""30"" PathHeight=""15"" Width=""30"" Height=""20"" Foreground=""White"" Margin=""0,0,2,0"" /><xuip:Path PathType=""Wifi1"" Width=""20"" Height=""20"" Foreground=""White"" /></StackPanel>");
             vm.Pages[3].Layers[1].XamlFragments.Add(@"<StackPanel Orientation=""Horizontal"" HorizontalAlignment=""Right"" VerticalAlignment=""Top"" Margin=""0,5,10,0""><xuip:Path PathType=""BatteryLow"" Width=""35"" Height=""22"" Foreground=""White""  /></StackPanel>");
             vm.Pages[3].ExternalPC("Layers");

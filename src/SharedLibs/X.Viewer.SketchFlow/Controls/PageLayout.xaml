@@ -11,12 +11,21 @@
     d:DesignWidth="400">
 
     <Grid>
-        <TextBlock Text="{Binding ElementName=root, Path=Width}" Foreground="LightGray" FontSize="14" Margin="4,-23,0,0"></TextBlock>
-        <TextBlock Text="{Binding ElementName=root, Path=Height}" Foreground="LightGray" FontSize="14" Margin="-30,0,0,0"></TextBlock>
+        <!-- Top Left label -->
+        <TextBlock Text="0" Foreground="LightGray" FontSize="14" Margin="4,-23,0,0"></TextBlock>
+        <TextBlock Text="0" Foreground="LightGray" FontSize="14" Margin="-15,0,0,0"></TextBlock>
         <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="LightGray" BorderThickness="1" ></Border>
         <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="LightGray" BorderThickness="0,1,0,0" Margin="-7,0,0,0" ></Border>
         <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="LightGray" BorderThickness="1,0,0,0" Margin="0,-7,0,0" ></Border>
 
+        <!-- Bottom Right label -->
+        <TextBlock Text="{Binding ElementName=root, Path=Width}" Foreground="LightGray" FontSize="14" Margin="0,0,4,-23" HorizontalAlignment="Right" VerticalAlignment="Bottom"></TextBlock>
+        <TextBlock Text="{Binding ElementName=root, Path=Height}" Foreground="LightGray" FontSize="14" Margin="0,0,-30,0" HorizontalAlignment="Right" VerticalAlignment="Bottom"></TextBlock>
+        <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="LightGray" BorderThickness="0,0,0,1" Margin="0,0,-7,0" ></Border>
+        <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="LightGray" BorderThickness="0,0,1,0" Margin="0,0,0,-7" ></Border>
+        
+        
+        
         <local:PageContent HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></local:PageContent>
         <local:PageLayers x:Name="pgLayer" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="-50,0,0, 0" LayerChanged="pgLayer_LayerChanged" ></local:PageLayers>
     </Grid>

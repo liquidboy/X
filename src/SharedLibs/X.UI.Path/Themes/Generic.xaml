@@ -8,14 +8,14 @@
             <Setter.Value>
                 <ControlTemplate TargetType="local:Path">
                     <Path x:Name="pth" Stretch="Uniform" Fill="{TemplateBinding Foreground}" Width="{TemplateBinding PathWidth}" Height="{TemplateBinding PathHeight}" Margin="{TemplateBinding Margin}" VerticalAlignment="{TemplateBinding VerticalAlignment}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" RenderTransformOrigin="0.5,0.5">
-                        <!--<Path.RenderTransform>
+                        <Path.RenderTransform>
                             <TransformGroup>
                                 <TransformGroup.Children>
-                                    <RotateTransform Angle="0" />
+                                    <RotateTransform Angle="{TemplateBinding Rotation}" />
                                     <ScaleTransform ScaleX="1" ScaleY="1" />
                                 </TransformGroup.Children>
                             </TransformGroup>
-                        </Path.RenderTransform>-->
+                        </Path.RenderTransform>
                     </Path>
                 </ControlTemplate>
             </Setter.Value>
