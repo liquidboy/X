@@ -17,5 +17,15 @@ namespace X.Viewer.SketchFlow.Controls
         {
             if (PerformAction != null) PerformAction("SnapViewer", EventArgs.Empty);
         }
+
+        private void butToolbar_Click(object sender, RoutedEventArgs e)
+        {
+            if (spToolbar.Visibility == Visibility.Visible) {
+                spToolbar.Visibility = Visibility.Collapsed;
+            }
+            else {
+                spToolbar.Visibility = Visibility.Visible;
+            }
+        }
     }
 }

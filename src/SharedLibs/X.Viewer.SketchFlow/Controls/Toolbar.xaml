@@ -11,9 +11,32 @@
     d:DesignWidth="400">
 
     <Grid>
-        <StackPanel Orientation="Horizontal">
-            <Button x:Name="butOne" Click="butOne_Click" >
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
+            <Button x:Name="butToolbar" Click="butToolbar_Click" Background="#BF000000">
+                <xuip:Path PathType="Toolbar" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butOne" Click="butOne_Click" Background="#BF000000">
                 <xuip:Path PathType="Camera" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+        </StackPanel>
+        <StackPanel x:Name="spToolbar" Margin="0,37,45,0" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed">
+            <Button x:Name="butAddPage"  Background="#7F000000">
+                <xuip:Path PathType="PageAdd" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butColorPicker"  Background="#7F000000">
+                <xuip:Path PathType="ColorPicker" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butShape"  Background="#7F000000">
+                <xuip:Path PathType="Shape" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butImage"  Background="#7F000000">
+                <xuip:Path PathType="Image" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butPath"  Background="#7F000000">
+                <xuip:Path PathType="Path" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butText" Background="#7F000000">
+                <xuip:Path PathType="Text" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
         </StackPanel>
     </Grid>
