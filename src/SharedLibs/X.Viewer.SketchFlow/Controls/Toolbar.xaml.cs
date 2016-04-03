@@ -27,5 +27,10 @@ namespace X.Viewer.SketchFlow.Controls
                 spToolbar.Visibility = Visibility.Visible;
             }
         }
+
+        private void butAddPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (PerformAction != null) PerformAction("AddPage", EventArgs.Empty);
+        }
     }
 }

@@ -20,7 +20,7 @@
             </Button>
         </StackPanel>
         <StackPanel x:Name="spToolbar" Margin="0,37,45,0" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed">
-            <Button x:Name="butAddPage"  Background="#7F000000">
+            <Button x:Name="butAddPage"  Background="#7F000000" Click="butAddPage_Click">
                 <xuip:Path PathType="PageAdd" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
             <Button x:Name="butColorPicker"  Background="#7F000000">

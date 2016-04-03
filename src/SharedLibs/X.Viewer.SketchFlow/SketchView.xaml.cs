@@ -79,9 +79,23 @@ namespace X.Viewer.SketchFlow
             vm.Pages[3].Layers[1].XamlFragments.Add(@"<StackPanel Orientation=""Horizontal"" HorizontalAlignment=""Right"" VerticalAlignment=""Top"" Margin=""0,5,10,0""><xuip:Path PathType=""Sound"" Width=""20"" Height=""20"" Foreground=""White""  /><xuip:Path PathType=""BatteryLow"" Width=""35"" Height=""22"" Foreground=""White""  /></StackPanel>");
             vm.Pages[3].ExternalPC("Layers");
 
-
             
         }
+
+
+        private void AddPage() {
+
+            var nextLeft = vm.Pages[vm.Pages.Count - 1].Left + 500;
+
+            var pg = new SketchPage() { Width = 360, Height = 640, Top = 100, Left = nextLeft };
+            pg.Layers.Add(new PageLayer());
+            var nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
+            nc.SetValue(Canvas.LeftProperty, pg.Left);
+            nc.SetValue(Canvas.TopProperty, pg.Top);
+            cvMain.Children.Add(nc);
+            vm.Pages.Add(pg);
+        }
+
 
         public void Dispose()
         {
@@ -91,7 +105,10 @@ namespace X.Viewer.SketchFlow
         private void toolbar_PerformAction(object sender, EventArgs e)
         {
             var actionToPerform = (string)sender;
-            _renderer.SendMessageThru(null, new ContentViewEventArgs() { Type = actionToPerform });
+
+            if (actionToPerform == "SnapViewer") _renderer.SendMessageThru(null, new ContentViewEventArgs() { Type = actionToPerform });
+            else if (actionToPerform == "AddPage") AddPage();
+            
         }
 
         private void layoutRoot_PointerWheelChanged(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
