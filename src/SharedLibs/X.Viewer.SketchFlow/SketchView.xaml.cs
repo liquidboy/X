@@ -48,14 +48,37 @@ namespace X.Viewer.SketchFlow
             pg = new SketchPage() { Width = 360, Height = 640, Top = 100, Left = 1020 };
             pg.Layers.Add(new PageLayer());
             pg.Layers.Add(new PageLayer());
+            pg.Layers.Add(new PageLayer());
             nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
             nc.SetValue(Canvas.LeftProperty, pg.Left);
             nc.SetValue(Canvas.TopProperty, pg.Top);
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
 
+            pg = new SketchPage() { Width = 360, Height = 640, Top = 100, Left = 1480 };
+            pg.Layers.Add(new PageLayer());
+            pg.Layers.Add(new PageLayer());
+            nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
+            nc.SetValue(Canvas.LeftProperty, pg.Left);
+            nc.SetValue(Canvas.TopProperty, pg.Top);
+            cvMain.Children.Add(nc);
+            vm.Pages.Add(pg);
+            
             vm.Pages[1].Layers[0].XamlFragments.Add(@"<Rectangle HorizontalAlignment=""Stretch"" VerticalAlignment=""Stretch"" Fill=""Black""></Rectangle>");
             vm.Pages[1].ExternalPC("Layers");
+            
+            vm.Pages[2].Layers[0].XamlFragments.Add(@"<Rectangle Fill=""Black"" />");
+            vm.Pages[2].Layers[1].XamlFragments.Add(@"<Rectangle Fill=""#FF252525"" Height=""160"" HorizontalAlignment=""Stretch"" VerticalAlignment=""Top""/>");
+            vm.Pages[2].Layers[2].XamlFragments.Add(@"<TextBlock x:Name=""textBlock"" HorizontalAlignment=""Center"" TextWrapping=""Wrap"" Text=""Jose Fajardo"" VerticalAlignment=""Top"" Foreground=""White"" Margin=""0,120,0,0"" /><Ellipse Height=""85"" Margin=""0,15,0,0"" VerticalAlignment=""Top"" Width=""85"" HorizontalAlignment=""Center""><Ellipse.Fill><ImageBrush ImageSource=""http://art.ngfiles.com/images/378000/378294_kukatoo_minecraft-aqua-blue-avatar.png"" Stretch=""UniformToFill"" /></Ellipse.Fill></Ellipse>");
+            vm.Pages[2].ExternalPC("Layers");
+
+            vm.Pages[3].Layers[0].XamlFragments.Add(@"<Rectangle Fill=""Black"" />");
+            vm.Pages[3].Layers[0].XamlFragments.Add(@"<Rectangle Fill=""#FF252525"" Height=""160"" HorizontalAlignment=""Stretch"" VerticalAlignment=""Top""/>");
+            vm.Pages[3].Layers[1].XamlFragments.Add(@"<xuip:Path PathType=""BatteryLow"" Width=""35"" Height=""20"" Foreground=""White"" HorizontalAlignment=""Right"" VerticalAlignment=""Top"" Margin=""0,5,5,0""></xuip:Path>");
+            vm.Pages[3].ExternalPC("Layers");
+
+
+            
         }
 
         public void Dispose()

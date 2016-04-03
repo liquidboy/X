@@ -18,7 +18,7 @@ namespace X.Viewer.SketchFlow.Converters
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             var layers = (IList<PageLayer>)value;
-            
+            var grd = new Grid();
             foreach (var layer in layers.Where(x=>x.IsEnabled)) {
                 
                 var xaml = "";
@@ -26,14 +26,16 @@ namespace X.Viewer.SketchFlow.Converters
                     xaml += xamlFragment;
                 }
 
-                var nsXaml = $"<Grid xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\" HorizontalAlignment=\"Stretch\" VerticalAlignment=\"Stretch\" > {xaml} </Grid>";
+                var nsXaml = $"<Grid xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\" HorizontalAlignment=\"Stretch\" xmlns:xuip=\"using:X.UI.Path\" VerticalAlignment=\"Stretch\" > {xaml} </Grid>";
                 
                 if (xaml.Length > 0) { 
                     var xamlFe = (FrameworkElement)XamlReader.Load(UnescapeString(nsXaml));
-                    return xamlFe;
+                    grd.Children.Add(xamlFe);
                 }
             }
-            
+
+            if (grd.Children.Count > 0) return grd;
+
             return null;
         }
 
