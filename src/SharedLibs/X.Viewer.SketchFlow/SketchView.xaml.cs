@@ -74,7 +74,8 @@ namespace X.Viewer.SketchFlow
 
             vm.Pages[3].Layers[0].XamlFragments.Add(@"<Rectangle Fill=""Black"" />");
             vm.Pages[3].Layers[0].XamlFragments.Add(@"<Rectangle Fill=""#FF252525"" Height=""160"" HorizontalAlignment=""Stretch"" VerticalAlignment=""Top""/>");
-            vm.Pages[3].Layers[1].XamlFragments.Add(@"<xuip:Path PathType=""BatteryLow"" Width=""35"" Height=""20"" Foreground=""White"" HorizontalAlignment=""Right"" VerticalAlignment=""Top"" Margin=""0,5,5,0""></xuip:Path>");
+            vm.Pages[3].Layers[1].XamlFragments.Add(@"<StackPanel Orientation=""Horizontal"" HorizontalAlignment=""Left"" VerticalAlignment=""Top"" Margin=""10,5,0,0""><xuip:Path PathType=""Wifi2"" PathWidth=""30"" PathHeight=""15"" Width=""30"" Height=""20"" Foreground=""White"" Margin=""0,0,2,0"" /><xuip:Path PathType=""Wifi1"" Width=""20"" Height=""20"" Foreground=""White"" /></StackPanel>");
+            vm.Pages[3].Layers[1].XamlFragments.Add(@"<StackPanel Orientation=""Horizontal"" HorizontalAlignment=""Right"" VerticalAlignment=""Top"" Margin=""0,5,10,0""><xuip:Path PathType=""BatteryLow"" Width=""35"" Height=""22"" Foreground=""White""  /></StackPanel>");
             vm.Pages[3].ExternalPC("Layers");
 
 
