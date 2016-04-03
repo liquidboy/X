@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
@@ -10,6 +11,8 @@ namespace X.Viewer.SketchFlow
     {
         IContentRenderer _renderer;
         Sketch vm;
+
+        bool IsMouseDown = false;
 
         public SketchView(IContentRenderer renderer)
         {
@@ -86,6 +89,45 @@ namespace X.Viewer.SketchFlow
                 if (ct.ScaleX >= 2.0) ct.ScaleX = 2.0;
                 if (ct.ScaleY >= 2.0) ct.ScaleY = 2.0;
             }
+        }
+
+
+
+
+
+        PointerPoint ptStart;
+        double ptDifXStart = 0;
+        double ptDifYStart = 0;
+        private void layoutRoot_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            IsMouseDown = true;
+            ptStart = e.GetCurrentPoint(null);
+            
+        }
+
+        private void layoutRoot_PointerReleased(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            IsMouseDown = false;
+
+            ptDifXStart = ptDifX;
+            ptDifYStart = ptDifY;
+
+        }
+
+        double ptDifX = 0;
+        double ptDifY = 0;
+        private void layoutRoot_PointerMoved(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            if (!IsMouseDown) return;
+
+            var ptEnd = e.GetCurrentPoint(null);
+
+            ptDifX = ptDifXStart + ptStart.Position.X - ptEnd.Position.X;
+            ptDifY = ptDifYStart + ptStart.Position.Y - ptEnd.Position.Y;
+
+            var ct = cvMain.RenderTransform as CompositeTransform;
+            ct.TranslateX = -1 * ptDifX;
+            ct.TranslateY = -1 * ptDifY;
         }
     }
 
