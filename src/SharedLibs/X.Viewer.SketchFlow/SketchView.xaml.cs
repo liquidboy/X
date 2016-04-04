@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -83,18 +84,7 @@ namespace X.Viewer.SketchFlow
         }
 
 
-        private void AddPage() {
-
-            var nextLeft = vm.Pages[vm.Pages.Count - 1].Left + 500;
-
-            var pg = new SketchPage() { Width = 360, Height = 640, Top = 100, Left = nextLeft };
-            pg.Layers.Add(new PageLayer());
-            var nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
-            nc.SetValue(Canvas.LeftProperty, pg.Left);
-            nc.SetValue(Canvas.TopProperty, pg.Top);
-            cvMain.Children.Add(nc);
-            vm.Pages.Add(pg);
-        }
+    
 
 
         public void Dispose()
@@ -107,9 +97,43 @@ namespace X.Viewer.SketchFlow
             var actionToPerform = (string)sender;
 
             if (actionToPerform == "SnapViewer") _renderer.SendMessageThru(null, new ContentViewEventArgs() { Type = actionToPerform });
-            else if (actionToPerform == "AddPage") AddPage();
-            
+            else if (actionToPerform == "AddPage640360") AddPage(360, 640);
+            else if (actionToPerform == "AddPage18001200") AddPage(1800, 1200);
+            else if (actionToPerform == "AddPage1400768") AddPage(1400, 768);
+            else if (actionToPerform == "AddPage1600900") AddPage(1600, 900);
+            else if (actionToPerform == "AddPage1200600") AddPage(1200, 600);
+            else if (actionToPerform == "AddPageTiles") {
+                var rect = AddPage(70, 70);
+                var rect2 = AddPage(310, 310, (int)rect.X, (int)(rect.Y + rect.Z + 55));
+                var rect3 = AddPage(310, 150, (int)rect2.X, (int)(rect2.Y + rect2.Z + 55));
+                AddPage(150, 150, -1, (int)rect3.Y);
+            }
         }
+
+        private Vector4 AddPage(int width, int height, int left = -1, int top = -1)
+        {
+            var rect = new Vector4();
+            rect.X = vm.Pages[vm.Pages.Count - 1].Left + vm.Pages[vm.Pages.Count - 1].Width + 150;
+            rect.Y = 100;
+            rect.W = width;
+            rect.Z = height;
+
+            if (left != -1) rect.X = left;
+            if (top != -1) rect.Y = top;
+
+            //var nextLeft = vm.Pages[vm.Pages.Count - 1].Left + vm.Pages[vm.Pages.Count - 1].Width + 150;
+
+            var pg = new SketchPage() { Width = width, Height = height, Top = (int)rect.Y, Left = (int)rect.X };
+            pg.Layers.Add(new PageLayer());
+            var nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
+            nc.SetValue(Canvas.LeftProperty, pg.Left);
+            nc.SetValue(Canvas.TopProperty, pg.Top);
+            cvMain.Children.Add(nc);
+            vm.Pages.Add(pg);
+
+            return rect;
+        }
+
 
         private void layoutRoot_PointerWheelChanged(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
