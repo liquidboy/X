@@ -160,6 +160,8 @@ namespace X.Viewer.SketchFlow
       
         }
 
+        double _scaleX = 0;
+        double _scaleY = 0;
         private void layoutRoot_PointerWheelChanged(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
             //var delta = 25;
@@ -180,6 +182,9 @@ namespace X.Viewer.SketchFlow
                 if (ct.ScaleX >= 2.0) ct.ScaleX = 2.0;
                 if (ct.ScaleY >= 2.0) ct.ScaleY = 2.0;
             }
+
+            _scaleX = ct.ScaleX;
+            _scaleY = ct.ScaleY;
         }
 
 
@@ -223,8 +228,8 @@ namespace X.Viewer.SketchFlow
 
             if (IsMovingPage)
             {
-                _currentPageLayout.SetValue(Canvas.LeftProperty, ptStartPt.X - (ptStart.Position.X - ptEnd.Position.X));
-                _currentPageLayout.SetValue(Canvas.TopProperty, ptStartPt.Y - (ptStart.Position.Y - ptEnd.Position.Y));
+                _currentPageLayout.SetValue(Canvas.LeftProperty, (ptStartPt.X - (ptStart.Position.X - ptEnd.Position.X)));
+                _currentPageLayout.SetValue(Canvas.TopProperty, (ptStartPt.Y - (ptStart.Position.Y - ptEnd.Position.Y)));
                 return;
             }
             else if (IsResizingPage)
