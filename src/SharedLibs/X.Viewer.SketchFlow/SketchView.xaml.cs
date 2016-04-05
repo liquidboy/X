@@ -33,6 +33,7 @@ namespace X.Viewer.SketchFlow
             var nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
             nc.SetValue(Canvas.LeftProperty, pg.Left);
             nc.SetValue(Canvas.TopProperty, pg.Top);
+            nc.PerformAction += Nc_PerformAction;
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
 
@@ -42,7 +43,8 @@ namespace X.Viewer.SketchFlow
             pg.Layers.Add(new PageLayer());
             nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
             nc.SetValue(Canvas.LeftProperty, pg.Left);
-            nc.SetValue(Canvas.TopProperty, pg.Top); 
+            nc.SetValue(Canvas.TopProperty, pg.Top);
+            nc.PerformAction += Nc_PerformAction;
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
 
@@ -53,6 +55,7 @@ namespace X.Viewer.SketchFlow
             nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
             nc.SetValue(Canvas.LeftProperty, pg.Left);
             nc.SetValue(Canvas.TopProperty, pg.Top);
+            nc.PerformAction += Nc_PerformAction;
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
 
@@ -62,6 +65,7 @@ namespace X.Viewer.SketchFlow
             nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
             nc.SetValue(Canvas.LeftProperty, pg.Left);
             nc.SetValue(Canvas.TopProperty, pg.Top);
+            nc.PerformAction += Nc_PerformAction;
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
             
@@ -83,8 +87,6 @@ namespace X.Viewer.SketchFlow
             
         }
 
-
-    
 
 
         public void Dispose()
@@ -128,12 +130,35 @@ namespace X.Viewer.SketchFlow
             var nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
             nc.SetValue(Canvas.LeftProperty, pg.Left);
             nc.SetValue(Canvas.TopProperty, pg.Top);
+            nc.PerformAction += Nc_PerformAction;
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
 
             return rect;
         }
 
+        bool IsMovingPage = false;
+        bool IsResizingPage = false;
+        Controls.PageLayout _currentPageLayout;
+
+        private void Nc_PerformAction(object sender, EventArgs e)
+        {
+            if(e is Controls.PageLayoutEventArgs)
+            {
+                var ea = e as Controls.PageLayoutEventArgs;
+                _currentPageLayout = sender as Controls.PageLayout;
+                if (ea.ActionType == "MovePageLayoutStarted") IsMovingPage = true;
+                else if (ea.ActionType == "MovePageLayoutFinished") IsMovingPage = false;
+                else if (ea.ActionType == "ResizePageLayoutStarted") IsResizingPage = true;
+                else if (ea.ActionType == "ResizePageLayoutFinished") IsResizingPage = false;
+
+
+                ptStartPt.X =  (double)_currentPageLayout.GetValue(Canvas.LeftProperty);
+                ptStartPt.Y = (double)_currentPageLayout.GetValue(Canvas.TopProperty);
+
+            }
+      
+        }
 
         private void layoutRoot_PointerWheelChanged(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
@@ -161,7 +186,8 @@ namespace X.Viewer.SketchFlow
 
 
 
-        PointerPoint ptStart;
+        PointerPoint ptStart;  //artboard moving
+        Windows.Foundation.Point ptStartPt; //pagelayout moving
         double ptDifXStart = 0;
         double ptDifYStart = 0;
         private void layoutRoot_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
@@ -174,6 +200,10 @@ namespace X.Viewer.SketchFlow
         private void layoutRoot_PointerReleased(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
             IsMouseDown = false;
+            IsMovingPage = false;
+            IsResizingPage = false;
+
+            _currentPageLayout = null;
 
             ptDifXStart = ptDifX;
             ptDifYStart = ptDifY;
@@ -188,12 +218,36 @@ namespace X.Viewer.SketchFlow
 
             var ptEnd = e.GetCurrentPoint(null);
 
-            ptDifX = ptDifXStart + ptStart.Position.X - ptEnd.Position.X;
-            ptDifY = ptDifYStart + ptStart.Position.Y - ptEnd.Position.Y;
 
-            var ct = cvMain.RenderTransform as CompositeTransform;
-            ct.TranslateX = -1 * ptDifX;
-            ct.TranslateY = -1 * ptDifY;
+
+
+            if (IsMovingPage)
+            {
+                _currentPageLayout.SetValue(Canvas.LeftProperty, ptStartPt.X - (ptStart.Position.X - ptEnd.Position.X));
+                _currentPageLayout.SetValue(Canvas.TopProperty, ptStartPt.Y - (ptStart.Position.Y - ptEnd.Position.Y));
+                return;
+            }
+            else if (IsResizingPage)
+            {
+
+                return;
+            }
+            else
+            {
+                //moving artboard
+                ptDifX = ptDifXStart + ptStart.Position.X - ptEnd.Position.X;
+                ptDifY = ptDifYStart + ptStart.Position.Y - ptEnd.Position.Y;
+
+                var ct = cvMain.RenderTransform as CompositeTransform;
+                ct.TranslateX = -1 * ptDifX;
+                ct.TranslateY = -1 * ptDifY;
+            }
+
+
+
+
+
+
         }
     }
 

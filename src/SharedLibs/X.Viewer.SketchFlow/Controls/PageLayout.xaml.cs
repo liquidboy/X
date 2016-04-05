@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -18,6 +19,8 @@ namespace X.Viewer.SketchFlow.Controls
 {
     public sealed partial class PageLayout : UserControl
     {
+        public event EventHandler PerformAction;
+
         public PageLayout()
         {
             this.InitializeComponent();
@@ -28,5 +31,26 @@ namespace X.Viewer.SketchFlow.Controls
             var page = this.DataContext as SketchPage;
             page.ExternalPC("Layers");
         }
+
+
+
+        private void grdPointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            var nm = (string)((Grid)sender).Tag;
+            PerformAction?.Invoke(this, new PageLayoutEventArgs() { ActionType = nm + "PageLayoutStarted", StartPoint = e.GetCurrentPoint(null) });
+        }
+
+        private void grdPointerReleased(object sender, PointerRoutedEventArgs e)
+        {
+            var nm = (string)((Grid)sender).Tag;
+            PerformAction?.Invoke(this, new PageLayoutEventArgs() { ActionType = nm + "PageLayoutFinished", StartPoint = e.GetCurrentPoint(null) });
+        }
+
+    }
+
+    public class PageLayoutEventArgs: EventArgs
+    {
+        public string ActionType;
+        public PointerPoint StartPoint;
     }
 }
