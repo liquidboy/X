@@ -35,7 +35,7 @@ namespace X.Viewer.SketchFlow
         }
 
         private void SampleData() {
-            var pg = new SketchPage() { Title = "Page 1", Width = 360, Height = 640, Top = 100, Left = 100 };
+            var pg = new SketchPage() { Title = "Splash", Width = 360, Height = 640, Top = 100, Left = 100 };
             pg.Layers.Add(new PageLayer());
             var nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
             nc.SetValue(Canvas.LeftProperty, pg.Left);
@@ -44,7 +44,7 @@ namespace X.Viewer.SketchFlow
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
 
-            pg = new SketchPage() { Title = "Page 2", Width = 360, Height = 640, Top = 100, Left = 600 };
+            pg = new SketchPage() { Title = "Shell", Width = 360, Height = 640, Top = 100, Left = 600 };
             pg.Layers.Add(new PageLayer());
             pg.Layers.Add(new PageLayer());
             pg.Layers.Add(new PageLayer());
@@ -55,7 +55,7 @@ namespace X.Viewer.SketchFlow
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
 
-            pg = new SketchPage() { Title = "Page 3", Width = 360, Height = 640, Top = 100, Left = 1100 };
+            pg = new SketchPage() { Title = "Landing Page", Width = 360, Height = 640, Top = 100, Left = 1100 };
             pg.Layers.Add(new PageLayer());
             pg.Layers.Add(new PageLayer());
             pg.Layers.Add(new PageLayer());
@@ -66,7 +66,7 @@ namespace X.Viewer.SketchFlow
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
 
-            pg = new SketchPage() { Title = "Page 4", Width = 360, Height = 640, Top = 100, Left = 1600 };
+            pg = new SketchPage() { Title = "Profile", Width = 360, Height = 640, Top = 100, Left = 1600 };
             pg.Layers.Add(new PageLayer());
             pg.Layers.Add(new PageLayer());
             nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
@@ -229,6 +229,7 @@ namespace X.Viewer.SketchFlow
         {
 
             var ptEnd = e.GetCurrentPoint(null);
+            console1.Text = $"ex : {ptEnd.Position.X} { this.ActualWidth}  ey :  { ptEnd.Position.Y} {this.ActualHeight}    ";
             var foundElements = VisualTreeHelper.FindElementsInHostCoordinates(ptEnd.Position, this);
             foreach (var el in foundElements)
             {
@@ -251,8 +252,7 @@ namespace X.Viewer.SketchFlow
                 double newX = 0; double newY = 0;
                 
                 var lvm = _currentPageLayout.DataContext as SketchPage;
-                console3.Text = $"sx : {ptStart.Position.X}   sy :  { ptStart.Position.Y}     ";
-                console1.Text = $"ex : {ptEnd.Position.X}   ey :  { ptEnd.Position.Y}     ";
+                console3.Text = $"sx : {ptStart.Position.X}   sy :  { ptStart.Position.Y }     ";
                 console2.Text = $"sx : {ptStartPt.X}   sy :  { ptStartPt.Y}     ";
                 
 

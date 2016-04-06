@@ -54,7 +54,7 @@ namespace X.Viewer.SketchFlow.Controls
 
         private void grdPointerExited(object sender, PointerRoutedEventArgs e)
         {
-            ((Grid)sender).Opacity = 0.5;
+            ((Grid)sender).Opacity = 0.3;
         }
     }
 

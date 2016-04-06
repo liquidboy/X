@@ -27,13 +27,21 @@
 
 
         <!-- Top Left Move -->
-        <Grid x:Name="grdMove" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-20,-40,0,0" Opacity="0.5" PointerEntered="grdPointerEntered" PointerExited="grdPointerExited" PointerReleased="grdPointerReleased" PointerPressed="grdPointerPressed" Tag="Move" Background="#02FFFFFF">
+        <Grid x:Name="grdMove" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-20,-40,0,0" Opacity="0.3" PointerEntered="grdPointerEntered" PointerExited="grdPointerExited" PointerReleased="grdPointerReleased" PointerPressed="grdPointerPressed" Tag="Move" Background="#02FFFFFF">
             <Grid.RenderTransform>
                 <CompositeTransform Rotation="45"/>
             </Grid.RenderTransform>
-            <xuip:Path PathType="Corners" Width="20" Height="20" Foreground="LightGray"></xuip:Path>
-            <Ellipse Width="10" Height="10" Fill="LightGray"></Ellipse>
+            <xuip:Path PathType="Corners" Width="20" Height="20" Foreground="Black"></xuip:Path>
+            <Ellipse Width="10" Height="10" Fill="Black"></Ellipse>
         </Grid>
+
+        
+        <!-- Title -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,-60,0,0" Padding="5" Background="Black">
+            <TextBlock Text="{Binding Title}" FontSize="18" Foreground="White" ></TextBlock>
+        </StackPanel>
+        
+        
 
 
         <!-- Bottom Right Resize --><!--
