@@ -24,6 +24,11 @@ namespace X.Viewer.SketchFlow
             
             _renderer = renderer;
 
+            var ct = cvMain.RenderTransform as CompositeTransform;
+            _scaleX = ct.ScaleX;
+            _scaleY = ct.ScaleY;
+
+
             SampleData();
         }
 
@@ -219,17 +224,68 @@ namespace X.Viewer.SketchFlow
         double ptDifY = 0;
         private void layoutRoot_PointerMoved(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
+           
+
             if (!IsMouseDown) return;
 
-            var ptEnd = e.GetCurrentPoint(null);
 
-
+            
+            
 
 
             if (IsMovingPage)
             {
-                _currentPageLayout.SetValue(Canvas.LeftProperty, (ptStartPt.X - (ptStart.Position.X - ptEnd.Position.X)));
-                _currentPageLayout.SetValue(Canvas.TopProperty, (ptStartPt.Y - (ptStart.Position.Y - ptEnd.Position.Y)));
+                var ptEnd = e.GetCurrentPoint(null);
+                console1.Text = $"ex : {ptEnd.Position.X}   ey :  { ptEnd.Position.Y}     ";
+                console2.Text = $"sx : {ptStartPt.X}   sy :  { ptStartPt.Y}     ";
+                console3.Text = $"sx : {ptStart.Position.X}   sy :  { ptStart.Position.Y}     ";
+
+
+                if (ptEnd.Position.X > ptStart.Position.X)
+                {
+                    var newX = Math.Abs(ptEnd.Position.X - ptStart.Position.X); //diff from start
+                    newX = (newX * (1 / _scaleX));  //take into account the scale factor
+                    newX = ptStartPt.X + newX; // add to current canvas position
+
+                    //console1.Text = $"right  : {ptStartPt.X + newX}   ey :  { 0 }     ";
+
+                    _currentPageLayout.SetValue(Canvas.LeftProperty, newX);
+                }
+                else {
+                    var newX = Math.Abs( ptStart.Position.X - ptEnd.Position.X); //diff from start
+                    newX = (newX * (1 / _scaleX)); //take into account the scale factor
+                    newX = ptStartPt.X - newX; // add to current canvas position
+
+                    //console1.Text = $"left : {ptStartPt.X - newX}   ey :  { 0 }     ";
+
+                    _currentPageLayout.SetValue(Canvas.LeftProperty, newX);
+                }
+
+
+
+                if (ptEnd.Position.Y > ptStart.Position.Y)
+                {
+                    var newY = Math.Abs(ptEnd.Position.Y - ptStart.Position.Y); //diff from start
+                    newY = (newY * (1 / _scaleY));  //take into account the scale factor
+                    newY = ptStartPt.Y + newY; // add to current canvas position
+
+                    //console1.Text = $"right  : {ptStartPt.X + newY}   ey :  { 0 }     ";
+
+                    _currentPageLayout.SetValue(Canvas.TopProperty, newY);
+                }
+                else {
+                    var newY = Math.Abs(ptStart.Position.Y - ptEnd.Position.Y); //diff from start
+                    newY = (newY * (1 / _scaleY)); //take into account the scale factor
+                    newY = ptStartPt.Y - newY; // add to current canvas position
+
+                    //console1.Text = $"left : {ptStartPt.Y - newY}   ey :  { 0 }     ";
+
+                    _currentPageLayout.SetValue(Canvas.TopProperty, newY);
+                }
+
+
+
+                //_currentPageLayout.SetValue(Canvas.TopProperty, (ptStartPt.Y - (ptStart.Position.Y - ptEnd.Position.Y)));
                 return;
             }
             else if (IsResizingPage)
@@ -239,6 +295,10 @@ namespace X.Viewer.SketchFlow
             }
             else
             {
+                var ptEnd = e.GetCurrentPoint(null);
+                console1.Text = $"ex : {ptEnd.Position.X}   ey :  { ptEnd.Position.Y}     ";
+                console2.Text = "";
+
                 //moving artboard
                 ptDifX = ptDifXStart + ptStart.Position.X - ptEnd.Position.X;
                 ptDifY = ptDifYStart + ptStart.Position.Y - ptEnd.Position.Y;
