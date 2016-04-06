@@ -235,56 +235,53 @@ namespace X.Viewer.SketchFlow
 
             if (IsMovingPage)
             {
+                double newX = 0; double newY = 0;
                 var ptEnd = e.GetCurrentPoint(null);
+                var vm = _currentPageLayout.DataContext as SketchPage;
                 //console1.Text = $"ex : {ptEnd.Position.X}   ey :  { ptEnd.Position.Y}     ";
                 //console2.Text = $"sx : {ptStartPt.X}   sy :  { ptStartPt.Y}     ";
                 //console3.Text = $"sx : {ptStart.Position.X}   sy :  { ptStart.Position.Y}     ";
 
-
                 if (ptEnd.Position.X > ptStart.Position.X)
                 {
-                    var newX = Math.Abs(ptEnd.Position.X - ptStart.Position.X); //diff from start
+                    newX = Math.Abs(ptEnd.Position.X - ptStart.Position.X); //diff from start
                     newX = (newX * (1 / _scaleX));  //take into account the scale factor
                     newX = ptStartPt.X + newX; // add to current canvas position
 
                     //console1.Text = $"right  : {ptStartPt.X + newX}   ey :  { 0 }     ";
-
-                    _currentPageLayout.SetValue(Canvas.LeftProperty, newX);
                 }
                 else {
-                    var newX = Math.Abs( ptStart.Position.X - ptEnd.Position.X); //diff from start
+                    newX = Math.Abs( ptStart.Position.X - ptEnd.Position.X); //diff from start
                     newX = (newX * (1 / _scaleX)); //take into account the scale factor
                     newX = ptStartPt.X - newX; // add to current canvas position
 
                     //console1.Text = $"left : {ptStartPt.X - newX}   ey :  { 0 }     ";
-
-                    _currentPageLayout.SetValue(Canvas.LeftProperty, newX);
                 }
 
-
+                _currentPageLayout.SetValue(Canvas.LeftProperty, newX);
+                vm.Left = (int)newX;
+                vm.ExternalPC("Left");
 
                 if (ptEnd.Position.Y > ptStart.Position.Y)
                 {
-                    var newY = Math.Abs(ptEnd.Position.Y - ptStart.Position.Y); //diff from start
+                    newY = Math.Abs(ptEnd.Position.Y - ptStart.Position.Y); //diff from start
                     newY = (newY * (1 / _scaleY));  //take into account the scale factor
                     newY = ptStartPt.Y + newY; // add to current canvas position
 
                     //console1.Text = $"right  : {ptStartPt.X + newY}   ey :  { 0 }     ";
-
-                    _currentPageLayout.SetValue(Canvas.TopProperty, newY);
                 }
                 else {
-                    var newY = Math.Abs(ptStart.Position.Y - ptEnd.Position.Y); //diff from start
+                    newY = Math.Abs(ptStart.Position.Y - ptEnd.Position.Y); //diff from start
                     newY = (newY * (1 / _scaleY)); //take into account the scale factor
                     newY = ptStartPt.Y - newY; // add to current canvas position
 
                     //console1.Text = $"left : {ptStartPt.Y - newY}   ey :  { 0 }     ";
-
-                    _currentPageLayout.SetValue(Canvas.TopProperty, newY);
                 }
 
-
-
+                _currentPageLayout.SetValue(Canvas.TopProperty, newY);
+                vm.Top = (int)newX;
+                vm.ExternalPC("Top");
+                
                 //_currentPageLayout.SetValue(Canvas.TopProperty, (ptStartPt.Y - (ptStart.Position.Y - ptEnd.Position.Y)));
                 return;
             }
