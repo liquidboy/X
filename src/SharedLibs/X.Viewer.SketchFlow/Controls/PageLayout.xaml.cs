@@ -46,6 +46,15 @@ namespace X.Viewer.SketchFlow.Controls
             PerformAction?.Invoke(this, new PageLayoutEventArgs() { ActionType = nm + "PageLayoutFinished", StartPoint = e.GetCurrentPoint(null) });
         }
 
+        private void grdPointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            ((Grid)sender).Opacity = 1;
+        }
+
+        private void grdPointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            ((Grid)sender).Opacity = 0.5;
+        }
     }
 
     public class PageLayoutEventArgs: EventArgs

@@ -236,9 +236,9 @@ namespace X.Viewer.SketchFlow
             if (IsMovingPage)
             {
                 var ptEnd = e.GetCurrentPoint(null);
-                console1.Text = $"ex : {ptEnd.Position.X}   ey :  { ptEnd.Position.Y}     ";
-                console2.Text = $"sx : {ptStartPt.X}   sy :  { ptStartPt.Y}     ";
-                console3.Text = $"sx : {ptStart.Position.X}   sy :  { ptStart.Position.Y}     ";
+                //console1.Text = $"ex : {ptEnd.Position.X}   ey :  { ptEnd.Position.Y}     ";
+                //console2.Text = $"sx : {ptStartPt.X}   sy :  { ptStartPt.Y}     ";
+                //console3.Text = $"sx : {ptStart.Position.X}   sy :  { ptStart.Position.Y}     ";
 
 
                 if (ptEnd.Position.X > ptStart.Position.X)

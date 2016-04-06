@@ -27,7 +27,7 @@
 
 
         <!-- Top Left Move -->
-        <Grid x:Name="grdMove" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-20,-40,0,0" Opacity="0.5" PointerReleased="grdPointerReleased" PointerPressed="grdPointerPressed" Tag="Move" Background="#02FFFFFF">
+        <Grid x:Name="grdMove" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-20,-40,0,0" Opacity="0.5" PointerEntered="grdPointerEntered" PointerExited="grdPointerExited" PointerReleased="grdPointerReleased" PointerPressed="grdPointerPressed" Tag="Move" Background="#02FFFFFF">
             <Grid.RenderTransform>
                 <CompositeTransform Rotation="45"/>
             </Grid.RenderTransform>
@@ -36,14 +36,14 @@
         </Grid>
 
 
-        <!-- Bottom Right Resize -->
-        <Grid x:Name="grdResize" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0, 0, -40,-30" Opacity="0.5" PointerReleased="grdPointerReleased" PointerPressed="grdPointerPressed"  Tag="Resize" Background="#02FFFFFF">
+        <!-- Bottom Right Resize --><!--
+        <Grid x:Name="grdResize" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0, 0, -40,-30" Opacity="0.5" PointerEntered="grdPointerEntered" PointerExited="grdPointerExited"  PointerReleased="grdPointerReleased" PointerPressed="grdPointerPressed"  Tag="Resize" Background="#02FFFFFF">
             <Grid.RenderTransform>
                 <CompositeTransform Rotation="45"/>
             </Grid.RenderTransform>
             <xuip:Path PathType="Corners" Width="20" Height="20" Foreground="LightGray"></xuip:Path>
             <Ellipse Width="10" Height="10" Fill="LightGray"></Ellipse>
-        </Grid>
+        </Grid>-->
 
 
 
