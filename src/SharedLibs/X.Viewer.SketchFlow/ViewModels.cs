@@ -11,19 +11,26 @@ namespace X.Viewer.SketchFlow
     public class Sketch :ViewModelBase
     {
         public ObservableCollection<SketchPage> Pages { get; set; }
-
+        public SketchPage SelectedPage { get; set; }
+        
         public Sketch() {
             Pages = new ObservableCollection<SketchPage>();
+        }
+
+        public void ExternalPC(string propertyName)
+        {
+            RaisePropertyChanged(propertyName);
         }
     }
 
     public class SketchPage : ViewModelBase
     {
-
+        public string Title { get; set; }
         public int Left { get; set; }
         public int Top { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
+        public bool IsSelected { get; set; }
 
         public ObservableCollection<PageLayer> Layers { get; set; }
         public SketchPage()

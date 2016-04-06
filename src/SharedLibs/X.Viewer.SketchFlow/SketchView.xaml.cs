@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Numerics;
 using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
+using X.Viewer.SketchFlow.Controls;
 
 namespace X.Viewer.SketchFlow
 {
@@ -33,7 +35,7 @@ namespace X.Viewer.SketchFlow
         }
 
         private void SampleData() {
-            var pg = new SketchPage() { Width = 360, Height = 640, Top = 100, Left = 100 };
+            var pg = new SketchPage() { Title = "Page 1", Width = 360, Height = 640, Top = 100, Left = 100 };
             pg.Layers.Add(new PageLayer());
             var nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
             nc.SetValue(Canvas.LeftProperty, pg.Left);
@@ -42,7 +44,7 @@ namespace X.Viewer.SketchFlow
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
 
-            pg = new SketchPage() { Width = 360, Height = 640, Top = 100, Left = 600 };
+            pg = new SketchPage() { Title = "Page 2", Width = 360, Height = 640, Top = 100, Left = 600 };
             pg.Layers.Add(new PageLayer());
             pg.Layers.Add(new PageLayer());
             pg.Layers.Add(new PageLayer());
@@ -53,7 +55,7 @@ namespace X.Viewer.SketchFlow
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
 
-            pg = new SketchPage() { Width = 360, Height = 640, Top = 100, Left = 1100 };
+            pg = new SketchPage() { Title = "Page 3", Width = 360, Height = 640, Top = 100, Left = 1100 };
             pg.Layers.Add(new PageLayer());
             pg.Layers.Add(new PageLayer());
             pg.Layers.Add(new PageLayer());
@@ -64,7 +66,7 @@ namespace X.Viewer.SketchFlow
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
 
-            pg = new SketchPage() { Width = 360, Height = 640, Top = 100, Left = 1600 };
+            pg = new SketchPage() { Title = "Page 4", Width = 360, Height = 640, Top = 100, Left = 1600 };
             pg.Layers.Add(new PageLayer());
             pg.Layers.Add(new PageLayer());
             nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
@@ -204,7 +206,8 @@ namespace X.Viewer.SketchFlow
         {
             IsMouseDown = true;
             ptStart = e.GetCurrentPoint(null);
-            
+
+          
         }
 
         private void layoutRoot_PointerReleased(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
@@ -224,23 +227,34 @@ namespace X.Viewer.SketchFlow
         double ptDifY = 0;
         private void layoutRoot_PointerMoved(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-           
+
+            var ptEnd = e.GetCurrentPoint(null);
+            var foundElements = VisualTreeHelper.FindElementsInHostCoordinates(ptEnd.Position, this);
+            foreach (var el in foundElements)
+            {
+                if (el is PageLayout)
+                {
+                    vm.SelectedPage = ((FrameworkElement)el).DataContext as SketchPage;
+                    vm.ExternalPC("SelectedPage");
+
+                    //vm.SelectedPage.ExternalPC("Title");
+                }
+            }
+
+
 
             if (!IsMouseDown) return;
 
-
             
-            
-
-
             if (IsMovingPage)
             {
                 double newX = 0; double newY = 0;
-                var ptEnd = e.GetCurrentPoint(null);
-                var vm = _currentPageLayout.DataContext as SketchPage;
-                //console1.Text = $"ex : {ptEnd.Position.X}   ey :  { ptEnd.Position.Y}     ";
-                //console2.Text = $"sx : {ptStartPt.X}   sy :  { ptStartPt.Y}     ";
-                //console3.Text = $"sx : {ptStart.Position.X}   sy :  { ptStart.Position.Y}     ";
+                
+                var lvm = _currentPageLayout.DataContext as SketchPage;
+                console3.Text = $"sx : {ptStart.Position.X}   sy :  { ptStart.Position.Y}     ";
+                console1.Text = $"ex : {ptEnd.Position.X}   ey :  { ptEnd.Position.Y}     ";
+                console2.Text = $"sx : {ptStartPt.X}   sy :  { ptStartPt.Y}     ";
+                
 
                 if (ptEnd.Position.X > ptStart.Position.X)
                 {
@@ -259,8 +273,8 @@ namespace X.Viewer.SketchFlow
                 }
 
                 _currentPageLayout.SetValue(Canvas.LeftProperty, newX);
-                vm.Left = (int)newX;
-                vm.ExternalPC("Left");
+                lvm.Left = (int)newX;
+                lvm.ExternalPC("Left");
 
                 if (ptEnd.Position.Y > ptStart.Position.Y)
                 {
@@ -279,8 +293,8 @@ namespace X.Viewer.SketchFlow
                 }
 
                 _currentPageLayout.SetValue(Canvas.TopProperty, newY);
-                vm.Top = (int)newX;
-                vm.ExternalPC("Top");
+                lvm.Top = (int)newX;
+                lvm.ExternalPC("Top");
                 
                 //_currentPageLayout.SetValue(Canvas.TopProperty, (ptStartPt.Y - (ptStart.Position.Y - ptEnd.Position.Y)));
                 return;
@@ -292,7 +306,6 @@ namespace X.Viewer.SketchFlow
             }
             else
             {
-                var ptEnd = e.GetCurrentPoint(null);
                 console1.Text = $"ex : {ptEnd.Position.X}   ey :  { ptEnd.Position.Y}     ";
                 console2.Text = "";
 

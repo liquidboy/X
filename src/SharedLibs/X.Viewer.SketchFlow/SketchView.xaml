@@ -34,6 +34,7 @@
             <TextBlock x:Name="console1" FontSize="16" Foreground="Red" ></TextBlock>
             <TextBlock x:Name="console2" FontSize="16" Foreground="Red" ></TextBlock>
             <TextBlock x:Name="console3" FontSize="16" Foreground="Red" ></TextBlock>
+            <TextBlock FontSize="10" Foreground="Red" Text="{Binding SelectedPage.Title}"></TextBlock>
         </StackPanel>
     </Grid>
 </UserControl>
