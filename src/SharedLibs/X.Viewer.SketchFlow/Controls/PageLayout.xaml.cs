@@ -39,12 +39,14 @@ namespace X.Viewer.SketchFlow.Controls
         {
             var nm = (string)((Grid)sender).Tag;
             PerformAction?.Invoke(this, new PageLayoutEventArgs() { ActionType = nm + "PageLayoutStarted", StartPoint = e.GetCurrentPoint(null) });
+            PerformAction?.Invoke(this, new PageLayoutEventArgs() { ActionType = "PageSelected", StartPoint = e.GetCurrentPoint(null) });
         }
 
         private void grdPointerReleased(object sender, PointerRoutedEventArgs e)
         {
             var nm = (string)((Grid)sender).Tag;
             PerformAction?.Invoke(this, new PageLayoutEventArgs() { ActionType = nm + "PageLayoutFinished", StartPoint = e.GetCurrentPoint(null) });
+            
         }
 
         private void grdPointerEntered(object sender, PointerRoutedEventArgs e)
@@ -55,6 +57,11 @@ namespace X.Viewer.SketchFlow.Controls
         private void grdPointerExited(object sender, PointerRoutedEventArgs e)
         {
             ((Grid)sender).Opacity = 0.3;
+        }
+
+        private void layoutRoot_PointerReleased(object sender, PointerRoutedEventArgs e)
+        {
+            PerformAction?.Invoke(this, new PageLayoutEventArgs() { ActionType = "PageSelected", StartPoint = e.GetCurrentPoint(null) });
         }
     }
 

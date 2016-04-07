@@ -104,14 +104,15 @@ namespace X.Viewer.SketchFlow
         private void toolbar_PerformAction(object sender, EventArgs e)
         {
             var actionToPerform = (string)sender;
-
+            
             if (actionToPerform == "SnapViewer") _renderer.SendMessageThru(null, new ContentViewEventArgs() { Type = actionToPerform });
             else if (actionToPerform == "AddPage640360") AddPage(360, 640);
             else if (actionToPerform == "AddPage18001200") AddPage(1800, 1200);
             else if (actionToPerform == "AddPage1400768") AddPage(1400, 768);
             else if (actionToPerform == "AddPage1600900") AddPage(1600, 900);
             else if (actionToPerform == "AddPage1200600") AddPage(1200, 600);
-            else if (actionToPerform == "AddPageTiles") {
+            else if (actionToPerform == "AddPageTiles")
+            {
                 var rect = AddPage(70, 70);
                 var rect2 = AddPage(310, 310, (int)rect.X, (int)(rect.Y + rect.Z + 55));
                 var rect3 = AddPage(310, 150, (int)rect2.X, (int)(rect2.Y + rect2.Z + 55));
@@ -154,7 +155,20 @@ namespace X.Viewer.SketchFlow
             {
                 var ea = e as Controls.PageLayoutEventArgs;
                 _currentPageLayout = sender as Controls.PageLayout;
-                if (ea.ActionType == "MovePageLayoutStarted") IsMovingPage = true;
+                if (ea.ActionType == "PageSelected")
+                {
+                    //var foundElements = VisualTreeHelper.FindElementsInHostCoordinates(ptEnd.Position, this);
+                    //foreach (var el in foundElements)
+                    //{
+                    if (sender is PageLayout)
+                    {
+                        vm.SelectedPage = ((FrameworkElement)sender).DataContext as SketchPage;
+
+                        //vm.SelectedPage.ExternalPC("Title");
+                    }
+                    //}
+                }
+                else if(ea.ActionType == "MovePageLayoutStarted") IsMovingPage = true;
                 else if (ea.ActionType == "MovePageLayoutFinished") IsMovingPage = false;
                 else if (ea.ActionType == "ResizePageLayoutStarted") IsResizingPage = true;
                 else if (ea.ActionType == "ResizePageLayoutFinished") IsResizingPage = false;
@@ -230,17 +244,19 @@ namespace X.Viewer.SketchFlow
 
             var ptEnd = e.GetCurrentPoint(null);
             console1.Text = $"ex : {ptEnd.Position.X} { this.ActualWidth}  ey :  { ptEnd.Position.Y} {this.ActualHeight}    ";
-            var foundElements = VisualTreeHelper.FindElementsInHostCoordinates(ptEnd.Position, this);
-            foreach (var el in foundElements)
-            {
-                if (el is PageLayout)
-                {
-                    vm.SelectedPage = ((FrameworkElement)el).DataContext as SketchPage;
-                    vm.ExternalPC("SelectedPage");
 
-                    //vm.SelectedPage.ExternalPC("Title");
-                }
-            }
+
+
+            //var foundElements = VisualTreeHelper.FindElementsInHostCoordinates(ptEnd.Position, this);
+            //foreach (var el in foundElements)
+            //{
+            //    if (el is PageLayout)
+            //    {
+            //        vm.SelectedPage = ((FrameworkElement)el).DataContext as SketchPage;
+
+            //        //vm.SelectedPage.ExternalPC("Title");
+            //    }
+            //}
 
 
 

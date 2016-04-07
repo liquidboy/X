@@ -110,6 +110,7 @@
     <Compile Include="Controls\PageContent.xaml.cs">
       <DependentUpon>PageContent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\IsSelectedToColorConverter.cs" />
     <Compile Include="Converters\LayerEnabledToColorConverter.cs" />
     <Compile Include="Converters\XamlFragmentsToContentConverter.cs" />
     <Compile Include="Controls\PageLayers.xaml.cs">

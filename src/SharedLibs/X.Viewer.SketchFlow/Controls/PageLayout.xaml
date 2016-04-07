@@ -4,14 +4,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:xuip="using:X.UI.Path"
     xmlns:local="using:X.Viewer.SketchFlow.Controls"
+    xmlns:lc="using:X.Viewer.SketchFlow.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     x:Name="root"
     d:DesignHeight="300"
     d:DesignWidth="400">
-
-    <Grid>
+    <UserControl.Resources>
+        <lc:IsSelectedToColorConverter x:Key="IsSelectedToColorConverter" ></lc:IsSelectedToColorConverter>
+    </UserControl.Resources>
+    <Grid x:Name="layoutRoot" PointerReleased="layoutRoot_PointerReleased">
         <!-- Top Left label -->
         <TextBlock Text="0" Foreground="LightGray" FontSize="14" Margin="4,-23,0,0"></TextBlock>
         <TextBlock Text="0" Foreground="LightGray" FontSize="14" Margin="-15,0,0,0"></TextBlock>
@@ -37,9 +40,11 @@
 
         
         <!-- Title -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,-60,0,0" Padding="5" Background="Black">
+        <Border BorderThickness="0,1,1,0" BorderBrush="DarkOrange" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="-5,-40,-20,0" Height="30" Visibility="{Binding IsSelected}"></Border>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,-60,0,0" Padding="5" Background="{Binding IsSelected, Converter={StaticResource IsSelectedToColorConverter}}">
             <TextBlock Text="{Binding Title}" FontSize="18" Foreground="White" ></TextBlock>
         </StackPanel>
+
         
         
 

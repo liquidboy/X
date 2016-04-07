@@ -11,7 +11,17 @@ namespace X.Viewer.SketchFlow
     public class Sketch :ViewModelBase
     {
         public ObservableCollection<SketchPage> Pages { get; set; }
-        public SketchPage SelectedPage { get; set; }
+
+        private SketchPage _SelectedPage;
+        public SketchPage SelectedPage {
+            get { return _SelectedPage; }
+            set {
+                if(_SelectedPage != null)_SelectedPage.IsSelected = false;
+                _SelectedPage = value;
+                RaisePropertyChanged();
+                _SelectedPage.IsSelected = true;
+            }
+        }
         
         public Sketch() {
             Pages = new ObservableCollection<SketchPage>();
@@ -30,7 +40,8 @@ namespace X.Viewer.SketchFlow
         public int Top { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
-        public bool IsSelected { get; set; }
+        private bool _IsSelected;
+        public bool IsSelected { get { return _IsSelected; } set { _IsSelected = value; RaisePropertyChanged(); } }
 
         public ObservableCollection<PageLayer> Layers { get; set; }
         public SketchPage()
