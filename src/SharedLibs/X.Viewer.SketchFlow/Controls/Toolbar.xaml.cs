@@ -25,18 +25,26 @@ namespace X.Viewer.SketchFlow.Controls
             if (spToolbar.Visibility == Visibility.Visible) {
                 spToolbar.Visibility = Visibility.Collapsed;
                 spPageSizes.Visibility = Visibility.Collapsed;
+                spShapes.Visibility = Visibility.Collapsed;
                 butToolbar.Background = new SolidColorBrush(Colors.LightGray);
                 butAddPage.Background = new SolidColorBrush(Colors.LightGray);
+                butShape.Background = new SolidColorBrush(Colors.LightGray);
             }
             else {
                 spToolbar.Visibility = Visibility.Visible;
                 butToolbar.Background = new SolidColorBrush(Colors.Gray);
+
+
             }
         }
 
         private void butAddPage_Click(object sender, RoutedEventArgs e)
         {
-            
+            //other buts disabled
+            spShapes.Visibility = Visibility.Collapsed;
+            butShape.Background = new SolidColorBrush(Colors.LightGray);
+
+
             if (spPageSizes.Visibility == Visibility.Visible)
             {
                 spPageSizes.Visibility = Visibility.Collapsed;
@@ -48,6 +56,25 @@ namespace X.Viewer.SketchFlow.Controls
             }
             
         }
+
+        private void butShape_Click(object sender, RoutedEventArgs e)
+        {
+            //other buts disabled
+            spPageSizes.Visibility = Visibility.Collapsed;
+            butAddPage.Background = new SolidColorBrush(Colors.LightGray);
+
+            if (spShapes.Visibility == Visibility.Visible)
+            {
+                spShapes.Visibility = Visibility.Collapsed;
+                butShape.Background = new SolidColorBrush(Colors.LightGray);
+            }
+            else {
+                spShapes.Visibility = Visibility.Visible;
+                butShape.Background = new SolidColorBrush(Colors.Gray);
+            }
+        }
+
+
 
         private void but640360_Click(object sender, RoutedEventArgs e)
         {
@@ -77,6 +104,11 @@ namespace X.Viewer.SketchFlow.Controls
         private void but18001200_Click(object sender, RoutedEventArgs e)
         {
             if (PerformAction != null) PerformAction("AddPage18001200", EventArgs.Empty);
+        }
+
+        private void butCircle_Click(object sender, RoutedEventArgs e)
+        {
+            if (PerformAction != null) PerformAction("AddCircle", EventArgs.Empty);
         }
     }
 }

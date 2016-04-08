@@ -104,7 +104,7 @@ namespace X.Viewer.SketchFlow
         private void toolbar_PerformAction(object sender, EventArgs e)
         {
             var actionToPerform = (string)sender;
-            
+
             if (actionToPerform == "SnapViewer") _renderer.SendMessageThru(null, new ContentViewEventArgs() { Type = actionToPerform });
             else if (actionToPerform == "AddPage640360") AddPage(360, 640);
             else if (actionToPerform == "AddPage18001200") AddPage(1800, 1200);
@@ -117,6 +117,12 @@ namespace X.Viewer.SketchFlow
                 var rect2 = AddPage(310, 310, (int)rect.X, (int)(rect.Y + rect.Z + 55));
                 var rect3 = AddPage(310, 150, (int)rect2.X, (int)(rect2.Y + rect2.Z + 55));
                 AddPage(150, 150, -1, (int)rect3.Y);
+            }
+            else if (actionToPerform == "AddCircle") {
+                var npl = new PageLayer();
+                npl.XamlFragments.Add(@"<Ellipse Height=""85"" VerticalAlignment=""Center"" Width=""85"" HorizontalAlignment=""Center"" Fill=""White""></Ellipse>");
+                vm.SelectedPage.Layers.Add(npl);
+                vm.Pages[vm.SelectedPage.Layers.Count-1].ExternalPC("Layers");
             }
         }
 
@@ -200,8 +206,8 @@ namespace X.Viewer.SketchFlow
             {
                 ct.ScaleX += 0.05;
                 ct.ScaleY += 0.05;
-                if (ct.ScaleX >= 2.0) ct.ScaleX = 2.0;
-                if (ct.ScaleY >= 2.0) ct.ScaleY = 2.0;
+                if (ct.ScaleX >= 3.0) ct.ScaleX = 3.0;
+                if (ct.ScaleY >= 3.0) ct.ScaleY = 3.0;
             }
 
             _scaleX = ct.ScaleX;

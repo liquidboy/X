@@ -26,7 +26,7 @@
             <Button x:Name="butColorPicker"  Background="LightGray">
                 <xuip:Path PathType="ColorPicker" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
-            <Button x:Name="butShape"  Background="LightGray">
+            <Button x:Name="butShape"  Background="LightGray" Click="butShape_Click">
                 <xuip:Path PathType="Shape" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
             <Button x:Name="butImage"  Background="LightGray">
@@ -57,6 +57,26 @@
             </Button>
             <Button x:Name="but18001200" Background="LightGray" Click="but18001200_Click">
                 <xuip:Path PathType="TVLayout" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+        </StackPanel>
+        <StackPanel x:Name="spShapes" Margin="0,111,90,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed">
+            <Button x:Name="butCircle" Background="LightGray" Click="butCircle_Click">
+                <xuip:Path PathType="Circle" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butStar" Background="LightGray">
+                <xuip:Path PathType="Star" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butRectangle" Background="LightGray">
+                <xuip:Path PathType="Rectangle" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butDiamond" Background="LightGray">
+                <xuip:Path PathType="Diamond" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butHeart" Background="LightGray">
+                <xuip:Path PathType="Heart" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butCloud" Background="LightGray">
+                <xuip:Path PathType="Cloud" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
         </StackPanel>
     </Grid>
