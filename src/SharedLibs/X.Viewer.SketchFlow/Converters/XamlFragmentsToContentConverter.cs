@@ -26,7 +26,7 @@ namespace X.Viewer.SketchFlow.Converters
                     xaml += xamlFragment;
                 }
 
-                var nsXaml = $"<Grid xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\" HorizontalAlignment=\"Stretch\" xmlns:xuip=\"using:X.UI.Path\" VerticalAlignment=\"Stretch\" > {xaml} </Grid>";
+                var nsXaml = $"<Grid xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\" HorizontalAlignment=\"Stretch\" xmlns:xuip=\"using:X.UI.Path\" xmlns:lc=\"using:X.Viewer.SketchFlow.Controls\" xmlns:lcs=\"using:X.Viewer.SketchFlow.Controls.Stamps\" VerticalAlignment=\"Stretch\" > {xaml} </Grid>";
                 
                 if (xaml.Length > 0) { 
                     var xamlFe = (FrameworkElement)XamlReader.Load(UnescapeString(nsXaml));

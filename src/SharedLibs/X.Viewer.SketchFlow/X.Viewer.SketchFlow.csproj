@@ -110,6 +110,12 @@
     <Compile Include="Controls\PageContent.xaml.cs">
       <DependentUpon>PageContent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Stamps\ResizeMoveEdges.xaml.cs">
+      <DependentUpon>ResizeMoveEdges.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stamps\Circle.xaml.cs">
+      <DependentUpon>Circle.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\IsSelectedToColorConverter.cs" />
     <Compile Include="Converters\LayerEnabledToColorConverter.cs" />
     <Compile Include="Converters\XamlFragmentsToContentConverter.cs" />
@@ -150,6 +156,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\PageLayout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stamps\ResizeMoveEdges.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stamps\Circle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

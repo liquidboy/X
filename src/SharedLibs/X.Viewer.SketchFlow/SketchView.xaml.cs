@@ -119,10 +119,16 @@ namespace X.Viewer.SketchFlow
                 AddPage(150, 150, -1, (int)rect3.Y);
             }
             else if (actionToPerform == "AddCircle") {
-                var npl = new PageLayer();
-                npl.XamlFragments.Add(@"<Ellipse Height=""85"" VerticalAlignment=""Center"" Width=""85"" HorizontalAlignment=""Center"" Fill=""White""></Ellipse>");
-                vm.SelectedPage.Layers.Add(npl);
-                vm.Pages[vm.SelectedPage.Layers.Count-1].ExternalPC("Layers");
+                //var npl = new PageLayer();
+                //npl.XamlFragments.Add(@"<lcs:Circle Height=""85"" VerticalAlignment=""Center"" Width=""85"" HorizontalAlignment=""Center"" ></lcs:Circle>");
+                //vm.SelectedPage.Layers.Add(npl);
+                //vm.Pages[vm.SelectedPage.Layers.Count-1].ExternalPC("Layers");
+
+                var nc = new Controls.Stamps.Circle();
+                nc.Width = 85; nc.Height = 85;
+                nc.SetValue(Canvas.LeftProperty, 500);
+                nc.SetValue(Canvas.TopProperty, 200);
+                cvMain.Children.Add(nc);
             }
         }
 
