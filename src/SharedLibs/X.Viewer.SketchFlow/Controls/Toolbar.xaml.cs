@@ -1,5 +1,6 @@
 ﻿using System;
 using Windows.UI;
+using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -105,10 +106,35 @@ namespace X.Viewer.SketchFlow.Controls
         {
             if (PerformAction != null) PerformAction("AddPage18001200", EventArgs.Empty);
         }
-
+        
         private void butCircle_Click(object sender, RoutedEventArgs e)
         {
-            if (PerformAction != null) PerformAction("AddCircle", EventArgs.Empty);
+            var sv = (FrameworkElement)((FrameworkElement)this.Parent).Parent; // get canvas in the parent , tight relation between this control and the parent now
+            //var cv = (UIElement)sv.FindName("cvMain"); // get canvas in parent
+            var cv = (UIElement)sv.FindName("cvMainAdorner"); // get canvas in parent
+            var tp = cv.TransformToVisual(butCircle); // get transform of this button in relation to the canvas(cv)
+            var pt = tp.TransformPoint(new Windows.Foundation.Point(0, 0)); // get position from the transform(tp)
+
+            ////factor in scale factor of cv
+            //var scaleX = ((CompositeTransform)cv.RenderTransform).ScaleX;
+            //var scaleY = ((CompositeTransform)cv.RenderTransform).ScaleX;
+            //pt.X = pt.X * (1 / scaleX);
+            //pt.Y = pt.Y * (1 / scaleY);
+
+            //just tweak the position so its not under toolbar
+            pt.X = pt.X + 20;
+            pt.Y = pt.Y - 90;
+
+            
+
+            if (PerformAction != null) PerformAction("AddCircle", new ToolbarEventArgs() { ActionType = "AddCircle", StartPoint = pt});
         }
+    }
+
+
+    public class ToolbarEventArgs : EventArgs
+    {
+        public string ActionType;
+        public Windows.Foundation.Point StartPoint;
     }
 }

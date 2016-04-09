@@ -118,18 +118,27 @@ namespace X.Viewer.SketchFlow
                 var rect3 = AddPage(310, 150, (int)rect2.X, (int)(rect2.Y + rect2.Z + 55));
                 AddPage(150, 150, -1, (int)rect3.Y);
             }
-            else if (actionToPerform == "AddCircle") {
-                //var npl = new PageLayer();
-                //npl.XamlFragments.Add(@"<lcs:Circle Height=""85"" VerticalAlignment=""Center"" Width=""85"" HorizontalAlignment=""Center"" ></lcs:Circle>");
-                //vm.SelectedPage.Layers.Add(npl);
-                //vm.Pages[vm.SelectedPage.Layers.Count-1].ExternalPC("Layers");
 
-                var nc = new Controls.Stamps.Circle();
-                nc.Width = 85; nc.Height = 85;
-                nc.SetValue(Canvas.LeftProperty, 500);
-                nc.SetValue(Canvas.TopProperty, 200);
-                cvMain.Children.Add(nc);
+            if (e is Controls.ToolbarEventArgs)
+            {
+                var ea = e as Controls.ToolbarEventArgs;
+
+                if (ea.ActionType == "AddCircle")
+                {
+                    //var npl = new PageLayer();
+                    //npl.XamlFragments.Add(@"<lcs:Circle Height=""85"" VerticalAlignment=""Center"" Width=""85"" HorizontalAlignment=""Center"" ></lcs:Circle>");
+                    //vm.SelectedPage.Layers.Add(npl);
+                    //vm.Pages[vm.SelectedPage.Layers.Count-1].ExternalPC("Layers");
+
+                    var nc = new Controls.Stamps.Circle();
+                    nc.Width = 85; nc.Height = 85;
+                    nc.SetValue(Canvas.LeftProperty, Math.Abs(ea.StartPoint.X ));
+                    nc.SetValue(Canvas.TopProperty, Math.Abs(ea.StartPoint.Y ));
+                    cvMainAdorner.Children.Add(nc);
+                }
             }
+
+
         }
 
         private Vector4 AddPage(int width, int height, int left = -1, int top = -1)

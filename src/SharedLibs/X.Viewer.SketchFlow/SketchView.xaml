@@ -28,6 +28,7 @@
                 <CompositeTransform ScaleX="0.8" ScaleY="0.8"/>
             </Canvas.RenderTransform>
         </Canvas>
+        <Canvas x:Name="cvMainAdorner" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RenderTransformOrigin="0.5,0.5"></Canvas>
         <controls:Toolbar x:Name="toolbar" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,20,0" PerformAction="toolbar_PerformAction" ></controls:Toolbar>
 
         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20" >
