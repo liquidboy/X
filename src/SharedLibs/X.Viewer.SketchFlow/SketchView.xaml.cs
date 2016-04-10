@@ -170,13 +170,16 @@ namespace X.Viewer.SketchFlow
                 var te = e as Controls.Stamps.CircleEventArgs;
                 var stamp = ((Controls.Stamps.Circle)_currentStamp);
 
-                if (te.ActionType == "CloseStamp")
+                if (te.ActionType == eActionTypes.CloseStamp )
                 {
                     stamp.PerformAction -= Stamp_PerformAction;
                     cvMainAdorner.Children.Remove(stamp);
 
                     return;
+                }if (te.ActionType == eActionTypes.CreateFromStamp )
+                {
                 }
+  
             }
         }
 
@@ -389,7 +392,7 @@ namespace X.Viewer.SketchFlow
 
                 var stampe = _stampEA as Controls.Stamps.ResizeMoveEdgesEventArgs;
 
-                if (stampe.ActionType == "MoveTopLeft")
+                if (stampe.ActionType ==  eActionTypes.MoveTopLeft)
                 {
                     console2.Text = $"sx : {ptStart.Position.X}  { _stampStartX }  sy :  { ptStart.Position.Y } { _stampStartY }    ";
 
@@ -397,7 +400,7 @@ namespace X.Viewer.SketchFlow
                     _currentStamp.SetValue(Canvas.TopProperty, _stampStartY + (ptEnd.Position.Y - ptStart.Position.Y));
                     
                 }
-                else if (stampe.ActionType == "RotateBottomLeft")
+                else if (stampe.ActionType == eActionTypes.RotateBottomLeft)
                 {
                     var ang = 180 / Math.PI * Math.Atan((ptStart.Position.Y - ptEnd.Position.Y)/ (ptStart.Position.X - ptEnd.Position.X));
                     //var slope = (ptStart.Position.Y - ptEnd.Position.Y) / (ptStart.Position.X - ptEnd.Position.X);
@@ -410,7 +413,7 @@ namespace X.Viewer.SketchFlow
                     console2.Text = $"sx : {ptStart.Position.X}  { _stampStartX }  sy :  { ptStart.Position.Y } { _stampStartY }    angle : { ang }  ";
 
                 }
-                else if (stampe.ActionType == "ResizeBottomRight")
+                else if (stampe.ActionType == eActionTypes.ResizeBottomRight)
                 {
                     ((FrameworkElement)_currentStamp).Width = _stampStartWidth + (ptEnd.Position.X - ptStart.Position.X);
                     ((FrameworkElement)_currentStamp).Height = _stampStartHeight + (ptEnd.Position.Y - ptStart.Position.Y);

@@ -37,7 +37,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         {
             var ea = e as ResizeMoveEdgesEventArgs;
 
-            if (ea.ActionType == "ToolbarTopRight") {
+            if (ea.ActionType == eActionTypes.ToolbarTopRight) {
                 if(spToolbar.Visibility == Visibility.Visible) spToolbar.Visibility = Visibility.Collapsed;
                 else spToolbar.Visibility = Visibility.Visible;
             }
@@ -47,17 +47,17 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
         private void butClose_Click(object sender, RoutedEventArgs e)
         {
-            PerformAction?.Invoke(this, new CircleEventArgs() { ActionType = "CloseStamp" } );
+            PerformAction?.Invoke(this, new CircleEventArgs() { ActionType = eActionTypes.CloseStamp } );
         }
 
         private void butStamp_Click(object sender, RoutedEventArgs e)
         {
-            PerformAction?.Invoke(this, new CircleEventArgs() { ActionType = "CreateFromStamp" });
+            PerformAction?.Invoke(this, new CircleEventArgs() { ActionType = eActionTypes.CreateFromStamp });
         }
     }
 
     public class CircleEventArgs : EventArgs
     {
-        public string ActionType;
+        public eActionTypes ActionType;
     }
 }

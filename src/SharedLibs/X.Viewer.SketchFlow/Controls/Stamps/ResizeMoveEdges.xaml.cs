@@ -27,28 +27,28 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
         private void butTopLeft_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-            if (PerformAction != null) PerformAction(this, new ResizeMoveEdgesEventArgs() { ActionType = "MoveTopLeft" } );
+            if (PerformAction != null) PerformAction(this, new ResizeMoveEdgesEventArgs() { ActionType = eActionTypes.MoveTopLeft } );
         }
 
         private void butTopRight_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-            if (PerformAction != null) PerformAction(this, new ResizeMoveEdgesEventArgs() { ActionType = "ToolbarTopRight" });
+            if (PerformAction != null) PerformAction(this, new ResizeMoveEdgesEventArgs() { ActionType = eActionTypes.ToolbarTopRight });
         }
 
         private void butBottomLeft_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-            if (PerformAction != null) PerformAction(this, new ResizeMoveEdgesEventArgs() { ActionType = "RotateBottomLeft" });
+            if (PerformAction != null) PerformAction(this, new ResizeMoveEdgesEventArgs() { ActionType = eActionTypes.RotateBottomLeft });
         }
 
         private void butBottomRight_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-            if (PerformAction != null) PerformAction(this, new ResizeMoveEdgesEventArgs() { ActionType = "ResizeBottomRight" });
+            if (PerformAction != null) PerformAction(this, new ResizeMoveEdgesEventArgs() { ActionType = eActionTypes.ResizeBottomRight });
         }
     }
 
     public class ResizeMoveEdgesEventArgs : EventArgs
     {
-        public string ActionType;
+        public eActionTypes ActionType;
         public Windows.Foundation.Point StartPoint;
     }
 }
