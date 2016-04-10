@@ -10,23 +10,33 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid>
-        <Grid x:Name="butTopLeft" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" PointerPressed="butTopLeft_PointerPressed" >
+    <Grid >
+        <Grid x:Name="butTopLeft" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-2,-10,0,0"   PointerPressed="butTopLeft_PointerPressed" >
             <Grid.RenderTransform>
                 <CompositeTransform Rotation="45"/>
             </Grid.RenderTransform>
             <xuip:Path PathType="Corners" Width="20" Height="20" Foreground="LightGray"></xuip:Path>
             <Ellipse Width="10" Height="10" Fill="LightGray"></Ellipse>
         </Grid>
-        <Grid x:Name="butTopRight" Width="20" Height="15" HorizontalAlignment="Right" VerticalAlignment="Top" PointerPressed="butTopRight_PointerPressed" >
+        <Grid x:Name="butCenterLeft" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-15,0,0,0" >
+            <xuip:Path PathType="Pallette1" Width="20" Height="20" Foreground="LightGray"></xuip:Path>
+        </Grid>
+        <Grid x:Name="butTopRight" Width="20" Height="15" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-5,-15,0"  PointerPressed="butTopRight_PointerPressed" >
             <xuip:Path PathType="Toolbar2" Width="20" Height="15" Foreground="LightGray"></xuip:Path>
         </Grid>
-        <Grid x:Name="butBottomLeft" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Bottom" PointerPressed="butBottomLeft_PointerPressed" >
+        <Grid x:Name="butBottomLeft" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Bottom" PointerPressed="butBottomLeft_PointerPressed" Margin="-15,0,0,-10" >
             <xuip:Path PathType="Rotate1" Width="20" Height="20" Foreground="LightGray"></xuip:Path>
         </Grid>
-        <Grid x:Name="butBottomRight" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" PointerPressed="butBottomRight_PointerPressed" >
+        <Grid x:Name="butBottomRight" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-10,-10"  PointerPressed="butBottomRight_PointerPressed" >
             <Grid.RenderTransform>
                 <CompositeTransform Rotation="0"/>
+            </Grid.RenderTransform>
+            <xuip:Path PathType="CornersLTRB" Width="20" Height="20" Foreground="LightGray"></xuip:Path>
+            <Ellipse Width="10" Height="10" Fill="LightGray"></Ellipse>
+        </Grid>
+        <Grid x:Name="butCenterRight" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,15,-7,0"  >
+            <Grid.RenderTransform>
+                <CompositeTransform Rotation="-45"/>
             </Grid.RenderTransform>
             <xuip:Path PathType="CornersLTRB" Width="20" Height="20" Foreground="LightGray"></xuip:Path>
             <Ellipse Width="10" Height="10" Fill="LightGray"></Ellipse>

@@ -13,7 +13,7 @@
     <Grid>
         <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stroke="DarkOrange" StrokeThickness="1"></Ellipse>
         <local:ResizeMoveEdges x:Name="edges" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="-15,-15,-15,-15" PerformAction="edges_PerformAction" ></local:ResizeMoveEdges>
-        <StackPanel x:Name="spToolbar" Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-15,-65,-200" Visibility="Collapsed">
+        <StackPanel x:Name="spToolbar" Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-20,-85,-200" Visibility="Collapsed">
             <Button x:Name="butStamp" Background="LightGray" Click="butStamp_Click">
                 <xuip:Path PathType="Stamp" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
