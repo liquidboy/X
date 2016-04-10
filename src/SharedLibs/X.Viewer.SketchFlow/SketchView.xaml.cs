@@ -122,7 +122,7 @@ namespace X.Viewer.SketchFlow
             if (e is Controls.ToolbarEventArgs)
             {
                 var ea = e as Controls.ToolbarEventArgs;
-
+                
                 if (ea.ActionType == "AddCircle")
                 {
                     //var npl = new PageLayer();
@@ -134,11 +134,39 @@ namespace X.Viewer.SketchFlow
                     nc.Width = 85; nc.Height = 85;
                     nc.SetValue(Canvas.LeftProperty, Math.Abs(ea.StartPoint.X ));
                     nc.SetValue(Canvas.TopProperty, Math.Abs(ea.StartPoint.Y ));
+                    nc.PerformAction += Stamp_PerformAction;
                     cvMainAdorner.Children.Add(nc);
                 }
             }
 
 
+        }
+
+        bool IsMovingStamp = false;
+        bool IsResizingStamp = false;
+        UIElement _currentStamp;
+        double _stampStartWidth = 0;
+        double _stampStartHeight = 0;
+        double _stampStartX = 0;
+        double _stampStartY = 0;
+        Controls.Stamps.ResizeMoveEdgesEventArgs _stampEA;
+        private void Stamp_PerformAction(object sender, EventArgs e)
+        {
+            if (e is Controls.Stamps.ResizeMoveEdgesEventArgs) {
+                _currentStamp = (UIElement)sender;
+                _stampStartWidth = ((FrameworkElement)_currentStamp).Width;
+                _stampStartHeight = ((FrameworkElement)_currentStamp).Height;
+                _stampStartX = (double)_currentStamp.GetValue(Canvas.LeftProperty);
+                _stampStartY = (double)_currentStamp.GetValue(Canvas.TopProperty);
+                _stampEA = e as Controls.Stamps.ResizeMoveEdgesEventArgs;
+                
+                if (_stampEA.ActionType == "ToolbarTopRight")
+                {
+                    return;
+                }
+
+                IsResizingStamp = true;
+            }
         }
 
         private Vector4 AddPage(int width, int height, int left = -1, int top = -1)
@@ -250,8 +278,11 @@ namespace X.Viewer.SketchFlow
             IsMouseDown = false;
             IsMovingPage = false;
             IsResizingPage = false;
+            IsResizingStamp = false;
+            IsMovingStamp = false;
 
             _currentPageLayout = null;
+            _currentStamp = null;
 
             ptDifXStart = ptDifX;
             ptDifYStart = ptDifY;
@@ -283,15 +314,15 @@ namespace X.Viewer.SketchFlow
 
             if (!IsMouseDown) return;
 
-            
+
             if (IsMovingPage)
             {
                 double newX = 0; double newY = 0;
-                
+
                 var lvm = _currentPageLayout.DataContext as SketchPage;
                 console3.Text = $"sx : {ptStart.Position.X}   sy :  { ptStart.Position.Y }     ";
                 console2.Text = $"sx : {ptStartPt.X}   sy :  { ptStartPt.Y}     ";
-                
+
 
                 if (ptEnd.Position.X > ptStart.Position.X)
                 {
@@ -302,7 +333,7 @@ namespace X.Viewer.SketchFlow
                     //console1.Text = $"right  : {ptStartPt.X + newX}   ey :  { 0 }     ";
                 }
                 else {
-                    newX = Math.Abs( ptStart.Position.X - ptEnd.Position.X); //diff from start
+                    newX = Math.Abs(ptStart.Position.X - ptEnd.Position.X); //diff from start
                     newX = (newX * (1 / _scaleX)); //take into account the scale factor
                     newX = ptStartPt.X - newX; // add to current canvas position
 
@@ -332,12 +363,47 @@ namespace X.Viewer.SketchFlow
                 _currentPageLayout.SetValue(Canvas.TopProperty, newY);
                 lvm.Top = (int)newX;
                 lvm.ExternalPC("Top");
-                
+
                 //_currentPageLayout.SetValue(Canvas.TopProperty, (ptStartPt.Y - (ptStart.Position.Y - ptEnd.Position.Y)));
                 return;
             }
             else if (IsResizingPage)
             {
+ 
+                return;
+            }
+            else if (IsResizingStamp) {
+                console2.Text = $"sx : {ptStart.Position.X}   sy :  { ptStart.Position.Y }     ";
+                console3.Text = $"deltax : {ptEnd.Position.X - ptStart.Position.X}   deltay :  { ptEnd.Position.Y - ptStart.Position.Y}     ";
+
+                if (_stampEA.ActionType == "MoveTopLeft")
+                {
+                    console2.Text = $"sx : {ptStart.Position.X}  { _stampStartX }  sy :  { ptStart.Position.Y } { _stampStartY }    ";
+
+                    _currentStamp.SetValue(Canvas.LeftProperty, _stampStartX + (ptEnd.Position.X - ptStart.Position.X));
+                    _currentStamp.SetValue(Canvas.TopProperty, _stampStartY + (ptEnd.Position.Y - ptStart.Position.Y));
+                    
+                }
+                else if (_stampEA.ActionType == "RotateBottomLeft")
+                {
+                    var ang = 180 / Math.PI * Math.Atan((ptStart.Position.Y - ptEnd.Position.Y)/ (ptStart.Position.X - ptEnd.Position.X));
+                    //var slope = (ptStart.Position.Y - ptEnd.Position.Y) / (ptStart.Position.X - ptEnd.Position.X);
+                    //var new_slope = -1 / slope;
+                    //var pt2x = (ptStart.Position.X + ptEnd.Position.X) / 2;
+                    //var pt2y = (ptStart.Position.Y + ptEnd.Position.Y) / 2;
+                    //var d_chord = Math.Sqrt( Math.Pow((ptStart.Position.X - ptEnd.Position.X),2) + Math.Pow((ptStart.Position.Y - ptEnd.Position.Y), 2));
+                    //var d_perp = d_chord / (2 * Math.Tan(angle));
+
+                    console2.Text = $"sx : {ptStart.Position.X}  { _stampStartX }  sy :  { ptStart.Position.Y } { _stampStartY }    angle : { ang }  ";
+
+                }
+                else if (_stampEA.ActionType == "ResizeBottomRight")
+                {
+                    ((FrameworkElement)_currentStamp).Width = _stampStartWidth + (ptEnd.Position.X - ptStart.Position.X);
+                    ((FrameworkElement)_currentStamp).Height = _stampStartHeight + (ptEnd.Position.Y - ptStart.Position.Y);
+                }
+                
+
 
                 return;
             }

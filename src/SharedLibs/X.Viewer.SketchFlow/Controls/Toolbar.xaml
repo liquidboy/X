@@ -13,7 +13,7 @@
     <Grid>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
             <Button x:Name="butToolbar" Click="butToolbar_Click" Background="LightGray">
-                <xuip:Path PathType="Toolbar" Width="25" Height="25" Foreground="White"></xuip:Path>
+                <xuip:Path PathType="Toolbar1" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
             <Button x:Name="butOne" Click="butOne_Click" Background="LightGray">
                 <xuip:Path PathType="Camera" Width="25" Height="25" Foreground="White"></xuip:Path>

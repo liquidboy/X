@@ -17,6 +17,9 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 {
     public partial class ResizeMoveEdges : UserControl
     {
+        public event EventHandler PerformAction;
+
+
         public ResizeMoveEdges()
         {
             this.InitializeComponent();
@@ -24,22 +27,28 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
         private void butTopLeft_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-
+            if (PerformAction != null) PerformAction(this, new ResizeMoveEdgesEventArgs() { ActionType = "MoveTopLeft" } );
         }
 
         private void butTopRight_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-
+            if (PerformAction != null) PerformAction(this, new ResizeMoveEdgesEventArgs() { ActionType = "ToolbarTopRight" });
         }
 
         private void butBottomLeft_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-
+            if (PerformAction != null) PerformAction(this, new ResizeMoveEdgesEventArgs() { ActionType = "RotateBottomLeft" });
         }
 
         private void butBottomRight_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-
+            if (PerformAction != null) PerformAction(this, new ResizeMoveEdgesEventArgs() { ActionType = "ResizeBottomRight" });
         }
+    }
+
+    public class ResizeMoveEdgesEventArgs : EventArgs
+    {
+        public string ActionType;
+        public Windows.Foundation.Point StartPoint;
     }
 }

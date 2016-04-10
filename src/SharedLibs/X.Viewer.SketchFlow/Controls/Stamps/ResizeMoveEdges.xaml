@@ -5,14 +5,31 @@
     xmlns:local="using:X.Viewer.SketchFlow.Controls.Stamps"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xuip="using:X.UI.Path"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
     <Grid>
-        <Rectangle x:Name="butTopLeft" Width="15" Height="15" Fill="Red" HorizontalAlignment="Left" VerticalAlignment="Top" PointerPressed="butTopLeft_PointerPressed"></Rectangle>
-        <Rectangle x:Name="butTopRight" Width="15" Height="15" Fill="Red" HorizontalAlignment="Right" VerticalAlignment="Top" PointerPressed="butTopRight_PointerPressed"></Rectangle>
-        <Rectangle x:Name="butBottomLeft" Width="15" Height="15" Fill="Red" HorizontalAlignment="Left" VerticalAlignment="Bottom" PointerPressed="butBottomLeft_PointerPressed"></Rectangle>
-        <Rectangle x:Name="butBottomRight" Width="15" Height="15" Fill="Red" HorizontalAlignment="Right" VerticalAlignment="Bottom" PointerPressed="butBottomRight_PointerPressed"></Rectangle>
+        <Grid x:Name="butTopLeft" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" PointerPressed="butTopLeft_PointerPressed" >
+            <Grid.RenderTransform>
+                <CompositeTransform Rotation="45"/>
+            </Grid.RenderTransform>
+            <xuip:Path PathType="Corners" Width="20" Height="20" Foreground="LightGray"></xuip:Path>
+            <Ellipse Width="10" Height="10" Fill="LightGray"></Ellipse>
+        </Grid>
+        <Grid x:Name="butTopRight" Width="20" Height="15" HorizontalAlignment="Right" VerticalAlignment="Top" PointerPressed="butTopRight_PointerPressed" >
+            <xuip:Path PathType="Toolbar2" Width="20" Height="15" Foreground="LightGray"></xuip:Path>
+        </Grid>
+        <Grid x:Name="butBottomLeft" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Bottom" PointerPressed="butBottomLeft_PointerPressed" >
+            <xuip:Path PathType="Rotate1" Width="20" Height="20" Foreground="LightGray"></xuip:Path>
+        </Grid>
+        <Grid x:Name="butBottomRight" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" PointerPressed="butBottomRight_PointerPressed" >
+            <Grid.RenderTransform>
+                <CompositeTransform Rotation="0"/>
+            </Grid.RenderTransform>
+            <xuip:Path PathType="CornersLTRB" Width="20" Height="20" Foreground="LightGray"></xuip:Path>
+            <Ellipse Width="10" Height="10" Fill="LightGray"></Ellipse>
+        </Grid>
     </Grid>
 </UserControl>

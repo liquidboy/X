@@ -15,11 +15,28 @@ using Windows.UI.Xaml.Navigation;
 
 namespace X.Viewer.SketchFlow.Controls.Stamps
 {
+
+
     public sealed partial class Circle : UserControl
     {
+        public event EventHandler PerformAction;
+
         public Circle()
         {
             this.InitializeComponent();
+            
+        }
+        
+        private void edges_PerformAction(object sender, EventArgs e)
+        {
+            var ea = e as ResizeMoveEdgesEventArgs;
+
+            if (ea.ActionType == "ToolbarTopRight") {
+                if(spToolbar.Visibility == Visibility.Visible) spToolbar.Visibility = Visibility.Collapsed;
+                else spToolbar.Visibility = Visibility.Visible;
+            }
+
+            PerformAction?.Invoke(this, e);
         }
     }
 }
