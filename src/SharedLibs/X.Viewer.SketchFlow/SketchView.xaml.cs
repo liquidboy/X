@@ -149,23 +149,34 @@ namespace X.Viewer.SketchFlow
         double _stampStartHeight = 0;
         double _stampStartX = 0;
         double _stampStartY = 0;
-        Controls.Stamps.ResizeMoveEdgesEventArgs _stampEA;
+        EventArgs _stampEA;
         private void Stamp_PerformAction(object sender, EventArgs e)
         {
-            if (e is Controls.Stamps.ResizeMoveEdgesEventArgs) {
-                _currentStamp = (UIElement)sender;
+            _currentStamp = (UIElement)sender;
+
+            if (e is Controls.Stamps.ResizeMoveEdgesEventArgs)
+            {
+                var te = e as Controls.Stamps.ResizeMoveEdgesEventArgs;
+                
                 _stampStartWidth = ((FrameworkElement)_currentStamp).Width;
                 _stampStartHeight = ((FrameworkElement)_currentStamp).Height;
                 _stampStartX = (double)_currentStamp.GetValue(Canvas.LeftProperty);
                 _stampStartY = (double)_currentStamp.GetValue(Canvas.TopProperty);
-                _stampEA = e as Controls.Stamps.ResizeMoveEdgesEventArgs;
+                _stampEA = e;
                 
-                if (_stampEA.ActionType == "ToolbarTopRight")
+                IsResizingStamp = true;
+            }
+            else if (e is Controls.Stamps.CircleEventArgs) {
+                var te = e as Controls.Stamps.CircleEventArgs;
+                var stamp = ((Controls.Stamps.Circle)_currentStamp);
+
+                if (te.ActionType == "CloseStamp")
                 {
+                    stamp.PerformAction -= Stamp_PerformAction;
+                    cvMainAdorner.Children.Remove(stamp);
+
                     return;
                 }
-
-                IsResizingStamp = true;
             }
         }
 
@@ -376,7 +387,9 @@ namespace X.Viewer.SketchFlow
                 console2.Text = $"sx : {ptStart.Position.X}   sy :  { ptStart.Position.Y }     ";
                 console3.Text = $"deltax : {ptEnd.Position.X - ptStart.Position.X}   deltay :  { ptEnd.Position.Y - ptStart.Position.Y}     ";
 
-                if (_stampEA.ActionType == "MoveTopLeft")
+                var stampe = _stampEA as Controls.Stamps.ResizeMoveEdgesEventArgs;
+
+                if (stampe.ActionType == "MoveTopLeft")
                 {
                     console2.Text = $"sx : {ptStart.Position.X}  { _stampStartX }  sy :  { ptStart.Position.Y } { _stampStartY }    ";
 
@@ -384,7 +397,7 @@ namespace X.Viewer.SketchFlow
                     _currentStamp.SetValue(Canvas.TopProperty, _stampStartY + (ptEnd.Position.Y - ptStart.Position.Y));
                     
                 }
-                else if (_stampEA.ActionType == "RotateBottomLeft")
+                else if (stampe.ActionType == "RotateBottomLeft")
                 {
                     var ang = 180 / Math.PI * Math.Atan((ptStart.Position.Y - ptEnd.Position.Y)/ (ptStart.Position.X - ptEnd.Position.X));
                     //var slope = (ptStart.Position.Y - ptEnd.Position.Y) / (ptStart.Position.X - ptEnd.Position.X);
@@ -397,7 +410,7 @@ namespace X.Viewer.SketchFlow
                     console2.Text = $"sx : {ptStart.Position.X}  { _stampStartX }  sy :  { ptStart.Position.Y } { _stampStartY }    angle : { ang }  ";
 
                 }
-                else if (_stampEA.ActionType == "ResizeBottomRight")
+                else if (stampe.ActionType == "ResizeBottomRight")
                 {
                     ((FrameworkElement)_currentStamp).Width = _stampStartWidth + (ptEnd.Position.X - ptStart.Position.X);
                     ((FrameworkElement)_currentStamp).Height = _stampStartHeight + (ptEnd.Position.Y - ptStart.Position.Y);

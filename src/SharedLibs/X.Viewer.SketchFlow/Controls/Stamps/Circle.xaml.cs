@@ -24,9 +24,15 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         public Circle()
         {
             this.InitializeComponent();
+
+            this.Unloaded += Circle_Unloaded;
+        }
+
+        private void Circle_Unloaded(object sender, RoutedEventArgs e)
+        {
             
         }
-        
+
         private void edges_PerformAction(object sender, EventArgs e)
         {
             var ea = e as ResizeMoveEdgesEventArgs;
@@ -38,5 +44,20 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
             PerformAction?.Invoke(this, e);
         }
+
+        private void butClose_Click(object sender, RoutedEventArgs e)
+        {
+            PerformAction?.Invoke(this, new CircleEventArgs() { ActionType = "CloseStamp" } );
+        }
+
+        private void butStamp_Click(object sender, RoutedEventArgs e)
+        {
+            PerformAction?.Invoke(this, new CircleEventArgs() { ActionType = "CreateFromStamp" });
+        }
+    }
+
+    public class CircleEventArgs : EventArgs
+    {
+        public string ActionType;
     }
 }
