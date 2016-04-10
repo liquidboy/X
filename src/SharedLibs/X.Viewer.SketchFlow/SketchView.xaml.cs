@@ -125,10 +125,7 @@ namespace X.Viewer.SketchFlow
                 
                 if (ea.ActionType == "AddCircle")
                 {
-                    //var npl = new PageLayer();
-                    //npl.XamlFragments.Add(@"<lcs:Circle Height=""85"" VerticalAlignment=""Center"" Width=""85"" HorizontalAlignment=""Center"" ></lcs:Circle>");
-                    //vm.SelectedPage.Layers.Add(npl);
-                    //vm.Pages[vm.SelectedPage.Layers.Count-1].ExternalPC("Layers");
+                  
 
                     var nc = new Controls.Stamps.Circle();
                     nc.Width = 85; nc.Height = 85;
@@ -153,6 +150,8 @@ namespace X.Viewer.SketchFlow
         private void Stamp_PerformAction(object sender, EventArgs e)
         {
             _currentStamp = (UIElement)sender;
+            _stampStartX = (double)_currentStamp.GetValue(Canvas.LeftProperty);
+            _stampStartY = (double)_currentStamp.GetValue(Canvas.TopProperty);
 
             if (e is Controls.Stamps.ResizeMoveEdgesEventArgs)
             {
@@ -160,8 +159,7 @@ namespace X.Viewer.SketchFlow
                 
                 _stampStartWidth = ((FrameworkElement)_currentStamp).Width;
                 _stampStartHeight = ((FrameworkElement)_currentStamp).Height;
-                _stampStartX = (double)_currentStamp.GetValue(Canvas.LeftProperty);
-                _stampStartY = (double)_currentStamp.GetValue(Canvas.TopProperty);
+                
                 _stampEA = e;
                 
                 IsResizingStamp = true;
@@ -178,6 +176,28 @@ namespace X.Viewer.SketchFlow
                     return;
                 }if (te.ActionType == eActionTypes.CreateFromStamp )
                 {
+                    //project stamp into the underlying page & new layer (in the future we should allow creating in an existing layer)
+
+                    var found = VisualTreeHelper.FindElementsInHostCoordinates(new Windows.Foundation.Point(_stampStartX, _stampStartY), cvMain);
+                    foreach (FrameworkElement el in found) {
+                        
+                        if (el.Parent is PageLayout)
+                        {
+                            var pl = el.Parent as PageLayout;
+                            var plvm = pl.DataContext as SketchPage;
+
+                            var npl = new PageLayer();
+                            var gt = pl.TransformToVisual(stamp);
+                            var pt = gt.TransformPoint(new Windows.Foundation.Point(0, 0));
+
+                            npl.XamlFragments.Add($"<Ellipse Height=\"{ (((FrameworkElement)_currentStamp).Height * (1 / _scaleY)) }\" VerticalAlignment=\"Top\" Width=\"{ (((FrameworkElement)_currentStamp).Width * (1 / _scaleX)) }\" HorizontalAlignment=\"Left\" StrokeThickness=\"1\" Stroke=\"DarkOrange\" Margin=\"{ Math.Abs(pt.X * (1 / _scaleX)) }, { Math.Abs(pt.Y * (1 / _scaleY)) }, 0,0\"  ></Ellipse>");
+                            plvm.Layers.Add(npl);
+                            plvm.ExternalPC("Layers");
+
+                        }
+
+                    }
+
                 }
   
             }
