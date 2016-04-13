@@ -6,7 +6,9 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Shapes;
 using X.Viewer.SketchFlow.Controls;
+using X.Viewer.SketchFlow.Controls.Stamps;
 
 namespace X.Viewer.SketchFlow
 {
@@ -189,8 +191,10 @@ namespace X.Viewer.SketchFlow
                             var npl = new PageLayer();
                             var gt = pl.TransformToVisual(stamp);
                             var pt = gt.TransformPoint(new Windows.Foundation.Point(0, 0));
+                            var cir = (FrameworkElement)_currentStamp as Circle;
+                            var cirsh = cir.FindName("el") as Shape;
 
-                            npl.XamlFragments.Add($"<Ellipse Height=\"{ (((FrameworkElement)_currentStamp).Height * (1 / _scaleY)) }\" VerticalAlignment=\"Top\" Width=\"{ (((FrameworkElement)_currentStamp).Width * (1 / _scaleX)) }\" HorizontalAlignment=\"Left\" StrokeThickness=\"1\" Stroke=\"DarkOrange\" Margin=\"{ Math.Abs(pt.X * (1 / _scaleX)) }, { Math.Abs(pt.Y * (1 / _scaleY)) }, 0,0\"  ></Ellipse>");
+                            npl.XamlFragments.Add($"<Ellipse Height=\"{ (cir.Height * (1 / _scaleY)) }\" VerticalAlignment=\"Top\" Width=\"{ (cir.Width * (1 / _scaleX)) }\" HorizontalAlignment=\"Left\" StrokeThickness=\"{ cirsh.StrokeThickness }\" Stroke=\"DarkOrange\" Margin=\"{ Math.Abs(pt.X * (1 / _scaleX)) }, { Math.Abs(pt.Y * (1 / _scaleY)) }, 0,0\"  ></Ellipse>");
                             plvm.Layers.Add(npl);
                             plvm.ExternalPC("Layers");
 
@@ -403,7 +407,7 @@ namespace X.Viewer.SketchFlow
             }
             else if (IsResizingPage)
             {
- 
+
                 return;
             }
             else if (IsResizingStamp) {
@@ -412,17 +416,17 @@ namespace X.Viewer.SketchFlow
 
                 var stampe = _stampEA as Controls.Stamps.ResizeMoveEdgesEventArgs;
 
-                if (stampe.ActionType ==  eActionTypes.MoveTopLeft)
+                if (stampe.ActionType == eActionTypes.MoveTopLeft)
                 {
                     console2.Text = $"sx : {ptStart.Position.X}  { _stampStartX }  sy :  { ptStart.Position.Y } { _stampStartY }    ";
 
                     _currentStamp.SetValue(Canvas.LeftProperty, _stampStartX + (ptEnd.Position.X - ptStart.Position.X));
                     _currentStamp.SetValue(Canvas.TopProperty, _stampStartY + (ptEnd.Position.Y - ptStart.Position.Y));
-                    
+
                 }
                 else if (stampe.ActionType == eActionTypes.RotateBottomLeft)
                 {
-                    var ang = 180 / Math.PI * Math.Atan((ptStart.Position.Y - ptEnd.Position.Y)/ (ptStart.Position.X - ptEnd.Position.X));
+                    var ang = 180 / Math.PI * Math.Atan((ptStart.Position.Y - ptEnd.Position.Y) / (ptStart.Position.X - ptEnd.Position.X));
                     //var slope = (ptStart.Position.Y - ptEnd.Position.Y) / (ptStart.Position.X - ptEnd.Position.X);
                     //var new_slope = -1 / slope;
                     //var pt2x = (ptStart.Position.X + ptEnd.Position.X) / 2;
@@ -438,7 +442,18 @@ namespace X.Viewer.SketchFlow
                     ((FrameworkElement)_currentStamp).Width = _stampStartWidth + (ptEnd.Position.X - ptStart.Position.X);
                     ((FrameworkElement)_currentStamp).Height = _stampStartHeight + (ptEnd.Position.Y - ptStart.Position.Y);
                 }
-                
+                else if (stampe.ActionType == eActionTypes.ResizeCenterRight)
+                {
+                    console2.Text = $"thickness : { ((ptEnd.Position.X - ptStart.Position.X) / 10) }  ";
+
+                    var newThickness = Math.Abs(((ptEnd.Position.X - ptStart.Position.X) / 10));
+                    //el
+                    var circ = (Circle)_currentStamp;
+                    var el = circ.FindName("el") as Shape;
+                    el.StrokeThickness = newThickness;
+
+                    //ptEnd.Position.X - ptStart.Position.X
+                }
 
 
                 return;

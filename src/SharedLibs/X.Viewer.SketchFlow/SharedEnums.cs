@@ -14,6 +14,8 @@ namespace X.Viewer.SketchFlow
         MoveTopLeft,
         ToolbarTopRight,
         RotateBottomLeft,
-        ResizeBottomRight
+        ResizeBottomRight,
+        ResizeCenterRight,
+        ResizeCenterLeft
     }
 }

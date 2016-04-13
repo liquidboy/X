@@ -44,6 +44,11 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         {
             if (PerformAction != null) PerformAction(this, new ResizeMoveEdgesEventArgs() { ActionType = eActionTypes.ResizeBottomRight });
         }
+
+        private void butCenterRight_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            if (PerformAction != null) PerformAction(this, new ResizeMoveEdgesEventArgs() { ActionType = eActionTypes.ResizeCenterRight });
+        }
     }
 
     public class ResizeMoveEdgesEventArgs : EventArgs

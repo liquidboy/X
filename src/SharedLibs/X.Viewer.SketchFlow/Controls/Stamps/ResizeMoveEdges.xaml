@@ -34,9 +34,9 @@
             <xuip:Path PathType="CornersLTRB" Width="20" Height="20" Foreground="LightGray"></xuip:Path>
             <Ellipse Width="10" Height="10" Fill="LightGray"></Ellipse>
         </Grid>
-        <Grid x:Name="butCenterRight" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,15,-7,0"  >
+        <Grid x:Name="butCenterRight" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,15,-7,0" PointerPressed="butCenterRight_PointerPressed" >
             <Grid.RenderTransform>
-                <CompositeTransform Rotation="-45"/>
+                <CompositeTransform Rotation="-42"/>
             </Grid.RenderTransform>
             <xuip:Path PathType="CornersLTRB" Width="20" Height="20" Foreground="LightGray"></xuip:Path>
             <Ellipse Width="10" Height="10" Fill="LightGray"></Ellipse>
