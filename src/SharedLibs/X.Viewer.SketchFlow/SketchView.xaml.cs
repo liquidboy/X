@@ -42,7 +42,7 @@ namespace X.Viewer.SketchFlow
             var nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
             nc.SetValue(Canvas.LeftProperty, pg.Left);
             nc.SetValue(Canvas.TopProperty, pg.Top);
-            nc.PerformAction += Nc_PerformAction;
+            nc.PerformAction += PageLayout_PerformAction;
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
 
@@ -53,7 +53,7 @@ namespace X.Viewer.SketchFlow
             nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
             nc.SetValue(Canvas.LeftProperty, pg.Left);
             nc.SetValue(Canvas.TopProperty, pg.Top);
-            nc.PerformAction += Nc_PerformAction;
+            nc.PerformAction += PageLayout_PerformAction;
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
 
@@ -64,7 +64,7 @@ namespace X.Viewer.SketchFlow
             nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
             nc.SetValue(Canvas.LeftProperty, pg.Left);
             nc.SetValue(Canvas.TopProperty, pg.Top);
-            nc.PerformAction += Nc_PerformAction;
+            nc.PerformAction += PageLayout_PerformAction;
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
 
@@ -74,7 +74,7 @@ namespace X.Viewer.SketchFlow
             nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
             nc.SetValue(Canvas.LeftProperty, pg.Left);
             nc.SetValue(Canvas.TopProperty, pg.Top);
-            nc.PerformAction += Nc_PerformAction;
+            nc.PerformAction += PageLayout_PerformAction;
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
             
@@ -191,10 +191,10 @@ namespace X.Viewer.SketchFlow
                             var npl = new PageLayer();
                             var gt = pl.TransformToVisual(stamp);
                             var pt = gt.TransformPoint(new Windows.Foundation.Point(0, 0));
-                            var cir = (FrameworkElement)_currentStamp as Circle;
-                            var cirsh = cir.FindName("el") as Shape;
-
-                            npl.XamlFragments.Add($"<Ellipse Height=\"{ (cir.Height * (1 / _scaleY)) }\" VerticalAlignment=\"Top\" Width=\"{ (cir.Width * (1 / _scaleX)) }\" HorizontalAlignment=\"Left\" StrokeThickness=\"{ cirsh.StrokeThickness }\" Stroke=\"DarkOrange\" Margin=\"{ Math.Abs(pt.X * (1 / _scaleX)) }, { Math.Abs(pt.Y * (1 / _scaleY)) }, 0,0\"  ></Ellipse>");
+                            var stampo = _currentStamp as IStamp;
+                            var str = stampo.GenerateXAML(_scaleX, _scaleY, pt.X, pt.Y);
+                            npl.XamlFragments.Add(str);
+                        
                             plvm.Layers.Add(npl);
                             plvm.ExternalPC("Layers");
 
@@ -225,7 +225,7 @@ namespace X.Viewer.SketchFlow
             var nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
             nc.SetValue(Canvas.LeftProperty, pg.Left);
             nc.SetValue(Canvas.TopProperty, pg.Top);
-            nc.PerformAction += Nc_PerformAction;
+            nc.PerformAction += PageLayout_PerformAction;
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
 
@@ -236,7 +236,7 @@ namespace X.Viewer.SketchFlow
         bool IsResizingPage = false;
         Controls.PageLayout _currentPageLayout;
 
-        private void Nc_PerformAction(object sender, EventArgs e)
+        private void PageLayout_PerformAction(object sender, EventArgs e)
         {
             if(e is Controls.PageLayoutEventArgs)
             {

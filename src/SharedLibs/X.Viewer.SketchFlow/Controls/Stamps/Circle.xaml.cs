@@ -17,7 +17,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 {
 
 
-    public sealed partial class Circle : UserControl
+    public sealed partial class Circle : UserControl, IStamp
     {
         public event EventHandler PerformAction;
 
@@ -53,6 +53,16 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         private void butStamp_Click(object sender, RoutedEventArgs e)
         {
             PerformAction?.Invoke(this, new CircleEventArgs() { ActionType = eActionTypes.CreateFromStamp });
+        }
+
+        public string GenerateXAML(double scaleX, double scaleY, double left, double top)
+        {
+            return $"<Ellipse Height=\"{ (this.Height * (1 / scaleY)) }\" VerticalAlignment=\"Top\" Width=\"{ (this.Width * (1 / scaleX)) }\" HorizontalAlignment=\"Left\" StrokeThickness=\"{ el.StrokeThickness }\" Stroke=\"DarkOrange\" Margin=\"{ Math.Abs(left * (1 / scaleX)) }, { Math.Abs(top * (1 / scaleY)) }, 0,0\"  ></Ellipse>";
+        }
+
+        public void PopulateFromUIElement(UIElement element)
+        {
+            throw new NotImplementedException();
         }
     }
 
