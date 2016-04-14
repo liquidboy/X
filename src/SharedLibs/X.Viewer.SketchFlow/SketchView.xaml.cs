@@ -197,10 +197,10 @@ namespace X.Viewer.SketchFlow
                             var plvm = pl.DataContext as SketchPage;
 
                             var npl = new PageLayer();
+                            npl.HasSubParentCanvas = true;
                             var gt = pl.TransformToVisual((UIElement)stamp);
                             var pt = gt.TransformPoint(new Windows.Foundation.Point(0, 0));
-                            var stampo = _currentStamp as IStamp;
-                            var str = stampo.GenerateXAML(_scaleX, _scaleY, pt.X, pt.Y);
+                            var str = stamp.GenerateXAML(_scaleX, _scaleY, pt.X, pt.Y);
                             npl.XamlFragments.Add(str);
 
                             plvm.Layers.Add(npl);

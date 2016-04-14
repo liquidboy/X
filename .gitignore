@@ -211,3 +211,5 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 src/Samples/Samples.VC.opendb
+/src/Samples/Samples.VC.VC.opendb
+/src/Samples/Samples.VC.db

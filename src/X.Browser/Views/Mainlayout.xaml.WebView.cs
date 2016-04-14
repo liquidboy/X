@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage.Streams;
+using Windows.UI.Composition;
+using Windows.UI.Xaml.Hosting;
 using X.Browser.ViewModels;
 using X.Viewer;
 
@@ -215,5 +217,19 @@ namespace X.Browser.Views
 
 
         }
+
+
+
+        //private Compositor m_compositor;
+        //private ContainerVisual m_root;
+        //private SpriteVisual m_sprite;
+        //private CompositionEffectBrush m_saturateEffectBrush;
+
+        //private void ConfigureWebviewEffect() {
+        //    m_compositor = ElementCompositionPreview.GetElementVisual(layoutRoot).Compositor;
+        //    m_root = m_compositor.CreateContainerVisual();
+        //    ElementCompositionPreview.SetElementChildVisual(layoutRoot, m_root);
+
+        //}
     }
 }

@@ -44,6 +44,7 @@ namespace X.Viewer.SketchFlow
         public bool IsSelected { get { return _IsSelected; } set { _IsSelected = value; RaisePropertyChanged(); } }
 
         public ObservableCollection<PageLayer> Layers { get; set; }
+        
         public SketchPage()
         {
             Layers = new ObservableCollection<PageLayer>();
@@ -56,8 +57,9 @@ namespace X.Viewer.SketchFlow
     public class PageLayer : ViewModelBase
     {
         public bool IsEnabled { get; set; } = true;
+        public bool HasSubParentCanvas { get; set; } = false;
         public ObservableCollection<string> XamlFragments { get; set; }
-
+        
         public PageLayer() {
             XamlFragments = new ObservableCollection<string>();
         }
@@ -67,4 +69,5 @@ namespace X.Viewer.SketchFlow
             RaisePropertyChanged(propertyName);
         }
     }
+
 }
