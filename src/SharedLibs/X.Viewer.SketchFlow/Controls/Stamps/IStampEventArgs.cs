@@ -7,10 +7,8 @@ using Windows.UI.Xaml;
 
 namespace X.Viewer.SketchFlow.Controls.Stamps
 {
-    interface IStamp
+    interface IStampEventArgs
     {
-        event EventHandler PerformAction;
-        string GenerateXAML(double scaleX, double scaleY, double left, double top);
-        void PopulateFromUIElement(UIElement element);
+        eActionTypes ActionType { get; set; }
     }
 }

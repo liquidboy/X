@@ -110,6 +110,7 @@
     <Compile Include="Controls\PageContent.xaml.cs">
       <DependentUpon>PageContent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Stamps\IStampEventArgs.cs" />
     <Compile Include="Controls\Stamps\IStamp.cs" />
     <Compile Include="Controls\Stamps\ResizeMoveEdges.xaml.cs">
       <DependentUpon>ResizeMoveEdges.xaml</DependentUpon>

@@ -166,17 +166,18 @@ namespace X.Viewer.SketchFlow
                 
                 IsResizingStamp = true;
             }
-            else if (e is Controls.Stamps.CircleEventArgs) {
-                var te = e as Controls.Stamps.CircleEventArgs;
-                var stamp = ((Controls.Stamps.Circle)_currentStamp);
+            else if (e is IStampEventArgs) {
+                var te = e as IStampEventArgs;
+                var stamp = ((IStamp)_currentStamp);
 
                 if (te.ActionType == eActionTypes.CloseStamp )
                 {
                     stamp.PerformAction -= Stamp_PerformAction;
-                    cvMainAdorner.Children.Remove(stamp);
+                    cvMainAdorner.Children.Remove((UIElement)stamp);
 
                     return;
-                }if (te.ActionType == eActionTypes.CreateFromStamp )
+                }
+                if (te.ActionType == eActionTypes.CreateFromStamp )
                 {
                     //project stamp into the underlying page & new layer (in the future we should allow creating in an existing layer)
 
@@ -189,7 +190,7 @@ namespace X.Viewer.SketchFlow
                             var plvm = pl.DataContext as SketchPage;
 
                             var npl = new PageLayer();
-                            var gt = pl.TransformToVisual(stamp);
+                            var gt = pl.TransformToVisual((UIElement)stamp);
                             var pt = gt.TransformPoint(new Windows.Foundation.Point(0, 0));
                             var stampo = _currentStamp as IStamp;
                             var str = stampo.GenerateXAML(_scaleX, _scaleY, pt.X, pt.Y);

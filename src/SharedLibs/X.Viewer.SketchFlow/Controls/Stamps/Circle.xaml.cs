@@ -66,8 +66,9 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         }
     }
 
-    public class CircleEventArgs : EventArgs
+    public class CircleEventArgs : EventArgs, IStampEventArgs
     {
-        public eActionTypes ActionType;
+        public eActionTypes ActionType { get; set; }
+        
     }
 }
