@@ -57,7 +57,11 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
         public string GenerateXAML(double scaleX, double scaleY, double left, double top)
         {
-            return $"<Ellipse Height=\"{ (this.Height * (1 / scaleY)) }\" VerticalAlignment=\"Top\" Width=\"{ (this.Width * (1 / scaleX)) }\" HorizontalAlignment=\"Left\" StrokeThickness=\"{ el.StrokeThickness }\" Stroke=\"DarkOrange\" Margin=\"{ Math.Abs(left * (1 / scaleX)) }, { Math.Abs(top * (1 / scaleY)) }, 0,0\"  ></Ellipse>";
+            var rotationAngle =  ((CompositeTransform)this.RenderTransform).Rotation;
+            var rotationStr = $"<Ellipse.RenderTransform><CompositeTransform Rotation=\"{ rotationAngle }\" /></Ellipse.RenderTransform>";
+            if (rotationAngle == 0) rotationStr = "";
+
+            return $"<Ellipse Height=\"{ (this.Height * (1 / scaleY)) }\" VerticalAlignment=\"Top\" Width=\"{ (this.Width * (1 / scaleX)) }\" HorizontalAlignment=\"Left\" StrokeThickness=\"{ el.StrokeThickness }\" Stroke=\"DarkOrange\" Margin=\"{ Math.Abs(left * (1 / scaleX)) }, { Math.Abs(top * (1 / scaleY)) }, 0,0\"   RenderTransformOrigin=\"0.5,0.5\">{ rotationStr }</Ellipse>";
         }
 
         public void PopulateFromUIElement(UIElement element)

@@ -127,12 +127,12 @@ namespace X.Viewer.SketchFlow
                 
                 if (ea.ActionType == "AddCircle")
                 {
-                  
-
                     var nc = new Controls.Stamps.Circle();
                     nc.Width = 85; nc.Height = 85;
                     nc.SetValue(Canvas.LeftProperty, Math.Abs(ea.StartPoint.X ));
                     nc.SetValue(Canvas.TopProperty, Math.Abs(ea.StartPoint.Y ));
+                    nc.RenderTransform = new CompositeTransform();
+                    nc.RenderTransformOrigin = new Windows.Foundation.Point(0.5d, 0.5d);
                     nc.PerformAction += Stamp_PerformAction;
                     cvMainAdorner.Children.Add(nc);
                 }
@@ -148,6 +148,7 @@ namespace X.Viewer.SketchFlow
         double _stampStartHeight = 0;
         double _stampStartX = 0;
         double _stampStartY = 0;
+        double _stampStartRotation = 0;
         EventArgs _stampEA;
         private void Stamp_PerformAction(object sender, EventArgs e)
         {
@@ -166,24 +167,30 @@ namespace X.Viewer.SketchFlow
                 
                 IsResizingStamp = true;
             }
-            else if (e is IStampEventArgs) {
+            else if (e is IStampEventArgs)
+            {
                 var te = e as IStampEventArgs;
                 var stamp = ((IStamp)_currentStamp);
 
-                if (te.ActionType == eActionTypes.CloseStamp )
+                if (te.ActionType == eActionTypes.CloseStamp)
                 {
                     stamp.PerformAction -= Stamp_PerformAction;
                     cvMainAdorner.Children.Remove((UIElement)stamp);
 
                     return;
                 }
-                if (te.ActionType == eActionTypes.CreateFromStamp )
+                else if (te.ActionType == eActionTypes.RotateBottomLeft)
+                {
+                    _stampStartRotation = ((CompositeTransform)((UIElement)stamp).RenderTransform).Rotation;
+                }
+                if (te.ActionType == eActionTypes.CreateFromStamp)
                 {
                     //project stamp into the underlying page & new layer (in the future we should allow creating in an existing layer)
 
                     var found = VisualTreeHelper.FindElementsInHostCoordinates(new Windows.Foundation.Point(_stampStartX, _stampStartY), cvMain);
-                    foreach (FrameworkElement el in found) {
-                        
+                    foreach (FrameworkElement el in found)
+                    {
+
                         if (el.Parent is PageLayout)
                         {
                             var pl = el.Parent as PageLayout;
@@ -195,7 +202,7 @@ namespace X.Viewer.SketchFlow
                             var stampo = _currentStamp as IStamp;
                             var str = stampo.GenerateXAML(_scaleX, _scaleY, pt.X, pt.Y);
                             npl.XamlFragments.Add(str);
-                        
+
                             plvm.Layers.Add(npl);
                             plvm.ExternalPC("Layers");
 
@@ -204,7 +211,7 @@ namespace X.Viewer.SketchFlow
                     }
 
                 }
-  
+
             }
         }
 
@@ -434,6 +441,8 @@ namespace X.Viewer.SketchFlow
                     //var pt2y = (ptStart.Position.Y + ptEnd.Position.Y) / 2;
                     //var d_chord = Math.Sqrt( Math.Pow((ptStart.Position.X - ptEnd.Position.X),2) + Math.Pow((ptStart.Position.Y - ptEnd.Position.Y), 2));
                     //var d_perp = d_chord / (2 * Math.Tan(angle));
+
+                    ((CompositeTransform)_currentStamp.RenderTransform).Rotation = _stampStartRotation - (ptEnd.Position.X - ptStart.Position.X);
 
                     console2.Text = $"sx : {ptStart.Position.X}  { _stampStartX }  sy :  { ptStart.Position.Y } { _stampStartY }    angle : { ang }  ";
 
