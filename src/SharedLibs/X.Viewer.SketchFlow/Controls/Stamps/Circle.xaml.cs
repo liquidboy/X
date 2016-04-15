@@ -63,7 +63,9 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
             var rotationStr = $"<Ellipse.RenderTransform><CompositeTransform Rotation=\"{ rotationAngle }\" /></Ellipse.RenderTransform>";
             if (rotationAngle == 0) rotationStr = "";
 
-            return $"<Ellipse HorizontalAlignment=\"Left\" VerticalAlignment=\"Top\" Height=\"{ (this.Height * (1 / scaleY)) }\" Width=\"{ (this.Width * (1 / scaleX)) }\"  StrokeThickness=\"{ el.StrokeThickness }\" Stroke=\"DarkOrange\" Canvas.Left=\"{ leftToUse }\" Canvas.Top=\"{ topToUse }\" RenderTransformOrigin=\"0.5,0.5\">{ rotationStr }</Ellipse>";
+            var newStroke = el.StrokeThickness * (1 / scaleX);
+
+            return $"<Ellipse HorizontalAlignment=\"Left\" VerticalAlignment=\"Top\" Height=\"{ (this.Height * (1 / scaleY)) }\" Width=\"{ (this.Width * (1 / scaleX)) }\"  StrokeThickness=\"{ newStroke }\" Stroke=\"DarkOrange\" Canvas.Left=\"{ leftToUse }\" Canvas.Top=\"{ topToUse }\" RenderTransformOrigin=\"0.5,0.5\">{ rotationStr }</Ellipse>";
         }
 
         public void PopulateFromUIElement(UIElement element)
