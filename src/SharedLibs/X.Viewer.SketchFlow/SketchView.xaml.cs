@@ -199,10 +199,8 @@ namespace X.Viewer.SketchFlow
                             var npl = new PageLayer();
                             var gt = ((FrameworkElement)stamp).TransformToVisual(pl); ;
                             //var gt = pl.TransformToVisual((UIElement)stamp);
-                            
+                            npl.HasChildContainerCanvas = true;
                             var ptCenter = gt.TransformPoint(new Windows.Foundation.Point(0,0));
-                            var ptCenter1 = gt.TransformPoint(new Windows.Foundation.Point((((FrameworkElement)stamp).Width / 2), (((FrameworkElement)stamp).Height / 2)));
-                            var ptCenter2 = gt.TransformPoint(new Windows.Foundation.Point((((FrameworkElement)stamp).Width ), (((FrameworkElement)stamp).Height )));
                             var str = stamp.GenerateXAML(_scaleX, _scaleY, ptCenter.X, ptCenter.Y);
                             npl.XamlFragments.Add(str);
 
