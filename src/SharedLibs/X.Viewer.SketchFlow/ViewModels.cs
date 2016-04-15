@@ -57,7 +57,7 @@ namespace X.Viewer.SketchFlow
     public class PageLayer : ViewModelBase
     {
         public bool IsEnabled { get; set; } = true;
-        public bool HasSubParentCanvas { get; set; } = false;
+
         public ObservableCollection<string> XamlFragments { get; set; }
         
         public PageLayer() {

@@ -197,10 +197,13 @@ namespace X.Viewer.SketchFlow
                             var plvm = pl.DataContext as SketchPage;
 
                             var npl = new PageLayer();
-                            npl.HasSubParentCanvas = true;
-                            var gt = pl.TransformToVisual((UIElement)stamp);
-                            var pt = gt.TransformPoint(new Windows.Foundation.Point(0, 0));
-                            var str = stamp.GenerateXAML(_scaleX, _scaleY, pt.X, pt.Y);
+                            var gt = ((FrameworkElement)stamp).TransformToVisual(pl); ;
+                            //var gt = pl.TransformToVisual((UIElement)stamp);
+                            
+                            var ptCenter = gt.TransformPoint(new Windows.Foundation.Point(0,0));
+                            var ptCenter1 = gt.TransformPoint(new Windows.Foundation.Point((((FrameworkElement)stamp).Width / 2), (((FrameworkElement)stamp).Height / 2)));
+                            var ptCenter2 = gt.TransformPoint(new Windows.Foundation.Point((((FrameworkElement)stamp).Width ), (((FrameworkElement)stamp).Height )));
+                            var str = stamp.GenerateXAML(_scaleX, _scaleY, ptCenter.X, ptCenter.Y);
                             npl.XamlFragments.Add(str);
 
                             plvm.Layers.Add(npl);
