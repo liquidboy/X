@@ -13,6 +13,7 @@
     d:DesignWidth="400">
     <UserControl.Resources>
         <lc:IsSelectedToColorConverter x:Key="IsSelectedToColorConverter" ></lc:IsSelectedToColorConverter>
+        <lc:UIElementAsClipConverter x:Key="UIElementAsClipConverter"></lc:UIElementAsClipConverter>
     </UserControl.Resources>
     <Grid x:Name="layoutRoot" PointerReleased="layoutRoot_PointerReleased">
         <!-- Top Left label -->
@@ -60,7 +61,11 @@
 
 
 
-        <local:PageContent HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></local:PageContent>
+        <local:PageContent HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <local:PageContent.Clip>
+                <RectangleGeometry Rect="{Binding ElementName=root, Converter={StaticResource UIElementAsClipConverter}}"/>
+            </local:PageContent.Clip>
+        </local:PageContent>
         <local:PageLayers x:Name="pgLayer" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="-50,0,0, 0" LayerChanged="pgLayer_LayerChanged" ></local:PageLayers>
     </Grid>
 </UserControl>
