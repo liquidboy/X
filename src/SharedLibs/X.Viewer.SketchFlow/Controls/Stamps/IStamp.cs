@@ -12,5 +12,6 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         event EventHandler PerformAction;
         string GenerateXAML(double scaleX, double scaleY, double left, double top);
         void PopulateFromUIElement(UIElement element);
+        void UpdateRotation(double angle);
     }
 }

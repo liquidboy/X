@@ -436,14 +436,9 @@ namespace X.Viewer.SketchFlow
                 else if (stampe.ActionType == eActionTypes.RotateBottomLeft)
                 {
                     var ang = 180 / Math.PI * Math.Atan((ptStart.Position.Y - ptEnd.Position.Y) / (ptStart.Position.X - ptEnd.Position.X));
-                    //var slope = (ptStart.Position.Y - ptEnd.Position.Y) / (ptStart.Position.X - ptEnd.Position.X);
-                    //var new_slope = -1 / slope;
-                    //var pt2x = (ptStart.Position.X + ptEnd.Position.X) / 2;
-                    //var pt2y = (ptStart.Position.Y + ptEnd.Position.Y) / 2;
-                    //var d_chord = Math.Sqrt( Math.Pow((ptStart.Position.X - ptEnd.Position.X),2) + Math.Pow((ptStart.Position.Y - ptEnd.Position.Y), 2));
-                    //var d_perp = d_chord / (2 * Math.Tan(angle));
 
-                    ((CompositeTransform)_currentStamp.RenderTransform).Rotation = _stampStartRotation - (ptEnd.Position.X - ptStart.Position.X);
+                    ((IStamp)_currentStamp).UpdateRotation(_stampStartRotation - (ptEnd.Position.X - ptStart.Position.X));
+                    //((CompositeTransform)_currentStamp.RenderTransform).Rotation = _stampStartRotation - (ptEnd.Position.X - ptStart.Position.X);
 
                     console2.Text = $"sx : {ptStart.Position.X}  { _stampStartX }  sy :  { ptStart.Position.Y } { _stampStartY }    angle : { ang }  ";
 

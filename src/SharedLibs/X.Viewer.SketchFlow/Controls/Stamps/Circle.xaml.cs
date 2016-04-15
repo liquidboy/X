@@ -57,18 +57,23 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
         public string GenerateXAML(double scaleX, double scaleY, double left, double top)
         {
-            var rotationAngle =  ((CompositeTransform)this.RenderTransform).Rotation;
+            var rotationAngle =  ((CompositeTransform)el.RenderTransform).Rotation;
             var leftToUse = left;
             var topToUse = top;
             var rotationStr = $"<Ellipse.RenderTransform><CompositeTransform Rotation=\"{ rotationAngle }\" /></Ellipse.RenderTransform>";
             if (rotationAngle == 0) rotationStr = "";
 
-            return $"<Ellipse HorizontalAlignment=\"Left\" VerticalAlignment=\"Top\" Height=\"{ (this.Height * (1 / scaleY)) }\" Width=\"{ (this.Width * (1 / scaleX)) }\"  StrokeThickness=\"{ el.StrokeThickness }\" Stroke=\"DarkOrange\" Canvas.Left=\"{ leftToUse }\" Canvas.Top=\"{ topToUse }\" RenderTransformOrigin=\"0,0\">{ rotationStr }</Ellipse>";
+            return $"<Ellipse HorizontalAlignment=\"Left\" VerticalAlignment=\"Top\" Height=\"{ (this.Height * (1 / scaleY)) }\" Width=\"{ (this.Width * (1 / scaleX)) }\"  StrokeThickness=\"{ el.StrokeThickness }\" Stroke=\"DarkOrange\" Canvas.Left=\"{ leftToUse }\" Canvas.Top=\"{ topToUse }\" RenderTransformOrigin=\"0.5,0.5\">{ rotationStr }</Ellipse>";
         }
 
         public void PopulateFromUIElement(UIElement element)
         {
             throw new NotImplementedException();
+        }
+
+        public void UpdateRotation(double angle)
+        {
+            ((CompositeTransform)el.RenderTransform).Rotation = angle;
         }
     }
 
