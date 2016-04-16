@@ -54,6 +54,16 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         {
             PerformAction?.Invoke(this, new ResizeMoveEdgesEventArgs() { ActionType = eActionTypes.CenterLeft });
         }
+
+        private void General_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            ((FrameworkElement)sender).Opacity = 1;
+        }
+
+        private void General_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            ((FrameworkElement)sender).Opacity = 0.2;
+        }
     }
 
     public class ResizeMoveEdgesEventArgs : EventArgs

@@ -81,6 +81,13 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         public void UpdateRotation(double angle)
         {
             ((CompositeTransform)el.RenderTransform).Rotation = angle;
+            ((CompositeTransform)grdGridRotationMarkers.RenderTransform).Rotation = angle;
+            
+
+        //    ((CompositeTransform)x1.RenderTransform).Rotation = Math.Cos(angle);
+        //    ((CompositeTransform)x2.RenderTransform).Rotation = Math.Cos(angle);
+        //    ((CompositeTransform)y1.RenderTransform).Rotation = Math.Cos(angle);
+        //    ((CompositeTransform)y2.RenderTransform).Rotation = Math.Cos(angle);
         }
 
         private void cpMain_ColorChanged(object sender, EventArgs e)
@@ -93,7 +100,9 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
             PerformAction?.Invoke(this, new CircleEventArgs() { ActionType = eActionTypes.ToggleGridMarkers });
 
             if (grdGridMarkers.Visibility == Visibility.Visible) grdGridMarkers.Visibility = Visibility.Collapsed;
-            else  grdGridMarkers.Visibility = Visibility.Visible; 
+            else  grdGridMarkers.Visibility = Visibility.Visible;
+
+            grdGridRotationMarkers.Visibility = grdGridMarkers.Visibility;
         }
     }
 
