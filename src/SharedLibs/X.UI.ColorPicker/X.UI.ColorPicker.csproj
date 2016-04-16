@@ -119,13 +119,13 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AppX\Assets\ColorSwatchCircle.png">
+    <EmbeddedResource Include="AppX\X.UI.ColorPicker.Assets\ColorSwatchCircle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Assets\ColorSwatchSquare1.png">
+    <EmbeddedResource Include="AppX\X.UI.ColorPicker.Assets\ColorSwatchSquare1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="AppX\Assets\ColorSwatchSquare2.png">
+    <EmbeddedResource Include="AppX\X.UI.ColorPicker.Assets\ColorSwatchSquare2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>

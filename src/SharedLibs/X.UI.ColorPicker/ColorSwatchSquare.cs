@@ -125,15 +125,15 @@ namespace X.UI.ColorPicker
             {
                 if (Swatch == eSwatchTypes.Circle)
                 {
-                    _colorImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/ColorSwatchCircle.png"));
+                    _colorImage.Source = new BitmapImage(new Uri("ms-appx:///X.UI.ColorPicker.Assets/ColorSwatchCircle.png"));
                 }
                 else if (Swatch == eSwatchTypes.Square1)
                 {
-                    _colorImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/ColorSwatchSquare1.png"));
+                    _colorImage.Source = new BitmapImage(new Uri("ms-appx:///X.UI.ColorPicker.Assets/ColorSwatchSquare1.png"));
                 }
                 else if (Swatch == eSwatchTypes.Square2)
                 {
-                    _colorImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/ColorSwatchSquare2.png"));
+                    _colorImage.Source = new BitmapImage(new Uri("ms-appx:///X.UI.ColorPicker.Assets/ColorSwatchSquare2.png"));
                 }
             }
         }
