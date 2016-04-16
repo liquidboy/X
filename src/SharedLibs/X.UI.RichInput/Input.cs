@@ -535,7 +535,7 @@ namespace X.UI.RichInput
             _udfProgRn1 = null;
             _udfTBut1 = null;
             dtInvalidate = null;
-            _ccInput.Content = null;
+            if (_ccInput != null && _ccInput.Content != null) _ccInput.Content = null;
             _grdContainer = null;
             _model = null;
         }

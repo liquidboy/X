@@ -99,8 +99,14 @@
             <Button x:Name="butGridMarker" Background="LightGray" Click="butGridMarker_Click">
                 <xuip:Path PathType="GridMarker" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
+            <Button x:Name="butLock" Background="LightGray" >
+                <xuip:Path PathType="Lock1" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butUnlock" Background="LightGray" >
+                <xuip:Path PathType="Unlock1" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
             <Button x:Name="butClose" Background="LightGray" Click="butClose_Click">
-                <xuip:Path PathType="Close1" Width="25" Height="25" Foreground="White"></xuip:Path>
+                <xuip:Path PathType="Trash1" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
         </StackPanel>
         <Border x:Name="colorPicker" 
