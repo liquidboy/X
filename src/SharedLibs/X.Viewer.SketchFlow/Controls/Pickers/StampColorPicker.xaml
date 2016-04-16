@@ -12,6 +12,6 @@
     d:DesignWidth="400">
 
     <Grid>
-        <xuicp:ColorSwatchSquare x:Name="cs" Width="{Binding ElementName=root, Path=Width}" Height="{Binding ElementName=root, Path=Height}" HorizontalAlignment="Left" VerticalAlignment="Top" Swatch="Circle"></xuicp:ColorSwatchSquare>
+        <xuicp:ColorSwatchSquare x:Name="cs" Width="{Binding ElementName=root, Path=Width}" Height="{Binding ElementName=root, Path=Height}" HorizontalAlignment="Left" VerticalAlignment="Top" Swatch="Circle" ColorChanged="cs_ColorChanged"></xuicp:ColorSwatchSquare>
     </Grid>
 </UserControl>

@@ -70,7 +70,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
             var newStroke = el.StrokeThickness * (1 / scaleX);
 
-            return $"<Ellipse HorizontalAlignment=\"Left\" VerticalAlignment=\"Top\" Height=\"{ (this.Height * (1 / scaleY)) }\" Width=\"{ (this.Width * (1 / scaleX)) }\"  StrokeThickness=\"{ newStroke }\" Stroke=\"DarkOrange\" Canvas.Left=\"{ leftToUse }\" Canvas.Top=\"{ topToUse }\" RenderTransformOrigin=\"0.5,0.5\">{ rotationStr }</Ellipse>";
+            return $"<Ellipse HorizontalAlignment=\"Left\" VerticalAlignment=\"Top\" Height=\"{ (this.Height * (1 / scaleY)) }\" Width=\"{ (this.Width * (1 / scaleX)) }\"  StrokeThickness=\"{ newStroke }\" Stroke=\"{ ((SolidColorBrush)el.Stroke).Color.ToString() }\" Canvas.Left=\"{ leftToUse }\" Canvas.Top=\"{ topToUse }\" RenderTransformOrigin=\"0.5,0.5\">{ rotationStr }</Ellipse>";
         }
 
         public void PopulateFromUIElement(UIElement element)
@@ -81,6 +81,11 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         public void UpdateRotation(double angle)
         {
             ((CompositeTransform)el.RenderTransform).Rotation = angle;
+        }
+
+        private void cpMain_ColorChanged(object sender, EventArgs e)
+        {
+            el.Stroke = (Brush)sender;
         }
     }
 

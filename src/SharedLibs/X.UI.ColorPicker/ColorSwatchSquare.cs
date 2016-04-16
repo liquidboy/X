@@ -40,6 +40,8 @@ namespace X.UI.ColorPicker
         TextBlock _tbData;
         Boolean IsMouseDown = false;
 
+        public event EventHandler ColorChanged;
+
         public ColorSwatchSquare()
         {
             this.DefaultStyleKey = typeof(ColorSwatchSquare);
@@ -163,8 +165,8 @@ namespace X.UI.ColorPicker
             r = _pixelBufferData[certainPixel + 2];
             a = _pixelBufferData[certainPixel + 3];
             
-            _rectSelectedColor.Fill = new SolidColorBrush(
-                Color.FromArgb(a, r, g, b));
+            var newColor= new SolidColorBrush(Color.FromArgb(a, r, g, b));
+            _rectSelectedColor.Fill = newColor;
 
             _tbData.Text = $"x:{imageX} y:{imageY}  r:{r} g:{g} b:{b}   ";
 
@@ -172,7 +174,7 @@ namespace X.UI.ColorPicker
             _ellipsePixel.SetValue(Canvas.TopProperty, y);
 
 
-
+            ColorChanged?.Invoke(newColor, EventArgs.Empty);
         }
 
 
