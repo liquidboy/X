@@ -21,6 +21,7 @@ Components still being fleshed out...
 * Viewer.* - Content is rendered by these viewers.
 * Toolbar
 * UserCard
+* ColorPicker
 
 The following components are less generic, possibly designed with the intention of modularizing the monolithic X.Browser app.
 
