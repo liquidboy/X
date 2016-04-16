@@ -62,23 +62,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
             PerformAction?.Invoke(this, new CircleEventArgs() { ActionType = eActionTypes.CreateFromStamp });
         }
 
-        public string GenerateXAML(double scaleX, double scaleY, double left, double top)
-        {
-            var rotationAngle =  ((CompositeTransform)el.RenderTransform).Rotation;
-            var leftToUse = left;
-            var topToUse = top;
-            var rotationStr = $"<Ellipse.RenderTransform><CompositeTransform Rotation=\"{ rotationAngle }\" /></Ellipse.RenderTransform>";
-            if (rotationAngle == 0) rotationStr = "";
-
-            var newStroke = el.StrokeThickness * (1 / scaleX);
-
-            return $"<Ellipse HorizontalAlignment=\"Left\" VerticalAlignment=\"Top\" Height=\"{ (this.Height * (1 / scaleY)) }\" Width=\"{ (this.Width * (1 / scaleX)) }\"  StrokeThickness=\"{ newStroke }\" Stroke=\"{ ((SolidColorBrush)el.Stroke).Color.ToString() }\" Canvas.Left=\"{ leftToUse }\" Canvas.Top=\"{ topToUse }\" RenderTransformOrigin=\"0.5,0.5\">{ rotationStr }</Ellipse>";
-        }
-
-        public void PopulateFromUIElement(UIElement element)
-        {
-            throw new NotImplementedException();
-        }
+     
 
         public void UpdateRotation(double angle)
         {
@@ -107,6 +91,28 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
             else  grdGridMarkers.Visibility = Visibility.Visible;
 
             grdGridRotationMarkers.Visibility = grdGridMarkers.Visibility;
+        }
+
+
+        public string GenerateXAML(double scaleX, double scaleY, double left, double top)
+        {
+            var rotationAngle = ((CompositeTransform)el.RenderTransform).Rotation;
+            var leftToUse = left;
+            var topToUse = top;
+            var rotationXaml = $"<Ellipse.RenderTransform><CompositeTransform Rotation=\"{ rotationAngle }\" /></Ellipse.RenderTransform>";
+            if (rotationAngle == 0) rotationXaml = "";
+
+            var fillColor = (el.Fill!=null)? ((SolidColorBrush)el.Fill).Color.ToString(): "";
+            var fillXaml = fillColor.Length >0 ? $"Fill=\"{fillColor}\"": "";
+
+            var newStroke = el.StrokeThickness * (1 / scaleX);
+
+            return $"<Ellipse HorizontalAlignment=\"Left\" VerticalAlignment=\"Top\" Height=\"{ (this.Height * (1 / scaleY)) }\" Width=\"{ (this.Width * (1 / scaleX)) }\"  StrokeThickness=\"{ newStroke }\" Stroke=\"{ ((SolidColorBrush)el.Stroke).Color.ToString() }\" Canvas.Left=\"{ leftToUse }\" Canvas.Top=\"{ topToUse }\" RenderTransformOrigin=\"0.5,0.5\" { fillXaml } >{ rotationXaml }</Ellipse>";
+        }
+
+        public void PopulateFromUIElement(UIElement element)
+        {
+            throw new NotImplementedException();
         }
     }
 

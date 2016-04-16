@@ -469,12 +469,14 @@ namespace X.UI.RichInput
             }
             else if (type == InputType.combobox)
             {
-                var sp = (Grid)_ccInput.Content;
-                var cb = (ComboBox)sp.Children[1];
-                cb.SelectionChanged -= itcombobox_SelectionChanged;
-                //if (cb.Items != null && cb.Items.Count > 0) cb.Items.Clear();
-                //if (cb.ItemsSource != null) cb.ItemsSource = null;
-                
+                if (_ccInput != null) {
+                    var sp = (Grid)_ccInput.Content;
+                    var cb = (ComboBox)sp.Children[1];
+                    cb.SelectionChanged -= itcombobox_SelectionChanged;
+                    Value2 = null;
+                    //if (cb.Items != null && cb.Items.Count > 0) cb.Items.Clear();
+                    //if (cb.ItemsSource != null) cb.ItemsSource = null;
+                }
             }
             if (_udfTS1 != null) {
                 _udfTS1.Toggled -= ittoggleswitch_Toggled;
@@ -536,8 +538,6 @@ namespace X.UI.RichInput
             _ccInput.Content = null;
             _grdContainer = null;
             _model = null;
-            Value2 = null;
-
         }
 
 

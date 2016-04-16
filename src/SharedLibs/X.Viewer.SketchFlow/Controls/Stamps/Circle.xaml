@@ -92,7 +92,7 @@
         
         <!-- Edge Button Dialogs-->
         <StackPanel x:Name="spToolbar" 
-                    Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-20,-85,-200" Visibility="Collapsed">
+                    Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-20,-105,-200" Visibility="Collapsed" Canvas.ZIndex="100">
             <Button x:Name="butStamp" Background="LightGray" Click="butStamp_Click">
                 <xuip:Path PathType="Stamp" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
