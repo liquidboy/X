@@ -11,7 +11,7 @@
     d:DesignWidth="400">
 
     <Grid x:Name="layoutRoot" >
-        <Rectangle Fill="#00FFFFFF" PointerEntered="layoutRoot_PointerEntered" PointerExited="layoutRoot_PointerExited"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="-50,-50,-50,-50"></Rectangle>
+        <Rectangle x:Name="bottomTouchArea" Fill="#00FFFFFF" PointerEntered="layoutRoot_PointerEntered" PointerExited="layoutRoot_PointerExited"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="-50,-50,-50,-50"></Rectangle>
         <Grid x:Name="butTopLeft" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-2,-10,0,0"   PointerPressed="butTopLeft_PointerPressed" Opacity="0.2" PointerEntered="General_PointerEntered" PointerExited="General_PointerExited">
             <Grid.RenderTransform>
                 <CompositeTransform Rotation="45"/>

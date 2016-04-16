@@ -114,6 +114,20 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         {
             throw new NotImplementedException();
         }
+
+        private void butLock_Click(object sender, RoutedEventArgs e)
+        {
+            butLock.Visibility = Visibility.Collapsed;
+            butUnlock.Visibility = Visibility.Visible;
+            edges.IsLocked = true;
+        }
+
+        private void butUnlock_Click(object sender, RoutedEventArgs e)
+        {
+            butLock.Visibility = Visibility.Visible;
+            butUnlock.Visibility = Visibility.Collapsed;
+            edges.IsLocked = false;
+        }
     }
 
     public class CircleEventArgs : EventArgs, IStampEventArgs

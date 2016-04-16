@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -19,6 +20,34 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
     {
         public event EventHandler PerformAction;
 
+        bool _isLocked = false;
+        public bool IsLocked {
+            get {
+                return _isLocked;
+            }
+            set {
+                _isLocked = value;
+
+                if (_isLocked) {
+                    //bottomTouchArea.Fill = new SolidColorBrush(Colors.Transparent);
+                    bottomTouchArea.Visibility = Visibility.Collapsed;
+                    butBottomLeft.Visibility = Visibility.Collapsed;
+                    butBottomRight.Visibility = Visibility.Collapsed;
+                    butTopLeft.Visibility = Visibility.Collapsed;
+                    butCenterLeft.Visibility = Visibility.Collapsed;
+                    butCenterRight.Visibility = Visibility.Collapsed;
+                }
+                else {
+                    //bottomTouchArea.Fill = new SolidColorBrush(new Color() { A=0, B=255,G=255,R=255  });
+                    bottomTouchArea.Visibility = Visibility.Visible;
+                    butBottomLeft.Visibility = Visibility.Visible;
+                    butBottomRight.Visibility = Visibility.Visible;
+                    butTopLeft.Visibility = Visibility.Visible;
+                    butCenterLeft.Visibility = Visibility.Visible;
+                    butCenterRight.Visibility = Visibility.Visible;
+                }
+            }
+        }
 
         public ResizeMoveEdges()
         {
