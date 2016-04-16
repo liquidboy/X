@@ -87,6 +87,14 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         {
             el.Stroke = (Brush)sender;
         }
+
+        private void butGridMarker_Click(object sender, RoutedEventArgs e)
+        {
+            PerformAction?.Invoke(this, new CircleEventArgs() { ActionType = eActionTypes.ToggleGridMarkers });
+
+            if (grdGridMarkers.Visibility == Visibility.Visible) grdGridMarkers.Visibility = Visibility.Collapsed;
+            else  grdGridMarkers.Visibility = Visibility.Visible; 
+        }
     }
 
     public class CircleEventArgs : EventArgs, IStampEventArgs

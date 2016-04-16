@@ -12,6 +12,18 @@
     d:DesignWidth="400">
 
     <Grid>
+        <Grid x:Name="grdGridMarkers" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed">
+            <Line HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="-2000,0,-2000,0" Stroke="DarkOrange" Opacity="0.3" StrokeThickness="1" Height="1" X2="4000"></Line>
+            <Line HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="-2000,0,-2000,0" Stroke="DarkOrange" Opacity="0.3" StrokeThickness="1" Height="1" X2="4000"></Line>
+
+            <Line HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,-2000,0,-2000" Stroke="DarkOrange" Opacity="0.3" StrokeThickness="1" Width="1" Y2="4000"></Line>
+            <Line HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0,-2000,0,-2000" Stroke="DarkOrange" Opacity="0.3" StrokeThickness="1" Width="1" Y2="4000"></Line>
+        </Grid>
+
+
+
+
+
         <Ellipse x:Name="el" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stroke="DarkOrange" StrokeThickness="1" RenderTransformOrigin="0.5,0.5">
             <Ellipse.RenderTransform>
                 <CompositeTransform Rotation="0"></CompositeTransform></Ellipse.RenderTransform>
@@ -21,6 +33,9 @@
             <Button x:Name="butStamp" Background="LightGray" Click="butStamp_Click">
                 <xuip:Path PathType="Stamp" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
+            <Button x:Name="butGridMarker" Background="LightGray" Click="butGridMarker_Click">
+                <xuip:Path PathType="GridMarker" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
             <Button x:Name="butClose" Background="LightGray" Click="butClose_Click">
                 <xuip:Path PathType="Close1" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
@@ -28,6 +43,9 @@
         <Border x:Name="colorPicker" BorderBrush="DarkOrange" BorderThickness="1" Margin="-350,-150,0,-150" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed" >
             <localPickers:StampColorPicker x:Name="cpMain" Width="300" Height="300" ColorChanged="cpMain_ColorChanged" ></localPickers:StampColorPicker>
         </Border>
+
+
+      
         
     </Grid>
 </UserControl>

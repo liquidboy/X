@@ -11,6 +11,8 @@ namespace X.Viewer.SketchFlow
         CreateFromStamp,
         CloseStamp,
 
+        ToggleGridMarkers,
+
         MoveTopLeft,
         ToolbarTopRight,
         RotateBottomLeft,
