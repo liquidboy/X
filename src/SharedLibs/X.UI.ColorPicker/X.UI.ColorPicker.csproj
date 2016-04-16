@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{76CBFC4C-BCE1-4938-898C-1F570CC1314E}</ProjectGuid>
+    <ProjectGuid>{528A34D6-0337-48AA-BBA8-DA2AC30BBB6E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>X.Viewer.SketchFlow</RootNamespace>
-    <AssemblyName>X.Viewer.SketchFlow</AssemblyName>
+    <RootNamespace>X.UI.ColorPicker</RootNamespace>
+    <AssemblyName>X.UI.ColorPicker</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
@@ -107,93 +107,30 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\PageContent.xaml.cs">
-      <DependentUpon>PageContent.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Pickers\StampColorPicker.xaml.cs">
-      <DependentUpon>StampColorPicker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Stamps\IStampEventArgs.cs" />
-    <Compile Include="Controls\Stamps\IStamp.cs" />
-    <Compile Include="Controls\Stamps\ResizeMoveEdges.xaml.cs">
-      <DependentUpon>ResizeMoveEdges.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Stamps\Circle.xaml.cs">
-      <DependentUpon>Circle.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Converters\UIElementAsClipConverter.cs" />
-    <Compile Include="Converters\IsSelectedToColorConverter.cs" />
-    <Compile Include="Converters\LayerEnabledToColorConverter.cs" />
-    <Compile Include="Converters\XamlFragmentsToContentConverter.cs" />
-    <Compile Include="Controls\PageLayers.xaml.cs">
-      <DependentUpon>PageLayers.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\PageLayout.xaml.cs">
-      <DependentUpon>PageLayout.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Toolbar.xaml.cs">
-      <DependentUpon>Toolbar.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SharedEnums.cs" />
+    <Compile Include="ColorSwatchSquare.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SketchFlowRenderer.cs" />
-    <Compile Include="SketchView.xaml.cs">
-      <DependentUpon>SketchView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewModels.cs" />
-    <EmbeddedResource Include="Properties\X.Viewer.SketchFlow.rd.xml" />
+    <Compile Include="SwatchToImageUrlConverter.cs" />
+    <EmbeddedResource Include="Properties\X.UI.ColorPicker.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\X.CoreLib\X.CoreLib.csproj">
-      <Project>{d273509d-612c-47c3-b2a6-c203d96b90d3}</Project>
-      <Name>X.CoreLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.UI.ColorPicker\X.UI.ColorPicker.csproj">
-      <Project>{528a34d6-0337-48aa-bba8-da2ac30bbb6e}</Project>
-      <Name>X.UI.ColorPicker</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.UI.Path\X.UI.Path.csproj">
-      <Project>{9da51ef4-2dae-40d8-92ec-cc81162669df}</Project>
-      <Name>X.UI.Path</Name>
-    </ProjectReference>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\PageContent.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\PageLayers.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\PageLayout.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\Pickers\StampColorPicker.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\Stamps\ResizeMoveEdges.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\Stamps\Circle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\Toolbar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SketchView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <EmbeddedResource Include="AppX\Assets\ColorSwatchCircle.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AppX\Assets\ColorSwatchSquare1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AppX\Assets\ColorSwatchSquare2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
-  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
-    <VisualStudioVersion>14.0</VisualStudioVersion>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">
+    <VisualStudioVersion>15.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

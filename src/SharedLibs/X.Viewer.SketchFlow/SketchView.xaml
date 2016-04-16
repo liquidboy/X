@@ -6,6 +6,7 @@
     xmlns:controls="using:X.Viewer.SketchFlow.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
@@ -37,5 +38,6 @@
             <TextBlock x:Name="console3" FontSize="16" Foreground="Red" ></TextBlock>
             <TextBlock FontSize="10" Foreground="Red" Text="{Binding SelectedPage.Title}"></TextBlock>
         </StackPanel>
+
     </Grid>
 </UserControl>
