@@ -62,7 +62,27 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
         private void General_PointerExited(object sender, PointerRoutedEventArgs e)
         {
-            ((FrameworkElement)sender).Opacity = 0.2;
+            ((FrameworkElement)sender).Opacity = 0.5;
+        }
+
+        private void layoutRoot_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            butTopLeft.Opacity = 0.5;
+            butBottomLeft.Opacity = 0.5;
+            butBottomRight.Opacity = 0.5;
+            butTopRight.Opacity = 0.5;
+            butCenterLeft.Opacity = 0.5;
+            butCenterRight.Opacity = 0.5;
+        }
+
+        private void layoutRoot_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            butTopLeft.Opacity = 0.2;
+            butBottomLeft.Opacity = 0.2;
+            butBottomRight.Opacity = 0.2;
+            butTopRight.Opacity = 0.2;
+            butCenterLeft.Opacity = 0.2;
+            butCenterRight.Opacity = 0.2;
         }
     }
 

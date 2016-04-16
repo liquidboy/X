@@ -18,7 +18,7 @@ namespace X.Viewer.SketchFlow.Controls.Pickers
 
         private void cs_ColorChanged(object sender, EventArgs e)
         {
-            ColorChanged?.Invoke(sender, new ColorPickerEventArgs() { ColorType = (string)cbMain.SelectedValue  } );
+            ColorChanged?.Invoke(sender, new ColorPickerEventArgs() { ColorType = (string)rcb.Value2  } );
         }
     }
 

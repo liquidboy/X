@@ -156,6 +156,10 @@
       <Project>{9da51ef4-2dae-40d8-92ec-cc81162669df}</Project>
       <Name>X.UI.Path</Name>
     </ProjectReference>
+    <ProjectReference Include="..\X.UI.RichInput\X.UI.RichInput.csproj">
+      <Project>{1ddc0313-f305-4091-ad21-2b3d99bb5550}</Project>
+      <Name>X.UI.RichInput</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\PageContent.xaml">

@@ -536,6 +536,7 @@ namespace X.UI.RichInput
             _ccInput.Content = null;
             _grdContainer = null;
             _model = null;
+            Value2 = null;
 
         }
 
@@ -692,10 +693,11 @@ namespace X.UI.RichInput
                     _udfg1.Visibility = Visibility.Collapsed;
                 }
 
+                Value2 = ((ComboBox)sender).SelectedItem;
                 ValueChanged?.Invoke(sender, e);
 
                 try {
-                    Invalidate(offsetX, offsetY);
+                    if(IsGlowActive) Invalidate(offsetX, offsetY);
                 } catch (Exception ex){
                     //todo: handle this error
                 }
@@ -828,10 +830,16 @@ namespace X.UI.RichInput
             get { return (double)GetValue(Value1Property); }
             set { SetValue(Value1Property, value); }
         }
-        
+
+        public Object Value2
+        {
+            get { return (Object)GetValue(Value2Property); }
+            set { SetValue(Value2Property, value); }
+        }
+
         public bool IsActive
         {
-            get { return (bool)GetValue(IsActiveProperty); }
+            get { return (bool)GetValue(IsActiveProperty); } 
             set { SetValue(IsActiveProperty, value); }
         }
         
@@ -841,6 +849,11 @@ namespace X.UI.RichInput
             set { SetValue(InvalidateUpdateIntervalProperty, value); }
         }
 
+        public bool IsGlowActive
+        {
+            get { return (bool)GetValue(IsGlowActiveProperty); }
+            set { SetValue(IsGlowActiveProperty, value); }
+        }
 
 
 
@@ -864,12 +877,15 @@ namespace X.UI.RichInput
 
 
 
+        public static readonly DependencyProperty IsGlowActiveProperty = DependencyProperty.Register("IsGlowActive", typeof(bool), typeof(Input), new PropertyMetadata(false, OnPropertyChanged));
 
         public static readonly DependencyProperty InvalidateUpdateIntervalProperty = DependencyProperty.Register("InvalidateUpdateInterval", typeof(double), typeof(Input), new PropertyMetadata(500d));
 
         public static readonly DependencyProperty IsActiveProperty = DependencyProperty.Register("IsActive", typeof(bool), typeof(Input), new PropertyMetadata(false, OnPropertyChanged));
 
         public static readonly DependencyProperty Value1Property = DependencyProperty.Register("Value1", typeof(double), typeof(Input), new PropertyMetadata(0, OnPropertyChanged));
+
+        public static readonly DependencyProperty Value2Property = DependencyProperty.Register("Value2", typeof(Object), typeof(Input), new PropertyMetadata(null, OnPropertyChanged));
 
         public static readonly DependencyProperty LargeChange1Property = DependencyProperty.Register("LargeChange1", typeof(double), typeof(Input), new PropertyMetadata(0, OnPropertyChanged));
 
@@ -923,7 +939,7 @@ namespace X.UI.RichInput
 
                 //instance.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () => {
                     instance.SetColors(instance.FocusColor, instance.FocusHoverColor, instance.FocusForegroundColor, instance._model);
-                    instance.Invalidate();
+                    if(instance.IsGlowActive) instance.Invalidate();
                 //});
 
 
