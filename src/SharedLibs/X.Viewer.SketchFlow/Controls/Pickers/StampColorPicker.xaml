@@ -6,11 +6,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:xuicp="using:X.UI.ColorPicker"
+    x:Name="root"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
     <Grid>
-        <xuicp:ColorSwatchSquare x:Name="cs" Width="300" Height="300" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,50,0,0" Swatch="Circle"></xuicp:ColorSwatchSquare>
+        <xuicp:ColorSwatchSquare x:Name="cs" Width="{Binding ElementName=root, Path=Width}" Height="{Binding ElementName=root, Path=Height}" HorizontalAlignment="Left" VerticalAlignment="Top" Swatch="Circle"></xuicp:ColorSwatchSquare>
     </Grid>
 </UserControl>

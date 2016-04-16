@@ -64,9 +64,10 @@ namespace X.UI.ColorPicker
                 _rectSelectedColor = GetTemplateChild("rectSelectedColor") as Rectangle;
                 _ellipsePixel = GetTemplateChild("ellipsePixel") as Ellipse;
                 _tbData = GetTemplateChild("tbData") as TextBlock; 
-
             }
-            
+
+            SetSwatch();
+
             base.OnApplyTemplate();
         }
 
@@ -116,19 +117,27 @@ namespace X.UI.ColorPicker
 
         private async void ColorSwatchSquare_Loaded(object sender, RoutedEventArgs e)
         {
+            SetSwatch();
+        }
 
-            if (Swatch == eSwatchTypes.Circle) {
-                _colorImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/ColorSwatchCircle.png"));
-            }
-            else if (Swatch == eSwatchTypes.Square1)
+        private void SetSwatch() {
+            if (_colorImage != null)
             {
-                _colorImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/ColorSwatchSquare1.png"));
-            }
-            else if (Swatch == eSwatchTypes.Square2)
-            {
-                _colorImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/ColorSwatchSquare2.png"));
+                if (Swatch == eSwatchTypes.Circle)
+                {
+                    _colorImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/ColorSwatchCircle.png"));
+                }
+                else if (Swatch == eSwatchTypes.Square1)
+                {
+                    _colorImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/ColorSwatchSquare1.png"));
+                }
+                else if (Swatch == eSwatchTypes.Square2)
+                {
+                    _colorImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/ColorSwatchSquare2.png"));
+                }
             }
         }
+
 
         private void UpdateColor(PointerPoint pointer)
         {

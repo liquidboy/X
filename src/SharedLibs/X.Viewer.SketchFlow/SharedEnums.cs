@@ -16,6 +16,6 @@ namespace X.Viewer.SketchFlow
         RotateBottomLeft,
         ResizeBottomRight,
         ResizeCenterRight,
-        ResizeCenterLeft
+        CenterLeft
     }
 }

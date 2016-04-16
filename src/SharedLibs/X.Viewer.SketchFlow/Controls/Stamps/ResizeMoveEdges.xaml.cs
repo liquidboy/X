@@ -27,27 +27,32 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
         private void butTopLeft_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-            if (PerformAction != null) PerformAction(this, new ResizeMoveEdgesEventArgs() { ActionType = eActionTypes.MoveTopLeft } );
+            PerformAction?.Invoke(this, new ResizeMoveEdgesEventArgs() { ActionType = eActionTypes.MoveTopLeft } );
         }
 
         private void butTopRight_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-            if (PerformAction != null) PerformAction(this, new ResizeMoveEdgesEventArgs() { ActionType = eActionTypes.ToolbarTopRight });
+            PerformAction?.Invoke(this, new ResizeMoveEdgesEventArgs() { ActionType = eActionTypes.ToolbarTopRight });
         }
 
         private void butBottomLeft_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-            if (PerformAction != null) PerformAction(this, new ResizeMoveEdgesEventArgs() { ActionType = eActionTypes.RotateBottomLeft });
+            PerformAction?.Invoke(this, new ResizeMoveEdgesEventArgs() { ActionType = eActionTypes.RotateBottomLeft });
         }
 
         private void butBottomRight_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-            if (PerformAction != null) PerformAction(this, new ResizeMoveEdgesEventArgs() { ActionType = eActionTypes.ResizeBottomRight });
+            PerformAction?.Invoke(this, new ResizeMoveEdgesEventArgs() { ActionType = eActionTypes.ResizeBottomRight });
         }
 
         private void butCenterRight_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-            if (PerformAction != null) PerformAction(this, new ResizeMoveEdgesEventArgs() { ActionType = eActionTypes.ResizeCenterRight });
+            PerformAction?.Invoke(this, new ResizeMoveEdgesEventArgs() { ActionType = eActionTypes.ResizeCenterRight });
+        }
+
+        private void butCenterLeft_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            PerformAction?.Invoke(this, new ResizeMoveEdgesEventArgs() { ActionType = eActionTypes.CenterLeft });
         }
     }
 

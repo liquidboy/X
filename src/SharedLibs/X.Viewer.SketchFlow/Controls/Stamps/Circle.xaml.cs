@@ -37,9 +37,14 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         {
             var ea = e as ResizeMoveEdgesEventArgs;
 
-            if (ea.ActionType == eActionTypes.ToolbarTopRight) {
-                if(spToolbar.Visibility == Visibility.Visible) spToolbar.Visibility = Visibility.Collapsed;
+            if (ea.ActionType == eActionTypes.ToolbarTopRight)
+            {
+                if (spToolbar.Visibility == Visibility.Visible) spToolbar.Visibility = Visibility.Collapsed;
                 else spToolbar.Visibility = Visibility.Visible;
+            }
+            else if (ea.ActionType == eActionTypes.CenterLeft) {
+                if (colorPicker.Visibility == Visibility.Visible) colorPicker.Visibility = Visibility.Collapsed;
+                else colorPicker.Visibility = Visibility.Visible;
             }
 
             PerformAction?.Invoke(this, e);

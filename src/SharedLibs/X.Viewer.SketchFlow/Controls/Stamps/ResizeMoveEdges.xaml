@@ -18,7 +18,7 @@
             <xuip:Path PathType="Corners" Width="20" Height="20" Foreground="LightGray"></xuip:Path>
             <Ellipse Width="10" Height="10" Fill="LightGray"></Ellipse>
         </Grid>
-        <Grid x:Name="butCenterLeft" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-15,0,0,0" >
+        <Grid x:Name="butCenterLeft" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-15,0,0,0" PointerPressed="butCenterLeft_PointerPressed" >
             <xuip:Path PathType="Pallette1" Width="20" Height="20" Foreground="LightGray"></xuip:Path>
         </Grid>
         <Grid x:Name="butTopRight" Width="20" Height="15" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-5,-15,0"  PointerPressed="butTopRight_PointerPressed" >
