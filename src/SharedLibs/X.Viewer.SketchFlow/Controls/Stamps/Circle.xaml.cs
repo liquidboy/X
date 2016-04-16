@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using X.Viewer.SketchFlow.Controls.Pickers;
 
 namespace X.Viewer.SketchFlow.Controls.Stamps
 {
@@ -26,6 +27,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
             this.InitializeComponent();
 
             this.Unloaded += Circle_Unloaded;
+            cpMain.ColorTypes = new List<string>() { "Stroke", "Fill" };
         }
 
         private void Circle_Unloaded(object sender, RoutedEventArgs e)
@@ -92,7 +94,9 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
         private void cpMain_ColorChanged(object sender, EventArgs e)
         {
-            el.Stroke = (Brush)sender;
+            var cpea = e as ColorPickerEventArgs;
+            if(cpea.ColorType == "Stroke") el.Stroke = (Brush)sender;
+            else if (cpea.ColorType == "Fill") el.Fill = (Brush)sender;
         }
 
         private void butGridMarker_Click(object sender, RoutedEventArgs e)

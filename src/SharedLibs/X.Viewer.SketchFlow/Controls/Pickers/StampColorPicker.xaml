@@ -13,5 +13,6 @@
 
     <Grid>
         <xuicp:ColorSwatchSquare x:Name="cs" Width="{Binding ElementName=root, Path=Width}" Height="{Binding ElementName=root, Path=Height}" HorizontalAlignment="Left" VerticalAlignment="Top" Swatch="Circle" ColorChanged="cs_ColorChanged"></xuicp:ColorSwatchSquare>
+        <ComboBox x:Name="cbMain" HorizontalAlignment="Right" VerticalAlignment="Top" ItemsSource="{Binding ElementName=root, Path=ColorTypes}"></ComboBox>
     </Grid>
 </UserControl>

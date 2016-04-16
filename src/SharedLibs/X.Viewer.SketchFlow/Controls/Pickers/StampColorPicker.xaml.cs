@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 
 
@@ -8,6 +9,8 @@ namespace X.Viewer.SketchFlow.Controls.Pickers
     {
         public event EventHandler ColorChanged;
 
+        public List<String> ColorTypes { get; set; } = new List<string>();
+
         public StampColorPicker()
         {
             this.InitializeComponent();
@@ -15,7 +18,11 @@ namespace X.Viewer.SketchFlow.Controls.Pickers
 
         private void cs_ColorChanged(object sender, EventArgs e)
         {
-            ColorChanged?.Invoke(sender, e);
+            ColorChanged?.Invoke(sender, new ColorPickerEventArgs() { ColorType = (string)cbMain.SelectedValue  } );
         }
+    }
+
+    public class ColorPickerEventArgs : EventArgs {
+        public string ColorType;
     }
 }
