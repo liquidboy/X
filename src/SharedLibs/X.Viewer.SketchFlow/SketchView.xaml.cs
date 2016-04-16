@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 using Windows.UI.Input;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
@@ -185,32 +186,19 @@ namespace X.Viewer.SketchFlow
                 }
                 if (te.ActionType == eActionTypes.CreateFromStamp)
                 {
-                    //project stamp into the underlying page & new layer (in the future we should allow creating in an existing layer)
-
-                    var found = VisualTreeHelper.FindElementsInHostCoordinates(new Windows.Foundation.Point(_stampStartX, _stampStartY), cvMain);
-                    foreach (FrameworkElement el in found)
+                    if (_currentPageLayoutForStamps != null)
                     {
+                        var plvm = _currentPageLayoutForStamps.DataContext as SketchPage;
+                        var npl = new PageLayer();
+                        var gt = ((FrameworkElement)stamp).TransformToVisual(_currentPageLayoutForStamps);
+                        npl.HasChildContainerCanvas = true;
+                        var ptCenter = gt.TransformPoint(new Windows.Foundation.Point(0,0));
+                        var str = stamp.GenerateXAML(_scaleX, _scaleY, ptCenter.X, ptCenter.Y);
+                        npl.XamlFragments.Add(str);
 
-                        if (el.Parent is PageLayout)
-                        {
-                            var pl = el.Parent as PageLayout;
-                            var plvm = pl.DataContext as SketchPage;
-
-                            var npl = new PageLayer();
-                            var gt = ((FrameworkElement)stamp).TransformToVisual(pl); ;
-                            //var gt = pl.TransformToVisual((UIElement)stamp);
-                            npl.HasChildContainerCanvas = true;
-                            var ptCenter = gt.TransformPoint(new Windows.Foundation.Point(0,0));
-                            var str = stamp.GenerateXAML(_scaleX, _scaleY, ptCenter.X, ptCenter.Y);
-                            npl.XamlFragments.Add(str);
-
-                            plvm.Layers.Add(npl);
-                            plvm.ExternalPC("Layers");
-
-                        }
-
+                        plvm.Layers.Add(npl);
+                        plvm.ExternalPC("Layers");
                     }
-
                 }
 
             }
@@ -244,6 +232,7 @@ namespace X.Viewer.SketchFlow
         bool IsMovingPage = false;
         bool IsResizingPage = false;
         Controls.PageLayout _currentPageLayout;
+        Controls.PageLayout _currentPageLayoutForStamps;
 
         private void PageLayout_PerformAction(object sender, EventArgs e)
         {
@@ -251,6 +240,7 @@ namespace X.Viewer.SketchFlow
             {
                 var ea = e as Controls.PageLayoutEventArgs;
                 _currentPageLayout = sender as Controls.PageLayout;
+                _currentPageLayoutForStamps = sender as Controls.PageLayout;
                 if (ea.ActionType == "PageSelected")
                 {
                     //var foundElements = VisualTreeHelper.FindElementsInHostCoordinates(ptEnd.Position, this);
