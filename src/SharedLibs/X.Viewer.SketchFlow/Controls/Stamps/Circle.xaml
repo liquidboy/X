@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:X.Viewer.SketchFlow.Controls.Stamps"
     xmlns:localPickers="using:X.Viewer.SketchFlow.Controls.Pickers"
+    xmlns:sc="using:CoreLib.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:xuip="using:X.UI.Path"
@@ -11,12 +12,15 @@
     d:DesignHeight="300"
     x:Name="root"
     d:DesignWidth="400">
-
+    <UserControl.Resources>
+        <sc:BooleanToVisibilityConverter x:Name="TrueToVisibleConverter" ></sc:BooleanToVisibilityConverter>
+    </UserControl.Resources>
     <Grid>
         
         
         <!-- Markers : WIDTH & HEIGHT -->
-        <Grid x:Name="grdGridMarkers" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed">
+        <Grid x:Name="grdGridMarkers" 
+              HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed">
             <Line x:Name="x1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="-2000,0,-2000,0" Stroke="DarkOrange" Opacity="0.3" StrokeThickness="1" Height="1" X2="4000" RenderTransformOrigin="0.5,0.5">
                 <Line.RenderTransform>
                     <CompositeTransform Rotation="0" TranslateY="0"></CompositeTransform>
@@ -60,14 +64,18 @@
         </Grid>
 
 
-
-        <Ellipse x:Name="el" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stroke="DarkOrange" StrokeThickness="1" RenderTransformOrigin="0.5,0.5">
+        <!-- Shape -->
+        <Ellipse x:Name="el" 
+                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stroke="DarkOrange" StrokeThickness="1" RenderTransformOrigin="0.5,0.5">
             <Ellipse.RenderTransform><CompositeTransform Rotation="0"></CompositeTransform></Ellipse.RenderTransform>
         </Ellipse>
-        <local:ResizeMoveEdges x:Name="edges" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="-15,-15,-15,-15" PerformAction="edges_PerformAction" ></local:ResizeMoveEdges>
+        
+        
+        <!-- Edge Buttons -->
+        <local:ResizeMoveEdges x:Name="edges" 
+                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="-15,-15,-15,-15" PerformAction="edges_PerformAction" ></local:ResizeMoveEdges>
 
-
-
+        
         <!-- Markers : ROTATION  -->
         <Grid x:Name="grdGridRotationMarkers" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
             <Grid.RenderTransform>
@@ -76,13 +84,15 @@
             <Line HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="-10,0,-10,0" Stroke="DarkOrange" Opacity="0.3" StrokeThickness="1" X2="20" RenderTransformOrigin="0.5,0.5"  />
             <Line HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0,-10,0,-10" Stroke="DarkOrange" Opacity="0.3" StrokeThickness="1" Y2="20" RenderTransformOrigin="0.5,0.5"  />
 
-            <Border Background="DarkOrange" Padding="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-40,-10,0,-10">
+            <Border Background="DarkOrange" Padding="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-40,-10,0,-10" Visibility="{Binding ElementName=grdGridRotationMarkers, Path=RenderTransform.Rotation, Converter={StaticResource TrueToVisibleConverter}}">
                 <TextBlock Text="{Binding ElementName=grdGridRotationMarkers, Path=RenderTransform.Rotation}" Foreground="White" FontSize="8"></TextBlock>
             </Border>
         </Grid>
 
-
-        <StackPanel x:Name="spToolbar" Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-20,-85,-200" Visibility="Collapsed">
+        
+        <!-- Edge Button Dialogs-->
+        <StackPanel x:Name="spToolbar" 
+                    Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-20,-85,-200" Visibility="Collapsed">
             <Button x:Name="butStamp" Background="LightGray" Click="butStamp_Click">
                 <xuip:Path PathType="Stamp" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
@@ -93,7 +103,8 @@
                 <xuip:Path PathType="Close1" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
         </StackPanel>
-        <Border x:Name="colorPicker" BorderBrush="DarkOrange" BorderThickness="1" Margin="-350,-150,0,-150" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed" >
+        <Border x:Name="colorPicker" 
+                BorderBrush="DarkOrange" BorderThickness="1" Margin="-350,-150,0,-150" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed" >
             <localPickers:StampColorPicker x:Name="cpMain" Width="300" Height="300" ColorChanged="cpMain_ColorChanged" ></localPickers:StampColorPicker>
         </Border>
 
