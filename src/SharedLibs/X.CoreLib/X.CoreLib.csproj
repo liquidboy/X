@@ -126,6 +126,7 @@
     <Compile Include="Converters\StripHtmlTagsConverter.cs" />
     <Compile Include="Converters\SurroundStringConverter.cs" />
     <Compile Include="Converters\UriToBitmapImageConverter.cs" />
+    <Compile Include="Converters\ValueDividedConverter.cs" />
     <Compile Include="Effects\CompositionExtensions.cs" />
     <Compile Include="Effects\CompositionManager.cs" />
     <Compile Include="Effects\ContrastEffect.cs" />

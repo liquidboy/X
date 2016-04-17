@@ -168,7 +168,8 @@ namespace X.UI.ColorPicker
             var newColor= new SolidColorBrush(Color.FromArgb(a, r, g, b));
             _rectSelectedColor.Fill = newColor;
 
-            _tbData.Text = $"x:{imageX} y:{imageY}  r:{r} g:{g} b:{b}   ";
+            //_tbData.Text = $"x:{imageX} y:{imageY}  r:{r} g:{g} b:{b} #:{newColor.Color.ToString()}  ";
+            _tbData.Text = $"R:{r} G:{g} B:{b}   {newColor.Color.ToString()}  ";
 
             _ellipsePixel.SetValue(Canvas.LeftProperty, x);
             _ellipsePixel.SetValue(Canvas.TopProperty, y);

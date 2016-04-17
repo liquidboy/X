@@ -110,6 +110,7 @@
     <Compile Include="ColorSwatchSquare.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SwatchToImageUrlConverter.cs" />
+    <Compile Include="ValueDividedConverter.cs" />
     <EmbeddedResource Include="Properties\X.UI.ColorPicker.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -119,15 +120,15 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AppX\X.UI.ColorPicker.Assets\ColorSwatchCircle.png">
+    <Content Include="AppX\X.UI.ColorPicker.Assets\ColorSwatchCircle.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\X.UI.ColorPicker.Assets\ColorSwatchSquare1.png">
+    </Content>
+    <Content Include="AppX\X.UI.ColorPicker.Assets\ColorSwatchSquare1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\X.UI.ColorPicker.Assets\ColorSwatchSquare2.png">
+    </Content>
+    <Content Include="AppX\X.UI.ColorPicker.Assets\ColorSwatchSquare2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    </Content>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">
     <VisualStudioVersion>15.0</VisualStudioVersion>

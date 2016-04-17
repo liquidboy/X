@@ -2,6 +2,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:X.UI.ColorPicker">
+    <local:ValueDividedConverter x:Key="ValueDividedConverter" ></local:ValueDividedConverter>
+    
     <Style TargetType="local:ColorSwatchSquare" >
         <Setter Property="Template">
             <Setter.Value>
@@ -14,11 +16,11 @@
                                 Height="15"
                                 Stroke="Black"
                                 Fill="White"
-                                Canvas.Left="0"
-                                Canvas.Top="0"/>
+                                Canvas.Left="{Binding ElementName=grdMain, Path=Width, Converter={StaticResource ValueDividedConverter}, ConverterParameter=2}"
+                                Canvas.Top="{Binding ElementName=grdMain, Path=Height, Converter={StaticResource ValueDividedConverter}, ConverterParameter=2}"/>
                         </Canvas>
                         <Rectangle x:Name="rectSelectedColor" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Rectangle>
-                        <TextBlock x:Name="tbData" HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="White" FontSize="10"></TextBlock>
+                        <TextBlock x:Name="tbData" HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="White" FontSize="12" Margin="3,0,0,3"></TextBlock>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
