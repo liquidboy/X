@@ -19,49 +19,9 @@
         
         
         <!-- Markers : WIDTH & HEIGHT -->
-        <Grid x:Name="grdGridMarkers" 
-              HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed">
-            <Line x:Name="x1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="-2000,0,-2000,0" Stroke="DarkOrange" Opacity="0.3" StrokeThickness="1" Height="1" X2="4000" RenderTransformOrigin="0.5,0.5">
-                <Line.RenderTransform>
-                    <CompositeTransform Rotation="0" TranslateY="0"></CompositeTransform>
-                </Line.RenderTransform>
-            </Line>
-            <Line x:Name="x2" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="-2000,0,-2000,0" Stroke="DarkOrange" Opacity="0.3" StrokeThickness="1" Height="1" X2="4000" RenderTransformOrigin="0.5,0.5" >
-                <Line.RenderTransform>
-                    <CompositeTransform Rotation="0"></CompositeTransform>
-                </Line.RenderTransform>
-            </Line>
-
-            <Line x:Name="y1"  HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,-2000,0,-2000" Stroke="DarkOrange" Opacity="0.3" StrokeThickness="1" Width="1" Y2="4000" RenderTransformOrigin="0.5,0.5" >
-                <Line.RenderTransform>
-                    <CompositeTransform Rotation="0"></CompositeTransform>
-                </Line.RenderTransform>
-            </Line>
-            <Line x:Name="y2"  HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0,-2000,0,-2000" Stroke="DarkOrange" Opacity="0.3" StrokeThickness="1" Width="1" Y2="4000" RenderTransformOrigin="0.5,0.5" >
-                <Line.RenderTransform>
-                    <CompositeTransform Rotation="0"></CompositeTransform>
-                </Line.RenderTransform>
-            </Line>
-
-            
-            <!-- Top Label -->
-            <Line HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,-95,0,0" Stroke="DarkOrange" StrokeThickness="2" X2="{Binding ElementName=root, Path=Width}"></Line>
-            <Ellipse Width="5" Height="5" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-2,-97,0,0" Fill="DarkOrange"></Ellipse>
-            <Ellipse Width="5" Height="5" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-97,-2,0" Fill="DarkOrange"></Ellipse>
-            <Border Background="DarkOrange" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,-100,0,0">
-                <TextBlock Text="{Binding ElementName=root, Path=Width}" Foreground="White" FontSize="10"></TextBlock>
-            </Border>
-            
-            
-
-            <!-- Left Label -->
-            <Line HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="-145,0,0,0" Stroke="DarkOrange" StrokeThickness="2" Y2="{Binding ElementName=root, Path=Height}"></Line>
-            <Ellipse Width="5" Height="5" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-147,-2,0,0" Fill="DarkOrange"></Ellipse>
-            <Ellipse Width="5" Height="5" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="-147,0,0,-2" Fill="DarkOrange"></Ellipse>
-            <Border Background="DarkOrange" Padding="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-150,0,0,0">
-                <TextBlock Text="{Binding ElementName=root, Path=Height}" Foreground="White" FontSize="10"></TextBlock>
-            </Border>
-        </Grid>
+        <local:MarkersHV x:Name="grdGridMarkers" 
+                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed" ParentWidth="{Binding ElementName=root, Path=Width}" ParentHeight="{Binding ElementName=root, Path=Height}">
+        </local:MarkersHV>
 
 
         <!-- Shape -->
@@ -77,18 +37,8 @@
 
         
         <!-- Markers : ROTATION  -->
-        <Grid x:Name="grdGridRotationMarkers" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
-            <Grid.RenderTransform>
-                <CompositeTransform Rotation="0"></CompositeTransform>
-            </Grid.RenderTransform>
-            <Line HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="-10,0,-10,0" Stroke="DarkOrange" Opacity="0.3" StrokeThickness="1" X2="20" RenderTransformOrigin="0.5,0.5"  />
-            <Line HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0,-10,0,-10" Stroke="DarkOrange" Opacity="0.3" StrokeThickness="1" Y2="20" RenderTransformOrigin="0.5,0.5"  />
-
-            <Border Background="DarkOrange" Padding="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-40,-10,0,-10" Visibility="{Binding ElementName=grdGridRotationMarkers, Path=RenderTransform.Rotation, Converter={StaticResource TrueToVisibleConverter}}">
-                <TextBlock Text="{Binding ElementName=grdGridRotationMarkers, Path=RenderTransform.Rotation}" Foreground="White" FontSize="8"></TextBlock>
-            </Border>
-        </Grid>
-
+        <local:MarkersR x:Name="grdGridRotationMarkers" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" RotationAngle="{Binding ElementName=grdGridRotationMarkers, Path=RenderTransform.Rotation}"></local:MarkersR>
+        
         
         <!-- Edge Button Dialogs-->
         <StackPanel x:Name="spToolbar" 

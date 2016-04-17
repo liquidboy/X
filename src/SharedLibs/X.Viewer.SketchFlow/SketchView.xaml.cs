@@ -440,7 +440,7 @@ namespace X.Viewer.SketchFlow
                 }
                 else if (stampe.ActionType == eActionTypes.ResizeCenterRight)
                 {
-                    console2.Text = $"thickness : { ((ptEnd.Position.X - ptStart.Position.X) / 10) }  ";
+                    console2.Text = $"thickness : { ((ptEnd.Position.X - ptStart.Position.X) / 10) }";
 
                     var newThickness = Math.Abs(((ptEnd.Position.X - ptStart.Position.X) / 10));
                     //el

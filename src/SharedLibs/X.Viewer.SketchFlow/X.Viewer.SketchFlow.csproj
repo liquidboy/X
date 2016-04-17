@@ -115,6 +115,12 @@
     </Compile>
     <Compile Include="Controls\Stamps\IStampEventArgs.cs" />
     <Compile Include="Controls\Stamps\IStamp.cs" />
+    <Compile Include="Controls\Stamps\MarkersR.xaml.cs">
+      <DependentUpon>MarkersR.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stamps\MarkersHV.xaml.cs">
+      <DependentUpon>MarkersHV.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Stamps\ResizeMoveEdges.xaml.cs">
       <DependentUpon>ResizeMoveEdges.xaml</DependentUpon>
     </Compile>
@@ -175,6 +181,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Pickers\StampColorPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stamps\MarkersR.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Stamps\MarkersHV.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

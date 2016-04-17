@@ -67,8 +67,9 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         public void UpdateRotation(double angle)
         {
             ((CompositeTransform)el.RenderTransform).Rotation = angle;
-            ((CompositeTransform)grdGridRotationMarkers.RenderTransform).Rotation = angle;
-            
+            //((CompositeTransform)grdGridRotationMarkers.RenderTransform).Rotation = angle;
+            grdGridRotationMarkers.RotationAngle = angle;
+
 
         //    ((CompositeTransform)x1.RenderTransform).Rotation = Math.Cos(angle);
         //    ((CompositeTransform)x2.RenderTransform).Rotation = Math.Cos(angle);
