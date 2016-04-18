@@ -13,6 +13,6 @@
         <converters:XamlFragmentsToContentConverter x:Key="XamlFragmentsToContentConverter" />
     </UserControl.Resources>
     <Grid>
-        <ContentControl Content="{Binding Layers, Converter={StaticResource XamlFragmentsToContentConverter}}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></ContentControl>
+        <ContentControl x:Name="cc" Content="{Binding Layers, Converter={StaticResource XamlFragmentsToContentConverter}}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></ContentControl>
     </Grid>
 </UserControl>

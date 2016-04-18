@@ -23,7 +23,7 @@ namespace X.Viewer.SketchFlow.Converters
                 
                 var xaml = "";
                 foreach (var xamlFragment in layer.XamlFragments) {
-                    xaml += xamlFragment;
+                    xaml += xamlFragment.Xaml;
                 }
 
                 var nsXaml = string.Empty;

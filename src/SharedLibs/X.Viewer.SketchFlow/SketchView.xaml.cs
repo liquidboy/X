@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 using X.Viewer.SketchFlow.Controls;
 using X.Viewer.SketchFlow.Controls.Stamps;
+using Windows.UI;
 
 namespace X.Viewer.SketchFlow
 {
@@ -78,20 +79,20 @@ namespace X.Viewer.SketchFlow
             nc.PerformAction += PageLayout_PerformAction;
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
-            
-            vm.Pages[1].Layers[0].XamlFragments.Add(@"<Rectangle HorizontalAlignment=""Stretch"" VerticalAlignment=""Stretch"" Fill=""Black""></Rectangle>");
-            vm.Pages[1].Layers[1].XamlFragments.Add(@"<Rectangle Fill=""#FF252525"" Height=""40"" Opacity=""0.8"" HorizontalAlignment=""Stretch"" VerticalAlignment=""Bottom""/><StackPanel Orientation=""Horizontal"" HorizontalAlignment=""Right"" VerticalAlignment=""Bottom"" Margin=""0,0,5,5"" ><StackPanel Orientation=""Vertical""><TextBlock Text=""4:49 PM"" Margin=""7,0,0,0"" FontSize=""12"" Foreground=""White"" /><TextBlock Text=""3/04/2016"" FontSize=""12"" Foreground=""White"" /></StackPanel><xuip:Path PathType=""More"" Rotation=""90"" Width=""20"" Height=""30"" Foreground=""White"" /></StackPanel>");
+
+            vm.Pages[1].Layers[0].XamlFragments.Add(new XamlFragment() { Uid = "xx1", Xaml = @"<Rectangle HorizontalAlignment=""Stretch"" VerticalAlignment=""Stretch"" Fill=""Black""></Rectangle>" });
+            vm.Pages[1].Layers[1].XamlFragments.Add(new XamlFragment() { Uid = "xx2", Xaml = @"<Rectangle Fill=""#FF252525"" Height=""40"" Opacity=""0.8"" HorizontalAlignment=""Stretch"" VerticalAlignment=""Bottom""/><StackPanel Orientation=""Horizontal"" HorizontalAlignment=""Right"" VerticalAlignment=""Bottom"" Margin=""0,0,5,5"" ><StackPanel Orientation=""Vertical""><TextBlock Text=""4:49 PM"" Margin=""7,0,0,0"" FontSize=""12"" Foreground=""White"" /><TextBlock Text=""3/04/2016"" FontSize=""12"" Foreground=""White"" /></StackPanel><xuip:Path PathType=""More"" Rotation=""90"" Width=""20"" Height=""30"" Foreground=""White"" /></StackPanel>" });
             vm.Pages[1].ExternalPC("Layers");
-            
-            vm.Pages[2].Layers[0].XamlFragments.Add(@"<Rectangle Fill=""Black"" />");
-            vm.Pages[2].Layers[1].XamlFragments.Add(@"<Rectangle Fill=""#FF252525"" Height=""160"" HorizontalAlignment=""Stretch"" VerticalAlignment=""Top""/>");
-            vm.Pages[2].Layers[2].XamlFragments.Add(@"<TextBlock x:Name=""textBlock"" HorizontalAlignment=""Center"" TextWrapping=""Wrap"" Text=""Jose Fajardo"" VerticalAlignment=""Top"" Foreground=""White"" Margin=""0,120,0,0"" /><Ellipse Height=""85"" Margin=""0,15,0,0"" VerticalAlignment=""Top"" Width=""85"" HorizontalAlignment=""Center""><Ellipse.Fill><ImageBrush ImageSource=""http://art.ngfiles.com/images/378000/378294_kukatoo_minecraft-aqua-blue-avatar.png"" Stretch=""UniformToFill"" /></Ellipse.Fill></Ellipse>");
+
+            vm.Pages[2].Layers[0].XamlFragments.Add(new XamlFragment() { Uid = "xx3", Xaml = @"<Rectangle Fill=""Black"" />" });
+            vm.Pages[2].Layers[1].XamlFragments.Add(new XamlFragment() { Uid = "xx4", Xaml = @"<Rectangle Fill=""#FF252525"" Height=""160"" HorizontalAlignment=""Stretch"" VerticalAlignment=""Top""/>" });
+            vm.Pages[2].Layers[2].XamlFragments.Add(new XamlFragment() { Uid = "xx5", Xaml = @"<TextBlock x:Name=""textBlock"" HorizontalAlignment=""Center"" TextWrapping=""Wrap"" Text=""Jose Fajardo"" VerticalAlignment=""Top"" Foreground=""White"" Margin=""0,120,0,0"" /><Ellipse Height=""85"" Margin=""0,15,0,0"" VerticalAlignment=""Top"" Width=""85"" HorizontalAlignment=""Center""><Ellipse.Fill><ImageBrush ImageSource=""http://art.ngfiles.com/images/378000/378294_kukatoo_minecraft-aqua-blue-avatar.png"" Stretch=""UniformToFill"" /></Ellipse.Fill></Ellipse>" });
             vm.Pages[2].ExternalPC("Layers");
 
-            vm.Pages[3].Layers[0].XamlFragments.Add(@"<Rectangle Fill=""Black"" />");
-            vm.Pages[3].Layers[0].XamlFragments.Add(@"<Rectangle Fill=""#FF252525"" Height=""30"" Opacity=""0.4"" HorizontalAlignment=""Stretch"" VerticalAlignment=""Top""/>");
-            vm.Pages[3].Layers[1].XamlFragments.Add(@"<StackPanel Orientation=""Horizontal"" HorizontalAlignment=""Left"" VerticalAlignment=""Top"" Margin=""10,5,0,0""><xuip:Path PathType=""Wifi2"" PathWidth=""30"" PathHeight=""15"" Width=""30"" Height=""20"" Foreground=""White"" Margin=""0,0,2,0"" /><xuip:Path PathType=""Wifi1"" Width=""20"" Height=""20"" Foreground=""White"" /></StackPanel>");
-            vm.Pages[3].Layers[1].XamlFragments.Add(@"<StackPanel Orientation=""Horizontal"" HorizontalAlignment=""Right"" VerticalAlignment=""Top"" Margin=""0,5,10,0""><xuip:Path PathType=""Sound"" Width=""20"" Height=""20"" Foreground=""White""  /><xuip:Path PathType=""BatteryLow"" Width=""35"" Height=""22"" Foreground=""White""  /></StackPanel>");
+            vm.Pages[3].Layers[0].XamlFragments.Add(new XamlFragment() { Uid = "xx6", Xaml = @"<Rectangle Fill=""Black"" />" });
+            vm.Pages[3].Layers[0].XamlFragments.Add(new XamlFragment() { Uid = "xx7", Xaml = @"<Rectangle Fill=""#FF252525"" Height=""30"" Opacity=""0.4"" HorizontalAlignment=""Stretch"" VerticalAlignment=""Top""/>" });
+            vm.Pages[3].Layers[1].XamlFragments.Add(new XamlFragment() { Uid = "xx8", Xaml = @"<StackPanel Orientation=""Horizontal"" HorizontalAlignment=""Left"" VerticalAlignment=""Top"" Margin=""10,5,0,0""><xuip:Path PathType=""Wifi2"" PathWidth=""30"" PathHeight=""15"" Width=""30"" Height=""20"" Foreground=""White"" Margin=""0,0,2,0"" /><xuip:Path PathType=""Wifi1"" Width=""20"" Height=""20"" Foreground=""White"" /></StackPanel>" });
+            vm.Pages[3].Layers[1].XamlFragments.Add(new XamlFragment() { Uid = "xx9", Xaml = @"<StackPanel Orientation=""Horizontal"" HorizontalAlignment=""Right"" VerticalAlignment=""Top"" Margin=""0,5,10,0""><xuip:Path PathType=""Sound"" Width=""20"" Height=""20"" Foreground=""White""  /><xuip:Path PathType=""BatteryLow"" Width=""35"" Height=""22"" Foreground=""White""  /></StackPanel>" });
             vm.Pages[3].ExternalPC("Layers");
 
             
@@ -193,8 +194,9 @@ namespace X.Viewer.SketchFlow
                         var gt = ((FrameworkElement)stamp).TransformToVisual(_currentPageLayoutForStamps);
                         npl.HasChildContainerCanvas = true;
                         var ptCenter = gt.TransformPoint(new Windows.Foundation.Point(0,0));
-                        var str = stamp.GenerateXAML(_scaleX, _scaleY, ptCenter.X, ptCenter.Y);
-                        npl.XamlFragments.Add(str);
+                        var uid = RandomString(15);
+                        var str = stamp.GenerateXAML(uid, _scaleX, _scaleY, ptCenter.X, ptCenter.Y);
+                        npl.XamlFragments.Add(new XamlFragment() { Uid = uid, Xaml = str });
 
                         plvm.Layers.Add(npl);
                         plvm.ExternalPC("Layers");
@@ -202,6 +204,25 @@ namespace X.Viewer.SketchFlow
                 }
 
             }
+        }
+
+        //private string GenerateUidString() {
+
+        //    Guid uid = Guid.NewGuid();
+        //    string GuidString = Convert.ToBase64String(uid.ToByteArray());
+        //    GuidString = GuidString.Replace("=", "").Replace("+", "").Replace("/", "");
+
+        //    return GuidString;
+        //}
+
+        public string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            var random = new Random();
+            var ret =  new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+
+            return "stamp_" + ret;
         }
 
         private Vector4 AddPage(int width, int height, int left = -1, int top = -1)
@@ -236,7 +257,7 @@ namespace X.Viewer.SketchFlow
 
         private void PageLayout_PerformAction(object sender, EventArgs e)
         {
-            if(e is Controls.PageLayoutEventArgs)
+            if (e is Controls.PageLayoutEventArgs)
             {
                 var ea = e as Controls.PageLayoutEventArgs;
                 _currentPageLayout = sender as Controls.PageLayout;
@@ -254,18 +275,80 @@ namespace X.Viewer.SketchFlow
                     }
                     //}
                 }
-                else if(ea.ActionType == "MovePageLayoutStarted") IsMovingPage = true;
+                else if (ea.ActionType == "MovePageLayoutStarted") IsMovingPage = true;
                 else if (ea.ActionType == "MovePageLayoutFinished") IsMovingPage = false;
                 else if (ea.ActionType == "ResizePageLayoutStarted") IsResizingPage = true;
                 else if (ea.ActionType == "ResizePageLayoutFinished") IsResizingPage = false;
 
 
-                ptStartPt.X =  (double)_currentPageLayout.GetValue(Canvas.LeftProperty);
+                ptStartPt.X = (double)_currentPageLayout.GetValue(Canvas.LeftProperty);
                 ptStartPt.Y = (double)_currentPageLayout.GetValue(Canvas.TopProperty);
 
             }
+            else if (e is PageLayerEventArgs)
+            {
+                var plea = e as PageLayerEventArgs;
+                if (plea.ActionType == "EditLayer") {
+                    //plea.Layer.IsEnabled = !plea.Layer.IsEnabled;
+                    foreach(var frag in plea.Layer.XamlFragments) {
+
+                        
+
+                        var found = _currentPageLayoutForStamps?.FindContentElementByName(frag.Uid) as FrameworkElement;
+                        var gtFound = cvMainAdorner.TransformToVisual(found);
+                        var ptFound = gtFound.TransformPoint(new Windows.Foundation.Point(0, 0));
+
+                        var gtPL = cvMainAdorner.TransformToVisual(_currentPageLayoutForStamps);
+                        var ptPL = gtPL.TransformPoint(new Windows.Foundation.Point(0, 0));
+
+
+                        var left = Math.Abs(ptPL.X) + Math.Abs(ptFound.X);
+                        var top = Math.Abs(ptPL.Y) + Math.Abs(ptFound.Y);
+
+
+                        var el = new Ellipse() { Width = 10, Height = 10, Fill = new SolidColorBrush(Colors.Red) };
+                        el.SetValue(Canvas.LeftProperty, left);
+                        el.SetValue(Canvas.TopProperty, top);
+                        cvMainAdorner.Children.Add(el);
+
+                        //var pc = _currentPageLayoutForStamps.FindName("pc");
+                        //var cc = ((FrameworkElement)pc).FindName("cc");
+
+                        //var c1 = VisualTreeHelper.GetChild((FrameworkElement)cc, 0);
+                        //var c2 = (ContentPresenter)c1;
+                        //var c3 = (FrameworkElement)c2.Content;
+                        //var c4 = c3.FindName(frag.Uid);
+                        //var stampToCreateFrom = ((FrameworkElement)c2).FindName(frag.Uid);
+
+                        //var stampToCreateFrom2 = cvMain.FindName(frag.Uid);
+
+                    };
+                    
+                }
+            }
       
         }
+        
+        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj, string name) where T : DependencyObject
+        {
+            if (depObj != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+                {
+                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+                    if (child != null && child is T && ((FrameworkElement)child).Name == name)
+                    {
+                        yield return (T)child;
+                    }
+
+                    foreach (T childOfChild in FindVisualChildren<T>(child, name))
+                    {
+                        yield return childOfChild;
+                    }
+                }
+            }
+        }
+
 
         double _scaleX = 0;
         double _scaleY = 0;

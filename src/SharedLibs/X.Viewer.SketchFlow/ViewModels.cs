@@ -56,18 +56,26 @@ namespace X.Viewer.SketchFlow
 
     public class PageLayer : ViewModelBase
     {
-        public bool IsEnabled { get; set; } = true;
+        private bool _isEnabled = true;
+        public bool IsEnabled { get { return _isEnabled; } set { _isEnabled = value; RaisePropertyChanged(); } } 
         public bool HasChildContainerCanvas { get; set; } = false;
-        public ObservableCollection<string> XamlFragments { get; set; }
+        public ObservableCollection<XamlFragment> XamlFragments { get; set; }
         
         public PageLayer() {
-            XamlFragments = new ObservableCollection<string>();
+            XamlFragments = new ObservableCollection<XamlFragment>();
         }
 
         public void ExternalPC(string propertyName)
         {
             RaisePropertyChanged(propertyName);
         }
+    }
+
+
+    public class XamlFragment
+    {
+        public string Xaml { get; set; }
+        public string Uid { get; set; }
     }
 
 }

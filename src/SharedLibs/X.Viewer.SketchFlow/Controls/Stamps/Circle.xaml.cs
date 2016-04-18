@@ -95,7 +95,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         }
 
 
-        public string GenerateXAML(double scaleX, double scaleY, double left, double top)
+        public string GenerateXAML(string uid, double scaleX, double scaleY, double left, double top)
         {
             var rotationAngle = ((CompositeTransform)el.RenderTransform).Rotation;
             var leftToUse = left;
@@ -107,8 +107,8 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
             var fillXaml = fillColor.Length >0 ? $"Fill=\"{fillColor}\"": "";
 
             var newStroke = el.StrokeThickness * (1 / scaleX);
-
-            return $"<Ellipse HorizontalAlignment=\"Left\" VerticalAlignment=\"Top\" Height=\"{ (this.Height * (1 / scaleY)) }\" Width=\"{ (this.Width * (1 / scaleX)) }\"  StrokeThickness=\"{ newStroke }\" Stroke=\"{ ((SolidColorBrush)el.Stroke).Color.ToString() }\" Canvas.Left=\"{ leftToUse }\" Canvas.Top=\"{ topToUse }\" RenderTransformOrigin=\"0.5,0.5\" { fillXaml } >{ rotationXaml }</Ellipse>";
+            
+            return $"<Ellipse x:Name=\"{uid}\" HorizontalAlignment=\"Left\" VerticalAlignment=\"Top\" Height=\"{ (this.Height * (1 / scaleY)) }\" Width=\"{ (this.Width * (1 / scaleX)) }\"  StrokeThickness=\"{ newStroke }\" Stroke=\"{ ((SolidColorBrush)el.Stroke).Color.ToString() }\" Canvas.Left=\"{ leftToUse }\" Canvas.Top=\"{ topToUse }\" RenderTransformOrigin=\"0.5,0.5\" { fillXaml } >{ rotationXaml }</Ellipse>";
         }
 
         public void PopulateFromUIElement(UIElement element)

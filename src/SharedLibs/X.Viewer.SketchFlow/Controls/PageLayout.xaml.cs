@@ -31,6 +31,7 @@ namespace X.Viewer.SketchFlow.Controls
             var page = this.DataContext as SketchPage;
             page.ExternalPC("Layers");
 
+            PerformAction?.Invoke(null, e);
         }
 
 
@@ -62,6 +63,10 @@ namespace X.Viewer.SketchFlow.Controls
         private void layoutRoot_PointerReleased(object sender, PointerRoutedEventArgs e)
         {
             PerformAction?.Invoke(this, new PageLayoutEventArgs() { ActionType = "PageSelected", StartPoint = e.GetCurrentPoint(null) });
+        }
+
+        public object FindContentElementByName(string name) {
+            return pc.FindContentElementByName(name);
         }
     }
 

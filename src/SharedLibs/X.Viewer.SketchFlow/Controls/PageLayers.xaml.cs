@@ -29,8 +29,21 @@ namespace X.Viewer.SketchFlow.Controls
         {
             var pl = ((FrameworkElement)sender).DataContext as PageLayer;
             pl.IsEnabled = !pl.IsEnabled;
-            pl.ExternalPC("IsEnabled");
-            LayerChanged?.Invoke(null, EventArgs.Empty);
+            //LayerChanged?.Invoke(null, EventArgs.Empty);
+            LayerChanged?.Invoke(null, new PageLayerEventArgs() { ActionType =  pl.IsEnabled? "EnableLayer": "DisableLayer" });
         }
+
+        private void butEdit_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            var pl = ((FrameworkElement)sender).DataContext as PageLayer;
+            LayerChanged?.Invoke(null, new PageLayerEventArgs() { ActionType = "EditLayer", Layer = pl });
+        }
+    }
+
+
+    public class PageLayerEventArgs : EventArgs
+    {
+        public string ActionType;
+        public PageLayer Layer;
     }
 }

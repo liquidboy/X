@@ -10,7 +10,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
     interface IStamp
     {
         event EventHandler PerformAction;
-        string GenerateXAML(double scaleX, double scaleY, double left, double top);
+        string GenerateXAML(string uid, double scaleX, double scaleY, double left, double top);
         void PopulateFromUIElement(UIElement element);
         void UpdateRotation(double angle);
     }
