@@ -129,7 +129,7 @@ namespace X.Viewer.SketchFlow
                 
                 if (ea.ActionType == "AddCircle")
                 {
-                    CreateStamp<Circle>(ea.StartPoint.X, ea.StartPoint.Y, 85, 85);
+                    CreateStamp<Circle>(ea.StartPoint.X, ea.StartPoint.Y, 85, 85, 0);
                 }
             }
 
@@ -138,14 +138,15 @@ namespace X.Viewer.SketchFlow
 
 
 
-        private void CreateStamp<T>(double x, double y, double w, double h) {
+        private void CreateStamp<T>(double x, double y, double w, double h, double r) {
             
             var nc = (FrameworkElement)Activator.CreateInstance(typeof(T), new object[] { });  //Controls.Stamps.Circle();
             nc.Width = w; nc.Height = h;
             nc.SetValue(Canvas.LeftProperty, Math.Abs(x));
             nc.SetValue(Canvas.TopProperty, Math.Abs(y));
-            nc.RenderTransform = new CompositeTransform();
-            nc.RenderTransformOrigin = new Windows.Foundation.Point(0.5d, 0.5d);
+            nc.RenderTransform = new CompositeTransform() { Rotation  = r };
+            nc.RenderTransformOrigin = new Windows.Foundation.Point(0d, 0d);
+            
             ((IStamp)nc).PerformAction += Stamp_PerformAction;
             cvMainAdorner.Children.Add(nc);
         }
@@ -313,6 +314,8 @@ namespace X.Viewer.SketchFlow
                         var height = found.Height * _scaleY;
                         var left = ((ptPL.X * -1)  + (ptFound.X * -1)) * _scaleX;
                         var top = ((ptPL.Y * -1) + (ptFound.Y * -1) + 80) * _scaleY;  //70 = tabs
+                        var rotation = 0d;
+                        try { rotation = ((CompositeTransform)found.RenderTransform).Rotation; } catch { }
 
 
                         //var el = new Ellipse() { Width = 10, Height = 10, Fill = new SolidColorBrush(Colors.Red) };
@@ -320,12 +323,9 @@ namespace X.Viewer.SketchFlow
                         //el.SetValue(Canvas.TopProperty, top);
                         //cvMainAdorner.Children.Add(el);
 
-                        //only if the stamp is being created in the viewable area (ptPL.Y < 0 )
-                        if(ptPL.Y<0) CreateStamp<Circle>(left, top, width, height);
-
-
-                   
-
+                        //only if the stamp is being created in the viewable area
+                        if(top > 20) CreateStamp<Circle>(left, top, width, height, rotation);
+                        
                     };
                     
                 }
