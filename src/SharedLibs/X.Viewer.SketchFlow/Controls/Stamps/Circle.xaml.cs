@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Shapes;
 using X.Viewer.SketchFlow.Controls.Pickers;
 
 namespace X.Viewer.SketchFlow.Controls.Stamps
@@ -128,6 +129,17 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
             butLock.Visibility = Visibility.Visible;
             butUnlock.Visibility = Visibility.Collapsed;
             edges.IsLocked = false;
+        }
+
+        public void GenerateFromXAML(UIElement template)
+        {
+            if (template is Ellipse) {
+                var elTemplate = template as Ellipse;
+                try { ((CompositeTransform)el.RenderTransform).Rotation = ((CompositeTransform)elTemplate.RenderTransform).Rotation; } catch { }
+                el.Stroke = elTemplate.Stroke;
+                el.StrokeThickness = elTemplate.StrokeThickness;
+                el.Fill = elTemplate.Fill;
+            }
         }
     }
 
