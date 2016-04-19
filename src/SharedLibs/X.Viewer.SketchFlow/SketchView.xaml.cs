@@ -311,8 +311,8 @@ namespace X.Viewer.SketchFlow
 
                         var width = found.Width * _scaleX;
                         var height = found.Height * _scaleY;
-                        var left = (Math.Abs(ptPL.X)  + Math.Abs(ptFound.X )) * _scaleX;
-                        var top = (Math.Abs(ptPL.Y) + Math.Abs(ptFound.Y) + 80) * _scaleY;  //70 = tabs
+                        var left = ((ptPL.X * -1)  + (ptFound.X * -1)) * _scaleX;
+                        var top = ((ptPL.Y * -1) + (ptFound.Y * -1) + 80) * _scaleY;  //70 = tabs
 
 
                         //var el = new Ellipse() { Width = 10, Height = 10, Fill = new SolidColorBrush(Colors.Red) };
@@ -320,7 +320,8 @@ namespace X.Viewer.SketchFlow
                         //el.SetValue(Canvas.TopProperty, top);
                         //cvMainAdorner.Children.Add(el);
 
-                        CreateStamp<Circle>(left, top, width, height);
+                        //only if the stamp is being created in the viewable area (ptPL.Y < 0 )
+                        if(ptPL.Y<0) CreateStamp<Circle>(left, top, width, height);
 
 
                    
