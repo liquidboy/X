@@ -129,19 +129,27 @@ namespace X.Viewer.SketchFlow
                 
                 if (ea.ActionType == "AddCircle")
                 {
-                    var nc = new Controls.Stamps.Circle();
-                    nc.Width = 85; nc.Height = 85;
-                    nc.SetValue(Canvas.LeftProperty, Math.Abs(ea.StartPoint.X ));
-                    nc.SetValue(Canvas.TopProperty, Math.Abs(ea.StartPoint.Y ));
-                    nc.RenderTransform = new CompositeTransform();
-                    nc.RenderTransformOrigin = new Windows.Foundation.Point(0.5d, 0.5d);
-                    nc.PerformAction += Stamp_PerformAction;
-                    cvMainAdorner.Children.Add(nc);
+                    CreateStamp<Circle>(ea.StartPoint.X, ea.StartPoint.Y, 85, 85);
                 }
             }
 
 
         }
+
+
+
+        private void CreateStamp<T>(double x, double y, double w, double h) {
+            
+            var nc = (FrameworkElement)Activator.CreateInstance(typeof(T), new object[] { });  //Controls.Stamps.Circle();
+            nc.Width = w; nc.Height = h;
+            nc.SetValue(Canvas.LeftProperty, Math.Abs(x));
+            nc.SetValue(Canvas.TopProperty, Math.Abs(y));
+            nc.RenderTransform = new CompositeTransform();
+            nc.RenderTransformOrigin = new Windows.Foundation.Point(0.5d, 0.5d);
+            ((IStamp)nc).PerformAction += Stamp_PerformAction;
+            cvMainAdorner.Children.Add(nc);
+        }
+
 
         bool IsMovingStamp = false;
         bool IsResizingStamp = false;
@@ -298,29 +306,24 @@ namespace X.Viewer.SketchFlow
                         var gtFound = cvMainAdorner.TransformToVisual(found);
                         var ptFound = gtFound.TransformPoint(new Windows.Foundation.Point(0, 0));
 
-                        var gtPL = cvMainAdorner.TransformToVisual(_currentPageLayoutForStamps);
+                        var gtPL =  cvMainAdorner.TransformToVisual(_currentPageLayoutForStamps);
                         var ptPL = gtPL.TransformPoint(new Windows.Foundation.Point(0, 0));
 
+                        var width = found.Width * _scaleX;
+                        var height = found.Height * _scaleY;
+                        var left = (Math.Abs(ptPL.X)  + Math.Abs(ptFound.X )) * _scaleX;
+                        var top = (Math.Abs(ptPL.Y) + Math.Abs(ptFound.Y) + 80) * _scaleY;  //70 = tabs
 
-                        var left = Math.Abs(ptPL.X) + Math.Abs(ptFound.X);
-                        var top = Math.Abs(ptPL.Y) + Math.Abs(ptFound.Y);
+
+                        //var el = new Ellipse() { Width = 10, Height = 10, Fill = new SolidColorBrush(Colors.Red) };
+                        //el.SetValue(Canvas.LeftProperty, left);
+                        //el.SetValue(Canvas.TopProperty, top);
+                        //cvMainAdorner.Children.Add(el);
+
+                        CreateStamp<Circle>(left, top, width, height);
 
 
-                        var el = new Ellipse() { Width = 10, Height = 10, Fill = new SolidColorBrush(Colors.Red) };
-                        el.SetValue(Canvas.LeftProperty, left);
-                        el.SetValue(Canvas.TopProperty, top);
-                        cvMainAdorner.Children.Add(el);
-
-                        //var pc = _currentPageLayoutForStamps.FindName("pc");
-                        //var cc = ((FrameworkElement)pc).FindName("cc");
-
-                        //var c1 = VisualTreeHelper.GetChild((FrameworkElement)cc, 0);
-                        //var c2 = (ContentPresenter)c1;
-                        //var c3 = (FrameworkElement)c2.Content;
-                        //var c4 = c3.FindName(frag.Uid);
-                        //var stampToCreateFrom = ((FrameworkElement)c2).FindName(frag.Uid);
-
-                        //var stampToCreateFrom2 = cvMain.FindName(frag.Uid);
+                   
 
                     };
                     
