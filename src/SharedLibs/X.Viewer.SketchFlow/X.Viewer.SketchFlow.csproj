@@ -116,15 +116,15 @@
     <Compile Include="Controls\Stamps\Rectangle.xaml.cs">
       <DependentUpon>Rectangle.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Stamps\IStampEventArgs.cs" />
-    <Compile Include="Controls\Stamps\IStamp.cs" />
-    <Compile Include="Controls\Stamps\MarkersR.xaml.cs">
+    <Compile Include="Controls\Stamps\common\IStampEventArgs.cs" />
+    <Compile Include="Controls\Stamps\common\IStamp.cs" />
+    <Compile Include="Controls\Stamps\common\MarkersR.xaml.cs">
       <DependentUpon>MarkersR.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Stamps\MarkersHV.xaml.cs">
+    <Compile Include="Controls\Stamps\common\MarkersHV.xaml.cs">
       <DependentUpon>MarkersHV.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Stamps\ResizeMoveEdges.xaml.cs">
+    <Compile Include="Controls\Stamps\common\ResizeMoveEdges.xaml.cs">
       <DependentUpon>ResizeMoveEdges.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Stamps\Circle.xaml.cs">
@@ -191,15 +191,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\Stamps\MarkersR.xaml">
+    <Page Include="Controls\Stamps\common\MarkersR.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\Stamps\MarkersHV.xaml">
+    <Page Include="Controls\Stamps\common\MarkersHV.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Stamps\ResizeMoveEdges.xaml">
+    <Page Include="Controls\Stamps\common\ResizeMoveEdges.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
