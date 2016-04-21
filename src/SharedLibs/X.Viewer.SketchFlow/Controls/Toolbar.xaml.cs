@@ -109,26 +109,31 @@ namespace X.Viewer.SketchFlow.Controls
         
         private void butCircle_Click(object sender, RoutedEventArgs e)
         {
+            var pt = getPoint((UIElement)sender);
+            if (PerformAction != null) PerformAction("AddCircle", new ToolbarEventArgs() { ActionType = "AddCircle", StartPoint = pt});
+        }
+
+        private void butRectangle_Click(object sender, RoutedEventArgs e)
+        {
+            var pt = getPoint((UIElement)sender);
+            if (PerformAction != null) PerformAction("AddRectangle", new ToolbarEventArgs() { ActionType = "AddRectangle", StartPoint = pt });
+        }
+
+        private Windows.Foundation.Point getPoint(UIElement el) {
             var sv = (FrameworkElement)((FrameworkElement)this.Parent).Parent; // get canvas in the parent , tight relation between this control and the parent now
             //var cv = (UIElement)sv.FindName("cvMain"); // get canvas in parent
             var cv = (UIElement)sv.FindName("cvMainAdorner"); // get canvas in parent
-            var tp = cv.TransformToVisual(butCircle); // get transform of this button in relation to the canvas(cv)
+            var tp = cv.TransformToVisual(el); // get transform of this button in relation to the canvas(cv)
             var pt = tp.TransformPoint(new Windows.Foundation.Point(0, 0)); // get position from the transform(tp)
-
-            ////factor in scale factor of cv
-            //var scaleX = ((CompositeTransform)cv.RenderTransform).ScaleX;
-            //var scaleY = ((CompositeTransform)cv.RenderTransform).ScaleX;
-            //pt.X = pt.X * (1 / scaleX);
-            //pt.Y = pt.Y * (1 / scaleY);
 
             //just tweak the position so its not under toolbar
             pt.X = pt.X + 20;
             pt.Y = pt.Y - 90;
 
-            
-
-            if (PerformAction != null) PerformAction("AddCircle", new ToolbarEventArgs() { ActionType = "AddCircle", StartPoint = pt});
+            return pt;
         }
+
+
     }
 
 

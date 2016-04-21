@@ -127,10 +127,9 @@ namespace X.Viewer.SketchFlow
             {
                 var ea = e as Controls.ToolbarEventArgs;
                 
-                if (ea.ActionType == "AddCircle")
-                {
-                    CreateStamp<Circle>(ea.StartPoint.X, ea.StartPoint.Y, 85, 85);
-                }
+                if (ea.ActionType == "AddCircle") CreateStamp<Controls.Stamps.Circle>(ea.StartPoint.X, ea.StartPoint.Y, 85, 85);
+                else if (ea.ActionType == "AddRectangle") CreateStamp<Controls.Stamps.Rectangle>(ea.StartPoint.X, ea.StartPoint.Y, 85, 85);
+
             }
 
 
@@ -272,16 +271,8 @@ namespace X.Viewer.SketchFlow
                 _currentPageLayoutForStamps = sender as Controls.PageLayout;
                 if (ea.ActionType == "PageSelected")
                 {
-                    //var foundElements = VisualTreeHelper.FindElementsInHostCoordinates(ptEnd.Position, this);
-                    //foreach (var el in foundElements)
-                    //{
                     if (sender is PageLayout)
-                    {
                         vm.SelectedPage = ((FrameworkElement)sender).DataContext as SketchPage;
-
-                        //vm.SelectedPage.ExternalPC("Title");
-                    }
-                    //}
                 }
                 else if (ea.ActionType == "MovePageLayoutStarted") IsMovingPage = true;
                 else if (ea.ActionType == "MovePageLayoutFinished") IsMovingPage = false;
@@ -299,9 +290,7 @@ namespace X.Viewer.SketchFlow
                 if (plea.ActionType == "EditLayer") {
                     //plea.Layer.IsEnabled = !plea.Layer.IsEnabled;
                     foreach(var frag in plea.Layer.XamlFragments) {
-
                         
-
                         var found = _currentPageLayoutForStamps?.FindContentElementByName(frag.Uid) as FrameworkElement;
                         var gtFound = cvMainAdorner.TransformToVisual(found);
                         var ptFound = gtFound.TransformPoint(new Windows.Foundation.Point(0, 0));
@@ -329,25 +318,25 @@ namespace X.Viewer.SketchFlow
       
         }
         
-        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj, string name) where T : DependencyObject
-        {
-            if (depObj != null)
-            {
-                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
-                {
-                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
-                    if (child != null && child is T && ((FrameworkElement)child).Name == name)
-                    {
-                        yield return (T)child;
-                    }
+        //public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj, string name) where T : DependencyObject
+        //{
+        //    if (depObj != null)
+        //    {
+        //        for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+        //        {
+        //            DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+        //            if (child != null && child is T && ((FrameworkElement)child).Name == name)
+        //            {
+        //                yield return (T)child;
+        //            }
 
-                    foreach (T childOfChild in FindVisualChildren<T>(child, name))
-                    {
-                        yield return childOfChild;
-                    }
-                }
-            }
-        }
+        //            foreach (T childOfChild in FindVisualChildren<T>(child, name))
+        //            {
+        //                yield return childOfChild;
+        //            }
+        //        }
+        //    }
+        //}
 
 
         double _scaleX = 0;
@@ -376,10 +365,7 @@ namespace X.Viewer.SketchFlow
             _scaleX = ct.ScaleX;
             _scaleY = ct.ScaleY;
         }
-
-
-
-
+        
 
         PointerPoint ptStart;  //artboard moving
         Windows.Foundation.Point ptStartPt; //pagelayout moving
@@ -533,7 +519,6 @@ namespace X.Viewer.SketchFlow
 
                     //ptEnd.Position.X - ptStart.Position.X
                 }
-
 
                 return;
             }
