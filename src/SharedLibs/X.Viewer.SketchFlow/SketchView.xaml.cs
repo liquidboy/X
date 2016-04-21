@@ -127,8 +127,8 @@ namespace X.Viewer.SketchFlow
             {
                 var ea = e as Controls.ToolbarEventArgs;
                 
-                if (ea.ActionType == "AddCircle") CreateStamp<Controls.Stamps.Circle>(ea.StartPoint.X, ea.StartPoint.Y, 85, 85);
-                else if (ea.ActionType == "AddRectangle") CreateStamp<Controls.Stamps.Rectangle>(ea.StartPoint.X, ea.StartPoint.Y, 85, 85);
+                if (ea.ActionType == "AddCircle") CreateStamp(typeof(Controls.Stamps.Circle), ea.StartPoint.X, ea.StartPoint.Y, 85, 85);
+                else if (ea.ActionType == "AddRectangle") CreateStamp(typeof(Controls.Stamps.Rectangle), ea.StartPoint.X, ea.StartPoint.Y, 85, 85);
 
             }
 
@@ -137,9 +137,9 @@ namespace X.Viewer.SketchFlow
 
 
 
-        private void CreateStamp<T>(double x, double y, double w, double h, UIElement template = null) {
+        private void CreateStamp( Type type, double x, double y, double w, double h, UIElement template = null) {
             
-            var nc = (FrameworkElement)Activator.CreateInstance(typeof(T), new object[] { });  //Controls.Stamps.Circle();
+            var nc = (FrameworkElement)Activator.CreateInstance(type, new object[] { });  //Controls.Stamps.Circle();
             nc.Width = w; nc.Height = h;
             nc.SetValue(Canvas.LeftProperty, Math.Abs(x));
             nc.SetValue(Canvas.TopProperty, Math.Abs(y));
@@ -203,7 +203,7 @@ namespace X.Viewer.SketchFlow
                         var ptCenter = gt.TransformPoint(new Windows.Foundation.Point(0,0));
                         var uid = RandomString(15);
                         var str = stamp.GenerateXAML(uid, _scaleX, _scaleY, ptCenter.X, ptCenter.Y);
-                        npl.XamlFragments.Add(new XamlFragment() { Uid = uid, Xaml = str });
+                        npl.XamlFragments.Add(new XamlFragment() { Uid = uid, Xaml = str, Type = stamp.GetType() });
 
                         plvm.Layers.Add(npl);
                         plvm.ExternalPC("Layers");
@@ -302,14 +302,14 @@ namespace X.Viewer.SketchFlow
                         var height = found.Height * _scaleY;
                         var left = ((ptPL.X * -1)  + (ptFound.X * -1)) * _scaleX;
                         var top = ((ptPL.Y * -1) + (ptFound.Y * -1) + 80) * _scaleY;  //70 = tabs
-                        
+
                         //var el = new Ellipse() { Width = 10, Height = 10, Fill = new SolidColorBrush(Colors.Red) };
                         //el.SetValue(Canvas.LeftProperty, left);
                         //el.SetValue(Canvas.TopProperty, top);
                         //cvMainAdorner.Children.Add(el);
 
                         //only if the stamp is being created in the viewable area
-                        if(top > 20) CreateStamp<Circle>(left, top, width, height, found);
+                        if(top > 20) CreateStamp( frag.Type, left, top, width, height, found);
                         
                     };
                     
@@ -510,14 +510,8 @@ namespace X.Viewer.SketchFlow
                 else if (stampe.ActionType == eActionTypes.ResizeCenterRight)
                 {
                     console2.Text = $"thickness : { ((ptEnd.Position.X - ptStart.Position.X) / 10) }";
-
                     var newThickness = Math.Abs(((ptEnd.Position.X - ptStart.Position.X) / 10));
-                    //el
-                    var circ = (Circle)_currentStamp;
-                    var el = circ.FindName("el") as Shape;
-                    el.StrokeThickness = newThickness;
-
-                    //ptEnd.Position.X - ptStart.Position.X
+                    if (_currentStamp is IStamp) ((IStamp)_currentStamp).UpdateStrokeThickness(newThickness);
                 }
 
                 return;

@@ -101,7 +101,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
             var rotationAngle = ((CompositeTransform)el.RenderTransform).Rotation;
             var leftToUse = left;
             var topToUse = top;
-            var rotationXaml = $"<Rectangle.RenderTransform><CompositeTransform Rotation=\"{ rotationAngle }\" /></Ellipse.RenderTransform>";
+            var rotationXaml = $"<Rectangle.RenderTransform><CompositeTransform Rotation=\"{ rotationAngle }\" /></Rectangle.RenderTransform>";
             if (rotationAngle == 0) rotationXaml = "";
 
             var fillColor = (el.Fill!=null)? ((SolidColorBrush)el.Fill).Color.ToString(): "";
@@ -141,6 +141,8 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
                 el.Fill = elTemplate.Fill;
             }
         }
+
+        public void UpdateStrokeThickness(double thickness) { el.StrokeThickness = thickness; }
     }
 
     public class RectangleventArgs : EventArgs, IStampEventArgs

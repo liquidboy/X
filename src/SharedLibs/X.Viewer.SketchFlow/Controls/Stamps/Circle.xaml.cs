@@ -141,6 +141,8 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
                 el.Fill = elTemplate.Fill;
             }
         }
+
+        public void UpdateStrokeThickness(double thickness) { el.StrokeThickness = thickness; }
     }
 
     public class CircleEventArgs : EventArgs, IStampEventArgs

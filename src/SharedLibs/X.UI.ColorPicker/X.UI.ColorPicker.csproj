@@ -120,15 +120,15 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AppX\X.UI.ColorPicker.Assets\ColorSwatchCircle.png">
+    <EmbeddedResource Include="AppX\X.UI.ColorPicker.Assets\ColorSwatchCircle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="AppX\X.UI.ColorPicker.Assets\ColorSwatchSquare1.png">
+    </EmbeddedResource>
+    <EmbeddedResource Include="AppX\X.UI.ColorPicker.Assets\ColorSwatchSquare1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="AppX\X.UI.ColorPicker.Assets\ColorSwatchSquare2.png">
+    </EmbeddedResource>
+    <EmbeddedResource Include="AppX\X.UI.ColorPicker.Assets\ColorSwatchSquare2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">
     <VisualStudioVersion>15.0</VisualStudioVersion>
