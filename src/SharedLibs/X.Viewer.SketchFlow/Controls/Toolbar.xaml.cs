@@ -110,13 +110,13 @@ namespace X.Viewer.SketchFlow.Controls
         private void butCircle_Click(object sender, RoutedEventArgs e)
         {
             var pt = getPoint((UIElement)sender);
-            if (PerformAction != null) PerformAction("AddCircle", new ToolbarEventArgs() { ActionType = "AddCircle", StartPoint = pt});
+            if (PerformAction != null) PerformAction(null, new ToolbarEventArgs() { ActionType = "AddStamp", StartPoint = pt, StampType  = typeof(Stamps.Circle) });
         }
 
         private void butRectangle_Click(object sender, RoutedEventArgs e)
         {
             var pt = getPoint((UIElement)sender);
-            if (PerformAction != null) PerformAction("AddRectangle", new ToolbarEventArgs() { ActionType = "AddRectangle", StartPoint = pt });
+            if (PerformAction != null) PerformAction(null, new ToolbarEventArgs() { ActionType = "AddStamp", StartPoint = pt, StampType = typeof(Stamps.Rectangle) });
         }
 
         private Windows.Foundation.Point getPoint(UIElement el) {
@@ -140,6 +140,7 @@ namespace X.Viewer.SketchFlow.Controls
     public class ToolbarEventArgs : EventArgs
     {
         public string ActionType;
+        public Type StampType;
         public Windows.Foundation.Point StartPoint;
     }
 }

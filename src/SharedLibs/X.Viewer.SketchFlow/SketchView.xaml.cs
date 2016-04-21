@@ -126,10 +126,7 @@ namespace X.Viewer.SketchFlow
             if (e is Controls.ToolbarEventArgs)
             {
                 var ea = e as Controls.ToolbarEventArgs;
-                
-                if (ea.ActionType == "AddCircle") CreateStamp(typeof(Controls.Stamps.Circle), ea.StartPoint.X, ea.StartPoint.Y, 85, 85);
-                else if (ea.ActionType == "AddRectangle") CreateStamp(typeof(Controls.Stamps.Rectangle), ea.StartPoint.X, ea.StartPoint.Y, 85, 85);
-
+                if (ea.ActionType == "AddStamp") CreateStamp(ea.StampType, ea.StartPoint.X, ea.StartPoint.Y, 85, 85);
             }
 
 
@@ -212,15 +209,6 @@ namespace X.Viewer.SketchFlow
 
             }
         }
-
-        //private string GenerateUidString() {
-
-        //    Guid uid = Guid.NewGuid();
-        //    string GuidString = Convert.ToBase64String(uid.ToByteArray());
-        //    GuidString = GuidString.Replace("=", "").Replace("+", "").Replace("/", "");
-
-        //    return GuidString;
-        //}
 
         public string RandomString(int length)
         {
