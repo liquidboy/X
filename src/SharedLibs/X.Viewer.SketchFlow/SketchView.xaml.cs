@@ -126,7 +126,7 @@ namespace X.Viewer.SketchFlow
             if (e is Controls.ToolbarEventArgs)
             {
                 var ea = e as Controls.ToolbarEventArgs;
-                if (ea.ActionType == "AddStamp") CreateStamp(ea.StampType, ea.StartPoint.X, ea.StartPoint.Y, 85, 85);
+                if (ea.ActionType == "AddStamp") CreateStamp(ea.StampType, ea.StartPoint.X, ea.StartPoint.Y, 85, 85, data: ea.Data);
             }
 
 
@@ -134,9 +134,13 @@ namespace X.Viewer.SketchFlow
 
 
 
-        private void CreateStamp( Type type, double x, double y, double w, double h, UIElement template = null) {
+        private void CreateStamp(Type type, double x, double y, double w, double h, UIElement template = null, string data = "") {
             
             var nc = (FrameworkElement)Activator.CreateInstance(type, new object[] { });  //Controls.Stamps.Circle();
+            //var nc = new Controls.Stamps.Shape();
+            //nc.StampData = data;
+            //nc.StampType = type;
+
             nc.Width = w; nc.Height = h;
             nc.SetValue(Canvas.LeftProperty, Math.Abs(x));
             nc.SetValue(Canvas.TopProperty, Math.Abs(y));

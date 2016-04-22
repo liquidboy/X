@@ -133,7 +133,11 @@ namespace X.Viewer.SketchFlow.Controls
             return pt;
         }
 
-
+        private void butStar_Click(object sender, RoutedEventArgs e)
+        {
+            var pt = getPoint((UIElement)sender);
+            if (PerformAction != null) PerformAction(null, new ToolbarEventArgs() { ActionType = "AddStamp", StartPoint = pt, StampType = typeof(Windows.UI.Xaml.Shapes.Path), Data= "M383.519,0L501.986,252.479 767,292.964 575.223,489.496 620.525,767 383.519,635.979 146.475,767 191.74,489.496 0,292.964 265.014,252.479z" });
+        }
     }
 
 
@@ -142,5 +146,6 @@ namespace X.Viewer.SketchFlow.Controls
         public string ActionType;
         public Type StampType;
         public Windows.Foundation.Point StartPoint;
+        public string Data;
     }
 }

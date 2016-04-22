@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoreLib.Converters;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,19 +20,61 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 {
 
 
-    public sealed partial class Rectangle : UserControl, IStamp
+    public sealed partial class Shape : UserControl, IStamp
     {
         public event EventHandler PerformAction;
 
-        public Rectangle()
+        public Shape()
         {
             this.InitializeComponent();
 
-            this.Unloaded += Rectangle_Unloaded;
+            this.Unloaded += Shape_Unloaded;
             cpMain.ColorTypes = new List<string>() { "Stroke", "Fill" };
         }
 
-        private void Rectangle_Unloaded(object sender, RoutedEventArgs e)
+
+        public object StampContent
+        {
+            get { return (object)GetValue(StampContentProperty); }
+            set { SetValue(StampContentProperty, value); }
+        }
+
+        public Type StampType
+        {
+            get { return (Type)GetValue(StampTypeProperty); }
+            set { SetValue(StampTypeProperty, value); }
+        }
+
+        public string StampData
+        {
+            get { return (string)GetValue(StampDataProperty); }
+            set { SetValue(StampDataProperty, value); }
+        }
+
+        public static readonly DependencyProperty StampDataProperty = DependencyProperty.Register("StampData", typeof(string), typeof(Shape), new PropertyMetadata(null));
+        public static readonly DependencyProperty StampContentProperty = DependencyProperty.Register("StampContent", typeof(object), typeof(Shape), new PropertyMetadata(null));
+        public static readonly DependencyProperty StampTypeProperty = DependencyProperty.Register("StampType", typeof(Type), typeof(Shape), new PropertyMetadata(null, OnStampTypePropertyChanged));
+        
+        private static void OnStampTypePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var shapeInstance = (Shape)d;
+            var nc = (FrameworkElement)Activator.CreateInstance((Type)e.NewValue, new object[] { });
+            if (nc is Windows.UI.Xaml.Shapes.Path)
+            {
+                
+                string pthString = $"<Path xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" Data=\"{ shapeInstance.StampData }\" HorizontalAlignment=\"Stretch\" VerticalAlignment=\"Stretch\" Fill=\"Black\" Stretch=\"Uniform\" />";
+                var pth = (Windows.UI.Xaml.Shapes.Path)Windows.UI.Xaml.Markup.XamlReader.Load(pthString);
+                shapeInstance.StampContent = pth;
+            }
+            else {
+                shapeInstance.StampContent = nc;
+            }
+            
+            
+        }
+
+
+        private void Shape_Unloaded(object sender, RoutedEventArgs e)
         {
             
         }
@@ -55,39 +98,35 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
         private void butClose_Click(object sender, RoutedEventArgs e)
         {
-            PerformAction?.Invoke(this, new RectangleventArgs() { ActionType = eActionTypes.CloseStamp } );
+            PerformAction?.Invoke(this, new ShapeEventArgs() { ActionType = eActionTypes.CloseStamp } );
         }
 
         private void butStamp_Click(object sender, RoutedEventArgs e)
         {
-            PerformAction?.Invoke(this, new RectangleventArgs() { ActionType = eActionTypes.CreateFromStamp });
+            PerformAction?.Invoke(this, new ShapeEventArgs() { ActionType = eActionTypes.CreateFromStamp });
         }
 
      
 
         public void UpdateRotation(double angle)
         {
-            ((CompositeTransform)el.RenderTransform).Rotation = angle;
+            ((CompositeTransform)elContent.RenderTransform).Rotation = angle;
             //((CompositeTransform)grdGridRotationMarkers.RenderTransform).Rotation = angle;
             grdGridRotationMarkers.RotationAngle = angle;
-
-
-        //    ((CompositeTransform)x1.RenderTransform).Rotation = Math.Cos(angle);
-        //    ((CompositeTransform)x2.RenderTransform).Rotation = Math.Cos(angle);
-        //    ((CompositeTransform)y1.RenderTransform).Rotation = Math.Cos(angle);
-        //    ((CompositeTransform)y2.RenderTransform).Rotation = Math.Cos(angle);
+            
         }
 
         private void cpMain_ColorChanged(object sender, EventArgs e)
         {
             var cpea = e as ColorPickerEventArgs;
-            if(cpea.ColorType == "Stroke") el.Stroke = (Brush)sender;
+            var el = (Windows.UI.Xaml.Shapes.Shape)elContent.Content;
+            if (cpea.ColorType == "Stroke") el.Stroke = (Brush)sender;
             else if (cpea.ColorType == "Fill") el.Fill = (Brush)sender;
         }
 
         private void butGridMarker_Click(object sender, RoutedEventArgs e)
         {
-            PerformAction?.Invoke(this, new RectangleventArgs() { ActionType = eActionTypes.ToggleGridMarkers });
+            PerformAction?.Invoke(this, new ShapeEventArgs() { ActionType = eActionTypes.ToggleGridMarkers });
 
             if (grdGridMarkers.Visibility == Visibility.Visible) grdGridMarkers.Visibility = Visibility.Collapsed;
             else  grdGridMarkers.Visibility = Visibility.Visible;
@@ -98,7 +137,8 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
         public string GenerateXAML(string uid, double scaleX, double scaleY, double left, double top)
         {
-            var rotationAngle = ((CompositeTransform)el.RenderTransform).Rotation;
+            var el = (Windows.UI.Xaml.Shapes.Shape)elContent.Content;
+            var rotationAngle = ((CompositeTransform)elContent.RenderTransform).Rotation;
             var leftToUse = left;
             var topToUse = top;
             var rotationXaml = $"<Rectangle.RenderTransform><CompositeTransform Rotation=\"{ rotationAngle }\" /></Rectangle.RenderTransform>";
@@ -134,18 +174,19 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         public void GenerateFromXAML(UIElement template)
         {
             if (template is Ellipse) {
-                var elTemplate = template as Ellipse;
-                try { ((CompositeTransform)el.RenderTransform).Rotation = ((CompositeTransform)elTemplate.RenderTransform).Rotation; } catch { }
+                var elTemplate = template as Windows.UI.Xaml.Shapes.Shape;
+                var el = (Windows.UI.Xaml.Shapes.Shape)elContent.Content;
+                try { ((CompositeTransform)elContent.RenderTransform).Rotation = ((CompositeTransform)elTemplate.RenderTransform).Rotation; } catch { }
                 el.Stroke = elTemplate.Stroke;
                 el.StrokeThickness = elTemplate.StrokeThickness;
                 el.Fill = elTemplate.Fill;
             }
         }
 
-        public void UpdateStrokeThickness(double thickness) { el.StrokeThickness = thickness; }
+        public void UpdateStrokeThickness(double thickness) { ((Windows.UI.Xaml.Shapes.Shape)elContent.Content).StrokeThickness = thickness; }
     }
 
-    public class RectangleventArgs : EventArgs, IStampEventArgs
+    public class ShapeEventArgs : EventArgs, IStampEventArgs
     {
         public eActionTypes ActionType { get; set; }
         

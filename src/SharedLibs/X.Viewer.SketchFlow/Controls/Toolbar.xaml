@@ -63,7 +63,7 @@
             <Button x:Name="butCircle" Background="LightGray" Click="butCircle_Click">
                 <xuip:Path PathType="Circle" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
-            <Button x:Name="butStar" Background="LightGray">
+            <Button x:Name="butStar" Background="LightGray" Click="butStar_Click">
                 <xuip:Path PathType="Star" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
             <Button x:Name="butRectangle" Background="LightGray" Click="butRectangle_Click">
