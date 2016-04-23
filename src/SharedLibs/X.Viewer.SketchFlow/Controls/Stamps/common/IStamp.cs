@@ -15,5 +15,6 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         void PopulateFromUIElement(UIElement element);
         void UpdateRotation(double angle);
         void UpdateStrokeThickness(double thickness);
+        string GetData();
     }
 }

@@ -30,10 +30,8 @@ namespace X.Viewer.SketchFlow.Converters
                 if (layer.HasChildContainerCanvas) nsXaml = $"<Canvas>{xaml}</Canvas>";
                 else nsXaml = xaml;
 
-                var nsTemplate = $"<Grid xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\" HorizontalAlignment=\"Stretch\" xmlns:xuip=\"using:X.UI.Path\" xmlns:lc=\"using:X.Viewer.SketchFlow.Controls\" xmlns:lcs=\"using:X.Viewer.SketchFlow.Controls.Stamps\" VerticalAlignment=\"Stretch\" >{nsXaml}</Grid>"; ;
-
-
-
+                var nsTemplate = $"<Grid xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\" HorizontalAlignment=\"Stretch\" xmlns:xuip=\"using:X.UI.Path\" xmlns:lc=\"using:X.Viewer.SketchFlow.Controls\" xmlns:lcs=\"using:X.Viewer.SketchFlow.Controls.Stamps\" VerticalAlignment=\"Stretch\" >{nsXaml}</Grid>";
+                
                 if (xaml.Length > 0) { 
                     var xamlFe = (FrameworkElement)XamlReader.Load(UnescapeString(nsTemplate));
                     grd.Children.Add(xamlFe);

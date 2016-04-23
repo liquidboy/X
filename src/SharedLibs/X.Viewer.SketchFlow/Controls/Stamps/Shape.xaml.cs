@@ -55,24 +55,6 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         public static readonly DependencyProperty StampContentProperty = DependencyProperty.Register("StampContent", typeof(object), typeof(Shape), new PropertyMetadata(null));
         public static readonly DependencyProperty StampTypeProperty = DependencyProperty.Register("StampType", typeof(Type), typeof(Shape), new PropertyMetadata(null));
         
-        private static void OnStampTypePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var shapeInstance = (Shape)d;
-            var nc = (FrameworkElement)Activator.CreateInstance((Type)e.NewValue, new object[] { });
-            if (nc is Windows.UI.Xaml.Shapes.Path)
-            {
-                
-                string pthString = $"<Path xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" Data=\"{ shapeInstance.StampData }\" HorizontalAlignment=\"Stretch\" VerticalAlignment=\"Stretch\" Fill=\"Black\" Stretch=\"Uniform\" />";
-                var pth = (Windows.UI.Xaml.Shapes.Path)Windows.UI.Xaml.Markup.XamlReader.Load(pthString);
-                shapeInstance.StampContent = pth;
-            }
-            else {
-                shapeInstance.StampContent = nc;
-            }
-            
-            
-        }
-
 
         private void Shape_Unloaded(object sender, RoutedEventArgs e)
         {
@@ -141,15 +123,16 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
             var rotationAngle = ((CompositeTransform)elContent.RenderTransform).Rotation;
             var leftToUse = left;
             var topToUse = top;
-            var rotationXaml = $"<Rectangle.RenderTransform><CompositeTransform Rotation=\"{ rotationAngle }\" /></Rectangle.RenderTransform>";
+            var rotationXaml = $"<Path.RenderTransform><CompositeTransform Rotation=\"{ rotationAngle }\" /></Path.RenderTransform>";
             if (rotationAngle == 0) rotationXaml = "";
 
             var fillColor = (el.Fill!=null)? ((SolidColorBrush)el.Fill).Color.ToString(): "";
             var fillXaml = fillColor.Length >0 ? $"Fill=\"{fillColor}\"": "";
 
             var newStroke = el.StrokeThickness * (1 / scaleX);
-            
-            return $"<Rectangle x:Name=\"{uid}\" HorizontalAlignment=\"Left\" VerticalAlignment=\"Top\" Height=\"{ (this.Height * (1 / scaleY)) }\" Width=\"{ (this.Width * (1 / scaleX)) }\"  StrokeThickness=\"{ newStroke }\" Stroke=\"{ ((SolidColorBrush)el.Stroke).Color.ToString() }\" Canvas.Left=\"{ leftToUse }\" Canvas.Top=\"{ topToUse }\" RenderTransformOrigin=\"0.5,0.5\" { fillXaml } >{ rotationXaml }</Rectangle>";
+            var dataXaml = $" Data=\"{ StampData }\""; 
+            //string pthString = $"<Path Data=\"{ data }\" HorizontalAlignment=\"Stretch\" VerticalAlignment=\"Stretch\" Fill=\"DarkOrange\" Stretch=\"Uniform\" />";
+            return $"<Path x:Name=\"{uid}\" HorizontalAlignment=\"Stretch\" VerticalAlignment=\"Stretch\" Height=\"{ (this.Height * (1 / scaleY)) }\" Width=\"{ (this.Width * (1 / scaleX)) }\"  StrokeThickness=\"{ newStroke }\" Stretch=\"Uniform\" Stroke=\"{ ((SolidColorBrush)el.Stroke).Color.ToString() }\" Canvas.Left=\"{ leftToUse }\" Canvas.Top=\"{ topToUse }\" RenderTransformOrigin=\"0.5,0.5\" { fillXaml } { dataXaml }>{ rotationXaml }</Path>";
         }
 
         public void PopulateFromUIElement(UIElement element)
@@ -180,10 +163,24 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
                 el.Stroke = elTemplate.Stroke;
                 el.StrokeThickness = elTemplate.StrokeThickness;
                 el.Fill = elTemplate.Fill;
+            } else if (template is Windows.UI.Xaml.Shapes.Path) {
+                var elTemplate = template as Windows.UI.Xaml.Shapes.Path;
+
+                string pthString = $"<Path xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" Data=\"{ StampData }\" HorizontalAlignment=\"Stretch\" VerticalAlignment=\"Stretch\" Fill=\"DarkOrange\" Stroke=\"DarkOrange\" Stretch=\"Uniform\" />";
+                var el = (Windows.UI.Xaml.Shapes.Path)Windows.UI.Xaml.Markup.XamlReader.Load(pthString);
+                elContent.Content = el;
+                
+                var eeeee = (((Windows.UI.Xaml.Shapes.Path)template).Data).ToString(); ;
+                try { ((CompositeTransform)elContent.RenderTransform).Rotation = ((CompositeTransform)elTemplate.RenderTransform).Rotation; } catch { }
+                el.Stroke = elTemplate.Stroke;
+                el.StrokeThickness = elTemplate.StrokeThickness;
+                el.Fill = elTemplate.Fill;
             }
         }
 
         public void UpdateStrokeThickness(double thickness) { ((Windows.UI.Xaml.Shapes.Shape)elContent.Content).StrokeThickness = thickness; }
+
+        public string GetData() { return StampData; }
     }
 
     public class ShapeEventArgs : EventArgs, IStampEventArgs

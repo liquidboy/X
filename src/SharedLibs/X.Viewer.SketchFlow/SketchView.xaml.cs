@@ -208,7 +208,7 @@ namespace X.Viewer.SketchFlow
                         var ptCenter = gt.TransformPoint(new Windows.Foundation.Point(0,0));
                         var uid = RandomString(15);
                         var str = stamp.GenerateXAML(uid, _scaleX, _scaleY, ptCenter.X, ptCenter.Y);
-                        npl.XamlFragments.Add(new XamlFragment() { Uid = uid, Xaml = str, Type = stamp.GetType() });
+                        npl.XamlFragments.Add(new XamlFragment() { Uid = uid, Xaml = str, Type = stamp.GetType(), Data = stamp.GetData() });
 
                         plvm.Layers.Add(npl);
                         plvm.ExternalPC("Layers");
@@ -305,7 +305,7 @@ namespace X.Viewer.SketchFlow
                         //cvMainAdorner.Children.Add(el);
 
                         //only if the stamp is being created in the viewable area
-                        if(top > 20) CreateStamp( frag.Type, left, top, width, height, found);
+                        if(top > 20) CreateStamp( frag.Type, left, top, width, height, template: found, data: frag.Data);
                         
                     };
                     

@@ -78,6 +78,7 @@ namespace X.Viewer.SketchFlow
         public string Uid { get; set; }
 
         public Type Type { get; set; }
+        public string Data { get; set; }
     }
 
 }

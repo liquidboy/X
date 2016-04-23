@@ -143,6 +143,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         }
 
         public void UpdateStrokeThickness(double thickness) { el.StrokeThickness = thickness; }
+        public string GetData() { return string.Empty; }
     }
 
     public class RectangleventArgs : EventArgs, IStampEventArgs
