@@ -53,7 +53,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
         public static readonly DependencyProperty StampDataProperty = DependencyProperty.Register("StampData", typeof(string), typeof(Shape), new PropertyMetadata(null));
         public static readonly DependencyProperty StampContentProperty = DependencyProperty.Register("StampContent", typeof(object), typeof(Shape), new PropertyMetadata(null));
-        public static readonly DependencyProperty StampTypeProperty = DependencyProperty.Register("StampType", typeof(Type), typeof(Shape), new PropertyMetadata(null, OnStampTypePropertyChanged));
+        public static readonly DependencyProperty StampTypeProperty = DependencyProperty.Register("StampType", typeof(Type), typeof(Shape), new PropertyMetadata(null));
         
         private static void OnStampTypePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

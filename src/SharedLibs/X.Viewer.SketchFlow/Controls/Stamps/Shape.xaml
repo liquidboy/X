@@ -5,6 +5,7 @@
     xmlns:local="using:X.Viewer.SketchFlow.Controls.Stamps"
     xmlns:localPickers="using:X.Viewer.SketchFlow.Controls.Pickers"
     xmlns:sc="using:CoreLib.Converters"
+    xmlns:lc="using:X.Viewer.SketchFlow.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:xuip="using:X.UI.Path"
@@ -14,6 +15,7 @@
     d:DesignWidth="400">
     <UserControl.Resources>
         <sc:BooleanToVisibilityConverter x:Name="TrueToVisibleConverter" ></sc:BooleanToVisibilityConverter>
+        <lc:StampTypeToContentConverter x:Key="StampTypeToContentConverter"></lc:StampTypeToContentConverter>
     </UserControl.Resources>
     <Grid>
         
@@ -25,7 +27,7 @@
 
 
         <!-- Shape -->
-        <ContentControl x:Name="elContent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" >
+        <ContentControl x:Name="elContent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Stretch" Background="Yellow" VerticalContentAlignment="Stretch" Content="{Binding ElementName=root, Path=StampData, Converter={StaticResource StampTypeToContentConverter}}">
             <ContentControl.RenderTransform>
                 <CompositeTransform Rotation="0"></CompositeTransform>
             </ContentControl.RenderTransform>

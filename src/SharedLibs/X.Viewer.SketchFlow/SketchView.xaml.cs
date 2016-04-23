@@ -135,11 +135,15 @@ namespace X.Viewer.SketchFlow
 
 
         private void CreateStamp(Type type, double x, double y, double w, double h, UIElement template = null, string data = "") {
-            
-            var nc = (FrameworkElement)Activator.CreateInstance(type, new object[] { });  //Controls.Stamps.Circle();
-            //var nc = new Controls.Stamps.Shape();
-            //nc.StampData = data;
-            //nc.StampType = type;
+
+            FrameworkElement nc = null;
+            if (string.IsNullOrEmpty(data))  
+                nc = (FrameworkElement)Activator.CreateInstance(type, new object[] { });  //Controls.Stamps.Circle();
+            else { 
+                nc = new Controls.Stamps.Shape();
+                ((Controls.Stamps.Shape)nc).StampData = data;
+                ((Controls.Stamps.Shape)nc).StampType = type;
+            }
 
             nc.Width = w; nc.Height = h;
             nc.SetValue(Canvas.LeftProperty, Math.Abs(x));

@@ -136,6 +136,7 @@
     <Compile Include="Converters\UIElementAsClipConverter.cs" />
     <Compile Include="Converters\IsSelectedToColorConverter.cs" />
     <Compile Include="Converters\LayerEnabledToColorConverter.cs" />
+    <Compile Include="Converters\StampTypeToContentConverter.cs" />
     <Compile Include="Converters\XamlFragmentsToContentConverter.cs" />
     <Compile Include="Controls\PageLayers.xaml.cs">
       <DependentUpon>PageLayers.xaml</DependentUpon>
