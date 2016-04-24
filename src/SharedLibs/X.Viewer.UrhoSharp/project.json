@@ -1,7 +1,8 @@
 ﻿{
   "dependencies": {
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
-    "MvvmLightLibs": "5.2.0"
+    "MvvmLightLibs": "5.2.0",
+    "UrhoSharp": "1.0.454-beta"
   },
   "frameworks": {
     "uap10.0": {}
