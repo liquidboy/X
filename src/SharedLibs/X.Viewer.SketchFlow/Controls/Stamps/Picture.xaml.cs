@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 using X.Viewer.SketchFlow.Controls.Pickers;
@@ -31,12 +32,22 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
             cpMain.ColorTypes = new List<string>() { "Stroke", "Fill" };
 
             tlLeftCenterToolbar.AddTab("Colors", isSelected: true);
+            tlLeftCenterToolbar.AddTab("Image");
             tlLeftCenterToolbar.OnTabChanged += TlLeftCenterToolbar_OnTabChanged;
         }
 
         private void TlLeftCenterToolbar_OnTabChanged(object sender, EventArgs e)
         {
+            var tab = (X.UI.LiteTab.Tab)sender;
 
+            cpMain.Visibility = Visibility.Collapsed;
+            ipMain.Visibility = Visibility.Collapsed;
+
+            switch (tab.Name)
+            {
+                case "Colors": cpMain.Visibility = Visibility.Visible; break;
+                case "Image": ipMain.Visibility = Visibility.Visible; break;
+            }
         }
 
         private void Picture_Unloaded(object sender, RoutedEventArgs e)
@@ -87,6 +98,12 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
             //else if (cpea.ColorType == "Fill") el.Fill = (Brush)sender;
         }
 
+        private void ipMain_TextChanged(object sender, EventArgs e)
+        {
+            var ipea = e as ImagePickerEventArgs;
+            //el.Source = new BitmapImage(new Uri(ipea.Text));
+        }
+
         private void butGridMarker_Click(object sender, RoutedEventArgs e)
         {
             PerformAction?.Invoke(this, new PictureEventArgs() { ActionType = eActionTypes.ToggleGridMarkers });
@@ -105,8 +122,6 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
             var topToUse = top;
             var rotationXaml = $"<Image.RenderTransform><CompositeTransform Rotation=\"{ rotationAngle }\" /></Image.RenderTransform>";
             if (rotationAngle == 0) rotationXaml = "";
-
-            
             
             return $"<Image x:Name=\"{uid}\" HorizontalAlignment=\"Left\" VerticalAlignment=\"Top\" Height=\"{ (this.Height * (1 / scaleY)) }\" Width=\"{ (this.Width * (1 / scaleX)) }\"  Canvas.Left=\"{ leftToUse }\" Canvas.Top=\"{ topToUse }\" RenderTransformOrigin=\"0.5,0.5\" Source=\"{ ((Windows.UI.Xaml.Media.Imaging.BitmapImage)el.Source).UriSource }\" Stretch=\"{ el.Stretch }\" >{ rotationXaml }</Image>";
         }
@@ -145,6 +160,8 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
         public void UpdateStrokeThickness(double thickness) { }
         public string GetData() { return string.Empty; }
+
+
     }
 
     public class PictureEventArgs : EventArgs, IStampEventArgs
