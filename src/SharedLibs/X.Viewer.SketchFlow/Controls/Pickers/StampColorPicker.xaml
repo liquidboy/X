@@ -13,9 +13,9 @@
     d:DesignWidth="400">
 
     <Grid>
-        <xuicp:ColorSwatchSquare x:Name="cs" Width="{Binding ElementName=root, Path=Width}" Height="{Binding ElementName=root, Path=Height}" HorizontalAlignment="Left" VerticalAlignment="Top" Swatch="Circle" ColorChanged="cs_ColorChanged"></xuicp:ColorSwatchSquare>
-        
-        <xuiri:Input x:Name="rcb" Width="200" Type="combobox" Label="Property" LabelFontSize="9" LabelTranslateY="-15"  FocusForegroundColor="White" FocusColor="DarkOrange" FocusHoverColor="DarkOrange" Margin="-1,-1,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" PlaceholderText="choose a property" ItemsSource="{Binding ElementName=root, Path=ColorTypes}" GlowAmount="0">
+        <xuicp:ColorSwatchSquare x:Name="cs" Width="{Binding ElementName=root, Path=Width}" Height="{Binding ElementName=root, Path=Height}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,30,0,0" Swatch="Circle" ColorChanged="cs_ColorChanged"></xuicp:ColorSwatchSquare>
+
+        <xuiri:Input x:Name="rcb" Type="combobox" Label="Property" LabelFontSize="9" Width="300"  Height="30" LabelTranslateY="-15"  FocusForegroundColor="White" FocusColor="DarkGray" FocusHoverColor="DarkGray" BorderBrush="DarkGray" FontSize="12" Margin="-1,-1,0,0" Foreground="White"  HorizontalAlignment="Left" VerticalAlignment="Top" PlaceholderText="choose a property" ItemsSource="{Binding ElementName=root, Path=ColorTypes}" GlowAmount="0">
             <xuiri:Input.ItemTemplate>
                 <DataTemplate>
                     <xuiri:InputComboBoxItem Foreground="White" Content="{Binding }" ></xuiri:InputComboBoxItem>

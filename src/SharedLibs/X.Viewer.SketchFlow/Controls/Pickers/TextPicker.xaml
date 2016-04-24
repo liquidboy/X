@@ -11,13 +11,13 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
     <Grid>
-        <xuiri:Input x:Name="rcb" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="30" Type="combobox" Label="Property" LabelFontSize="9" LabelTranslateY="-15"  FocusForegroundColor="White" FocusColor="DarkOrange" FocusHoverColor="DarkOrange" Margin="-1,-1,0,0" Foreground="White" PlaceholderText="choose a font family" ItemsSource="{Binding ElementName=root, Path=FontFamilies}" ValueChanged="rcb_ValueChanged" GlowAmount="0">
+        <xuiri:Input x:Name="rcb" HorizontalAlignment="Stretch" VerticalAlignment="Top" FontSize="12"  Width="300" Height="30" Type="combobox" Label="Property" LabelFontSize="9" LabelTranslateY="-15"  FocusForegroundColor="White" FocusColor="DarkGray" FocusHoverColor="DarkGray" BorderBrush="DarkGray" Margin="-1,-1,0,0" Foreground="White" PlaceholderText="choose a font family" ItemsSource="{Binding ElementName=root, Path=FontFamilies}" ValueChanged="rcb_ValueChanged" GlowAmount="0">
             <xuiri:Input.ItemTemplate>
                 <DataTemplate>
                     <xuiri:InputComboBoxItem Foreground="White" Content="{Binding }" ></xuiri:InputComboBoxItem>
                 </DataTemplate>
             </xuiri:Input.ItemTemplate>
         </xuiri:Input>
-        <TextBox x:Name="tbMain" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,30,0,0" TextWrapping="Wrap" Text="[text]" BorderBrush="DarkOrange" Foreground="Black" SelectionHighlightColor="DarkOrange" BorderThickness="1" Padding="5" TextChanged="tbMain_TextChanged"></TextBox>
+        <TextBox x:Name="tbMain" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,30,0,0" TextWrapping="Wrap" Text="[text]" BorderBrush="DarkGray" Foreground="Black" SelectionHighlightColor="DarkGray" BorderThickness="1" Padding="5" TextChanged="tbMain_TextChanged"></TextBox>
     </Grid>
 </UserControl>

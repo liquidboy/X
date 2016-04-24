@@ -62,8 +62,8 @@
         </StackPanel>
         
         <!-- Color -->
-        
-        <StackPanel Orientation="Vertical" Margin="-400,-150,0,-350" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="leftCenterToolBar" Visibility="Collapsed" Background="WhiteSmoke" Padding="10">
+
+        <StackPanel Orientation="Vertical" Margin="-400,-150,0,-350" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="leftCenterToolBar" Visibility="Collapsed" Background="#FFE6E6E6" Padding="10">
             <xuilt:TabList x:Name="tlLeftCenterToolbar" TabItemBorderColor="DarkGray" HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Horizontal" Foreground="Black" Margin="0,0,0,5" >
 
             </xuilt:TabList>
