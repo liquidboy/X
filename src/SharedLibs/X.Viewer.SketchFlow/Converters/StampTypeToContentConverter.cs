@@ -23,7 +23,7 @@ namespace X.Viewer.SketchFlow.Converters
             //var nc = (FrameworkElement)Activator.CreateInstance((Type)value, new object[] { });
             //var nc = new Windows.UI.Xaml.Shapes.Path();
             
-            string pthString = $"<Path xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" Data=\"{ data }\" HorizontalAlignment=\"Stretch\" VerticalAlignment=\"Stretch\" Fill=\"DarkOrange\" Stroke=\"DarkOrange\" Stretch=\"Uniform\" />";
+            string pthString = $"<Path xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" Data=\"{ data }\" HorizontalAlignment=\"Stretch\" VerticalAlignment=\"Stretch\" Fill=\"Transparent\" Stroke=\"DarkOrange\" Stretch=\"Uniform\" />";
             var pth = (Windows.UI.Xaml.Shapes.Path)Windows.UI.Xaml.Markup.XamlReader.Load(pthString);
             return pth;
             
