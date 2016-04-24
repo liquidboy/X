@@ -10,7 +10,7 @@
     x:Name="root"
     d:DesignHeight="300"
     d:DesignWidth="400">
-    <Grid Background="Black">
+    <Grid>
         <xuiri:Input x:Name="rcb" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="30" Type="combobox" Label="Property" LabelFontSize="9" LabelTranslateY="-15"  FocusForegroundColor="White" FocusColor="DarkOrange" FocusHoverColor="DarkOrange" Margin="-1,-1,0,0" Foreground="White" PlaceholderText="choose a font family" ItemsSource="{Binding ElementName=root, Path=FontFamilies}" ValueChanged="rcb_ValueChanged" GlowAmount="0">
             <xuiri:Input.ItemTemplate>
                 <DataTemplate>

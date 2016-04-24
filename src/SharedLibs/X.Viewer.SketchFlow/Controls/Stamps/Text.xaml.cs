@@ -27,9 +27,28 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         {
             this.InitializeComponent();
 
+            tlLeftCenterToolbar.AddTab("Colors", isSelected: true);
+            tlLeftCenterToolbar.AddTab("Text");
+
+            tlLeftCenterToolbar.OnTabChanged += TlLeftCenterToolbar_OnTabChanged;
+
+
             this.Unloaded += Text_Unloaded;
             cpMain.ColorTypes = new List<string>() { "Foreground", "SelectionHighlightColor" };
             tpMain.FontFamilies = new List<string>() { "Neue Haas Grotesk Text Pro", "FangSong", "Kokila", "Cambria", "Courier New", "Gadugi", "Georgia", "Leelawadee UI", "Lucida Console", "Segoe MDL2 Assets", "Segoe UI", "Segoe UI Emoji", "Verdana" };
+        }
+
+        private void TlLeftCenterToolbar_OnTabChanged(object sender, EventArgs e)
+        {
+            var tab = (X.UI.LiteTab.Tab)sender;
+
+            textPicker.Visibility = Visibility.Collapsed;
+            colorPicker.Visibility = Visibility.Collapsed;
+
+            switch (tab.Name) {
+                case "Colors": colorPicker.Visibility = Visibility.Visible; break;
+                case "Text": textPicker.Visibility = Visibility.Visible; break;
+            }
         }
 
         private void Text_Unloaded(object sender, RoutedEventArgs e)
