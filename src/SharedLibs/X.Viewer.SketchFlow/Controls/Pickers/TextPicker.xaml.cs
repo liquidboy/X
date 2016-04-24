@@ -19,6 +19,7 @@ namespace X.Viewer.SketchFlow.Controls.Pickers
     {
         public event EventHandler TextChanged;
 
+        public List<String> FontFamilies { get; set; } = new List<string>();
 
         public TextPicker()
         {
@@ -27,12 +28,18 @@ namespace X.Viewer.SketchFlow.Controls.Pickers
 
         private void tbMain_TextChanged(object sender, TextChangedEventArgs e)
         {
-            TextChanged?.Invoke(sender, new TextPickerEventArgs() { Text = (string)tbMain.Text });
+            TextChanged?.Invoke(sender, new TextPickerEventArgs() { Text = (string)tbMain.Text, FontFamily = (string)rcb.Value2 });
+        }
+
+        private void rcb_ValueChanged(object sender, RoutedEventArgs e)
+        {
+            TextChanged?.Invoke(sender, new TextPickerEventArgs() { Text = (string)tbMain.Text, FontFamily = (string)rcb.Value2 });
         }
     }
 
     public class TextPickerEventArgs : EventArgs
     {
         public string Text;
+        public string FontFamily;
     }
 }

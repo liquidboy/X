@@ -29,6 +29,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
             this.Unloaded += Text_Unloaded;
             cpMain.ColorTypes = new List<string>() { "Foreground", "SelectionHighlightColor" };
+            tpMain.FontFamilies = new List<string>() { "Neue Haas Grotesk Text Pro", "FangSong", "Kokila", "Cambria", "Courier New", "Gadugi", "Georgia", "Leelawadee UI", "Lucida Console", "Segoe MDL2 Assets", "Segoe UI", "Segoe UI Emoji", "Verdana" };
         }
 
         private void Text_Unloaded(object sender, RoutedEventArgs e)
@@ -84,6 +85,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         {
             var tea = e as TextPickerEventArgs;
             el.Text = tea.Text;
+            if (!string.IsNullOrEmpty(tea.FontFamily)) el.FontFamily = new Windows.UI.Xaml.Media.FontFamily(tea.FontFamily);
         }
 
         private void butGridMarker_Click(object sender, RoutedEventArgs e)
