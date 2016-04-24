@@ -37,7 +37,7 @@ namespace X.Viewer.UrhoSharp
 
         public void Load()
         {
-            _renderElement = new Scene();
+            _renderElement = new SceneVisual();
         }
 
         public void Unload()

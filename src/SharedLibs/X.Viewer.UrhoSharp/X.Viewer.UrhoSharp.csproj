@@ -107,9 +107,12 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scene.xaml.cs">
-      <DependentUpon>Scene.xaml</DependentUpon>
+    <Compile Include="RandomHelper.cs" />
+    <Compile Include="UrhoScene.cs" />
+    <Compile Include="SceneVisual.xaml.cs">
+      <DependentUpon>SceneVisual.xaml</DependentUpon>
     </Compile>
     <Compile Include="UrhoRenderer.cs" />
     <EmbeddedResource Include="Properties\X.Viewer.UrhoSharp.rd.xml" />
@@ -126,7 +129,7 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Scene.xaml">
+    <Page Include="SceneVisual.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
