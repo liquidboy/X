@@ -8,6 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:xuip="using:X.UI.Path"
+    xmlns:xuilt="using:X.UI.LiteTab"
     mc:Ignorable="d"
     d:DesignHeight="300"
     x:Name="root"
@@ -59,10 +60,15 @@
                 <xuip:Path PathType="Trash1" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
         </StackPanel>
-        <Border x:Name="colorPicker" 
-                BorderBrush="DarkOrange" BorderThickness="1" Margin="-350,-150,0,-150" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed" >
+
+
+
+        <StackPanel Orientation="Vertical" Margin="-380,-150,0,-350" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="leftCenterToolBar" Visibility="Collapsed" Background="#FFE6E6E6" Padding="10">
+            <xuilt:TabList x:Name="tlLeftCenterToolbar" TabItemBorderColor="DarkGray" HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Horizontal" Foreground="Black" Margin="0,0,0,5" >
+
+            </xuilt:TabList>
             <localPickers:StampColorPicker x:Name="cpMain" Width="300" Height="300" ColorChanged="cpMain_ColorChanged" ></localPickers:StampColorPicker>
-        </Border>
+        </StackPanel>
 
 
       
