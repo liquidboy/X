@@ -30,8 +30,15 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
             this.Unloaded += Shape_Unloaded;
             cpMain.ColorTypes = new List<string>() { "Stroke", "Fill" };
+
+            tlLeftCenterToolbar.AddTab("Colors", isSelected: true);
+            tlLeftCenterToolbar.OnTabChanged += TlLeftCenterToolbar_OnTabChanged;
         }
 
+        private void TlLeftCenterToolbar_OnTabChanged(object sender, EventArgs e)
+        {
+
+        }
 
         public object StampContent
         {
@@ -71,8 +78,8 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
                 else spToolbar.Visibility = Visibility.Visible;
             }
             else if (ea.ActionType == eActionTypes.CenterLeft) {
-                if (colorPicker.Visibility == Visibility.Visible) colorPicker.Visibility = Visibility.Collapsed;
-                else colorPicker.Visibility = Visibility.Visible;
+                if (leftCenterToolBar.Visibility == Visibility.Visible) leftCenterToolBar.Visibility = Visibility.Collapsed;
+                else leftCenterToolBar.Visibility = Visibility.Visible;
             }
 
             PerformAction?.Invoke(this, e);
