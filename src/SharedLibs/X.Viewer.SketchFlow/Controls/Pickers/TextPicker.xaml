@@ -18,6 +18,6 @@
                 </DataTemplate>
             </xuiri:Input.ItemTemplate>
         </xuiri:Input>
-        <TextBox x:Name="tbMain" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,30,0,0" TextWrapping="Wrap" Text="[text]" TextChanged="tbMain_TextChanged"></TextBox>
+        <TextBox x:Name="tbMain" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,30,0,0" TextWrapping="Wrap" Text="[text]" BorderBrush="DarkOrange" Foreground="Black" SelectionHighlightColor="DarkOrange" BorderThickness="1" Padding="5" TextChanged="tbMain_TextChanged"></TextBox>
     </Grid>
 </UserControl>
