@@ -46,8 +46,8 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
                 else spToolbar.Visibility = Visibility.Visible;
             }
             else if (ea.ActionType == eActionTypes.CenterLeft) {
-                if (colorPicker.Visibility == Visibility.Visible) colorPicker.Visibility = Visibility.Collapsed;
-                else colorPicker.Visibility = Visibility.Visible;
+                if (leftCenterToolBar.Visibility == Visibility.Visible) leftCenterToolBar.Visibility = Visibility.Collapsed;
+                else leftCenterToolBar.Visibility = Visibility.Visible;
             }
 
             PerformAction?.Invoke(this, e);
@@ -78,6 +78,12 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
             var cpea = e as ColorPickerEventArgs;
             if(cpea.ColorType == "Foreground") el.Foreground = (Brush)sender;
             else if (cpea.ColorType == "SelectionHighlightColor") el.SelectionHighlightColor = (SolidColorBrush)sender;
+        }
+
+        private void tpMain_TextChanged(object sender, EventArgs e)
+        {
+            var tea = e as TextPickerEventArgs;
+            el.Text = tea.Text;
         }
 
         private void butGridMarker_Click(object sender, RoutedEventArgs e)
@@ -137,13 +143,16 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
             }
         }
 
-        public void UpdateStrokeThickness(double thickness) { el.FontSize = thickness; }
+        public void UpdateStrokeThickness(double thickness) { if (thickness >= 0) el.FontSize = thickness; }
         public string GetData() { return string.Empty; }
+
+
     }
 
     public class TextEventArgs : EventArgs, IStampEventArgs
     {
         public eActionTypes ActionType { get; set; }
-        
+        public string Text { get; set; }
+
     }
 }
