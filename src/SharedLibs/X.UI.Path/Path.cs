@@ -42,23 +42,24 @@ namespace X.UI.Path
             set { SetValue(RotationProperty, value); }
         }
 
+        public string Data
+        {
+            get { return (string)GetValue(DataProperty); }
+            set { SetValue(DataProperty, value); }
+        }
 
 
 
 
 
 
-        public static readonly DependencyProperty RotationProperty =
-            DependencyProperty.Register("Rotation", typeof(double), typeof(Path), new PropertyMetadata(0));
 
-        public static readonly DependencyProperty PathHeightProperty =
-            DependencyProperty.Register("PathHeight", typeof(double), typeof(Path), new PropertyMetadata(20));
-        
-        public static readonly DependencyProperty PathTypeProperty =
-            DependencyProperty.Register("PathType", typeof(PathType), typeof(Path), new PropertyMetadata(0, OnPathTypePropertyChanged));
-        
-        public static readonly DependencyProperty PathWidthProperty =
-            DependencyProperty.Register("PathWidth", typeof(double), typeof(Path), new PropertyMetadata(20));
+
+        public static readonly DependencyProperty DataProperty = DependencyProperty.Register("Data", typeof(string), typeof(Path), new PropertyMetadata(null));
+        public static readonly DependencyProperty RotationProperty = DependencyProperty.Register("Rotation", typeof(double), typeof(Path), new PropertyMetadata(0));
+        public static readonly DependencyProperty PathHeightProperty = DependencyProperty.Register("PathHeight", typeof(double), typeof(Path), new PropertyMetadata(20));
+        public static readonly DependencyProperty PathTypeProperty = DependencyProperty.Register("PathType", typeof(PathType), typeof(Path), new PropertyMetadata(0, OnPathTypePropertyChanged));
+        public static readonly DependencyProperty PathWidthProperty = DependencyProperty.Register("PathWidth", typeof(double), typeof(Path), new PropertyMetadata(20));
 
 
 
@@ -258,7 +259,7 @@ namespace X.UI.Path
             }
 
 
-
+            this.Data = dataPath;
 
 
             if (!string.IsNullOrEmpty(dataPath))

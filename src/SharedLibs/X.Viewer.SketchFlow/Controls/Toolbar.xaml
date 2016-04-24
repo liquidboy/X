@@ -63,19 +63,19 @@
             <Button x:Name="butCircle" Background="LightGray" Click="butCircle_Click">
                 <xuip:Path PathType="Circle" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
-            <Button x:Name="butStar" Background="LightGray" Click="butStar_Click">
+            <Button x:Name="butStar" Background="LightGray" Click="butGenericStamp_Click">
                 <xuip:Path PathType="Star" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
             <Button x:Name="butRectangle" Background="LightGray" Click="butRectangle_Click">
                 <xuip:Path PathType="Rectangle" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
-            <Button x:Name="butDiamond" Background="LightGray">
+            <Button x:Name="butDiamond" Background="LightGray" Click="butGenericStamp_Click">
                 <xuip:Path PathType="Diamond" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
-            <Button x:Name="butHeart" Background="LightGray">
+            <Button x:Name="butHeart" Background="LightGray" Click="butGenericStamp_Click">
                 <xuip:Path PathType="Heart" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
-            <Button x:Name="butCloud" Background="LightGray">
+            <Button x:Name="butCloud" Background="LightGray" Click="butGenericStamp_Click">
                 <xuip:Path PathType="Cloud" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
         </StackPanel>
