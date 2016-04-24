@@ -145,6 +145,12 @@ namespace X.Viewer.SketchFlow.Controls
             var pt = getPoint((UIElement)sender);
             PerformAction?.Invoke(null, new ToolbarEventArgs() { ActionType = "AddText", StartPoint = pt, StampType = typeof(Stamps.Text) });
         }
+
+        private void butImage_Click(object sender, RoutedEventArgs e)
+        {
+            var pt = getPoint((UIElement)sender);
+            PerformAction?.Invoke(null, new ToolbarEventArgs() { ActionType = "AddImage", StartPoint = pt, StampType = typeof(Stamps.Picture) });
+        }
     }
 
 

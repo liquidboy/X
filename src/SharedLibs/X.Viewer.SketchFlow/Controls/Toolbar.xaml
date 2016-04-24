@@ -29,7 +29,7 @@
             <Button x:Name="butShape"  Background="LightGray" Click="butShape_Click">
                 <xuip:Path PathType="Shape" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
-            <Button x:Name="butImage"  Background="LightGray">
+            <Button x:Name="butImage"  Background="LightGray" Click="butImage_Click">
                 <xuip:Path PathType="Image" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
             <Button x:Name="butPath"  Background="LightGray">

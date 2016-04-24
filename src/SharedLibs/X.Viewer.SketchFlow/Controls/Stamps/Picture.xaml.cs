@@ -19,20 +19,19 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 {
 
 
-    public sealed partial class Text : UserControl, IStamp
+    public sealed partial class Picture : UserControl, IStamp
     {
         public event EventHandler PerformAction;
 
-        public Text()
+        public Picture()
         {
             this.InitializeComponent();
 
-            this.Unloaded += Text_Unloaded;
-            cpMain.ColorTypes = new List<string>() { "Foreground", "SelectionHighlightColor" };
-            tpMain.FontFamilies = new List<string>() { "Neue Haas Grotesk Text Pro", "FangSong", "Kokila", "Cambria", "Courier New", "Gadugi", "Georgia", "Leelawadee UI", "Lucida Console", "Segoe MDL2 Assets", "Segoe UI", "Segoe UI Emoji", "Verdana" };
+            this.Unloaded += Picture_Unloaded;
+            cpMain.ColorTypes = new List<string>() { "Stroke", "Fill" };
         }
 
-        private void Text_Unloaded(object sender, RoutedEventArgs e)
+        private void Picture_Unloaded(object sender, RoutedEventArgs e)
         {
             
         }
@@ -47,8 +46,8 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
                 else spToolbar.Visibility = Visibility.Visible;
             }
             else if (ea.ActionType == eActionTypes.CenterLeft) {
-                if (leftCenterToolBar.Visibility == Visibility.Visible) leftCenterToolBar.Visibility = Visibility.Collapsed;
-                else leftCenterToolBar.Visibility = Visibility.Visible;
+                if (colorPicker.Visibility == Visibility.Visible) colorPicker.Visibility = Visibility.Collapsed;
+                else colorPicker.Visibility = Visibility.Visible;
             }
 
             PerformAction?.Invoke(this, e);
@@ -56,12 +55,12 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
         private void butClose_Click(object sender, RoutedEventArgs e)
         {
-            PerformAction?.Invoke(this, new TextEventArgs() { ActionType = eActionTypes.CloseStamp } );
+            PerformAction?.Invoke(this, new PictureEventArgs() { ActionType = eActionTypes.CloseStamp } );
         }
 
         private void butStamp_Click(object sender, RoutedEventArgs e)
         {
-            PerformAction?.Invoke(this, new TextEventArgs() { ActionType = eActionTypes.CreateFromStamp });
+            PerformAction?.Invoke(this, new PictureEventArgs() { ActionType = eActionTypes.CreateFromStamp });
         }
 
      
@@ -69,7 +68,6 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         public void UpdateRotation(double angle)
         {
             ((CompositeTransform)el.RenderTransform).Rotation = angle;
-            //((CompositeTransform)grdGridRotationMarkers.RenderTransform).Rotation = angle;
             grdGridRotationMarkers.RotationAngle = angle;
             
         }
@@ -77,20 +75,13 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         private void cpMain_ColorChanged(object sender, EventArgs e)
         {
             var cpea = e as ColorPickerEventArgs;
-            if(cpea.ColorType == "Foreground") el.Foreground = (Brush)sender;
-            else if (cpea.ColorType == "SelectionHighlightColor") el.SelectionHighlightColor = (SolidColorBrush)sender;
-        }
-
-        private void tpMain_TextChanged(object sender, EventArgs e)
-        {
-            var tea = e as TextPickerEventArgs;
-            el.Text = tea.Text;
-            if (!string.IsNullOrEmpty(tea.FontFamily)) el.FontFamily = new Windows.UI.Xaml.Media.FontFamily(tea.FontFamily);
+            //if(cpea.ColorType == "Stroke") el.Stroke = (Brush)sender;
+            //else if (cpea.ColorType == "Fill") el.Fill = (Brush)sender;
         }
 
         private void butGridMarker_Click(object sender, RoutedEventArgs e)
         {
-            PerformAction?.Invoke(this, new TextEventArgs() { ActionType = eActionTypes.ToggleGridMarkers });
+            PerformAction?.Invoke(this, new PictureEventArgs() { ActionType = eActionTypes.ToggleGridMarkers });
 
             if (grdGridMarkers.Visibility == Visibility.Visible) grdGridMarkers.Visibility = Visibility.Collapsed;
             else  grdGridMarkers.Visibility = Visibility.Visible;
@@ -104,15 +95,12 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
             var rotationAngle = ((CompositeTransform)el.RenderTransform).Rotation;
             var leftToUse = left;
             var topToUse = top;
-            var rotationXaml = $"<TextBlock.RenderTransform><CompositeTransform Rotation=\"{ rotationAngle }\" /></TextBlock.RenderTransform>";
+            var rotationXaml = $"<Image.RenderTransform><CompositeTransform Rotation=\"{ rotationAngle }\" /></Image.RenderTransform>";
             if (rotationAngle == 0) rotationXaml = "";
 
-            var fillColor = (el.SelectionHighlightColor!=null)? ((SolidColorBrush)el.SelectionHighlightColor).Color.ToString(): "";
-            var fillXaml = fillColor.Length >0 ? $"SelectionHighlightColor=\"{fillColor}\"": "";
-
-            var newStroke = el.FontSize * (1 / scaleX);
             
-            return $"<TextBlock x:Name=\"{uid}\" HorizontalAlignment=\"Left\" VerticalAlignment=\"Top\" Height=\"{ (this.Height * (1 / scaleY)) }\" Width=\"{ (this.Width * (1 / scaleX)) }\"  FontSize=\"{ newStroke }\" Foreground=\"{ ((SolidColorBrush)el.Foreground).Color.ToString() }\" FontFamily=\"{ el.FontFamily.Source }\" Canvas.Left=\"{ leftToUse }\" Canvas.Top=\"{ topToUse }\" RenderTransformOrigin=\"0.5,0.5\" { fillXaml } Text=\"{ el.Text }\" TextWrapping=\"WrapWholeWords\" >{ rotationXaml }</TextBlock>";
+            
+            return $"<Image x:Name=\"{uid}\" HorizontalAlignment=\"Left\" VerticalAlignment=\"Top\" Height=\"{ (this.Height * (1 / scaleY)) }\" Width=\"{ (this.Width * (1 / scaleX)) }\"  Canvas.Left=\"{ leftToUse }\" Canvas.Top=\"{ topToUse }\" RenderTransformOrigin=\"0.5,0.5\" Source=\"{ ((Windows.UI.Xaml.Media.Imaging.BitmapImage)el.Source).UriSource }\" Stretch=\"{ el.Stretch }\" >{ rotationXaml }</Image>";
         }
 
         public void PopulateFromUIElement(UIElement element)
@@ -136,28 +124,24 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
         public void GenerateFromXAML(UIElement template)
         {
-            if (template is TextBlock) {
-                var elTemplate = template as TextBlock;
+            if (template is Image) {
+                var elTemplate = template as Image;
                 try { ((CompositeTransform)el.RenderTransform).Rotation = ((CompositeTransform)elTemplate.RenderTransform).Rotation; } catch { }
-                el.Foreground = elTemplate.Foreground;
-                el.FontSize = elTemplate.FontSize;
-                el.FontFamily = elTemplate.FontFamily;
-                el.SelectionHighlightColor = elTemplate.SelectionHighlightColor;
-                el.TextWrapping = elTemplate.TextWrapping;
-                el.Text = elTemplate.Text;
+                el.Source = elTemplate.Source;
+                el.Stretch = elTemplate.Stretch;
+                //el.Stroke = elTemplate.Stroke;
+                //el.StrokeThickness = elTemplate.StrokeThickness;
+                //el.Fill = elTemplate.Fill;
             }
         }
 
-        public void UpdateStrokeThickness(double thickness) { if (thickness > 0) el.FontSize = thickness; }
+        public void UpdateStrokeThickness(double thickness) { }
         public string GetData() { return string.Empty; }
-
-
     }
 
-    public class TextEventArgs : EventArgs, IStampEventArgs
+    public class PictureEventArgs : EventArgs, IStampEventArgs
     {
         public eActionTypes ActionType { get; set; }
-        public string Text { get; set; }
-
+        
     }
 }

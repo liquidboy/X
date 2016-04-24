@@ -116,6 +116,9 @@
     <Compile Include="Controls\Pickers\TextPicker.xaml.cs">
       <DependentUpon>TextPicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Stamps\Picture.xaml.cs">
+      <DependentUpon>Picture.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Stamps\Text.xaml.cs">
       <DependentUpon>Text.xaml</DependentUpon>
     </Compile>
@@ -200,6 +203,10 @@
     <Page Include="Controls\Pickers\TextPicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stamps\Picture.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Stamps\Text.xaml">
       <Generator>MSBuild:Compile</Generator>
