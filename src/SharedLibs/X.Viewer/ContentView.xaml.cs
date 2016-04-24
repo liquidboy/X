@@ -122,6 +122,15 @@ namespace X.Viewer
 
                     cv.Renderer.UpdateSource((string)e.NewValue);
                 }
+                else if (uriNew.Contains(".urho"))
+                {
+                    cv.Renderer = new UrhoSharp.UrhoRenderer();
+                    cv.Renderer.SendMessage += (s, ea) => { cv._SendMessageSource.Raise(s, ea); };
+                    cv.Renderer.Load();
+                    cv.layoutRoot.Children.Add(cv.Renderer.RenderElement);
+
+                    cv.Renderer.UpdateSource((string)e.NewValue);
+                }
                 else
                 {
                     cv.Renderer = new WebViewRenderer();

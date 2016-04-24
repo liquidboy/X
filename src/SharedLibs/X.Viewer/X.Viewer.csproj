@@ -156,6 +156,10 @@
       <Project>{0ee8b5f2-bafc-4ba7-a6cb-80b35d89c7cc}</Project>
       <Name>X.Viewer.Tiles</Name>
     </ProjectReference>
+    <ProjectReference Include="..\X.Viewer.UrhoSharp\X.Viewer.UrhoSharp.csproj">
+      <Project>{4ee65a2f-ae4a-4e4b-a45b-2526f9d39b74}</Project>
+      <Name>X.Viewer.UrhoSharp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\X.Viewer.WebView\X.Viewer.WebView.csproj">
       <Project>{eeb55f2d-9afe-48f0-8d44-2ed3ed12e36d}</Project>
       <Name>X.Viewer.WebView</Name>
