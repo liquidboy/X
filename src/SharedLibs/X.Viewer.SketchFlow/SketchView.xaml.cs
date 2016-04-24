@@ -127,6 +127,7 @@ namespace X.Viewer.SketchFlow
             {
                 var ea = e as Controls.ToolbarEventArgs;
                 if (ea.ActionType == "AddStamp") CreateStamp(ea.StampType, ea.StartPoint.X, ea.StartPoint.Y, 85, 85, data: ea.Data);
+                else if (ea.ActionType == "AddText") CreateStamp(ea.StampType, ea.StartPoint.X, ea.StartPoint.Y, 85, 85, data: ea.Data);
             }
 
 

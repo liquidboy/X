@@ -35,7 +35,7 @@
             <Button x:Name="butPath"  Background="LightGray">
                 <xuip:Path PathType="Path" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
-            <Button x:Name="butText" Background="LightGray">
+            <Button x:Name="butText" Background="LightGray" Click="butText_Click">
                 <xuip:Path PathType="Text" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
         </StackPanel>

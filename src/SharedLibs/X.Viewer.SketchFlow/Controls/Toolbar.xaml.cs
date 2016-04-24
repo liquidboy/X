@@ -18,7 +18,7 @@ namespace X.Viewer.SketchFlow.Controls
 
         private void butOne_Click(object sender, RoutedEventArgs e)
         {
-            if (PerformAction != null) PerformAction("SnapViewer", EventArgs.Empty);
+            PerformAction?.Invoke("SnapViewer", EventArgs.Empty);
         }
 
         private void butToolbar_Click(object sender, RoutedEventArgs e)
@@ -79,27 +79,27 @@ namespace X.Viewer.SketchFlow.Controls
 
         private void but640360_Click(object sender, RoutedEventArgs e)
         {
-            if (PerformAction != null) PerformAction("AddPage640360", EventArgs.Empty);
+            PerformAction?.Invoke("AddPage640360", EventArgs.Empty);
         }
 
         private void but200200_Click(object sender, RoutedEventArgs e)
         {
-            if (PerformAction != null) PerformAction("AddPageTiles", EventArgs.Empty);
+            PerformAction?.Invoke("AddPageTiles", EventArgs.Empty);
         }
 
         private void but1200600_Click(object sender, RoutedEventArgs e)
         {
-            if (PerformAction != null) PerformAction("AddPage1200600", EventArgs.Empty);
+            PerformAction?.Invoke("AddPage1200600", EventArgs.Empty);
         }
 
         private void but1600900_Click(object sender, RoutedEventArgs e)
         {
-            if (PerformAction != null) PerformAction("AddPage1600900", EventArgs.Empty);
+            PerformAction?.Invoke("AddPage1600900", EventArgs.Empty);
         }
 
         private void but1400768_Click(object sender, RoutedEventArgs e)
         {
-            if (PerformAction != null) PerformAction("AddPage1400768", EventArgs.Empty);
+            PerformAction?.Invoke("AddPage1400768", EventArgs.Empty);
         }
 
         private void but18001200_Click(object sender, RoutedEventArgs e)
@@ -110,13 +110,13 @@ namespace X.Viewer.SketchFlow.Controls
         private void butCircle_Click(object sender, RoutedEventArgs e)
         {
             var pt = getPoint((UIElement)sender);
-            if (PerformAction != null) PerformAction(null, new ToolbarEventArgs() { ActionType = "AddStamp", StartPoint = pt, StampType  = typeof(Stamps.Circle) });
+            PerformAction?.Invoke(null, new ToolbarEventArgs() { ActionType = "AddStamp", StartPoint = pt, StampType  = typeof(Stamps.Circle) });
         }
 
         private void butRectangle_Click(object sender, RoutedEventArgs e)
         {
             var pt = getPoint((UIElement)sender);
-            if (PerformAction != null) PerformAction(null, new ToolbarEventArgs() { ActionType = "AddStamp", StartPoint = pt, StampType = typeof(Stamps.Rectangle) });
+            PerformAction?.Invoke(null, new ToolbarEventArgs() { ActionType = "AddStamp", StartPoint = pt, StampType = typeof(Stamps.Rectangle) });
         }
 
         private Windows.Foundation.Point getPoint(UIElement el) {
@@ -137,9 +137,14 @@ namespace X.Viewer.SketchFlow.Controls
         {
             var pathData = ((X.UI.Path.Path)((Button)sender).Content).Data;
             var pt = getPoint((UIElement)sender);
-            if (PerformAction != null) PerformAction(null, new ToolbarEventArgs() { ActionType = "AddStamp", StartPoint = pt, StampType = typeof(Windows.UI.Xaml.Shapes.Path), Data= pathData });
+            PerformAction?.Invoke(null, new ToolbarEventArgs() { ActionType = "AddStamp", StartPoint = pt, StampType = typeof(Windows.UI.Xaml.Shapes.Path), Data= pathData });
         }
-        
+
+        private void butText_Click(object sender, RoutedEventArgs e)
+        {
+            var pt = getPoint((UIElement)sender);
+            PerformAction?.Invoke(null, new ToolbarEventArgs() { ActionType = "AddText", StartPoint = pt, StampType = typeof(Stamps.Text) });
+        }
     }
 
 
