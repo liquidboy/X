@@ -112,7 +112,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
             var newStroke = el.FontSize * (1 / scaleX);
             
-            return $"<TextBlock x:Name=\"{uid}\" HorizontalAlignment=\"Left\" VerticalAlignment=\"Top\" Height=\"{ (this.Height * (1 / scaleY)) }\" Width=\"{ (this.Width * (1 / scaleX)) }\"  StrokeThickness=\"{ newStroke }\" Foreground=\"{ ((SolidColorBrush)el.Foreground).Color.ToString() }\" Canvas.Left=\"{ leftToUse }\" Canvas.Top=\"{ topToUse }\" RenderTransformOrigin=\"0.5,0.5\" { fillXaml } >{ rotationXaml }</TextBlock>";
+            return $"<TextBlock x:Name=\"{uid}\" HorizontalAlignment=\"Left\" VerticalAlignment=\"Top\" Height=\"{ (this.Height * (1 / scaleY)) }\" Width=\"{ (this.Width * (1 / scaleX)) }\"  FontSize=\"{ newStroke }\" Foreground=\"{ ((SolidColorBrush)el.Foreground).Color.ToString() }\" FontFamily=\"{ el.FontFamily }\" Canvas.Left=\"{ leftToUse }\" Canvas.Top=\"{ topToUse }\" RenderTransformOrigin=\"0.5,0.5\" { fillXaml } Text=\"{ el.Text }\" TextWrapping=\"WrapWholeWords\" >{ rotationXaml }</TextBlock>";
         }
 
         public void PopulateFromUIElement(UIElement element)
@@ -136,16 +136,18 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
         public void GenerateFromXAML(UIElement template)
         {
-            if (template is Ellipse) {
-                var elTemplate = template as Ellipse;
+            if (template is TextBlock) {
+                var elTemplate = template as TextBlock;
                 try { ((CompositeTransform)el.RenderTransform).Rotation = ((CompositeTransform)elTemplate.RenderTransform).Rotation; } catch { }
-                el.Foreground = elTemplate.Stroke;
-                el.FontSize = elTemplate.StrokeThickness;
-                el.SelectionHighlightColor = (SolidColorBrush)elTemplate.Fill;
+                el.Foreground = elTemplate.Foreground;
+                el.FontSize = elTemplate.FontSize;
+                el.SelectionHighlightColor = elTemplate.SelectionHighlightColor;
+                el.TextWrapping = elTemplate.TextWrapping;
+                el.Text = elTemplate.Text;
             }
         }
 
-        public void UpdateStrokeThickness(double thickness) { if (thickness >= 0) el.FontSize = thickness; }
+        public void UpdateStrokeThickness(double thickness) { if (thickness > 0) el.FontSize = thickness; }
         public string GetData() { return string.Empty; }
 
 
