@@ -76,6 +76,13 @@ namespace X.Viewer.SketchFlow.Controls
             xf.IsEnabled = !xf.IsEnabled;
             LayerChanged?.Invoke(null, new PageLayerEventArgs() { ActionType = xf.IsEnabled ? "EnableXamlFragment" : "DisableXamlFragment" });
         }
+
+        private void butXamlFragLayerEdit_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            var but = (FrameworkElement)sender as Border;
+            var xf = ((FrameworkElement)sender).DataContext as XamlFragment;
+            LayerChanged?.Invoke(null, new PageLayerEventArgs() { ActionType = "EditXamlFragment", Fragment = xf });
+        }
     }
 
 
@@ -83,5 +90,6 @@ namespace X.Viewer.SketchFlow.Controls
     {
         public string ActionType;
         public PageLayer Layer;
+        public XamlFragment Fragment;
     }
 }
