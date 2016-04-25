@@ -1,6 +1,7 @@
 ﻿{
   "dependencies": {
     "linqtotwitter": "4.1.0",
+    "Microsoft.Azure.Mobile.Client": "2.0.1",
     "Microsoft.Net.Http": "2.2.29",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
     "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0",
@@ -12,8 +13,7 @@
     "Rx-PlatformServices": "2.3.0-beta2",
     "System.Numerics.Vectors": "4.1.1-beta-23516",
     "ThomasLevesque.WeakEvent": "1.0.1",
-    "Win2D.uwp": "1.16.0",
-    "WindowsAzure.MobileServices": "2.0.0-beta-2"
+    "Win2D.uwp": "1.16.0"
   },
   "frameworks": {
     "uap10.0": {}

@@ -25,13 +25,8 @@ namespace FavouriteMX.Shared.Services
                 return AzureMobileService._azureMobileService;
             }
         }
-
-        private static MobileServiceClient MobileService = new MobileServiceClient(
-            AppService.AppSetting.AMSUrl, 
-            AppService.AppSetting.AMSKey 
-            //"https://developermx.azure-mobile.net/",
-            //"bnIWZFbEKBzNJXtXgMgAxHLtsOaYfW28"
-        );
+        public static MobileServiceClient MobileService = new MobileServiceClient( AppService.AppSetting.AMSUrl );
+        //"https://uapx.azurewebsites.net"
 
         private static IMobileServiceTable<Solution> mstSolution = MobileService.GetTable<Solution>();
         private static IMobileServiceTable<Project> mstProject = MobileService.GetTable<Project>();
