@@ -107,6 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\MenuFlyoutPathItem.cs" />
     <Compile Include="Controls\PageContent.xaml.cs">
       <DependentUpon>PageContent.xaml</DependentUpon>
     </Compile>

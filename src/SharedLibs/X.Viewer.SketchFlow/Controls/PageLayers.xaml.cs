@@ -79,9 +79,33 @@ namespace X.Viewer.SketchFlow.Controls
 
         private void butXamlFragLayerEdit_Click(object sender, RoutedEventArgs e)
         {
-            var but = (FrameworkElement)sender as Button;
+            //var but = (FrameworkElement)sender as Button;
+            //var xf = ((FrameworkElement)sender).DataContext as XamlFragment;
+            //LayerChanged?.Invoke(null, new PageLayerEventArgs() { ActionType = "EditXamlFragment", Fragment = xf });
+        }
+
+        private void miXamlFragEdit_Click(object sender, RoutedEventArgs e)
+        {
             var xf = ((FrameworkElement)sender).DataContext as XamlFragment;
             LayerChanged?.Invoke(null, new PageLayerEventArgs() { ActionType = "EditXamlFragment", Fragment = xf });
+        }
+
+        private void miXamlFragDelete_Click(object sender, RoutedEventArgs e)
+        {
+            var xf = ((FrameworkElement)sender).DataContext as XamlFragment;
+            LayerChanged?.Invoke(null, new PageLayerEventArgs() { ActionType = "DeleteXamlFragment", Fragment = xf });
+        }
+
+        private void miXamlFragMoveUp_Click(object sender, RoutedEventArgs e)
+        {
+            var xf = ((FrameworkElement)sender).DataContext as XamlFragment;
+            LayerChanged?.Invoke(null, new PageLayerEventArgs() { ActionType = "MoveUpXamlFragment", Fragment = xf });
+        }
+
+        private void miXamlFragMoveDown_Click(object sender, RoutedEventArgs e)
+        {
+            var xf = ((FrameworkElement)sender).DataContext as XamlFragment;
+            LayerChanged?.Invoke(null, new PageLayerEventArgs() { ActionType = "MoveDownXamlFragment", Fragment = xf });
         }
     }
 
