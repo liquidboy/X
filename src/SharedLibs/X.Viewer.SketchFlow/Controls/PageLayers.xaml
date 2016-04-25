@@ -12,12 +12,13 @@
     <UserControl.Resources>
         <converters:LayerEnabledToColorConverter x:Key="LayerEnabledToColorConverter" />
     </UserControl.Resources>
-    <ItemsControl ItemsSource="{Binding Layers}">
+    <ItemsControl x:Name="layoutRoot" ItemsSource="{Binding Layers}" Margin="-55,0,0,0">
         <ItemsControl.ItemTemplate>
             <DataTemplate>
                 <StackPanel Orientation="Horizontal" Margin="0,3,0,0" >
-                    <Border x:Name="butEnableDisable" BorderBrush="LightGray" BorderThickness="1" Width="30" Height="10" Background="{Binding IsEnabled,  Converter={StaticResource LayerEnabledToColorConverter}}" PointerPressed="butEnableDisable_PointerPressed"></Border>
-                    <Border x:Name="butEdit" BorderBrush="Gray" BorderThickness="1" Width="20" Height="10" Background="Gray" PointerPressed="butEdit_PointerPressed" ></Border>
+                    <Border x:Name="butEnableDisable" BorderBrush="LightGray" BorderThickness="1" Width="30" Height="15" Background="{Binding IsEnabled,  Converter={StaticResource LayerEnabledToColorConverter}}" PointerPressed="butEnableDisable_PointerPressed"></Border>
+                    <Border x:Name="butEdit" Width="20" Height="15" Background="Gray" PointerPressed="butEdit_PointerPressed" >
+                        <TextBlock HorizontalAlignment="Stretch" TextAlignment="Center" FontSize="10" Foreground="White"></TextBlock></Border>
                 </StackPanel>
                 
             </DataTemplate>

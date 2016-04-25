@@ -28,10 +28,11 @@ namespace X.Viewer.SketchFlow.Controls
 
         private void pgLayer_LayerChanged(object sender, EventArgs e)
         {
+            var plea = e as PageLayerEventArgs;
             var page = this.DataContext as SketchPage;
             page.ExternalPC("Layers");
 
-            PerformAction?.Invoke(null, e);
+            PerformAction?.Invoke(null, plea);
         }
 
 

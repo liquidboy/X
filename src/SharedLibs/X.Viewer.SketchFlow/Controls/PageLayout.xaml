@@ -66,6 +66,8 @@
                 <RectangleGeometry Rect="{Binding ElementName=root, Converter={StaticResource UIElementAsClipConverter}}"/>
             </local:PageContent.Clip>
         </local:PageContent>
-        <local:PageLayers x:Name="pgLayer" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="-55,0,0, 0" LayerChanged="pgLayer_LayerChanged" ></local:PageLayers>
+
+        <!-- Layers -->
+        <local:PageLayers x:Name="pgLayer" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0, 0" LayerChanged="pgLayer_LayerChanged" ></local:PageLayers>
     </Grid>
 </UserControl>

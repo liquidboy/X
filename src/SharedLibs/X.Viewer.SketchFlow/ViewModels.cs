@@ -59,6 +59,10 @@ namespace X.Viewer.SketchFlow
         private bool _isEnabled = true;
         public bool IsEnabled { get { return _isEnabled; } set { _isEnabled = value; RaisePropertyChanged(); } } 
         public bool HasChildContainerCanvas { get; set; } = false;
+
+        private bool _isExpanded = false;
+        public bool IsExpanded { get { return _isExpanded; } set { _isExpanded = value; RaisePropertyChanged(); } }
+        
         public ObservableCollection<XamlFragment> XamlFragments { get; set; }
         
         public PageLayer() {

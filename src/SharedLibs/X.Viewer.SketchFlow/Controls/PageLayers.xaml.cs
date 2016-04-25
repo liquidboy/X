@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -33,9 +34,30 @@ namespace X.Viewer.SketchFlow.Controls
             LayerChanged?.Invoke(null, new PageLayerEventArgs() { ActionType =  pl.IsEnabled? "EnableLayer": "DisableLayer" });
         }
 
+        int noInEditMode = 0;
         private void butEdit_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
+            var but = (FrameworkElement)sender as Border;
+            var butCont = but.Child as TextBlock;
             var pl = ((FrameworkElement)sender).DataContext as PageLayer;
+            var sp = this.DataContext as SketchPage;
+            
+            pl.IsExpanded = !pl.IsExpanded;
+            if (pl.IsExpanded)
+            {
+                but.Background = new SolidColorBrush(Colors.DarkOrange);
+                sp.Left += 55;
+                noInEditMode++;
+                butCont.Text = noInEditMode.ToString();
+            }
+            else
+            {
+                but.Background = new SolidColorBrush(Colors.Gray);
+                sp.Left -= 55;
+                noInEditMode--;
+                butCont.Text = string.Empty;
+            }
+            layoutRoot.Margin = new Thickness(-1 * (55 * (noInEditMode + 1)), 0, 0, 0);
             LayerChanged?.Invoke(null, new PageLayerEventArgs() { ActionType = "EditLayer", Layer = pl });
         }
     }
