@@ -44,7 +44,9 @@ namespace X.Viewer.SketchFlow
         public bool IsSelected { get { return _IsSelected; } set { _IsSelected = value; RaisePropertyChanged(); } }
 
         public ObservableCollection<PageLayer> Layers { get; set; }
-        
+
+        public List<PageLayer> ExpandedLayers { get { return Layers.Where(x => x.IsExpanded).ToList(); } private set { } }
+
         public SketchPage()
         {
             Layers = new ObservableCollection<PageLayer>();
@@ -62,7 +64,11 @@ namespace X.Viewer.SketchFlow
 
         private bool _isExpanded = false;
         public bool IsExpanded { get { return _isExpanded; } set { _isExpanded = value; RaisePropertyChanged(); } }
-        
+
+
+        private string _layerNumber;
+        public string LayerNumber { get { return _layerNumber; } set { _layerNumber = value; RaisePropertyChanged(); } }
+
         public ObservableCollection<XamlFragment> XamlFragments { get; set; }
         
         public PageLayer() {

@@ -12,17 +12,34 @@
     <UserControl.Resources>
         <converters:LayerEnabledToColorConverter x:Key="LayerEnabledToColorConverter" />
     </UserControl.Resources>
-    <ItemsControl x:Name="layoutRoot" ItemsSource="{Binding Layers}" Margin="-55,0,0,0">
-        <ItemsControl.ItemTemplate>
-            <DataTemplate>
-                <StackPanel Orientation="Horizontal" Margin="0,3,0,0" >
-                    <Border x:Name="butEnableDisable" BorderBrush="LightGray" BorderThickness="1" Width="30" Height="15" Background="{Binding IsEnabled,  Converter={StaticResource LayerEnabledToColorConverter}}" PointerPressed="butEnableDisable_PointerPressed"></Border>
-                    <Border x:Name="butEdit" Width="20" Height="15" Background="Gray" PointerPressed="butEdit_PointerPressed" >
-                        <TextBlock HorizontalAlignment="Stretch" TextAlignment="Center" FontSize="10" Foreground="White"></TextBlock></Border>
-                </StackPanel>
-                
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
-    </ItemsControl>
+    <StackPanel x:Name="layoutRoot" Orientation="Horizontal" Margin="-55,0,0,0">
+        <ItemsControl ItemsSource="{Binding Layers}" >
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="0,3,0,0" >
+                        <Border x:Name="butEnableDisable" BorderBrush="LightGray" BorderThickness="1" Width="30" Height="15" Background="{Binding IsEnabled,  Converter={StaticResource LayerEnabledToColorConverter}}" PointerPressed="butEnableDisable_PointerPressed"></Border>
+                        <Border x:Name="butEdit" Width="20" Height="15" Background="Gray" PointerPressed="butEdit_PointerPressed" >
+                            <TextBlock HorizontalAlignment="Stretch" TextAlignment="Center" FontSize="10" Foreground="White"></TextBlock>
+                        </Border>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <ItemsControl ItemsSource="{Binding ExpandedLayers}" >
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom"></StackPanel>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="DarkOrange" Width="50" Height="15" Margin="5,0,0,0" >
+                        <TextBlock HorizontalAlignment="Stretch" TextAlignment="Center" FontSize="10" Foreground="White" Text="{Binding LayerNumber}"></TextBlock>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
+    
     
 </UserControl>
