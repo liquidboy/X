@@ -82,13 +82,16 @@ namespace X.Viewer.SketchFlow
     }
 
 
-    public class XamlFragment
+    public class XamlFragment: ViewModelBase
     {
         public string Xaml { get; set; }
         public string Uid { get; set; }
 
         public Type Type { get; set; }
         public string Data { get; set; }
+
+        private bool _isEnabled = true;
+        public bool IsEnabled { get { return _isEnabled; } set { _isEnabled = value; RaisePropertyChanged(); } }
     }
 
 }

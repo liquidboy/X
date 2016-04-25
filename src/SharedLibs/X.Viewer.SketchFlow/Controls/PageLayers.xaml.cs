@@ -68,6 +68,14 @@ namespace X.Viewer.SketchFlow.Controls
             LayerChanged?.Invoke(null, new PageLayerEventArgs() { ActionType = "EditLayer", Layer = pl });
             sp.ExternalPC("ExpandedLayers");
         }
+
+        private void butXamlFragLayer_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            var but = (FrameworkElement)sender as Border;
+            var xf = ((FrameworkElement)sender).DataContext as XamlFragment;
+            xf.IsEnabled = !xf.IsEnabled;
+            LayerChanged?.Invoke(null, new PageLayerEventArgs() { ActionType = xf.IsEnabled ? "EnableXamlFragment" : "DisableXamlFragment" });
+        }
     }
 
 

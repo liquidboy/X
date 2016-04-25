@@ -22,7 +22,7 @@ namespace X.Viewer.SketchFlow.Converters
             foreach (var layer in layers.Where(x=>x.IsEnabled)) {
                 
                 var xaml = "";
-                foreach (var xamlFragment in layer.XamlFragments) {
+                foreach (var xamlFragment in layer.XamlFragments.Where(x=>x.IsEnabled)) {
                     xaml += xamlFragment.Xaml;
                 }
 

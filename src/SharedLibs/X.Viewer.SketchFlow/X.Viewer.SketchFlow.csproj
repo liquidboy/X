@@ -145,6 +145,7 @@
     <Compile Include="Controls\Stamps\Circle.xaml.cs">
       <DependentUpon>Circle.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\XamlFragmentEnabledToColorConverter.cs" />
     <Compile Include="Converters\UIElementAsClipConverter.cs" />
     <Compile Include="Converters\IsSelectedToColorConverter.cs" />
     <Compile Include="Converters\LayerEnabledToColorConverter.cs" />
