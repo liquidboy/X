@@ -25,7 +25,7 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <ItemsControl ItemsSource="{Binding ExpandedLayers}" >
+        <ItemsControl ItemsSource="{Binding ExpandedLayers}" Margin="0,0,0,-18">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom"></StackPanel>
@@ -33,9 +33,18 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border Background="DarkOrange" Width="50" Height="15" Margin="5,0,0,0" >
-                        <TextBlock HorizontalAlignment="Stretch" TextAlignment="Center" FontSize="10" Foreground="White" Text="{Binding LayerNumber}"></TextBlock>
-                    </Border>
+                    <StackPanel Orientation="Vertical" Margin="5,0,0,0" >
+                        <ItemsControl ItemsSource="{Binding XamlFragments}" >
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="LightGray" BorderThickness="1" Width="50" Height="15" Background="LightGray" Margin="0,0,0,3"></Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <Border Background="DarkOrange" BorderBrush="DarkOrange" BorderThickness="1" Width="50" Height="15">
+                            <TextBlock HorizontalAlignment="Stretch" TextAlignment="Center" FontSize="10" Foreground="White" Text="{Binding LayerNumber}"></TextBlock>
+                        </Border>
+                    </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
