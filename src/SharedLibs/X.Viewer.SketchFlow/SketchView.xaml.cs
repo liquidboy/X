@@ -289,7 +289,7 @@ namespace X.Viewer.SketchFlow
                         if (ci is PageLayout) {
                             var pg = ((FrameworkElement)ci).DataContext as SketchPage;
                             ((PageLayout)ci).SetValue(Canvas.LeftProperty, pg.Left);
-                            ((PageLayout)ci).SetValue(Canvas.TopProperty, pg.Top);
+                            //((PageLayout)ci).SetValue(Canvas.TopProperty, pg.Top);  //<-- for some reason the last page always repositions very low (need to resolve before uncommenting)
                         }
                     }
                     
@@ -302,24 +302,26 @@ namespace X.Viewer.SketchFlow
                     var frag = plea.Fragment;
 
                     var found = _currentPageLayoutForStamps?.FindContentElementByName(frag.Uid) as FrameworkElement;
-                    var gtFound = cvMainAdorner.TransformToVisual(found);
-                    var ptFound = gtFound.TransformPoint(new Windows.Foundation.Point(0, 0));
+                    if (found != null) {
+                        var gtFound = cvMainAdorner.TransformToVisual(found);
+                        var ptFound = gtFound.TransformPoint(new Windows.Foundation.Point(0, 0));
 
-                    var gtPL = cvMainAdorner.TransformToVisual(_currentPageLayoutForStamps);
-                    var ptPL = gtPL.TransformPoint(new Windows.Foundation.Point(0, 0));
+                        var gtPL = cvMainAdorner.TransformToVisual(_currentPageLayoutForStamps);
+                        var ptPL = gtPL.TransformPoint(new Windows.Foundation.Point(0, 0));
 
-                    var width = found.Width * _scaleX;
-                    var height = found.Height * _scaleY;
-                    var left = ((ptPL.X * -1) + (ptFound.X * -1)) * _scaleX;
-                    var top = ((ptPL.Y * -1) + (ptFound.Y * -1) + 80) * _scaleY;  //70 = tabs
+                        var width = found.Width * _scaleX;
+                        var height = found.Height * _scaleY;
+                        var left = ((ptPL.X * -1) + (ptFound.X * -1)) * _scaleX;
+                        var top = ((ptPL.Y * -1) + (ptFound.Y * -1) + 80) * _scaleY;  //70 = tabs
 
-                    //var el = new Ellipse() { Width = 10, Height = 10, Fill = new SolidColorBrush(Colors.Red) };
-                    //el.SetValue(Canvas.LeftProperty, left);
-                    //el.SetValue(Canvas.TopProperty, top);
-                    //cvMainAdorner.Children.Add(el);
+                        //var el = new Ellipse() { Width = 10, Height = 10, Fill = new SolidColorBrush(Colors.Red) };
+                        //el.SetValue(Canvas.LeftProperty, left);
+                        //el.SetValue(Canvas.TopProperty, top);
+                        //cvMainAdorner.Children.Add(el);
 
-                    //only if the stamp is being created in the viewable area
-                    if (top > 20) CreateStamp(frag.Type, left, top, width, height, template: found, data: frag.Data);
+                        //only if the stamp is being created in the viewable area
+                        if (top > 20) CreateStamp(frag.Type, left, top, width, height, template: found, data: frag.Data);
+                    }
 
                     //};
                 }
