@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:xuiri="using:X.UI.RichInput"
+    xmlns:xuip="using:X.UI.Path"
     mc:Ignorable="d"
     x:Name="root"
     d:DesignHeight="300"
@@ -18,6 +19,20 @@
                 </DataTemplate>
             </xuiri:Input.ItemTemplate>
         </xuiri:Input>
-        <TextBox x:Name="tbMain" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,30,0,0" TextWrapping="Wrap" Text="[text]" BorderBrush="DarkGray" Foreground="Black" SelectionHighlightColor="DarkGray" BorderThickness="1" Padding="5" TextChanged="tbMain_TextChanged"></TextBox>
+        <TextBox x:Name="tbMain" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,30,0,40" TextWrapping="Wrap" Text="[text]" BorderBrush="DarkGray" Foreground="Black" SelectionHighlightColor="DarkGray" BorderThickness="1" Padding="5" TextChanged="tbMain_TextChanged" IsColorFontEnabled="True"></TextBox>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
+            <Button x:Name="butLeftAlign"  Background="LightGray" >
+                <xuip:Path PathType="TextLeftAlign" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butCenterAlign"  Background="LightGray" >
+                <xuip:Path PathType="TextCenterAlign" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butRightAlign"  Background="LightGray" >
+                <xuip:Path PathType="TextRightAlign" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butTextJustify"  Background="LightGray" >
+                <xuip:Path PathType="TextJustify" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+        </StackPanel>
     </Grid>
 </UserControl>
