@@ -293,7 +293,8 @@ namespace X.Viewer.SketchFlow
                         }
                     }
                     
-                }else if (plea.ActionType == "EditXamlFragment") 
+                }
+                else if (plea.ActionType == "EditXamlFragment") 
                 {
                     //plea.Layer.IsEnabled = !plea.Layer.IsEnabled;
                     //foreach (var frag in plea.Layer.XamlFragments)
@@ -302,7 +303,8 @@ namespace X.Viewer.SketchFlow
                     var frag = plea.Fragment;
 
                     var found = _currentPageLayoutForStamps?.FindContentElementByName(frag.Uid) as FrameworkElement;
-                    if (found != null) {
+                    if (found != null)
+                    {
                         var gtFound = cvMainAdorner.TransformToVisual(found);
                         var ptFound = gtFound.TransformPoint(new Windows.Foundation.Point(0, 0));
 
@@ -323,7 +325,18 @@ namespace X.Viewer.SketchFlow
                         if (top > 20) CreateStamp(frag.Type, left, top, width, height, template: found, data: frag.Data);
                     }
 
+
                     //};
+                }
+                else if (plea.ActionType == "DeleteXamlFragment")
+                {
+                    //var frag = plea.Fragment;
+                    //foreach (var layer in vm.SelectedPage.Layers) {
+                    //    var found = layer.XamlFragments.Where(x => x.Uid == frag.Uid).FirstOrDefault();
+                    //    if (found != null) layer.XamlFragments.Remove(found);
+                    //}
+
+                    //vm.SelectedPage.ExternalPC("Layers");
                 }
             }
       

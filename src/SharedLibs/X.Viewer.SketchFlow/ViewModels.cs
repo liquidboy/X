@@ -85,7 +85,7 @@ namespace X.Viewer.SketchFlow
     public class XamlFragment: ViewModelBase
     {
         public string Xaml { get; set; }
-        public string Uid { get; set; }
+        public string Uid { get; set; } = new Guid().ToString();
 
         public Type Type { get; set; }
         public string Data { get; set; }
