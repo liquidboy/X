@@ -16,7 +16,7 @@ namespace X.Services.Data
 
         public StorageDatabaseAzure() 
         {
-
+            DataModelsManager.InitInDatabase(this.MobileService);
         }
 
         public void Dispose()

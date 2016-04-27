@@ -22,6 +22,11 @@ namespace X.Services.Data
             sqliteDb.CreateTable<ExtensionManifestDataModel>();
         }
 
+        public static void InitInDatabase(IMobileServiceClient client)
+        {
+
+        }
+
         public static void TruncateDatabase(SQLiteConnection sqliteDb) {
             sqliteDb.DeleteAll<WebPageDataModel>();
             sqliteDb.DeleteAll<ExtensionManifestDataModel>();

@@ -1262,12 +1262,12 @@ namespace FavouriteMX.Shared.Services
         {
             FlickrKey = "";
             FlickrSecret = "";
-            TwitterKey = "mQ68ryA1jM48rUjYVuxEobpMH";
-            TwitterSecret = "GukFX13o3D2hYeNJQiJgbH58jhYkOFjFGooq68GwupNXRqxtdQ";
+            TwitterKey = "";
+            TwitterSecret = "";
             FavouriteMXPictureFolder = "";
             WatchMXVideoFolder = "";
             ExplorerMXDocumentsFolder = "";
-            AMSUrl = "";
+            AMSUrl = "https://uapx.azurewebsites.net";
             AMSKey = "";
             
         }
