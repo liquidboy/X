@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FavouriteMX.Shared.Services;
+using Microsoft.WindowsAzure.MobileServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +22,18 @@ namespace X.Services.Data
                     Storage = new StorageDatabase();
                 }
             }
+
+            lock (StorageDatabaseAzure.lockobj)
+            {
+                if (AzureStorage == null)
+                {
+                    AzureStorage = new StorageDatabaseAzure();
+                }
+            }
         }
+
+        public StorageDatabaseAzure AzureStorage { get; set; }
+
 
         public void Dispose()
         {

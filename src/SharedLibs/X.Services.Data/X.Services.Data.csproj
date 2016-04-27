@@ -113,6 +113,7 @@
     <Compile Include="Models\IDataModel.cs" />
     <Compile Include="Models\IWebPageDataModel.cs" />
     <Compile Include="Models\BaseDataModel.cs" />
+    <Compile Include="StorageDatabaseAzure.cs" />
     <Compile Include="StorageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqliteDatabase.cs" />
