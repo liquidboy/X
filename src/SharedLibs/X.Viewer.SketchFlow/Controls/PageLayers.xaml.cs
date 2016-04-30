@@ -107,6 +107,18 @@ namespace X.Viewer.SketchFlow.Controls
             var xf = ((FrameworkElement)sender).DataContext as XamlFragment;
             LayerChanged?.Invoke(null, new PageLayerEventArgs() { ActionType = "MoveDownXamlFragment", Fragment = xf });
         }
+
+        private void miXamlFragMoveLeft_Click(object sender, RoutedEventArgs e)
+        {
+            var xf = ((FrameworkElement)sender).DataContext as XamlFragment;
+            LayerChanged?.Invoke(null, new PageLayerEventArgs() { ActionType = "MoveLeftXamlFragment", Fragment = xf });
+        }
+
+        private void miXamlFragMoveRight_Click(object sender, RoutedEventArgs e)
+        {
+            var xf = ((FrameworkElement)sender).DataContext as XamlFragment;
+            LayerChanged?.Invoke(null, new PageLayerEventArgs() { ActionType = "MoveRightXamlFragment", Fragment = xf });
+        }
     }
 
 

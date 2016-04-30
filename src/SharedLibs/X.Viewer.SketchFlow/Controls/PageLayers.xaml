@@ -47,6 +47,8 @@
                                                     <MenuFlyoutItem x:Name="miXamlFragDelete" Text="Delete" Click="miXamlFragDelete_Click"></MenuFlyoutItem>
                                                     <MenuFlyoutItem x:Name="miXamlFragMoveUp" Text="Move Up" Click="miXamlFragMoveUp_Click"></MenuFlyoutItem>
                                                     <MenuFlyoutItem x:Name="miXamlFragMoveDown" Text="Move Down" Click="miXamlFragMoveDown_Click"></MenuFlyoutItem>
+                                                    <MenuFlyoutItem x:Name="miXamlFragMoveLeft" Text="Move Left" Click="miXamlFragMoveLeft_Click" ></MenuFlyoutItem>
+                                                    <MenuFlyoutItem x:Name="miXamlFragMoveRight" Text="Move Right" Click="miXamlFragMoveRight_Click" ></MenuFlyoutItem>
                                                 </MenuFlyout>
                                             </Button.Flyout>
                                         </Button>
