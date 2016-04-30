@@ -367,29 +367,54 @@ namespace X.Viewer.SketchFlow
         double _scaleY = 0;
         private void layoutRoot_PointerWheelChanged(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            //var delta = 25;
+            var mousePoint = e.GetCurrentPoint(null).Position;
+            cvMainContainer.RenderTransformOrigin = new Windows.Foundation.Point(mousePoint.X / cvMainContainer.ActualWidth, mousePoint.Y / cvMainContainer.ActualHeight);
+
+
+            var delta = 0.05d;
             var change = e.GetCurrentPoint(null).Properties.MouseWheelDelta;
-            var ct = cvMain.RenderTransform as CompositeTransform;
+            var ct = cvMainContainer.RenderTransform as CompositeTransform;
+
             
             if (change > 0)
             {
-                ct.ScaleX += -0.05;
-                ct.ScaleY += -0.05;
-                if (ct.ScaleX <= 0.3) ct.ScaleX = 0.3;
-                if (ct.ScaleY <= 0.3) ct.ScaleY = 0.3;
+                //    ct.ScaleX += -0.05;
+                //    ct.ScaleY += -0.05;
+                //    if (ct.ScaleX <= 0.3) ct.ScaleX = 0.3;
+                //    if (ct.ScaleY <= 0.3) ct.ScaleY = 0.3;
+                
+                if (ct.ScaleY <= 0.3) delta = 0;
+                else delta = -0.05d;
             }
             else if (change < 0)
             {
-                ct.ScaleX += 0.05;
-                ct.ScaleY += 0.05;
-                if (ct.ScaleX >= 3.0) ct.ScaleX = 3.0;
-                if (ct.ScaleY >= 3.0) ct.ScaleY = 3.0;
+                //    ct.ScaleX += 0.05;
+                //    ct.ScaleY += 0.05;
+                //    if (ct.ScaleX >= 3.0) ct.ScaleX = 3.0;
+                //    if (ct.ScaleY >= 3.0) ct.ScaleY = 3.0;
+                
+                if (ct.ScaleY >= 3.0) delta = 0;
+                else delta = 0.05d;
             }
+
+            ct.ScaleX += delta;
+            ct.ScaleY += delta;
+
 
             _scaleX = ct.ScaleX;
             _scaleY = ct.ScaleY;
+
+
+
+
+            
+
+
+
+
+
         }
-        
+
 
         PointerPoint ptStart;  //artboard moving
         Windows.Foundation.Point ptStartPt; //pagelayout moving
@@ -550,8 +575,8 @@ namespace X.Viewer.SketchFlow
                 ptDifY = ptDifYStart + ptStart.Position.Y - ptEnd.Position.Y;
 
                 var ct = cvMain.RenderTransform as CompositeTransform;
-                ct.TranslateX = -1 * ptDifX;
-                ct.TranslateY = -1 * ptDifY;
+                ct.TranslateX = -1 * ptDifX * (1 / _scaleX);
+                ct.TranslateY = -1 * ptDifY * (1 / _scaleY);
             }
 
 
