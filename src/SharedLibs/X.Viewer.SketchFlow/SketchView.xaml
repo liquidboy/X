@@ -24,7 +24,7 @@
     
     -->
     <Grid x:Name="layoutRoot" Background="White" PointerWheelChanged="layoutRoot_PointerWheelChanged" PointerPressed="layoutRoot_PointerPressed" PointerReleased="layoutRoot_PointerReleased" PointerMoved="layoutRoot_PointerMoved">
-        <Canvas x:Name="cvMainContainer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White" RenderTransformOrigin="0.5,0.5" >
+        <Canvas x:Name="cvMainContainer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White" RenderTransformOrigin="0,0" >
             <Canvas.RenderTransform >
                 <CompositeTransform ScaleX="0.8" ScaleY="0.8"   />
             </Canvas.RenderTransform>
@@ -41,6 +41,14 @@
             <TextBlock x:Name="console1" FontSize="16" Foreground="Red" ></TextBlock>
             <TextBlock x:Name="console2" FontSize="16" Foreground="Red" ></TextBlock>
             <TextBlock x:Name="console3" FontSize="16" Foreground="Red" ></TextBlock>
+            <TextBlock x:Name="console4" FontSize="16" Foreground="Red" ></TextBlock>
+            <TextBlock x:Name="line0" FontSize="16" Foreground="Red" ></TextBlock>
+            <TextBlock x:Name="line1" FontSize="16" Foreground="Red" ></TextBlock>
+            <TextBlock x:Name="line2" FontSize="16" Foreground="Red" ></TextBlock>
+            <TextBlock x:Name="line3" FontSize="16" Foreground="Red" ></TextBlock>
+            <TextBlock x:Name="line4" FontSize="16" Foreground="Red" ></TextBlock>
+            <TextBlock x:Name="line5" FontSize="16" Foreground="Red" ></TextBlock>
+            <TextBlock x:Name="line6" FontSize="16" Foreground="Red" ></TextBlock>
             <TextBlock FontSize="10" Foreground="Red" Text="{Binding SelectedPage.Title}"></TextBlock>
         </StackPanel>
 
