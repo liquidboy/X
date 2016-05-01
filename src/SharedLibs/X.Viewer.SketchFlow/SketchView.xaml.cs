@@ -32,7 +32,7 @@ namespace X.Viewer.SketchFlow
             _renderer = renderer;
 
             var ct = cvMain.RenderTransform as CompositeTransform;
-            scale = ct.ScaleX;
+            cvMainContainer.Scale = ct.ScaleX;
 
             SampleData();
         }
@@ -207,7 +207,7 @@ namespace X.Viewer.SketchFlow
                         npl.HasChildContainerCanvas = true;
                         var ptCenter = gt.TransformPoint(new Windows.Foundation.Point(0,0));
                         var uid = RandomString(15);
-                        var str = stamp.GenerateXAML(uid, scale, scale, ptCenter.X, ptCenter.Y);
+                        var str = stamp.GenerateXAML(uid, cvMainContainer.Scale, cvMainContainer.Scale, ptCenter.X, ptCenter.Y);
                         npl.XamlFragments.Add(new XamlFragment() { Uid = uid, Xaml = str, Type = stamp.GetType(), Data = stamp.GetData() });
 
                         plvm.Layers.Add(npl);
@@ -310,10 +310,10 @@ namespace X.Viewer.SketchFlow
                         var gtPL = cvMainAdorner.TransformToVisual(_currentPageLayoutForStamps);
                         var ptPL = gtPL.TransformPoint(new Windows.Foundation.Point(0, 0));
 
-                        var width = found.Width * scale;
-                        var height = found.Height * scale;
-                        var left = ((ptPL.X * -1) + (ptFound.X * -1)) * scale;
-                        var top = ((ptPL.Y * -1) + (ptFound.Y * -1) + 80) * scale;  //70 = tabs
+                        var width = found.Width * cvMainContainer.Scale;
+                        var height = found.Height * cvMainContainer.Scale;
+                        var left = ((ptPL.X * -1) + (ptFound.X * -1)) * cvMainContainer.Scale;
+                        var top = ((ptPL.Y * -1) + (ptFound.Y * -1) + 80) * cvMainContainer.Scale;  //70 = tabs
 
                         //var el = new Ellipse() { Width = 10, Height = 10, Fill = new SolidColorBrush(Colors.Red) };
                         //el.SetValue(Canvas.LeftProperty, left);
@@ -340,60 +340,16 @@ namespace X.Viewer.SketchFlow
             }
       
         }
-        
-        //public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj, string name) where T : DependencyObject
-        //{
-        //    if (depObj != null)
-        //    {
-        //        for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
-        //        {
-        //            DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
-        //            if (child != null && child is T && ((FrameworkElement)child).Name == name)
-        //            {
-        //                yield return (T)child;
-        //            }
-
-        //            foreach (T childOfChild in FindVisualChildren<T>(child, name))
-        //            {
-        //                yield return childOfChild;
-        //            }
-        //        }
-        //    }
-        //}
 
 
-        
-        double zoomIntensity = 0.05d;
-        double scale = 1;
-        
+
         private void layoutRoot_PointerWheelChanged(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            var mousePoint = e.GetCurrentPoint(null).Position;
-            var wheel = e.GetCurrentPoint(null).Properties.MouseWheelDelta / 120;
-            var zoom = Math.Exp(wheel * zoomIntensity);
 
-            Zoom(zoom, mousePoint.X, mousePoint.Y);   
+
+            cvMainContainer.Zoom(sender, e);
         }
-
-        private void Zoom(double s, double x, double y)
-        {
-            //line0.Text = $"scale : {s} x : {x} y : {y}";
-            var ct = cvMainContainer.RenderTransform as CompositeTransform;
-            Point worldPos = new Point((x - ct.TranslateX) / ct.ScaleX, (y - ct.TranslateY) / ct.ScaleY);
-            Point newScale = new Point(ct.ScaleX * s, ct.ScaleY * s);
-
-            Point newScreenPos = new Point((worldPos.X) * newScale.X + ct.TranslateX, (worldPos.Y) * newScale.Y + ct.TranslateY);
-
-            ct.TranslateX -= (newScreenPos.X - x);
-            ct.TranslateY -= (newScreenPos.Y - y);
-            ct.ScaleX = newScale.X;
-            ct.ScaleY = newScale.Y;
-
-            scale = newScale.Y;
-            
-            ptDifX = 0;
-            ptDifY = 0;
-        }
+        
 
 
 
@@ -464,14 +420,14 @@ namespace X.Viewer.SketchFlow
                 if (ptEnd.Position.X > ptStart.Position.X)
                 {
                     newX = Math.Abs(ptEnd.Position.X - ptStart.Position.X); //diff from start
-                    newX = (newX * (1 / scale));  //take into account the scale factor
+                    newX = (newX * (1 / cvMainContainer.Scale));  //take into account the scale factor
                     newX = ptStartPt.X + newX; // add to current canvas position
 
                     //console1.Text = $"right  : {ptStartPt.X + newX}   ey :  { 0 }     ";
                 }
                 else {
                     newX = Math.Abs(ptStart.Position.X - ptEnd.Position.X); //diff from start
-                    newX = (newX * (1 / scale)); //take into account the scale factor
+                    newX = (newX * (1 / cvMainContainer.Scale)); //take into account the scale factor
                     newX = ptStartPt.X - newX; // add to current canvas position
 
                     //console1.Text = $"left : {ptStartPt.X - newX}   ey :  { 0 }     ";
@@ -484,14 +440,14 @@ namespace X.Viewer.SketchFlow
                 if (ptEnd.Position.Y > ptStart.Position.Y)
                 {
                     newY = Math.Abs(ptEnd.Position.Y - ptStart.Position.Y); //diff from start
-                    newY = (newY * (1 / scale));  //take into account the scale factor
+                    newY = (newY * (1 / cvMainContainer.Scale));  //take into account the scale factor
                     newY = ptStartPt.Y + newY; // add to current canvas position
 
                     //console1.Text = $"right  : {ptStartPt.X + newY}   ey :  { 0 }     ";
                 }
                 else {
                     newY = Math.Abs(ptStart.Position.Y - ptEnd.Position.Y); //diff from start
-                    newY = (newY * (1 / scale)); //take into account the scale factor
+                    newY = (newY * (1 / cvMainContainer.Scale)); //take into account the scale factor
                     newY = ptStartPt.Y - newY; // add to current canvas position
 
                     //console1.Text = $"left : {ptStartPt.Y - newY}   ey :  { 0 }     ";
@@ -554,11 +510,11 @@ namespace X.Viewer.SketchFlow
 
                 line0.Text = $"sx : {ptStart.Position.X}   sy :  { ptStart.Position.Y} ";
                 line1.Text = $"ex : {ptEnd.Position.X}   ey :  { ptEnd.Position.Y} ";
-                line2.Text = $"scale : {scale}   ptDifXStart :  { ptDifXStart}  ptDifYStart :  { ptDifYStart} ";
+                line2.Text = $"scale : {cvMainContainer.Scale}   ptDifXStart :  { ptDifXStart}  ptDifYStart :  { ptDifYStart} ";
                 line3.Text = $"translateX : {ct.TranslateX}   translateY :  { ct.TranslateY} ";
                 
-                ptDifX = ptDifXStart + ((ptStart.Position.X - ptEnd.Position.X) / scale);
-                ptDifY = ptDifYStart + ((ptStart.Position.Y - ptEnd.Position.Y) / scale);
+                ptDifX = ptDifXStart + ((ptStart.Position.X - ptEnd.Position.X) / cvMainContainer.Scale);
+                ptDifY = ptDifYStart + ((ptStart.Position.Y - ptEnd.Position.Y) / cvMainContainer.Scale);
 
                 line4.Text = $"s-e X : {ptStart.Position.X - ptEnd.Position.X}   s-e Y :  { ptStart.Position.Y - ptEnd.Position.Y}  ";
                 

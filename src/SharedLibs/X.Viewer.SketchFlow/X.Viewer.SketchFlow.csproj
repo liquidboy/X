@@ -191,6 +191,10 @@
       <Project>{1ddc0313-f305-4091-ad21-2b3d99bb5550}</Project>
       <Name>X.UI.RichInput</Name>
     </ProjectReference>
+    <ProjectReference Include="..\X.UI.ZoomCanvas\X.UI.ZoomCanvas.csproj">
+      <Project>{bb7191bb-0ae9-46fa-9403-ed86a7894467}</Project>
+      <Name>X.UI.ZoomCanvas</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\PageContent.xaml">
