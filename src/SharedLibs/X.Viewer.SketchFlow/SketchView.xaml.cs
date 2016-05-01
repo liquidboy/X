@@ -375,7 +375,6 @@ namespace X.Viewer.SketchFlow
             Zoom(zoom, mousePoint.X, mousePoint.Y);   
         }
 
-
         private void Zoom(double s, double x, double y)
         {
             //line0.Text = $"scale : {s} x : {x} y : {y}";
@@ -391,6 +390,9 @@ namespace X.Viewer.SketchFlow
             ct.ScaleY = newScale.Y;
 
             scale = newScale.Y;
+            
+            ptDifX = 0;
+            ptDifY = 0;
         }
 
 
@@ -421,7 +423,7 @@ namespace X.Viewer.SketchFlow
 
             ptDifXStart = ptDifX;
             ptDifYStart = ptDifY;
-
+   
         }
 
         double ptDifX = 0;
@@ -547,16 +549,24 @@ namespace X.Viewer.SketchFlow
             }
             else
             {
-                console1.Text = $"ex : {ptEnd.Position.X}   ey :  { ptEnd.Position.Y}     ";
-                console2.Text = "";
-
                 //moving artboard
-                ptDifX = ptDifXStart + ptStart.Position.X - ptEnd.Position.X;
-                ptDifY = ptDifYStart + ptStart.Position.Y - ptEnd.Position.Y;
-
                 var ct = cvMain.RenderTransform as CompositeTransform;
-                ct.TranslateX = -1 * ptDifX * (1 / scale);
-                ct.TranslateY = -1 * ptDifY * (1 / scale);
+
+                line0.Text = $"sx : {ptStart.Position.X}   sy :  { ptStart.Position.Y} ";
+                line1.Text = $"ex : {ptEnd.Position.X}   ey :  { ptEnd.Position.Y} ";
+                line2.Text = $"scale : {scale}   ptDifXStart :  { ptDifXStart}  ptDifYStart :  { ptDifYStart} ";
+                line3.Text = $"translateX : {ct.TranslateX}   translateY :  { ct.TranslateY} ";
+                
+                ptDifX = ptDifXStart + ((ptStart.Position.X - ptEnd.Position.X) / scale);
+                ptDifY = ptDifYStart + ((ptStart.Position.Y - ptEnd.Position.Y) / scale);
+
+                line4.Text = $"s-e X : {ptStart.Position.X - ptEnd.Position.X}   s-e Y :  { ptStart.Position.Y - ptEnd.Position.Y}  ";
+                
+
+                ct.TranslateX = -1 * ptDifX ;
+                ct.TranslateY = -1 * ptDifY ;
+                
+
             }
 
 
