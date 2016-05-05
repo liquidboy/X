@@ -23,5 +23,15 @@ namespace X.Services.Data
         {
             MobileService.Dispose();
         }
+
+        public void Save<T>(T entity) {
+            //MobileService.GetTable<T>()
+
+            var tbl = MobileService.GetTable<T>();
+            if (tbl != null) {
+                tbl.InsertAsync(entity);
+            }
+        }
+
     }
 }

@@ -12,6 +12,8 @@ using X.Viewer.SketchFlow.Controls;
 using X.Viewer.SketchFlow.Controls.Stamps;
 using Windows.UI;
 using Windows.Foundation;
+using X.Services.Data.Models;
+using X.Services.Data;
 
 namespace X.Viewer.SketchFlow
 {
@@ -35,6 +37,11 @@ namespace X.Viewer.SketchFlow
             cvMainContainer.Scale = ct.ScaleX;
 
             SampleData();
+
+            //foreach (var pg in vm.Pages) {
+            //    StorageService.Instance.AzureStorage.Save<ISketchPageDataModel>(pg);
+            //}
+            
         }
 
         private void SampleData() {

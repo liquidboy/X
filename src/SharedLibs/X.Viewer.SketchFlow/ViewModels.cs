@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using X.Services.Data;
 
 namespace X.Viewer.SketchFlow
 {
@@ -33,7 +34,7 @@ namespace X.Viewer.SketchFlow
         }
     }
 
-    public class SketchPage : ViewModelBase
+    public class SketchPage : ViewModelBase, ISketchPageDataModel
     {
         public string Title { get; set; }
         public int Left { get; set; }
@@ -47,6 +48,8 @@ namespace X.Viewer.SketchFlow
 
         public List<PageLayer> ExpandedLayers { get { return Layers.Where(x => x.IsExpanded).ToList(); } private set { } }
 
+        public int Id { get; set; }
+        
         public SketchPage()
         {
             Layers = new ObservableCollection<PageLayer>();
