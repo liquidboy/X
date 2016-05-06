@@ -44,8 +44,8 @@ namespace X.Browser.Views
             //Installer.GetExtensionManifests().ForEach(x => { X.Services.Extensions.ExtensionsService.Instance.Install(x); });
             //X.Services.Extensions.ExtensionsService.Instance.Install(X.Extensions.ThirdParty.GitX.Installer.GetManifest());
             LoadThirdPartyExtensions(Installer.GetExtensionManifests());
-            LoadThirdPartyExtensions(new List<ExtensionManifest>{ X.Extensions.ThirdParty.GitX.Installer.GetManifest() });
-            
+            LoadThirdPartyExtensions(new List<ExtensionManifest>{ X.Extensions.ThirdParty.GitX.Installer.GetManifest(), X.Extensions.ThirdParty.JsRTChakraCoreX.Installer.GetManifest() });
+
 
 
             ctlExtensionsBarTop.InstallMyself(); // does Install + LoadExtensions

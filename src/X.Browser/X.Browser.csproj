@@ -199,6 +199,10 @@
       <Project>{fd5c1993-3366-4f69-8fea-d6738b2cffa7}</Project>
       <Name>X.Extensions.ThirdParty.GitX</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.Extensions.ThirdParty.JsRTChakraCoreX\X.Extensions.ThirdParty.JsRTChakraCoreX.csproj">
+      <Project>{f9dcb5a7-bc78-476c-9013-fac93d4785a2}</Project>
+      <Name>X.Extensions.ThirdParty.JsRTChakraCoreX</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharedLibs\X.Extensions.ThirdParty\X.Extensions.ThirdParty.csproj">
       <Project>{ccab5d7d-4fc3-4e60-9a9d-e63b1d5c8be5}</Project>
       <Name>X.Extensions.ThirdParty</Name>
