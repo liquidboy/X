@@ -66,7 +66,7 @@ namespace X.Extensions.UIComponentExtensions
         private bool _canUninstall = false;
         public bool CanUninstall { get { return _canUninstall; } set { _canUninstall = value; } }
 
-        private IList<dynamic> _extensions;
+        private IList<IExtensionManifest> _extensions;
 
         public void RecieveMessage(object message)
         {
@@ -75,8 +75,8 @@ namespace X.Extensions.UIComponentExtensions
                 spExtensions.ClearAll();
                 var ea = (ResponseListOfBottomToolbarExtensionsEventArgs)message;
                 _extensions = ea.ExtensionsMetadata;
-                foreach (var ext in _extensions) if (bool.Parse(ext.IsExtEnabled)) spExtensions.AddItem(ext.IconUrl, 20, Guid.Parse((string)ext.UniqueID));
-                if(_extensions.Where(x=>x.IsExtEnabled == "True").Count() > 0) this.Height = 40;
+                foreach (var ext in _extensions) if (ext.IsExtEnabled) spExtensions.AddItem(ext.IconUrl, 20, ext.UniqueID);
+                if(_extensions.Where(x=>x.IsExtEnabled).Count() > 0) this.Height = 40;
                 else this.Height = 0;
             }
         }

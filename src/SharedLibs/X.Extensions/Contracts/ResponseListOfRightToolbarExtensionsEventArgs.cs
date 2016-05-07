@@ -9,6 +9,6 @@ namespace X.Extensions
 {
     public class ResponseListOfRightToolbarExtensionsEventArgs : BaseEventArgs
     {
-        public List<dynamic> ExtensionsMetadata;
+        public List<IExtensionManifest> ExtensionsMetadata;
     }
 }

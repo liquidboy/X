@@ -22,6 +22,52 @@ namespace X.Services.Extensions
             public bool IsShowingExtensionPanel;
         }
 
+        class ExtensionManifest : IExtensionManifest
+        {
+            public string Abstract { get; set; }
+            
+            public string AssemblyName { get; set; }
+
+            public bool CanUninstall { get; set; }
+
+            public string ContentControl { get; set; }
+
+            public string DisplayName { get; set; }
+
+            public ExtensionInToolbarPositions FoundInToolbarPositions { get; set; }
+
+            public string IconUrl { get; set; }
+
+            public bool IsExtEnabled { get; set; }
+
+            public ExtensionInToolbarPositions LaunchInDockPositions { get; set; }
+
+            public string Publisher { get; set; }
+
+            public string Title { get; set; }
+
+            public Guid UniqueID { get; set; }
+
+            public string Version { get; set; }
+
+            public ExtensionManifest(IExtensionManifest data) {
+                this.Abstract = data.Abstract;
+                this.AssemblyName = data.AssemblyName;
+                this.CanUninstall = data.CanUninstall;
+                this.ContentControl = data.ContentControl;
+                this.DisplayName = data.DisplayName;
+                this.FoundInToolbarPositions = data.FoundInToolbarPositions;
+                this.IconUrl = data.IconUrl;
+                this.IsExtEnabled = data.IsExtEnabled;
+                this.LaunchInDockPositions = data.LaunchInDockPositions;
+                this.Publisher = data.Publisher;
+                this.Title = data.Title;
+                this.UniqueID = data.UniqueID;
+                this.Version = data.Version;
+            }
+            
+        }
+
         List<ExtensionLite> _extensions = new List<ExtensionLite>();
 
         private readonly WeakEventSource<EventArgs> _OnInstallExtensionSource = new WeakEventSource<EventArgs>();
@@ -74,96 +120,40 @@ namespace X.Services.Extensions
             Install(new OSToast()).Wait();
         }
 
-        public dynamic GetExtensionMetadata(Guid guid)
+        public IExtensionManifest GetExtensionMetadata(Guid guid)
         {
             foreach (var el in _extensions)
             {
                 if (el.Manifest.UniqueID == guid) {
 
-                    dynamic item = new ExpandoObject();
-
-                    foreach (var prop in el.Manifest.GetType().GetRuntimeProperties())
-                    {
-                        var val = prop.GetValue(el.Manifest);
-                        if (val != null) ((IDictionary<string, object>)item).Add(prop.Name, val.ToString());
-                    }
-
-                    return item;
+                    return new ExtensionManifest(el.Manifest);
                 }
             }
 
             return null;
         }
 
-        public List<dynamic> GetExtensionsMetadata() {
+        public List<IExtensionManifest> GetExtensionsMetadata() {
 
-            List<dynamic> ret = new List<dynamic>();
-
-            //=========================================================================================
-            //we statically define what of an extensions 'properties' to bring across into a dynamic object 
-            //that xaml will use for binding (very brittle and requires lots of maintenance)
-            //=========================================================================================
-            //foreach (var el in _extensions) {
-            //    dynamic item = new ExpandoObject();
-            //    item.Title = el.Title;
-            //    item.Abstract = el.Abstract;
-            //    item.CanUninstall = el.CanUninstall;
-            //    item.IsExtEnabled = el.IsExtEnabled;
-            //    item.Version = el.Version;
-            //    item.Publisher = el.Publisher;
-            //    ret.Add(item);
-            //}
-
-
-            //=========================================================================================
-            //we will "dynamically" bring across ALL properties defined in the extension for use in
-            //binding in xaml (less brittle)
-            //=========================================================================================
+            List<IExtensionManifest> ret = new List<IExtensionManifest>();
+            
             foreach (var el in _extensions)
             {
-                dynamic item = new ExpandoObject();
-
-                foreach (var prop in el.Manifest.GetType().GetRuntimeProperties())
-                {
-                    var val = prop.GetValue(el.Manifest);
-                    if (val != null) ((IDictionary<string, object>)item).Add(prop.Name, val.ToString());
-                }
-
-                ret.Add(item);
+                ret.Add( new ExtensionManifest(el.Manifest));
             }
 
             return ret;
         }
-
-        public List<dynamic> GetToolbarExtensionsMetadata(ExtensionInToolbarPositions position)
+        
+        public List<IExtensionManifest> GetToolbarExtensionsMetadata(ExtensionInToolbarPositions position)
         {
 
-            List<dynamic> ret = new List<dynamic>();
+            List<IExtensionManifest> ret = new List<IExtensionManifest>();
 
-            //=========================================================================================
-            //we will "dynamically" bring across ALL properties defined in the extension for use in
-            //binding in xaml (less brittle)
-            //=========================================================================================
             foreach (var el in _extensions)
             {
-
-                if (((int)el.Manifest.FoundInToolbarPositions & (int)position) > 0)
-                {
-                    dynamic item = new ExpandoObject();
-
-                    foreach (var prop in el.Manifest.GetType().GetRuntimeProperties())
-                    {
-                        try {
-                            var val = prop.GetValue(el.Manifest);
-                            if (val != null) ((IDictionary<string, object>)item).Add(prop.Name, val.ToString());
-                        }
-                        catch (Exception ex) {
-                            //should never get here! (BUT IT DOES BECAUSE OF .NETNative toolchain)
-                        }
-                    }
-
-                    ret.Add(item);
-                }
+                if(el.Manifest.FoundInToolbarPositions == position)
+                    ret.Add( new ExtensionManifest(el.Manifest));   
             }
 
             return ret;
@@ -222,28 +212,17 @@ namespace X.Services.Extensions
             return extension;
         }
 
-        public object CreateInstance(dynamic md)
+        public IExtension CreateInstance(IExtensionManifest md)
         {
-            //var ctlName = md.BaseUri;
-            //ctlName = ctlName.Replace("ms-appx:///", "");
-            //var parts = ctlName.Split("/".ToCharArray());
-            //parts[parts.Length - 1] = "";
-            //ctlName = string.Join(".", parts);
-            //ctlName = ctlName.Substring(0, ctlName.Length - 1);
-            //ctlName = "X." + ctlName;
-            //var type = Type.GetType((string)ctlName);
-            //var newEl = Activator.CreateInstance(type);
-            //var newElExt = (IExtension)newEl;
 
-            var found = _extensions.Where(x => x.Manifest.UniqueID.ToString() == md.UniqueID).FirstOrDefault();
+            var found = _extensions.Where(x => x.Manifest.UniqueID == md.UniqueID).FirstOrDefault();
 
             if (found.Extension == null)
             {
-                ExtensionInToolbarPositions launchPosition = GetExtensionPositionFromString(md.LaunchInDockPositions);
                 var newElExt = new Services.ThirdParty._Template(found.Manifest);
                 newElExt.SendMessage += DoSendMessage;
 
-                if (launchPosition == ExtensionInToolbarPositions.Left || launchPosition == ExtensionInToolbarPositions.Right)
+                if (md.LaunchInDockPositions == ExtensionInToolbarPositions.Left || md.LaunchInDockPositions == ExtensionInToolbarPositions.Right)
                     newElExt.Width = 350;
                 else newElExt.Height = 200;
 
@@ -256,37 +235,7 @@ namespace X.Services.Extensions
 
             return found.Extension;
         }
-
-        private ExtensionInToolbarPositions GetExtensionPositionFromString(string position) {
-            if (ExtensionInToolbarPositions.Bottom.ToString() == position)
-            {
-                return ExtensionInToolbarPositions.Bottom;
-            }
-            else if (ExtensionInToolbarPositions.BottomFull.ToString() == position)
-            {
-                return ExtensionInToolbarPositions.BottomFull;
-            }
-            else if (ExtensionInToolbarPositions.Left.ToString() == position)
-            {
-                return ExtensionInToolbarPositions.Left;
-            }
-            if (ExtensionInToolbarPositions.None.ToString() == position)
-            {
-                return ExtensionInToolbarPositions.None;
-            }
-            if (ExtensionInToolbarPositions.Right.ToString() == position)
-            {
-                return ExtensionInToolbarPositions.Right;
-            }
-            if (ExtensionInToolbarPositions.Top.ToString() == position)
-            {
-                return ExtensionInToolbarPositions.Top;
-            }
-            else
-                return ExtensionInToolbarPositions.Left;
-
-        }
-
+        
         public IExtension Install(string zipPath)
         {
             throw new NotImplementedException();
@@ -332,7 +281,7 @@ namespace X.Services.Extensions
         }
 
         public void UpdateExtension(IExtensionManifest manifest) {
-            var found = _extensions.Where(x => x.Manifest.UniqueID.ToString() == manifest.UniqueID.ToString()).FirstOrDefault();
+            var found = _extensions.Where(x => x.Manifest.UniqueID == manifest.UniqueID).FirstOrDefault();
             if (found != null) {
                 found.Manifest.IsExtEnabled = manifest.IsExtEnabled;
                 found.Manifest.LaunchInDockPositions = manifest.LaunchInDockPositions;

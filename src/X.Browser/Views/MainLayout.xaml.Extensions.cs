@@ -158,15 +158,15 @@ namespace X.Browser.Views
 
                 if (newExtensionInstance != null)
                 {
-                    if ((string)extMetaData.LaunchInDockPositions == ExtensionInToolbarPositions.Left.ToString())
+                    if (extMetaData.LaunchInDockPositions == ExtensionInToolbarPositions.Left)
                         grdDockedExtensionLeft.Children.Insert(grdDockedExtensionLeft.Children.Count, (UserControl)newExtensionInstance);
-                    else if ((string)extMetaData.LaunchInDockPositions == ExtensionInToolbarPositions.Top.ToString())
+                    else if (extMetaData.LaunchInDockPositions == ExtensionInToolbarPositions.Top)
                         grdDockedExtensionTop.Children.Insert(grdDockedExtensionTop.Children.Count, (UserControl)newExtensionInstance);
-                    else if ((string)extMetaData.LaunchInDockPositions == ExtensionInToolbarPositions.Right.ToString())
+                    else if (extMetaData.LaunchInDockPositions == ExtensionInToolbarPositions.Right)
                         grdDockedExtensionRight.Children.Insert(0, (UserControl)newExtensionInstance);
-                    else if ((string)extMetaData.LaunchInDockPositions == ExtensionInToolbarPositions.Bottom.ToString())
+                    else if (extMetaData.LaunchInDockPositions == ExtensionInToolbarPositions.Bottom)
                         grdDockedExtensionBottom.Children.Insert(grdDockedExtensionBottom.Children.Count, (UserControl)newExtensionInstance);
-                    else if ((string)extMetaData.LaunchInDockPositions == ExtensionInToolbarPositions.BottomFull.ToString())
+                    else if (extMetaData.LaunchInDockPositions == ExtensionInToolbarPositions.BottomFull)
                         grdDockedExtensionBottomFull.Children.Insert(grdDockedExtensionBottomFull.Children.Count, (UserControl)newExtensionInstance);
 
                     newExtensionInstance.OnPaneLoad();

@@ -19,9 +19,9 @@ namespace CoreLib.Extensions
         void UnInstall(IExtension extension);
         IExtension[] GetInstalled();
 
-        dynamic GetExtensionMetadata(Guid guid);
-        List<dynamic> GetExtensionsMetadata();
-        List<dynamic> GetToolbarExtensionsMetadata(ExtensionInToolbarPositions position);
+        IExtensionManifest GetExtensionMetadata(Guid guid);
+        List<IExtensionManifest> GetExtensionsMetadata();
+        List<IExtensionManifest> GetToolbarExtensionsMetadata(ExtensionInToolbarPositions position);
 
     }
 }
