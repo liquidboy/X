@@ -31,7 +31,8 @@ namespace CoreLib.Sprites
         }
 
         public void DeleteAll() {
-            Elements.ToList().ForEach(x => x.Delete(ref _surface));
+            //Elements.ToList().ForEach(x => x.Delete(ref _surface));
+            Elements.Clear();
         }
 
         public void Add(IVisualTreeElement element)
