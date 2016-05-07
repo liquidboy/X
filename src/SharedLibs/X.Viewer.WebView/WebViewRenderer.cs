@@ -53,26 +53,30 @@ namespace X.Viewer
             _renderElement.DOMContentLoaded += wvMain_DOMContentLoaded;
 
             
-
-
-
         }
 
         public void Unload()
         {
-            _renderElement.ScriptNotify -= wvMain_ScriptNotify;
-            _renderElement.ContentLoading -= wvMain_ContentLoading;
-            _renderElement.NavigationStarting -= wvMain_NavigationStarting;
-            _renderElement.NavigationCompleted -= wvMain_NavigationCompleted;
-            _renderElement.LoadCompleted -= wvMain_LoadCompleted;
-            _renderElement.LongRunningScriptDetected -= wvMain_LongRunningScriptDetected;
-            _renderElement.UnsafeContentWarningDisplaying -= wvMain_UnsafeContentWarningDisplaying;
-            _renderElement.UnviewableContentIdentified -= wvMain_UnviewableContentIdentified;
-            _renderElement.NavigationFailed -= wvMain_NavigationFailed;
-            _renderElement.NewWindowRequested -= wvMain_NewWindowRequested;
-            _renderElement.DOMContentLoaded -= wvMain_DOMContentLoaded;
-            
-            _renderElement = null;
+            if (_renderElement != null) {
+                
+                _renderElement.ScriptNotify -= wvMain_ScriptNotify;
+                _renderElement.ContentLoading -= wvMain_ContentLoading;
+                _renderElement.NavigationStarting -= wvMain_NavigationStarting;
+                _renderElement.NavigationCompleted -= wvMain_NavigationCompleted;
+                _renderElement.LoadCompleted -= wvMain_LoadCompleted;
+                _renderElement.LongRunningScriptDetected -= wvMain_LongRunningScriptDetected;
+                _renderElement.UnsafeContentWarningDisplaying -= wvMain_UnsafeContentWarningDisplaying;
+                _renderElement.UnviewableContentIdentified -= wvMain_UnviewableContentIdentified;
+                _renderElement.NavigationFailed -= wvMain_NavigationFailed;
+                _renderElement.NewWindowRequested -= wvMain_NewWindowRequested;
+                _renderElement.DOMContentLoaded -= wvMain_DOMContentLoaded;
+                
+                _renderElement = null;
+
+                dtMaxLoadTime.Stop();
+                dtMaxLoadTime.Tick -= DtMaxLoadTime_Tick;
+                dtMaxLoadTime = null;
+            }
         }
 
         public void UpdateSource(string uri)

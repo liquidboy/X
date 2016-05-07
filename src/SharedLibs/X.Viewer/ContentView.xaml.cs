@@ -44,7 +44,7 @@ namespace X.Viewer
 
         }
 
-   
+        private static ContentView _cv;
 
         public string Uri
         {
@@ -59,14 +59,17 @@ namespace X.Viewer
         {
 
             if (!e.NewValue.Equals(e.OldValue)) {
-                ContentView cv = (ContentView)d;
 
+                if (_cv != null) _cv = null;
+
+                 ContentView cv = (ContentView)d;
+                
                 if (cv.Renderer != null ) {
                
-                    cv.Renderer.Unload();
                     cv.layoutRoot.Children.Remove(cv.Renderer.RenderElement);
                     cv.layoutRoot.Children.Clear();
-                    cv.Renderer.RenderElement = null;
+                    cv.Renderer.Unload();
+                    cv.Renderer.SendMessage -= Renderer_SendMessage;
                     cv.Renderer = null;
                 }
 
@@ -80,7 +83,8 @@ namespace X.Viewer
                     cv.Renderer = new FFmpeg.FFmpegRenderer();
 
                     //todo : need to find a way to light bind this so as to unbind when unloaded
-                    cv.Renderer.SendMessage += (s, ea) => { cv._SendMessageSource.Raise(s, ea); };
+                    //cv.Renderer.SendMessage += (s, ea) => { cv._SendMessageSource.Raise(s, ea); };
+                    cv.Renderer.SendMessage += Renderer_SendMessage;
                     cv.Renderer.Load();
                     cv.layoutRoot.Children.Add(cv.Renderer.RenderElement);
 
@@ -89,7 +93,8 @@ namespace X.Viewer
                 }
                 else if (uriNew.Contains(".tile")){
                     cv.Renderer = new Tiles.TileRenderer();
-                    cv.Renderer.SendMessage += (s, ea) => { cv._SendMessageSource.Raise(s, ea); };
+                    //cv.Renderer.SendMessage += (s, ea) => { cv._SendMessageSource.Raise(s, ea); };
+                    cv.Renderer.SendMessage += Renderer_SendMessage;
                     cv.Renderer.Load();
                     cv.layoutRoot.Children.Add(cv.Renderer.RenderElement);
 
@@ -98,7 +103,8 @@ namespace X.Viewer
                 else if (uriNew.Contains(".dotnet"))
                 {
                     cv.Renderer = new DotnetCLI.DotnetCLIRenderer();
-                    cv.Renderer.SendMessage += (s, ea) => { cv._SendMessageSource.Raise(s, ea); };
+                    cv.Renderer.SendMessage += Renderer_SendMessage;
+                    //cv.Renderer.SendMessage += (s, ea) => { cv._SendMessageSource.Raise(s, ea); };
                     cv.Renderer.Load();
                     cv.layoutRoot.Children.Add(cv.Renderer.RenderElement);
 
@@ -107,7 +113,8 @@ namespace X.Viewer
                 else if (uriNew.Contains(".map"))
                 {
                     cv.Renderer = new MapView.MapViewRenderer();
-                    cv.Renderer.SendMessage += (s, ea) => { cv._SendMessageSource.Raise(s, ea); };
+                    cv.Renderer.SendMessage += Renderer_SendMessage;
+                    //cv.Renderer.SendMessage += (s, ea) => { cv._SendMessageSource.Raise(s, ea); };
                     cv.Renderer.Load();
                     cv.layoutRoot.Children.Add(cv.Renderer.RenderElement);
 
@@ -116,7 +123,8 @@ namespace X.Viewer
                 else if (uriNew.Contains(".sketch"))
                 {
                     cv.Renderer = new SketchFlow.SketchFlowRenderer();
-                    cv.Renderer.SendMessage += (s, ea) => { cv._SendMessageSource.Raise(s, ea); };
+                    //cv.Renderer.SendMessage += (s, ea) => { cv._SendMessageSource.Raise(s, ea); };
+                    cv.Renderer.SendMessage += Renderer_SendMessage;
                     cv.Renderer.Load();
                     cv.layoutRoot.Children.Add(cv.Renderer.RenderElement);
 
@@ -125,7 +133,8 @@ namespace X.Viewer
                 else if (uriNew.Contains(".urho"))
                 {
                     cv.Renderer = new UrhoSharp.UrhoRenderer();
-                    cv.Renderer.SendMessage += (s, ea) => { cv._SendMessageSource.Raise(s, ea); };
+                    //cv.Renderer.SendMessage += (s, ea) => { cv._SendMessageSource.Raise(s, ea); };
+                    cv.Renderer.SendMessage += Renderer_SendMessage;
                     cv.Renderer.Load();
                     cv.layoutRoot.Children.Add(cv.Renderer.RenderElement);
 
@@ -133,10 +142,11 @@ namespace X.Viewer
                 }
                 else
                 {
-                    cv.Renderer = new WebViewRenderer();
 
+                    cv.Renderer = new WebViewRenderer();
                     //todo : need to find a way to light bind this so as to unbind when unloaded
-                    cv.Renderer.SendMessage += (s, ea) => { cv._SendMessageSource.Raise(s, ea); };
+                    //cv.Renderer.SendMessage += (s, ea) => { cv._SendMessageSource.Raise(s, ea); };
+                    cv.Renderer.SendMessage += Renderer_SendMessage;
                     cv.Renderer.Load();
                     cv.layoutRoot.Children.Add(cv.Renderer.RenderElement);
 
@@ -150,6 +160,10 @@ namespace X.Viewer
             
         }
 
+        private static void Renderer_SendMessage(object sender, ContentViewEventArgs e)
+        {
+            _cv?._SendMessageSource.Raise(sender, e);
+        }
     }
 
 
