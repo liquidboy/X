@@ -15,58 +15,7 @@ namespace X.Services.Extensions
     public class ExtensionsService : ISender, IExtensionsService
     {
 
-        class ExtensionLite {
-            public IExtensionManifest Manifest;
-            public ExtensionType ExtensionType;
-            public IExtension Extension;
-            public bool IsShowingExtensionPanel;
-        }
-
-        class ExtensionManifest : IExtensionManifest
-        {
-            public string Abstract { get; set; }
-            
-            public string AssemblyName { get; set; }
-
-            public bool CanUninstall { get; set; }
-
-            public string ContentControl { get; set; }
-
-            public string DisplayName { get; set; }
-
-            public ExtensionInToolbarPositions FoundInToolbarPositions { get; set; }
-
-            public string IconUrl { get; set; }
-
-            public bool IsExtEnabled { get; set; }
-
-            public ExtensionInToolbarPositions LaunchInDockPositions { get; set; }
-
-            public string Publisher { get; set; }
-
-            public string Title { get; set; }
-
-            public Guid UniqueID { get; set; }
-
-            public string Version { get; set; }
-
-            public ExtensionManifest(IExtensionManifest data) {
-                this.Abstract = data.Abstract;
-                this.AssemblyName = data.AssemblyName;
-                this.CanUninstall = data.CanUninstall;
-                this.ContentControl = data.ContentControl;
-                this.DisplayName = data.DisplayName;
-                this.FoundInToolbarPositions = data.FoundInToolbarPositions;
-                this.IconUrl = data.IconUrl;
-                this.IsExtEnabled = data.IsExtEnabled;
-                this.LaunchInDockPositions = data.LaunchInDockPositions;
-                this.Publisher = data.Publisher;
-                this.Title = data.Title;
-                this.UniqueID = data.UniqueID;
-                this.Version = data.Version;
-            }
-            
-        }
+      
 
         List<ExtensionLite> _extensions = new List<ExtensionLite>();
 
@@ -282,11 +231,11 @@ namespace X.Services.Extensions
 
         public void UpdateExtension(IExtensionManifest manifest) {
             var found = _extensions.Where(x => x.Manifest.UniqueID == manifest.UniqueID).FirstOrDefault();
-            if (found != null) {
+            //if (found != null) {
                 found.Manifest.IsExtEnabled = manifest.IsExtEnabled;
                 found.Manifest.LaunchInDockPositions = manifest.LaunchInDockPositions;
                 found.Manifest.FoundInToolbarPositions = manifest.FoundInToolbarPositions;
-            }
+            //}
         }
 
 
@@ -311,5 +260,60 @@ namespace X.Services.Extensions
                 return instance;
             }
         }
+    }
+
+    public struct ExtensionLite
+    {
+        public IExtensionManifest Manifest;
+        public ExtensionType ExtensionType;
+        public IExtension Extension;
+        public bool IsShowingExtensionPanel;
+    }
+
+    public struct ExtensionManifest : IExtensionManifest
+    {
+        public string Abstract { get; set; }
+
+        public string AssemblyName { get; set; }
+
+        public bool CanUninstall { get; set; }
+
+        public string ContentControl { get; set; }
+
+        public string DisplayName { get; set; }
+
+        public ExtensionInToolbarPositions FoundInToolbarPositions { get; set; }
+
+        public string IconUrl { get; set; }
+
+        public bool IsExtEnabled { get; set; }
+
+        public ExtensionInToolbarPositions LaunchInDockPositions { get; set; }
+
+        public string Publisher { get; set; }
+
+        public string Title { get; set; }
+
+        public Guid UniqueID { get; set; }
+
+        public string Version { get; set; }
+
+        public ExtensionManifest(IExtensionManifest data)
+        {
+            this.Abstract = data.Abstract;
+            this.AssemblyName = data.AssemblyName;
+            this.CanUninstall = data.CanUninstall;
+            this.ContentControl = data.ContentControl;
+            this.DisplayName = data.DisplayName;
+            this.FoundInToolbarPositions = data.FoundInToolbarPositions;
+            this.IconUrl = data.IconUrl;
+            this.IsExtEnabled = data.IsExtEnabled;
+            this.LaunchInDockPositions = data.LaunchInDockPositions;
+            this.Publisher = data.Publisher;
+            this.Title = data.Title;
+            this.UniqueID = data.UniqueID;
+            this.Version = data.Version;
+        }
+
     }
 }
