@@ -82,6 +82,8 @@ namespace X.Viewer.SketchFlow.Controls
 
         private void layoutRoot_Loaded(object sender, RoutedEventArgs e)
         {
+            //Currently there's no true "mixing" where you could directly host XAML content within a Composition Visual.
+            //https://github.com/Microsoft/WindowsUIDevLabs/issues/68
             //InitShadow();
         }
 
