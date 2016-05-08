@@ -11,7 +11,7 @@ namespace X.Extensions.ThirdParty.Office365
     {
         public static ExtensionManifest GetManifest() {
 
-            return new ExtensionManifest("Office365 Management", "ms-appx:///Extensions/ThirdParty/Office365/Office365.png", "Jose Fajardo", "1.0", "Manage your Office365 account", ExtensionInToolbarPositions.Bottom, ExtensionInToolbarPositions.BottomFull) { ContentControl = "X.Extensions.ThirdParty.Office365.Content", AssemblyName= "X.Extensions.ThirdParty.Office365", IsExtEnabled = false };
+            return new ExtensionManifest("Office365 Management", "ms-appx:///Extensions/ThirdParty/Office365/Office365.png", "Jose Fajardo", "1.0", "Manage your Office365 account", ExtensionInToolbarPositions.Left, ExtensionInToolbarPositions.Left) { ContentControl = "X.Extensions.ThirdParty.Office365.Content", AssemblyName= "X.Extensions.ThirdParty.Office365", IsExtEnabled = false };
         }
     }
 }
