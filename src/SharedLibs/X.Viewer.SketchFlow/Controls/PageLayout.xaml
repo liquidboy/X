@@ -63,7 +63,6 @@
         </Grid>-->
 
 
-
             <local:PageContent x:Name="pc" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <local:PageContent.Clip>
                     <RectangleGeometry Rect="{Binding ElementName=root, Converter={StaticResource UIElementAsClipConverter}}"/>

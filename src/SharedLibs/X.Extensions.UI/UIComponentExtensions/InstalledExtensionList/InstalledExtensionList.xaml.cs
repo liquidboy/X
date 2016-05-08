@@ -54,12 +54,12 @@ namespace X.Extensions.UIComponentExtensions
                 else Extensions.Clear();
 
                 var extensionsInStorage = X.Services.Data.StorageService.Instance.Storage.RetrieveList<ExtensionManifestDataModel>();
-                foreach (dynamic emd in ea.ExtensionsMetadata) {
+                foreach (IExtensionManifest emd in ea.ExtensionsMetadata) {
 
                     var evm = new ExtensionViewModel();
                     evm.Load(emd);
                     
-                    var uid = emd.TitleHashed;
+                    var uid = evm.TitleHashed;
                     var found = extensionsInStorage.Where(x => x.Uid == uid).ToList();
                     if (found != null && found.Count() > 0) {
                         evm.Load(found.First());

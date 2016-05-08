@@ -294,6 +294,8 @@ namespace X.Services.Extensions
 
         public string Title { get; set; }
 
+        public string Path { get; set; }
+
         public Guid UniqueID { get; set; }
 
         public string Version { get; set; }
@@ -313,6 +315,7 @@ namespace X.Services.Extensions
             this.Title = data.Title;
             this.UniqueID = data.UniqueID;
             this.Version = data.Version;
+            this.Path = data.Path;
         }
 
     }

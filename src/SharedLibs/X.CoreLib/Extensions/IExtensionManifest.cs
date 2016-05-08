@@ -13,7 +13,7 @@ namespace CoreLib.Extensions
         string Version { get; set; }
         Guid UniqueID { get; set; }
 
-
+        string Path { get; set; }
         string Title { get; set; }
         string DisplayName { get; set; }
         string Abstract { get; set; }

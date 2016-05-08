@@ -11,6 +11,6 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
     <Grid>
-        <TextBox x:Name="tbMain" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,30,0,0" TextWrapping="Wrap" Text="{Binding ElementName=root, Path=ImageSource, Mode=TwoWay}" BorderBrush="DarkGray" Foreground="Black" SelectionHighlightColor="DarkGray" BorderThickness="1" Padding="5" TextChanged="tbMain_TextChanged"></TextBox>
+        <TextBox x:Name="tbMain" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0" TextWrapping="Wrap" Text="{Binding ElementName=root, Path=ImageSource, Mode=TwoWay}" BorderBrush="DarkGray" Foreground="Black" SelectionHighlightColor="DarkGray" BorderThickness="1" Padding="5" TextChanged="tbMain_TextChanged"></TextBox>
     </Grid>
 </UserControl>

@@ -30,18 +30,18 @@ namespace X.Browser
         public ExtensionInToolbarPositions FoundInToolbarPositions { get; set; }
         public ExtensionInToolbarPositions LaunchInDockPositions { get; set; }
 
-        public void Load(dynamic extensionManifest) {
-            UniqueID = Guid.Parse(extensionManifest.UniqueID);
+        public void Load(IExtensionManifest extensionManifest) {
+            UniqueID = extensionManifest.UniqueID;
             Title = extensionManifest.Title;
             Path = extensionManifest.Path;
             IconUrl = extensionManifest.IconUrl;
             Publisher = extensionManifest.Publisher;
             Version = extensionManifest.Version;
-            IsExtEnabled = bool.Parse(extensionManifest.IsExtEnabled);
-            CanUninstall = bool.Parse(extensionManifest.CanUninstall);
+            IsExtEnabled = extensionManifest.IsExtEnabled;
+            CanUninstall = extensionManifest.CanUninstall;
 
-            FoundInToolbarPositions = Enum.Parse(typeof(ExtensionInToolbarPositions), extensionManifest.FoundInToolbarPositions);
-            LaunchInDockPositions = Enum.Parse(typeof(ExtensionInToolbarPositions), extensionManifest.LaunchInDockPositions);
+            FoundInToolbarPositions = extensionManifest.FoundInToolbarPositions;
+            LaunchInDockPositions = extensionManifest.LaunchInDockPositions;
         }
 
         public void Load(ExtensionManifestDataModel extensionManifest) {
