@@ -505,6 +505,7 @@
     <Compile Include="Sprites\IVisualTreeElement.cs" />
     <Compile Include="Sprites\SpriteBatch.cs" />
     <Compile Include="Viewer\ContentViewEventArgs.cs" />
+    <Compile Include="Viewer\IContentView.cs" />
     <Compile Include="Viewer\IContentRenderer.cs" />
     <Compile Include="WriteableBitmapExtensions.cs" />
     <EmbeddedResource Include="Properties\X.CoreLib.rd.xml" />

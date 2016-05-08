@@ -59,13 +59,23 @@ namespace X.Viewer.SketchFlow
 
         public void Load()
         {
-            _renderElement = new SketchView(this);
+            if (_renderElement == null) {
+                _renderElement = new SketchView();
+                var cvre = _renderElement as IContentView;
+                cvre.SendMessage += SendMessageThru;
+                cvre.Load();
+            }
         }
 
         public void Unload()
         {
-            ((IDisposable)_renderElement).Dispose();
-            _renderElement = null;
+            if (_renderElement != null) {
+                var cvre = _renderElement as IContentView;
+                cvre.SendMessage -= SendMessageThru;
+                cvre.Unload();
+                cvre = null;
+                _renderElement = null;
+            }
         }
 
         public void UpdateSource(string uri)

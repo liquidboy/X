@@ -21,18 +21,8 @@
     
     960 x 540
     
-    
     -->
     <Grid x:Name="layoutRoot" Background="White" PointerWheelChanged="layoutRoot_PointerWheelChanged" PointerPressed="layoutRoot_PointerPressed" PointerReleased="layoutRoot_PointerReleased" PointerMoved="layoutRoot_PointerMoved">
-        <xuizc:Canvas x:Name="cvMainContainer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White" RenderTransformOrigin="0,0" >
-            <xuizc:Canvas.Content>
-                <Canvas x:Name="cvMain" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White" RenderTransformOrigin="0.5,0.5" >
-                    <Canvas.RenderTransform >
-                        <CompositeTransform TranslateX="0" TranslateY="0"   />
-                    </Canvas.RenderTransform>
-                </Canvas>
-            </xuizc:Canvas.Content>
-        </xuizc:Canvas>
        
         <Canvas x:Name="cvMainAdorner" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RenderTransformOrigin="0.5,0.5"></Canvas>
         <controls:Toolbar x:Name="toolbar" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,20,0" PerformAction="toolbar_PerformAction" ></controls:Toolbar>

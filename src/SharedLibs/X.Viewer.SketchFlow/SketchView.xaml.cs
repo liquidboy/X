@@ -14,42 +14,114 @@ using Windows.UI;
 using Windows.Foundation;
 using X.Services.Data.Models;
 using X.Services.Data;
+using X.UI.ZoomCanvas;
 
 namespace X.Viewer.SketchFlow
 {
-    public sealed partial class SketchView : UserControl, IDisposable
+    public sealed partial class SketchView : UserControl, IContentView
     {
-        IContentRenderer _renderer;
-        Sketch vm;
+        public event EventHandler<ContentViewEventArgs> SendMessage;
 
+        Sketch vm;
+        UI.ZoomCanvas.Canvas cvMainContainer;
+        Windows.UI.Xaml.Controls.Canvas cvMain;
         bool IsMouseDown = false;
 
-        public SketchView(IContentRenderer renderer)
+        public SketchView()
         {
             this.InitializeComponent();
 
+            this.Loaded += SketchView_Loaded;
+
+        }
+
+
+        private void SketchView_Loaded(object sender, RoutedEventArgs e)
+        {
+            //var ct = cvMain.RenderTransform as CompositeTransform;
+            //cvMainContainer.Scale = ct.ScaleX;
+
             vm = new Sketch();
-            this.DataContext = vm;
-            
-            _renderer = renderer;
-
-            var ct = cvMain.RenderTransform as CompositeTransform;
-            cvMainContainer.Scale = ct.ScaleX;
-
             SampleData();
+            //this.DataContext = vm;
 
             //foreach (var pg in vm.Pages) {
             //    StorageService.Instance.AzureStorage.Save<ISketchPageDataModel>(pg);
             //}
-            
+
         }
+        public void Load()
+        {
+            //changed to creating zcanvas by code rather than xaml, it was causing a memory leak
+            cvMainContainer = new UI.ZoomCanvas.Canvas() { HorizontalAlignment = HorizontalAlignment.Stretch, VerticalAlignment = VerticalAlignment.Stretch, Background = new SolidColorBrush(Colors.White) , RenderTransformOrigin = new Point(0,0) };
+            cvMain = new Windows.UI.Xaml.Controls.Canvas() { HorizontalAlignment = HorizontalAlignment.Stretch, VerticalAlignment = VerticalAlignment.Stretch, Background = new SolidColorBrush(Colors.White), RenderTransformOrigin = new Point(0.5d, 0.5d) };
+            cvMain.RenderTransform = new CompositeTransform() { ScaleX = 1, ScaleY = 1, TranslateX = 0, TranslateY = 0 };
+            cvMainContainer.Content = cvMain;
+            layoutRoot.Children.Insert(0, cvMainContainer);
+
+            var ct = cvMain.RenderTransform as CompositeTransform;
+            cvMainContainer.Scale = ct.ScaleX;
+        }
+
+        public void Unload()
+        {
+            if (vm != null)
+            {
+
+                if (cvMain.Children.Count > 0)
+                {
+                    foreach (var nc in cvMain.Children)
+                    {
+                        if (nc is PageLayout)
+                        {
+                            var ncpl = nc as PageLayout;
+                            ncpl.PerformAction -= PageLayout_PerformAction;
+                            ncpl.DataContext = null;
+                        }
+                    }
+                    cvMain.Children.Clear();
+                }
+
+                if (vm.Pages != null)
+                {
+                    foreach (var pg in vm.Pages)
+                    {
+                        pg.Layers.Clear();
+                    }
+                    vm.Pages.Clear();
+                }
+                if (cvMain.Children.Count > 0)
+                {
+                    //foreach (var nc in cvMain.Children) {
+                    //    if (nc is PageLayout) {
+                    //        var ncpl = nc as PageLayout;
+                    //        ncpl.PerformAction -= PageLayout_PerformAction;
+                    //    }
+                    //}
+                    cvMain.Children.Clear();
+                }
+
+                vm = null;
+            }
+
+            cvMainContainer.Content = null;
+            cvMain.RenderTransform = null;
+            cvMain = null;
+            
+
+
+            layoutRoot.Children.Remove(cvMainContainer);
+            //cvMainContainer.Content = null;
+            cvMainContainer = null;
+        }
+
 
         private void SampleData() {
             var pg = new SketchPage() { Title = "Splash", Width = 360, Height = 640, Top = 100, Left = 100 };
             pg.Layers.Add(new PageLayer());
             var nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
-            nc.SetValue(Canvas.LeftProperty, pg.Left);
-            nc.SetValue(Canvas.TopProperty, pg.Top);
+            nc.SetValue(Windows.UI.Xaml.Controls.Canvas.LeftProperty, pg.Left);
+            nc.SetValue(Windows.UI.Xaml.Controls.Canvas.TopProperty, pg.Top);
             nc.PerformAction += PageLayout_PerformAction;
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
@@ -59,8 +131,8 @@ namespace X.Viewer.SketchFlow
             pg.Layers.Add(new PageLayer());
             pg.Layers.Add(new PageLayer());
             nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
-            nc.SetValue(Canvas.LeftProperty, pg.Left);
-            nc.SetValue(Canvas.TopProperty, pg.Top);
+            nc.SetValue(Windows.UI.Xaml.Controls.Canvas.LeftProperty, pg.Left);
+            nc.SetValue(Windows.UI.Xaml.Controls.Canvas.TopProperty, pg.Top);
             nc.PerformAction += PageLayout_PerformAction;
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
@@ -70,8 +142,8 @@ namespace X.Viewer.SketchFlow
             pg.Layers.Add(new PageLayer());
             pg.Layers.Add(new PageLayer());
             nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
-            nc.SetValue(Canvas.LeftProperty, pg.Left);
-            nc.SetValue(Canvas.TopProperty, pg.Top);
+            nc.SetValue(Windows.UI.Xaml.Controls.Canvas.LeftProperty, pg.Left);
+            nc.SetValue(Windows.UI.Xaml.Controls.Canvas.TopProperty, pg.Top);
             nc.PerformAction += PageLayout_PerformAction;
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
@@ -80,8 +152,8 @@ namespace X.Viewer.SketchFlow
             pg.Layers.Add(new PageLayer());
             pg.Layers.Add(new PageLayer());
             nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
-            nc.SetValue(Canvas.LeftProperty, pg.Left);
-            nc.SetValue(Canvas.TopProperty, pg.Top);
+            nc.SetValue(Windows.UI.Xaml.Controls.Canvas.LeftProperty, pg.Left);
+            nc.SetValue(Windows.UI.Xaml.Controls.Canvas.TopProperty, pg.Top);
             nc.PerformAction += PageLayout_PerformAction;
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
@@ -101,21 +173,14 @@ namespace X.Viewer.SketchFlow
             vm.Pages[3].Layers[1].XamlFragments.Add(new XamlFragment() { Uid = "xx9", Xaml = @"<StackPanel Orientation=""Horizontal"" HorizontalAlignment=""Right"" VerticalAlignment=""Top"" Margin=""0,5,10,0""><xuip:Path PathType=""Sound"" Width=""20"" Height=""20"" Foreground=""White""  /><xuip:Path PathType=""BatteryLow"" Width=""35"" Height=""22"" Foreground=""White""  /></StackPanel>" });
             vm.Pages[3].ExternalPC("Layers");
 
-            
-        }
 
-
-
-        public void Dispose()
-        {
-            _renderer = null;
         }
 
         private void toolbar_PerformAction(object sender, EventArgs e)
         {
             var actionToPerform = (string)sender;
 
-            if (actionToPerform == "SnapViewer") _renderer.SendMessageThru(null, new ContentViewEventArgs() { Type = actionToPerform });
+            if (actionToPerform == "SnapViewer") SendMessage?.Invoke(null, new ContentViewEventArgs() { Type = actionToPerform });
             else if (actionToPerform == "AddPage640360") AddPage(360, 640);
             else if (actionToPerform == "AddPage18001200") AddPage(1800, 1200);
             else if (actionToPerform == "AddPage1400768") AddPage(1400, 768);
@@ -153,8 +218,8 @@ namespace X.Viewer.SketchFlow
             }
 
             nc.Width = w; nc.Height = h;
-            nc.SetValue(Canvas.LeftProperty, Math.Abs(x));
-            nc.SetValue(Canvas.TopProperty, Math.Abs(y));
+            nc.SetValue(Windows.UI.Xaml.Controls.Canvas.LeftProperty, Math.Abs(x));
+            nc.SetValue(Windows.UI.Xaml.Controls.Canvas.TopProperty, Math.Abs(y));
             if (template != null) ((IStamp)nc).GenerateFromXAML(template);
 
             ((IStamp)nc).PerformAction += Stamp_PerformAction;
@@ -174,8 +239,8 @@ namespace X.Viewer.SketchFlow
         private void Stamp_PerformAction(object sender, EventArgs e)
         {
             _currentStamp = (UIElement)sender;
-            _stampStartX = (double)_currentStamp.GetValue(Canvas.LeftProperty);
-            _stampStartY = (double)_currentStamp.GetValue(Canvas.TopProperty);
+            _stampStartX = (double)_currentStamp.GetValue(Windows.UI.Xaml.Controls.Canvas.LeftProperty);
+            _stampStartY = (double)_currentStamp.GetValue(Windows.UI.Xaml.Controls.Canvas.TopProperty);
 
             if (e is Controls.Stamps.ResizeMoveEdgesEventArgs)
             {
@@ -212,7 +277,7 @@ namespace X.Viewer.SketchFlow
                         var npl = new PageLayer();
                         var gt = ((FrameworkElement)stamp).TransformToVisual(_currentPageLayoutForStamps);
                         npl.HasChildContainerCanvas = true;
-                        var ptCenter = gt.TransformPoint(new Windows.Foundation.Point(0,0));
+                        var ptCenter = gt.TransformPoint(new Windows.Foundation.Point(0, 0));
                         var uid = RandomString(15);
                         var str = stamp.GenerateXAML(uid, cvMainContainer.Scale, cvMainContainer.Scale, ptCenter.X, ptCenter.Y);
                         npl.XamlFragments.Add(new XamlFragment() { Uid = uid, Xaml = str, Type = stamp.GetType(), Data = stamp.GetData() });
@@ -251,8 +316,8 @@ namespace X.Viewer.SketchFlow
             var pg = new SketchPage() { Width = width, Height = height, Top = (int)rect.Y, Left = (int)rect.X };
             pg.Layers.Add(new PageLayer());
             var nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
-            nc.SetValue(Canvas.LeftProperty, pg.Left);
-            nc.SetValue(Canvas.TopProperty, pg.Top);
+            nc.SetValue(Windows.UI.Xaml.Controls.Canvas.LeftProperty, pg.Left);
+            nc.SetValue(Windows.UI.Xaml.Controls.Canvas.TopProperty, pg.Top);
             nc.PerformAction += PageLayout_PerformAction;
             cvMain.Children.Add(nc);
             vm.Pages.Add(pg);
@@ -283,24 +348,27 @@ namespace X.Viewer.SketchFlow
                 else if (ea.ActionType == "ResizePageLayoutFinished") IsResizingPage = false;
 
 
-                ptStartPt.X = (double)_currentPageLayout.GetValue(Canvas.LeftProperty);
-                ptStartPt.Y = (double)_currentPageLayout.GetValue(Canvas.TopProperty);
+                ptStartPt.X = (double)_currentPageLayout.GetValue(Windows.UI.Xaml.Controls.Canvas.LeftProperty);
+                ptStartPt.Y = (double)_currentPageLayout.GetValue(Windows.UI.Xaml.Controls.Canvas.TopProperty);
 
             }
             else if (e is PageLayerEventArgs)
             {
                 var plea = e as PageLayerEventArgs;
-                if (plea.ActionType == "EditLayer") {
-                    foreach (var ci in cvMain.Children) {
-                        if (ci is PageLayout) {
+                if (plea.ActionType == "EditLayer")
+                {
+                    foreach (var ci in cvMain.Children)
+                    {
+                        if (ci is PageLayout)
+                        {
                             var pg = ((FrameworkElement)ci).DataContext as SketchPage;
-                            ((PageLayout)ci).SetValue(Canvas.LeftProperty, pg.Left);
+                            ((PageLayout)ci).SetValue(Windows.UI.Xaml.Controls.Canvas.LeftProperty, pg.Left);
                             //((PageLayout)ci).SetValue(Canvas.TopProperty, pg.Top);  //<-- for some reason the last page always repositions very low (need to resolve before uncommenting)
                         }
                     }
-                    
+
                 }
-                else if (plea.ActionType == "EditXamlFragment") 
+                else if (plea.ActionType == "EditXamlFragment")
                 {
                     //plea.Layer.IsEnabled = !plea.Layer.IsEnabled;
                     //foreach (var frag in plea.Layer.XamlFragments)
@@ -345,7 +413,7 @@ namespace X.Viewer.SketchFlow
                     //vm.SelectedPage.ExternalPC("Layers");
                 }
             }
-      
+
         }
 
 
@@ -356,7 +424,7 @@ namespace X.Viewer.SketchFlow
 
             cvMainContainer.Zoom(sender, e);
         }
-        
+
 
 
 
@@ -389,8 +457,12 @@ namespace X.Viewer.SketchFlow
    
         }
 
+       
+
         double ptDifX = 0;
         double ptDifY = 0;
+
+
         private void layoutRoot_PointerMoved(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
 
@@ -432,7 +504,8 @@ namespace X.Viewer.SketchFlow
 
                     //console1.Text = $"right  : {ptStartPt.X + newX}   ey :  { 0 }     ";
                 }
-                else {
+                else
+                {
                     newX = Math.Abs(ptStart.Position.X - ptEnd.Position.X); //diff from start
                     newX = (newX * (1 / cvMainContainer.Scale)); //take into account the scale factor
                     newX = ptStartPt.X - newX; // add to current canvas position
@@ -440,7 +513,7 @@ namespace X.Viewer.SketchFlow
                     //console1.Text = $"left : {ptStartPt.X - newX}   ey :  { 0 }     ";
                 }
 
-                _currentPageLayout.SetValue(Canvas.LeftProperty, newX);
+                _currentPageLayout.SetValue(Windows.UI.Xaml.Controls.Canvas.LeftProperty, newX);
                 lvm.Left = (int)newX;
                 lvm.ExternalPC("Left");
 
@@ -452,7 +525,8 @@ namespace X.Viewer.SketchFlow
 
                     //console1.Text = $"right  : {ptStartPt.X + newY}   ey :  { 0 }     ";
                 }
-                else {
+                else
+                {
                     newY = Math.Abs(ptStart.Position.Y - ptEnd.Position.Y); //diff from start
                     newY = (newY * (1 / cvMainContainer.Scale)); //take into account the scale factor
                     newY = ptStartPt.Y - newY; // add to current canvas position
@@ -460,7 +534,7 @@ namespace X.Viewer.SketchFlow
                     //console1.Text = $"left : {ptStartPt.Y - newY}   ey :  { 0 }     ";
                 }
 
-                _currentPageLayout.SetValue(Canvas.TopProperty, newY);
+                _currentPageLayout.SetValue(Windows.UI.Xaml.Controls.Canvas.TopProperty, newY);
                 lvm.Top = (int)newX;
                 lvm.ExternalPC("Top");
 
@@ -472,7 +546,8 @@ namespace X.Viewer.SketchFlow
 
                 return;
             }
-            else if (IsResizingStamp) {
+            else if (IsResizingStamp)
+            {
                 console2.Text = $"sx : {ptStart.Position.X}   sy :  { ptStart.Position.Y }     ";
                 console3.Text = $"deltax : {ptEnd.Position.X - ptStart.Position.X}   deltay :  { ptEnd.Position.Y - ptStart.Position.Y}     ";
 
@@ -482,8 +557,8 @@ namespace X.Viewer.SketchFlow
                 {
                     console2.Text = $"sx : {ptStart.Position.X}  { _stampStartX }  sy :  { ptStart.Position.Y } { _stampStartY }    ";
 
-                    _currentStamp.SetValue(Canvas.LeftProperty, _stampStartX + (ptEnd.Position.X - ptStart.Position.X));
-                    _currentStamp.SetValue(Canvas.TopProperty, _stampStartY + (ptEnd.Position.Y - ptStart.Position.Y));
+                    _currentStamp.SetValue(Windows.UI.Xaml.Controls.Canvas.LeftProperty, _stampStartX + (ptEnd.Position.X - ptStart.Position.X));
+                    _currentStamp.SetValue(Windows.UI.Xaml.Controls.Canvas.TopProperty, _stampStartY + (ptEnd.Position.Y - ptStart.Position.Y));
 
                 }
                 else if (stampe.ActionType == eActionTypes.RotateBottomLeft)
@@ -519,16 +594,16 @@ namespace X.Viewer.SketchFlow
                 line1.Text = $"ex : {ptEnd.Position.X}   ey :  { ptEnd.Position.Y} ";
                 line2.Text = $"scale : {cvMainContainer.Scale}   ptDifXStart :  { ptDifXStart}  ptDifYStart :  { ptDifYStart} ";
                 line3.Text = $"translateX : {ct.TranslateX}   translateY :  { ct.TranslateY} ";
-                
+
                 ptDifX = ptDifXStart + ((ptStart.Position.X - ptEnd.Position.X) / cvMainContainer.Scale);
                 ptDifY = ptDifYStart + ((ptStart.Position.Y - ptEnd.Position.Y) / cvMainContainer.Scale);
 
                 line4.Text = $"s-e X : {ptStart.Position.X - ptEnd.Position.X}   s-e Y :  { ptStart.Position.Y - ptEnd.Position.Y}  ";
-                
 
-                ct.TranslateX = -1 * ptDifX ;
-                ct.TranslateY = -1 * ptDifY ;
-                
+
+                ct.TranslateX = -1 * ptDifX;
+                ct.TranslateY = -1 * ptDifY;
+
 
             }
 
