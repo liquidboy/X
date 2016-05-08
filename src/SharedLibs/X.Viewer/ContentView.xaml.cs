@@ -61,11 +61,13 @@ namespace X.Viewer
             if (!e.NewValue.Equals(e.OldValue)) {
 
                 if (_cv != null) {
-                    _cv.layoutRoot.Children.Remove(_cv.Renderer.RenderElement);
+                    if (_cv.Renderer != null) {
+                        _cv.layoutRoot.Children.Remove(_cv.Renderer.RenderElement);
+                        _cv.Renderer.Unload();
+                        _cv.Renderer.SendMessage -= Renderer_SendMessage;
+                        _cv.Renderer = null;
+                    }
                     _cv.layoutRoot.Children.Clear();
-                    _cv.Renderer.Unload();
-                    _cv.Renderer.SendMessage -= Renderer_SendMessage;
-                    _cv.Renderer = null;
                 }
 
                  ContentView cv = (ContentView)d;
