@@ -47,7 +47,11 @@ namespace X.Browser.Views
             LoadThirdPartyExtensions(new List<ExtensionManifest>{
                 X.Extensions.ThirdParty.GitX.Installer.GetManifest(),
                 X.Extensions.ThirdParty.JsRTChakraCoreX.Installer.GetManifest(),
-                X.Extensions.ThirdParty.Flickr.Installer.GetManifest()
+                X.Extensions.ThirdParty.Flickr.Installer.GetManifest(),
+                X.Extensions.ThirdParty.OneDriveX.Installer.GetManifest(),
+                X.Extensions.ThirdParty.Office365.Installer.GetManifest(),
+                X.Extensions.ThirdParty.Aws.Installer.GetManifest(),
+                X.Extensions.ThirdParty.Azure.Installer.GetManifest(),
             });
 
 
