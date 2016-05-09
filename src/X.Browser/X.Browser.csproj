@@ -203,6 +203,10 @@
       <Project>{e041d961-7f15-4d78-9550-8762c95daac7}</Project>
       <Name>X.Extensions.ThirdParty.Azure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.Extensions.ThirdParty.Facebook\X.Extensions.ThirdParty.Facebook.csproj">
+      <Project>{b96db5e4-2cf7-4cac-8d13-9e7afba0b1f2}</Project>
+      <Name>X.Extensions.ThirdParty.Facebook</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharedLibs\X.Extensions.ThirdParty.Flickr\X.Extensions.ThirdParty.Flickr.csproj">
       <Project>{1615cf12-d6d2-4fbf-8cc2-e651f572d8e6}</Project>
       <Name>X.Extensions.ThirdParty.Flickr</Name>
@@ -222,6 +226,10 @@
     <ProjectReference Include="..\SharedLibs\X.Extensions.ThirdParty.OneDriveX\X.Extensions.ThirdParty.OneDriveX.csproj">
       <Project>{f4a16b99-df3d-497e-a6ae-e9b018d338a6}</Project>
       <Name>X.Extensions.ThirdParty.OneDriveX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.Extensions.ThirdParty.Twitter\X.Extensions.ThirdParty.Twitter.csproj">
+      <Project>{9882b19c-6a92-42ac-b6c0-6c76ebd46093}</Project>
+      <Name>X.Extensions.ThirdParty.Twitter</Name>
     </ProjectReference>
     <ProjectReference Include="..\SharedLibs\X.Extensions.ThirdParty\X.Extensions.ThirdParty.csproj">
       <Project>{ccab5d7d-4fc3-4e60-9a9d-e63b1d5c8be5}</Project>
