@@ -32,10 +32,7 @@ namespace X.Browser.Views
         void InitExtensions()
         {
             ExtensionManifest = new ExtensionManifest("Browser Shell", string.Empty, "Sample Extensions", "1.0", "The chrome of the browser is itself an extension. Enabling/Disabling this will affect ALL extensions.", ExtensionInToolbarPositions.None, ExtensionInToolbarPositions.None);
-
-
-
-
+            
             X.Services.Extensions.ExtensionsService.Instance.Install(this);
             X.Services.Extensions.ExtensionsService.Instance.Install(ctlToast);
 

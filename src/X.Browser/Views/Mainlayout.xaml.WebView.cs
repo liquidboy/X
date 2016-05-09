@@ -45,7 +45,7 @@ namespace X.Browser.Views
                     try
                     {
                         BrowserVM vm = this.DataContext as BrowserVM;
-                        vm.SelectedTab.Uri = ea.Uri.OriginalString;
+                        if (vm.SelectedTab != null) vm.SelectedTab.Uri = ea.Uri.OriginalString;
                         X.Services.Extensions.ExtensionsService.Instance.SendMessage(ea.Uri, ExtensionType.WVNavigationStarting);
                     }
                     catch (Exception ex)
