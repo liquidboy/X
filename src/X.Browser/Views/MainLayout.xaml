@@ -325,29 +325,33 @@
             </xuichrome:Header.TitleContent>
         </xuichrome:Header>
 
-        <!-- MORE TAB -->
-        <Button
+        
+        <StackPanel Orientation="Horizontal" Margin="0,0,185,2" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <!-- MORE TAB -->
+            <Button
                 x:Name="tabButtonMore"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
                 Background="#FFFFC500"
                 BorderBrush="{x:Null}"
                 BorderThickness="0"
-                Padding="10,5,10,5"
+                Padding="0,5,0,5"
                 ClickMode="Release"
                 UseLayoutRounding="False"
                 Command="{Binding TabMoreCommand}"
                 Height="40"
                 IsEnabled="{Binding IsShowingMoreTab, Converter={StaticResource InverseBooleanConverter}}"
-                Style="{StaticResource TabMoreButtonStyle}" Margin="0,0,215,2">
-            <Grid BorderBrush="{StaticResource MoreTabAccent5}" BorderThickness="{Binding IsShowingMoreTab,Converter={StaticResource MoreTabBorderThicknessConverter}}" Padding="0,0,10,5" >
-                <Path Data="M285.305,0L285.305,75.710529 189.82141,152.64609 189.01901,153.30347 189.42913,153.64473 142.45632,191.5 95.465693,153.64473 0,76.69482 0,0.98785392 108.34008,88.30862 142.03731,115.4374 142.84418,114.79439 176.94702,87.302791z" Stretch="Uniform" Fill="White" Width="16" Height="16" Margin="0,5,0,0" RenderTransformOrigin="0.5,0.5">
-                </Path>
-            </Grid>
-        </Button>
-
-        <!-- NEW TAB -->
-        <Button
+                Style="{StaticResource TabMoreButtonStyle}" >
+                <Grid BorderBrush="{StaticResource MoreTabAccent5}" BorderThickness="{Binding IsShowingMoreTab,Converter={StaticResource MoreTabBorderThicknessConverter}}" Padding="10,0,0,5" >
+                    <Path 
+                        Margin="5,5,10,0"
+                        Data="M285.305,0L285.305,75.710529 189.82141,152.64609 189.01901,153.30347 189.42913,153.64473 142.45632,191.5 95.465693,153.64473 0,76.69482 0,0.98785392 108.34008,88.30862 142.03731,115.4374 142.84418,114.79439 176.94702,87.302791z" Stretch="Uniform" Fill="White" Width="16" Height="16" RenderTransformOrigin="0.5,0.5">
+                    </Path>
+                </Grid>
+            </Button>
+            
+            <!-- NEW TAB -->
+            <Button
                 x:Name="tabButtonNew"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
@@ -360,9 +364,9 @@
                 UseLayoutRounding="False"
                 Height="40"
                 IsEnabled="{Binding IsShowingAddTab, Converter={StaticResource InverseBooleanConverter}}"
-                Style="{StaticResource TabAddButtonStyle}" Margin="0,0,185,2">
-            <Grid>
-                <Path
+                Style="{StaticResource TabAddButtonStyle}" >
+                <Grid>
+                    <Path
                     Data="F1M1039.59,974.868L1018.83,974.868 1018.83,951.909 995.873,951.901 995.88,931.148 1018.83,931.155 1018.83,908.202 1039.59,908.202 1039.59,931.16 1062.55,931.168 1062.54,951.921 1039.59,951.914 1039.59,974.868z M1021.5,972.202L1036.92,972.202 1036.92,949.247 1059.87,949.254 1059.88,933.835 1036.92,933.827 1036.92,910.868 1021.5,910.868 1021.5,933.822 998.545,933.815 998.541,949.234 1021.5,949.242 1021.5,972.202z"
                     Stretch="Uniform"
                     Fill="#FFFFFFFF"
@@ -370,21 +374,21 @@
                     Height="20"
                     Margin="0,0,0,0"
                     RenderTransformOrigin="0.5,0.5">
-                    <Path.RenderTransform>
-                        <TransformGroup>
-                            <TransformGroup.Children>
-                                <RotateTransform
+                        <Path.RenderTransform>
+                            <TransformGroup>
+                                <TransformGroup.Children>
+                                    <RotateTransform
                                     Angle="0" />
-                                <ScaleTransform
+                                    <ScaleTransform
                                     ScaleX="1"
                                     ScaleY="1" />
-                            </TransformGroup.Children>
-                        </TransformGroup>
-                    </Path.RenderTransform>
-                </Path>
-            </Grid>
-        </Button>
-
+                                </TransformGroup.Children>
+                            </TransformGroup>
+                        </Path.RenderTransform>
+                    </Path>
+                </Grid>
+            </Button>
+        </StackPanel>
 
         <!-- DX LAYER -->
         <Canvas x:Name="canvasDXLayer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed" />
