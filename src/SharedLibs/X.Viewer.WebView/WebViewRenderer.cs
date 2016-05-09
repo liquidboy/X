@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Graphics.Display;
+using Windows.Graphics.Imaging;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 namespace X.Viewer
@@ -228,7 +232,28 @@ namespace X.Viewer
 
         public async Task CaptureThumbnail(Windows.Storage.Streams.InMemoryRandomAccessStream ms)
         {
-            await _renderElement.CapturePreviewToStreamAsync(ms);
+            //rendering the UIElement instead of using the capture api as this is causing a memory leak
+            //await _renderElement.CapturePreviewToStreamAsync(ms);
+
+            var renderTargetBitmap = new RenderTargetBitmap();
+            await renderTargetBitmap.RenderAsync(_renderElement);
+
+            var pixels = await renderTargetBitmap.GetPixelsAsync();
+
+            var logicalDpi = DisplayInformation.GetForCurrentView().LogicalDpi;
+            var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, ms);
+            encoder.SetPixelData(
+                BitmapPixelFormat.Bgra8,
+                BitmapAlphaMode.Ignore,
+                (uint)renderTargetBitmap.PixelWidth,
+                (uint)renderTargetBitmap.PixelHeight,
+                logicalDpi,
+                logicalDpi,
+                pixels.ToArray());
+
+            await encoder.FlushAsync();
+
+
         }
 
         public void SendMessageThru(object source, ContentViewEventArgs ea)
