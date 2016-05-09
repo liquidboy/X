@@ -13,10 +13,10 @@
                         <xuiel:EffectLayer x:Name="bkgLayer" HorizontalAlignment="Stretch"  GlowFill="Transparent" VerticalAlignment="Stretch" GlowAmount="{TemplateBinding GlowAmount}" GlowColor="{TemplateBinding GlowColor}" ShowGlowArea="False" ></xuiel:EffectLayer>
                         <StackPanel x:Name="root" Orientation="Horizontal" FlowDirection="{Binding IsAvatarOnRight, Converter={StaticResource RightToFlowDirectionConverter}}">
                             <StackPanel Orientation="Vertical">
-                                <TextBlock Text="{TemplateBinding SecondaryName}" FontSize="12" HorizontalAlignment="Right" Foreground="White"></TextBlock>
-                                <TextBlock Text="{TemplateBinding PrimaryName}" FontSize="20" HorizontalAlignment="Right" Foreground="White"></TextBlock>
+                                <TextBlock Text="{TemplateBinding SecondaryName}" FontSize="9" HorizontalAlignment="Right" Foreground="White"></TextBlock>
+                                <TextBlock Text="{TemplateBinding PrimaryName}" FontSize="14" HorizontalAlignment="Right" Foreground="White"></TextBlock>
                             </StackPanel>
-                            <Border BorderBrush="White" BorderThickness="1" Width="40" Height="40" VerticalAlignment="Top" Margin="5,3,0,0" >
+                            <Border BorderBrush="White" BorderThickness="1" Width="25" Height="25" VerticalAlignment="Top" Margin="5,3,0,0" >
                                 <Image HorizontalAlignment="Stretch" Stretch="UniformToFill" Source="{TemplateBinding AvatarUri}"/>
                             </Border>
                         </StackPanel>
@@ -30,15 +30,15 @@
             <Setter.Value>
                 <ControlTemplate TargetType="local:CircularCard">
                     <Grid>
-                        <xuiel:EffectLayer x:Name="bkgLayer" HorizontalAlignment="Stretch"  GlowFill="Transparent" VerticalAlignment="Stretch" GlowAmount="{TemplateBinding GlowAmount}" GlowColor="{TemplateBinding GlowColor}" ShowGlowArea="False" ></xuiel:EffectLayer>
+                        <!--<xuiel:EffectLayer x:Name="bkgLayer" HorizontalAlignment="Stretch"  GlowFill="Transparent" VerticalAlignment="Stretch" GlowAmount="{TemplateBinding GlowAmount}" GlowColor="{TemplateBinding GlowColor}" ShowGlowArea="False" ></xuiel:EffectLayer>-->
                         <StackPanel x:Name="root" Orientation="Vertical">
-                            <Ellipse  Width="40" Height="40" IsHitTestVisible="False" VerticalAlignment="Top" >
+                            <Ellipse  Width="25" Height="25" IsHitTestVisible="False" VerticalAlignment="Top" >
                                 <Ellipse.Fill>
                                     <ImageBrush ImageSource="{Binding AvatarUri}" Stretch="UniformToFill" />
                                 </Ellipse.Fill>
                             </Ellipse>
                             <StackPanel Orientation="Vertical">
-                                <TextBlock Text="{TemplateBinding PrimaryName}" FontSize="16" HorizontalAlignment="Center" Foreground="White"></TextBlock>
+                                <TextBlock Text="{TemplateBinding PrimaryName}" FontSize="14" HorizontalAlignment="Center" Foreground="White"></TextBlock>
                                 <TextBlock Text="{TemplateBinding SecondaryName}" FontSize="9" HorizontalAlignment="Center" Foreground="White"></TextBlock>
                             </StackPanel>
                         </StackPanel>

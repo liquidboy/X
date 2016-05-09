@@ -12,13 +12,13 @@
     xmlns:xuilt="using:X.UI.LiteTab"
     xmlns:xuip="using:X.UI.Path"
     xmlns:xuildg="using:X.UI.LiteDataGrid"
-    xmlns:xuiuc="using:X.UI.UserCard"
     xmlns:xuichrome="using:X.UI.Chrome"
     xmlns:xviewer="using:X.Viewer"
     xmlns:xonebox="using:X.UI.OneBox"
     xmlns:converters="using:X.Browser.Converters"
     xmlns:xuiat="using:X.UI.AddTab"
     xmlns:xuimt="using:X.UI.MoreTab"
+    xmlns:xuiuc="using:X.UI.UserCard"
     mc:Ignorable="d">
     <Page.Resources>
         <converters:BooleanToVisibilityConverter x:Key="TrueToVisibleConverter" />
@@ -319,14 +319,14 @@
                         <Rectangle x:Name="recDragTop" Height="15" HorizontalAlignment="Stretch" Fill="White" Opacity="0.1" VerticalAlignment="Top" IsHitTestVisible="True" />
 
                         <!--tabs-->
-                        <xuirt:TabList x:Name="tlMainTabs" Margin="0,0,260,0"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  TabPointerEntered="tlMainTabs_TabPointerEntered" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" TabPointerExited="tlMainTabs_TabPointerExited" ></xuirt:TabList>
+                        <xuirt:TabList x:Name="tlMainTabs" Margin="0,0,350,0"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  TabPointerEntered="tlMainTabs_TabPointerEntered" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" TabPointerExited="tlMainTabs_TabPointerExited" ></xuirt:TabList>
                     </Grid>
                 </ContentControl>
             </xuichrome:Header.TitleContent>
         </xuichrome:Header>
 
         
-        <StackPanel Orientation="Horizontal" Margin="0,0,185,2" HorizontalAlignment="Right" VerticalAlignment="Top">
+        <StackPanel Orientation="Horizontal" Margin="0,0,140,2" HorizontalAlignment="Right" VerticalAlignment="Top">
             <!-- MORE TAB -->
             <Button
                 x:Name="tabButtonMore"
@@ -388,6 +388,10 @@
                     </Path>
                 </Grid>
             </Button>
+
+            <xuiuc:SmallCard Foreground="Black" IsAvatarOnRight="True" PrimaryName="Jose Fajardo" SecondaryName="online" Margin="10,5,0,0" AvatarUri="ms-appx:///Assets/jose.png">
+
+            </xuiuc:SmallCard>
         </StackPanel>
 
         <!-- DX LAYER -->

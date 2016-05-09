@@ -15,7 +15,7 @@ namespace X.UI.UserCard
 {
     public sealed class CircularCard : Control
     {
-        EffectLayer.EffectLayer _bkgLayer;//x
+        //EffectLayer.EffectLayer _bkgLayer;//x
 
         StackPanel _root;
         int RenderTargetIndexFor_Root = 0;
@@ -50,17 +50,17 @@ namespace X.UI.UserCard
 
         private void CircularCard_Loaded(object sender, RoutedEventArgs e)
         {
-            if (_bkgLayer != null)
-            {
-                _bkgLayer.DrawUIElements(_root, offsetX: 3);
-                _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY, EffectLayer.EffectGraphType.Glow);
-                //dtInvalidate.Start();
-            }
+            //if (_bkgLayer != null)
+            //{
+            //    _bkgLayer.DrawUIElements(_root, offsetX: 3);
+            //    _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY, EffectLayer.EffectGraphType.Glow);
+            //    //dtInvalidate.Start();
+            //}
         }
 
         protected override void OnApplyTemplate()
         {
-            if (_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
+            //if (_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
 
             if (_root == null)
             {
@@ -68,12 +68,14 @@ namespace X.UI.UserCard
                 _root.DataContext = this;
             }
 
-            if (_bkgLayer != null && _root != null && _root.ActualWidth != 0) _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY, EffectLayer.EffectGraphType.Glow);
+            //if (_bkgLayer != null && _root != null && _root.ActualWidth != 0) _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY, EffectLayer.EffectGraphType.Glow);
 
             base.OnApplyTemplate();
         }
         
-        public void Invalidate(double offsetX = 3, double offsetY = 0) { _bkgLayer?.DrawUIElements(_root, RenderTargetIndexFor_Root, offsetX, offsetY); }
+        public void Invalidate(double offsetX = 3, double offsetY = 0) {
+            //_bkgLayer?.DrawUIElements(_root, RenderTargetIndexFor_Root, offsetX, offsetY);
+        }
 
 
 

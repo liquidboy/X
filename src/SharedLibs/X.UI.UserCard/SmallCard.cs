@@ -15,7 +15,7 @@ namespace X.UI.UserCard
 {
     public sealed class SmallCard : Control
     {
-        EffectLayer.EffectLayer _bkgLayer;//x
+        //EffectLayer.EffectLayer _bkgLayer;//x
 
         StackPanel _root;
         int RenderTargetIndexFor_Root = 0;
@@ -38,16 +38,16 @@ namespace X.UI.UserCard
 
         private void SmallCard_Loaded(object sender, RoutedEventArgs e)
         {
-            if (_bkgLayer != null)
-            {
-                _bkgLayer.DrawUIElements(_root); 
-                _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY);
-            }
+            //if (_bkgLayer != null)
+            //{
+            //    _bkgLayer.DrawUIElements(_root); 
+            //    _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY);
+            //}
         }
 
         protected override void OnApplyTemplate()
         {
-            if (_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
+            //if (_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
 
             if (_root == null)
             {
@@ -55,12 +55,14 @@ namespace X.UI.UserCard
                 _root.DataContext = this;
             }
 
-            if (_bkgLayer != null && _root != null && _root.ActualWidth != 0) _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY);
+            //if (_bkgLayer != null && _root != null && _root.ActualWidth != 0) _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY);
 
             base.OnApplyTemplate();
         }
         
-        public void Invalidate(double offsetX = 0, double offsetY = 0) { _bkgLayer?.DrawUIElements(_root, RenderTargetIndexFor_Root, offsetX, offsetY); }
+        public void Invalidate(double offsetX = 0, double offsetY = 0) {
+            //_bkgLayer?.DrawUIElements(_root, RenderTargetIndexFor_Root, offsetX, offsetY);
+        }
 
 
 

@@ -126,6 +126,7 @@
     <None Include="X.Browser_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\jose.png" />
     <Content Include="Assets\MissingImage.png" />
     <Content Include="Assets\stilltobegenerated.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
