@@ -96,7 +96,7 @@ namespace X.Browser.Views
 
         public void SetSelectedTab(string tileId) {
 
-            var found = vm.Tabs.Where(x => x.Uid == tileId).First();
+            var found = vm.GetTabByUID(tileId);
             if (found != null) {
                 vm.SelectedTab = found;
                 vm.ExposedNotifyPropertyChanged("SelectedTab");

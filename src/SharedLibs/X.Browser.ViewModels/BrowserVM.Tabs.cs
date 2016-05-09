@@ -64,6 +64,16 @@ namespace X.Browser.ViewModels
 
         public RelayCommand<object> TabChangedCommand { get { return _tabChangedCommand ?? (_tabChangedCommand = new RelayCommand<object>(ExecuteTabChangedCommand)); } }
 
+        public TabViewModel GetTabByUID(string uid) {
+            var found = Tabs.Where(x => x.Uid == uid).FirstOrDefault();
+            if (found != null) return found;
+
+            found = LockedTabs.Where(x => x.Uid == uid).FirstOrDefault();
+            if (found != null) return found;
+
+            return null;
+        }
+
         private void ExecuteTabChangedCommand(object obj)
         {
             if (this.IsShowingAddTab)
