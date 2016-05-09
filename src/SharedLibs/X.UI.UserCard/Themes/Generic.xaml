@@ -13,10 +13,10 @@
                         <xuiel:EffectLayer x:Name="bkgLayer" HorizontalAlignment="Stretch"  GlowFill="Transparent" VerticalAlignment="Stretch" GlowAmount="{TemplateBinding GlowAmount}" GlowColor="{TemplateBinding GlowColor}" ShowGlowArea="False" ></xuiel:EffectLayer>
                         <StackPanel x:Name="root" Orientation="Horizontal" FlowDirection="{Binding IsAvatarOnRight, Converter={StaticResource RightToFlowDirectionConverter}}">
                             <StackPanel Orientation="Vertical">
-                                <TextBlock Text="{TemplateBinding SecondaryName}" FontSize="9" HorizontalAlignment="Right" Foreground="White"></TextBlock>
-                                <TextBlock Text="{TemplateBinding PrimaryName}" FontSize="14" HorizontalAlignment="Right" Foreground="White"></TextBlock>
+                                <TextBlock Text="{TemplateBinding SecondaryName}" FontSize="9" HorizontalAlignment="Right" Foreground="{TemplateBinding Foreground}"></TextBlock>
+                                <TextBlock Text="{TemplateBinding PrimaryName}" FontSize="14" HorizontalAlignment="Right" Foreground="{TemplateBinding Foreground}"></TextBlock>
                             </StackPanel>
-                            <Border BorderBrush="White" BorderThickness="1" Width="25" Height="25" VerticalAlignment="Top" Margin="5,3,0,0" >
+                            <Border BorderBrush="{TemplateBinding Foreground}" BorderThickness="1" Width="25" Height="25" VerticalAlignment="Top" Margin="5,3,0,0" >
                                 <Image HorizontalAlignment="Stretch" Stretch="UniformToFill" Source="{TemplateBinding AvatarUri}"/>
                             </Border>
                         </StackPanel>
@@ -38,8 +38,8 @@
                                 </Ellipse.Fill>
                             </Ellipse>
                             <StackPanel Orientation="Vertical">
-                                <TextBlock Text="{TemplateBinding PrimaryName}" FontSize="14" HorizontalAlignment="Center" Foreground="White"></TextBlock>
-                                <TextBlock Text="{TemplateBinding SecondaryName}" FontSize="9" HorizontalAlignment="Center" Foreground="White"></TextBlock>
+                                <TextBlock Text="{TemplateBinding PrimaryName}" FontSize="14" HorizontalAlignment="Center" Foreground="{TemplateBinding Foreground}"></TextBlock>
+                                <TextBlock Text="{TemplateBinding SecondaryName}" FontSize="9" HorizontalAlignment="Center" Foreground="{TemplateBinding Foreground}"></TextBlock>
                             </StackPanel>
                         </StackPanel>
                     </Grid>
