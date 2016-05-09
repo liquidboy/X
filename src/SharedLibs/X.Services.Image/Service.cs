@@ -112,66 +112,67 @@ namespace X.Services.Image
         //    return true;
         //}
 
-        public async Task<bool> GenerateResizedImageAsyncOld(int longWidth, double srcWidth, double srcHeight, InMemoryRandomAccessStream srcMemoryStream, string newImageName, location subFolder, int longHeight = 0)
-        {
-            if (_localFolder == null) InitFolders();
+        //public async Task<bool> GenerateResizedImageAsyncOld(int longWidth, double srcWidth, double srcHeight, InMemoryRandomAccessStream srcMemoryStream, string newImageName, location subFolder, int longHeight = 0)
+        //{
+        //    if (_localFolder == null) InitFolders();
 
-            try
-            {
-                int width = 0, height = 0;
-                double factor = srcWidth / srcHeight;
-                if (factor < 1)
-                {
-                    height = longWidth;
-                    width = (int)(longWidth * factor);
-                }
-                else
-                {
-                    width = longWidth;
-                    height = (int)(longWidth / factor);
-                }
+        //    try
+        //    {
+        //        int width = 0, height = 0;
+        //        double factor = srcWidth / srcHeight;
+        //        if (factor < 1)
+        //        {
+        //            height = longWidth;
+        //            width = (int)(longWidth * factor);
+        //        }
+        //        else
+        //        {
+        //            width = longWidth;
+        //            height = (int)(longWidth / factor);
+        //        }
 
-                if (longHeight > 0)
-                {
-                    width = longWidth;
-                    height = longHeight;
-                }
+        //        if (longHeight > 0)
+        //        {
+        //            width = longWidth;
+        //            height = longHeight;
+        //        }
                 
-                WriteableBitmap wb = await BitmapFactory.New((int)srcWidth, (int)srcHeight).FromStream(srcMemoryStream);
+        //        WriteableBitmap wb = await BitmapFactory.New((int)srcWidth, (int)srcHeight).FromStream(srcMemoryStream);
                 
-                //WRITEABLE BITMAP IS THROWING AN ERROR
+        //        //WRITEABLE BITMAP IS THROWING AN ERROR
 
-                var wbthumbnail = wb.Resize(width, height, Windows.UI.Xaml.Media.Imaging.WriteableBitmapExtensions.Interpolation.Bilinear);
+        //        var wbthumbnail = wb.Resize(width, height, Windows.UI.Xaml.Media.Imaging.WriteableBitmapExtensions.Interpolation.Bilinear);
 
-                switch (subFolder)
-                {
-                    case location.MediumFolder:
-                        StorageFile sampleFile1 = await _mediumFolder.CreateFileAsync(newImageName, CreationCollisionOption.ReplaceExisting);
-                        await wbthumbnail.SaveToFile(sampleFile1, BitmapEncoder.PngEncoderId);
-                        break;
-                    case location.ThumbFolder:
-                        StorageFile sampleFile2 = await _thumbFolder.CreateFileAsync(newImageName, CreationCollisionOption.ReplaceExisting);
-                        await wbthumbnail.SaveToFile(sampleFile2, BitmapEncoder.PngEncoderId);
-                        break;
-                    case location.TileFolder:
-                        StorageFile sampleFile3 = await _tileFolder.CreateFileAsync(newImageName, CreationCollisionOption.ReplaceExisting);
-                        await wbthumbnail.SaveToFile(sampleFile3, BitmapEncoder.PngEncoderId);
-                        break;
-                }
+        //        switch (subFolder)
+        //        {
+        //            case location.MediumFolder:
+        //                StorageFile sampleFile1 = await _mediumFolder.CreateFileAsync(newImageName, CreationCollisionOption.ReplaceExisting);
+        //                await wbthumbnail.SaveToFile(sampleFile1, BitmapEncoder.PngEncoderId);
+        //                break;
+        //            case location.ThumbFolder:
+        //                StorageFile sampleFile2 = await _thumbFolder.CreateFileAsync(newImageName, CreationCollisionOption.ReplaceExisting);
+        //                await wbthumbnail.SaveToFile(sampleFile2, BitmapEncoder.PngEncoderId);
+        //                break;
+        //            case location.TileFolder:
+        //                StorageFile sampleFile3 = await _tileFolder.CreateFileAsync(newImageName, CreationCollisionOption.ReplaceExisting);
+        //                await wbthumbnail.SaveToFile(sampleFile3, BitmapEncoder.PngEncoderId);
+        //                break;
+        //        }
 
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return false;
+        //    }
 
 
-        }
+        //}
 
         public async Task<bool> GenerateResizedImageAsync(int longWidth, double srcWidth, double srcHeight, InMemoryRandomAccessStream srcMemoryStream, string newImageName, location subFolder, int longHeight = 0)
         {
             if (_localFolder == null) InitFolders();
+            if (srcMemoryStream.Size == 0) return false;
 
             try
             {
