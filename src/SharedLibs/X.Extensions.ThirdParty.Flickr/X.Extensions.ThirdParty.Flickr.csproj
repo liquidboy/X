@@ -141,6 +141,10 @@
       <Project>{9cf3fa6f-8edd-4c98-a505-a6614aa214cd}</Project>
       <Name>X.Services.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\X.UI.UserCard\X.UI.UserCard.csproj">
+      <Project>{5020ec7c-3018-4af2-9481-8b0efe491170}</Project>
+      <Name>X.UI.UserCard</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">
     <VisualStudioVersion>15.0</VisualStudioVersion>

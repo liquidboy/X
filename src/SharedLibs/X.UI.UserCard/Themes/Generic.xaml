@@ -32,7 +32,7 @@
                     <Grid>
                         <!--<xuiel:EffectLayer x:Name="bkgLayer" HorizontalAlignment="Stretch"  GlowFill="Transparent" VerticalAlignment="Stretch" GlowAmount="{TemplateBinding GlowAmount}" GlowColor="{TemplateBinding GlowColor}" ShowGlowArea="False" ></xuiel:EffectLayer>-->
                         <StackPanel x:Name="root" Orientation="Vertical">
-                            <Ellipse  Width="25" Height="25" IsHitTestVisible="False" VerticalAlignment="Top" >
+                            <Ellipse  Width="35" Height="35" IsHitTestVisible="False" VerticalAlignment="Top" >
                                 <Ellipse.Fill>
                                     <ImageBrush ImageSource="{Binding AvatarUri}" Stretch="UniformToFill" />
                                 </Ellipse.Fill>

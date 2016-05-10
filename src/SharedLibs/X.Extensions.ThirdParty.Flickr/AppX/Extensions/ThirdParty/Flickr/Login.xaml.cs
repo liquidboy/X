@@ -30,7 +30,8 @@ namespace X.Extensions.ThirdParty.Flickr
         OAuthRequestToken RequestToken;
 
         bool IsLoggedIn = false;
-        Person LoggedInUser;
+        Person LoggedInUser { get; set; }
+        
 
         public Login()
         {
@@ -57,8 +58,8 @@ namespace X.Extensions.ThirdParty.Flickr
                 };
                 IsLoggedIn = true;
 
-                _flickr.ApiKey = "xxx";
-                _flickr.ApiSecret = "xxx";
+                _flickr.ApiKey = "";
+                _flickr.ApiSecret = "";
                 var p = await _flickr.PeopleGetInfoAsync(AccessToken.UserId);
                 if(!p.HasError) LoggedInUser = p.Result;
 

@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:X.Extensions.ThirdParty.Flickr"
+    xmlns:xuiuc="using:X.UI.UserCard"
     xmlns:converters="using:CoreLib.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -34,6 +35,8 @@
             </StackPanel>
         </ScrollViewer>
 
-        <Image Source="{x:Bind LoggedInUser.BuddyIconUrl}" Width="40" Height="40"></Image>
+        <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center">
+            <xuiuc:CircularCard PrimaryName="{x:Bind LoggedInUser.RealName}" SecondaryName="{x:Bind LoggedInUser.UserName}" Foreground="Black" AvatarUri="{x:Bind LoggedInUser.BuddyIconUrl}"></xuiuc:CircularCard>
+        </StackPanel>
     </Grid>
 </UserControl>
