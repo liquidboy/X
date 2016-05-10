@@ -196,6 +196,10 @@
       <Project>{d273509d-612c-47c3-b2a6-c203d96b90d3}</Project>
       <Name>X.CoreLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.Extensions.FirstParty.Settings\X.Extensions.FirstParty.Settings.csproj">
+      <Project>{0d2e3133-f4e1-4ea4-9a7f-cf32eb4c5c09}</Project>
+      <Name>X.Extensions.FirstParty.Settings</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharedLibs\X.Extensions.ThirdParty.Aws\X.Extensions.ThirdParty.Aws.csproj">
       <Project>{38c7d250-bb1f-4034-bcf3-d58686eb2a8a}</Project>
       <Name>X.Extensions.ThirdParty.Aws</Name>

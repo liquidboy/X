@@ -51,6 +51,7 @@ namespace X.Browser.Views
                 X.Extensions.ThirdParty.Azure.Installer.GetManifest(),
                 X.Extensions.ThirdParty.Twitter.Installer.GetManifest(),
                 X.Extensions.ThirdParty.Facebook.Installer.GetManifest(),
+                X.Extensions.FirstParty.Settings.Installer.GetManifest(),
             });
 
 
