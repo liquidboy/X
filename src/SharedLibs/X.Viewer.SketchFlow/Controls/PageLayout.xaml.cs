@@ -89,6 +89,8 @@ namespace X.Viewer.SketchFlow.Controls
 
         private void InitShadow()
         {
+            grdLowerLayer.UpdateLayout();
+
             _shadowContainer = CompositionManager.GetVisual(grdLowerLayer);
             _shadowContainer.Size = new Vector2((float)grdLowerLayer.ActualWidth, (float)grdLowerLayer.ActualHeight);
             _shadowContainer.Offset = new Vector3(0, 0, 0);
@@ -96,13 +98,14 @@ namespace X.Viewer.SketchFlow.Controls
             _compositor = CompositionManager.GetCompositor(_shadowContainer);
 
             _spriteVisual = _compositor.CreateSpriteVisual();
-            _spriteVisual.Size = new Vector2((float)grdLowerLayer.ActualWidth, (float)grdLowerLayer.ActualHeight);
-            _spriteVisual.Offset = new Vector3(0, 0, 0);
+            _spriteVisual.Size = new Vector2((float)grdLowerLayer.ActualWidth + 10, (float)grdLowerLayer.ActualHeight + 10);
+            _spriteVisual.Offset = new Vector3(-5, -5, 0);
 
             // Add drop shadow to image visual
             _shadow = _compositor.CreateDropShadow();
             _shadow.Offset = new System.Numerics.Vector3(0, 0, 0);
             _shadow.Color = Windows.UI.Colors.Black;
+            _shadow.Opacity = 0.3f;
             _spriteVisual.Shadow = _shadow;
 
             _shadowContainer.Children.InsertAtBottom(_spriteVisual);

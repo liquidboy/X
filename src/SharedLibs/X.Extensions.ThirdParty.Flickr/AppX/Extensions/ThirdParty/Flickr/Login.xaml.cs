@@ -58,8 +58,8 @@ namespace X.Extensions.ThirdParty.Flickr
                 };
                 IsLoggedIn = true;
 
-                _flickr.ApiKey = "";
-                _flickr.ApiSecret = "";
+                _flickr.ApiKey = "3a69c88919d2ae659b692d28681646ec";
+                _flickr.ApiSecret = "784b556b1f4857cd";
                 var p = await _flickr.PeopleGetInfoAsync(AccessToken.UserId);
                 if(!p.HasError) LoggedInUser = p.Result;
 

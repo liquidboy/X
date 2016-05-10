@@ -5,7 +5,6 @@
     xmlns:local="using:X.Extensions.ThirdParty.GitX"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:xuiri="using:X.UI.RichInput"
-    xmlns:xuird="using:X.UI.RichDial"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:xuirb="using:X.UI.RichButton"
     mc:Ignorable="d"

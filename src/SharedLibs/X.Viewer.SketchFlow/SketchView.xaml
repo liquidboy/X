@@ -27,7 +27,7 @@
         <Canvas x:Name="cvMainAdorner" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RenderTransformOrigin="0.5,0.5"></Canvas>
         <controls:Toolbar x:Name="toolbar" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,20,0" PerformAction="toolbar_PerformAction" ></controls:Toolbar>
 
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20" >
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20"  Visibility="Collapsed">
             <TextBlock x:Name="console1" FontSize="16" Foreground="Red" ></TextBlock>
             <TextBlock x:Name="console2" FontSize="16" Foreground="Red" ></TextBlock>
             <TextBlock x:Name="console3" FontSize="16" Foreground="Red" ></TextBlock>

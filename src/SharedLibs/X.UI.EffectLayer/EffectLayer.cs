@@ -59,15 +59,17 @@ namespace X.UI.EffectLayer
         {
             this.DefaultStyleKey = typeof(EffectLayer);
 
+            return;
+
             Loaded += EffectLayer_Loaded;
             Unloaded += EffectLayer_Unloaded;
         }
 
         protected override void OnApplyTemplate()
         {
-            if (_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as ContentControl;
+            //if (_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as ContentControl;
 
-            if (doDlayedInitBkgLayerLaterAfterOnApplyTemplate) InitBkgLayer();
+            //if (doDlayedInitBkgLayerLaterAfterOnApplyTemplate) InitBkgLayer();
 
 
             base.OnApplyTemplate();
@@ -104,6 +106,8 @@ namespace X.UI.EffectLayer
 
 
         public void InitLayer(double canvasWidth, double canvasHeight, double offsetX = 0, double offsetY = 0, EffectGraphType graphType = EffectGraphType.Shadow) {
+
+            return;
 
             if(graphType == EffectGraphType.Shadow) _eg = new ShadowEffectGraph();
             else if (graphType == EffectGraphType.Glow) _eg = new GlowEffectGraph();
@@ -143,12 +147,14 @@ namespace X.UI.EffectLayer
         List<string> _paths = new List<string>();
         public void DrawPath(string path)
         {
+            return;
             _paths.Add(path);
         }
 
         List<IRandomAccessStream> _streams = new List<IRandomAccessStream>();
         public void DrawStreams(IRandomAccessStream stream, int? index = 0)
         {
+            return;
             if (!index.HasValue) _streams.Add(stream);
             else _streams[index.Value] = stream;
         }
@@ -157,6 +163,8 @@ namespace X.UI.EffectLayer
         List<Tuple<byte[], int, int, double, double>> _uielements = new List<Tuple<byte[], int, int, double, double>>();
         public async void DrawUIElements(UIElement elm, int index = -1, double offsetX = 0, double offsetY = 0)
         {
+            return;
+
             try { 
                 var bitmap = await GetUIElementBitmapPixels(elm, offsetX, offsetY);
                 if (index == -1) _uielements.Add(bitmap);
