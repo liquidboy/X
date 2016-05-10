@@ -31,6 +31,7 @@ namespace X.Extensions.ThirdParty.Flickr
 
         bool IsLoggedIn = false;
         Person LoggedInUser { get; set; }
+        APIKeyDataModel apiKey;
         
 
         public Login()
@@ -38,15 +39,21 @@ namespace X.Extensions.ThirdParty.Flickr
             this.InitializeComponent();
 
             _flickr = new FlickrNet.Flickr();
-
             CheckAlreadyExists();
         }
 
 
         private async void CheckAlreadyExists() {
-            var data = X.Services.Data.StorageService.Instance.Storage.RetrieveList<PassportDataModel>();
+
+           
+            
+            var data = StorageService.Instance.Storage.RetrieveList<PassportDataModel>();
             if (data != null && data.Count > 0) {
                 var dm = data[0];
+
+                var apis = StorageService.Instance.Storage.RetrieveList<APIKeyDataModel>();
+                if (apis != null && apis.Count > 0) apiKey = apis.Where(x => x.Id == dm.APIKeyFKID).FirstOrDefault();
+                
                 RequestToken = new OAuthRequestToken() { Token = dm.Token, TokenSecret = dm.TokenSecret };
                 AccessToken = new OAuthAccessToken() {
                     Username = dm.UserName,
@@ -58,8 +65,8 @@ namespace X.Extensions.ThirdParty.Flickr
                 };
                 IsLoggedIn = true;
 
-                _flickr.ApiKey = "3a69c88919d2ae659b692d28681646ec";
-                _flickr.ApiSecret = "784b556b1f4857cd";
+                _flickr.ApiKey = apiKey.APIKey;
+                _flickr.ApiSecret = apiKey.APISecret;
                 var p = await _flickr.PeopleGetInfoAsync(AccessToken.UserId);
                 if(!p.HasError) LoggedInUser = p.Result;
 
@@ -72,6 +79,9 @@ namespace X.Extensions.ThirdParty.Flickr
             {
                 _flickr.ApiKey = FlickrClientID.Text;
                 _flickr.ApiSecret = FlickrClientSecret.Text;
+                apiKey = new APIKeyDataModel() { APIKey = FlickrClientID.Text, APISecret = FlickrClientSecret.Text, APICallbackUrl = FlickrCallbackUrl.Text, Type = tbAPIType.Text , APIName = tbAPIName.Text, DeveloperUri = tbDeveloperUri.Text };
+                StorageService.Instance.Storage.Insert(apiKey);
+
 
                 // Acquiring a request token
                 TimeSpan SinceEpoch = DateTime.UtcNow - new DateTime(1970, 1, 1);
@@ -83,8 +93,8 @@ namespace X.Extensions.ThirdParty.Flickr
                 // This is a common operation that is required for all requests even after the token is obtained.
                 // Parameters need to be sorted in alphabetical order
                 // Keys and values should be URL Encoded.
-                String SigBaseStringParams = "oauth_callback=" + Uri.EscapeDataString(FlickrCallbackUrl.Text);
-                SigBaseStringParams += "&" + "oauth_consumer_key=" + FlickrClientID.Text;
+                String SigBaseStringParams = "oauth_callback=" + Uri.EscapeDataString(apiKey.APICallbackUrl);
+                SigBaseStringParams += "&" + "oauth_consumer_key=" + apiKey.APIKey;
                 SigBaseStringParams += "&" + "oauth_nonce=" + Nonce.ToString();
                 SigBaseStringParams += "&" + "oauth_signature_method=HMAC-SHA1";
                 SigBaseStringParams += "&" + "oauth_timestamp=" + Math.Round(SinceEpoch.TotalSeconds);
@@ -130,7 +140,7 @@ namespace X.Extensions.ThirdParty.Flickr
                     {
                         FlickrUrl = "https://secure.flickr.com/services/oauth/authorize?oauth_token=" + oauth_token + "&perms=read";
                         System.Uri StartUri = new Uri(FlickrUrl);
-                        System.Uri EndUri = new Uri(FlickrCallbackUrl.Text.Contains("http")? FlickrCallbackUrl.Text : $"http://{FlickrCallbackUrl.Text}");
+                        System.Uri EndUri = new Uri(apiKey.APICallbackUrl.Contains("http")? apiKey.APICallbackUrl : $"http://{apiKey.APICallbackUrl}");
 
                         //rootPage.NotifyUser("Navigating to: " + FlickrUrl, NotifyType.StatusMessage);
                         WebAuthenticationResult WebAuthenticationResult = await WebAuthenticationBroker.AuthenticateAsync(
@@ -176,7 +186,10 @@ namespace X.Extensions.ThirdParty.Flickr
                                 dm.UserName = AccessToken.Username;
                                 dm.FullName = AccessToken.FullName;
                                 dm.ScreenName = AccessToken.ScreenName;
-                                
+
+                                dm.APIKeyFKID = apiKey.Id;
+
+
                                 StorageService.Instance.Storage.Insert(dm);
                             }
 
