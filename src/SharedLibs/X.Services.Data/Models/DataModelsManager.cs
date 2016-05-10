@@ -37,11 +37,12 @@ namespace X.Services.Data
         public static IList<T> RetrieveList<T>(SQLiteConnection sqliteDb)
         {
             object result = null;
+            var to = typeof(T);
+            var qry = $"SELECT * FROM { to.Name }";
 
-            if(typeof(T).Equals(typeof(WebPageDataModel)))
-                result = sqliteDb.Query<WebPageDataModel>("SELECT * FROM " + typeof(T).Name);
-            else if (typeof(T).Equals(typeof(ExtensionManifestDataModel)))
-                result = sqliteDb.Query<ExtensionManifestDataModel>("SELECT * FROM " + typeof(T).Name);
+            if (to.Equals(typeof(WebPageDataModel))) result = sqliteDb.Query<WebPageDataModel>(qry);
+            else if (to.Equals(typeof(ExtensionManifestDataModel))) result = sqliteDb.Query<ExtensionManifestDataModel>(qry);
+            else if (to.Equals(typeof(PassportDataModel))) result = sqliteDb.Query<PassportDataModel>(qry);
 
 
             return result as IList<T>;

@@ -15,5 +15,13 @@ namespace X.Services.Data
         public string Token { get; set; }
         public string TokenSecret { get; set; }
         public string Verifier { get; set; }
+
+
+        public string FullName { get; set; }
+        public string ScreenName { get; set; }
+        public string UserId { get; set; }
+        public string UserName { get; set; }
+
+
     }
 }

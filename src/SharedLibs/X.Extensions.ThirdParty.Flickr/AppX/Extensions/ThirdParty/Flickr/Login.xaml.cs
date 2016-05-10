@@ -19,6 +19,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using X.Services.Data;
 
 namespace X.Extensions.ThirdParty.Flickr
 {
@@ -33,6 +34,26 @@ namespace X.Extensions.ThirdParty.Flickr
             this.InitializeComponent();
 
             _flickr = new FlickrNet.Flickr();
+
+            CheckAlreadyExists();
+        }
+
+
+        private void CheckAlreadyExists() {
+            var data = X.Services.Data.StorageService.Instance.Storage.RetrieveList<PassportDataModel>();
+            if (data != null && data.Count > 0) {
+                var dm = data[0];
+                RequestToken = new OAuthRequestToken() { Token = dm.Token, TokenSecret = dm.TokenSecret };
+                AccessToken = new OAuthAccessToken() {
+                    Username = dm.UserName,
+                    FullName = dm.FullName,
+                    ScreenName = dm.ScreenName,
+                    Token = dm.Token,
+                    TokenSecret = dm.TokenSecret,
+                    UserId = dm.UserId,
+                };
+                ctlLogin.Visibility = Visibility.Collapsed;
+            }
         }
 
         private async void Launch_Click(object sender, RoutedEventArgs e)
@@ -134,6 +155,19 @@ namespace X.Extensions.ThirdParty.Flickr
                             if (!rat.HasError)
                             {
                                 AccessToken = rat.Result;
+                                
+                                var dm = new PassportDataModel();
+                                dm.Token = AccessToken.Token;
+                                dm.TokenSecret = AccessToken.TokenSecret;
+                                dm.Verifier = xoauth_verifier;
+                                dm.PassType = "Flickr";
+
+                                dm.UserId = AccessToken.UserId;
+                                dm.UserName = AccessToken.Username;
+                                dm.FullName = AccessToken.FullName;
+                                dm.ScreenName = AccessToken.ScreenName;
+                                
+                                StorageService.Instance.Storage.Insert(dm);
                             }
 
                         }
