@@ -40,7 +40,7 @@ namespace X.Browser.Views
             //Find a way to reflect this in
             //Installer.GetExtensionManifests().ForEach(x => { X.Services.Extensions.ExtensionsService.Instance.Install(x); });
             //X.Services.Extensions.ExtensionsService.Instance.Install(X.Extensions.ThirdParty.GitX.Installer.GetManifest());
-            LoadThirdPartyExtensions(Installer.GetExtensionManifests());
+            //LoadThirdPartyExtensions(Installer.GetExtensionManifests());  //<== example bulk extensions (30+ extension shells)
             LoadThirdPartyExtensions(new List<ExtensionManifest>{
                 X.Extensions.ThirdParty.GitX.Installer.GetManifest(),
                 X.Extensions.ThirdParty.JsRTChakraCoreX.Installer.GetManifest(),

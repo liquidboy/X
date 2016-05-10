@@ -10,6 +10,6 @@
     d:DesignWidth="400">
 
     <Grid x:Name="layoutRoot" Loaded="layoutRoot_Loaded">
-        
+        <local:Login HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></local:Login>
     </Grid>
 </UserControl>

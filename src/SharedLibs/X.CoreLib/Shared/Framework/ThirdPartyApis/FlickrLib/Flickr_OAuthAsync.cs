@@ -67,7 +67,7 @@ namespace FlickrNet
         /// <param name="callback"></param>
         public async Task<FlickrResult<OAuthAccessToken>> OAuthGetAccessTokenAsync(string requestToken, string requestTokenSecret, string verifier)
         {
-            string url = "http://www.flickr.com/services/oauth/access_token";
+            string url = "https://www.flickr.com/services/oauth/access_token";
 
             Dictionary<string, string> parameters = OAuthGetBasicParameters();
 

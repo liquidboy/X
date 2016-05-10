@@ -110,12 +110,19 @@
     <Compile Include="AppX\Extensions\ThirdParty\Flickr\Content.xaml.cs">
       <DependentUpon>Content.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppX\Extensions\ThirdParty\Flickr\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Installer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\X.Extensions.Flickr.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="AppX\Extensions\ThirdParty\Flickr\Content.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppX\Extensions\ThirdParty\Flickr\Login.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
