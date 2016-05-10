@@ -20,6 +20,7 @@ namespace X.Services.Data
         {
             sqliteDb.CreateTable<WebPageDataModel>();
             sqliteDb.CreateTable<ExtensionManifestDataModel>();
+            sqliteDb.CreateTable<PassportDataModel>();
         }
 
         public static void InitInDatabase(IMobileServiceClient client)
@@ -30,6 +31,7 @@ namespace X.Services.Data
         public static void TruncateDatabase(SQLiteConnection sqliteDb) {
             sqliteDb.DeleteAll<WebPageDataModel>();
             sqliteDb.DeleteAll<ExtensionManifestDataModel>();
+            sqliteDb.DeleteAll<PassportDataModel>();
         }
       
         public static IList<T> RetrieveList<T>(SQLiteConnection sqliteDb)
@@ -47,11 +49,11 @@ namespace X.Services.Data
         public static async Task<IList<T>> RetrieveList<T>(IMobileServiceClient client)
         {
             object result = null;
-            
-            if (typeof(T).Equals(typeof(WebPageDataModel)))
-                result = await client.GetTable<WebPageDataModel>().ToListAsync();
-            else if (typeof(T).Equals(typeof(ExtensionManifestDataModel)))
-                result = await client.GetTable<ExtensionManifestDataModel>().ToListAsync();
+            var to = typeof(T);
+
+            if (to.Equals(typeof(WebPageDataModel))) result = await client.GetTable<WebPageDataModel>().ToListAsync();
+            else if (to.Equals(typeof(ExtensionManifestDataModel))) result = await client.GetTable<ExtensionManifestDataModel>().ToListAsync();
+            else if (to.Equals(typeof(PassportDataModel))) result = await client.GetTable<PassportDataModel>().ToListAsync();
 
 
             return result as IList<T>;
@@ -59,22 +61,23 @@ namespace X.Services.Data
         public static IList<T> RetrieveByUid<T>(SQLiteConnection sqliteDb, string uid)
         {
             object result = null;
+            var to = typeof(T);
+            var qry = $"SELECT * FROM { to.Name } WHERE Uid = ?";
 
-            if (typeof(T).Equals(typeof(WebPageDataModel)))
-                result =  sqliteDb.Query<WebPageDataModel>("SELECT * FROM " + typeof(T).Name + " WHERE Uid = ?", uid);
-            else if (typeof(T).Equals(typeof(ExtensionManifestDataModel)))
-                result = sqliteDb.Query<ExtensionManifestDataModel>("SELECT * FROM " + typeof(T).Name + " WHERE Uid = ?", uid);
+            if (to.Equals(typeof(WebPageDataModel))) result =  sqliteDb.Query<WebPageDataModel>(qry, uid);
+            else if (to.Equals(typeof(ExtensionManifestDataModel))) result = sqliteDb.Query<ExtensionManifestDataModel>(qry, uid);
+            else if (to.Equals(typeof(PassportDataModel))) result = sqliteDb.Query<PassportDataModel>(qry, uid);
 
             return result as IList<T>;
         }
         public static async Task<IList<T>> RetrieveByUid<T>(IMobileServiceClient client, string uid)
         {
             object result = null;
+            var to = typeof(T);
 
-            if (typeof(T).Equals(typeof(WebPageDataModel)))
-                result = await client.GetTable<WebPageDataModel>().Where(x => x.Uid == uid).ToListAsync();
-            else if (typeof(T).Equals(typeof(ExtensionManifestDataModel)))
-                result = await client.GetTable<ExtensionManifestDataModel>().Where(x=>x.Uid == uid).ToListAsync();
+            if (to.Equals(typeof(WebPageDataModel))) result = await client.GetTable<WebPageDataModel>().Where(x => x.Uid == uid).ToListAsync();
+            else if (to.Equals(typeof(ExtensionManifestDataModel))) result = await client.GetTable<ExtensionManifestDataModel>().Where(x=>x.Uid == uid).ToListAsync();
+            else if (to.Equals(typeof(PassportDataModel))) result = await client.GetTable<PassportDataModel>().Where(x => x.Uid == uid).ToListAsync();
 
             return result as IList<T>;
         }
@@ -82,11 +85,12 @@ namespace X.Services.Data
         public static IList<T> RetrieveListByIndex<T>(SQLiteConnection sqliteDb, string index1)
         {
             object result = null;
+            var to = typeof(T);
+            var qry = $"SELECT * FROM { to.Name } WHERE index1 = ?";
 
-            if (typeof(T).Equals(typeof(WebPageDataModel)))
-                result = sqliteDb.Query<WebPageDataModel>("SELECT * FROM " + typeof(T).Name + " WHERE index1 = ?", index1);
-            else if (typeof(T).Equals(typeof(ExtensionManifestDataModel)))
-                result = sqliteDb.Query<ExtensionManifestDataModel>("SELECT * FROM " + typeof(T).Name + " WHERE index1 = ?", index1);
+            if (to.Equals(typeof(WebPageDataModel))) result = sqliteDb.Query<WebPageDataModel>(qry, index1);
+            else if (to.Equals(typeof(ExtensionManifestDataModel))) result = sqliteDb.Query<ExtensionManifestDataModel>(qry, index1);
+            else if (to.Equals(typeof(PassportDataModel))) result = sqliteDb.Query<PassportDataModel>(qry, index1);
 
             return result as IList<T>;
 
@@ -94,11 +98,11 @@ namespace X.Services.Data
         public static async Task< IList<T>> RetrieveListByIndex<T>(IMobileServiceClient client, string index1)
         {
             object result = null;
+            var to = typeof(T);
 
-            if (typeof(T).Equals(typeof(WebPageDataModel)))
-                result = await client.GetTable<WebPageDataModel>().Where(x=>x.Index1 == index1).ToListAsync();
-            else if (typeof(T).Equals(typeof(ExtensionManifestDataModel)))
-                result = await client.GetTable<ExtensionManifestDataModel>().Where(x=>x.Index1 == index1).ToListAsync();
+            if (to.Equals(typeof(WebPageDataModel))) result = await client.GetTable<WebPageDataModel>().Where(x=>x.Index1 == index1).ToListAsync();
+            else if (to.Equals(typeof(ExtensionManifestDataModel))) result = await client.GetTable<ExtensionManifestDataModel>().Where(x=>x.Index1 == index1).ToListAsync();
+            else if (to.Equals(typeof(PassportDataModel))) result = await client.GetTable<PassportDataModel>().Where(x => x.Index1 == index1).ToListAsync();
 
             return result as IList<T>;
 

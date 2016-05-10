@@ -110,6 +110,7 @@
     <Compile Include="IAzureTableBase.cs" />
     <Compile Include="ISqliteBase.cs" />
     <Compile Include="Models\DataModelsManager.cs" />
+    <Compile Include="Models\PassportDataModel.cs" />
     <Compile Include="Models\ExtensionManifestDataModel.cs" />
     <Compile Include="Models\IDataModel.cs" />
     <Compile Include="Models\ISketchPageDataModel.cs" />
