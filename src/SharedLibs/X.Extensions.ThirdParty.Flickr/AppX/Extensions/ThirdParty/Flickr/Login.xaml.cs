@@ -29,6 +29,9 @@ namespace X.Extensions.ThirdParty.Flickr
         OAuthAccessToken AccessToken;
         OAuthRequestToken RequestToken;
 
+        bool IsLoggedIn = false;
+        Person LoggedInUser;
+
         public Login()
         {
             this.InitializeComponent();
@@ -39,7 +42,7 @@ namespace X.Extensions.ThirdParty.Flickr
         }
 
 
-        private void CheckAlreadyExists() {
+        private async void CheckAlreadyExists() {
             var data = X.Services.Data.StorageService.Instance.Storage.RetrieveList<PassportDataModel>();
             if (data != null && data.Count > 0) {
                 var dm = data[0];
@@ -52,7 +55,13 @@ namespace X.Extensions.ThirdParty.Flickr
                     TokenSecret = dm.TokenSecret,
                     UserId = dm.UserId,
                 };
-                ctlLogin.Visibility = Visibility.Collapsed;
+                IsLoggedIn = true;
+
+                _flickr.ApiKey = "xxx";
+                _flickr.ApiSecret = "xxx";
+                var p = await _flickr.PeopleGetInfoAsync(AccessToken.UserId);
+                if(!p.HasError) LoggedInUser = p.Result;
+
             }
         }
 
