@@ -32,14 +32,14 @@
                     <Grid>
                         <!--<xuiel:EffectLayer x:Name="bkgLayer" HorizontalAlignment="Stretch"  GlowFill="Transparent" VerticalAlignment="Stretch" GlowAmount="{TemplateBinding GlowAmount}" GlowColor="{TemplateBinding GlowColor}" ShowGlowArea="False" ></xuiel:EffectLayer>-->
                         <StackPanel x:Name="root" Orientation="Vertical">
-                            <Ellipse  Width="35" Height="35" IsHitTestVisible="False" VerticalAlignment="Top" >
+                            <Ellipse  Width="55" Height="55" IsHitTestVisible="False" VerticalAlignment="Top" >
                                 <Ellipse.Fill>
                                     <ImageBrush ImageSource="{Binding AvatarUri}" Stretch="UniformToFill" />
                                 </Ellipse.Fill>
                             </Ellipse>
                             <StackPanel Orientation="Vertical">
-                                <TextBlock Text="{TemplateBinding PrimaryName}" FontSize="14" HorizontalAlignment="Center" Foreground="{TemplateBinding Foreground}"></TextBlock>
-                                <TextBlock Text="{TemplateBinding SecondaryName}" FontSize="9" HorizontalAlignment="Center" Foreground="{TemplateBinding Foreground}"></TextBlock>
+                                <TextBlock Text="{TemplateBinding PrimaryName}" FontSize="16" FontFamily="Microsoft Sans Serif" HorizontalAlignment="Center" Foreground="{TemplateBinding Foreground}"></TextBlock>
+                                <TextBlock Text="{TemplateBinding SecondaryName}" FontSize="14" FontFamily="Quicksand" Margin="0,3,0,0" HorizontalAlignment="Center" Foreground="{TemplateBinding Foreground}"></TextBlock>
                             </StackPanel>
                         </StackPanel>
                     </Grid>
