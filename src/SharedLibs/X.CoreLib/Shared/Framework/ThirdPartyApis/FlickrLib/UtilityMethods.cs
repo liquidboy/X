@@ -432,6 +432,9 @@ namespace FlickrNet
         /// <returns>The parsed <see cref="DateTime"/>.</returns>
         public static DateTime ParseDateWithGranularity(string date)
         {
+
+            if (string.IsNullOrEmpty(date)) return DateTime.MinValue;
+
             DateTime output;
 
             string format = "yyyy-MM-dd HH:mm:ss";

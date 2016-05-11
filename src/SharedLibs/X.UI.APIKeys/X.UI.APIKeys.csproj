@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1615CF12-D6D2-4FBF-8CC2-E651F572D8E6}</ProjectGuid>
+    <ProjectGuid>{23257002-DB11-4BFA-837C-649B558575E5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>X.Extensions.ThirdParty.Flickr</RootNamespace>
-    <AssemblyName>X.Extensions.ThirdParty.Flickr</AssemblyName>
+    <RootNamespace>X.UI.APIKeys</RootNamespace>
+    <AssemblyName>X.UI.APIKeys</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.14332.0</TargetPlatformVersion>
@@ -107,30 +107,11 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppX\Extensions\ThirdParty\Flickr\Content.xaml.cs">
-      <DependentUpon>Content.xaml</DependentUpon>
+    <Compile Include="ApiEditor.xaml.cs">
+      <DependentUpon>ApiEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppX\Extensions\ThirdParty\Flickr\Login.xaml.cs">
-      <DependentUpon>Login.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Installer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\X.Extensions.Flickr.rd.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="AppX\Extensions\ThirdParty\Flickr\Content.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="AppX\Extensions\ThirdParty\Flickr\Login.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="AppX\Extensions\ThirdParty\Flickr\Flickr.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\X.UI.APIKeys.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\X.CoreLib\X.CoreLib.csproj">
@@ -141,14 +122,12 @@
       <Project>{9cf3fa6f-8edd-4c98-a505-a6614aa214cd}</Project>
       <Name>X.Services.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\X.UI.APIKeys\X.UI.APIKeys.csproj">
-      <Project>{23257002-db11-4bfa-837c-649b558575e5}</Project>
-      <Name>X.UI.APIKeys</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.UI.UserCard\X.UI.UserCard.csproj">
-      <Project>{5020ec7c-3018-4af2-9481-8b0efe491170}</Project>
-      <Name>X.UI.UserCard</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="ApiEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">
     <VisualStudioVersion>15.0</VisualStudioVersion>

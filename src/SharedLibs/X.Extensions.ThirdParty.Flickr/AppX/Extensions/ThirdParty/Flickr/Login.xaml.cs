@@ -25,6 +25,7 @@ namespace X.Extensions.ThirdParty.Flickr
 {
     public sealed partial class Login : UserControl
     {
+
         public FlickrNet.Flickr _flickr = null;
         OAuthAccessToken AccessToken;
         OAuthRequestToken RequestToken;
@@ -73,15 +74,37 @@ namespace X.Extensions.ThirdParty.Flickr
             }
         }
 
-        private async void Launch_Click(object sender, RoutedEventArgs e)
+
+        private void OutputToken(string TokenUri)
+        {
+            //FlickrReturnedToken.Text = TokenUri;
+        }
+
+
+        private async Task<string> SendDataAsync(String Url)
         {
             try
             {
-                _flickr.ApiKey = FlickrClientID.Text;
-                _flickr.ApiSecret = FlickrClientSecret.Text;
-                apiKey = new APIKeyDataModel() { APIKey = FlickrClientID.Text, APISecret = FlickrClientSecret.Text, APICallbackUrl = FlickrCallbackUrl.Text, Type = tbAPIType.Text , APIName = tbAPIName.Text, DeveloperUri = tbDeveloperUri.Text };
-                StorageService.Instance.Storage.Insert(apiKey);
+                HttpClient httpClient = new HttpClient();
+                return await httpClient.GetStringAsync(new Uri(Url));
+            }
+            catch (Exception Err)
+            {
+                //rootPage.NotifyUser("Error getting data from server." + Err.Message, NotifyType.StatusMessage);
+            }
 
+            return null;
+        }
+
+        private async void ctlApiEditor_SaveComplete(object sender, EventArgs e)
+        {
+            apiKey = ctlApiEditor.APIKey;
+
+            try
+            {
+                _flickr.ApiKey = apiKey.APIKey;
+                _flickr.ApiSecret = apiKey.APISecret;
+                
 
                 // Acquiring a request token
                 TimeSpan SinceEpoch = DateTime.UtcNow - new DateTime(1970, 1, 1);
@@ -102,7 +125,7 @@ namespace X.Extensions.ThirdParty.Flickr
                 String SigBaseString = "GET&";
                 SigBaseString += Uri.EscapeDataString(FlickrUrl) + "&" + Uri.EscapeDataString(SigBaseStringParams);
 
-                IBuffer KeyMaterial = CryptographicBuffer.ConvertStringToBinary(FlickrClientSecret.Text + "&", BinaryStringEncoding.Utf8);
+                IBuffer KeyMaterial = CryptographicBuffer.ConvertStringToBinary(apiKey.APISecret + "&", BinaryStringEncoding.Utf8);
                 MacAlgorithmProvider HmacSha1Provider = MacAlgorithmProvider.OpenAlgorithm("HMAC_SHA1");
                 CryptographicKey MacKey = HmacSha1Provider.CreateKey(KeyMaterial);
                 IBuffer DataToBeSigned = CryptographicBuffer.ConvertStringToBinary(SigBaseString, BinaryStringEncoding.Utf8);
@@ -140,7 +163,7 @@ namespace X.Extensions.ThirdParty.Flickr
                     {
                         FlickrUrl = "https://secure.flickr.com/services/oauth/authorize?oauth_token=" + oauth_token + "&perms=read";
                         System.Uri StartUri = new Uri(FlickrUrl);
-                        System.Uri EndUri = new Uri(apiKey.APICallbackUrl.Contains("http")? apiKey.APICallbackUrl : $"http://{apiKey.APICallbackUrl}");
+                        System.Uri EndUri = new Uri(apiKey.APICallbackUrl.Contains("http") ? apiKey.APICallbackUrl : $"http://{apiKey.APICallbackUrl}");
 
                         //rootPage.NotifyUser("Navigating to: " + FlickrUrl, NotifyType.StatusMessage);
                         WebAuthenticationResult WebAuthenticationResult = await WebAuthenticationBroker.AuthenticateAsync(
@@ -169,13 +192,13 @@ namespace X.Extensions.ThirdParty.Flickr
                                         break;
                                 }
                             }
-                            
+
 
                             var rat = await _flickr.OAuthGetAccessTokenAsync(RequestToken, xoauth_verifier);
                             if (!rat.HasError)
                             {
                                 AccessToken = rat.Result;
-                                
+
                                 var dm = new PassportDataModel();
                                 dm.Token = AccessToken.Token;
                                 dm.TokenSecret = AccessToken.TokenSecret;
@@ -210,27 +233,5 @@ namespace X.Extensions.ThirdParty.Flickr
                 //rootPage.NotifyUser(Error.Message, NotifyType.ErrorMessage);
             }
         }
-
-        private void OutputToken(string TokenUri)
-        {
-            FlickrReturnedToken.Text = TokenUri;
-        }
-
-
-        private async Task<string> SendDataAsync(String Url)
-        {
-            try
-            {
-                HttpClient httpClient = new HttpClient();
-                return await httpClient.GetStringAsync(new Uri(Url));
-            }
-            catch (Exception Err)
-            {
-                //rootPage.NotifyUser("Error getting data from server." + Err.Message, NotifyType.StatusMessage);
-            }
-
-            return null;
-        }
-
     }
 }
