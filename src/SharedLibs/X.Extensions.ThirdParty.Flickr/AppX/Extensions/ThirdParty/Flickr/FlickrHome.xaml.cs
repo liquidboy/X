@@ -23,7 +23,7 @@ using X.Services.Data;
 
 namespace X.Extensions.ThirdParty.Flickr
 {
-    public sealed partial class Login : UserControl
+    public sealed partial class FlickrHome : UserControl
     {
 
         public FlickrNet.Flickr _flickr = null;
@@ -33,9 +33,11 @@ namespace X.Extensions.ThirdParty.Flickr
         bool IsLoggedIn = false;
         Person LoggedInUser { get; set; }
         APIKeyDataModel apiKey;
-        
 
-        public Login()
+        PhotoCollection Favourites;
+        public GridLength FavouritesHeight { get; set; }
+
+        public FlickrHome()
         {
             this.InitializeComponent();
 
@@ -43,11 +45,12 @@ namespace X.Extensions.ThirdParty.Flickr
             CheckAlreadyExists();
         }
 
+        private void layoutRoot_Loaded(object sender, RoutedEventArgs e)
+        {
+            FavouritesHeight = new GridLength(root.ActualHeight - 200);
+        }
 
         private async void CheckAlreadyExists() {
-
-           
-            
             var data = StorageService.Instance.Storage.RetrieveList<PassportDataModel>();
             if (data != null && data.Count > 0) {
                 var dm = data[0];
@@ -66,10 +69,17 @@ namespace X.Extensions.ThirdParty.Flickr
                 };
                 IsLoggedIn = true;
 
+                _flickr.OAuthAccessToken = AccessToken.Token;
+                _flickr.OAuthAccessTokenSecret = AccessToken.TokenSecret;
+
                 _flickr.ApiKey = apiKey.APIKey;
                 _flickr.ApiSecret = apiKey.APISecret;
+                
                 var p = await _flickr.PeopleGetInfoAsync(AccessToken.UserId);
                 if(!p.HasError) LoggedInUser = p.Result;
+
+                var favs = await _flickr.FavoritesGetListAsync(AccessToken.UserId);
+                if (!favs.HasError) Favourites = favs.Result;
 
             }
         }
@@ -233,5 +243,7 @@ namespace X.Extensions.ThirdParty.Flickr
                 //rootPage.NotifyUser(Error.Message, NotifyType.ErrorMessage);
             }
         }
+
+        
     }
 }

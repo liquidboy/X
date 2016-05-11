@@ -1,0 +1,32 @@
+﻿<UserControl
+    x:Class="X.Extensions.ThirdParty.Flickr.FlickrHome"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:X.Extensions.ThirdParty.Flickr"
+    xmlns:xuiuc="using:X.UI.UserCard"
+    xmlns:xuiak="using:X.UI.APIKeys"
+    xmlns:converters="using:CoreLib.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    x:Name="root"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" IsReversed="True" ></converters:BooleanToVisibilityConverter>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityInvertedConverter" IsReversed="False" ></converters:BooleanToVisibilityConverter>
+    </UserControl.Resources>
+    <Grid x:Name="layoutRoot" Loaded="layoutRoot_Loaded">
+        <xuiak:ApiEditor x:Name="ctlApiEditor" Visibility="{x:Bind Converter={StaticResource BooleanToVisibilityConverter}, Path=IsLoggedIn}" SaveComplete="ctlApiEditor_SaveComplete"></xuiak:ApiEditor>
+        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind Converter={StaticResource BooleanToVisibilityInvertedConverter}, Path=IsLoggedIn}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150"></RowDefinition>
+                <RowDefinition ></RowDefinition>
+            </Grid.RowDefinitions>
+            <xuiuc:CircularCard Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" PrimaryName="{x:Bind LoggedInUser.RealName}" SecondaryName="{x:Bind LoggedInUser.UserName}" Foreground="Black" AvatarUri="{x:Bind LoggedInUser.BuddyIconUrl}"></xuiuc:CircularCard>
+            <ScrollViewer Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                <local:YourFavourites x:Name="ctlYourFavourites" FavouritePhotos="{x:Bind Favourites}" Margin="5,0,0,0"></local:YourFavourites>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -110,8 +110,11 @@
     <Compile Include="AppX\Extensions\ThirdParty\Flickr\Content.xaml.cs">
       <DependentUpon>Content.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppX\Extensions\ThirdParty\Flickr\Login.xaml.cs">
-      <DependentUpon>Login.xaml</DependentUpon>
+    <Compile Include="AppX\Extensions\ThirdParty\Flickr\FlickrHome.xaml.cs">
+      <DependentUpon>FlickrHome.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppX\Extensions\ThirdParty\Flickr\YourFavourites.xaml.cs">
+      <DependentUpon>YourFavourites.xaml</DependentUpon>
     </Compile>
     <Compile Include="Installer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -122,9 +125,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="AppX\Extensions\ThirdParty\Flickr\Login.xaml">
+    <Page Include="AppX\Extensions\ThirdParty\Flickr\FlickrHome.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppX\Extensions\ThirdParty\Flickr\YourFavourites.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
