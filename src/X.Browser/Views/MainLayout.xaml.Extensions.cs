@@ -31,7 +31,7 @@ namespace X.Browser.Views
 
         async Task InitExtensions()
         {
-            //await X.Services.Extensions.ExtensionsFullService.Instance.Initialize();
+            await X.Services.Extensions.ExtensionsFullService.Instance.Initialize();
 
             ExtensionManifest = new ExtensionManifest("Browser Shell", string.Empty, "Sample Extensions", "1.0", "The chrome of the browser is itself an extension. Enabling/Disabling this will affect ALL extensions.", ExtensionInToolbarPositions.None, ExtensionInToolbarPositions.None);
             
@@ -50,11 +50,12 @@ namespace X.Browser.Views
                 X.Extensions.ThirdParty.OneDriveX.Installer.GetManifest(),
                 X.Extensions.ThirdParty.Office365.Installer.GetManifest(),
                 X.Extensions.ThirdParty.Azure.Installer.GetManifest(),
+                //X.Extensions.ThirdParty.Aws.Installer.GetManifest(),
                 X.Extensions.ThirdParty.Twitter.Installer.GetManifest(),
                 X.Extensions.ThirdParty.Facebook.Installer.GetManifest(),
                 X.Extensions.FirstParty.Settings.Installer.GetManifest(),
             });
-            //LoadThirdPartyExtensions(X.Services.Extensions.ExtensionsFullService.Instance.Extensions.ToList());
+            LoadThirdPartyExtensions(X.Services.Extensions.ExtensionsFullService.Instance.Extensions.ToList());
 
 
             ctlExtensionsBarTop.InstallMyself(); // does Install + LoadExtensions

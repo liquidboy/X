@@ -24,6 +24,7 @@ namespace CoreLib.Extensions
         bool CanUninstall { get; set; }
         ExtensionInToolbarPositions FoundInToolbarPositions { get; set; }
         ExtensionInToolbarPositions LaunchInDockPositions { get; set; }
+        bool IsUWPExtension { get; set; }
 
     }
 }

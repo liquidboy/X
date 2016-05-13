@@ -21,15 +21,16 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
+        <uap:Extension Category="windows.appService" EntryPoint="X.Extension.ThirdParty.Aws.TestService">
+          <uap:AppService Name="x.extension.svc.getcontent" />
+        </uap:Extension>
         <uap3:Extension Category="windows.appExtension">
-          <!--<uap:Extension Category="windows.appService" EntryPoint="X.Extension.ThirdParty.Aws.TestService">
-            <uap:AppService Name="X.Extension.Svc.GetContent"></uap:AppService>
-          </uap:Extension>-->
-          <uap3:AppExtension Name="X.Extensions" Id="X.Extension.ThirdParty.AWS" PublicFolder="Shared" DisplayName="AWS Extension (3rd Party)">
+          <uap3:AppExtension Name="X.Extensions" Id="X.Extension.ThirdParty.AWS" PublicFolder="public\shared" DisplayName="AWS Extension (3rd Party)">
             <uap3:Properties>
               <Logo>ms-appx:///Assets/Aws.png</Logo>
               <Title>Aws Management</Title>
-              <IconUrl>ms-appx:///Extensions/ThirdParty/Aws/Aws.png</IconUrl>
+              <IconUrl>ms-appx:///Assets/jose.png</IconUrl>
+              <IconUrl2>ms-appx:///Extensions/ThirdParty/Aws/Aws.png</IconUrl2>
               <Publisher>Jose Fajardo</Publisher>
               <Version>1.0</Version>
               <Abstract>Manage your AWS account</Abstract>
@@ -37,7 +38,8 @@
               <LaunchInDockPositions>BottomFull</LaunchInDockPositions>
               <ContentControl>X.Extension.ThirdParty.Aws.Content</ContentControl>
               <AssemblyName>X.Extension.ThirdParty.Aws</AssemblyName>
-              <IsExtEnabled>false</IsExtEnabled>
+              <IsExtEnabled>true</IsExtEnabled>
+              <IsUWPExtension>true</IsUWPExtension>
             </uap3:Properties>
           </uap3:AppExtension>
         </uap3:Extension>

@@ -14,7 +14,7 @@ namespace X.Extension.ThirdParty.Aws
         }
     }
 
-    public class TestService : Windows.ApplicationModel.Background.IBackgroundTask
+    public class TestService : IBackgroundTask
     {
         private AppServiceConnection appServiceConnection;
 

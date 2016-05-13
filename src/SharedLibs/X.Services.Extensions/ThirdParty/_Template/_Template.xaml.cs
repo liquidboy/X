@@ -48,29 +48,65 @@ namespace X.Services.ThirdParty
             _content?.RecieveMessage(message);
         }
 
-        public void OnPaneLoad()
+        public async void OnPaneLoad()
         {
             if (!string.IsNullOrEmpty(ExtensionManifest.ContentControl)) {
 
+                if (ExtensionManifest.IsUWPExtension) {
+                    Type type = null;
+                    if (!string.IsNullOrEmpty(ExtensionManifest.AssemblyName))
+                    {
+                        var an = new System.Reflection.AssemblyName(ExtensionManifest.AssemblyName);
+                        var ass = System.Reflection.Assembly.Load(an);
+                        type = ass.GetType(ExtensionManifest.ContentControl);
+                    }
+                    else type = Type.GetType(ExtensionManifest.ContentControl);
 
-                Type type = null;
-                if (!string.IsNullOrEmpty(ExtensionManifest.AssemblyName)) {
-                    var an = new System.Reflection.AssemblyName(ExtensionManifest.AssemblyName);
-                    var ass = System.Reflection.Assembly.Load(an);
-                    type = ass.GetType(ExtensionManifest.ContentControl);
+
+                    var newEl = (UserControl)Activator.CreateInstance(type);
+
+                    if (newEl is IExtensionContent)
+                    {
+                        _content = (IExtensionContent)newEl;
+                        _content.SendMessage += _content_SendMessage;
+                    }
+
+                    ctlContent.Children.Add(newEl);
                 }
-                else type = Type.GetType(ExtensionManifest.ContentControl);
+                else {
 
+                    var ef = Extensions.ExtensionsFullService.Instance.Extensions[0];
 
-                var newEl = (UserControl)Activator.CreateInstance(type);
+                    using (var connection = new Windows.ApplicationModel.AppService.AppServiceConnection())
+                    {
+                        connection.AppServiceName = "x.extension.svc.getcontent";
+                        connection.PackageFamilyName = ef.AppExtension.Package.Id.FamilyName;
+                        var status = await connection.OpenAsync();
+                        if (status != Windows.ApplicationModel.AppService.AppServiceConnectionStatus.Success)
+                        {
+                            System.Diagnostics.Debug.WriteLine("Failed app service connection");
+                        }
+                        else
+                        {
+                            var request = new ValueSet();
+                            request.Add("Command", "Load");
+                            Windows.ApplicationModel.AppService.AppServiceResponse response = await connection.SendMessageAsync(request);
+                            if (response.Status == Windows.ApplicationModel.AppService.AppServiceResponseStatus.Success)
+                            {
+                                var message = response.Message as ValueSet;
 
-                if (newEl is IExtensionContent)
-                {
-                    _content = (IExtensionContent)newEl;
-                    _content.SendMessage += _content_SendMessage;
+                            }
+                        }
+
+                    }
                 }
+                    
+      
+                    
 
-                ctlContent.Children.Add(newEl);
+
+                
+               
             }
 
         }

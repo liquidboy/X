@@ -15,6 +15,8 @@ using Windows.UI.Xaml.Media.Imaging;
 using X.Services.Settings;
 using Windows.Storage;
 using Windows.UI.Core;
+using Windows.ApplicationModel.AppService;
+using System.Diagnostics;
 
 namespace X.Services.Extensions
 {
@@ -54,9 +56,11 @@ namespace X.Services.Extensions
                     case "LaunchInDockPositions": _manifest.LaunchInDockPositions = (ExtensionInToolbarPositions)Enum.Parse(typeof(ExtensionInToolbarPositions), GetValueFromProperty(prop.Value)); break;
                     case "ContentControl": _manifest.ContentControl = GetValueFromProperty(prop.Value); break;
                     case "AssemblyName": _manifest.AssemblyName = GetValueFromProperty(prop.Value); break;
-                    case "IsExtEnabled": _manifest.IsExtEnabled = bool.Parse(GetValueFromProperty(prop.Value)); break;
+                    case "IsExtEnabled": _manifest.IsExtEnabled = bool.Parse(GetValueFromProperty(prop.Value)); AppSettings.AppExtensionEnabled = _manifest.IsExtEnabled; break;
+                    case "IsUWPExtension": _manifest.IsUWPExtension = bool.Parse(GetValueFromProperty(prop.Value)); break;
                 }
             }
+            
         }
 
         private string GetValueFromProperty(object propertyValue) {
@@ -182,6 +186,7 @@ namespace X.Services.Extensions
                 return;
             }
 
+            
             // Extension is not loaded and enabled - load it
             StorageFolder folder = await _extension.GetPublicFolderAsync();
             if (folder != null)

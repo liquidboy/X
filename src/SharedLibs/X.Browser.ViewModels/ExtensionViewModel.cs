@@ -26,6 +26,7 @@ namespace X.Browser
         public string DisplayName { get { return Title; } set { } }
         public string Abstract { get; set; }
         public bool IsExtEnabled { get; set; } = true;
+        public bool IsUWPExtension { get; set; } = false;
         public bool CanUninstall { get; set; } = true;
         public ExtensionInToolbarPositions FoundInToolbarPositions { get; set; }
         public ExtensionInToolbarPositions LaunchInDockPositions { get; set; }
@@ -38,6 +39,7 @@ namespace X.Browser
             Publisher = extensionManifest.Publisher;
             Version = extensionManifest.Version;
             IsExtEnabled = extensionManifest.IsExtEnabled;
+            IsUWPExtension = extensionManifest.IsUWPExtension;
             CanUninstall = extensionManifest.CanUninstall;
 
             FoundInToolbarPositions = extensionManifest.FoundInToolbarPositions;

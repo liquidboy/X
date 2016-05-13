@@ -35,6 +35,8 @@ namespace X.Services.Extensions
         public string IconUrl { get; set; }
 
         public bool IsExtEnabled { get; set; }
+        
+        public bool IsUWPExtension { get; set; }
 
         public ExtensionInToolbarPositions LaunchInDockPositions { get; set; }
 
@@ -64,6 +66,7 @@ namespace X.Services.Extensions
             this.UniqueID = data.UniqueID;
             this.Version = data.Version;
             this.Path = data.Path;
+            this.IsUWPExtension = data.IsUWPExtension;
         }
 
     }
