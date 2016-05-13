@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.AppExtensions;
+using Windows.Foundation.Collections;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace CoreLib.Extensions
@@ -23,5 +24,6 @@ namespace CoreLib.Extensions
         void Unload();
         void Disable();
         IExtensionManifest Manifest {get;}
+        Task<ValueSet> MakeCommandCall(string commandCall, string serviceName);
     }
 }

@@ -21,8 +21,13 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
+        <Extension Category="windows.backgroundTasks" EntryPoint="X.Extension.ThirdParty.Aws.TestService">
+          <BackgroundTasks>
+            <Task Type="general" />
+          </BackgroundTasks>
+        </Extension>
         <uap:Extension Category="windows.appService" EntryPoint="X.Extension.ThirdParty.Aws.TestService">
-          <uap:AppService Name="x.extension.svc.getcontent" />
+          <uap:AppService Name="X.Extension.Svc.GetContent" />
         </uap:Extension>
         <uap3:Extension Category="windows.appExtension">
           <uap3:AppExtension Name="X.Extensions" Id="X.Extension.ThirdParty.AWS" PublicFolder="public\shared" DisplayName="AWS Extension (3rd Party)">

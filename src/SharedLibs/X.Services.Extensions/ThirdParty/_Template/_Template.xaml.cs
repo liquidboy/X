@@ -76,29 +76,8 @@ namespace X.Services.ThirdParty
                 else {
 
                     var ef = Extensions.ExtensionsFullService.Instance.Extensions[0];
-
-                    using (var connection = new Windows.ApplicationModel.AppService.AppServiceConnection())
-                    {
-                        connection.AppServiceName = "x.extension.svc.getcontent";
-                        connection.PackageFamilyName = ef.AppExtension.Package.Id.FamilyName;
-                        var status = await connection.OpenAsync();
-                        if (status != Windows.ApplicationModel.AppService.AppServiceConnectionStatus.Success)
-                        {
-                            System.Diagnostics.Debug.WriteLine("Failed app service connection");
-                        }
-                        else
-                        {
-                            var request = new ValueSet();
-                            request.Add("Command", "Load");
-                            Windows.ApplicationModel.AppService.AppServiceResponse response = await connection.SendMessageAsync(request);
-                            if (response.Status == Windows.ApplicationModel.AppService.AppServiceResponseStatus.Success)
-                            {
-                                var message = response.Message as ValueSet;
-
-                            }
-                        }
-
-                    }
+                    var result = await ef.MakeCommandCall("Load", "X.Extension.Svc.GetContent");
+                    
                 }
                     
       

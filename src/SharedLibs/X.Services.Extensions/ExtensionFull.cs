@@ -210,6 +210,35 @@ namespace X.Services.Extensions
 
         }
 
+        public async Task<ValueSet> MakeCommandCall(string commandCall, string serviceName) {
+            using (var connection = new AppServiceConnection())
+            {
+                connection.AppServiceName = serviceName; // "x.extension.svc.getcontent";
+                connection.PackageFamilyName = _extension.Package.Id.FamilyName;
+                var status = await connection.OpenAsync();
+                if (status != AppServiceConnectionStatus.Success)
+                {
+                    Debug.WriteLine("Failed app service connection");
+                }
+                else
+                {
+                    var request = new ValueSet();
+                    request.Add("Command", commandCall);
+                    AppServiceResponse response = await connection.SendMessageAsync(request);
+                    if (response.Status == Windows.ApplicationModel.AppService.AppServiceResponseStatus.Success)
+                    {
+                        var message = response.Message as ValueSet;
+
+                        return message;
+                    }
+                }
+
+            }
+
+            return null;
+        }
+
+
         public async Task Enable()
         {
             // indicate desired state is enabled

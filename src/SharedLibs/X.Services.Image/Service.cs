@@ -41,61 +41,31 @@ namespace X.Services.Image
         {
             _localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 
-
-
+            var folderName = "";
             try
             {
-                _mediumFolder = await _localFolder.GetFolderAsync("medium");
+                folderName = "medium";
+                if (Directory.Exists($"{_localFolder.Path}\\{folderName}")) _mediumFolder = await _localFolder.GetFolderAsync(folderName);
+                else _mediumFolder = await _localFolder.CreateFolderAsync(folderName);
+
+                folderName = "thumb";
+                if (Directory.Exists($"{_localFolder.Path}\\{folderName}")) _thumbFolder = await _localFolder.GetFolderAsync(folderName);
+                else _thumbFolder = await _localFolder.CreateFolderAsync(folderName);
+
+                folderName = "original";
+                if (Directory.Exists($"{_localFolder.Path}\\{folderName}")) _originalFolder = await _localFolder.GetFolderAsync(folderName);
+                else _originalFolder = await _localFolder.CreateFolderAsync(folderName);
+
+                folderName = "tile";
+                if (Directory.Exists($"{_localFolder.Path}\\{folderName}")) _tileFolder = await _localFolder.GetFolderAsync(folderName);
+                else _tileFolder = await _localFolder.CreateFolderAsync(folderName);
+
             }
             catch (System.IO.FileNotFoundException ex)
             {
-
+                //todo: what would ever cause this ??! need to work out how to handle this type of error
             }
-            if (_mediumFolder == null) _mediumFolder = await _localFolder.CreateFolderAsync("medium");
-
-            try
-            {
-                _thumbFolder = await _localFolder.GetFolderAsync("thumb");
-            }
-            catch (System.IO.FileNotFoundException ex)
-            {
-
-            }
-            if (_thumbFolder == null) _thumbFolder = await _localFolder.CreateFolderAsync("thumb");
-
-            try
-            {
-                _originalFolder = await _localFolder.GetFolderAsync("original");
-            }
-            catch (System.IO.FileNotFoundException ex)
-            {
-
-            }
-
-            try
-            {
-                if (_originalFolder == null) _originalFolder = await _localFolder.CreateFolderAsync("original");
-            }
-            catch
-            {
-
-            }
-
-
-            try
-            {
-                _tileFolder = await _localFolder.GetFolderAsync("tile");
-            }
-            catch (System.IO.FileNotFoundException ex)
-            {
-
-            }
-            if (_tileFolder == null) _tileFolder = await _localFolder.CreateFolderAsync("tile");
-
-
-
-
-
+            
         }
 
 

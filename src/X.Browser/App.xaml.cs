@@ -25,8 +25,6 @@ namespace X.Browser
                 Microsoft.ApplicationInsights.WindowsCollectors.Metadata |
                 Microsoft.ApplicationInsights.WindowsCollectors.Session);
             
-            X.Services.Image.Service.Instance.InitFolders();
-            
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }
@@ -40,7 +38,7 @@ namespace X.Browser
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-
+            X.Services.Image.Service.Instance.InitFolders();
 
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
