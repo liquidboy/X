@@ -200,10 +200,6 @@
       <Project>{0d2e3133-f4e1-4ea4-9a7f-cf32eb4c5c09}</Project>
       <Name>X.Extensions.FirstParty.Settings</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SharedLibs\X.Extensions.ThirdParty.Aws\X.Extensions.ThirdParty.Aws.csproj">
-      <Project>{38c7d250-bb1f-4034-bcf3-d58686eb2a8a}</Project>
-      <Name>X.Extensions.ThirdParty.Aws</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SharedLibs\X.Extensions.ThirdParty.Azure\X.Extensions.ThirdParty.Azure.csproj">
       <Project>{e041d961-7f15-4d78-9550-8762c95daac7}</Project>
       <Name>X.Extensions.ThirdParty.Azure</Name>

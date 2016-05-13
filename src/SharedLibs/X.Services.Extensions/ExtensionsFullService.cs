@@ -49,7 +49,7 @@ namespace X.Services.Extensions
         }
 
         // this sets up UI dispatcher and does initial extension scan
-        public void Initialize()
+        public async Task Initialize()
         {
             // check that we haven't already been initialized
             if (_dispatcher != null)
@@ -68,11 +68,11 @@ namespace X.Services.Extensions
             _catalog.PackageStatusChanged += Catalog_PackageStatusChanged;
 
             // Scan all extensions
-            FindAllExtensions();
+            await FindAllExtensions();
         }
 
 
-        public async void FindAllExtensions()
+        public async Task FindAllExtensions()
         {
             // make sure we have initialized
             if (_dispatcher == null)
@@ -181,22 +181,30 @@ namespace X.Services.Extensions
             // new extension
             if (existingExt == null)
             {
-                // get extension properties
-                IPropertySet properties = await ext.GetExtensionPropertiesAsync();
+                try
+                {
+                    // get extension properties
+                    IPropertySet properties = await ext.GetExtensionPropertiesAsync();
+                    //IPropertySet properties = null;
 
-                // get logo 
-                var filestream = await (ext.AppInfo.DisplayInfo.GetLogo(new Windows.Foundation.Size(1, 1))).OpenReadAsync();
-                BitmapImage logo = new BitmapImage();
-                logo.SetSource(filestream);
+                    // get logo 
+                    var filestream = await (ext.AppInfo.DisplayInfo.GetLogo(new Windows.Foundation.Size(1, 1))).OpenReadAsync();
+                    BitmapImage logo = new BitmapImage();
+                    logo.SetSource(filestream);
 
-                // create new extension
-                ExtensionFull nExt = new ExtensionFull(ext, properties, logo);
+                    // create new extension
+                    ExtensionFull nExt = new ExtensionFull(ext, properties, logo);
 
-                // Add it to extension list
-                _extensions.Add(nExt);
+                    // Add it to extension list
+                    _extensions.Add(nExt);
 
-                // load it
-                await nExt.Load();
+                    // load it
+                    await nExt.Load();
+                }
+                catch (Exception ex)
+                {
+                    //chances are if it fails retrieving properties that the app was added with no properties .. Uninstall the app and reinstall it and hopefully the latest metadata will be there
+                }
             }
             // update
             else
@@ -249,6 +257,7 @@ namespace X.Services.Extensions
 
 
 
+
         // For exceptions using the Extension Manager
         public class ExtensionManagerException : Exception
         {
@@ -279,7 +288,7 @@ namespace X.Services.Extensions
             {
                 if (instance == null)
                 {
-                    instance = new ExtensionsFullService("xbrowser");
+                    instance = new ExtensionsFullService("X.Extensions");
                 }
                 return instance;
             }

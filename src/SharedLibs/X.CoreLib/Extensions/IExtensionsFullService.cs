@@ -13,8 +13,8 @@ namespace CoreLib.Extensions
     {
         ObservableCollection<IExtensionFull> Extensions { get; }
         string Contract { get; }
-        void Initialize();
-        void FindAllExtensions();
+        Task Initialize();
+        Task FindAllExtensions();
 
         Task LoadExtension(AppExtension ext);
         Task LoadExtensions(Package package);

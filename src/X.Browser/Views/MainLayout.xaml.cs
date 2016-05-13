@@ -33,7 +33,7 @@ namespace X.Browser.Views
         }
 
 
-        public void ProcessArguments(string arguments, string tileId) {
+        public async void ProcessArguments(string arguments, string tileId) {
 
             if (arguments.Contains("TabWasPinnedAt")) SetSelectedTab(tileId);
             else {
@@ -46,7 +46,7 @@ namespace X.Browser.Views
                 header.InitChrome(App.Current, ApplicationView.GetForCurrentView());
                 InitOneBox();
                 InitTabs();
-                InitExtensions();
+                await InitExtensions();
             }
 
 

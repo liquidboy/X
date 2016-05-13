@@ -23,6 +23,7 @@ namespace X.Services.Extensions
     {
         private AppExtension _extension;
         private IPropertySet _valueset;
+        private IExtensionManifest _manifest;
         private string _version;
         //private bool _enabled;
         private bool _supported;
@@ -30,7 +31,7 @@ namespace X.Services.Extensions
         private string _uniqueId;
         private BitmapImage _logo;
         private readonly object _sync = new object();
-
+        
         public ExtensionFull(AppExtension ext, IPropertySet properties, BitmapImage logo)
         {
             _extension = ext;
@@ -40,6 +41,26 @@ namespace X.Services.Extensions
             _logo = logo;
             _version = "Unknown";
             _uniqueId = ext.AppInfo.AppUserModelId + "!" + ext.Id;
+
+            _manifest = new ExtensionManifest();
+            foreach (var prop in properties) {
+                switch (prop.Key) {
+                    case "Title": _manifest.Title = GetValueFromProperty(prop.Value); break;
+                    case "IconUrl": _manifest.IconUrl = GetValueFromProperty(prop.Value); break;
+                    case "Publisher": _manifest.Publisher = GetValueFromProperty(prop.Value); break;
+                    case "Version": _manifest.Version = GetValueFromProperty(prop.Value); break;
+                    case "Abstract": _manifest.Abstract = GetValueFromProperty(prop.Value); break;
+                    case "FoundInToolbarPositions": _manifest.FoundInToolbarPositions = (ExtensionInToolbarPositions)Enum.Parse( typeof(ExtensionInToolbarPositions), GetValueFromProperty(prop.Value)); break;
+                    case "LaunchInDockPositions": _manifest.LaunchInDockPositions = (ExtensionInToolbarPositions)Enum.Parse(typeof(ExtensionInToolbarPositions), GetValueFromProperty(prop.Value)); break;
+                    case "ContentControl": _manifest.ContentControl = GetValueFromProperty(prop.Value); break;
+                    case "AssemblyName": _manifest.AssemblyName = GetValueFromProperty(prop.Value); break;
+                    case "IsExtEnabled": _manifest.IsExtEnabled = bool.Parse(GetValueFromProperty(prop.Value)); break;
+                }
+            }
+        }
+
+        private string GetValueFromProperty(object propertyValue) {
+            return (string)((PropertySet)propertyValue).Values.First();
         }
 
         public BitmapImage Logo
@@ -65,6 +86,11 @@ namespace X.Services.Extensions
         public AppExtension AppExtension
         {
             get { return _extension; }
+        }
+        
+        public IExtensionManifest Manifest
+        {
+            get { return _manifest; }
         }
 
         public bool Enabled
@@ -242,3 +268,4 @@ namespace X.Services.Extensions
         }
     }
 }
+

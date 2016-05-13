@@ -22,5 +22,6 @@ namespace CoreLib.Extensions
         Task Enable();
         void Unload();
         void Disable();
+        IExtensionManifest Manifest {get;}
     }
 }
