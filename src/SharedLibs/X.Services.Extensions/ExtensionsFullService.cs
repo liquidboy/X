@@ -51,6 +51,8 @@ namespace X.Services.Extensions
         // this sets up UI dispatcher and does initial extension scan
         public async Task Initialize()
         {
+            AppSettings.Clear();
+
             // check that we haven't already been initialized
             if (_dispatcher != null)
             {
@@ -174,6 +176,8 @@ namespace X.Services.Extensions
                 // ignore it and return
                 return;
             }
+
+
 
             // if its already existing then this is an update
             IExtensionFull existingExt = _extensions.Where(e => e.UniqueId == identifier).FirstOrDefault();

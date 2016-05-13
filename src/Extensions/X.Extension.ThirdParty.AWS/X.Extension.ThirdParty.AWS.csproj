@@ -98,10 +98,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Content.xaml.cs">
+    <Compile Include="Shared\Content.xaml.cs">
       <DependentUpon>Content.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Installer.cs" />
+    <Compile Include="Shared\Installer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -111,7 +111,7 @@
     <None Include="X.Extension.ThirdParty.AWS_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Assets\Aws.png">
+    <EmbeddedResource Include="Shared\Aws.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <Content Include="Properties\Default.rd.xml" />
@@ -130,7 +130,7 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Content.xaml">
+    <Page Include="Shared\Content.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

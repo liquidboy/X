@@ -10,6 +10,6 @@
     d:DesignWidth="400">
 
     <Grid x:Name="layoutRoot" Loaded="layoutRoot_Loaded">
-        
+        <TextBlock Text="Content within the AWS Extension"></TextBlock>
     </Grid>
 </UserControl>
