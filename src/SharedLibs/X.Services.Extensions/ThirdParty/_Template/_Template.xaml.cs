@@ -52,7 +52,7 @@ namespace X.Services.ThirdParty
         {
             if (!string.IsNullOrEmpty(ExtensionManifest.ContentControl)) {
 
-                if (ExtensionManifest.IsUWPExtension) {
+                if (!ExtensionManifest.IsUWPExtension) {
                     Type type = null;
                     if (!string.IsNullOrEmpty(ExtensionManifest.AssemblyName))
                     {
