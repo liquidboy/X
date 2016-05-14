@@ -9,6 +9,7 @@ namespace X.Services.Data
 {
     public interface IAzureTableBase
     {
+        
         [PrimaryKey, AutoIncrement]
         int Id { get; set; }
 

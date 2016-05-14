@@ -20,18 +20,18 @@ using System.Diagnostics;
 
 namespace X.Services.Extensions
 {
-    public class ExtensionLite
+    public class ExtensionLite: IExtensionLite
     {
-        public IExtensionManifest Manifest;
-        public ExtensionType ExtensionType;
-        public IExtension Extension;
-        public bool IsShowingExtensionPanel;
+        public IExtensionManifest Manifest { get; set; }
+        public ExtensionType ExtensionType { get; set; }
+        public IExtension Extension { get; set; }
+        public bool IsShowingExtensionPanel { get; set; }
 
 
 
-        public string AppExtensionUniqueId;
-        public AppExtension AppExtension;
-        private IPropertySet _valueset;
+        public string AppExtensionUniqueId { get; set; }
+        public AppExtension AppExtension { get; set; }
+        private IPropertySet _valueset { get; set; }
 
 
         public ExtensionLite() {

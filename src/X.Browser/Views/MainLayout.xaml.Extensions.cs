@@ -85,7 +85,7 @@ namespace X.Browser.Views
             }
         }
 
-        private void UpdateUWPExtensionsWithStateSavedData(IEnumerable<Services.Extensions.ExtensionLite> thirdPartyExtensions)
+        private void UpdateUWPExtensionsWithStateSavedData(IEnumerable<IExtensionLite> thirdPartyExtensions)
         {
             var extensionsInStorage = X.Services.Data.StorageService.Instance.Storage.RetrieveList<Services.Data.ExtensionManifestDataModel>();
             foreach (var ext in thirdPartyExtensions)

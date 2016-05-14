@@ -14,7 +14,7 @@ using Windows.ApplicationModel;
 
 namespace X.Services.Extensions
 {
-    public class ExtensionsService : ISender, IExtensionsService
+    public class ExtensionsService : ISender, IExtensionsService, IUWPExtensionsService
     {
         List<ExtensionLite> _extensions = new List<ExtensionLite>();
         private string _contract = "X.Extensions";  //our ecosystem of extensions all have this contract "name"
@@ -241,7 +241,7 @@ namespace X.Services.Extensions
             //}
         }
 
-        public async Task InitializeCatalog()
+        public void InitializeCatalog()
         {
             _catalog = AppExtensionCatalog.Open(_contract);
 
@@ -269,8 +269,7 @@ namespace X.Services.Extensions
                 await LoadUWPExtension(ext);
             
         }
-
-
+        
         private async void Catalog_PackageInstalled(AppExtensionCatalog sender, AppExtensionPackageInstalledEventArgs args)
         {
             await _dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
@@ -416,12 +415,12 @@ namespace X.Services.Extensions
             }
         }
 
-        public ExtensionLite GetExtensionByAppExtensionUniqueId(string uniqueId)
+        public IExtensionLite GetExtensionByAppExtensionUniqueId(string uniqueId)
         {
             return _extensions.Where(x => x.AppExtensionUniqueId == uniqueId).FirstOrDefault();
         }
 
-        public IEnumerable<ExtensionLite> GetUWPExtensions()
+        public IEnumerable<IExtensionLite> GetUWPExtensions()
         {
             return _extensions.Where(x => x.Manifest.IsUWPExtension);
         }
