@@ -11,6 +11,7 @@ using X.Services.Settings;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.ApplicationModel;
+using Windows.Storage;
 
 namespace X.Services.Extensions
 {
@@ -384,14 +385,28 @@ namespace X.Services.Extensions
                     // get extension properties
                     IPropertySet properties = await ext.GetExtensionPropertiesAsync();
                     //IPropertySet properties = null;
-
-                    // get logo 
-                    var filestream = await (ext.AppInfo.DisplayInfo.GetLogo(new Windows.Foundation.Size(1, 1))).OpenReadAsync();
-                    BitmapImage logo = new BitmapImage();
-                    logo.SetSource(filestream);
-
+                    
                     // create new extension
                     var nExt = new ExtensionLite(ext, properties);
+
+                    // get content and do stuff with it
+                    #region content
+                    var folder = await ext.GetPublicFolderAsync();
+                    if (folder != null)
+                    {
+                        var file = await folder.GetFileAsync("Aws.png");
+                        nExt.Manifest.IconLocalUrn = file.Path;
+                    }
+                    //var publicFolder = await ext.Package.InstalledLocation.GetFolderAsync("public");
+                    //var file = publicFolder.GetFileAsync("Aws.png");
+
+
+                    //// get logo 
+                    //var filestream = await (ext.AppInfo.DisplayInfo.GetLogo(new Windows.Foundation.Size(1, 1))).OpenReadAsync();
+                    //BitmapImage logo = new BitmapImage();
+                    //logo.SetSource(filestream);
+                    #endregion
+
 
                     // Add it to extension list
                     _extensions.Add(nExt);

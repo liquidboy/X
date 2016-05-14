@@ -34,6 +34,8 @@ namespace X.Services.Extensions
 
         public string IconUrl { get; set; }
 
+        public string IconLocalUrn { get; set; }
+
         public bool IsExtEnabled { get; set; } = true;
 
         public bool IsUWPExtension { get; set; } = false;

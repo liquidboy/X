@@ -18,6 +18,7 @@ namespace CoreLib.Extensions
         string DisplayName { get; set; }
         string Abstract { get; set; }
         string IconUrl { get; set; }
+        string IconLocalUrn { get; set; }
         string ContentControl { get; set; }
         string AssemblyName { get; set; }
         bool IsExtEnabled { get; set; }

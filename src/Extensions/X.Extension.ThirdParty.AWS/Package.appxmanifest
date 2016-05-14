@@ -25,7 +25,7 @@
           <uap:AppService Name="Call" />
         </uap:Extension>
         <uap3:Extension Category="windows.appExtension">
-          <uap3:AppExtension Name="X.Extensions" Id="X.Extension.ThirdParty.AWS" PublicFolder="public\shared" DisplayName="AWS Extension (3rd Party)">
+          <uap3:AppExtension Name="X.Extensions" Id="X.Extension.ThirdParty.AWS" PublicFolder="public" DisplayName="AWS Extension (3rd Party)">
             <uap3:Properties>
               <Logo>ms-appx:///Assets/Aws.png</Logo>
               <Title>Aws Management</Title>
