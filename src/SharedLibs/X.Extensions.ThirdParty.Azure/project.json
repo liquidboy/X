@@ -1,7 +1,6 @@
 ﻿{
   "dependencies": {
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
-    "Microsoft.WindowsAzure.Management.Libraries": "2.0.0",
     "ThomasLevesque.WeakEvent": "1.0.1"
   },
   "frameworks": {

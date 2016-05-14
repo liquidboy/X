@@ -17,7 +17,7 @@ namespace X.Browser.Views
         bool isCapturingImage = false;
         private async void wvMain_SendMessage(object sender, System.EventArgs e)
         {
-            try {
+            //try {
 
                 var ea = (ContentViewEventArgs)e;
 
@@ -48,7 +48,7 @@ namespace X.Browser.Views
                         if (vm.SelectedTab != null) vm.SelectedTab.Uri = ea.Uri.OriginalString;
                         X.Services.Extensions.ExtensionsService.Instance.SendMessage(ea.Uri, ExtensionType.WVNavigationStarting);
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         X.Services.Extensions.ExtensionsService.Instance.SendMessage(ea.Uri, ExtensionType.WVNavigationFailed);
                     }
@@ -217,12 +217,12 @@ namespace X.Browser.Views
                         isCapturingImage = false;
                     }
                 }
-            }
-            catch (Exception ex){
+            //}
+            //catch (Exception ex){
 
-                //todo : handle this BUT need to work out why this happens
+            //    //todo : handle this BUT need to work out why this happens
 
-            }
+            //}
 
 
         }
