@@ -76,8 +76,15 @@ namespace X.Services.ThirdParty
                 else {
 
                     var ef = Extensions.ExtensionsFullService.Instance.Extensions[0];
-                    var result = await ef.MakeCommandCall("Load", "X.Extension.Svc.GetContent");
-                    
+                    var result = await ef.MakeCommandCall("UI", "Call");
+
+
+                    var newEl = new StackPanel() { Orientation = Orientation.Vertical};
+                    foreach (var val in result)
+                    {
+                        newEl.Children.Add(new TextBlock() { Text = $"{val.Key}  - {val.Value}" });
+                    }
+                    ctlContent.Children.Add(newEl);
                 }
                     
       

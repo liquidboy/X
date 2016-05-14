@@ -213,7 +213,7 @@ namespace X.Services.Extensions
         public async Task<ValueSet> MakeCommandCall(string commandCall, string serviceName) {
             using (var connection = new AppServiceConnection())
             {
-                connection.AppServiceName = serviceName; // "x.extension.svc.getcontent";
+                connection.AppServiceName = serviceName; 
                 connection.PackageFamilyName = _extension.Package.Id.FamilyName;
                 var status = await connection.OpenAsync();
                 if (status != AppServiceConnectionStatus.Success)
