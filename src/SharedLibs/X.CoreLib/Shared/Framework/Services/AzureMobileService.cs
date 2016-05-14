@@ -7,7 +7,7 @@ using Microsoft.WindowsAzure.MobileServices;
 using SumoNinjaMonkey.Framework.Controls.Messages;
 using GalaSoft.MvvmLight.Messaging;
 
-namespace FavouriteMX.Shared.Services
+namespace X.CoreLib.Shared.Services
 {
 
     public class AzureMobileService

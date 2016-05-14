@@ -1,13 +1,10 @@
 ﻿
 using FavouriteMX.Shared.Views;
-//using SumoNinjaMonkey.Framework.Controls.DrawingSurface;
 using System;
-using Windows.UI.Xaml.Input;
-//using FavouriteMX.Shared.DxRenderer;
 using System.Threading.Tasks;
 
 
-namespace FavouriteMX.Shared.Services
+namespace X.CoreLib.Shared.Services
 {
     public class RenderingService
     {

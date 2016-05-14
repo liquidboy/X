@@ -5,7 +5,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
 
-namespace FavouriteMX.Shared.Services
+namespace X.CoreLib.Shared.Services
 {
     public class WindowLayoutService
     {

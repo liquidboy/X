@@ -5,7 +5,7 @@ using System;
 
 using Windows.UI.Notifications;
 using Windows.Data.Xml.Dom;
-using FavouriteMX.Shared.Services;
+using X.CoreLib.Shared.Services;
 using GalaSoft.MvvmLight.Command;
 using SumoNinjaMonkey.Framework.Services;
 using SumoNinjaMonkey.Framework.Controls.Messages;
@@ -244,32 +244,32 @@ namespace FavouriteMX.Shared.Models
         private void FillSessionDataFromDB()
         {
             
-            string[] pac = AppDatabase.Current.RetrieveInstanceAppState(FavouriteMX.Shared.Services.AppDatabase.AppSystemDataEnums.PrimaryAccentColor).Value.ToString().Split(",".ToCharArray());
+            string[] pac = AppDatabase.Current.RetrieveInstanceAppState(AppDatabase.AppSystemDataEnums.PrimaryAccentColor).Value.ToString().Split(",".ToCharArray());
             AccentColor = new SolidColorBrush(new Color() { R = Byte.Parse(pac[0]), G = Byte.Parse(pac[1]), B = Byte.Parse(pac[2]), A = Byte.Parse(pac[3]) });
             RaisePropertyChanged("AccentColor");
 
-            pac = AppDatabase.Current.RetrieveInstanceAppState(FavouriteMX.Shared.Services.AppDatabase.AppSystemDataEnums.SecondaryAccentColor).Value.ToString().Split(",".ToCharArray());
+            pac = AppDatabase.Current.RetrieveInstanceAppState(AppDatabase.AppSystemDataEnums.SecondaryAccentColor).Value.ToString().Split(",".ToCharArray());
             AccentColorLightBy1Degree = new SolidColorBrush(new Color() { R = Byte.Parse(pac[0]), G = Byte.Parse(pac[1]), B = Byte.Parse(pac[2]), A = Byte.Parse(pac[3]) });
             RaisePropertyChanged("AccentColorLightBy1Degree");
 
-            pac = AppDatabase.Current.RetrieveInstanceAppState(FavouriteMX.Shared.Services.AppDatabase.AppSystemDataEnums.ThirdAccentColor).Value.ToString().Split(",".ToCharArray());
+            pac = AppDatabase.Current.RetrieveInstanceAppState(AppDatabase.AppSystemDataEnums.ThirdAccentColor).Value.ToString().Split(",".ToCharArray());
             AccentColorLightBy2Degree = new SolidColorBrush(new Color() { R = Byte.Parse(pac[0]), G = Byte.Parse(pac[1]), B = Byte.Parse(pac[2]), A = Byte.Parse(pac[3]) });
             RaisePropertyChanged("AccentColorLightBy2Degree");
 
 
-            pac = AppDatabase.Current.RetrieveInstanceAppState(FavouriteMX.Shared.Services.AppDatabase.AppSystemDataEnums.PrimaryBackgroundColor).Value.ToString().Split(",".ToCharArray());
+            pac = AppDatabase.Current.RetrieveInstanceAppState(AppDatabase.AppSystemDataEnums.PrimaryBackgroundColor).Value.ToString().Split(",".ToCharArray());
             BackgroundColor = new SolidColorBrush(new Color() { R = Byte.Parse(pac[0]), G = Byte.Parse(pac[1]), B = Byte.Parse(pac[2]), A = Byte.Parse(pac[3]) });
             RaisePropertyChanged("BackgroundColor");
 
-            pac = AppDatabase.Current.RetrieveInstanceAppState(FavouriteMX.Shared.Services.AppDatabase.AppSystemDataEnums.SecondaryBackgroundColor).Value.ToString().Split(",".ToCharArray());
+            pac = AppDatabase.Current.RetrieveInstanceAppState(AppDatabase.AppSystemDataEnums.SecondaryBackgroundColor).Value.ToString().Split(",".ToCharArray());
             BackgroundDarkBy1Color = new SolidColorBrush(new Color() { R = Byte.Parse(pac[0]), G = Byte.Parse(pac[1]), B = Byte.Parse(pac[2]), A = Byte.Parse(pac[3]) });
             RaisePropertyChanged("BackgroundDarkBy1Color");
 
-            pac = AppDatabase.Current.RetrieveInstanceAppState(FavouriteMX.Shared.Services.AppDatabase.AppSystemDataEnums.ThirdBackgroundColor).Value.ToString().Split(",".ToCharArray());
+            pac = AppDatabase.Current.RetrieveInstanceAppState(AppDatabase.AppSystemDataEnums.ThirdBackgroundColor).Value.ToString().Split(",".ToCharArray());
             BackgroundDarkBy2Color = new SolidColorBrush(new Color() { R = Byte.Parse(pac[0]), G = Byte.Parse(pac[1]), B = Byte.Parse(pac[2]), A = Byte.Parse(pac[3]) });
             RaisePropertyChanged("BackgroundDarkBy2Color");
 
-            SessionID = AppDatabase.Current.RetrieveInstanceAppState(FavouriteMX.Shared.Services.AppDatabase.AppSystemDataEnums.UserSessionID).Value;
+            SessionID = AppDatabase.Current.RetrieveInstanceAppState(AppDatabase.AppSystemDataEnums.UserSessionID).Value;
 
 
         }

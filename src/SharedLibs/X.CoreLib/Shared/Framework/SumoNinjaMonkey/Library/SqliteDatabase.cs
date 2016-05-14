@@ -1,11 +1,8 @@
-﻿
-
-using System.Collections.Generic;
-using SQLite;
+﻿using X.CoreLib.SQLite;
 
 namespace SumoNinjaMonkey.Framework
 {
-    
+
     public abstract class SqliteDatabase
     {
         private SQLiteConnection _sqlitedb;

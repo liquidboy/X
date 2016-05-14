@@ -8,7 +8,7 @@ using Windows.Networking.Connectivity;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
 
-namespace FavouriteMX.Shared.Services
+namespace X.CoreLib.Shared.Services
 {
     public partial class AppService
     {

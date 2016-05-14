@@ -3,7 +3,7 @@ using FavouriteMX.Shared.Views;
 using System;
 using Windows.UI.Xaml.Input;
 
-namespace FavouriteMX.Shared.Services
+namespace X.CoreLib.Shared.Services
 {
     public class GestureService
     {

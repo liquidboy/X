@@ -14,7 +14,7 @@ using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace FavouriteMX.Shared.Services
+namespace X.CoreLib.Shared.Services
 {
     public class YouTubeService
     {

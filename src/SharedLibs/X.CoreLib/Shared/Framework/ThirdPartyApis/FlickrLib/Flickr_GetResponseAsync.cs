@@ -49,12 +49,12 @@ namespace FlickrNet
 
         private void CacheCall(string url, string data)
         {
-            FavouriteMX.Shared.Services.AppDatabase.Current.SaveCacheCallResponse(url, data, DateTime.UtcNow);
+            X.CoreLib.Shared.Services.AppDatabase.Current.SaveCacheCallResponse(url, data, DateTime.UtcNow);
         }
 
         private string TryGetCacheCall(string url)
         {
-            var found = FavouriteMX.Shared.Services.AppDatabase.Current.RetrieveCacheCallResponse(url);
+            var found = X.CoreLib.Shared.Services.AppDatabase.Current.RetrieveCacheCallResponse(url);
 
             if (found != null && found.Count == 1)
             {

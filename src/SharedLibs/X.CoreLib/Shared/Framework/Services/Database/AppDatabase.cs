@@ -1,7 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using GalaSoft.MvvmLight.Messaging;
-using SQLite;
+using X.CoreLib.SQLite;
 using SumoNinjaMonkey.Framework;
 using SumoNinjaMonkey.Framework.Controls.Messages;
 using SumoNinjaMonkey.Framework.Services;
@@ -11,7 +11,7 @@ using System;
 using System.Runtime.Serialization;
 
 
-namespace FavouriteMX.Shared.Services
+namespace X.CoreLib.Shared.Services
 {
     public partial class AppDatabase : SqliteDatabase
     {
@@ -89,12 +89,12 @@ namespace FavouriteMX.Shared.Services
         {
             this.AppStates = RetrieveAppStates();
         }
-        public AppState RetrieveInstanceAppState(FavouriteMX.Shared.Services.AppDatabase.AppSystemDataEnums appSystemData)
+        public AppState RetrieveInstanceAppState(AppSystemDataEnums appSystemData)
         {
             var found = AppStates.Where(x => x.Name == ((int)appSystemData).ToString());
             return found.FirstOrDefault();
         }
-        public void UpdateInstanceAppState(FavouriteMX.Shared.Services.AppDatabase.AppSystemDataEnums appSystemData, string value)
+        public void UpdateInstanceAppState(AppSystemDataEnums appSystemData, string value)
         {
             var found = RetrieveInstanceAppState(appSystemData);
             

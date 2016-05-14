@@ -1,9 +1,6 @@
-﻿using System;
-//using FavouriteMX.Shared.Views;
-using SumoNinjaMonkey.Framework.Services;
-using Windows.UI.Xaml.Controls;
-using FavouriteMX.Shared.Views;
-namespace FavouriteMX.Shared.Services
+﻿using Windows.UI.Xaml.Controls;
+
+namespace X.CoreLib.Shared.Services
 {
     public class NavigationServiceBase
     {

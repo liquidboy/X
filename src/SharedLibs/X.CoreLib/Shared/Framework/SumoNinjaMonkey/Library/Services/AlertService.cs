@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Messaging;
-using SQLite;
+using X.CoreLib.SQLite;
 using SumoNinjaMonkey.Framework.Controls.Messages;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;

@@ -1,7 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using GalaSoft.MvvmLight.Messaging;
-using SQLite;
+using X.CoreLib.SQLite;
 using SumoNinjaMonkey.Framework;
 using SumoNinjaMonkey.Framework.Controls.Messages;
 using SumoNinjaMonkey.Framework.Services;
@@ -12,7 +12,7 @@ using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
 
-namespace FavouriteMX.Shared.Services
+namespace X.CoreLib.Shared.Services
 {
     public partial class AppDatabase
     {

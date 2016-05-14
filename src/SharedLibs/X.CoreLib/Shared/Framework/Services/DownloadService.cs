@@ -11,7 +11,7 @@ using GalaSoft.MvvmLight.Messaging;
 using SumoNinjaMonkey.Framework.Controls.Messages;
 using System.Threading;
 
-namespace FavouriteMX.Shared.Services
+namespace X.CoreLib.Shared.Services
 {
 
     public class DownloadService

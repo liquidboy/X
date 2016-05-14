@@ -41,7 +41,7 @@ using Sqlite3DatabaseHandle = System.IntPtr;
 using Sqlite3Statement = System.IntPtr;
 #endif
 
-namespace SQLite
+namespace X.CoreLib.SQLite
 {
 	public class SQLiteException : System.Exception
 	{

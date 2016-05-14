@@ -1,5 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
-using SQLite;
+using X.CoreLib.SQLite;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

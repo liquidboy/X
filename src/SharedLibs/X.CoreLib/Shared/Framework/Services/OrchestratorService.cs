@@ -3,7 +3,7 @@ using SumoNinjaMonkey.Framework.Controls.Messages;
 using SumoNinjaMonkey.Framework.Services;
 using System.Linq;
 
-namespace FavouriteMX.Shared.Services
+namespace X.CoreLib.Shared.Services
 {
     public class OrchestratorService
     {

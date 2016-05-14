@@ -1,5 +1,5 @@
 ﻿using Microsoft.WindowsAzure.MobileServices;
-using SQLite;
+using X.CoreLib.SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;

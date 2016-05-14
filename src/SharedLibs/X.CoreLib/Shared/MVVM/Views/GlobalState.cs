@@ -1,5 +1,5 @@
 ﻿
-using FavouriteMX.Shared.Services;
+using X.CoreLib.Shared.Services;
 namespace FavouriteMX.Shared.Views
 {
     public class GlobalState
