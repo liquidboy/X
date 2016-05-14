@@ -5,12 +5,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using X.Extensions.Popups;
 using WeakEvent;
+using Windows.UI.Core;
+using Windows.ApplicationModel.AppExtensions;
+using X.Services.Settings;
+using Windows.Foundation.Collections;
+using Windows.UI.Xaml.Media.Imaging;
+using Windows.ApplicationModel;
 
 namespace X.Services.Extensions
 {
     public class ExtensionsService : ISender, IExtensionsService
     {
         List<ExtensionLite> _extensions = new List<ExtensionLite>();
+        private string _contract = "X.Extensions";  //our ecosystem of extensions all have this contract "name"
+        private CoreDispatcher _dispatcher;
+        private AppExtensionCatalog _catalog;
 
         private readonly WeakEventSource<EventArgs> _OnInstallExtensionSource = new WeakEventSource<EventArgs>();
         public event EventHandler<EventArgs> OnInstallExtension
@@ -43,6 +52,7 @@ namespace X.Services.Extensions
 
         public ExtensionsService() {
             CreateDefaultExtensions();
+            InitializeCatalog();
         }
 
 
@@ -231,9 +241,190 @@ namespace X.Services.Extensions
             //}
         }
 
+        public async Task InitializeCatalog()
+        {
+            _catalog = AppExtensionCatalog.Open(_contract);
+
+            AppSettings.Clear();
+            if (_dispatcher != null) throw new Exception("Extension Manager for " + this._contract + " is already initialized.");
+
+            // thread that initializes the extension manager has the dispatcher
+            _dispatcher = Windows.UI.Core.CoreWindow.GetForCurrentThread().Dispatcher;
+
+            // set up extension management events
+            _catalog.PackageInstalled += Catalog_PackageInstalled;
+            _catalog.PackageUninstalling += Catalog_PackageUninstalling;
+            _catalog.PackageUpdating += Catalog_PackageUpdating;
+            _catalog.PackageUpdated += Catalog_PackageUpdated;
+            _catalog.PackageStatusChanged += Catalog_PackageStatusChanged;
+            
+        }
+
+        public async Task PopulateAllUWPExtensions()
+        {
+            if (_dispatcher == null) throw new Exception("Extension Manager for " + this._contract + " is not initialized.");
+            
+            IReadOnlyList<AppExtension> extensions = await _catalog.FindAllAsync();
+            foreach (AppExtension ext in extensions)
+                await LoadUWPExtension(ext);
+            
+        }
+
+
+        private async void Catalog_PackageInstalled(AppExtensionCatalog sender, AppExtensionPackageInstalledEventArgs args)
+        {
+            await _dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+            {
+                foreach (AppExtension ext in args.Extensions) await LoadUWPExtension(ext);
+            });
+        }
+
+        private async void Catalog_PackageUpdated(AppExtensionCatalog sender, AppExtensionPackageUpdatedEventArgs args)
+        {
+            await _dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+            {
+                foreach (AppExtension ext in args.Extensions) await LoadUWPExtension(ext);
+            });
+        }
+
+        // package is updating, so just unload the extensions
+        private async void Catalog_PackageUpdating(AppExtensionCatalog sender, AppExtensionPackageUpdatingEventArgs args)
+        {
+            await UnloadUWPExtensions(args.Package);
+        }
+
+        // package is removed, so unload all the extensions in the package and remove it
+        private async void Catalog_PackageUninstalling(AppExtensionCatalog sender, AppExtensionPackageUninstallingEventArgs args)
+        {
+            await RemoveUWPExtensions(args.Package);
+        }
+
+        // package status has changed, could be invalid, licensing issue, app was on USB and removed, etc
+        private async void Catalog_PackageStatusChanged(AppExtensionCatalog sender, AppExtensionPackageStatusChangedEventArgs args)
+        {
+            // get package status
+            if (!(args.Package.Status.VerifyIsOK()))
+            {
+                // if it's offline unload only
+                if (args.Package.Status.PackageOffline) await UnloadUWPExtensions(args.Package);
+
+                // package is being serviced or deployed
+                else if (args.Package.Status.Servicing || args.Package.Status.DeploymentInProgress)
+                {
+                    // ignore these package status events
+                }
+
+                // package is tampered or invalid or some other issue, remove the extensions
+                else
+                {
+                    await RemoveUWPExtensions(args.Package);
+                }
+
+            }
+            // if package is now OK, attempt to load the extensions
+            else
+            {
+                // try to load any extensions associated with this package
+                await LoadUWPExtensions(args.Package);
+            }
+        }
+
+        // removes all extensions associated with a package - used when removing a package or it becomes invalid
+        public async Task RemoveUWPExtensions(Package package)
+        {
+            await _dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                _extensions.Where(ext => ext.AppExtension.Package.Id.FamilyName == package.Id.FamilyName).ToList().ForEach(e => { e.UnloadUWPExtension(); _extensions.Remove(e); });
+            });
+        }
+
+        // loads all extensions associated with a package - used for when package status comes back
+        public async Task LoadUWPExtensions(Package package)
+        {
+            await _dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                _extensions.Where(ext => ext.AppExtension.Package.Id.FamilyName == package.Id.FamilyName).ToList().ForEach(async e => { await e.LoadUWPExtension(); });
+            });
+        }
+
+        // unloads all extensions associated with a package - used for updating and when package status goes away
+        public async Task UnloadUWPExtensions(Package package)
+        {
+            await _dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                _extensions.Where(ext => ext.AppExtension.Package.Id.FamilyName == package.Id.FamilyName).ToList().ForEach(e => { e.UnloadUWPExtension(); });
+            });
+        }
+
+        public async Task LoadUWPExtension(AppExtension ext)
+        {
+            // get unique identifier for this extension
+            string identifier = ext.AppInfo.AppUserModelId + "!" + ext.Id;
+
+            // load the extension if the package is OK
+            if (!(ext.Package.Status.VerifyIsOK()
+                    // This is where we'd normally do signature verfication, but don't care right now
+                    //&& extension.Package.SignatureKind == PackageSignatureKind.Store
+                    ))
+            {
+                // if this package doesn't meet our requirements
+                // ignore it and return
+                return;
+            }
 
 
 
+            // if its already existing then this is an update
+            var existingExt = _extensions.Where(e => e.AppExtensionUniqueId == identifier).FirstOrDefault();
+
+            // new extension
+            if (existingExt == null)
+            {
+                try
+                {
+                    // get extension properties
+                    IPropertySet properties = await ext.GetExtensionPropertiesAsync();
+                    //IPropertySet properties = null;
+
+                    // get logo 
+                    var filestream = await (ext.AppInfo.DisplayInfo.GetLogo(new Windows.Foundation.Size(1, 1))).OpenReadAsync();
+                    BitmapImage logo = new BitmapImage();
+                    logo.SetSource(filestream);
+
+                    // create new extension
+                    var nExt = new ExtensionLite(ext, properties);
+
+                    // Add it to extension list
+                    _extensions.Add(nExt);
+
+                    // load it
+                    //await nExt.Load();
+                }
+                catch (Exception ex)
+                {
+                    //chances are if it fails retrieving properties that the app was added with no properties .. Uninstall the app and reinstall it and hopefully the latest metadata will be there
+                }
+            }
+            // update
+            else
+            {
+                // unload the extension
+                existingExt.UnloadUWPExtension();
+
+                // update the extension
+                await existingExt.UpdateUWPExtension(ext);
+            }
+        }
+
+        public ExtensionLite GetExtensionByAppExtensionUniqueId(string uniqueId)
+        {
+            return _extensions.Where(x => x.AppExtensionUniqueId == uniqueId).FirstOrDefault();
+        }
+
+        public IEnumerable<ExtensionLite> GetUWPExtensions()
+        {
+            return _extensions.Where(x => x.Manifest.IsUWPExtension);
+        }
 
 
 

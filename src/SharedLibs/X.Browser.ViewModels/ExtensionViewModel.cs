@@ -30,6 +30,7 @@ namespace X.Browser
         public bool CanUninstall { get; set; } = true;
         public ExtensionInToolbarPositions FoundInToolbarPositions { get; set; }
         public ExtensionInToolbarPositions LaunchInDockPositions { get; set; }
+        public string AppExtensionUniqueID { get; set; }
 
         public void Load(IExtensionManifest extensionManifest) {
             UniqueID = extensionManifest.UniqueID;
@@ -44,6 +45,7 @@ namespace X.Browser
 
             FoundInToolbarPositions = extensionManifest.FoundInToolbarPositions;
             LaunchInDockPositions = extensionManifest.LaunchInDockPositions;
+            AppExtensionUniqueID = extensionManifest.AppExtensionUniqueID;
         }
 
         public void Load(ExtensionManifestDataModel extensionManifest) {

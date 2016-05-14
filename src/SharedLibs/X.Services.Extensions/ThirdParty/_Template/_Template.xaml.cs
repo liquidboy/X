@@ -75,7 +75,7 @@ namespace X.Services.ThirdParty
                 }
                 else {
 
-                    var ef = Extensions.ExtensionsFullService.Instance.Extensions[0];
+                    var ef = Extensions.ExtensionsService.Instance.GetExtensionByAppExtensionUniqueId(ExtensionManifest.AppExtensionUniqueID);
                     var result = await ef.MakeCommandCall("UI", "Call");
 
 

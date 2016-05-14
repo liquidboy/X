@@ -39,12 +39,8 @@ namespace CoreLib.Extensions
         public bool CanUninstall { get; set; } = true;
         public ExtensionInToolbarPositions FoundInToolbarPositions { get; set; }
         public ExtensionInToolbarPositions LaunchInDockPositions { get; set; }
-
-
-
+        public string AppExtensionUniqueID { get; set; }
         
-        
-
 
     }
 }

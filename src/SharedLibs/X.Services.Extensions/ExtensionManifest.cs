@@ -18,25 +18,25 @@ using Windows.UI.Core;
 
 namespace X.Services.Extensions
 {
-    public struct ExtensionManifest : IExtensionManifest
+    public class ExtensionManifest : IExtensionManifest
     {
         public string Abstract { get; set; }
 
         public string AssemblyName { get; set; }
 
-        public bool CanUninstall { get; set; }
+        public bool CanUninstall { get; set; } = true;
 
         public string ContentControl { get; set; }
 
-        public string DisplayName { get; set; }
+        public string DisplayName { get { return Title; } set { } }
 
         public ExtensionInToolbarPositions FoundInToolbarPositions { get; set; }
 
         public string IconUrl { get; set; }
 
-        public bool IsExtEnabled { get; set; }
-        
-        public bool IsUWPExtension { get; set; }
+        public bool IsExtEnabled { get; set; } = true;
+
+        public bool IsUWPExtension { get; set; } = false;
 
         public ExtensionInToolbarPositions LaunchInDockPositions { get; set; }
 
@@ -44,11 +44,18 @@ namespace X.Services.Extensions
 
         public string Title { get; set; }
 
-        public string Path { get; set; }
+        public string TitleHashed { get { return FlickrNet.UtilityMethods.MD5Hash(Title); } private set { } }
 
-        public Guid UniqueID { get; set; }
+        public string Path { get { return "//"; } set { } }
+
+        public Guid UniqueID { get; set; } = Guid.NewGuid();
 
         public string Version { get; set; }
+
+        public string AppExtensionUniqueID { get; set; }
+
+        public ExtensionManifest()
+        { }
 
         public ExtensionManifest(IExtensionManifest data)
         {
@@ -67,6 +74,20 @@ namespace X.Services.Extensions
             this.Version = data.Version;
             this.Path = data.Path;
             this.IsUWPExtension = data.IsUWPExtension;
+            this.AppExtensionUniqueID = data.AppExtensionUniqueID;
+        }
+
+        public ExtensionManifest(string title, string iconUrl, string publisher, string version, string description, ExtensionInToolbarPositions iconPosition, ExtensionInToolbarPositions panelPosition)
+        {
+
+            Title = title;
+            IconUrl = iconUrl;
+            Publisher = publisher;
+            Version = version;
+            Abstract = description;
+            FoundInToolbarPositions = iconPosition;
+            LaunchInDockPositions = panelPosition;
+
         }
 
     }

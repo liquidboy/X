@@ -31,8 +31,7 @@ namespace X.Browser.Views
 
         async Task InitExtensions()
         {
-            await X.Services.Extensions.ExtensionsFullService.Instance.Initialize();
-
+            
             ExtensionManifest = new ExtensionManifest("Browser Shell", string.Empty, "Sample Extensions", "1.0", "The chrome of the browser is itself an extension. Enabling/Disabling this will affect ALL extensions.", ExtensionInToolbarPositions.None, ExtensionInToolbarPositions.None);
             
             X.Services.Extensions.ExtensionsService.Instance.Install(this);
@@ -55,7 +54,9 @@ namespace X.Browser.Views
                 X.Extensions.ThirdParty.Facebook.Installer.GetManifest(),
                 X.Extensions.FirstParty.Settings.Installer.GetManifest(),
             });
-            LoadThirdPartyExtensions(X.Services.Extensions.ExtensionsFullService.Instance.Extensions.ToList());
+
+            await X.Services.Extensions.ExtensionsService.Instance.PopulateAllUWPExtensions();
+            UpdateUWPExtensionsWithStateSavedData(X.Services.Extensions.ExtensionsService.Instance.GetUWPExtensions());
 
 
             ctlExtensionsBarTop.InstallMyself(); // does Install + LoadExtensions
@@ -84,19 +85,19 @@ namespace X.Browser.Views
             }
         }
 
-        private void LoadThirdPartyExtensions(List<IExtensionFull> thirdPartyExtensions)
+        private void UpdateUWPExtensionsWithStateSavedData(IEnumerable<Services.Extensions.ExtensionLite> thirdPartyExtensions)
         {
             var extensionsInStorage = X.Services.Data.StorageService.Instance.Storage.RetrieveList<Services.Data.ExtensionManifestDataModel>();
             foreach (var ext in thirdPartyExtensions)
             {
-                var found = extensionsInStorage.Where(x => x.Uid == ext.UniqueId).ToList();
+                var hashedUid = ((X.Services.Extensions.ExtensionManifest)ext.Manifest).TitleHashed;
+                var found = extensionsInStorage.Where(x => x.Uid == hashedUid).ToList();
                 if (found != null && found.Count() > 0)
                 {
                     ext.Manifest.IsExtEnabled = found.First().IsExtEnabled;
                     ext.Manifest.LaunchInDockPositions = (ExtensionInToolbarPositions)found.First().LaunchInDockPositions;
                     ext.Manifest.FoundInToolbarPositions = (ExtensionInToolbarPositions)found.First().FoundInToolbarPositions;
                 }
-                X.Services.Extensions.ExtensionsService.Instance.Install(ext.Manifest);
             }
         }
 
