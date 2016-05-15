@@ -29,7 +29,7 @@
             <uap3:Properties>
               <Logo>ms-appx:///Assets/Aws.png</Logo>
               <Title>Aws Management</Title>
-              <IconUrl>LogoExtraSmall.png</IconUrl>
+              <IconUrl>Logo-20x20.png</IconUrl>
               <Publisher>Jose Fajardo</Publisher>
               <Version>1.0</Version>
               <Abstract>Manage your AWS account</Abstract>
