@@ -26,6 +26,7 @@ namespace X.Browser
                 if (IconUrl == "bitmap") return IconBitmap;
                 else return IconUrl;
             }
+            set { }
         }
         public string Publisher { get; set; }
         public string Version { get; set; }

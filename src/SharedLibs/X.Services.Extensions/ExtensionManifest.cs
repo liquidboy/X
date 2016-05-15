@@ -36,6 +36,16 @@ namespace X.Services.Extensions
 
         public BitmapImage IconBitmap { get; set; }
 
+        public object Icon
+        {
+            get
+            {
+                if (IconUrl == "bitmap") return IconBitmap;
+                else return IconUrl;
+            }
+            set { }
+        }
+
         public bool IsExtEnabled { get; set; } = true;
 
         public bool IsUWPExtension { get; set; } = false;

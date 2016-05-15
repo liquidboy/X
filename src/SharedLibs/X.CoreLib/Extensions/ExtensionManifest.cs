@@ -30,6 +30,15 @@ namespace CoreLib.Extensions
         public string Path { get { return "//"; } set { } }
         public string IconUrl { get; set; }
         public BitmapImage IconBitmap { get; set; }
+        public object Icon
+        {
+            get
+            {
+                if (IconUrl == "bitmap") return IconBitmap;
+                else return IconUrl;
+            }
+            set { }
+        }
         public string Publisher { get; set; }
         public string Version { get; set; }
         public string ContentControl { get; set; }

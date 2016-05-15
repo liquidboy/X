@@ -22,7 +22,7 @@
             </Grid.RowDefinitions>
 
             <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
-                <Image Source="{Binding ExtensionManifest.IconUrl}" Height="30" MaxWidth="80" Stretch="Uniform" />
+                <Image Source="{Binding ExtensionManifest.Icon}" Height="30" MaxWidth="80" Stretch="Uniform" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,10,10,0" HorizontalAlignment="Right">
                 <xuitb:ImageButton x:Name="butClose" IconUri="ms-appx:///X.Extensions.UI/ThirdParty/_SharedAssets/close4.png" Width="20" Height="20" PointerReleased="butClose_PointerReleased"/>
@@ -34,7 +34,7 @@
 
 
             <StackPanel Orientation="Horizontal" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Opacity="0.5">
-                <Image Source="{Binding ExtensionManifest.IconUrl}" Height="17" Stretch="UniformToFill"  />
+                <Image Source="{Binding ExtensionManifest.Icon}" Height="17" Stretch="UniformToFill"  />
                 <TextBlock Text="'" FontSize="10" Margin="3,3,0,0" />
                 <TextBlock Text="{Binding ExtensionManifest.Title}" FontSize="10" Margin="0,3,0,0" />
                 <TextBlock Text="'" FontSize="10" Margin="0,3,3,0" />

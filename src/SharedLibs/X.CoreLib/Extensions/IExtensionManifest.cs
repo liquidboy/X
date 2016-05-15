@@ -20,6 +20,7 @@ namespace CoreLib.Extensions
         string Abstract { get; set; }
         string IconUrl { get; set; }
         BitmapImage IconBitmap { get; set; }
+        object Icon { get; set; }
         string ContentControl { get; set; }
         string AssemblyName { get; set; }
         bool IsExtEnabled { get; set; }
