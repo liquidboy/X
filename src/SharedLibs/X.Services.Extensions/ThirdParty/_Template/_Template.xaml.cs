@@ -78,13 +78,15 @@ namespace X.Services.ThirdParty
                     var ef = Extensions.ExtensionsService.Instance.GetExtensionByAppExtensionUniqueId(ExtensionManifest.AppExtensionUniqueID);
                     var result = await ef.MakeCommandCall("UI", "Call");
 
-
-                    var newEl = new StackPanel() { Orientation = Orientation.Vertical};
-                    foreach (var val in result)
-                    {
-                        newEl.Children.Add(new TextBlock() { Text = $"{val.Key}  - {val.Value}" });
+                    if (result != null) {
+                        var newEl = new StackPanel() { Orientation = Orientation.Vertical };
+                        foreach (var val in result)
+                        {
+                            newEl.Children.Add(new TextBlock() { Text = $"{val.Key}  - {val.Value}" });
+                        }
+                        ctlContent.Children.Add(newEl);
                     }
-                    ctlContent.Children.Add(newEl);
+                    
                 }
                     
       
