@@ -394,8 +394,13 @@ namespace X.Services.Extensions
                     var folder = await ext.GetPublicFolderAsync();
                     if (folder != null)
                     {
-                        var file = await folder.GetFileAsync("Aws.png");
-                        nExt.Manifest.IconLocalUrn = file.Path;
+                        var file = await folder.GetFileAsync("Logo.png");
+                        using (var randomAccessStream = await file.OpenReadAsync())
+                        {
+                            BitmapImage logo = new BitmapImage();
+                            logo.SetSource(randomAccessStream);
+                            nExt.Manifest.IconBitmap = logo;
+                        }
                     }
                     //var publicFolder = await ext.Package.InstalledLocation.GetFolderAsync("public");
                     //var file = publicFolder.GetFileAsync("Aws.png");

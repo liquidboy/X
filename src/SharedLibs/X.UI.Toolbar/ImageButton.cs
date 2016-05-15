@@ -36,7 +36,7 @@ namespace X.UI.Toolbar
 
         }
 
-        protected override void OnApplyTemplate()
+        protected async override void OnApplyTemplate()
         {
 
             if (rootLayout == null)
@@ -49,7 +49,11 @@ namespace X.UI.Toolbar
                 rootLayout.PointerReleased += RootLayout_PointerReleased;
 
                 imgMain = (Image)GetTemplateChild("imgMain");
-                if(!string.IsNullOrEmpty(IconUri))imgMain.Source = new BitmapImage(new Uri(IconUri));
+                if (!string.IsNullOrEmpty(IconUri))
+                    if (IconUri.Contains("ms-appx") || IconUri.Contains("http://"))
+                        imgMain.Source = new BitmapImage(new Uri(IconUri));
+                    else if (IconUri == "bitmap")
+                        imgMain.Source = IconBitmap;
             }
 
             base.OnApplyTemplate();
@@ -71,6 +75,14 @@ namespace X.UI.Toolbar
         }
 
 
+        public BitmapImage IconBitmap
+        {
+            get { return (BitmapImage)GetValue(IconBitmapProperty); }
+            set { SetValue(IconBitmapProperty, value); }
+        }
+
+
+        public static readonly DependencyProperty IconBitmapProperty = DependencyProperty.Register("IconBitmap", typeof(BitmapImage), typeof(ImageButton), new PropertyMetadata(null));
 
         public static readonly DependencyProperty IconUriProperty = DependencyProperty.Register("IconUri", typeof(string), typeof(ImageButton), new PropertyMetadata(string.Empty));
 

@@ -75,8 +75,8 @@ namespace X.Extensions.UIComponentExtensions
                 spExtensions.ClearAll();
                 var ea = (ResponseListOfBottomToolbarExtensionsEventArgs)message;
                 _extensions = ea.ExtensionsMetadata;
-                foreach (var ext in _extensions) if (ext.IsExtEnabled) spExtensions.AddItem(ext.IconUrl, 20, ext.UniqueID);
-                if(_extensions.Where(x=>x.IsExtEnabled).Count() > 0) this.Height = 40;
+                foreach (var ext in _extensions) if (ext.IsExtEnabled) spExtensions.AddItem(ext.IconBitmap != null ? "bitmap" : ext.IconUrl, 20, ext.UniqueID, ext.IconBitmap);
+                if (_extensions.Where(x=>x.IsExtEnabled).Count() > 0) this.Height = 40;
                 else this.Height = 0;
             }
         }

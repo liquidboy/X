@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace X.UI.Toolbar
 {
@@ -83,13 +83,13 @@ namespace X.UI.Toolbar
             _spExtensions.Children.Clear();
             HasExtensions = false;
         }
-        public void AddItem(string iconUrl, double height, Guid uniqueId) {
+        public void AddItem(string iconUrl, double height, Guid uniqueId, BitmapImage iconBitmap = null) {
             ImageButton newIcon;
 
             if (Orientation == Orientation.Horizontal)
-                newIcon = new ImageButton() { IconUri = iconUrl, Height = height, ExtensionUniqueId = uniqueId, Margin = new Thickness(10, 0, 0, 0) };
+                newIcon = new ImageButton() { IconUri = iconUrl, Height = height, ExtensionUniqueId = uniqueId, Margin = new Thickness(10, 0, 0, 0), IconBitmap = iconBitmap };
             else
-                newIcon = new ImageButton() { IconUri = iconUrl, Height = height, ExtensionUniqueId = uniqueId, Margin = new Thickness(0, 0, 0, 10) };
+                newIcon = new ImageButton() { IconUri = iconUrl, Height = height, ExtensionUniqueId = uniqueId, Margin = new Thickness(0, 0, 0, 10), IconBitmap = iconBitmap };
 
             newIcon.Click += NewIcon_Click;
 

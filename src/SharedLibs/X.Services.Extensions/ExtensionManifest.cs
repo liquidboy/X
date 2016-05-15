@@ -34,7 +34,7 @@ namespace X.Services.Extensions
 
         public string IconUrl { get; set; }
 
-        public string IconLocalUrn { get; set; }
+        public BitmapImage IconBitmap { get; set; }
 
         public bool IsExtEnabled { get; set; } = true;
 
@@ -77,6 +77,7 @@ namespace X.Services.Extensions
             this.Path = data.Path;
             this.IsUWPExtension = data.IsUWPExtension;
             this.AppExtensionUniqueID = data.AppExtensionUniqueID;
+            this.IconBitmap = data.IconBitmap; // <==== this could lead to a leak, investigate this
         }
 
         public ExtensionManifest(string title, string iconUrl, string publisher, string version, string description, ExtensionInToolbarPositions iconPosition, ExtensionInToolbarPositions panelPosition)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace CoreLib.Extensions
 {
@@ -28,7 +29,7 @@ namespace CoreLib.Extensions
         public string TitleHashed { get { return FlickrNet.UtilityMethods.MD5Hash(Title); } private set { } }
         public string Path { get { return "//"; } set { } }
         public string IconUrl { get; set; }
-        public string IconLocalUrn { get; set; }
+        public BitmapImage IconBitmap { get; set; }
         public string Publisher { get; set; }
         public string Version { get; set; }
         public string ContentControl { get; set; }
