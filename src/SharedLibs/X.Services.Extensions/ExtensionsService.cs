@@ -394,12 +394,13 @@ namespace X.Services.Extensions
                     var folder = await ext.GetPublicFolderAsync();
                     if (folder != null)
                     {
-                        var file = await folder.GetFileAsync("Logo.png");
+                        var file = await folder.GetFileAsync(nExt.Manifest.IconUrl);
                         using (var randomAccessStream = await file.OpenReadAsync())
                         {
                             BitmapImage logo = new BitmapImage();
                             logo.SetSource(randomAccessStream);
                             nExt.Manifest.IconBitmap = logo;
+                            nExt.Manifest.IconUrl = "bitmap";
                         }
                     }
                     //var publicFolder = await ext.Package.InstalledLocation.GetFolderAsync("public");

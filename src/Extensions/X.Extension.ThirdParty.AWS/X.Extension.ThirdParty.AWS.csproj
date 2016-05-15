@@ -93,6 +93,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Aws.png" />
+    <Content Include="public\LogoExtraSmall.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="public\LogoSmall.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="public\Logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

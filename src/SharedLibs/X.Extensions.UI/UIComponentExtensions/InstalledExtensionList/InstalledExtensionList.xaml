@@ -64,7 +64,7 @@
                                                 </TransformGroup>
                                             </Path.RenderTransform>
                                         </Path>
-                                        <Image Source="{Binding IconUrl}" Visibility="{Binding IconUrl, Converter={StaticResource StringEmptyToVisibilityInvertedConverter}}" Margin="10,13,0,0"  Height="22" VerticalAlignment="Top"  />
+                                        <Image Source="{Binding Icon}" Visibility="{Binding IconUrl, Converter={StaticResource StringEmptyToVisibilityInvertedConverter}}" Margin="10,13,0,0"  Height="22" VerticalAlignment="Top"  />
                                     </StackPanel>
                                 </Grid>
 
