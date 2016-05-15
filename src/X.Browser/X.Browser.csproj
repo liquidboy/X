@@ -200,37 +200,9 @@
       <Project>{0d2e3133-f4e1-4ea4-9a7f-cf32eb4c5c09}</Project>
       <Name>X.Extensions.FirstParty.Settings</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SharedLibs\X.Extensions.ThirdParty.Azure\X.Extensions.ThirdParty.Azure.csproj">
-      <Project>{e041d961-7f15-4d78-9550-8762c95daac7}</Project>
-      <Name>X.Extensions.ThirdParty.Azure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SharedLibs\X.Extensions.ThirdParty.Facebook\X.Extensions.ThirdParty.Facebook.csproj">
-      <Project>{b96db5e4-2cf7-4cac-8d13-9e7afba0b1f2}</Project>
-      <Name>X.Extensions.ThirdParty.Facebook</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SharedLibs\X.Extensions.ThirdParty.Flickr\X.Extensions.ThirdParty.Flickr.csproj">
-      <Project>{1615cf12-d6d2-4fbf-8cc2-e651f572d8e6}</Project>
-      <Name>X.Extensions.ThirdParty.Flickr</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SharedLibs\X.Extensions.ThirdParty.GitX\X.Extensions.ThirdParty.GitX.csproj">
       <Project>{fd5c1993-3366-4f69-8fea-d6738b2cffa7}</Project>
       <Name>X.Extensions.ThirdParty.GitX</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SharedLibs\X.Extensions.ThirdParty.JsRTChakraCoreX\X.Extensions.ThirdParty.JsRTChakraCoreX.csproj">
-      <Project>{f9dcb5a7-bc78-476c-9013-fac93d4785a2}</Project>
-      <Name>X.Extensions.ThirdParty.JsRTChakraCoreX</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SharedLibs\X.Extensions.ThirdParty.Office365\X.Extensions.ThirdParty.Office365.csproj">
-      <Project>{713698d9-90d3-4c55-a5d0-fe30ff1d013e}</Project>
-      <Name>X.Extensions.ThirdParty.Office365</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SharedLibs\X.Extensions.ThirdParty.OneDriveX\X.Extensions.ThirdParty.OneDriveX.csproj">
-      <Project>{f4a16b99-df3d-497e-a6ae-e9b018d338a6}</Project>
-      <Name>X.Extensions.ThirdParty.OneDriveX</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SharedLibs\X.Extensions.ThirdParty.Twitter\X.Extensions.ThirdParty.Twitter.csproj">
-      <Project>{9882b19c-6a92-42ac-b6c0-6c76ebd46093}</Project>
-      <Name>X.Extensions.ThirdParty.Twitter</Name>
     </ProjectReference>
     <ProjectReference Include="..\SharedLibs\X.Extensions.ThirdParty\X.Extensions.ThirdParty.csproj">
       <Project>{ccab5d7d-4fc3-4e60-9a9d-e63b1d5c8be5}</Project>

@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+  IgnorableNamespaces="uap uap3 mp">
+
+  <Identity
+    Name="299fbe71-6b79-416f-b68c-a6097a230391"
+    Publisher="CN=jose.fajardo"
+    Version="1.0.0.0" />
+
+  <mp:PhoneIdentity PhoneProductId="299fbe71-6b79-416f-b68c-a6097a230391" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+
+  <Properties>
+    <DisplayName>X.Extension.ThirdParty.Flickr</DisplayName>
+    <PublisherDisplayName>jose.fajardo</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="x-generate"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="App"
+      Executable="$targetnametoken$.exe"
+      EntryPoint="X.Extension.ThirdParty.Flickr.App">
+      <uap:VisualElements
+        DisplayName="X.Extension.ThirdParty.Flickr"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png"
+        Description="X.Extension.ThirdParty.Flickr"
+        BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+      <Extensions>
+        <!--<uap:Extension Category="windows.appService" EntryPoint="X.Extension.ThirdParty.Flickr.Services.CallService">
+          <uap:AppService Name="Call" />
+        </uap:Extension>-->
+        <uap3:Extension Category="windows.appExtension">
+          <uap3:AppExtension Name="X.Extensions" Id="X.Extension.ThirdParty.Flickr" PublicFolder="public" DisplayName="Flickr Extension (3rd Party)">
+            <uap3:Properties>
+              <Logo>ms-appx:///Assets/Flickr.png</Logo>
+              <Title>Flickr Management</Title>
+              <IconUrl>Logo-20x20.png</IconUrl>
+              <Publisher>Jose Fajardo</Publisher>
+              <Version>1.0</Version>
+              <Abstract>Manage your Flickr account</Abstract>
+              <FoundInToolbarPositions>Top</FoundInToolbarPositions>
+              <LaunchInDockPositions>Left</LaunchInDockPositions>
+              <ContentControl>X.Extension.ThirdParty.Flickr.Content</ContentControl>
+              <AssemblyName>X.Extension.ThirdParty.Flickr</AssemblyName>
+              <IsExtEnabled>true</IsExtEnabled>
+              <IsUWPExtension>true</IsUWPExtension>
+            </uap3:Properties>
+          </uap3:AppExtension>
+        </uap3:Extension>
+      </Extensions>
+    </Application>
+    
+  </Applications>
+
+  <Capabilities>
+    <Capability Name="internetClient" />
+  </Capabilities>
+</Package>
