@@ -50,7 +50,7 @@
             <uap3:Properties>
               <Logo>ms-appx:///Assets/Office365.png</Logo>
               <Title>Office365 Management</Title>
-              <IconUrl>Logo-20x20.png</IconUrl>
+              <IconUrl>Logo-50x50.png</IconUrl>
               <Publisher>Jose Fajardo</Publisher>
               <Version>1.0</Version>
               <Abstract>Manage your Office365 account</Abstract>

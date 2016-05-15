@@ -33,7 +33,7 @@
 
 
 
-            <StackPanel Orientation="Horizontal" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Opacity="0.5">
+            <StackPanel Orientation="Horizontal" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Opacity="1">
                 <Image Source="{Binding ExtensionManifest.Icon}" Height="17" Stretch="UniformToFill"  />
                 <TextBlock Text="'" FontSize="10" Margin="3,3,0,0" />
                 <TextBlock Text="{Binding ExtensionManifest.Title}" FontSize="10" Margin="0,3,0,0" />

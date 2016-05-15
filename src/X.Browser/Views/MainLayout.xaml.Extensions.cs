@@ -43,7 +43,6 @@ namespace X.Browser.Views
             //X.Services.Extensions.ExtensionsService.Instance.Install(X.Extensions.ThirdParty.GitX.Installer.GetManifest());
             //LoadThirdPartyExtensions(Installer.GetExtensionManifests());  //<== example bulk extensions (30+ extension shells)
             LoadThirdPartyExtensions(new List<ExtensionManifest>{
-                X.Extensions.ThirdParty.GitX.Installer.GetManifest(),
                 X.Extensions.FirstParty.Settings.Installer.GetManifest(),
             });
 

@@ -50,7 +50,7 @@
             <uap3:Properties>
               <Logo>ms-appx:///Assets/Flickr.png</Logo>
               <Title>Flickr Management</Title>
-              <IconUrl>Logo-20x20.png</IconUrl>
+              <IconUrl>Logo-50x50.png</IconUrl>
               <Publisher>Jose Fajardo</Publisher>
               <Version>1.0</Version>
               <Abstract>Manage your Flickr account</Abstract>

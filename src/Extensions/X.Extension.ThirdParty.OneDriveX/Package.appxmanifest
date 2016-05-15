@@ -50,7 +50,7 @@
             <uap3:Properties>
               <Logo>ms-appx:///Assets/OneDriveX.png</Logo>
               <Title>OneDriveX Management</Title>
-              <IconUrl>Logo-20x20.png</IconUrl>
+              <IconUrl>Logo-50x50.png</IconUrl>
               <Publisher>Jose Fajardo</Publisher>
               <Version>1.0</Version>
               <Abstract>Manage your OneDriveX account</Abstract>
