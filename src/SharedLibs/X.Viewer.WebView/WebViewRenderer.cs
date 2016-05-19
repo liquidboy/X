@@ -61,6 +61,12 @@ namespace X.Viewer
 
         public void Unload()
         {
+            if (dtMaxLoadTime != null) { 
+                dtMaxLoadTime.Stop();
+                dtMaxLoadTime.Tick -= DtMaxLoadTime_Tick;
+                dtMaxLoadTime = null;
+            }
+
             if (_renderElement != null) {
                 
                 _renderElement.ScriptNotify -= wvMain_ScriptNotify;
@@ -76,10 +82,6 @@ namespace X.Viewer
                 _renderElement.DOMContentLoaded -= wvMain_DOMContentLoaded;
                 
                 _renderElement = null;
-
-                dtMaxLoadTime.Stop();
-                dtMaxLoadTime.Tick -= DtMaxLoadTime_Tick;
-                dtMaxLoadTime = null;
             }
         }
 
