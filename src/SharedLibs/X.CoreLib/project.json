@@ -2,6 +2,7 @@
   "dependencies": {
     "linqtotwitter": "4.1.0",
     "Microsoft.Azure.Mobile.Client": "2.0.1",
+    "Microsoft.Bcl.Build": "1.0.21",
     "Microsoft.Net.Http": "2.2.29",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
     "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0",
