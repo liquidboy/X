@@ -54,12 +54,23 @@ namespace X.Viewer.SketchFlow.Controls
                 spPageSizes.Visibility = Visibility.Visible;
                 butAddPage.Background = new SolidColorBrush(Colors.Gray);
             }
-            
         }
 
+
+        bool isShowingSave = false;
         private void butSave_Click(object sender, RoutedEventArgs e)
         {
+            if (isShowingSave) {
+                butSave.Flyout.Hide();
+            }
+            else {
+                butSave.Flyout.Placement = Windows.UI.Xaml.Controls.Primitives.FlyoutPlacementMode.Left;
+                butSave.Flyout.ShowAt(butSave);
+            }
 
+            isShowingSave = !isShowingSave;
+
+            
         }
 
         private void butShape_Click(object sender, RoutedEventArgs e)

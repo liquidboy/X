@@ -187,6 +187,10 @@
       <Project>{528a34d6-0337-48aa-bba8-da2ac30bbb6e}</Project>
       <Name>X.UI.ColorPicker</Name>
     </ProjectReference>
+    <ProjectReference Include="..\X.UI.LiteDataGrid\X.UI.LiteDataGrid.csproj">
+      <Project>{dbaffcc8-1ac5-4a13-8cd8-57a3d1d4e243}</Project>
+      <Name>X.UI.LiteDataGrid</Name>
+    </ProjectReference>
     <ProjectReference Include="..\X.UI.LiteTab\X.UI.LiteTab.csproj">
       <Project>{7564864b-e139-42a3-b53f-0714d118edae}</Project>
       <Name>X.UI.LiteTab</Name>

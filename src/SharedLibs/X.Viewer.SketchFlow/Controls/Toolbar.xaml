@@ -4,6 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:X.Viewer.SketchFlow.Controls"
     xmlns:xuip="using:X.UI.Path"
+    xmlns:xuiri="using:X.UI.RichInput"
+    xmlns:xuildg="using:X.UI.LiteDataGrid"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -39,7 +41,21 @@
                 <xuip:Path PathType="Text" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
             <Button x:Name="butSave" Background="LightGray" Click="butSave_Click">
-                <xuip:Path PathType="Save" Width="25" Height="25" Foreground="White"></xuip:Path>
+                <Button.Content>
+                    <xuip:Path PathType="Save" Width="25" Height="25" Foreground="White"></xuip:Path>
+                </Button.Content>
+                <Button.Flyout>
+                    <Flyout>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <xuiri:Input Width="300" Height="25" Type="text" GlowAmount="0" GlowColor="White" Foreground="Black" PlaceholderText="save as"></xuiri:Input>
+                                <xuip:Path PathType="Save" Width="25" Height="25" Foreground="White"></xuip:Path>
+                            </StackPanel>
+                            <xuildg:LiteDataGrid Width="325" Height="400"></xuildg:LiteDataGrid>
+                        </StackPanel>
+                        
+                    </Flyout>  
+                </Button.Flyout>
             </Button>
         </StackPanel>
         <StackPanel x:Name="spPageSizes" Margin="0,37,90,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed">
