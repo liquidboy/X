@@ -138,6 +138,12 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\X.Extension.ThirdParty.GixX.Services\X.Extension.ThirdParty.GitX.Services.csproj">
+      <Project>{a4c525f2-b986-4a07-a90d-130fc5dd308a}</Project>
+      <Name>X.Extension.ThirdParty.GitX.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">
     <VisualStudioVersion>15.0</VisualStudioVersion>
   </PropertyGroup>

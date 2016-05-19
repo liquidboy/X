@@ -138,6 +138,12 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\X.Extension.ThirdParty.JsRTChakraCoreX.Services\X.Extension.ThirdParty.JsRTChakraCoreX.Services.csproj">
+      <Project>{ca69184d-3c58-47c7-97de-2d323431aa18}</Project>
+      <Name>X.Extension.ThirdParty.JsRTChakraCoreX.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">
     <VisualStudioVersion>15.0</VisualStudioVersion>
   </PropertyGroup>

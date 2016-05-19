@@ -138,6 +138,12 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\X.Extension.ThirdParty.Office365.Services\X.Extension.ThirdParty.Office365.Services.csproj">
+      <Project>{2449e196-9274-4c18-9776-889b75cbb625}</Project>
+      <Name>X.Extension.ThirdParty.Office365.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">
     <VisualStudioVersion>15.0</VisualStudioVersion>
   </PropertyGroup>

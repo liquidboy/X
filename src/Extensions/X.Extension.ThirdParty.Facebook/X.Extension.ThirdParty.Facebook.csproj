@@ -138,6 +138,12 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\X.Extension.ThirdParty.Facebook.Services\X.Extension.ThirdParty.Facebook.Services.csproj">
+      <Project>{c6c0233c-a782-4c43-9852-c692b10b2a8e}</Project>
+      <Name>X.Extension.ThirdParty.Facebook.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">
     <VisualStudioVersion>15.0</VisualStudioVersion>
   </PropertyGroup>

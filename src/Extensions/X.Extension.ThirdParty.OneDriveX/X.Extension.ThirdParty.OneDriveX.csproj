@@ -138,6 +138,12 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\X.Extension.ThirdParty.OneDriveX.Services\X.Extension.ThirdParty.OneDriveX.Services.csproj">
+      <Project>{14d7432b-ddec-4080-89d1-2b8c629b552d}</Project>
+      <Name>X.Extension.ThirdParty.OneDriveX.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">
     <VisualStudioVersion>15.0</VisualStudioVersion>
   </PropertyGroup>

@@ -138,6 +138,12 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\X.Extension.ThirdParty.Twitter.Services\X.Extension.ThirdParty.Twitter.Services.csproj">
+      <Project>{1240e7f8-675d-4e20-81e0-f64420917317}</Project>
+      <Name>X.Extension.ThirdParty.Twitter.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">
     <VisualStudioVersion>15.0</VisualStudioVersion>
   </PropertyGroup>

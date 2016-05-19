@@ -42,9 +42,9 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <!--<uap:Extension Category="windows.appService" EntryPoint="X.Extension.ThirdParty.GitX.Services.CallService">
+        <uap:Extension Category="windows.appService" EntryPoint="X.Extension.ThirdParty.JsRTChakraCoreX.Services.CallService">
           <uap:AppService Name="Call" />
-        </uap:Extension>-->
+        </uap:Extension>
         <uap3:Extension Category="windows.appExtension">
           <uap3:AppExtension Name="X.Extensions" Id="X.Extension.ThirdParty.GitX" PublicFolder="public" DisplayName="GitX Extension (3rd Party)">
             <uap3:Properties>

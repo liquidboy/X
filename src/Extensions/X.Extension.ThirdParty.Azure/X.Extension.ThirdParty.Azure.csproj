@@ -138,6 +138,12 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\X.Extension.ThirdParty.Azure.Services\X.Extension.ThirdParty.Azure.Services.csproj">
+      <Project>{5f279874-3b01-4014-b0b6-ed73afeea10e}</Project>
+      <Name>X.Extension.ThirdParty.Azure.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">
     <VisualStudioVersion>15.0</VisualStudioVersion>
   </PropertyGroup>
