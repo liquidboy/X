@@ -44,8 +44,7 @@ namespace X.Viewer.SketchFlow.Controls
             //other buts disabled
             spShapes.Visibility = Visibility.Collapsed;
             butShape.Background = new SolidColorBrush(Colors.LightGray);
-
-
+            
             if (spPageSizes.Visibility == Visibility.Visible)
             {
                 spPageSizes.Visibility = Visibility.Collapsed;
@@ -56,6 +55,11 @@ namespace X.Viewer.SketchFlow.Controls
                 butAddPage.Background = new SolidColorBrush(Colors.Gray);
             }
             
+        }
+
+        private void butSave_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void butShape_Click(object sender, RoutedEventArgs e)
@@ -151,6 +155,8 @@ namespace X.Viewer.SketchFlow.Controls
             var pt = getPoint((UIElement)sender);
             PerformAction?.Invoke(null, new ToolbarEventArgs() { ActionType = "AddImage", StartPoint = pt, StampType = typeof(Stamps.Picture) });
         }
+
+
     }
 
 

@@ -38,6 +38,9 @@
             <Button x:Name="butText" Background="LightGray" Click="butText_Click">
                 <xuip:Path PathType="Text" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
+            <Button x:Name="butSave" Background="LightGray" Click="butSave_Click">
+                <xuip:Path PathType="Save" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
         </StackPanel>
         <StackPanel x:Name="spPageSizes" Margin="0,37,90,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed">
             <Button x:Name="but640360" Background="LightGray" Click="but640360_Click">
