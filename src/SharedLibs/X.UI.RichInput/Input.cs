@@ -47,20 +47,22 @@ namespace X.UI.RichInput
         Grid _udfg1;
         ToggleButton _udfTBut1;
         PasswordBox _udfPB1;
-        EffectLayer.EffectLayer _bkgLayer;//x
+        //EffectLayer.EffectLayer _bkgLayer;//x
 
         Storyboard _sbHideBgLayer;
         Storyboard _sbShowBgLayer;
 
         InputModel _model;
 
-        double bkgOffsetX = 0;
-        double bkgOffsetY = 0;
+        //double bkgOffsetX = 0;
+        //double bkgOffsetY = 0;
         
         public event Windows.UI.Xaml.RoutedEventHandler ValueChanged;
 
         bool dtInvalidateForever = false;
         DispatcherTimer dtInvalidate;
+
+        bool hasInitialized = false;
 
         public string Value { get; set; }
 
@@ -72,7 +74,7 @@ namespace X.UI.RichInput
             Unloaded += Input_Unloaded;
         }
 
-        public void Invalidate(double offsetX = 0, double offsetY = 0) { _bkgLayer?.DrawUIElements(_grdRoot, RenderTargetIndexFor_grdRoot, offsetX, offsetY); }
+        //public void Invalidate(double offsetX = 0, double offsetY = 0) { _bkgLayer?.DrawUIElements(_grdRoot, RenderTargetIndexFor_grdRoot, offsetX, offsetY); }
 
 
         private void Input_Unloaded(object sender, RoutedEventArgs e)
@@ -82,48 +84,57 @@ namespace X.UI.RichInput
 
         private void Input_Loaded(object sender, RoutedEventArgs e)
         {
-            if (_bkgLayer != null)
-            {
-                var effectType = EffectLayer.EffectGraphType.Glow;
+            oneTimeInit();
 
-                if (Type == InputType.radio || Type == InputType.checkbox)
-                {
-                    bkgOffsetY = 2;
-                    bkgOffsetX = 0;
-                }
-                else if (Type == InputType.toggleButton)
-                {
-                    bkgOffsetY = 1;
-                    bkgOffsetX = 1;
-                }
+            //if (_bkgLayer != null)
+            //{
+            //    var effectType = EffectLayer.EffectGraphType.Glow;
 
-                _bkgLayer.DrawUIElements(_grdRoot);  //will draw at index 0 (RenderTargetIndexFor_icTabList)
-                _bkgLayer.InitLayer(_grdRoot.ActualWidth, _grdRoot.ActualHeight, bkgOffsetX, bkgOffsetY, effectType);
-            }
+            //    if (Type == InputType.radio || Type == InputType.checkbox)
+            //    {
+            //        bkgOffsetY = 2;
+            //        bkgOffsetX = 0;
+            //    }
+            //    else if (Type == InputType.toggleButton)
+            //    {
+            //        bkgOffsetY = 1;
+            //        bkgOffsetX = 1;
+            //    }
+
+            //    _bkgLayer.DrawUIElements(_grdRoot);  //will draw at index 0 (RenderTargetIndexFor_icTabList)
+            //    _bkgLayer.InitLayer(_grdRoot.ActualWidth, _grdRoot.ActualHeight, bkgOffsetX, bkgOffsetY, effectType);
+            //}
 
 
             //if(Type== InputType.progressRing && dtInvalidate != null)
             //{
             //    if (IsActive) { dtInvalidateForever = true; dtInvalidate.Start(); }
             //    else { dtInvalidate.Stop(); }
-                
+
             //}
         }
 
         protected override void OnApplyTemplate()
         {
-            if (_model == null) _model = new InputModel(); 
+            //oneTimeInit();
+            base.OnApplyTemplate();
+        }
 
-            if (_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
+        private void oneTimeInit() {
+            if (hasInitialized) return;
+            if (_model == null) _model = new InputModel();
+
+            //if (_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
             if (_grdContainer == null) _grdContainer = GetTemplateChild("grdContainer") as Grid;
-            
-            if (_grdRoot == null) {
+
+            if (_grdRoot == null)
+            {
                 _grdRoot = GetTemplateChild("grdRoot") as Grid;
                 _grdRoot.DataContext = _model;
             }
 
-            if (_GeneralTextBoxStyle == null) _GeneralTextBoxStyle = (Style)_grdRoot.Resources["GeneralTextBoxStyle"]; 
-            if (_GeneralPasswordBoxStyle == null) _GeneralPasswordBoxStyle = (Style)_grdRoot.Resources["GeneralPasswordBoxStyle"]; 
+            if (_GeneralTextBoxStyle == null) _GeneralTextBoxStyle = (Style)_grdRoot.Resources["GeneralTextBoxStyle"];
+            if (_GeneralPasswordBoxStyle == null) _GeneralPasswordBoxStyle = (Style)_grdRoot.Resources["GeneralPasswordBoxStyle"];
             if (_GeneralCheckBoxStyle == null) _GeneralCheckBoxStyle = (Style)_grdRoot.Resources["GeneralCheckBoxStyle"];
             if (_GeneralRadioButtonStyle == null) _GeneralRadioButtonStyle = (Style)_grdRoot.Resources["GeneralRadioButtonStyle"];
             if (_GeneralComboBoxStyle == null) _GeneralComboBoxStyle = (Style)_grdRoot.Resources["GeneralComboBoxStyle"];
@@ -132,20 +143,21 @@ namespace X.UI.RichInput
             if (_GeneralProgressRingStyle == null) _GeneralProgressRingStyle = (Style)_grdRoot.Resources["GeneralProgressRingStyle"];
             if (_GeneralSliderStyle == null) _GeneralSliderStyle = (Style)_grdRoot.Resources["GeneralSliderStyle"];
             if (_GeneralToggleButtonStyle == null) _GeneralToggleButtonStyle = (Style)_grdRoot.Resources["GeneralToggleButtonStyle"];
-            
+
             if (_sbHideBgLayer == null)
             {
                 _sbHideBgLayer = (Storyboard)_grdContainer.Resources["sbHideBgLayer"];
                 _sbShowBgLayer = (Storyboard)_grdContainer.Resources["sbShowBgLayer"];
             }
-            
 
 
 
-            if (_ccInput == null) {
+
+            if (_ccInput == null)
+            {
                 _ccInput = GetTemplateChild("ccInput") as ContentControl;
-                
-                BuildControl(Type, Label, PlaceholderText, LabelFontSize, LabelTranslateY, GroupName,  _ccInput);
+
+                BuildControl(Type, Label, PlaceholderText, LabelFontSize, LabelTranslateY, GroupName, _ccInput);
                 SetColors(FocusColor, FocusHoverColor, FocusForegroundColor, _model);
                 //SetColors();
             }
@@ -156,25 +168,25 @@ namespace X.UI.RichInput
                 dtInvalidate.Interval = TimeSpan.FromMilliseconds(InvalidateUpdateInterval);
                 dtInvalidate.Tick += DtInvalidate_Tick;
             }
-            
-            var effectType = EffectLayer.EffectGraphType.Glow;
-            if (Type == InputType.radio || Type == InputType.checkbox)
-            {
-                bkgOffsetY = 2;
-                bkgOffsetX = 0;
-            }
-            else if (Type == InputType.toggleButton)
-            {
-                bkgOffsetY = 1;
-                bkgOffsetX = 1;
-            }
-            
-            if (_bkgLayer != null && _grdRoot != null && _grdRoot.ActualWidth != 0) _bkgLayer.InitLayer(_grdRoot.ActualWidth, _grdRoot.ActualHeight, bkgOffsetX, bkgOffsetY, effectType);
 
-            base.OnApplyTemplate();
+            //var effectType = EffectLayer.EffectGraphType.Glow;
+            //if (Type == InputType.radio || Type == InputType.checkbox)
+            //{
+            //    bkgOffsetY = 2;
+            //    bkgOffsetX = 0;
+            //}
+            //else if (Type == InputType.toggleButton)
+            //{
+            //    bkgOffsetY = 1;
+            //    bkgOffsetX = 1;
+            //}
+
+            //if (_bkgLayer != null && _grdRoot != null && _grdRoot.ActualWidth != 0) _bkgLayer.InitLayer(_grdRoot.ActualWidth, _grdRoot.ActualHeight, bkgOffsetX, bkgOffsetY, effectType);
+
+            hasInitialized = true;
         }
 
- 
+
         private void BuildControl(InputType type, string label, string placeholderText, double labelFontSize, double labelTranslateY, string groupName, ContentControl ccInput) {
 
             FrameworkElement fe = null;
@@ -536,8 +548,11 @@ namespace X.UI.RichInput
             _udfTBut1 = null;
             dtInvalidate = null;
             if (_ccInput != null && _ccInput.Content != null) _ccInput.Content = null;
+            if (_ccInput != null) _ccInput = null;
             _grdContainer = null;
+            if (_grdRoot != null) { _grdRoot.DataContext = null; _grdRoot = null; }
             _model = null;
+            hasInitialized = false;
         }
 
 
@@ -568,7 +583,7 @@ namespace X.UI.RichInput
             {
                 //_sbHideBgLayer?.Begin();
                 //dtInvalidate.Start();
-                Invalidate();
+                //Invalidate();
             }
         }
 
@@ -576,7 +591,7 @@ namespace X.UI.RichInput
         {
             if(!dtInvalidateForever) dtInvalidate.Stop();
             _sbShowBgLayer?.Begin();
-            Invalidate();
+            //Invalidate();
         }
 
 
@@ -588,7 +603,7 @@ namespace X.UI.RichInput
                 ValueChanged?.Invoke(sender, e);
                 _sbHideBgLayer?.Begin();
                 dtInvalidate.Start();
-                Invalidate();
+                //Invalidate();
             }
         }
 
@@ -600,7 +615,7 @@ namespace X.UI.RichInput
                 Value = ((RadioButton)sender).IsChecked.ToString();
                 ValueChanged?.Invoke(sender, e);
                 
-                Invalidate();
+                //Invalidate();
             }
         }
 
@@ -625,7 +640,7 @@ namespace X.UI.RichInput
                 Value = ((CheckBox)sender).IsChecked.ToString();
                 ValueChanged?.Invoke(sender, e);
 
-                Invalidate();
+                //Invalidate();
             }
         }
 
@@ -649,7 +664,7 @@ namespace X.UI.RichInput
                 Value = ((PasswordBox)sender).Password;
                 ValueChanged?.Invoke(sender, e);
                 
-                Invalidate(offsetX, offsetY);
+                //Invalidate(offsetX, offsetY);
             }
         }
 
@@ -672,7 +687,7 @@ namespace X.UI.RichInput
                 Value = ((TextBox)sender).Text;
                 ValueChanged?.Invoke(sender, e);
 
-                Invalidate(offsetX, offsetY);
+                //Invalidate(offsetX, offsetY);
             }
             
         }
@@ -696,11 +711,11 @@ namespace X.UI.RichInput
                 Value2 = ((ComboBox)sender).SelectedItem;
                 ValueChanged?.Invoke(sender, e);
 
-                try {
-                    if(IsGlowActive) Invalidate(offsetX, offsetY);
-                } catch (Exception ex){
-                    //todo: handle this error
-                }
+                //try {
+                //    if(IsGlowActive) Invalidate(offsetX, offsetY);
+                //} catch (Exception ex){
+                //    //todo: handle this error
+                //}
                 
             }
         }
@@ -935,15 +950,15 @@ namespace X.UI.RichInput
 
             if (instance._ccInput != null)
             {
-                //instance.UpdateControl(instance.Type, instance.Label, instance.PlaceholderText, instance.LabelFontSize, instance.LabelTranslateY, instance.GroupName, instance._ccInput);
+                ////instance.UpdateControl(instance.Type, instance.Label, instance.PlaceholderText, instance.LabelFontSize, instance.LabelTranslateY, instance.GroupName, instance._ccInput);
 
-                //instance.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () => {
+                ////instance.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () => {
                     instance.SetColors(instance.FocusColor, instance.FocusHoverColor, instance.FocusForegroundColor, instance._model);
-                    if(instance.IsGlowActive) instance.Invalidate();
-                //});
+                    //if(instance.IsGlowActive) instance.Invalidate();
+                ////});
 
 
-                //((UIElement)d).UpdateLayout();
+                ////((UIElement)d).UpdateLayout();
             }
         }
         
