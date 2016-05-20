@@ -40,12 +40,12 @@
             <Button x:Name="butText" Background="LightGray" Click="butText_Click">
                 <xuip:Path PathType="Text" Width="25" Height="25" Foreground="White"></xuip:Path>
             </Button>
-            <Button x:Name="butSave" Background="LightGray" Click="butSave_Click">
+            <Button x:Name="butSave" Background="LightGray" >
                 <Button.Content>
                     <xuip:Path PathType="Save" Width="25" Height="25" Foreground="White"></xuip:Path>
                 </Button.Content>
                 <Button.Flyout>
-                    <Flyout>
+                    <Flyout Placement="Left">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <xuiri:Input x:Name="txtSaveName" Type="text" Label="Sketch will be saved with this name:" LabelFontSize="9" LabelTranslateY="-13" PlaceholderText="enter name of sketch" FocusColor="Black" FocusHoverColor="Black" FocusForegroundColor="White" HorizontalAlignment="Stretch" Height="37" Margin="0,10,0,0" MinWidth="300" ></xuiri:Input>
@@ -53,10 +53,26 @@
                                     <xuip:Path PathType="Save" Width="25" Height="25" Foreground="White"></xuip:Path>
                                 </Button>
                             </StackPanel>
-                            <!--<xuildg:LiteDataGrid Width="325" Height="400"></xuildg:LiteDataGrid>-->
                         </StackPanel>
-                        
                     </Flyout>  
+                </Button.Flyout>
+            </Button>
+            <Button x:Name="butLoad" Background="LightGray" >
+                <Button.Content>
+                    <xuip:Path PathType="Save2" Width="25" Height="25" Foreground="White"></xuip:Path>
+                </Button.Content>
+                <Button.Flyout >
+                    <Flyout Placement="Left">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <xuiri:Input x:Name="txtLoadName" Type="text" Label="Currently loaded sketch:" LabelFontSize="9" LabelTranslateY="-13" PlaceholderText="[filled in with current sketch]" FocusColor="Black" FocusHoverColor="Black" FocusForegroundColor="White" HorizontalAlignment="Stretch" Height="37" Margin="0,10,0,0" MinWidth="300" ></xuiri:Input>
+                                <Button x:Name="butDoLoad" Background="Black" Click="butDoLoad_Click" Margin="0,9,0,0">
+                                    <xuip:Path PathType="Save" Width="25" Height="25" Foreground="White"></xuip:Path>
+                                </Button>
+                            </StackPanel>
+                            <!--<xuildg:LiteDataGrid Width="327" Height="400"></xuildg:LiteDataGrid>-->
+                        </StackPanel>
+                    </Flyout>
                 </Button.Flyout>
             </Button>
         </StackPanel>
