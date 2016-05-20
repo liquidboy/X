@@ -167,7 +167,10 @@ namespace X.Viewer.SketchFlow.Controls
             PerformAction?.Invoke(null, new ToolbarEventArgs() { ActionType = "AddImage", StartPoint = pt, StampType = typeof(Stamps.Picture) });
         }
 
+        private void butDoSave_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
     }
 
 

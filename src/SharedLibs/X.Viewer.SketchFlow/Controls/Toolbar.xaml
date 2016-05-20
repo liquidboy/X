@@ -48,8 +48,10 @@
                     <Flyout>
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
-                                <xuiri:Input x:Name="txtSaveName" Type="text" Label="Session name:" LabelFontSize="9" LabelTranslateY="-13" PlaceholderText="enter name of session" FocusColor="Black" FocusHoverColor="Black" FocusForegroundColor="White" HorizontalAlignment="Stretch" Height="35" Margin="0,10,0,0" MinWidth="300" ></xuiri:Input>
-                                <xuip:Path PathType="Save" Width="25" Height="25" Foreground="DarkGray"></xuip:Path>
+                                <xuiri:Input x:Name="txtSaveName" Type="text" Label="Sketch will be saved with this name:" LabelFontSize="9" LabelTranslateY="-13" PlaceholderText="enter name of sketch" FocusColor="Black" FocusHoverColor="Black" FocusForegroundColor="White" HorizontalAlignment="Stretch" Height="37" Margin="0,10,0,0" MinWidth="300" ></xuiri:Input>
+                                <Button x:Name="butDoSave" Background="Black" Click="butDoSave_Click" Margin="0,9,0,0">
+                                    <xuip:Path PathType="Save" Width="25" Height="25" Foreground="White"></xuip:Path>
+                                </Button>
                             </StackPanel>
                             <!--<xuildg:LiteDataGrid Width="325" Height="400"></xuildg:LiteDataGrid>-->
                         </StackPanel>

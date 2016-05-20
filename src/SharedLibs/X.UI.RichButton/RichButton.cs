@@ -25,7 +25,7 @@ namespace X.UI.RichButton
         Grid _grdTooltip;
         Grid _grdTTContainer;
         Windows.UI.Xaml.Shapes.Rectangle _rect;
-
+        bool hasInitialized = false;
 
         public event Windows.UI.Xaml.RoutedEventHandler Click;
 
@@ -48,12 +48,16 @@ namespace X.UI.RichButton
                 _butRoot.PointerEntered -= _butRoot_PointerEntered;
                 _butRoot.PointerExited -= _butRoot_PointerExited;
             }
+
+            hasInitialized = false;
         }
 
 
         
         private void RichButton_Loaded(object sender, RoutedEventArgs e)
         {
+            oneTimeInit();
+
             //Important : if _bkgLayer or _butRoot.ActualWidth == 0 then somehow the OnApplyTemplate did not trigger before the Loaded event .. 
             if (_bkgLayer!=null) _bkgLayer.InitLayer(_butRoot.ActualWidth, _butRoot.ActualHeight);
         }
@@ -62,8 +66,14 @@ namespace X.UI.RichButton
 
         protected override void OnApplyTemplate()
         {
+            //oneTimeInit();
+            base.OnApplyTemplate();
+        }
+
+        private void oneTimeInit() {
+            if (hasInitialized) return;
             if (_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
-            
+
             if (_butRoot == null)
             {
                 _butRoot = GetTemplateChild("butRoot") as Button;
@@ -75,20 +85,16 @@ namespace X.UI.RichButton
             if (_bkgLayer != null && _butRoot != null && _butRoot.ActualWidth != 0) _bkgLayer.InitLayer(_butRoot.ActualWidth, _butRoot.ActualHeight);
 
             if (_tbContent == null) _tbContent = GetTemplateChild("tbContent") as TextBlock;
-            
+
             if (_xuiIco == null) _xuiIco = GetTemplateChild("xuiIco") as X.UI.Path.Path;
-            
+
             if (_grdTooltip == null) _grdTooltip = GetTemplateChild("grdTooltip") as Grid;
-            
+
             if (_grdTTContainer == null) _grdTTContainer = GetTemplateChild("grdTTContainer") as Grid;
-            
+
             _rect = GetTemplateChild("rect") as Windows.UI.Xaml.Shapes.Rectangle;
-
-
-            base.OnApplyTemplate();
+            hasInitialized = true;
         }
-
-
 
 
 
