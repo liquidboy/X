@@ -14,6 +14,8 @@ namespace X.Viewer.SketchFlow.Controls
         public Toolbar()
         {
             this.InitializeComponent();
+
+            //lbSavedSketches.ItemsSource = new string[] { "sketch1", "sketch2" };
         }
 
         private void butOne_Click(object sender, RoutedEventArgs e)

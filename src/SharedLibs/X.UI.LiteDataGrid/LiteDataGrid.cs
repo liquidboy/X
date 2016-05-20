@@ -20,8 +20,7 @@ namespace X.UI.LiteDataGrid
         public LiteDataGrid()
         {
             this.DefaultStyleKey = typeof(LiteDataGrid);
-
-
+            
             Loaded += LiteDataGrid_Loaded;
             Unloaded += LiteDataGrid_Unloaded;
         }
@@ -127,11 +126,11 @@ namespace X.UI.LiteDataGrid
 
         public static readonly DependencyProperty GlowColorProperty = DependencyProperty.Register("GlowColor", typeof(Brush), typeof(LiteDataGrid), new PropertyMetadata(Colors.Black));
 
-        public static readonly DependencyProperty FocusForegroundColorProperty = DependencyProperty.Register("FocusForegroundColor", typeof(Brush), typeof(LiteDataGrid), new PropertyMetadata(Colors.White, OnPropertyChanged));
+        public static readonly DependencyProperty FocusForegroundColorProperty = DependencyProperty.Register("FocusForegroundColor", typeof(Brush), typeof(LiteDataGrid), new PropertyMetadata(Colors.White));
 
-        public static readonly DependencyProperty FocusHoverColorProperty = DependencyProperty.Register("FocusHoverColor", typeof(Brush), typeof(LiteDataGrid), new PropertyMetadata(Colors.DarkGray, OnPropertyChanged));
+        public static readonly DependencyProperty FocusHoverColorProperty = DependencyProperty.Register("FocusHoverColor", typeof(Brush), typeof(LiteDataGrid), new PropertyMetadata(Colors.DarkGray));
 
-        public static readonly DependencyProperty FocusColorProperty = DependencyProperty.Register("FocusColor", typeof(Brush), typeof(LiteDataGrid), new PropertyMetadata(Colors.DarkGray, OnPropertyChanged));
+        public static readonly DependencyProperty FocusColorProperty = DependencyProperty.Register("FocusColor", typeof(Brush), typeof(LiteDataGrid), new PropertyMetadata(Colors.DarkGray));
 
 
 
@@ -153,14 +152,6 @@ namespace X.UI.LiteDataGrid
 
 
         }
-
-        private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var instance = d as ScrollViewer;
-            if (d == null)
-                return;
-
-           
-        }
+        
     }
 }

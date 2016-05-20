@@ -20,13 +20,13 @@ namespace X.UI.RichScrollViewer
         //ScrollViewer _root;  //wtf : due to casting weirdness below in onapplytemplate i had to make it a content control
         ContentControl _root;  //wtf : see above
         int RenderTargetIndexFor_root = 0;
-        EffectLayer.EffectLayer _bkgLayer;
+        //EffectLayer.EffectLayer _bkgLayer;
         Storyboard _sbHideBgLayer;
         Storyboard _sbShowBgLayer;
+        bool hasInitialized = false;
 
-
-        double bkgOffsetX = 0;
-        double bkgOffsetY = 0;
+        //double bkgOffsetX = 0;
+        //double bkgOffsetY = 0;
 
         DispatcherTimer dtInvalidate;
 
@@ -37,12 +37,10 @@ namespace X.UI.RichScrollViewer
             this.Loaded += ScrollViewer_Loaded;
             this.Unloaded += ScrollViewer_Unloaded;
 
-            dtInvalidate = new DispatcherTimer();
-            dtInvalidate.Interval = TimeSpan.FromMilliseconds(1000);
-            dtInvalidate.Tick += DtInvalidate_Tick;
+           
         }
 
-        public void Invalidate(double offsetX = 0, double offsetY = 0) { _bkgLayer?.DrawUIElements(_root, RenderTargetIndexFor_root, offsetX, offsetY); }
+        //public void Invalidate(double offsetX = 0, double offsetY = 0) { _bkgLayer?.DrawUIElements(_root, RenderTargetIndexFor_root, offsetX, offsetY); }
 
 
         private void ScrollViewer_Unloaded(object sender, RoutedEventArgs e)
@@ -51,32 +49,37 @@ namespace X.UI.RichScrollViewer
 
             this.Loaded -= ScrollViewer_Loaded;
             this.Unloaded -= ScrollViewer_Unloaded;
-            
+
             //throw new NotImplementedException();
+            hasInitialized = false;
         }
 
         private void ScrollViewer_Loaded(object sender, RoutedEventArgs e)
         {
-            if (_bkgLayer != null)
-            {
-                var effectType = EffectLayer.EffectGraphType.Glow;
-                
-                _bkgLayer.DrawUIElements(_root);  //will draw at index 0 (RenderTargetIndexFor_icTabList)
-                _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY, effectType);
-            }
+            oneTimeInit();
 
-
-
-
+            //if (_bkgLayer != null)
+            //{
+            //    var effectType = EffectLayer.EffectGraphType.Glow;
+            //    _bkgLayer.DrawUIElements(_root);  //will draw at index 0 (RenderTargetIndexFor_icTabList)
+            //    _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY, effectType);
+            //}
+            
             _sbHideBgLayer?.Begin();
-            dtInvalidate.Start();
+            dtInvalidate?.Start();
         }
 
+        
         protected override void OnApplyTemplate()
         {
+            oneTimeInit();
+            base.OnApplyTemplate();
+        }
 
+        private void oneTimeInit() {
 
-            if (_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
+            if (hasInitialized) return;
+            //if (_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
             if (_rootContainer == null) { _rootContainer = GetTemplateChild("rootContainer") as Grid; _rootContainer.DataContext = this; }
 
             if (_root == null)
@@ -97,17 +100,23 @@ namespace X.UI.RichScrollViewer
 
             var effectType = EffectLayer.EffectGraphType.Glow;
 
-            if (_bkgLayer != null && _root != null && _root.ActualWidth != 0) _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY, effectType);
+            //if (_bkgLayer != null && _root != null && _root.ActualWidth != 0) _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY, effectType);
 
+            if (dtInvalidate == null) { 
+                dtInvalidate = new DispatcherTimer();
+                dtInvalidate.Interval = TimeSpan.FromMilliseconds(1000);
+                dtInvalidate.Tick += DtInvalidate_Tick;
+            }
 
-            base.OnApplyTemplate();
+            //if (_bkgLayer != null) hasInitialized = true;
         }
+
 
         private void DtInvalidate_Tick(object sender, object e)
         {
             dtInvalidate.Stop();
             _sbShowBgLayer?.Begin();
-            Invalidate();
+            //Invalidate();
         }
 
 
@@ -172,12 +181,12 @@ namespace X.UI.RichScrollViewer
             if (d == null)
                 return;
 
-            if (instance._bkgLayer != null)
-            {
-                instance._sbHideBgLayer?.Begin();
-                instance.dtInvalidate.Start();
-                instance.Invalidate();
-            }
+            //if (instance._bkgLayer != null)
+            //{
+            //    instance._sbHideBgLayer?.Begin();
+            //    instance.dtInvalidate.Start();
+            //    instance.Invalidate();
+            //}
         }
     }
 }

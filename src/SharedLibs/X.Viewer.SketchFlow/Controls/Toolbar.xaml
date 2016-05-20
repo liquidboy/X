@@ -70,7 +70,13 @@
                                     <xuip:Path PathType="Save" Width="25" Height="25" Foreground="White"></xuip:Path>
                                 </Button>
                             </StackPanel>
-                            <!--<xuildg:LiteDataGrid Width="327" Height="400"></xuildg:LiteDataGrid>-->
+                            <xuildg:LiteDataGrid x:Name="lbSavedSketches" HorizontalContentAlignment="Stretch" Margin="0,10,0,0" Width="325" Height="325" ItemTemplateToUse="1">
+                                <!--<xuildg:LiteDataGrid.ItemTemplate1>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding }" TextWrapping="WrapWholeWords"></TextBlock>
+                                    </DataTemplate>
+                                </xuildg:LiteDataGrid.ItemTemplate1>-->
+                            </xuildg:LiteDataGrid>
                         </StackPanel>
                     </Flyout>
                 </Button.Flyout>
