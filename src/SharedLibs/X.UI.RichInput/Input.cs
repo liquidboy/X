@@ -116,7 +116,7 @@ namespace X.UI.RichInput
 
         protected override void OnApplyTemplate()
         {
-            //oneTimeInit();
+            oneTimeInit();
             base.OnApplyTemplate();
         }
 
@@ -127,37 +127,34 @@ namespace X.UI.RichInput
             //if (_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
             if (_grdContainer == null) _grdContainer = GetTemplateChild("grdContainer") as Grid;
 
-            if (_grdRoot == null)
-            {
-                _grdRoot = GetTemplateChild("grdRoot") as Grid;
+            if (_grdRoot == null) _grdRoot = GetTemplateChild("grdRoot") as Grid;
+
+            if (_grdRoot != null) { 
                 _grdRoot.DataContext = _model;
+            
+                if (_GeneralTextBoxStyle == null) _GeneralTextBoxStyle = (Style)_grdRoot.Resources["GeneralTextBoxStyle"];
+                if (_GeneralPasswordBoxStyle == null) _GeneralPasswordBoxStyle = (Style)_grdRoot.Resources["GeneralPasswordBoxStyle"];
+                if (_GeneralCheckBoxStyle == null) _GeneralCheckBoxStyle = (Style)_grdRoot.Resources["GeneralCheckBoxStyle"];
+                if (_GeneralRadioButtonStyle == null) _GeneralRadioButtonStyle = (Style)_grdRoot.Resources["GeneralRadioButtonStyle"];
+                if (_GeneralComboBoxStyle == null) _GeneralComboBoxStyle = (Style)_grdRoot.Resources["GeneralComboBoxStyle"];
+                if (_GeneralToggleSwitchStyle == null) _GeneralToggleSwitchStyle = (Style)_grdRoot.Resources["GeneralToggleSwitchStyle"];
+                if (_GeneralProgressBarStyle == null) _GeneralProgressBarStyle = (Style)_grdRoot.Resources["GeneralProgressBarStyle"];
+                if (_GeneralProgressRingStyle == null) _GeneralProgressRingStyle = (Style)_grdRoot.Resources["GeneralProgressRingStyle"];
+                if (_GeneralSliderStyle == null) _GeneralSliderStyle = (Style)_grdRoot.Resources["GeneralSliderStyle"];
+                if (_GeneralToggleButtonStyle == null) _GeneralToggleButtonStyle = (Style)_grdRoot.Resources["GeneralToggleButtonStyle"];
             }
 
-            if (_GeneralTextBoxStyle == null) _GeneralTextBoxStyle = (Style)_grdRoot.Resources["GeneralTextBoxStyle"];
-            if (_GeneralPasswordBoxStyle == null) _GeneralPasswordBoxStyle = (Style)_grdRoot.Resources["GeneralPasswordBoxStyle"];
-            if (_GeneralCheckBoxStyle == null) _GeneralCheckBoxStyle = (Style)_grdRoot.Resources["GeneralCheckBoxStyle"];
-            if (_GeneralRadioButtonStyle == null) _GeneralRadioButtonStyle = (Style)_grdRoot.Resources["GeneralRadioButtonStyle"];
-            if (_GeneralComboBoxStyle == null) _GeneralComboBoxStyle = (Style)_grdRoot.Resources["GeneralComboBoxStyle"];
-            if (_GeneralToggleSwitchStyle == null) _GeneralToggleSwitchStyle = (Style)_grdRoot.Resources["GeneralToggleSwitchStyle"];
-            if (_GeneralProgressBarStyle == null) _GeneralProgressBarStyle = (Style)_grdRoot.Resources["GeneralProgressBarStyle"];
-            if (_GeneralProgressRingStyle == null) _GeneralProgressRingStyle = (Style)_grdRoot.Resources["GeneralProgressRingStyle"];
-            if (_GeneralSliderStyle == null) _GeneralSliderStyle = (Style)_grdRoot.Resources["GeneralSliderStyle"];
-            if (_GeneralToggleButtonStyle == null) _GeneralToggleButtonStyle = (Style)_grdRoot.Resources["GeneralToggleButtonStyle"];
-
-            if (_sbHideBgLayer == null)
+            if (_sbHideBgLayer == null & _grdContainer != null)
             {
                 _sbHideBgLayer = (Storyboard)_grdContainer.Resources["sbHideBgLayer"];
                 _sbShowBgLayer = (Storyboard)_grdContainer.Resources["sbShowBgLayer"];
             }
-
-
-
-
+            
             if (_ccInput == null)
             {
                 _ccInput = GetTemplateChild("ccInput") as ContentControl;
 
-                BuildControl(Type, Label, PlaceholderText, LabelFontSize, LabelTranslateY, GroupName, _ccInput);
+                if (_ccInput != null) BuildControl(Type, Label, PlaceholderText, LabelFontSize, LabelTranslateY, GroupName, _ccInput);
                 SetColors(FocusColor, FocusHoverColor, FocusForegroundColor, _model);
                 //SetColors();
             }
@@ -183,7 +180,7 @@ namespace X.UI.RichInput
 
             //if (_bkgLayer != null && _grdRoot != null && _grdRoot.ActualWidth != 0) _bkgLayer.InitLayer(_grdRoot.ActualWidth, _grdRoot.ActualHeight, bkgOffsetX, bkgOffsetY, effectType);
 
-            hasInitialized = true;
+            if (_grdContainer != null) hasInitialized = true;
         }
 
 

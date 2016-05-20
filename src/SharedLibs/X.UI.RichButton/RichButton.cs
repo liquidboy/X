@@ -59,41 +59,36 @@ namespace X.UI.RichButton
             oneTimeInit();
 
             //Important : if _bkgLayer or _butRoot.ActualWidth == 0 then somehow the OnApplyTemplate did not trigger before the Loaded event .. 
-            if (_bkgLayer!=null) _bkgLayer.InitLayer(_butRoot.ActualWidth, _butRoot.ActualHeight);
+            if (_bkgLayer != null) _bkgLayer.InitLayer(_butRoot.ActualWidth, _butRoot.ActualHeight);
         }
 
 
 
         protected override void OnApplyTemplate()
         {
-            //oneTimeInit();
+            oneTimeInit();
             base.OnApplyTemplate();
         }
 
         private void oneTimeInit() {
             if (hasInitialized) return;
-            if (_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
 
-            if (_butRoot == null)
+            if (_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
+            if (_butRoot == null) _butRoot = GetTemplateChild("butRoot") as Button;
+            if (_butRoot != null)
             {
-                _butRoot = GetTemplateChild("butRoot") as Button;
                 _butRoot.Click += _butRoot_Click;
                 _butRoot.PointerEntered += _butRoot_PointerEntered;
                 _butRoot.PointerExited += _butRoot_PointerExited;
             }
-
             if (_bkgLayer != null && _butRoot != null && _butRoot.ActualWidth != 0) _bkgLayer.InitLayer(_butRoot.ActualWidth, _butRoot.ActualHeight);
-
             if (_tbContent == null) _tbContent = GetTemplateChild("tbContent") as TextBlock;
-
             if (_xuiIco == null) _xuiIco = GetTemplateChild("xuiIco") as X.UI.Path.Path;
-
             if (_grdTooltip == null) _grdTooltip = GetTemplateChild("grdTooltip") as Grid;
-
             if (_grdTTContainer == null) _grdTTContainer = GetTemplateChild("grdTTContainer") as Grid;
+            if (_rect == null) _rect = GetTemplateChild("rect") as Windows.UI.Xaml.Shapes.Rectangle;
 
-            _rect = GetTemplateChild("rect") as Windows.UI.Xaml.Shapes.Rectangle;
-            hasInitialized = true;
+            if (_bkgLayer != null) hasInitialized = true;
         }
 
 

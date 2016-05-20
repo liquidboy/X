@@ -83,7 +83,7 @@ namespace X.UI.ColorPicker
 
         private void _main_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
-            if(IsMouseDown) UpdateColor(e.GetCurrentPoint(_main));
+            if(_rtb != null && IsMouseDown) UpdateColor(e.GetCurrentPoint(_main));
 
             e.Handled = true;
         }
@@ -123,7 +123,7 @@ namespace X.UI.ColorPicker
         }
 
         private void SetSwatch() {
-            if (_colorImage != null)
+            if (_rtb != null && _colorImage != null)
             {
                 if (Swatch == eSwatchTypes.Circle)
                 {
