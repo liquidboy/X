@@ -186,8 +186,10 @@
                                 <TextBlock Text=" tabs open" FontSize="14" Foreground="{TemplateBinding Accent2}" VerticalAlignment="Bottom"></TextBlock>
                             </StackPanel>
 
-                            <StackPanel>
-                                <GridView x:Name="gvLocked" 
+
+                            <ScrollViewer >
+                                <StackPanel >
+                                    <GridView x:Name="gvLocked" 
                                     ItemsSource="{Binding LockedTabs}" 
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"  
@@ -265,7 +267,7 @@
                                         </DataTemplate>
                                     </GridView.ItemTemplate>
                                 </GridView>
-                                <GridView x:Name="gv" 
+                                    <GridView x:Name="gv" 
                                     ItemsSource="{Binding Tabs}" 
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"  
@@ -356,7 +358,9 @@
                                         </DataTemplate>
                                     </GridView.ItemTemplate>
                                 </GridView>
-                            </StackPanel>
+                                </StackPanel>
+                            </ScrollViewer>
+                            
                             
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,200,0" Background="{TemplateBinding Accent1}" Padding="5">
                                 <RadioButton x:Name="checkDragGrouping" GroupName="dragtype" Content="Grouping" Foreground="White" Margin="15,0,0,0" Style="{StaticResource GeneralRadioButtonStyle}"></RadioButton>
