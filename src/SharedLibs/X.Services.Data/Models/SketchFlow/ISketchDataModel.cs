@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace X.Services.Data
 {
-    public interface ISketchPageDataModel : ISqliteBase
+    public interface ISketchDataModel : ISqliteBase
     {
         string Title { get; set; }
         string Abstract { get; set; }

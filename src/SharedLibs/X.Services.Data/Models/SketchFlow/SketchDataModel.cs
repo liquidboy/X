@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace X.Services.Data
 {
-    public class SketchPageDataModel: BaseDataModel, IDataModel, ISqliteBase
+    public class SketchDataModel : BaseDataModel, ISketchDataModel, ISqliteBase
     {
         public string Index1 { get; set; }
 

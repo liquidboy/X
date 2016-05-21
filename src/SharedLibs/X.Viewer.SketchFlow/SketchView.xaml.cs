@@ -194,7 +194,16 @@ namespace X.Viewer.SketchFlow
             }
             else if (actionToPerform == "SaveSketch")
             {
+                var tbea = e as ToolbarEventArgs;
 
+                var ni = new SketchDataModel() { Title = tbea.Data };
+                StorageService.Instance.Storage.Insert(ni);
+
+                foreach (var pg in vm.Pages) {
+                    var nip = new SketchPageDataModel() { SketchId = ni.Id, Title = pg.Title };
+
+                    StorageService.Instance.Storage.Insert(ni);
+                }
             }
             else if (actionToPerform == "GetAllSketchs")
             {

@@ -111,13 +111,15 @@
     <Compile Include="ISqliteBase.cs" />
     <Compile Include="Models\DataModelsManager.cs" />
     <Compile Include="Models\APIKeyDataModel.cs" />
-    <Compile Include="Models\ISketchPageDataModel.cs" />
+    <Compile Include="Models\SketchFlow\ISketchDataModel.cs" />
+    <Compile Include="Models\SketchFlow\ISketchPageDataModel.cs" />
     <Compile Include="Models\PassportDataModel.cs" />
     <Compile Include="Models\ExtensionManifestDataModel.cs" />
     <Compile Include="Models\IDataModel.cs" />
     <Compile Include="Models\IWebPageDataModel.cs" />
     <Compile Include="Models\BaseDataModel.cs" />
-    <Compile Include="Models\SketchPageDataModel.cs" />
+    <Compile Include="Models\SketchFlow\SketchDataModel.cs" />
+    <Compile Include="Models\SketchFlow\SketchPageDataModel.cs" />
     <Compile Include="StorageDatabaseAzure.cs" />
     <Compile Include="StorageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

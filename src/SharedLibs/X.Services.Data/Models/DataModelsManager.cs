@@ -22,6 +22,7 @@ namespace X.Services.Data
             sqliteDb.CreateTable<ExtensionManifestDataModel>();
             sqliteDb.CreateTable<PassportDataModel>();
             sqliteDb.CreateTable<APIKeyDataModel>();
+            sqliteDb.CreateTable<SketchDataModel>();
             sqliteDb.CreateTable<SketchPageDataModel>();
         }
 
@@ -35,6 +36,7 @@ namespace X.Services.Data
             sqliteDb.DeleteAll<ExtensionManifestDataModel>();
             sqliteDb.DeleteAll<PassportDataModel>();
             sqliteDb.DeleteAll<APIKeyDataModel>();
+            sqliteDb.DeleteAll<SketchDataModel>();
             sqliteDb.DeleteAll<SketchPageDataModel>();
         }
       
@@ -48,6 +50,7 @@ namespace X.Services.Data
             else if (to.Equals(typeof(ExtensionManifestDataModel))) result = sqliteDb.Query<ExtensionManifestDataModel>(qry);
             else if (to.Equals(typeof(PassportDataModel))) result = sqliteDb.Query<PassportDataModel>(qry);
             else if (to.Equals(typeof(APIKeyDataModel))) result = sqliteDb.Query<APIKeyDataModel>(qry);
+            else if (to.Equals(typeof(SketchDataModel))) result = sqliteDb.Query<SketchDataModel>(qry);
             else if (to.Equals(typeof(SketchPageDataModel))) result = sqliteDb.Query<SketchPageDataModel>(qry);
 
 
@@ -62,6 +65,7 @@ namespace X.Services.Data
             else if (to.Equals(typeof(ExtensionManifestDataModel))) result = await client.GetTable<ExtensionManifestDataModel>().ToListAsync();
             else if (to.Equals(typeof(PassportDataModel))) result = await client.GetTable<PassportDataModel>().ToListAsync();
             else if (to.Equals(typeof(APIKeyDataModel))) result = await client.GetTable<APIKeyDataModel>().ToListAsync();
+            else if (to.Equals(typeof(SketchDataModel))) result = await client.GetTable<SketchDataModel>().ToListAsync();
             else if (to.Equals(typeof(SketchPageDataModel))) result = await client.GetTable<SketchPageDataModel>().ToListAsync();
 
 
@@ -77,6 +81,7 @@ namespace X.Services.Data
             else if (to.Equals(typeof(ExtensionManifestDataModel))) result = sqliteDb.Query<ExtensionManifestDataModel>(qry, uid);
             else if (to.Equals(typeof(PassportDataModel))) result = sqliteDb.Query<PassportDataModel>(qry, uid);
             else if (to.Equals(typeof(APIKeyDataModel))) result = sqliteDb.Query<APIKeyDataModel>(qry, uid);
+            else if (to.Equals(typeof(SketchDataModel))) result = sqliteDb.Query<SketchDataModel>(qry, uid);
             else if (to.Equals(typeof(SketchPageDataModel))) result = sqliteDb.Query<SketchPageDataModel>(qry, uid);
 
             return result as IList<T>;
@@ -90,6 +95,7 @@ namespace X.Services.Data
             else if (to.Equals(typeof(ExtensionManifestDataModel))) result = await client.GetTable<ExtensionManifestDataModel>().Where(x=>x.Uid == uid).ToListAsync();
             else if (to.Equals(typeof(PassportDataModel))) result = await client.GetTable<PassportDataModel>().Where(x => x.Uid == uid).ToListAsync();
             else if (to.Equals(typeof(APIKeyDataModel))) result = await client.GetTable<APIKeyDataModel>().Where(x => x.Uid == uid).ToListAsync();
+            else if (to.Equals(typeof(SketchDataModel))) result = await client.GetTable<SketchDataModel>().Where(x => x.Uid == uid).ToListAsync();
             else if (to.Equals(typeof(SketchPageDataModel))) result = await client.GetTable<SketchPageDataModel>().Where(x => x.Uid == uid).ToListAsync();
 
             return result as IList<T>;
@@ -105,6 +111,7 @@ namespace X.Services.Data
             else if (to.Equals(typeof(ExtensionManifestDataModel))) result = sqliteDb.Query<ExtensionManifestDataModel>(qry, index1);
             else if (to.Equals(typeof(PassportDataModel))) result = sqliteDb.Query<PassportDataModel>(qry, index1);
             else if (to.Equals(typeof(APIKeyDataModel))) result = sqliteDb.Query<APIKeyDataModel>(qry, index1);
+            else if (to.Equals(typeof(SketchDataModel))) result = sqliteDb.Query<SketchDataModel>(qry, index1);
             else if (to.Equals(typeof(SketchPageDataModel))) result = sqliteDb.Query<SketchPageDataModel>(qry, index1);
 
             return result as IList<T>;
@@ -119,6 +126,7 @@ namespace X.Services.Data
             else if (to.Equals(typeof(ExtensionManifestDataModel))) result = await client.GetTable<ExtensionManifestDataModel>().Where(x=>x.Index1 == index1).ToListAsync();
             else if (to.Equals(typeof(PassportDataModel))) result = await client.GetTable<PassportDataModel>().Where(x => x.Index1 == index1).ToListAsync();
             else if (to.Equals(typeof(APIKeyDataModel))) result = await client.GetTable<APIKeyDataModel>().Where(x => x.Index1 == index1).ToListAsync();
+            else if (to.Equals(typeof(SketchDataModel))) result = await client.GetTable<SketchDataModel>().Where(x => x.Index1 == index1).ToListAsync();
             else if (to.Equals(typeof(SketchPageDataModel))) result = await client.GetTable<SketchPageDataModel>().Where(x => x.Index1 == index1).ToListAsync();
 
             return result as IList<T>;
