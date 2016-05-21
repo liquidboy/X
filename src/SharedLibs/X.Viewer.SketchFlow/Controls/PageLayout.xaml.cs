@@ -85,6 +85,57 @@ namespace X.Viewer.SketchFlow.Controls
             //Currently there's no true "mixing" where you could directly host XAML content within a Composition Visual.
             //https://github.com/Microsoft/WindowsUIDevLabs/issues/68
             //InitShadow();
+
+            this.UpdateLayout();
+            DrawGridLines(this.ActualWidth, this.ActualHeight, 50, 50);
+        }
+
+        private void DrawGridLines(double width, double height, double overhangX, double overhangY, double spacingX = 10, double spacingY = 10) {
+            if (width == 0 || height == 0) return;
+            
+            PathFigureCollection myPathFigureCollection = new PathFigureCollection();
+
+            //horizontal
+            var max = ((height + overhangY) / spacingY);
+            for (int y = 0; y < max; y++) {
+                
+                var yPos = y * spacingY;
+                LineSegment myLineSegment = new LineSegment();
+                PathFigure myPathFigure = new PathFigure();
+                PathSegmentCollection myPathSegmentCollection = new PathSegmentCollection();
+                myPathFigure.StartPoint = new Point(0, yPos);
+                myLineSegment.Point = new Point(width + overhangX, yPos);
+                myPathSegmentCollection.Add(myLineSegment);
+                myPathFigure.Segments = myPathSegmentCollection;
+                
+                if (y > 0 && y < max-1) myPathFigureCollection.Add(myPathFigure);
+                
+            }
+
+            //vertical
+            max = ((width + overhangX) / spacingX);
+            for (int x = 0; x < max; x++)
+            {
+                var xPos = x * spacingX;
+                LineSegment myLineSegment = new LineSegment();
+                PathFigure myPathFigure = new PathFigure();
+                PathSegmentCollection myPathSegmentCollection = new PathSegmentCollection();
+                myPathFigure.StartPoint = new Point(xPos, 0);
+                myLineSegment.Point = new Point(xPos, height + overhangY);
+                myPathSegmentCollection.Add(myLineSegment);
+                myPathFigure.Segments = myPathSegmentCollection;
+                
+                if (x > 0 && x < max-1) myPathFigureCollection.Add(myPathFigure);
+            }
+
+
+
+            PathGeometry myPathGeometry = new PathGeometry();
+            myPathGeometry.Figures = myPathFigureCollection;
+            
+            pthGridLines.Stroke = new SolidColorBrush(Colors.CornflowerBlue);
+            pthGridLines.StrokeThickness = 1;
+            pthGridLines.Data = myPathGeometry;
         }
 
         private void InitShadow()

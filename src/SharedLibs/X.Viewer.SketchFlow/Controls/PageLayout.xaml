@@ -17,7 +17,11 @@
     </UserControl.Resources>
     <Grid x:Name="layoutRoot" PointerReleased="layoutRoot_PointerReleased" Loaded="layoutRoot_Loaded" Unloaded="layoutRoot_Unloaded">
         <Grid x:Name="grdLowerLayer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Grid>
+        
         <Grid x:Name="grdContainer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White">
+
+            <Path x:Name="pthGridLines" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="-20,-20,-20,-20" Opacity="0.3"></Path>
+
             <!-- Top Left label -->
             <TextBlock Text="0" Foreground="LightGray" FontSize="14" Margin="4,-23,0,0"></TextBlock>
             <TextBlock Text="0" Foreground="LightGray" FontSize="14" Margin="-15,0,0,0"></TextBlock>
