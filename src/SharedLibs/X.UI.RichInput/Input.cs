@@ -64,8 +64,8 @@ namespace X.UI.RichInput
 
         bool hasInitialized = false;
 
-        public string Value { get; set; }
-
+        //public string Value { get; set; }
+ 
         public Input()
         {
             this.DefaultStyleKey = typeof(Input);
@@ -867,6 +867,11 @@ namespace X.UI.RichInput
             set { SetValue(IsGlowActiveProperty, value); }
         }
 
+        public string Value
+        {
+            get { return (string)GetValue(ValueProperty); }
+            set { SetValue(ValueProperty, value); }
+        }
 
 
 
@@ -888,6 +893,7 @@ namespace X.UI.RichInput
 
 
 
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(string), typeof(Input), new PropertyMetadata(null, OnPropertyValueChanged));
 
         public static readonly DependencyProperty IsGlowActiveProperty = DependencyProperty.Register("IsGlowActive", typeof(bool), typeof(Input), new PropertyMetadata(false, OnPropertyChanged));
 
@@ -958,8 +964,22 @@ namespace X.UI.RichInput
                 ////((UIElement)d).UpdateLayout();
             }
         }
-        
 
+        private static void OnPropertyValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var instance = d as Input;
+            if (d == null)
+                return;
+
+            if (instance._ccInput != null)
+            {
+                switch (instance.Type) {
+                    case InputType.text:
+                        if(instance._udfTB1!=null) instance._udfTB1.Text = (string)e.NewValue;
+                        break;
+                }
+            }
+        }
     }
 
  

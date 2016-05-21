@@ -57,7 +57,7 @@
                     </Flyout>  
                 </Button.Flyout>
             </Button>
-            <Button x:Name="butLoad" Background="LightGray" >
+            <Button x:Name="butLoad" Background="LightGray" Click="butLoad_Click" >
                 <Button.Content>
                     <xuip:Path PathType="Save2" Width="25" Height="25" Foreground="White"></xuip:Path>
                 </Button.Content>
@@ -65,11 +65,18 @@
                     <Flyout Placement="Left">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
-                                <xuiri:Input x:Name="txtLoadName" IsEnabled="True" Type="text" Label="Currently loaded sketch:" LabelFontSize="9" LabelTranslateY="-13" PlaceholderText="[filled in with current sketch]" FocusColor="Black" FocusHoverColor="Black" FocusForegroundColor="White" HorizontalAlignment="Stretch" Height="37" Margin="0,10,0,0" MinWidth="300" ></xuiri:Input>
+                                <xuiri:Input x:Name="txtLoadName" IsEnabled="True" Type="text" Label="Currently loaded sketch:" LabelFontSize="9" LabelTranslateY="-13" PlaceholderText="[filled in with current sketch]" FocusColor="Black" FocusHoverColor="Black" FocusForegroundColor="White" HorizontalAlignment="Stretch" Height="37" Margin="0,10,0,0" MinWidth="300" Value="{Binding Title}" ></xuiri:Input>
                                 <Button x:Name="butDoLoad" Background="Black" Click="butDoLoad_Click" Margin="0,9,0,0">
                                     <xuip:Path PathType="Save2" Width="25" Height="25" Foreground="White"></xuip:Path>
                                 </Button>
                             </StackPanel>
+                            <ListBox x:Name="lbSketches" HorizontalContentAlignment="Stretch" Margin="0,10,0,0" Width="325" Height="325" SelectionChanged="lbSketches_SelectionChanged">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Title}" ></TextBlock>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
                             <!--<xuildg:LiteDataGrid x:Name="lbSavedSketches" HorizontalContentAlignment="Stretch" Margin="0,10,0,0" Width="325" Height="325" ItemTemplateToUse="1">
                                 <xuildg:LiteDataGrid.ItemTemplate1>
                                     <DataTemplate>

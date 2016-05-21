@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using Windows.UI;
 using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using X.Services.Data;
 
 namespace X.Viewer.SketchFlow.Controls
 {
@@ -164,9 +166,28 @@ namespace X.Viewer.SketchFlow.Controls
 
         private void butDoLoad_Click(object sender, RoutedEventArgs e)
         {
-            //PerformAction?.Invoke("GetSketchsList", new ToolbarEventArgs() { ActionType = "GetAllSketchs" });
-            PerformAction?.Invoke("LoadSketch", new ToolbarEventArgs() { ActionType = "LoadSketch", Data = txtLoadName.Value });
-            //PerformAction?.Invoke("DeleteAllSketchs", new ToolbarEventArgs() { ActionType = "LoadSketch", Data = txtLoadName.Value });
+            if (txtLoadName.DataContext is SketchDataModel) {
+                var dc = txtLoadName.DataContext as SketchDataModel;
+                PerformAction?.Invoke("LoadSketch", new ToolbarEventArgs() { ActionType = "LoadSketch", Data = dc.Id.ToString() });
+                //PerformAction?.Invoke("DeleteAllSketchs", new ToolbarEventArgs() { ActionType = "LoadSketch", Data = txtLoadName.Value });
+            }
+        }
+
+        public void LoadSketches(IList<SketchDataModel> sketches) {
+            lbSketches.ItemsSource = sketches;
+        }
+
+        private void butLoad_Click(object sender, RoutedEventArgs e)
+        {
+            PerformAction?.Invoke("GetAllSketchs", new ToolbarEventArgs() { ActionType = "GetAllSketchs" });
+        }
+
+        private void lbSketches_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count > 0) {
+                var found = e.AddedItems[0];
+                txtLoadName.DataContext = found;
+            }
         }
     }
 

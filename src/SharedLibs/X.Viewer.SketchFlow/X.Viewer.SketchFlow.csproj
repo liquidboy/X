@@ -167,6 +167,7 @@
     <Compile Include="SketchView.xaml.cs">
       <DependentUpon>SketchView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SketchView.xaml.Persist.cs" />
     <Compile Include="ViewModels.cs" />
     <EmbeddedResource Include="Properties\X.Viewer.SketchFlow.rd.xml" />
   </ItemGroup>
