@@ -159,12 +159,12 @@ namespace X.Viewer.SketchFlow.Controls
 
         private void butDoSave_Click(object sender, RoutedEventArgs e)
         {
-
+            PerformAction?.Invoke("SaveSketch", new ToolbarEventArgs() { ActionType ="SaveSketch", Data = txtSaveName.Value });
         }
 
         private void butDoLoad_Click(object sender, RoutedEventArgs e)
         {
-
+            PerformAction?.Invoke("GetSketchsList", new ToolbarEventArgs() { ActionType = "GetAllSketchs" });
         }
     }
 

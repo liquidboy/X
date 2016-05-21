@@ -42,8 +42,12 @@ namespace X.Extension.ThirdParty.Backgrounds.Services
                     returnData.Add("sketch-test", "X.Extension.ThirdParty.Backgrounds.UI.Test");
                     returnData.Add("sketch-home", "X.Extension.ThirdParty.Backgrounds.UI.Home");
                     break;
-                case "Background":
-                    returnData.Add("filename", "bkg01.jpg");
+                case "RandomBackground":
+                    Random rnd = new Random();
+                    returnData.Add("filename", $"bkg0{rnd.Next(1, 5)}.jpg");
+                    break;
+                case "AllBackgrounds":
+                    returnData.Add("filenames", "bkg01.jpg,bkg02.jpg,bkg03.jpg,bkg04.jpg,bkg05.jpg");
                     break;
             }
             

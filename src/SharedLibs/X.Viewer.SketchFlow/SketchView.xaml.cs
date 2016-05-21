@@ -192,6 +192,14 @@ namespace X.Viewer.SketchFlow
                 var rect3 = AddPage(310, 150, (int)rect2.X, (int)(rect2.Y + rect2.Z + 55));
                 AddPage(150, 150, -1, (int)rect3.Y);
             }
+            else if (actionToPerform == "SaveSketch")
+            {
+
+            }
+            else if (actionToPerform == "GetAllSketchs")
+            {
+
+            }
 
             if (e is Controls.ToolbarEventArgs)
             {
