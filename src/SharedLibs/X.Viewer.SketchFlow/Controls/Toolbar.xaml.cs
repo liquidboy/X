@@ -166,15 +166,37 @@ namespace X.Viewer.SketchFlow.Controls
 
         private void butDoLoad_Click(object sender, RoutedEventArgs e)
         {
-            if (txtLoadName.DataContext is SketchDataModel) {
+            
+            if (txtLoadName.Value == "deleteall")
+            {
+                PerformAction?.Invoke("DeleteAllSketchs", new ToolbarEventArgs() { ActionType = "DeleteAllSketchs" });
+                return;
+            }
+
+            if (txtLoadName.Value == "loadsample")
+            {
+                PerformAction?.Invoke("LoadSampleSketch", new ToolbarEventArgs() { ActionType = "LoadSampleSketch" });
+                return;
+            }
+
+            if (txtLoadName.DataContext is SketchDataModel)
+            {
                 var dc = txtLoadName.DataContext as SketchDataModel;
                 PerformAction?.Invoke("LoadSketch", new ToolbarEventArgs() { ActionType = "LoadSketch", Data = dc.Id.ToString() });
-                //PerformAction?.Invoke("DeleteAllSketchs", new ToolbarEventArgs() { ActionType = "LoadSketch", Data = txtLoadName.Value });
+                txtLoadName.DataContext = null;
             }
+
+            
+            
         }
 
-        public void LoadSketches(IList<SketchDataModel> sketches) {
+        public void LoadSketchs(IList<SketchDataModel> sketches) {
             lbSketches.ItemsSource = sketches;
+        }
+        public void ClearSketchs()
+        {
+            txtLoadName.DataContext = null;
+            lbSketches.ItemsSource = null;
         }
 
         private void butLoad_Click(object sender, RoutedEventArgs e)

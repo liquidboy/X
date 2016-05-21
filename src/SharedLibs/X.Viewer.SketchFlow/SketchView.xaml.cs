@@ -41,7 +41,7 @@ namespace X.Viewer.SketchFlow
             //cvMainContainer.Scale = ct.ScaleX;
 
             vm = new Sketch();
-            //LoadSampleData();
+            //LoadSampleSketch();
             //this.DataContext = vm;
 
             //foreach (var pg in vm.Pages) {
@@ -49,6 +49,7 @@ namespace X.Viewer.SketchFlow
             //}
 
         }
+
         public void Load()
         {
             //changed to creating zcanvas by code rather than xaml, it was causing a memory leak
@@ -143,6 +144,10 @@ namespace X.Viewer.SketchFlow
             else if (actionToPerform == "DeleteAllSketchs")
             {
                 DeleteALLSketchs();
+            }
+            else if (actionToPerform == "LoadSampleSketch")
+            {
+                LoadSampleSketch();
             }
             else if (actionToPerform == "LoadSketch")
             {

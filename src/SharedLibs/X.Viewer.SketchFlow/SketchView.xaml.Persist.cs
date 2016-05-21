@@ -21,14 +21,7 @@ namespace X.Viewer.SketchFlow
     {
         private void LoadSketch(int sketchId)
         {
-            if (sketchId == -999) //HACK to refresh from sample data
-            {
-                DeleteALLSketchs();
-                LoadSampleData();
-                return;
-            }
-
-
+      
             var foundS = StorageService.Instance.Storage.RetrieveById<SketchDataModel>(sketchId);
             if (foundS != null && foundS.Count() > 0)
             {
@@ -53,7 +46,7 @@ namespace X.Viewer.SketchFlow
                                 {
                                     foreach (var fsplxf in foundSPLXF)
                                     {
-                                        var xf = new XamlFragment() { Uid = fsplxf.Uid, Xaml = fsplxf.Xaml };
+                                        var xf = new XamlFragment() { Uid = fsplxf.Uid, Xaml = fsplxf.Xaml, Data = fsplxf.Data };
 
                                         pl.XamlFragments.Add(xf);
                                     }
@@ -72,6 +65,11 @@ namespace X.Viewer.SketchFlow
                         cvMain.Children.Add(nc);
 
                         vm.Pages.Add(pg);
+
+                        //foreach (var pgg in vm.Pages) {
+                        //    pgg.ExternalPC("Layers");
+                        //}
+
                     }
                 }
 
@@ -102,7 +100,7 @@ namespace X.Viewer.SketchFlow
                     }
                     foreach (var xf in pgl.XamlFragments)
                     {
-                        var nxf = new SketchPageLayerXamlFragmentDataModel() { SketchPageLayerId = npgl.Id, Uid = xf.Uid, Xaml = xf.Xaml };
+                        var nxf = new SketchPageLayerXamlFragmentDataModel() { SketchPageLayerId = npgl.Id, Uid = xf.Uid, Xaml = xf.Xaml, Data = xf.Data };
                         StorageService.Instance.Storage.Insert(nxf);
 
                     }
@@ -117,14 +115,15 @@ namespace X.Viewer.SketchFlow
             StorageService.Instance.Storage.Truncate<SketchPageDataModel>();
             StorageService.Instance.Storage.Truncate<SketchPageLayerDataModel>();
             StorageService.Instance.Storage.Truncate<SketchPageLayerXamlFragmentDataModel>();
+            toolbar.ClearSketchs();
         }
 
         private void LoadAllSketchs() {
             var foundS = StorageService.Instance.Storage.RetrieveList<SketchDataModel>();
-            toolbar.LoadSketches(foundS);
+            toolbar.LoadSketchs(foundS);
         }
 
-        private void LoadSampleData()
+        private void LoadSampleSketch()
         {
             var pg = new SketchPage() { Title = "Splash", Width = 360, Height = 640, Top = 100, Left = 100 };
             pg.Layers.Add(new PageLayer());

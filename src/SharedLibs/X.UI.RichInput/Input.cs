@@ -975,7 +975,7 @@ namespace X.UI.RichInput
             {
                 switch (instance.Type) {
                     case InputType.text:
-                        if(instance._udfTB1!=null) instance._udfTB1.Text = (string)e.NewValue;
+                        if(instance._udfTB1!=null && e.NewValue != null) instance._udfTB1.Text = (string)e.NewValue;
                         break;
                 }
             }
