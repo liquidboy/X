@@ -65,7 +65,7 @@
                     <Flyout Placement="Left">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
-                                <xuiri:Input x:Name="txtLoadName" IsEnabled="False" Type="text" Label="Currently loaded sketch:" LabelFontSize="9" LabelTranslateY="-13" PlaceholderText="[filled in with current sketch]" FocusColor="Black" FocusHoverColor="Black" FocusForegroundColor="White" HorizontalAlignment="Stretch" Height="37" Margin="0,10,0,0" MinWidth="300" ></xuiri:Input>
+                                <xuiri:Input x:Name="txtLoadName" IsEnabled="True" Type="text" Label="Currently loaded sketch:" LabelFontSize="9" LabelTranslateY="-13" PlaceholderText="[filled in with current sketch]" FocusColor="Black" FocusHoverColor="Black" FocusForegroundColor="White" HorizontalAlignment="Stretch" Height="37" Margin="0,10,0,0" MinWidth="300" ></xuiri:Input>
                                 <Button x:Name="butDoLoad" Background="Black" Click="butDoLoad_Click" Margin="0,9,0,0">
                                     <xuip:Path PathType="Save2" Width="25" Height="25" Foreground="White"></xuip:Path>
                                 </Button>

@@ -12,5 +12,10 @@ namespace X.Services.Data
         string Abstract { get; set; }
         int SketchId { get; set; }
 
+        double Width { get; set; }
+        double Height { get; set; }
+        double Top { get; set; }
+        double Left { get; set; }
+
     }
 }

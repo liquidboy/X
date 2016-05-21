@@ -164,7 +164,8 @@ namespace X.Viewer.SketchFlow.Controls
 
         private void butDoLoad_Click(object sender, RoutedEventArgs e)
         {
-            PerformAction?.Invoke("GetSketchsList", new ToolbarEventArgs() { ActionType = "GetAllSketchs" });
+            //PerformAction?.Invoke("GetSketchsList", new ToolbarEventArgs() { ActionType = "GetAllSketchs" });
+            PerformAction?.Invoke("LoadSketch", new ToolbarEventArgs() { ActionType = "LoadSketch", Data = txtLoadName.Value });
         }
     }
 

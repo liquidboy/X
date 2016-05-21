@@ -42,6 +42,15 @@ namespace X.Services.Data
             return DataModelsManager.RetrieveByUid<T>( this.SqliteDb, uid);
         }
 
+        public IList<T> RetrieveById<T>(int id)
+        {
+            return DataModelsManager.RetrieveById<T>(this.SqliteDb, id);
+        }
+        public IList<T> RetrieveByField<T>(string fieldName,string fieldValue)
+        {
+            return DataModelsManager.RetrieveByField<T>(this.SqliteDb, fieldName, fieldValue);
+        }
+
         public void DeleteByUid<T>(string uid)
         {
             this.SqliteDb.Execute("delete from " + typeof(T).Name + " where Uid = '" + uid + "'");
