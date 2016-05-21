@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace X.Services.Data
 {
-    public interface ISketchPageDataModel : IAzureTableBase
+    public interface ISketchPageDataModel : ISqliteBase
     {
-  
+        string Title { get; set; }
+        string Abstract { get; set; }
 
     }
 }

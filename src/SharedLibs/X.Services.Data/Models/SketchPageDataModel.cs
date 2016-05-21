@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace X.Services.Data.Models
+namespace X.Services.Data
 {
-    public class SketchPageDataModel: ISketchPageDataModel
+    public class SketchPageDataModel: BaseDataModel, IDataModel, ISqliteBase
     {
-        public int Id { get; set; }
+        public string Index1 { get; set; }
+
+        public string Title { get; set; }
+        public string Abstract { get; set; }
     }
 }

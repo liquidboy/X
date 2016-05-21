@@ -12,7 +12,6 @@ using X.Viewer.SketchFlow.Controls;
 using X.Viewer.SketchFlow.Controls.Stamps;
 using Windows.UI;
 using Windows.Foundation;
-using X.Services.Data.Models;
 using X.Services.Data;
 using X.UI.ZoomCanvas;
 

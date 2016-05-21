@@ -34,7 +34,7 @@ namespace X.Viewer.SketchFlow
         }
     }
 
-    public class SketchPage : ViewModelBase, ISketchPageDataModel
+    public class SketchPage : ViewModelBase
     {
         public string Title { get; set; }
         public int Left { get; set; }
