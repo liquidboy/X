@@ -41,7 +41,7 @@ namespace X.Viewer.SketchFlow
             //cvMainContainer.Scale = ct.ScaleX;
 
             vm = new Sketch();
-            //SampleData();
+            //LoadSampleData();
             //this.DataContext = vm;
 
             //foreach (var pg in vm.Pages) {
@@ -116,6 +116,14 @@ namespace X.Viewer.SketchFlow
         
         private void LoadSketch(int sketchId)
         {
+            if (sketchId == -999)
+            {
+                DeleteALLSketchs();
+                LoadSampleData();
+                return;
+            }
+
+
             var foundS = StorageService.Instance.Storage.RetrieveById<SketchDataModel>(sketchId);
             if (foundS != null && foundS.Count() > 0)
             {
@@ -135,6 +143,7 @@ namespace X.Viewer.SketchFlow
                                 var pl = new PageLayer();
 
                                 var foundSPLXF = StorageService.Instance.Storage.RetrieveByField<SketchPageLayerXamlFragmentDataModel>("SketchPageLayerId", fspl.Id.ToString());
+                                if (foundSPLXF.Count() >= 2) { }
                                 if (foundSPLXF != null && foundSPLXF.Count() > 0)
                                 {
                                     foreach (var fsplxf in foundSPLXF)
@@ -162,18 +171,47 @@ namespace X.Viewer.SketchFlow
                 }
                 
             }
-            //else
-            //{
-            //    StorageService.Instance.Storage.Truncate<SketchDataModel>();
-            //    StorageService.Instance.Storage.Truncate<SketchPageDataModel>();
-            //    StorageService.Instance.Storage.Truncate<SketchPageLayerDataModel>();
-            //    StorageService.Instance.Storage.Truncate<SketchPageLayerXamlFragmentDataModel>();
-            //    SampleData();
-            //}
+
+            
 
         }
 
-        private void SampleData() {
+        private void SaveSketch(string title) {
+            var ni = new SketchDataModel() { Title = title };
+            StorageService.Instance.Storage.Insert(ni);
+
+            foreach (var pg in vm.Pages)
+            {
+                var nip = new SketchPageDataModel() { SketchId = ni.Id, Title = pg.Title, Left = pg.Left, Top = pg.Top, Width = pg.Width, Height = pg.Height };
+                StorageService.Instance.Storage.Insert(nip);
+
+                foreach (var pgl in pg.Layers)
+                {
+                    var npgl = new SketchPageLayerDataModel() { SketchPageId = nip.Id };
+                    StorageService.Instance.Storage.Insert(npgl);
+
+                    if (pgl.XamlFragments.Count() >= 2) {
+
+                    }
+                    foreach (var xf in pgl.XamlFragments)
+                    {   
+                        var nxf = new SketchPageLayerXamlFragmentDataModel() { SketchPageLayerId = npgl.Id, Uid = xf.Uid, Xaml = xf.Xaml };
+                        StorageService.Instance.Storage.Insert(nxf);
+
+                    }
+                }
+
+            }
+        }
+
+        private void DeleteALLSketchs() {
+            StorageService.Instance.Storage.Truncate<SketchDataModel>();
+            StorageService.Instance.Storage.Truncate<SketchPageDataModel>();
+            StorageService.Instance.Storage.Truncate<SketchPageLayerDataModel>();
+            StorageService.Instance.Storage.Truncate<SketchPageLayerXamlFragmentDataModel>();
+        }
+
+        private void LoadSampleData() {
             var pg = new SketchPage() { Title = "Splash", Width = 360, Height = 640, Top = 100, Left = 100 };
             pg.Layers.Add(new PageLayer());
             var nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
@@ -253,26 +291,7 @@ namespace X.Viewer.SketchFlow
             else if (actionToPerform == "SaveSketch")
             {
                 var tbea = e as ToolbarEventArgs;
-                
-                var ni = new SketchDataModel() { Title = tbea.Data };
-                StorageService.Instance.Storage.Insert(ni);
-
-                foreach (var pg in vm.Pages) {
-                    var nip = new SketchPageDataModel() { SketchId = ni.Id, Title = pg.Title, Left = pg.Left, Top = pg.Top, Width = pg.Width, Height = pg.Height };
-                    StorageService.Instance.Storage.Insert(nip);
-
-                    foreach (var pgl in pg.Layers) {
-                        var npgl = new SketchPageLayerDataModel() { SketchPageId = nip.Id };
-                        StorageService.Instance.Storage.Insert(npgl);
-
-                        foreach (var xf in pgl.XamlFragments) {
-                            var nxf = new SketchPageLayerXamlFragmentDataModel() { SketchPageLayerId = npgl.Id, Uid = xf.Uid, Xaml = xf.Xaml };
-                            StorageService.Instance.Storage.Insert(nxf);
-
-                        }
-                    }
-
-                }
+                SaveSketch(tbea.Data);
             }
             else if (actionToPerform == "GetAllSketchs")
             {
@@ -280,10 +299,7 @@ namespace X.Viewer.SketchFlow
             }
             else if (actionToPerform == "DeleteAllSketchs")
             {
-                StorageService.Instance.Storage.Truncate<SketchDataModel>();
-                StorageService.Instance.Storage.Truncate<SketchPageDataModel>();
-                StorageService.Instance.Storage.Truncate<SketchPageLayerDataModel>();
-                StorageService.Instance.Storage.Truncate<SketchPageLayerXamlFragmentDataModel>();
+                DeleteALLSketchs();
             }
             else if (actionToPerform == "LoadSketch")
             {

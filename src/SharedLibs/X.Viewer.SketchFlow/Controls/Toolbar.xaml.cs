@@ -166,6 +166,7 @@ namespace X.Viewer.SketchFlow.Controls
         {
             //PerformAction?.Invoke("GetSketchsList", new ToolbarEventArgs() { ActionType = "GetAllSketchs" });
             PerformAction?.Invoke("LoadSketch", new ToolbarEventArgs() { ActionType = "LoadSketch", Data = txtLoadName.Value });
+            //PerformAction?.Invoke("DeleteAllSketchs", new ToolbarEventArgs() { ActionType = "LoadSketch", Data = txtLoadName.Value });
         }
     }
 
