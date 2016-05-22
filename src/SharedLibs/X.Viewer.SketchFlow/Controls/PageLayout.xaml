@@ -54,7 +54,7 @@
             </StackPanel>
 
             <!-- Page Metadata Edit -->
-            <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-80,10,0,0">
+            <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-80,0,0,0">
                 <Button x:Name="butEditPage" Background="LightGray" >
                     <Button.Content>
                         <xuip:Path PathType="DocumentSettings1" Width="25" Height="25" Foreground="White"></xuip:Path>
