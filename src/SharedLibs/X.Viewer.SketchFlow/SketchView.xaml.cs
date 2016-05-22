@@ -153,7 +153,14 @@ namespace X.Viewer.SketchFlow
             {
                 var tbea = e as ToolbarEventArgs;
                 var idToLoad = int.Parse( tbea.Data);
-                LoadSketch(idToLoad);    
+                LoadSketch(idToLoad);
+            }
+            else if (actionToPerform == "DeleteSketch")
+            {
+                var tbea = e as ToolbarEventArgs;
+                var idToLoad = int.Parse(tbea.Data);
+                DeleteSketch(idToLoad);
+                LoadAllSketchs();
             }
 
             if (e is Controls.ToolbarEventArgs)

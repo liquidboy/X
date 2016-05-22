@@ -19,6 +19,34 @@ namespace X.Viewer.SketchFlow
 {
     public sealed partial class SketchView
     {
+        private void DeleteSketch(int sketchId)
+        {
+            var foundS = StorageService.Instance.Storage.RetrieveById<SketchDataModel>(sketchId);
+            if (foundS != null && foundS.Count() > 0)
+            {
+                var fs = foundS.First();
+                var foundSP = StorageService.Instance.Storage.RetrieveByField<SketchPageDataModel>("SketchId", fs.Id.ToString());
+                if (foundSP != null && foundSP.Count() > 0)
+                {
+                    foreach (var fsp in foundSP)
+                    {
+                        var foundSPL = StorageService.Instance.Storage.RetrieveByField<SketchPageLayerDataModel>("SketchPageId", fsp.Id.ToString());
+                        if (foundSPL != null && foundSPL.Count() > 0)
+                        {
+                            foreach (var fspl in foundSPL)
+                            {
+                                StorageService.Instance.Storage.DeleteByField<SketchPageLayerXamlFragmentDataModel>("SketchPageLayerId", fspl.Id.ToString());
+                            }
+                        }
+                        StorageService.Instance.Storage.DeleteByField<SketchPageLayerDataModel>("SketchPageId", fsp.Id.ToString());
+                    }
+                }
+                StorageService.Instance.Storage.DeleteByField<SketchPageDataModel>("SketchId", fs.Id.ToString());
+                StorageService.Instance.Storage.DeleteById<SketchDataModel>(sketchId.ToString());
+            }
+        }
+
+
         private async void LoadSketch(int sketchId)
         {
       
@@ -34,7 +62,7 @@ namespace X.Viewer.SketchFlow
                         var pg = new SketchPage() { Title = fsp.Title, Width = (int)fsp.Width, Height = (int)fsp.Height, Top = (int)fsp.Top, Left = (int)fsp.Left };
 
                         var foundSPL = StorageService.Instance.Storage.RetrieveByField<SketchPageLayerDataModel>("SketchPageId", fsp.Id.ToString());
-                        if (foundSPL != null && foundSP.Count() > 0)
+                        if (foundSPL != null && foundSPL.Count() > 0)
                         {
                             foreach (var fspl in foundSPL)
                             {

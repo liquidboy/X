@@ -211,6 +211,16 @@ namespace X.Viewer.SketchFlow.Controls
                 txtLoadName.DataContext = found;
             }
         }
+
+        private void butDoDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (txtLoadName.DataContext is SketchDataModel)
+            {
+                var dc = txtLoadName.DataContext as SketchDataModel;
+                PerformAction?.Invoke("DeleteSketch", new ToolbarEventArgs() { ActionType = "DeleteSketch", Data = dc.Id.ToString() });
+                txtLoadName.DataContext = null;
+            }
+        }
     }
 
 

@@ -58,7 +58,12 @@ namespace X.Services.Data
 
         public void DeleteById<T>(string id)
         {
-            this.SqliteDb.Execute("delete from ? where id = ?", typeof(T).Name, id);
+            this.SqliteDb.Execute($"delete from {typeof(T).Name} where id = '{id}'");
+        }
+
+        public void DeleteByField<T>(string fieldName, string fieldValue)
+        {
+            this.SqliteDb.Execute($"delete from {typeof(T).Name} where {fieldName} = '{fieldValue}'");
         }
 
         public void UpdateFieldByUid<T>(string uid, string fieldName, object value)
