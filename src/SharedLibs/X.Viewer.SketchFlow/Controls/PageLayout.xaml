@@ -49,10 +49,18 @@
             <!-- Title -->
             <Border BorderThickness="0,1,1,0" BorderBrush="DarkOrange" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="-5,-40,-20,0" Height="30" Visibility="{Binding IsSelected}"></Border>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,-60,0,0" Padding="5" Background="{Binding IsSelected, Converter={StaticResource IsSelectedToColorConverter}}">
-                <TextBlock Text="{Binding Title}" FontSize="18" Foreground="White" ></TextBlock>
+                <TextBlock Text="{Binding Title}" FontSize="18" Foreground="White" >
+                </TextBlock>
             </StackPanel>
 
-
+            <!-- Page Metadata Edit -->
+            <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-80,30,0,0">
+                <Button x:Name="butEditPage" Background="LightGray" >
+                    <Button.Content>
+                        <xuip:Path PathType="DocumentSettings1" Width="25" Height="25" Foreground="White"></xuip:Path>
+                    </Button.Content>
+                </Button>
+            </Grid>
 
 
 
@@ -74,7 +82,7 @@
             </local:PageContent>
 
             <!-- Layers -->
-            <local:PageLayers x:Name="pgLayer" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0, 0" LayerChanged="pgLayer_LayerChanged" ></local:PageLayers>
+            <local:PageLayers x:Name="pgLayer" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="-25,0,0, 0" LayerChanged="pgLayer_LayerChanged" ></local:PageLayers>
         </Grid>
         
     </Grid>

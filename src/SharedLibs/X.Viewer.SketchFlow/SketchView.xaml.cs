@@ -274,7 +274,8 @@ namespace X.Viewer.SketchFlow
         private Vector4 AddPage(int width, int height, int left = -1, int top = -1)
         {
             var rect = new Vector4();
-            rect.X = vm.Pages[vm.Pages.Count - 1].Left + vm.Pages[vm.Pages.Count - 1].Width + 150;
+            var leftToUse = vm.Pages.Count() == 0 ? 150 : vm.Pages[vm.Pages.Count - 1].Left + vm.Pages[vm.Pages.Count - 1].Width + 150;
+            rect.X = leftToUse;
             rect.Y = 100;
             rect.W = width;
             rect.Z = height;
