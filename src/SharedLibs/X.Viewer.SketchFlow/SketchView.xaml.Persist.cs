@@ -19,7 +19,7 @@ namespace X.Viewer.SketchFlow
 {
     public sealed partial class SketchView
     {
-        private void LoadSketch(int sketchId)
+        private async void LoadSketch(int sketchId)
         {
       
             var foundS = StorageService.Instance.Storage.RetrieveById<SketchDataModel>(sketchId);
@@ -38,25 +38,25 @@ namespace X.Viewer.SketchFlow
                         {
                             foreach (var fspl in foundSPL)
                             {
-                                var pl = new PageLayer();
+                                var pl = new PageLayer() { PersistedId = fspl.Id, HasChildContainerCanvas = fspl.HasChildContainerCanvas };
 
+                                //add xamlfrags
                                 var foundSPLXF = StorageService.Instance.Storage.RetrieveByField<SketchPageLayerXamlFragmentDataModel>("SketchPageLayerId", fspl.Id.ToString());
-                                if (foundSPLXF.Count() >= 2) { }
                                 if (foundSPLXF != null && foundSPLXF.Count() > 0)
                                 {
                                     foreach (var fsplxf in foundSPLXF)
                                     {
-                                        var xf = new XamlFragment() { Uid = fsplxf.Uid, Xaml = fsplxf.Xaml, Data = fsplxf.Data };
-
+                                        var dt = string.IsNullOrEmpty(fsplxf.DataType) ? null : Type.GetType(fsplxf.DataType);
+                                        var xf = new XamlFragment() { Uid = fsplxf.Uid, Xaml = fsplxf.Xaml, Data = fsplxf.Data, Type = dt };
                                         pl.XamlFragments.Add(xf);
                                     }
                                 }
+
                                 pg.Layers.Add(pl);
 
                             }
 
                         }
-
 
                         var nc = new Controls.PageLayout() { DataContext = pg, Width = pg.Width, Height = pg.Height };
                         nc.SetValue(Windows.UI.Xaml.Controls.Canvas.LeftProperty, pg.Left);
@@ -66,13 +66,30 @@ namespace X.Viewer.SketchFlow
 
                         vm.Pages.Add(pg);
 
-                        //foreach (var pgg in vm.Pages) {
-                        //    pgg.ExternalPC("Layers");
-                        //}
 
+                        //// add xaml frags
+                        //foreach (var pl in pg.Layers)
+                        //{
+                        //    var foundSPLXF = StorageService.Instance.Storage.RetrieveByField<SketchPageLayerXamlFragmentDataModel>("SketchPageLayerId", pl.PersistedId.ToString());
+                        //    if (foundSPLXF != null && foundSPLXF.Count() > 0)
+                        //    {
+                        //        foreach (var fsplxf in foundSPLXF)
+                        //        {
+                        //            var dt =  string.IsNullOrEmpty(fsplxf.DataType) ? null: Type.GetType(fsplxf.DataType);
+                        //            var xf = new XamlFragment() { Uid = fsplxf.Uid, Xaml = fsplxf.Xaml, Data = fsplxf.Data, Type = dt };
+                        //            pl.XamlFragments.Add(xf);
+                        //        }
+                        //    }
+                        //    pl.ExternalPC("Layers");
+                        //}
                     }
                 }
 
+             
+                //    foreach (var pgg in vm.Pages)
+                //    {
+                //        pgg.ExternalPC("Layers");
+                //    }
             }
 
 
@@ -91,16 +108,12 @@ namespace X.Viewer.SketchFlow
 
                 foreach (var pgl in pg.Layers)
                 {
-                    var npgl = new SketchPageLayerDataModel() { SketchPageId = nip.Id };
+                    var npgl = new SketchPageLayerDataModel() { SketchPageId = nip.Id, HasChildContainerCanvas = pgl.HasChildContainerCanvas };
                     StorageService.Instance.Storage.Insert(npgl);
-
-                    if (pgl.XamlFragments.Count() >= 2)
-                    {
-
-                    }
+                    
                     foreach (var xf in pgl.XamlFragments)
                     {
-                        var nxf = new SketchPageLayerXamlFragmentDataModel() { SketchPageLayerId = npgl.Id, Uid = xf.Uid, Xaml = xf.Xaml, Data = xf.Data };
+                        var nxf = new SketchPageLayerXamlFragmentDataModel() { SketchPageLayerId = npgl.Id, Uid = xf.Uid, Xaml = xf.Xaml, Data = xf.Data, DataType = xf.Type != null? xf.Type.ToString(): null };
                         StorageService.Instance.Storage.Insert(nxf);
 
                     }

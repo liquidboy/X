@@ -11,5 +11,6 @@ namespace X.Services.Data
         public string Index1 { get; set; }
 
         public int SketchPageId { get; set; }
+        public bool HasChildContainerCanvas { get; set; }
     }
 }

@@ -12,5 +12,6 @@ namespace X.Services.Data
         public int SketchPageLayerId { get; set; }
         public string Xaml { get; set; }
         public string Data { get; set; }
+        public string DataType { get; set; }
     }
 }

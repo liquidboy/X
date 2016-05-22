@@ -28,3 +28,10 @@ namespace X.Extension.ThirdParty.JsRTChakraCoreX
         }
     }
 }
+
+
+
+//http://www.strathweb.com/2016/03/roslyn-scripting-on-coreclr-net-cli-and-dnx-and-in-memory-assemblies/
+//https://www.google.com.au/#safe=active&q=Rosyln+in+a+UWP+application
+//https://dotnetfiddle.net/
+//https://github.com/RehanSaeed/Roslyn.Sandbox/blob/master/Roslyn.Sandbox.Script.Test/ScriptTest.cs

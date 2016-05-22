@@ -73,7 +73,9 @@ namespace X.Viewer.SketchFlow
         public string LayerNumber { get { return _layerNumber; } set { _layerNumber = value; RaisePropertyChanged(); } }
 
         public ObservableCollection<XamlFragment> XamlFragments { get; set; }
-        
+
+        public int PersistedId { get; set; }  //used to link this to the persistedId
+
         public PageLayer() {
             XamlFragments = new ObservableCollection<XamlFragment>();
         }

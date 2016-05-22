@@ -9,6 +9,7 @@ namespace X.Services.Data
     public interface ISketchPageLayerDataModel : ISqliteBase
     {
         int SketchPageId { get; set; }
+        bool HasChildContainerCanvas { get; set; }
 
     }
 }
