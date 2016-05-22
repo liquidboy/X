@@ -73,7 +73,7 @@
                                     <xuip:Path PathType="Trash1" Width="25" Height="25" Foreground="White"></xuip:Path>
                                 </Button>
                             </StackPanel>
-                            <ListBox x:Name="lbSketches" HorizontalContentAlignment="Stretch" Margin="0,10,0,0" Width="345" Height="325" SelectionChanged="lbSketches_SelectionChanged">
+                            <ListBox x:Name="lbSketches" HorizontalContentAlignment="Stretch" Margin="0,10,0,0" Width="355" Height="325" SelectionChanged="lbSketches_SelectionChanged">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Title}" ></TextBlock>

@@ -507,7 +507,7 @@ namespace X.Viewer.SketchFlow
                 }
 
                 _currentPageLayout.SetValue(Windows.UI.Xaml.Controls.Canvas.TopProperty, newY);
-                lvm.Top = (int)newX;
+                lvm.Top = (int)newY;
                 lvm.ExternalPC("Top");
 
                 //_currentPageLayout.SetValue(Canvas.TopProperty, (ptStartPt.Y - (ptStart.Position.Y - ptEnd.Position.Y)));
