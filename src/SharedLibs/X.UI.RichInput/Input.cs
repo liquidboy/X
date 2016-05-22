@@ -193,6 +193,8 @@ namespace X.UI.RichInput
                 _udfTB1 = new TextBox();
                 _udfTB1.PlaceholderText = placeholderText;
                 _udfTB1.Style = _GeneralTextBoxStyle;
+                _udfTB1.SetBinding(TextBox.DataContextProperty, new Binding() { Path= new PropertyPath("{x:Null}") });
+                _udfTB1.SetBinding(TextBox.TextProperty, new Binding() { Source = Value });
                 _udfTB1.KeyUp += ittext_KeyUp;
 
                 _udfg1 = new Grid() { Padding = new Thickness(2, 2, 2, 2), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment= VerticalAlignment.Top};
@@ -463,6 +465,7 @@ namespace X.UI.RichInput
             if (type == InputType.text)
             {
                 _udfTB1.KeyUp -= ittext_KeyUp;
+                
             }
             else if (type == InputType.password)
             {

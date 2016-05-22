@@ -9,6 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     x:Name="root"
+    xmlns:xuiri="using:X.UI.RichInput"
     d:DesignHeight="300"
     d:DesignWidth="400">
     <UserControl.Resources>
@@ -49,16 +50,22 @@
             <!-- Title -->
             <Border BorderThickness="0,1,1,0" BorderBrush="DarkOrange" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="-5,-40,-20,0" Height="30" Visibility="{Binding IsSelected}"></Border>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,-60,0,0" Padding="5" Background="{Binding IsSelected, Converter={StaticResource IsSelectedToColorConverter}}">
-                <TextBlock Text="{Binding Title}" FontSize="18" Foreground="White" >
-                </TextBlock>
+                <TextBlock Text="{Binding Title}" FontSize="18" Foreground="White"></TextBlock>
             </StackPanel>
 
             <!-- Page Metadata Edit -->
-            <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-80,30,0,0">
+            <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-80,10,0,0">
                 <Button x:Name="butEditPage" Background="LightGray" >
                     <Button.Content>
                         <xuip:Path PathType="DocumentSettings1" Width="25" Height="25" Foreground="White"></xuip:Path>
                     </Button.Content>
+                    <Button.Flyout>
+                        <Flyout Placement="Right">
+                            <StackPanel Orientation="Vertical">
+                                <xuiri:Input x:Name="xinputTitle" Type="text" Label="Title" LabelFontSize="9" LabelTranslateY="-13" PlaceholderText="[page title]" FocusColor="Black" FocusHoverColor="Black" FocusForegroundColor="White" HorizontalAlignment="Stretch" Height="37" Margin="0,10,0,0" MinWidth="265" Value="{Binding Title, Mode=TwoWay}" ></xuiri:Input>
+                            </StackPanel>
+                        </Flyout>
+                    </Button.Flyout>
                 </Button>
             </Grid>
 

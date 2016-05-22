@@ -36,7 +36,8 @@ namespace X.Viewer.SketchFlow
 
     public class SketchPage : ViewModelBase
     {
-        public string Title { get; set; }
+        private string _title;
+        public string Title { get { return _title; } set { _title = value; RaisePropertyChanged(); } }
         public int Left { get; set; }
         public int Top { get; set; }
         public int Width { get; set; }
