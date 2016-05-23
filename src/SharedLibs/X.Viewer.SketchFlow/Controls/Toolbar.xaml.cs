@@ -156,65 +156,27 @@ namespace X.Viewer.SketchFlow.Controls
             var pt = getPoint((UIElement)sender);
             PerformAction?.Invoke(null, new ToolbarEventArgs() { ActionType = "AddImage", StartPoint = pt, StampType = typeof(Stamps.Picture) });
         }
-
-        private void butDoLoad_Click(object sender, RoutedEventArgs e)
-        {
-            
-            if (txtLoadName.Value == "deleteall")
-            {
-                PerformAction?.Invoke("DeleteAllSketchs", new ToolbarEventArgs() { ActionType = "DeleteAllSketchs" });
-                return;
-            }
-
-            if (txtLoadName.Value == "loadsample")
-            {
-                PerformAction?.Invoke("LoadSampleSketch", new ToolbarEventArgs() { ActionType = "LoadSampleSketch" });
-                return;
-            }
-
-            if (txtLoadName.DataContext is SketchDataModel)
-            {
-                var dc = txtLoadName.DataContext as SketchDataModel;
-                PerformAction?.Invoke("LoadSketch", new ToolbarEventArgs() { ActionType = "LoadSketch", Data = dc.Id.ToString() });
-                txtLoadName.DataContext = null;
-            }
-
-            
-            
-        }
-
+        
+        //Picker : LoadSketch
         public void LoadSketchs(IList<SketchDataModel> sketches) {
-            lbSketches.ItemsSource = sketches;
+            pikLoadSketch.LoadSketchs(sketches);
         }
         public void ClearSketchs()
         {
-            txtLoadName.DataContext = null;
-            lbSketches.ItemsSource = null;
+            pikLoadSketch.ClearSketchs();
         }
 
         private void butLoad_Click(object sender, RoutedEventArgs e)
         {
             PerformAction?.Invoke("GetAllSketchs", new ToolbarEventArgs() { ActionType = "GetAllSketchs" });
         }
-
-        private void lbSketches_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        
+        private void pikLoadSketch_PerformAction(object sender, EventArgs e)
         {
-            if (e.AddedItems.Count > 0) {
-                var found = e.AddedItems[0];
-                txtLoadName.DataContext = found;
-            }
+            PerformAction?.Invoke(sender, e);
         }
 
-        private void butDoDelete_Click(object sender, RoutedEventArgs e)
-        {
-            if (txtLoadName.DataContext is SketchDataModel)
-            {
-                var dc = txtLoadName.DataContext as SketchDataModel;
-                PerformAction?.Invoke("DeleteSketch", new ToolbarEventArgs() { ActionType = "DeleteSketch", Data = dc.Id.ToString() });
-                txtLoadName.DataContext = null;
-            }
-        }
-
+        //Picker : SaveSketch
         private void pikSaveSketch_PerformAction(object sender, EventArgs e)
         {
             PerformAction?.Invoke(sender, e);
