@@ -42,19 +42,30 @@ namespace X.UI.ColorPicker
 
         public event EventHandler ColorChanged;
 
+        bool hasInitialized = false;
+
         public ColorSwatchSquare()
         {
             this.DefaultStyleKey = typeof(ColorSwatchSquare);
-
-
-
+            
             this.Loaded += ColorSwatchSquare_Loaded;
             this.Unloaded += ColorSwatchSquare_Unloaded;
         }
 
-        protected override async void OnApplyTemplate()
+        protected override void OnApplyTemplate()
         {
-            if (_main == null) {
+
+            oneTimeInit();
+            base.OnApplyTemplate();
+        }
+
+        private void oneTimeInit()
+        {
+            if (hasInitialized) return;
+
+            if (_main == null) _main = GetTemplateChild("grdMain") as Canvas;
+            if (_main != null)
+            {
                 _main = GetTemplateChild("grdMain") as Canvas;
                 _main.PointerPressed += _main_PointerPressed;
                 _main.PointerReleased += _main_PointerReleased;
@@ -62,20 +73,22 @@ namespace X.UI.ColorPicker
 
                 _colorImage = GetTemplateChild("imgSwatch") as Image;
                 _colorImage.ImageOpened += _colorImage_ImageOpened;
-                
+
                 _rectSelectedColor = GetTemplateChild("rectSelectedColor") as Rectangle;
                 _ellipsePixel = GetTemplateChild("ellipsePixel") as Ellipse;
-                _tbData = GetTemplateChild("tbData") as TextBlock; 
+                _tbData = GetTemplateChild("tbData") as TextBlock;
             }
 
             SetSwatch();
 
-            base.OnApplyTemplate();
+            if (_main != null) hasInitialized = true;
         }
 
         private async void _colorImage_ImageOpened(object sender, RoutedEventArgs e)
         {
+            if (_rtb != null) _rtb = null;
             _rtb = new RenderTargetBitmap();
+
             await _rtb.RenderAsync(_colorImage);
             _pixelBuffer = await _rtb.GetPixelsAsync();
             _pixelBufferData = _pixelBuffer.ToArray();
@@ -115,15 +128,17 @@ namespace X.UI.ColorPicker
                 _pixelBufferData = null;
                 _rtb = null;
             }
+
+            hasInitialized = false;
         }
 
         private async void ColorSwatchSquare_Loaded(object sender, RoutedEventArgs e)
         {
-            SetSwatch();
+            oneTimeInit();
         }
 
         private void SetSwatch() {
-            if (_rtb != null && _colorImage != null)
+            if (_colorImage != null)
             {
                 if (Swatch == eSwatchTypes.Circle)
                 {
