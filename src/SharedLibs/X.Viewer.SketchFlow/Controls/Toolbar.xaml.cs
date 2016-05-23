@@ -157,13 +157,6 @@ namespace X.Viewer.SketchFlow.Controls
             PerformAction?.Invoke(null, new ToolbarEventArgs() { ActionType = "AddImage", StartPoint = pt, StampType = typeof(Stamps.Picture) });
         }
 
-        
-
-        private void butDoSave_Click(object sender, RoutedEventArgs e)
-        {
-            PerformAction?.Invoke("SaveSketch", new ToolbarEventArgs() { ActionType ="SaveSketch", Data = txtSaveName.Value });
-        }
-
         private void butDoLoad_Click(object sender, RoutedEventArgs e)
         {
             
@@ -220,6 +213,11 @@ namespace X.Viewer.SketchFlow.Controls
                 PerformAction?.Invoke("DeleteSketch", new ToolbarEventArgs() { ActionType = "DeleteSketch", Data = dc.Id.ToString() });
                 txtLoadName.DataContext = null;
             }
+        }
+
+        private void pikSaveSketch_PerformAction(object sender, EventArgs e)
+        {
+            PerformAction?.Invoke(sender, e);
         }
     }
 
