@@ -8,6 +8,7 @@ namespace X.Viewer.SketchFlow.Controls.Pickers
 {
     public sealed partial class ImagePicker : UserControl
     {
+        public event EventHandler PerformAction;
         public event EventHandler ImageChanged;
         
         public ImagePicker()

@@ -28,12 +28,18 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         {
             this.InitializeComponent();
 
+            this.Loaded += Picture_Loaded;
             this.Unloaded += Picture_Unloaded;
             cpMain.ColorTypes = new List<string>() { "Stroke", "Fill" };
 
             tlLeftCenterToolbar.AddTab("Colors", isSelected: true);
             tlLeftCenterToolbar.AddTab("Image");
             tlLeftCenterToolbar.OnTabChanged += TlLeftCenterToolbar_OnTabChanged;
+        }
+
+        private void Picture_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadPictureLibrary();
         }
 
         private void TlLeftCenterToolbar_OnTabChanged(object sender, EventArgs e)
@@ -161,7 +167,10 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         public void UpdateStrokeThickness(double thickness) { }
         public string GetData() { return string.Empty; }
 
-
+        public void LoadPictureLibrary()
+        {
+            
+        }
     }
 
     public class PictureEventArgs : EventArgs, IStampEventArgs

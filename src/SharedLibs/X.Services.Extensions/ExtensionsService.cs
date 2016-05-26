@@ -446,6 +446,15 @@ namespace X.Services.Extensions
             return _extensions.Where(x => x.Manifest.IsUWPExtension);
         }
 
+        public async Task<IEnumerable<ValueSet>> MakeCall(string commandCall = "UI", string serviceName = "Call") {
+            var retResults = new List<ValueSet>();
+            foreach (var ext in _extensions) {
+                var ret = await ext.MakeCommandCall(commandCall, serviceName);
+                if (ret != null) retResults.Add(ret);
+            }
+            return retResults;
+        }
+
 
 
         //=========================
