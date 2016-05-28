@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -36,7 +38,10 @@ namespace X.Viewer.SketchFlow.Controls.Pickers
 
         public static readonly DependencyProperty ImageSourceProperty = DependencyProperty.Register("ImageSource", typeof(String), typeof(ImagePicker), new PropertyMetadata(null));
 
-
+        public void LoadData(IList<string> data, StorageFolder dataFolder)
+        {
+            lbPictures.ItemsSource = data;
+        }
     }
 
     public class ImagePickerEventArgs : EventArgs

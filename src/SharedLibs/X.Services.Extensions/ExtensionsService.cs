@@ -15,7 +15,7 @@ using Windows.Storage;
 
 namespace X.Services.Extensions
 {
-    public class ExtensionsService : ISender, IExtensionsService, IUWPExtensionsService
+    public class ExtensionsService : ISender, IUWPSender, IExtensionsService, IUWPExtensionsService
     {
         List<ExtensionLite> _extensions = new List<ExtensionLite>();
         private string _contract = "X.Extensions";  //our ecosystem of extensions all have this contract "name"
@@ -446,14 +446,27 @@ namespace X.Services.Extensions
             return _extensions.Where(x => x.Manifest.IsUWPExtension);
         }
 
+
+
         public async Task<IEnumerable<ValueSet>> MakeCall(string commandCall = "UI", string serviceName = "Call") {
             var retResults = new List<ValueSet>();
             foreach (var ext in _extensions) {
-                var ret = await ext.MakeCommandCall(commandCall, serviceName);
+                var ret = await ext.MakeUWPCommandCall(commandCall, serviceName);
                 if (ret != null) retResults.Add(ret);
             }
             return retResults;
         }
+
+        public IExtensionLite FindExtensionLiteInstance(string appExtensionDisplayName) {
+            foreach (var ext in _extensions) {
+                if(ext.AppExtension !=null &&  ext.AppExtension.Id == appExtensionDisplayName) {
+                    return ext;
+                }
+            }
+            return null;
+        }
+
+
 
 
 

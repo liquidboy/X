@@ -76,7 +76,7 @@ namespace X.Services.ThirdParty
                 else {
 
                     var ef = Extensions.ExtensionsService.Instance.GetExtensionByAppExtensionUniqueId(ExtensionManifest.AppExtensionUniqueID);
-                    var result = await ef.MakeCommandCall("UI", "Call");
+                    var result = await ef.MakeUWPCommandCall("UI", "Call");
 
                     if (result != null) {
                         var newEl = new StackPanel() { Orientation = Orientation.Vertical };

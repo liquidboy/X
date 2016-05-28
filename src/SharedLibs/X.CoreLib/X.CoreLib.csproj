@@ -148,6 +148,7 @@
     <Compile Include="Extensions\IExtension.cs" />
     <Compile Include="Extensions\IExtensionContent.cs" />
     <Compile Include="Extensions\IExtensionManifest.cs" />
+    <Compile Include="Extensions\IUWPSender.cs" />
     <Compile Include="Extensions\IUWPExtensionsService.cs" />
     <Compile Include="Extensions\IExtensionsService.cs" />
     <Compile Include="Extensions\IGalleryInformation.cs" />

@@ -70,7 +70,8 @@ namespace X.Services.Extensions
             return (string)((PropertySet)propertyValue).Values.First();
         }
 
-        public async Task<ValueSet> MakeCommandCall(string commandCall, string serviceName) {
+        public async Task<ValueSet> MakeUWPCommandCall(string commandCall, string serviceName) {
+            if (AppExtension == null) return null;
             using (var connection = new AppServiceConnection())
             {
                 connection.AppServiceName = serviceName;
@@ -88,8 +89,10 @@ namespace X.Services.Extensions
                     if (response.Status == Windows.ApplicationModel.AppService.AppServiceResponseStatus.Success)
                     {
                         var message = response.Message as ValueSet;
-
-                        return message;
+                        if (message != null && message.Count > 0) {
+                            message.Add(new KeyValuePair<string, object>("AppExtensionDisplayName", AppExtension.AppInfo.DisplayInfo.DisplayName));
+                        }
+                        return (message!=null && message.Count>0)? message: null;
                     }
                 }
 

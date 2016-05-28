@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoreLib.Extensions;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -167,9 +168,24 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         public void UpdateStrokeThickness(double thickness) { }
         public string GetData() { return string.Empty; }
 
-        public void LoadPictureLibrary()
+        public async void LoadPictureLibrary()
         {
+            var sender = Services.Extensions.ExtensionsService.Instance as IUWPSender;
+            var results = await sender.MakeCall("AllBackgrounds");
             
+            foreach (var result in results) {
+                var vsPackageName = result.Where(x => x.Key == "AppExtensionDisplayName").FirstOrDefault();
+                var vsFilesNode = result.Where(x => x.Key == "filenames").FirstOrDefault();
+                if (vsPackageName.Value != null) {
+                    var el = sender.FindExtensionLiteInstance((string)vsPackageName.Value);
+                    if (vsFilesNode.Value != null)
+                    {
+                        var files = vsFilesNode.Value.ToString().Split(",".ToCharArray());
+                        var packageDirectory = el.AppExtension.Package.InstalledLocation;
+                        ipMain.LoadData(files, packageDirectory);
+                    }
+                }
+            }
         }
     }
 

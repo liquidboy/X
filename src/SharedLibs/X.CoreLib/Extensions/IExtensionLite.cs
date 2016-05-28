@@ -12,13 +12,13 @@ namespace CoreLib.Extensions
     {
         IExtensionManifest Manifest { get; set; }
         ExtensionType ExtensionType { get; set; }
-        IExtension Extension { get; set; }
+        IExtension Extension { get; set; } //stores an internal PERSONAL representation of an extension (not UWP extension) - LEGACY
         bool IsShowingExtensionPanel { get; set; }
 
         string AppExtensionUniqueId { get; set; }
-        AppExtension AppExtension { get; set; }
+        AppExtension AppExtension { get; set; }  // stores the UWP representation of an extension
 
-        Task<ValueSet> MakeCommandCall(string commandCall, string serviceName);
+        Task<ValueSet> MakeUWPCommandCall(string commandCall, string serviceName);
         Task UpdateUWPExtension(AppExtension ext);
         void UnloadUWPExtension();
         Task LoadUWPExtension();
