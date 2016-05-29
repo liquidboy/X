@@ -23,3 +23,7 @@ namespace X.Services.Extensions
 
     }
 }
+
+
+//eg. X.Viewer.SketchFlow.Controls.Stamps.Picture.LoadPictureLibrary
+//   ---> X.Viewer.SketchFlow.Controls.Pickers.ImagePicker.LoadData
