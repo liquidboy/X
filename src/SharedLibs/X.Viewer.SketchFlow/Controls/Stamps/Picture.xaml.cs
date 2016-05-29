@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
+using X.Services.Extensions;
 using X.Viewer.SketchFlow.Controls.Pickers;
 
 namespace X.Viewer.SketchFlow.Controls.Stamps
@@ -178,9 +179,10 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
             //todo : work out how to move this into a reusable library that pulls content from an extension
             // and lets u use that content .. In this case that content is a SpriteSheet Image and SpriteSheet XMl
             foreach (var result in results) {
-                var vsPackageName = result.Where(x => x.Key == "AppExtensionDisplayName").FirstOrDefault();
-                var vsSpriteSheetImg = result.Where(x => x.Key == "spritesheet-img").FirstOrDefault();
-                var vsSpriteSheetXml = result.Where(x => x.Key == "spritesheet-xml").FirstOrDefault();
+
+                var vsPackageName = ExtensionHelper.GetPropertyFromResults(result, "AppExtensionDisplayName");
+                var vsSpriteSheetImg = ExtensionHelper.GetPropertyFromResults(result, "spritesheet-img");
+                var vsSpriteSheetXml = ExtensionHelper.GetPropertyFromResults(result, "spritesheet-xml"); 
 
 
                 if (vsPackageName.Value != null) {
@@ -198,7 +200,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
                         {
                             spriteSheetXml = XDocument.Load(stream.AsStreamForRead());
                         }
-                        var sprites = GetElement("sprite", spriteSheetXml);
+                        var sprites = ExtensionHelper.GetElement("sprite", spriteSheetXml);
 
                         //img spritesheet
                         var spriteSheetFile = await publicDirectory.GetFileAsync(vsSpriteSheetImg.Value.ToString());
@@ -209,12 +211,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
             }
         }
 
-        //todo : as above pull this out into a reusable library
-        public IEnumerable<XElement> GetElement(string nodeName, XDocument xmlData)
-        {
-            //NullReferenceException because xmlData is not initializied yet
-            return xmlData.Descendants(nodeName).ToList();
-        }
+       
     }
 
     public class PictureEventArgs : EventArgs, IStampEventArgs

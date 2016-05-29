@@ -107,6 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExtensionHelper.cs" />
     <Compile Include="ExtensionManifest.cs" />
     <Compile Include="ExtensionLite.cs" />
     <Compile Include="ExtensionsService.cs" />
