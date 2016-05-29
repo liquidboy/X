@@ -174,6 +174,9 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
             var sender = Services.Extensions.ExtensionsService.Instance as IUWPSender;
             var results = await sender.MakeCall("Spritesheet");
             
+
+            //todo : work out how to move this into a reusable library that pulls content from an extension
+            // and lets u use that content .. In this case that content is a SpriteSheet Image and SpriteSheet XMl
             foreach (var result in results) {
                 var vsPackageName = result.Where(x => x.Key == "AppExtensionDisplayName").FirstOrDefault();
                 var vsSpriteSheetImg = result.Where(x => x.Key == "spritesheet-img").FirstOrDefault();
@@ -206,6 +209,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
             }
         }
 
+        //todo : as above pull this out into a reusable library
         public IEnumerable<XElement> GetElement(string nodeName, XDocument xmlData)
         {
             //NullReferenceException because xmlData is not initializied yet
