@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sprites>
+  <sprite Title="Black Dots" Width="320" Height="200" Row="0" Column="0"></sprite>
+  <sprite Title="Splash of color" Width="320" Height="200" Row="0" Column="1"></sprite>
+  <sprite Title="Deer" Width="355" Height="200" Row="0" Column="2"></sprite>
+  <sprite Title="Dabs of color" Width="319" Height="200" Row="1" Column="0"></sprite>
+  <sprite Title="Shades of Yellow" Width="319" Height="200" Row="1" Column="1"></sprite>
+</sprites>

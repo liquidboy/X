@@ -12,10 +12,15 @@
     d:DesignWidth="400">
     <Grid>
         <TextBox x:Name="tbMain" HorizontalAlignment="Stretch" VerticalAlignment="Top" FontSize="10" Margin="0,0,0,0" TextWrapping="Wrap" Text="{Binding ElementName=root, Path=ImageSource, Mode=TwoWay}" BorderBrush="DarkGray" Foreground="Black" SelectionHighlightColor="DarkGray" BorderThickness="1" Padding="5" TextChanged="tbMain_TextChanged" Height="45"></TextBox>
-        <ListBox x:Name="lbPictures" HorizontalContentAlignment="Stretch" Margin="0,45,0,0" Width="355" Height="325" >
+        <ListBox x:Name="lbPictures" HorizontalContentAlignment="Stretch" Margin="0,45,0,0" Width="300" Height="255" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding }" ></TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Width="120" Height="80" Margin="0,0,10,0" Fill="{Binding SpriteSheetBrush}" Stretch="UniformToFill">
+
+                        </Rectangle>
+                        <TextBlock Text="{Binding Title}" ></TextBlock>
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
