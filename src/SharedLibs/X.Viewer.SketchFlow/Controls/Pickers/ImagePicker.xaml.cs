@@ -41,28 +41,13 @@ namespace X.Viewer.SketchFlow.Controls.Pickers
 
         public static readonly DependencyProperty ImageSourceProperty = DependencyProperty.Register("ImageSource", typeof(String), typeof(ImagePicker), new PropertyMetadata(null));
 
-        public async void LoadData(IList<string> data, StorageFolder dataFolder)
+        public async void LoadData(IEnumerable<XElement> sprites, StorageFile spriteSheetFile)
         {
-            //spritesheet
-            var publicFolder = await dataFolder.GetFolderAsync("public");
-            var spriteSheetFile = await publicFolder.GetFileAsync("bkg-spritesheet.jpg");
             var bitmapImage = new BitmapImage();
             using (var stream = await spriteSheetFile.OpenReadAsync()) {
                 await bitmapImage.SetSourceAsync(stream);
             }
-
-       
-
-            //xml 
-            //http://stackoverflow.com/questions/23311287/read-xml-file-from-storage-with-wp8-1-storagefile-api
-            var spriteSheetXmlFile = await publicFolder.GetFileAsync("bkg-spritesheet.xml");
-            XDocument spriteSheetXml;
-            using (var stream = await spriteSheetXmlFile.OpenReadAsync())
-            {
-                spriteSheetXml = XDocument.Load(stream.AsStreamForRead());
-            }
-            var sprites = GetElement("sprite", spriteSheetXml);
-
+            
             //xaml
             List<ImageListItem> listOfImages = new List<ImageListItem>();
             foreach (var sprite in sprites) {
@@ -80,11 +65,7 @@ namespace X.Viewer.SketchFlow.Controls.Pickers
             lbPictures.ItemsSource = listOfImages;
         }
 
-        public IEnumerable<XElement> GetElement(string nodeName,  XDocument xmlData)
-        {
-            //NullReferenceException because xmlData is not initializied yet
-            return xmlData.Descendants(nodeName).ToList();
-        }
+   
     }
 
     public class ImagePickerEventArgs : EventArgs

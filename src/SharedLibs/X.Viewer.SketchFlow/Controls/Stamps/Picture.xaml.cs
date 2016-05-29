@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Xml.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -171,21 +172,44 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         public async void LoadPictureLibrary()
         {
             var sender = Services.Extensions.ExtensionsService.Instance as IUWPSender;
-            var results = await sender.MakeCall("AllBackgrounds");
+            var results = await sender.MakeCall("Spritesheet");
             
             foreach (var result in results) {
                 var vsPackageName = result.Where(x => x.Key == "AppExtensionDisplayName").FirstOrDefault();
-                var vsFilesNode = result.Where(x => x.Key == "filenames").FirstOrDefault();
+                var vsSpriteSheetImg = result.Where(x => x.Key == "spritesheet-img").FirstOrDefault();
+                var vsSpriteSheetXml = result.Where(x => x.Key == "spritesheet-xml").FirstOrDefault();
+
+
                 if (vsPackageName.Value != null) {
                     var el = sender.FindExtensionLiteInstance((string)vsPackageName.Value);
-                    if (vsFilesNode.Value != null)
+                    if (vsSpriteSheetImg.Value != null && vsSpriteSheetXml.Value != null)
                     {
-                        var files = vsFilesNode.Value.ToString().Split(",".ToCharArray());
                         var packageDirectory = el.AppExtension.Package.InstalledLocation;
-                        ipMain.LoadData(files, packageDirectory);
+                        var publicDirectory = await packageDirectory.GetFolderAsync("public");
+
+                        //xml spriteseet
+                        //http://stackoverflow.com/questions/23311287/read-xml-file-from-storage-with-wp8-1-storagefile-api
+                        var spriteSheetXmlFile = await publicDirectory.GetFileAsync(vsSpriteSheetXml.Value.ToString());
+                        XDocument spriteSheetXml;
+                        using (var stream = await spriteSheetXmlFile.OpenReadAsync())
+                        {
+                            spriteSheetXml = XDocument.Load(stream.AsStreamForRead());
+                        }
+                        var sprites = GetElement("sprite", spriteSheetXml);
+
+                        //img spritesheet
+                        var spriteSheetFile = await publicDirectory.GetFileAsync(vsSpriteSheetImg.Value.ToString());
+
+                        ipMain.LoadData(sprites, spriteSheetFile);
                     }
                 }
             }
+        }
+
+        public IEnumerable<XElement> GetElement(string nodeName, XDocument xmlData)
+        {
+            //NullReferenceException because xmlData is not initializied yet
+            return xmlData.Descendants(nodeName).ToList();
         }
     }
 

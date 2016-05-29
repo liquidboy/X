@@ -46,8 +46,9 @@ namespace X.Extension.ThirdParty.Backgrounds.Services
                     Random rnd = new Random();
                     returnData.Add("filename", $"bkg0{rnd.Next(1, 5)}.jpg");
                     break;
-                case "AllBackgrounds":
-                    returnData.Add("filenames", "bkg01.jpg,bkg02.jpg,bkg03.jpg,bkg04.jpg,bkg05.jpg");
+                case "Spritesheet":
+                    returnData.Add("spritesheet-img", "bkg-spritesheet.jpg");
+                    returnData.Add("spritesheet-xml", "bkg-spritesheet.xml");
                     break;
             }
             
