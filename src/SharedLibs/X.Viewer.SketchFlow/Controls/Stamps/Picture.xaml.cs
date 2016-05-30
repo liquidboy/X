@@ -205,7 +205,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
                         //img spritesheet
                         var spriteSheetFile = await publicDirectory.GetFileAsync(vsSpriteSheetImg.Value.ToString());
 
-                        ipMain.LoadData(sprites, spriteSheetFile);
+                        ipMain.LoadData(sprites, spriteSheetFile, (string)vsPackageName.Value);
                     }
                 }
             }

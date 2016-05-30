@@ -457,9 +457,9 @@ namespace X.Services.Extensions
             return retResults;
         }
 
-        public IExtensionLite FindExtensionLiteInstance(string appExtensionDisplayName) {
+        public IExtensionLite FindExtensionLiteInstance(string appExtensionId) {
             foreach (var ext in _extensions) {
-                if(ext.AppExtension !=null &&  ext.AppExtension.Id == appExtensionDisplayName) {
+                if(ext.AppExtension !=null &&  ext.AppExtension.Id == appExtensionId) {
                     return ext;
                 }
             }
