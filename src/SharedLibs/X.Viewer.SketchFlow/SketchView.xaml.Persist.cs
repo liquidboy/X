@@ -75,7 +75,7 @@ namespace X.Viewer.SketchFlow
                                     foreach (var fsplxf in foundSPLXF)
                                     {
                                         var dt = string.IsNullOrEmpty(fsplxf.DataType) ? null : Type.GetType(fsplxf.DataType);
-                                        var xf = new XamlFragment() { Uid = fsplxf.Uid, Xaml = fsplxf.Xaml, Namespaces = fsplxf.Namespaces, Resources = fsplxf.Resources,  Data = fsplxf.Data, Type = dt };
+                                        var xf = new XamlFragment() { Uid = fsplxf.Uid, Xaml = fsplxf.Xaml, Data = fsplxf.Data, Type = dt };
                                         pl.XamlFragments.Add(xf);
                                     }
                                 }
@@ -141,7 +141,7 @@ namespace X.Viewer.SketchFlow
                     
                     foreach (var xf in pgl.XamlFragments)
                     {
-                        var nxf = new SketchPageLayerXamlFragmentDataModel() { SketchPageLayerId = npgl.Id, Uid = xf.Uid, Xaml = xf.Xaml, Namespaces = xf.Namespaces, Resources = xf.Resources, Data = xf.Data, DataType = xf.Type != null? xf.Type.ToString(): null };
+                        var nxf = new SketchPageLayerXamlFragmentDataModel() { SketchPageLayerId = npgl.Id, Uid = xf.Uid, Xaml = xf.Xaml, Data = xf.Data, DataType = xf.Type != null? xf.Type.ToString(): null };
                         StorageService.Instance.Storage.Insert(nxf);
 
                     }

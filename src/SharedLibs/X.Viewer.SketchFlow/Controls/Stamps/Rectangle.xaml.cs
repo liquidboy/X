@@ -119,17 +119,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
             
             return $"<Rectangle x:Name=\"{uid}\" HorizontalAlignment=\"Left\" VerticalAlignment=\"Top\" Height=\"{ (this.Height * (1 / scaleY)) }\" Width=\"{ (this.Width * (1 / scaleX)) }\"  StrokeThickness=\"{ newStroke }\" Stroke=\"{ ((SolidColorBrush)el.Stroke).Color.ToString() }\" Canvas.Left=\"{ leftToUse }\" Canvas.Top=\"{ topToUse }\" RenderTransformOrigin=\"0.5,0.5\" { fillXaml } >{ rotationXaml }</Rectangle>";
         }
-
-        public string GenerateNamespaces()
-        {
-            return string.Empty;
-        }
-
-        public string GenerateResources()
-        {
-            return string.Empty;
-        }
-
+        
         public void PopulateFromUIElement(UIElement element)
         {
             throw new NotImplementedException();

@@ -135,17 +135,6 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
             return $"<Image x:Name=\"{uid}\" HorizontalAlignment=\"Left\" VerticalAlignment=\"Top\" Height=\"{ (this.Height * (1 / scaleY)) }\" Width=\"{ (this.Width * (1 / scaleX)) }\"  Canvas.Left=\"{ leftToUse }\" Canvas.Top=\"{ topToUse }\" RenderTransformOrigin=\"0.5,0.5\" Tag=\"{tag}\" Source=\"{{Binding Tag ,ElementName={uid}, Converter={{StaticResource ExtensionToImageSourceConverter}}}}\" Stretch=\"{ el.Stretch }\" >{ rotationXaml }</Image>";
         }
 
-
-        public string GenerateNamespaces()
-        {
-            return string.Empty; //"xmlns:extconv=\"using:X.Services.Extensions.Converters\"";
-        }
-
-        public string GenerateResources()
-        {
-            return string.Empty; // "<extconv:ExtensionToImageSourceConverter x:Key=\"ExtensionToImageSourceConverter\" ></extconv:ExtensionToImageSourceConverter>";
-        }
-
         public void PopulateFromUIElement(UIElement element)
         {
             throw new NotImplementedException();

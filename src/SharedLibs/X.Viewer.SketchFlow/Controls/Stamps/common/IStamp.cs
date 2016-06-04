@@ -10,8 +10,6 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
     interface IStamp
     {
         event EventHandler PerformAction;
-        string GenerateNamespaces();
-        string GenerateResources();
         string GenerateXAML(string uid, double scaleX, double scaleY, double left, double top);
         void GenerateFromXAML(UIElement template);
         void PopulateFromUIElement(UIElement element);
