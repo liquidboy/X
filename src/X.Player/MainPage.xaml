@@ -5,9 +5,10 @@
     xmlns:local="using:X.Player"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xuic="using:X.UI.Chrome"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <xuic:Shell HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></xuic:Shell>
     </Grid>
 </Page>

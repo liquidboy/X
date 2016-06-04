@@ -170,6 +170,10 @@
       <Project>{3bf0e9c5-16ae-472a-97d9-0a0f037e31ab}</Project>
       <Name>X.Services.Toast</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.UI.Chrome\X.UI.Chrome.csproj">
+      <Project>{5ebc59ca-877f-4446-8d8b-7a18b1ffd3dd}</Project>
+      <Name>X.UI.Chrome</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">
     <VisualStudioVersion>15.0</VisualStudioVersion>
