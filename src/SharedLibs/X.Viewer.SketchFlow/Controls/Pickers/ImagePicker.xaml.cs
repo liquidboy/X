@@ -69,11 +69,15 @@ namespace X.Viewer.SketchFlow.Controls.Pickers
             if (e != null &&  e.AddedItems.Count > 0)
             {
                 var ili = e.AddedItems[0] as ImageListItem;
+
+                ImageUri = $"x-ext://{ili.AppExtensionId}/{ili.File}";
+
                 ImageChanged?.Invoke(sender, new ImagePickerEventArgs() {
-                    Text = string.Empty,
+                    Text = ImageUri,
                     AppExtensionId = ili.AppExtensionId,
                     File = ili.File });
 
+                
 
                 //set imagesource
                 var el = ExtensionsService.Instance.FindExtensionLiteInstance(ili.AppExtensionId);
@@ -95,9 +99,18 @@ namespace X.Viewer.SketchFlow.Controls.Pickers
             set { SetValue(ImageSourceProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for ImageSource.  This enables animation, styling, binding, etc...
+
         public static readonly DependencyProperty ImageSourceProperty =
             DependencyProperty.Register("ImageSource", typeof(ImageSource), typeof(ImagePicker), new PropertyMetadata(null));
+
+        public string ImageUri
+        {
+            get { return (string)GetValue(ImageUriProperty); }
+            set { SetValue(ImageUriProperty, value); }
+        }
+
+        public static readonly DependencyProperty ImageUriProperty =
+            DependencyProperty.Register("ImageUri", typeof(string), typeof(ImagePicker), new PropertyMetadata(null));
 
 
 

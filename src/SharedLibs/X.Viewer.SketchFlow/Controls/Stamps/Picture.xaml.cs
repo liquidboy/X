@@ -107,10 +107,10 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
             //else if (cpea.ColorType == "Fill") el.Fill = (Brush)sender;
         }
 
+        private ImagePickerEventArgs SelectedImage;
         private void ipMain_TextChanged(object sender, EventArgs e)
         {
-            var ipea = e as ImagePickerEventArgs;
-            //el.Source = new BitmapImage(new Uri(ipea.Text));
+            SelectedImage = e as ImagePickerEventArgs;
         }
 
         private void butGridMarker_Click(object sender, RoutedEventArgs e)
@@ -131,8 +131,19 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
             var topToUse = top;
             var rotationXaml = $"<Image.RenderTransform><CompositeTransform Rotation=\"{ rotationAngle }\" /></Image.RenderTransform>";
             if (rotationAngle == 0) rotationXaml = "";
-            
-            return $"<Image x:Name=\"{uid}\" HorizontalAlignment=\"Left\" VerticalAlignment=\"Top\" Height=\"{ (this.Height * (1 / scaleY)) }\" Width=\"{ (this.Width * (1 / scaleX)) }\"  Canvas.Left=\"{ leftToUse }\" Canvas.Top=\"{ topToUse }\" RenderTransformOrigin=\"0.5,0.5\" Source=\"{ ((Windows.UI.Xaml.Media.Imaging.BitmapImage)el.Source).UriSource }\" Stretch=\"{ el.Stretch }\" >{ rotationXaml }</Image>";
+            var tag = SelectedImage == null ? string.Empty: SelectedImage.Text;
+            return $"<Image x:Name=\"{uid}\" HorizontalAlignment=\"Left\" VerticalAlignment=\"Top\" Height=\"{ (this.Height * (1 / scaleY)) }\" Width=\"{ (this.Width * (1 / scaleX)) }\"  Canvas.Left=\"{ leftToUse }\" Canvas.Top=\"{ topToUse }\" RenderTransformOrigin=\"0.5,0.5\" Tag=\"{tag}\" Source=\"{{Binding Tag ,ElementName={uid}, Converter={{StaticResource ExtensionToImageSourceConverter}}}}\" Stretch=\"{ el.Stretch }\" >{ rotationXaml }</Image>";
+        }
+
+
+        public string GenerateNamespaces()
+        {
+            return string.Empty; //"xmlns:extconv=\"using:X.Services.Extensions.Converters\"";
+        }
+
+        public string GenerateResources()
+        {
+            return string.Empty; // "<extconv:ExtensionToImageSourceConverter x:Key=\"ExtensionToImageSourceConverter\" ></extconv:ExtensionToImageSourceConverter>";
         }
 
         public void PopulateFromUIElement(UIElement element)
@@ -211,7 +222,6 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
             }
         }
 
-       
     }
 
     public class PictureEventArgs : EventArgs, IStampEventArgs

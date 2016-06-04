@@ -6,10 +6,12 @@
     xmlns:converters="using:X.Viewer.SketchFlow.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:extconv="using:X.Services.Extensions.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
     <UserControl.Resources>
+        <!--<extconv:ExtensionToImageSourceConverter x:Key="ExtensionToImageSourceConverter" />-->
         <converters:XamlFragmentsToContentConverter x:Key="XamlFragmentsToContentConverter" />
     </UserControl.Resources>
     <Grid>

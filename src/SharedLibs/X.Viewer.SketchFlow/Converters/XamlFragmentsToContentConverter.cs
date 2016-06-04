@@ -22,16 +22,21 @@ namespace X.Viewer.SketchFlow.Converters
             foreach (var layer in layers.Where(x=>x.IsEnabled)) {
                 
                 var xaml = "";
+                var ns = "";
+                var resources = "";
                 foreach (var xamlFragment in layer.XamlFragments.Where(x=>x.IsEnabled)) {
                     xaml += xamlFragment.Xaml;
+                    ns += xamlFragment.Namespaces + " " ;
+                    resources += xamlFragment.Resources;
                 }
 
                 var nsXaml = string.Empty;
                 if (layer.HasChildContainerCanvas) nsXaml = $"<Canvas>{xaml}</Canvas>";
                 else nsXaml = xaml;
 
-                var nsTemplate = $"<Grid xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\" HorizontalAlignment=\"Stretch\" xmlns:xuip=\"using:X.UI.Path\" xmlns:lc=\"using:X.Viewer.SketchFlow.Controls\" xmlns:lcs=\"using:X.Viewer.SketchFlow.Controls.Stamps\" VerticalAlignment=\"Stretch\" >{nsXaml}</Grid>";
-                
+                var nsTemplate = $"<Grid xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\" HorizontalAlignment=\"Stretch\" xmlns:xuip=\"using:X.UI.Path\" xmlns:lc=\"using:X.Viewer.SketchFlow.Controls\" xmlns:lcs=\"using:X.Viewer.SketchFlow.Controls.Stamps\" VerticalAlignment=\"Stretch\" ><Grid.Resources>{resources}</Grid.Resources>{nsXaml}</Grid>";
+                //todo: create then inject the converter "ExtensionToImageSourceConverter"  <-- after much fucking around i added it to apps root resource dict ... wont work if injected in..
+
                 if (xaml.Length > 0) { 
                     var xamlFe = (FrameworkElement)XamlReader.Load(UnescapeString(nsTemplate));
                     grd.Children.Add(xamlFe);
