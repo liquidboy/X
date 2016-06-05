@@ -9,6 +9,22 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <xuic:Shell HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></xuic:Shell>
+        <xuic:Shell HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <xuic:Shell.ContentMain>
+                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="Red"></Rectangle>
+            </xuic:Shell.ContentMain>
+            <xuic:Shell.BarTop>
+                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="Orange" Height="30"></Rectangle>
+            </xuic:Shell.BarTop>
+            <xuic:Shell.BarBottom>
+                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="Green" Height="30"></Rectangle>
+            </xuic:Shell.BarBottom>
+            <xuic:Shell.BarLeft>
+                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="Cyan" Width="150"></Rectangle>
+            </xuic:Shell.BarLeft>
+            <xuic:Shell.BarRight>
+                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="MintCream" Width="150"></Rectangle>
+            </xuic:Shell.BarRight>
+        </xuic:Shell>
     </Grid>
 </Page>
