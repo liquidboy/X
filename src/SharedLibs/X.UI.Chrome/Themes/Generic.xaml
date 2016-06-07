@@ -73,6 +73,7 @@
                             </StackPanel>
                         </Grid>
 
+                        
                         <Grid Grid.Column="2" Grid.Row="1">
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel x:Name="grdDockedExtensionRight" Orientation="Horizontal">

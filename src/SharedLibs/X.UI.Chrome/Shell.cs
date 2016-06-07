@@ -21,6 +21,13 @@ namespace X.UI.Chrome
         ContentControl _ctlBarLeft;
         ContentControl _ctlBarRight;
 
+        public StackPanel DockedExtensionBottomFull;
+        public StackPanel DockedExtensionLeft;
+        public StackPanel DockedExtensionRight;
+        public StackPanel DockedExtensionTopFull;
+        public StackPanel DockedExtensionBottom;
+        public StackPanel DockedExtensionTop;
+
         public Shell()
         {
             this.DefaultStyleKey = typeof(Shell);
@@ -55,6 +62,13 @@ namespace X.UI.Chrome
                 if (_ctlBarTop == null) _ctlBarTop = GetTemplateChild("ctlBarTop") as ContentControl;
                 if (_ctlBarLeft == null) _ctlBarLeft = GetTemplateChild("ctlBarLeft") as ContentControl;
                 if (_ctlBarRight == null) _ctlBarRight = GetTemplateChild("ctlBarRight") as ContentControl;
+
+                if (DockedExtensionBottomFull == null) DockedExtensionBottomFull = GetTemplateChild("grdDockedExtensionBottomFull") as StackPanel;
+                if (DockedExtensionLeft == null) DockedExtensionLeft = GetTemplateChild("grdDockedExtensionLeft") as StackPanel;
+                if (DockedExtensionRight == null) DockedExtensionRight = GetTemplateChild("grdDockedExtensionRight") as StackPanel;
+                if (DockedExtensionTopFull == null) DockedExtensionTopFull = GetTemplateChild("grdDockedExtensionTopFull") as StackPanel;
+                if (DockedExtensionBottom == null) DockedExtensionBottom = GetTemplateChild("grdDockedExtensionBottom") as StackPanel;
+                if (DockedExtensionTop == null) DockedExtensionTop = GetTemplateChild("grdDockedExtensionTop") as StackPanel;
             }
             
             if (_root != null) hasInitialized = true;
