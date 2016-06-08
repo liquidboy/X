@@ -36,21 +36,19 @@ namespace X.Browser.Views
         {
             if (show)
             {
-                spOnebox.Visibility = Visibility.Visible;
-                spRightToolbar.Visibility = Visibility.Visible;
-                grdDockedExtensionRight.Visibility = Visibility.Visible;
-                grdDockedExtensionLeft.Visibility = Visibility.Visible;
-                grdDockedExtensionBottomFull.Visibility = Visibility.Visible;
-                grdDockedExtensionBottom.Visibility = Visibility.Visible;
+                ctlShell.IsOneBoxHidden = false;
+                ctlShell.DockedExtensionRight.Visibility = Visibility.Visible;
+                ctlShell.DockedExtensionLeft.Visibility = Visibility.Visible;
+                ctlShell.DockedExtensionBottomFull.Visibility = Visibility.Visible;
+                ctlShell.DockedExtensionBottom.Visibility = Visibility.Visible;
             }
             else
             {
-                spOnebox.Visibility = Visibility.Collapsed;
-                spRightToolbar.Visibility = Visibility.Collapsed;
-                grdDockedExtensionRight.Visibility = Visibility.Collapsed;
-                grdDockedExtensionLeft.Visibility = Visibility.Collapsed;
-                grdDockedExtensionBottomFull.Visibility = Visibility.Collapsed;
-                grdDockedExtensionBottom.Visibility = Visibility.Collapsed;
+                ctlShell.IsOneBoxHidden = true;
+                ctlShell.DockedExtensionRight.Visibility = Visibility.Collapsed;
+                ctlShell.DockedExtensionLeft.Visibility = Visibility.Collapsed;
+                ctlShell.DockedExtensionBottomFull.Visibility = Visibility.Collapsed;
+                ctlShell.DockedExtensionBottom.Visibility = Visibility.Collapsed;
             }
         }
 

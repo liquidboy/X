@@ -20,6 +20,8 @@ namespace X.UI.Chrome
         ContentControl _ctlBarTop;
         ContentControl _ctlBarLeft;
         ContentControl _ctlBarRight;
+        ContentControl _ctlOneBox;
+
 
         public StackPanel DockedExtensionBottomFull;
         public StackPanel DockedExtensionLeft;
@@ -45,6 +47,26 @@ namespace X.UI.Chrome
             oneTimeInit();
         }
 
+
+        private bool _IsOneBoxHidden = false;
+        public bool IsOneBoxHidden {
+            get { return _IsOneBoxHidden; }
+            set {
+                _IsOneBoxHidden = value;
+                if (_IsOneBoxHidden) {
+                    DockedExtensionTopFull.Visibility = Visibility.Collapsed;
+                    _ctlOneBox.Visibility = Visibility.Collapsed;
+                }
+                else {
+                    DockedExtensionTopFull.Visibility = Visibility.Visible;
+                    _ctlOneBox.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+
+
+
         protected override void OnApplyTemplate()
         {
             oneTimeInit();
@@ -58,10 +80,12 @@ namespace X.UI.Chrome
             
             if (_root != null) {
                 if (_mainContent == null) _mainContent = GetTemplateChild("grdMainContent") as ContentControl;
-                if (_ctlBarBottom == null) _ctlBarBottom = GetTemplateChild("ctlBarBottom") as ContentControl;
-                if (_ctlBarTop == null) _ctlBarTop = GetTemplateChild("ctlBarTop") as ContentControl;
-                if (_ctlBarLeft == null) _ctlBarLeft = GetTemplateChild("ctlBarLeft") as ContentControl;
-                if (_ctlBarRight == null) _ctlBarRight = GetTemplateChild("ctlBarRight") as ContentControl;
+                if (_ctlBarBottom == null) _ctlBarBottom = GetTemplateChild("ctlExtensionsBarBottom") as ContentControl;
+                if (_ctlBarTop == null) _ctlBarTop = GetTemplateChild("ctlExtensionsBarTop") as ContentControl;
+                if (_ctlBarLeft == null) _ctlBarLeft = GetTemplateChild("ctlExtensionsBarLeft") as ContentControl;
+                if (_ctlBarRight == null) _ctlBarRight = GetTemplateChild("ctlExtensionsBarRight") as ContentControl;
+                if (_ctlOneBox == null) _ctlOneBox = GetTemplateChild("ctlOneBox") as ContentControl;
+                
 
                 if (DockedExtensionBottomFull == null) DockedExtensionBottomFull = GetTemplateChild("grdDockedExtensionBottomFull") as StackPanel;
                 if (DockedExtensionLeft == null) DockedExtensionLeft = GetTemplateChild("grdDockedExtensionLeft") as StackPanel;
@@ -105,6 +129,23 @@ namespace X.UI.Chrome
             set { SetValue(BarRightProperty, value); }
         }
 
+        public object ContentOneBox
+        {
+            get { return (object)GetValue(ContentOneBoxProperty); }
+            set { SetValue(ContentOneBoxProperty, value); }
+        }
+
+        public object ContentExtraTabs
+        {
+            get { return (object)GetValue(ContentExtraTabsProperty); }
+            set { SetValue(ContentExtraTabsProperty, value); }
+        }
+
+
+
+
+        public static readonly DependencyProperty ContentExtraTabsProperty = DependencyProperty.Register("ContentExtraTabs", typeof(object), typeof(Shell), new PropertyMetadata(null));
+        public static readonly DependencyProperty ContentOneBoxProperty = DependencyProperty.Register("ContentOneBox", typeof(object), typeof(Shell), new PropertyMetadata(null));
         public static readonly DependencyProperty ContentMainProperty = DependencyProperty.Register("ContentMain", typeof(object), typeof(Shell), new PropertyMetadata(null));
         public static readonly DependencyProperty BarTopProperty = DependencyProperty.Register("BarTop", typeof(object), typeof(Shell), new PropertyMetadata(null));
         public static readonly DependencyProperty BarBottomProperty = DependencyProperty.Register("BarBottom", typeof(object), typeof(Shell), new PropertyMetadata(null));

@@ -177,15 +177,15 @@ namespace X.Browser.Views
                 if (newExtensionInstance != null)
                 {
                     if (extMetaData.LaunchInDockPositions == ExtensionInToolbarPositions.Left)
-                        grdDockedExtensionLeft.Children.Insert(grdDockedExtensionLeft.Children.Count, (UserControl)newExtensionInstance);
+                        ctlShell.DockedExtensionLeft.Children.Insert(ctlShell.DockedExtensionLeft.Children.Count, (UserControl)newExtensionInstance);
                     else if (extMetaData.LaunchInDockPositions == ExtensionInToolbarPositions.Top)
-                        grdDockedExtensionTop.Children.Insert(grdDockedExtensionTop.Children.Count, (UserControl)newExtensionInstance);
+                        ctlShell.DockedExtensionTop.Children.Insert(ctlShell.DockedExtensionTop.Children.Count, (UserControl)newExtensionInstance);
                     else if (extMetaData.LaunchInDockPositions == ExtensionInToolbarPositions.Right)
-                        grdDockedExtensionRight.Children.Insert(0, (UserControl)newExtensionInstance);
+                        ctlShell.DockedExtensionRight.Children.Insert(0, (UserControl)newExtensionInstance);
                     else if (extMetaData.LaunchInDockPositions == ExtensionInToolbarPositions.Bottom)
-                        grdDockedExtensionBottom.Children.Insert(grdDockedExtensionBottom.Children.Count, (UserControl)newExtensionInstance);
+                        ctlShell.DockedExtensionBottom.Children.Insert(ctlShell.DockedExtensionBottom.Children.Count, (UserControl)newExtensionInstance);
                     else if (extMetaData.LaunchInDockPositions == ExtensionInToolbarPositions.BottomFull)
-                        grdDockedExtensionBottomFull.Children.Insert(grdDockedExtensionBottomFull.Children.Count, (UserControl)newExtensionInstance);
+                        ctlShell.DockedExtensionBottomFull.Children.Insert(ctlShell.DockedExtensionBottomFull.Children.Count, (UserControl)newExtensionInstance);
 
                     newExtensionInstance.OnPaneLoad();
                 }
@@ -195,48 +195,48 @@ namespace X.Browser.Views
                 var extGuid = ((CloseExtensionEventArgs)message).ExtensionUniqueGuid;
                 var md = X.Services.Extensions.ExtensionsService.Instance.GetExtensionMetadata(extGuid);
 
-                foreach (dynamic child in grdDockedExtensionBottomFull.Children)
+                foreach (dynamic child in ctlShell.DockedExtensionBottomFull.Children)
                 {
                     if (((Guid)child.ExtensionManifest.UniqueID).ToString() == extGuid.ToString())
                     {
                         X.Services.Extensions.ExtensionsService.Instance.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
-                        grdDockedExtensionBottomFull.Children.Remove(child);
+                        ctlShell.DockedExtensionBottomFull.Children.Remove(child);
                     }
                 }
 
-                foreach (dynamic child in grdDockedExtensionBottom.Children)
+                foreach (dynamic child in ctlShell.DockedExtensionBottom.Children)
                 {
                     if (((Guid)child.ExtensionManifest.UniqueID).ToString() == extGuid.ToString())
                     {
                         X.Services.Extensions.ExtensionsService.Instance.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
-                        grdDockedExtensionBottom.Children.Remove(child);
+                        ctlShell.DockedExtensionBottom.Children.Remove(child);
                     }
                 }
 
-                foreach (dynamic child in grdDockedExtensionTop.Children)
+                foreach (dynamic child in ctlShell.DockedExtensionTop.Children)
                 {
                     if (((Guid)child.ExtensionManifest.UniqueID).ToString() == extGuid.ToString())
                     {
                         X.Services.Extensions.ExtensionsService.Instance.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
-                        grdDockedExtensionTop.Children.Remove(child);
+                        ctlShell.DockedExtensionTop.Children.Remove(child);
                     }
                 }
 
-                foreach (dynamic child in grdDockedExtensionLeft.Children)
+                foreach (dynamic child in ctlShell.DockedExtensionLeft.Children)
                 {
                     if (((Guid)child.ExtensionManifest.UniqueID).ToString() == extGuid.ToString())
                     {
                         X.Services.Extensions.ExtensionsService.Instance.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
-                        grdDockedExtensionLeft.Children.Remove(child);
+                        ctlShell.DockedExtensionLeft.Children.Remove(child);
                     }
                 }
 
-                foreach (dynamic child in grdDockedExtensionRight.Children)
+                foreach (dynamic child in ctlShell.DockedExtensionRight.Children)
                 {
                     if (((Guid)child.ExtensionManifest.UniqueID).ToString() == extGuid.ToString())
                     {
                         X.Services.Extensions.ExtensionsService.Instance.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
-                        grdDockedExtensionRight.Children.Remove(child);
+                        ctlShell.DockedExtensionRight.Children.Remove(child);
                     }
                 }
 
