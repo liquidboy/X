@@ -4,7 +4,8 @@
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
-  IgnorableNamespaces="uap mp">
+  xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" 
+  IgnorableNamespaces="uap uap3 mp">
 
   <Identity
     Name="6d918283-1709-4827-80b0-bce015b85d11"
@@ -40,6 +41,13 @@
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
+      <Extensions>
+        <uap3:Extension Category="windows.appExtensionHost">
+          <uap3:AppExtensionHost>
+            <uap3:Name>X.Extensions</uap3:Name>
+          </uap3:AppExtensionHost>
+        </uap3:Extension>
+      </Extensions>
     </Application>
   </Applications>
 

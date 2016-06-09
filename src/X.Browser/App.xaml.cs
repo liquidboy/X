@@ -63,23 +63,27 @@ namespace X.Browser
                 Window.Current.Content = rootFrame;
             }
 
-            if (rootFrame.Content == null)
+
+            if (e.PrelaunchActivated == false)
             {
-                // When the navigation stack isn't restored navigate to the first page,
-                // configuring the new page by passing required information as a navigation
-                // parameter
-                rootFrame.Navigate(typeof(MainLayout), e.Arguments);
-                ((MainLayout)rootFrame.Content).ProcessArguments("DefaultTabTo", e.TileId);
-            }
-            else {
-                //app is already running and has been activated (like from a secondary tile)
-                if (rootFrame.Content is MainLayout)
-                    ((MainLayout)rootFrame.Content).ProcessArguments(e.Arguments, e.TileId);
-            }
-            // Ensure the current window is active
-            Window.Current.Activate();
+                if (rootFrame.Content == null)
+                {
+                    // When the navigation stack isn't restored navigate to the first page,
+                    // configuring the new page by passing required information as a navigation
+                    // parameter
+                    rootFrame.Navigate(typeof(MainLayout), e.Arguments);
+                    ((MainLayout)rootFrame.Content).ProcessArguments("DefaultTabTo", e.TileId);
+                }
+                else
+                {
+                    //app is already running and has been activated (like from a secondary tile)
+                    if (rootFrame.Content is MainLayout)
+                        ((MainLayout)rootFrame.Content).ProcessArguments(e.Arguments, e.TileId);
+                }
+                // Ensure the current window is active
+                Window.Current.Activate();
 
-
+            }
             
         }
 

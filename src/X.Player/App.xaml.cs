@@ -76,6 +76,11 @@ namespace X.Player
                     // configuring the new page by passing required information as a navigation
                     // parameter
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    ((MainPage)rootFrame.Content).ProcessArguments("DefaultTabTo", e.TileId);
+                }
+                else {
+                    if (rootFrame.Content is MainPage)
+                        ((MainPage)rootFrame.Content).ProcessArguments(e.Arguments, e.TileId);
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();
