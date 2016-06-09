@@ -43,5 +43,6 @@ namespace X.Extensions.UI.Shared
                 ext.FoundInToolbarPositions = (ExtensionInToolbarPositions)found.First().FoundInToolbarPositions;
             }
         }
+        
     }
 }

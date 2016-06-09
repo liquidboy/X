@@ -17,23 +17,19 @@ using Windows.UI.Xaml.Navigation;
 
 namespace X.Player
 {
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage : Page, IExtensionHost
     {
         public MainPage()
         {
             this.InitializeComponent();
         }
-
-
+        
         public async void ProcessArguments(string arguments, string tileId)
         {
-          
             await InitExtensions();
-            
         }
-
-
-        async Task InitExtensions()
+        
+        public async Task InitExtensions()
         {
             X.Extensions.UI.Shared.ExtensionUtils.LoadThirdPartyExtensions(new List<ExtensionManifest>{
                 X.Extensions.FirstParty.Settings.Installer.GetManifest(),
@@ -43,12 +39,20 @@ namespace X.Player
             X.Extensions.UI.Shared.ExtensionUtils.UpdateUWPExtensionsWithStateSavedData(X.Services.Extensions.ExtensionsService.Instance.GetUWPExtensions());
 
         }
-
-        void UnInitExtensions()
+        
+        public void UnInitExtensions()
         {
             X.Services.Extensions.ExtensionsService.Instance.UnloadExtensions();
         }
 
-       
+        public void CloseExtension(Guid extGuid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void LaunchExtension(Guid extGuid)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

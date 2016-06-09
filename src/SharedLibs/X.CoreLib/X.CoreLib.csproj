@@ -144,6 +144,7 @@
     <Compile Include="Extensions\ExtensionManifest.cs" />
     <Compile Include="Extensions\ExtensionPosition.cs" />
     <Compile Include="Extensions\ExtensionType.cs" />
+    <Compile Include="Extensions\IExtensionHost.cs" />
     <Compile Include="Extensions\IExtensionLite.cs" />
     <Compile Include="Extensions\IExtension.cs" />
     <Compile Include="Extensions\IExtensionContent.cs" />
