@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace X.Browser.Views
 {
-    public sealed partial class MainLayout : Page, IExtension
+    public sealed partial class MainLayout : Page
     {
         //ViewModels.BrowserVM vm = new ViewModels.BrowserVM();
         ViewModels.BrowserVM vm;

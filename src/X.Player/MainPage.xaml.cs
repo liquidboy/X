@@ -57,7 +57,10 @@ namespace X.Player
             await X.Services.Extensions.ExtensionsService.Instance.PopulateAllUWPExtensions();
             X.Extensions.UI.Shared.ExtensionUtils.UpdateUWPExtensionsWithStateSavedData(X.Services.Extensions.ExtensionsService.Instance.GetUWPExtensions());
 
-            ctlExtensionsBarTop.InstallMyself(); 
+            ctlExtensionsBarTop.InstallMyself();
+            ctlExtensionsBarBottom.InstallMyself();
+            ctlExtensionsBarLeft.InstallMyself();
+            ctlExtensionsBarRight.InstallMyself();
         }
         
         public void UnInitExtensions()
@@ -65,15 +68,36 @@ namespace X.Player
             X.Services.Extensions.ExtensionsService.Instance.UnloadExtensions();
             ctlExtensionsBarTop.UnloadExtensions();
         }
-
+        
         public void CloseExtension(Guid extGuid)
         {
-            throw new NotImplementedException();
+            X.Extensions.UI.Shared.ExtensionUtils.DeleteFromCollection(ctlShell.DockedExtensionBottomFull.Children, extGuid);
+            X.Extensions.UI.Shared.ExtensionUtils.DeleteFromCollection(ctlShell.DockedExtensionBottom.Children, extGuid);
+            X.Extensions.UI.Shared.ExtensionUtils.DeleteFromCollection(ctlShell.DockedExtensionTop.Children, extGuid);
+            X.Extensions.UI.Shared.ExtensionUtils.DeleteFromCollection(ctlShell.DockedExtensionLeft.Children, extGuid);
+            X.Extensions.UI.Shared.ExtensionUtils.DeleteFromCollection(ctlShell.DockedExtensionRight.Children, extGuid);
         }
 
         public void LaunchExtension(Guid extGuid)
         {
-            throw new NotImplementedException();
+            var extMetaData = X.Services.Extensions.ExtensionsService.Instance.GetExtensionMetadata(extGuid);
+            var newExtensionInstance = X.Services.Extensions.ExtensionsService.Instance.CreateInstance(extMetaData);
+
+            if (newExtensionInstance != null)
+            {
+                if (extMetaData.LaunchInDockPositions == ExtensionInToolbarPositions.Left)
+                    ctlShell.DockedExtensionLeft.Children.Insert(ctlShell.DockedExtensionLeft.Children.Count, (UserControl)newExtensionInstance);
+                else if (extMetaData.LaunchInDockPositions == ExtensionInToolbarPositions.Top)
+                    ctlShell.DockedExtensionTop.Children.Insert(ctlShell.DockedExtensionTop.Children.Count, (UserControl)newExtensionInstance);
+                else if (extMetaData.LaunchInDockPositions == ExtensionInToolbarPositions.Right)
+                    ctlShell.DockedExtensionRight.Children.Insert(0, (UserControl)newExtensionInstance);
+                else if (extMetaData.LaunchInDockPositions == ExtensionInToolbarPositions.Bottom)
+                    ctlShell.DockedExtensionBottom.Children.Insert(ctlShell.DockedExtensionBottom.Children.Count, (UserControl)newExtensionInstance);
+                else if (extMetaData.LaunchInDockPositions == ExtensionInToolbarPositions.BottomFull)
+                    ctlShell.DockedExtensionBottomFull.Children.Insert(ctlShell.DockedExtensionBottomFull.Children.Count, (UserControl)newExtensionInstance);
+
+                newExtensionInstance.OnPaneLoad();
+            }
         }
 
         public void RecieveMessage(object message)
@@ -87,6 +111,46 @@ namespace X.Player
             {
                 var extensions = X.Services.Extensions.ExtensionsService.Instance.GetToolbarExtensionsMetadata(ExtensionInToolbarPositions.Top);
                 _SendMessageSource?.Raise(this, new ResponseListOfTopToolbarExtensionsEventArgs() { ExtensionsMetadata = extensions, ReceiverType = ExtensionType.UIComponent });
+            }
+            else if (message is RequestListOfBottomToolbarExtensionsEventArgs)
+            {
+                var extensions = X.Services.Extensions.ExtensionsService.Instance.GetToolbarExtensionsMetadata(ExtensionInToolbarPositions.Bottom);
+                _SendMessageSource?.Raise(this, new ResponseListOfBottomToolbarExtensionsEventArgs() { ExtensionsMetadata = extensions, ReceiverType = ExtensionType.UIComponent });
+            }
+            else if (message is RequestListOfLeftToolbarExtensionsEventArgs)
+            {
+                var extensions = X.Services.Extensions.ExtensionsService.Instance.GetToolbarExtensionsMetadata(ExtensionInToolbarPositions.Left);
+                _SendMessageSource?.Raise(this, new ResponseListOfLeftToolbarExtensionsEventArgs() { ExtensionsMetadata = extensions, ReceiverType = ExtensionType.UIComponent });
+            }
+            else if (message is RequestListOfRightToolbarExtensionsEventArgs)
+            {
+                var extensions = X.Services.Extensions.ExtensionsService.Instance.GetToolbarExtensionsMetadata(ExtensionInToolbarPositions.Right);
+                _SendMessageSource?.Raise(this, new ResponseListOfRightToolbarExtensionsEventArgs() { ExtensionsMetadata = extensions, ReceiverType = ExtensionType.UIComponent });
+            }
+            else if (message is RequestRefreshToolbarExtensionsEventArgs)
+            {
+
+                var extensions = X.Services.Extensions.ExtensionsService.Instance.GetToolbarExtensionsMetadata(ExtensionInToolbarPositions.Top);
+                _SendMessageSource?.Raise(this, new ResponseListOfTopToolbarExtensionsEventArgs() { ExtensionsMetadata = extensions, ReceiverType = ExtensionType.UIComponent });
+
+                extensions = X.Services.Extensions.ExtensionsService.Instance.GetToolbarExtensionsMetadata(ExtensionInToolbarPositions.Bottom);
+                _SendMessageSource?.Raise(this, new ResponseListOfBottomToolbarExtensionsEventArgs() { ExtensionsMetadata = extensions, ReceiverType = ExtensionType.UIComponent });
+
+                extensions = X.Services.Extensions.ExtensionsService.Instance.GetToolbarExtensionsMetadata(ExtensionInToolbarPositions.Left);
+                _SendMessageSource?.Raise(this, new ResponseListOfLeftToolbarExtensionsEventArgs() { ExtensionsMetadata = extensions, ReceiverType = ExtensionType.UIComponent });
+
+                extensions = X.Services.Extensions.ExtensionsService.Instance.GetToolbarExtensionsMetadata(ExtensionInToolbarPositions.Right);
+                _SendMessageSource?.Raise(this, new ResponseListOfRightToolbarExtensionsEventArgs() { ExtensionsMetadata = extensions, ReceiverType = ExtensionType.UIComponent });
+            }
+            else if (message is LaunchExtensionEventArgs)
+            {
+                var extGuid = ((LaunchExtensionEventArgs)message).ExtensionUniqueGuid;
+                LaunchExtension(extGuid);
+            }
+            else if (message is CloseExtensionEventArgs)
+            {
+                var extGuid = ((CloseExtensionEventArgs)message).ExtensionUniqueGuid;
+                CloseExtension(extGuid);
             }
         }
 

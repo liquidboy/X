@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 
 namespace X.Extensions.UI.Shared
 {
@@ -43,6 +44,22 @@ namespace X.Extensions.UI.Shared
                 ext.FoundInToolbarPositions = (ExtensionInToolbarPositions)found.First().FoundInToolbarPositions;
             }
         }
-        
+
+        public static void DeleteFromCollection(UIElementCollection extensions, Guid extGuid)
+        {
+            foreach (dynamic child in extensions)
+            {
+                if (child is IExtension)
+                {
+                    if (((Guid)child.ExtensionManifest.UniqueID).ToString() == extGuid.ToString())
+                    {
+                        X.Services.Extensions.ExtensionsService.Instance.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
+                        extensions.Remove(child);
+                        break;
+                    }
+                }
+            }
+        }
+
     }
 }

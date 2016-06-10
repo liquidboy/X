@@ -10,21 +10,21 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <xuic:Shell HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <xuic:Shell x:Name="ctlShell" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <xuic:Shell.ContentMain>
-                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="Red"></Rectangle>
+                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="Black"></Rectangle>
             </xuic:Shell.ContentMain>
             <xuic:Shell.BarTop>
-                <extcontrols:ExtensionsIconBarTop x:Name="ctlExtensionsBarTop" Margin="0,0,0,0"></extcontrols:ExtensionsIconBarTop>
+                <extcontrols:ExtensionsIconBarTop x:Name="ctlExtensionsBarTop" HorizontalAlignment="Stretch" Margin="0,0,0,0"></extcontrols:ExtensionsIconBarTop>
             </xuic:Shell.BarTop>
             <xuic:Shell.BarBottom>
-                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="Green" Height="30"></Rectangle>
+                <extcontrols:ExtensionsIconBarBottom x:Name="ctlExtensionsBarBottom" Margin="0,0,0,0"></extcontrols:ExtensionsIconBarBottom>
             </xuic:Shell.BarBottom>
             <xuic:Shell.BarLeft>
-                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="Cyan" Width="150"></Rectangle>
+                <extcontrols:ExtensionsIconBarLeft x:Name="ctlExtensionsBarLeft" Margin="0,0,0,0"></extcontrols:ExtensionsIconBarLeft>
             </xuic:Shell.BarLeft>
             <xuic:Shell.BarRight>
-                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="MintCream" Width="150"></Rectangle>
+                <extcontrols:ExtensionsIconBarRight x:Name="ctlExtensionsBarRight" Margin="0,0,0,0"></extcontrols:ExtensionsIconBarRight>
             </xuic:Shell.BarRight>
         </xuic:Shell>
     </Grid>

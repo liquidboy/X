@@ -168,68 +168,13 @@ namespace X.Browser.Views
             }
         }
 
-        public void CloseExtension(Guid extGuid) {
-            var md = X.Services.Extensions.ExtensionsService.Instance.GetExtensionMetadata(extGuid);
-
-            foreach (dynamic child in ctlShell.DockedExtensionBottomFull.Children)
-            {
-                if (child is IExtension)
-                {
-                    if (((Guid)child.ExtensionManifest.UniqueID).ToString() == extGuid.ToString())
-                    {
-                        X.Services.Extensions.ExtensionsService.Instance.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
-                        ctlShell.DockedExtensionBottomFull.Children.Remove(child);
-                    }
-                }
-            }
-
-            foreach (dynamic child in ctlShell.DockedExtensionBottom.Children)
-            {
-                if (child is IExtension)
-                {
-                    if (((Guid)child.ExtensionManifest.UniqueID).ToString() == extGuid.ToString())
-                    {
-                        X.Services.Extensions.ExtensionsService.Instance.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
-                        ctlShell.DockedExtensionBottom.Children.Remove(child);
-                    }
-                }
-            }
-
-            foreach (dynamic child in ctlShell.DockedExtensionTop.Children)
-            {
-                if (child is IExtension)
-                {
-                    if (((Guid)child.ExtensionManifest.UniqueID).ToString() == extGuid.ToString())
-                    {
-                        X.Services.Extensions.ExtensionsService.Instance.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
-                        ctlShell.DockedExtensionTop.Children.Remove(child);
-                    }
-                }
-            }
-
-            foreach (dynamic child in ctlShell.DockedExtensionLeft.Children)
-            {
-                if (child is IExtension)
-                {
-                    if (((Guid)child.ExtensionManifest.UniqueID).ToString() == extGuid.ToString())
-                    {
-                        X.Services.Extensions.ExtensionsService.Instance.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
-                        ctlShell.DockedExtensionLeft.Children.Remove(child);
-                    }
-                }
-            }
-
-            foreach (dynamic child in ctlShell.DockedExtensionRight.Children)
-            {
-                if (child is IExtension)
-                {
-                    if (((Guid)child.ExtensionManifest.UniqueID).ToString() == extGuid.ToString())
-                    {
-                        X.Services.Extensions.ExtensionsService.Instance.UninstallInstance((Guid)child.ExtensionManifest.UniqueID);
-                        ctlShell.DockedExtensionRight.Children.Remove(child);
-                    }
-                }
-            }
+        public void CloseExtension(Guid extGuid)
+        {
+            X.Extensions.UI.Shared.ExtensionUtils.DeleteFromCollection(ctlShell.DockedExtensionBottomFull.Children, extGuid);
+            X.Extensions.UI.Shared.ExtensionUtils.DeleteFromCollection(ctlShell.DockedExtensionBottom.Children, extGuid);
+            X.Extensions.UI.Shared.ExtensionUtils.DeleteFromCollection(ctlShell.DockedExtensionTop.Children, extGuid);
+            X.Extensions.UI.Shared.ExtensionUtils.DeleteFromCollection(ctlShell.DockedExtensionLeft.Children, extGuid);
+            X.Extensions.UI.Shared.ExtensionUtils.DeleteFromCollection(ctlShell.DockedExtensionRight.Children, extGuid);
         }
 
         public event EventHandler<EventArgs> SendMessage
