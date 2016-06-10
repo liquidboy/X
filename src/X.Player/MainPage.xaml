@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:xuic="using:X.UI.Chrome"
+    xmlns:extcontrols="using:X.Extensions.UIComponentExtensions"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -14,7 +15,7 @@
                 <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="Red"></Rectangle>
             </xuic:Shell.ContentMain>
             <xuic:Shell.BarTop>
-                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="Orange" Height="30"></Rectangle>
+                <extcontrols:ExtensionsIconBarTop x:Name="ctlExtensionsBarTop" Margin="0,0,0,0"></extcontrols:ExtensionsIconBarTop>
             </xuic:Shell.BarTop>
             <xuic:Shell.BarBottom>
                 <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="Green" Height="30"></Rectangle>
