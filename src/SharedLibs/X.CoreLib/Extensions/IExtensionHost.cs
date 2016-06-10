@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CoreLib.Extensions
 {
-    public interface IExtensionHost
+    public interface IExtensionHost: IExtension
     {
         Task InitExtensions();
         void UnInitExtensions();

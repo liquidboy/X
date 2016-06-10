@@ -19,7 +19,7 @@ using X.Extensions;
 
 namespace X.Player
 {
-    public sealed partial class MainPage : Page, IExtensionHost, IExtension
+    public sealed partial class MainPage : Page, IExtensionHost
     {
         public IExtensionManifest ExtensionManifest { get; set; }
         public ExtensionType ExtensionType { get; set; } = ExtensionType.UIComponent;
