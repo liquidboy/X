@@ -1,14 +1,10 @@
 ﻿using CoreLib.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using WeakEvent;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using X.Browser;
-using X.Services.Data;
 using X.Services.ThirdParty;
 using X.UI.Toolbar;
 

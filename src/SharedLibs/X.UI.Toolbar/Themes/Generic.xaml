@@ -53,7 +53,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:Toolbar">
-                    <StackPanel x:Name="spExtensions" Background="{TemplateBinding Background}" Orientation="{TemplateBinding Orientation}"></StackPanel>
+                    <StackPanel x:Name="spExtensions" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" Orientation="{TemplateBinding Orientation}"></StackPanel>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

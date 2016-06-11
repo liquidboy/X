@@ -66,8 +66,9 @@
                             <StackPanel x:Name="grdDockedExtensionTop" Orientation="Vertical" Grid.Row="0" Canvas.ZIndex="110" ></StackPanel>
                             <StackPanel x:Name="grdDockedExtensionBottom" Orientation="Vertical" Grid.Row="2" ></StackPanel>
                         </Grid>
-
+                        
                         <Grid Grid.Row="0" Grid.ColumnSpan="3" Background="{TemplateBinding TopBackground}">
+                            <Border BorderThickness="0,0,0,1" BorderBrush="#FFDEDEDE" Margin="20,0,20,0" Visibility="{TemplateBinding IsShowingBorders}"></Border>
                             <ContentControl x:Name="ctlOneBox" Content="{TemplateBinding ContentOneBox}" VerticalAlignment="Center" Height="40" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" ></ContentControl>
                             <StackPanel x:Name="grdDockedExtensionTopFull" HorizontalAlignment="Stretch" Orientation="Vertical" VerticalAlignment="Center">
                                 <ContentControl x:Name="ctlExtensionsBarTop" Content="{TemplateBinding BarTop}" HorizontalContentAlignment="Right" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch"></ContentControl>
@@ -77,6 +78,7 @@
                         <ContentControl x:Name="ctlExtraTabs" Grid.Row="1" Grid.Column="1" Content="{TemplateBinding ContentExtraTabs}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" ></ContentControl>
 
                         <Grid Grid.Column="2" Grid.Row="1" Background="{TemplateBinding ExtensionBackground}">
+                            <Border BorderThickness="1,0,0,0" BorderBrush="#FFDEDEDE" Margin="0,3,40,3" HorizontalAlignment="Right" Visibility="{TemplateBinding IsShowingBorders}"></Border>
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel x:Name="grdDockedExtensionRight" Orientation="Horizontal">
                                     <ContentControl x:Name="ctlExtensionsBarRight" Content="{TemplateBinding BarRight}"  Margin="0,0,0,0" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" ></ContentControl>
@@ -85,11 +87,13 @@
                         </Grid>
 
                         <Grid Grid.Column="0" Grid.Row="1" Background="{TemplateBinding ExtensionBackground}">
+                            <Border BorderThickness="0,0,1,0" BorderBrush="#FFDEDEDE" Margin="40,3,0,3" HorizontalAlignment="Left" Visibility="{TemplateBinding IsShowingBorders}"></Border>
                             <StackPanel x:Name="grdDockedExtensionLeft" Orientation="Horizontal" >
                                 <ContentControl x:Name="ctlExtensionsBarLeft" Content="{TemplateBinding BarLeft}"  Margin="0,0,0,0" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" ></ContentControl>
                             </StackPanel>
                         </Grid>
                         <Grid Grid.ColumnSpan="3" Grid.Row="2" Background="{TemplateBinding ExtensionBackground}">
+                            <Border BorderThickness="0,1,0,0" BorderBrush="#FFDEDEDE" Margin="20,0,20,0" Visibility="{TemplateBinding IsShowingBorders}"></Border>
                             <StackPanel x:Name="grdDockedExtensionBottomFull" Orientation="Vertical">
                                 <ContentControl x:Name="ctlExtensionsBarBottom" Content="{TemplateBinding BarBottom}"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" ></ContentControl>
                             </StackPanel>

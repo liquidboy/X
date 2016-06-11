@@ -11,6 +11,6 @@
     d:DesignWidth="400">
 
     <Grid>
-        <xuitb:Toolbar x:Name="spExtensions" Background="{x:Bind Background}" Orientation="Vertical" Click="spExtensions_Click" />
+        <xuitb:Toolbar x:Name="spExtensions" Background="{x:Bind Background}" Padding="{x:Bind Padding}" Orientation="Vertical" Click="spExtensions_Click" />
     </Grid>
 </UserControl>

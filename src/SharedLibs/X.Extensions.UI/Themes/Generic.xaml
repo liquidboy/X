@@ -9,7 +9,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:ShellWithExtensions">
-                    <xuic:Shell x:Name="ctlShell" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" xuic:Shell.ContentMain="{TemplateBinding ContentMain}">
+                    <xuic:Shell x:Name="ctlShell" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" xuic:Shell.ContentMain="{TemplateBinding ContentMain}" xuic:Shell.IsShowingBorders="Visible">
                         <xuic:Shell.BarTop>
                             <extcontrols:ExtensionsIconBarTop x:Name="ctlExtensionsBarTop" HorizontalAlignment="Stretch" Margin="0,0,0,0"></extcontrols:ExtensionsIconBarTop>
                         </xuic:Shell.BarTop>
@@ -17,10 +17,10 @@
                             <extcontrols:ExtensionsIconBarBottom x:Name="ctlExtensionsBarBottom" Margin="0,0,0,0"></extcontrols:ExtensionsIconBarBottom>
                         </xuic:Shell.BarBottom>
                         <xuic:Shell.BarLeft>
-                            <extcontrols:ExtensionsIconBarLeft x:Name="ctlExtensionsBarLeft" Margin="0,0,0,0"></extcontrols:ExtensionsIconBarLeft>
+                            <extcontrols:ExtensionsIconBarLeft x:Name="ctlExtensionsBarLeft" Padding="0,10,0,10"></extcontrols:ExtensionsIconBarLeft>
                         </xuic:Shell.BarLeft>
                         <xuic:Shell.BarRight>
-                            <extcontrols:ExtensionsIconBarRight x:Name="ctlExtensionsBarRight" Margin="0,0,0,0"></extcontrols:ExtensionsIconBarRight>
+                            <extcontrols:ExtensionsIconBarRight x:Name="ctlExtensionsBarRight" Padding="0,10,0,10"></extcontrols:ExtensionsIconBarRight>
                         </xuic:Shell.BarRight>
                     </xuic:Shell>
                 </ControlTemplate>
