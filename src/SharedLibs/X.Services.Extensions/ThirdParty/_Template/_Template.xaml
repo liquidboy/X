@@ -9,9 +9,9 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid x:Name="layoutRoot" Loaded="layoutRoot_Loaded" >
+    <Grid x:Name="layoutRoot" Loaded="layoutRoot_Loaded" Background="#FFEAEAEA">
         <Border x:Name="brMain" BorderThickness="0" BorderBrush="#FFDEDEDE" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
-        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2,0,2,0">
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2,0,2,0" >
             
         
         
