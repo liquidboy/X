@@ -205,11 +205,7 @@
             </Setter>
         </Style>
     </Page.Resources>
-    <!--<Page.DataContext>
-        <Binding
-            Path="Main"
-            Source="{StaticResource Locator}" />
-    </Page.DataContext>-->
+
     <Grid x:Name="layoutRoot" Background="{Binding Accent1Brush}">
 
 
@@ -247,110 +243,14 @@
                 <Grid Margin="0,0,0,0" >
                     <Grid x:Name="grdAddView" Visibility="{Binding IsShowingAddTab, Converter={StaticResource TrueToVisibleConverter}}" >
                         <xuiat:Tab x:Name="AddTab" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Accent1="{StaticResource MoreTabAccent1}" Accent2="{StaticResource MoreTabAccent2}" Background="{StaticResource MoreTabViewBackground}" LoadCompleted="AddTab_LoadCompleted" DoSearch="AddTab_DoSearch" >
-                            <!--<xuiat:Tab.DataContext>
-                        <Binding Path="AddTab" Source="{StaticResource Locator}" />
-                    </xuiat:Tab.DataContext>-->
                         </xuiat:Tab>
                     </Grid>
                     <Grid x:Name="grdMoreView" Visibility="{Binding IsShowingMoreTab, Converter={StaticResource TrueToVisibleConverter}}" >
                         <xuimt:Tab HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{Binding }" Accent1="{StaticResource MoreTabAccent1}" Accent2="{StaticResource MoreTabAccent2}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="{StaticResource MoreTabViewBackground}" TabCount="{Binding Tabs.Count}" ></xuimt:Tab>
-                        <!--<views:MoreTabView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{Binding }" OnDrawContextMenu="MoreTabView_OnDrawContextMenu"  />-->
                     </Grid>
                 </Grid>
             </xuichrome:Shell.ContentExtraTabs>
         </xuichrome:Shell>
-        
-        
-        
-        <!-- WEBPAGE & ONEBOX --><!--
-        <Grid x:Name="grid" Margin="0,40,0,0" Background="{Binding Accent1Brush}" PointerEntered="grid_PointerEntered">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition ></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition Width="Auto"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-
-
-
-            <Grid Grid.Row="1"
-                    Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
-                <xviewer:ContentView x:Name="wvMain" Grid.Row="1" Uri="{Binding SelectedTab.Uri}" SendMessage="wvMain_SendMessage" Canvas.ZIndex="100" >
-
-                </xviewer:ContentView>
-                <StackPanel x:Name="grdDockedExtensionTop" Orientation="Vertical" Grid.Row="0" Background="{Binding Accent4Brush}" Canvas.ZIndex="110" >
-                </StackPanel>
-                <StackPanel x:Name="grdDockedExtensionBottom" Orientation="Vertical" Grid.Row="2" Background="{Binding Accent4Brush}" >
-                </StackPanel>
-            </Grid>
-
-            <Grid Grid.Row="0" Grid.ColumnSpan="3">
-                <StackPanel x:Name="spOnebox" VerticalAlignment="Top" Orientation="Horizontal" Height="40" Background="Black">
-                    <xonebox:ModernUri
-                        x:Name="ctrlModernUri"
-                        VerticalAlignment="Center"
-                        DataContext="{Binding SelectedTab}"
-                        Margin="10,0,0,0" 
-                        HorizontalAlignment="Left"
-                        PointerReleased="ctrlModernUri_PointerReleased"
-                    />
-                </StackPanel>
-                <StackPanel x:Name="spRightToolbar" HorizontalAlignment="Right" Orientation="Horizontal">
-                    <extcontrols:ExtensionsIconBarTop x:Name="ctlExtensionsBarTop" Margin="0,0,0,0"></extcontrols:ExtensionsIconBarTop>
-                </StackPanel>
-            </Grid>
-
-
-            <Grid x:Name="grdAddView" 
-                Margin="0,0,0,0" 
-                Visibility="{Binding IsShowingAddTab, Converter={StaticResource TrueToVisibleConverter}}" 
-                Grid.Row="1"
-                Grid.Column="1">
-                <xuiat:Tab x:Name="AddTab" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Accent1="{StaticResource MoreTabAccent1}" Accent2="{StaticResource MoreTabAccent2}" Background="{StaticResource MoreTabViewBackground}" LoadCompleted="AddTab_LoadCompleted" DoSearch="AddTab_DoSearch" >
-                    --><!--<xuiat:Tab.DataContext>
-                        <Binding Path="AddTab" Source="{StaticResource Locator}" />
-                    </xuiat:Tab.DataContext>--><!--
-                </xuiat:Tab>
-            </Grid>
-            <Grid x:Name="grdMoreView" 
-                Margin="0,0,0,0" 
-                Visibility="{Binding IsShowingMoreTab, Converter={StaticResource TrueToVisibleConverter}}" 
-                Grid.Row="1"
-                Grid.Column="1">
-                <xuimt:Tab HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{Binding }" Accent1="{StaticResource MoreTabAccent1}" Accent2="{StaticResource MoreTabAccent2}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="{StaticResource MoreTabViewBackground}" TabCount="{Binding Tabs.Count}" ></xuimt:Tab>
-                --><!--<views:MoreTabView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{Binding }" OnDrawContextMenu="MoreTabView_OnDrawContextMenu"  />--><!--
-            </Grid>
-
-
-            <Grid Grid.Column="2" Grid.Row="1"  Background="{Binding Accent4Brush}" >
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel x:Name="grdDockedExtensionRight" Orientation="Horizontal">
-                        <extcontrols:ExtensionsIconBarRight x:Name="ctlExtensionsBarRight" Margin="0,0,0,0" Background="{Binding SelectedTab.PrimaryBackgroundColor}" VerticalAlignment="Stretch" ></extcontrols:ExtensionsIconBarRight>
-                    </StackPanel>
-                </StackPanel>
-            </Grid>
-
-            <Grid Grid.Column="0" Grid.Row="1" Background="{Binding Accent4Brush}" >
-                <StackPanel x:Name="grdDockedExtensionLeft"  Orientation="Horizontal" >
-                    <extcontrols:ExtensionsIconBarLeft x:Name="ctlExtensionsBarLeft" Margin="0,0,0,0" Background="{Binding SelectedTab.PrimaryBackgroundColor}" VerticalAlignment="Stretch"></extcontrols:ExtensionsIconBarLeft>
-                </StackPanel>
-            </Grid>
-            <Grid Grid.ColumnSpan="3" Grid.Row="2" Background="{Binding Accent4Brush}" >
-                <StackPanel x:Name="grdDockedExtensionBottomFull" Orientation="Vertical">
-                    <extcontrols:ExtensionsIconBarBottom x:Name="ctlExtensionsBarBottom" Background="{Binding SelectedTab.PrimaryBackgroundColor}" HorizontalAlignment="Stretch"></extcontrols:ExtensionsIconBarBottom>
-                </StackPanel>
-
-            </Grid>
-        </Grid>-->
 
 
         <!-- HEADHER and TABS -->
