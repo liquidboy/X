@@ -19,12 +19,9 @@
             <xuitb:Toolbar x:Name="spExtensions"  Orientation="Horizontal" Click="spExtensions_Click" />
 
 
-            <Image Source="ms-appx:///X.Extensions.UI/Assets/Extensions/Separator.png" Height="30" Width="20" Opacity="0.7" Visibility="{Binding HasExtensions,ElementName=spExtensions, Converter={StaticResource FalseToVisibleConverter}}" />
+            <Image Source="ms-appx:///X.Extensions.UI/Assets/Extensions/Separator.png" Height="30" Width="20" Opacity="0.3" Visibility="{Binding HasExtensions,ElementName=spExtensions, Converter={StaticResource FalseToVisibleConverter}}" />
 
             <xuitb:ImageButton x:Name="butExtensionStore"  IconUri="ms-appx:///X.Extensions.UI/UIComponentExtensions/InstalledExtensionList/InstalledExtensionList.png" Width="20" Height="20" Margin="0,0, 10,0" PointerReleased="butExtensionStore_PointerReleased" />
-            
-            
-            
             
         </StackPanel>
     </Grid>

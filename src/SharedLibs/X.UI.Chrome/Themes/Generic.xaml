@@ -67,7 +67,7 @@
                             <StackPanel x:Name="grdDockedExtensionBottom" Orientation="Vertical" Grid.Row="2" ></StackPanel>
                         </Grid>
 
-                        <Grid Grid.Row="0" Grid.ColumnSpan="3" Background="Black">
+                        <Grid Grid.Row="0" Grid.ColumnSpan="3">
                             <ContentControl x:Name="ctlOneBox" Content="{TemplateBinding ContentOneBox}" VerticalAlignment="Top" Height="40" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" ></ContentControl>
                             <StackPanel x:Name="grdDockedExtensionTopFull" HorizontalAlignment="Stretch" Orientation="Vertical" VerticalAlignment="Center">
                                 <ContentControl x:Name="ctlExtensionsBarTop" Content="{TemplateBinding BarTop}" HorizontalContentAlignment="Right" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch"></ContentControl>

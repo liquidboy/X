@@ -20,6 +20,8 @@ namespace X.UI.Chrome
 {
     public sealed class Header : Control
     {
+        bool hasInitialized = false;
+
         //EffectLayer.EffectLayer _bkgLayer;//x
         TextBlock _tbTitle;
         int RenderTargetIndexFor_tbTitle = 0;
@@ -60,41 +62,54 @@ namespace X.UI.Chrome
             //    _bkgLayer.DrawUIElements(_tbTitle, offsetX: pt.X, offsetY: pt.Y);
             //    _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY, EffectLayer.EffectGraphType.Glow);
             //}
+            oneTimeInit();
         }
 
         protected override void OnApplyTemplate()
         {
+            oneTimeInit();
+            base.OnApplyTemplate();
+        }
+
+
+        private void oneTimeInit()
+        {
+            if (hasInitialized) return;
+
             //if(_bkgLayer == null) _bkgLayer = GetTemplateChild("bkgLayer") as EffectLayer.EffectLayer;
 
             if (_root == null) _root = GetTemplateChild("root") as Grid;
-            if (_ccTitle == null) { _ccTitle = GetTemplateChild("ccTitle") as ContentControl; _ccTitle.Content = TitleContent; }
-            if (_recSmallTitle == null)
-            {
-                _recSmallTitle = GetTemplateChild("recSmallTitle") as Windows.UI.Xaml.Shapes.Rectangle;
-                Window.Current.SetTitleBar(_recSmallTitle);
 
-                //_dtChrome = new DispatcherTimer();
-                //_dtChrome.Interval = new TimeSpan(0, 0, 0, 0, 15);
-                //_dtChrome.Tick += (object sender, object e) =>
-                //{
-                //    //NativeLib.GetCursorPos(ref _curPos);
-                //    //ChromeUpdate(_curPos);
-                //};
-                //if (EnableResizeFix) _dtChrome.Start();
-                //else _dtChrome.Stop();
+            if (_root != null) {
+                if (_ccTitle == null) { _ccTitle = GetTemplateChild("ccTitle") as ContentControl; _ccTitle.Content = TitleContent; }
+                if (_recSmallTitle == null)
+                {
+                    _recSmallTitle = GetTemplateChild("recSmallTitle") as Windows.UI.Xaml.Shapes.Rectangle;
+                    Window.Current.SetTitleBar(_recSmallTitle);
+
+                    //_dtChrome = new DispatcherTimer();
+                    //_dtChrome.Interval = new TimeSpan(0, 0, 0, 0, 15);
+                    //_dtChrome.Tick += (object sender, object e) =>
+                    //{
+                    //    //NativeLib.GetCursorPos(ref _curPos);
+                    //    //ChromeUpdate(_curPos);
+                    //};
+                    //if (EnableResizeFix) _dtChrome.Start();
+                    //else _dtChrome.Stop();
+                }
+
+                if (_tbTitle == null)
+                {
+                    _tbTitle = GetTemplateChild("tbTitle") as TextBlock;
+                    _tbTitle.DataContext = this;
+                }
+
+                //if (_bkgLayer != null && _tbTitle != null && _tbTitle.ActualWidth != 0) _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY);
+
             }
-
-            if (_tbTitle == null)
-            {
-                _tbTitle = GetTemplateChild("tbTitle") as TextBlock;
-                _tbTitle.DataContext = this;
-            }
-
-            //if (_bkgLayer != null && _tbTitle != null && _tbTitle.ActualWidth != 0) _bkgLayer.InitLayer(_root.ActualWidth, _root.ActualHeight, bkgOffsetX, bkgOffsetY);
-
-
-            base.OnApplyTemplate();
+            if (_root != null) hasInitialized = true;
         }
+
 
         private void _tlMain_Click(object sender, RoutedEventArgs e)
         {

@@ -10,7 +10,7 @@
     d:DesignHeight="30"
     d:DesignWidth="400">
 
-    <Grid Background="Black">
+    <Grid>
         <xuitb:Toolbar x:Name="spExtensions"  Orientation="Horizontal" Click="spExtensions_Click" />
     </Grid>
 </UserControl>
