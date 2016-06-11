@@ -211,23 +211,23 @@
 
 
 
-        <xuichrome:Shell x:Name="ctlShell" Margin="0,40,0,0" Background="{Binding Accent1Brush}" PointerEntered="grid_PointerEntered">
+        <xuichrome:Shell x:Name="ctlShell" Margin="0,40,0,0" Background="{Binding Accent1Brush}" PointerEntered="grid_PointerEntered" xuichrome:Shell.ExtensionBackground="#FFF2F2F2" xuichrome:Shell.TopBackground="Black" >
             <xuichrome:Shell.ContentMain>
                 <xviewer:ContentView x:Name="wvMain" Grid.Row="1" Uri="{Binding SelectedTab.Uri}" SendMessage="wvMain_SendMessage" Canvas.ZIndex="100" >
 
                 </xviewer:ContentView>
             </xuichrome:Shell.ContentMain>
             <xuichrome:Shell.BarTop>
-                <extcontrols:ExtensionsIconBarTop x:Name="ctlExtensionsBarTop" Margin="0,0,0,0"></extcontrols:ExtensionsIconBarTop>
+                <extcontrols:ExtensionsIconBarTop x:Name="ctlExtensionsBarTop" Background="Black" Margin="0,0,0,0" HorizontalAlignment="Stretch"></extcontrols:ExtensionsIconBarTop>
             </xuichrome:Shell.BarTop>
             <xuichrome:Shell.BarBottom>
-                <extcontrols:ExtensionsIconBarBottom x:Name="ctlExtensionsBarBottom" Background="{Binding SelectedTab.PrimaryBackgroundColor}" HorizontalAlignment="Stretch"></extcontrols:ExtensionsIconBarBottom>
+                <extcontrols:ExtensionsIconBarBottom x:Name="ctlExtensionsBarBottom" Background="Black" HorizontalAlignment="Stretch"></extcontrols:ExtensionsIconBarBottom>
             </xuichrome:Shell.BarBottom>
             <xuichrome:Shell.BarLeft>
-                <extcontrols:ExtensionsIconBarLeft x:Name="ctlExtensionsBarLeft" Margin="0,0,0,0" Background="{Binding SelectedTab.PrimaryBackgroundColor}" VerticalAlignment="Stretch"></extcontrols:ExtensionsIconBarLeft>
+                <extcontrols:ExtensionsIconBarLeft x:Name="ctlExtensionsBarLeft" Background="Black" Margin="0,0,0,0" VerticalAlignment="Stretch"></extcontrols:ExtensionsIconBarLeft>
             </xuichrome:Shell.BarLeft>
             <xuichrome:Shell.BarRight>
-                <extcontrols:ExtensionsIconBarRight x:Name="ctlExtensionsBarRight" Margin="0,0,0,0" Background="{Binding SelectedTab.PrimaryBackgroundColor}" VerticalAlignment="Stretch" ></extcontrols:ExtensionsIconBarRight>
+                <extcontrols:ExtensionsIconBarRight x:Name="ctlExtensionsBarRight" Background="Black" Margin="0,0,0,0" VerticalAlignment="Stretch" ></extcontrols:ExtensionsIconBarRight>
             </xuichrome:Shell.BarRight>
             <xuichrome:Shell.ContentOneBox>
                 <xonebox:ModernUri

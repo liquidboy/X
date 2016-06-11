@@ -141,9 +141,46 @@ namespace X.UI.Chrome
             set { SetValue(ContentExtraTabsProperty, value); }
         }
 
+        public Brush TopBackground
+        {
+            get { return (Brush)GetValue(TopBackgroundProperty); }
+            set { SetValue(TopBackgroundProperty, value); }
+        }
+
+        //public Brush LeftBackground
+        //{
+        //    get { return (Brush)GetValue(LeftBackgroundProperty); }
+        //    set { SetValue(LeftBackgroundProperty, value); }
+        //}
+
+        //public Brush RightBackground
+        //{
+        //    get { return (Brush)GetValue(RightBackgroundProperty); }
+        //    set { SetValue(RightBackgroundProperty, value); }
+        //}
+
+        //public Brush BottomBackground
+        //{
+        //    get { return (Brush)GetValue(BottomBackgroundProperty); }
+        //    set { SetValue(BottomBackgroundProperty, value); }
+        //}
+
+        public Brush ExtensionBackground
+        {
+            get { return (Brush)GetValue(ExtensionBackgroundProperty); }
+            set { SetValue(ExtensionBackgroundProperty, value); }
+        }
 
 
 
+
+
+
+        public static readonly DependencyProperty ExtensionBackgroundProperty = DependencyProperty.Register("ExtensionBackground", typeof(Brush), typeof(Shell), new PropertyMetadata(null));
+        //public static readonly DependencyProperty BottomBackgroundProperty = DependencyProperty.Register("BottomBackground", typeof(Brush), typeof(Shell), new PropertyMetadata(null));
+        //public static readonly DependencyProperty LeftBackgroundProperty = DependencyProperty.Register("LeftBackground", typeof(Brush), typeof(Shell), new PropertyMetadata(null));
+        //public static readonly DependencyProperty RightBackgroundProperty = DependencyProperty.Register("RightBackground", typeof(Brush), typeof(Shell), new PropertyMetadata(null));
+        public static readonly DependencyProperty TopBackgroundProperty = DependencyProperty.Register("TopBackground", typeof(Brush), typeof(Shell), new PropertyMetadata(null));
         public static readonly DependencyProperty ContentExtraTabsProperty = DependencyProperty.Register("ContentExtraTabs", typeof(object), typeof(Shell), new PropertyMetadata(null));
         public static readonly DependencyProperty ContentOneBoxProperty = DependencyProperty.Register("ContentOneBox", typeof(object), typeof(Shell), new PropertyMetadata(null));
         public static readonly DependencyProperty ContentMainProperty = DependencyProperty.Register("ContentMain", typeof(object), typeof(Shell), new PropertyMetadata(null));

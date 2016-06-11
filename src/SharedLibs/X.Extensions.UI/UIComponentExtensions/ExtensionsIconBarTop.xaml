@@ -13,7 +13,7 @@
     <UserControl.Resources>
         <local:BooleanToVisibilityConverter x:Key="FalseToVisibleConverter" IsReversed="False" ></local:BooleanToVisibilityConverter>
     </UserControl.Resources>
-    <Grid x:Name="layoutRoot">
+    <Grid x:Name="layoutRoot" Background="{x:Bind Background}">
         <StackPanel Orientation="Horizontal">
 
             <xuitb:Toolbar x:Name="spExtensions"  Orientation="Horizontal" Click="spExtensions_Click" />
