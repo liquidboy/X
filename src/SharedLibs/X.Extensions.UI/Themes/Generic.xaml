@@ -9,7 +9,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:ShellWithExtensions">
-                    <xuic:Shell x:Name="ctlShell" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" xuic:Shell.ContentMain="{TemplateBinding ContentMain}" xuic:Shell.IsShowingBorders="Visible">
+                    <xuic:Shell x:Name="ctlShell" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" xuic:Shell.ContentMain="{TemplateBinding ContentMain}" 
+                                xuic:Shell.IsShowingBorders="Visible" xuic:Shell.ExtensionBackground="#FFF2F2F2">
                         <xuic:Shell.BarTop>
                             <extcontrols:ExtensionsIconBarTop x:Name="ctlExtensionsBarTop" HorizontalAlignment="Stretch" Margin="0,0,0,0"></extcontrols:ExtensionsIconBarTop>
                         </xuic:Shell.BarTop>

@@ -56,15 +56,15 @@
 
 
 
-                        <Grid Grid.Row="1" Grid.Column="1" Background="{TemplateBinding ExtensionBackground}">
+                        <Grid Grid.Row="1" Grid.Column="1" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition ></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
                             </Grid.RowDefinitions>
                             <ContentControl x:Name="grdMainContent" Grid.Row="1"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Content="{TemplateBinding ContentMain}" ></ContentControl>
-                            <StackPanel x:Name="grdDockedExtensionTop" Orientation="Vertical" Grid.Row="0" Canvas.ZIndex="110" ></StackPanel>
-                            <StackPanel x:Name="grdDockedExtensionBottom" Orientation="Vertical" Grid.Row="2" ></StackPanel>
+                            <StackPanel x:Name="grdDockedExtensionTop" Orientation="Vertical" Grid.Row="0" Canvas.ZIndex="110" Background="{TemplateBinding ExtensionBackground}"></StackPanel>
+                            <StackPanel x:Name="grdDockedExtensionBottom" Orientation="Vertical" Grid.Row="2" Background="{TemplateBinding ExtensionBackground}"></StackPanel>
                         </Grid>
                         
                         <Grid Grid.Row="0" Grid.ColumnSpan="3" Background="{TemplateBinding TopBackground}">

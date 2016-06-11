@@ -88,13 +88,17 @@ namespace X.Services.ThirdParty
                     }
                     
                 }
-                    
-      
-                    
-
-
                 
-               
+                switch (ExtensionManifest.LaunchInDockPositions)
+                {
+                    case ExtensionInToolbarPositions.Left: brMain.BorderThickness = new Thickness(0,0,0.5,0); brMain.Margin = new Thickness(0, 3, 0, 3); break;
+                    case ExtensionInToolbarPositions.Right: brMain.BorderThickness = new Thickness(0.5,0,0,0); brMain.Margin = new Thickness(0, 3, 0, 3); break;
+                    case ExtensionInToolbarPositions.Bottom: brMain.BorderThickness = new Thickness(0, 0.5, 0, 0); brMain.Margin = new Thickness(3, 0, 3, 0); break;
+                    case ExtensionInToolbarPositions.BottomFull: brMain.BorderThickness = new Thickness(0, 0.5, 0, 0); brMain.Margin = new Thickness(3, 0, 3, 0); break;
+                    case ExtensionInToolbarPositions.Top: brMain.BorderThickness = new Thickness(0, 0, 0, 0.5); brMain.Margin = new Thickness(3, 0, 3, 0); break;
+                    default: brMain.BorderThickness = new Thickness(0); brMain.Margin = new Thickness(3, 0, 3, 0); break;
+                }
+                
             }
 
         }
