@@ -5,27 +5,14 @@
     xmlns:local="using:X.Player"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:xuic="using:X.UI.Chrome"
-    xmlns:extcontrols="using:X.Extensions.UIComponentExtensions"
+    xmlns:extui="using:X.Extensions.UI"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <xuic:Shell x:Name="ctlShell" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <xuic:Shell.ContentMain>
-                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="Black"></Rectangle>
-            </xuic:Shell.ContentMain>
-            <xuic:Shell.BarTop>
-                <extcontrols:ExtensionsIconBarTop x:Name="ctlExtensionsBarTop" HorizontalAlignment="Stretch" Margin="0,0,0,0"></extcontrols:ExtensionsIconBarTop>
-            </xuic:Shell.BarTop>
-            <xuic:Shell.BarBottom>
-                <extcontrols:ExtensionsIconBarBottom x:Name="ctlExtensionsBarBottom" Margin="0,0,0,0"></extcontrols:ExtensionsIconBarBottom>
-            </xuic:Shell.BarBottom>
-            <xuic:Shell.BarLeft>
-                <extcontrols:ExtensionsIconBarLeft x:Name="ctlExtensionsBarLeft" Margin="0,0,0,0"></extcontrols:ExtensionsIconBarLeft>
-            </xuic:Shell.BarLeft>
-            <xuic:Shell.BarRight>
-                <extcontrols:ExtensionsIconBarRight x:Name="ctlExtensionsBarRight" Margin="0,0,0,0"></extcontrols:ExtensionsIconBarRight>
-            </xuic:Shell.BarRight>
-        </xuic:Shell>
+        <extui:ShellWithExtensions x:Name="ctlShellExt" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <extui:ShellWithExtensions.ContentMain>
+                <Rectangle Fill="Purple" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Rectangle>
+            </extui:ShellWithExtensions.ContentMain>
+        </extui:ShellWithExtensions>
     </Grid>
 </Page>
