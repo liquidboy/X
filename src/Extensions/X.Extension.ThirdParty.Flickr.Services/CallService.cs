@@ -41,6 +41,7 @@ namespace X.Extension.ThirdParty.Flickr.Services
                 case "UI":
                     returnData.Add("sketch-test", "X.Extension.ThirdParty.Flickr.UI.Test");
                     returnData.Add("sketch-home", "X.Extension.ThirdParty.Flickr.UI.Home");
+                    returnData.Add("splash-page", "Splash.xaml");
                     break;
             }
             

@@ -18,7 +18,7 @@ namespace X.Viewer.SketchFlow.Converters
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             var root = (FrameworkElement)value;
-            return new Rect(0,0, root.Width, root.Height) ;
+            return new Rect(0,0, double.IsNaN(root.Width)? root.ActualWidth: root.Width , double.IsNaN(root.Height)?root.ActualHeight:root.Height) ;
         }
         
         public object ConvertBack(object value, Type targetType, object parameter, string language)

@@ -6,8 +6,10 @@
     xmlns:controls="using:X.Viewer.SketchFlow.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:lc="using:X.Viewer.SketchFlow.Converters"
     xmlns:xuizc="using:X.UI.ZoomCanvas"
     mc:Ignorable="d"
+    x:Name="root"
     d:DesignHeight="300"
     d:DesignWidth="400">
     <!--
@@ -22,8 +24,14 @@
     960 x 540
     
     -->
+    <UserControl.Resources>
+        <lc:UIElementAsClipConverter x:Key="UIElementAsClipConverter"></lc:UIElementAsClipConverter>
+    </UserControl.Resources>
     <Grid x:Name="layoutRoot" Background="White" PointerWheelChanged="layoutRoot_PointerWheelChanged" PointerPressed="layoutRoot_PointerPressed" PointerReleased="layoutRoot_PointerReleased" PointerMoved="layoutRoot_PointerMoved">
-       
+        <Grid.Clip>
+            <RectangleGeometry Rect="{Binding ElementName=root, Converter={StaticResource UIElementAsClipConverter}}"/>
+        </Grid.Clip>
+        
         <Canvas x:Name="cvMainAdorner" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RenderTransformOrigin="0.5,0.5"></Canvas>
         <controls:Toolbar x:Name="toolbar" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,20,0" PerformAction="toolbar_PerformAction" ></controls:Toolbar>
 

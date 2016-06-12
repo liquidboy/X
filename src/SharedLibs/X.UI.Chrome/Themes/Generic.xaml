@@ -86,7 +86,6 @@
                                 </StackPanel>
                             </StackPanel>
                         </Grid>
-
                         <Grid Grid.Column="0" Grid.Row="1" Background="{TemplateBinding ExtensionBackground}">
                             <Border BorderThickness="0,0,1,0" BorderBrush="#FFDEDEDE" Margin="40,3,0,3" HorizontalAlignment="Left" Visibility="{TemplateBinding IsShowingBorders}"></Border>
                             <StackPanel x:Name="grdDockedExtensionLeft" Orientation="Horizontal" >
