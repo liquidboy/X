@@ -32,6 +32,17 @@ namespace X.Extensions.UI
             set { SetValue(ContentMainProperty, value); }
         }
 
+        public object Footer
+        {
+            get { return (object)GetValue(FooterProperty); }
+            set { SetValue(FooterProperty, value); }
+        }
+
+
+
+
+
+        public static readonly DependencyProperty FooterProperty = DependencyProperty.Register("Footer", typeof(object), typeof(ShellWithExtensions), new PropertyMetadata(null));
         public static readonly DependencyProperty ContentMainProperty = DependencyProperty.Register("ContentMain", typeof(object), typeof(ShellWithExtensions), new PropertyMetadata(null));
 
 

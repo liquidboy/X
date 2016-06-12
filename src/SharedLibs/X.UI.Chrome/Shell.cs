@@ -177,12 +177,20 @@ namespace X.UI.Chrome
             set { SetValue(IsShowingBordersProperty, value); }
         }
 
+        public object Footer
+        {
+            get { return (object)GetValue(FooterProperty); }
+            set { SetValue(FooterProperty, value); }
+        }
 
 
 
 
 
 
+
+
+        public static readonly DependencyProperty FooterProperty = DependencyProperty.Register("Footer", typeof(object), typeof(Shell), new PropertyMetadata(null));
         public static readonly DependencyProperty IsShowingBordersProperty = DependencyProperty.Register("IsShowingBorders", typeof(Visibility), typeof(Shell), new PropertyMetadata(Visibility.Collapsed));
         public static readonly DependencyProperty ExtensionBackgroundProperty = DependencyProperty.Register("ExtensionBackground", typeof(Brush), typeof(Shell), new PropertyMetadata(null));
         //public static readonly DependencyProperty BottomBackgroundProperty = DependencyProperty.Register("BottomBackground", typeof(Brush), typeof(Shell), new PropertyMetadata(null));

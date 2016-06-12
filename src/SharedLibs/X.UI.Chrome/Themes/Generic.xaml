@@ -47,6 +47,7 @@
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition ></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -97,6 +98,9 @@
                             <StackPanel x:Name="grdDockedExtensionBottomFull" Orientation="Vertical">
                                 <ContentControl x:Name="ctlExtensionsBarBottom" Content="{TemplateBinding BarBottom}"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" ></ContentControl>
                             </StackPanel>
+                        </Grid>
+                        <Grid Grid.ColumnSpan="3" Grid.Row="3">
+                            <ContentControl x:Name="ctlFooter" Content="{TemplateBinding Footer}"  Margin="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" ></ContentControl>
                         </Grid>
                     </Grid>
                 </ControlTemplate>

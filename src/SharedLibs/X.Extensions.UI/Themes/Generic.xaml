@@ -23,6 +23,9 @@
                         <xuic:Shell.BarRight>
                             <extcontrols:ExtensionsIconBarRight x:Name="ctlExtensionsBarRight" Padding="0,10,0,10"></extcontrols:ExtensionsIconBarRight>
                         </xuic:Shell.BarRight>
+                        <xuic:Shell.Footer>
+                            <ContentControl x:Name="ctlFooter" Content="{TemplateBinding Footer}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ></ContentControl>
+                        </xuic:Shell.Footer>
                     </xuic:Shell>
                 </ControlTemplate>
             </Setter.Value>
