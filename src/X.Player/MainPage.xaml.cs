@@ -33,6 +33,7 @@ namespace X.Player
         {
             //await ctlShellExt.InitExtensions();
             header.InitChrome(App.Current, ApplicationView.GetForCurrentView());
+            ctlViewer.Uri = "viewer://sketchflow-application.sketch";
         }
         
         

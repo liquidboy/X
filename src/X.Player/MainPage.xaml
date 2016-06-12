@@ -6,15 +6,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:extui="using:X.Extensions.UI"
+    xmlns:xv="using:X.Viewer"
     xmlns:xuic="using:X.UI.Chrome"
     mc:Ignorable="d">
 
     <Grid Background="#FFF2F2F2">
         <xuic:Header x:Name="header" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="32" Background="#FFCCCCCC"></xuic:Header>
         <extui:ShellWithExtensions x:Name="ctlShellExt" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,32,0,0" >
-            <!--<extui:ShellWithExtensions.ContentMain>
-                <Border  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="#66D3D3D3" BorderThickness="1" ></Border>
-            </extui:ShellWithExtensions.ContentMain>-->
+            <extui:ShellWithExtensions.ContentMain>
+                <xv:ContentView x:Name="ctlViewer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></xv:ContentView>
+                <!--<Border  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="#66D3D3D3" BorderThickness="1" Margin="5" ></Border>-->
+            </extui:ShellWithExtensions.ContentMain>
             <extui:ShellWithExtensions.Footer>
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFBB540F" Height="25"></Grid>
             </extui:ShellWithExtensions.Footer>
