@@ -9,7 +9,7 @@
     d:DesignWidth="400">
 
     <Grid>
-        <Rectangle Fill="Red" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Rectangle>
+        <Rectangle Fill="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Rectangle>
         <TextBlock Text="SPLASH PAGE" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="30"></TextBlock>
     </Grid>
 </UserControl>

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text.RegularExpressions;
 using WeakEvent;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -12,6 +13,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using X.Extensions;
@@ -79,10 +81,38 @@ namespace X.Services.ThirdParty
                     var result = await ef.MakeUWPCommandCall("UI", "Call");
 
                     if (result != null) {
-                        var newEl = new StackPanel() { Orientation = Orientation.Vertical };
-                        foreach (var val in result)
+                        //var newEl = new StackPanel() { Orientation = Orientation.Vertical };
+                        var newEl = new Grid() { HorizontalAlignment = HorizontalAlignment.Stretch, VerticalAlignment = VerticalAlignment.Stretch };
+                        //foreach (var val in result)
+                        //{
+                        //    newEl.Children.Add(new TextBlock() { Text = $"{val.Key}  - {val.Value}" });
+                        //}
+                        if (result.ContainsKey("default"))
                         {
-                            newEl.Children.Add(new TextBlock() { Text = $"{val.Key}  - {val.Value}" });
+                            
+                            var keyValueForDefault = result.Where(x => x.Key == "default").First();
+                            var defaultPage = result.Where(x => x.Key == (string)keyValueForDefault.Value).First();
+
+                            var packageDirectory = ef.AppExtension.Package.InstalledLocation;
+                            var publicDirectory = await packageDirectory.GetFolderAsync("public");
+
+                            var defaultPageXaml = await publicDirectory.GetFileAsync(defaultPage.Value.ToString());
+                            using (var stream = await defaultPageXaml.OpenStreamForReadAsync())
+                            {
+                                var tr = new StreamReader(stream);
+                                var xaml = await tr.ReadToEndAsync();
+
+                                if (xaml.Length > 0)
+                                {
+                                    var xamlFe = (FrameworkElement)XamlReader.Load(UnescapeString(xaml));
+                                    newEl.Children.Add(xamlFe);
+                                }
+                            }
+
+                            
+                        }else
+                        {
+
                         }
                         ctlContent.Children.Add(newEl);
                     }
@@ -101,6 +131,21 @@ namespace X.Services.ThirdParty
                 
             }
 
+        }
+
+        private string UnescapeString(string escapedString)
+        {
+            var output = Regex.Replace(escapedString, @"\\[rnt]", m =>
+            {
+                switch (m.Value)
+                {
+                    case @"\r": return "\r";
+                    case @"\n": return "\n";
+                    case @"\t": return "\t";
+                    default: return m.Value;
+                }
+            });
+            return output;
         }
 
         public void OnPaneUnload()
