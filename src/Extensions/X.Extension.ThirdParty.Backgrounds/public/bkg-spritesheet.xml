@@ -5,4 +5,8 @@
   <sprite Title="Deer" Width="355" Height="200" Row="0" Column="2" File="bkg03.jpg"></sprite>
   <sprite Title="Dabs of color" Width="319" Height="200" Row="1" Column="0" File="bkg04.jpg"></sprite>
   <sprite Title="Shades of Yellow" Width="319" Height="200" Row="1" Column="1" File="bkg05.jpg"></sprite>
+  <sprite Title="Rainbow V" Width="320" Height="200" Row="1" Column="2" File="bkg06.jpg"></sprite>
+  <sprite Title="Rainbow Squares" Width="320" Height="200" Row="2" Column="0" File="bkg07.jpg"></sprite>
+  <sprite Title="Shades Red/Orange" Width="320" Height="200" Row="2" Column="1" File="bkg08.jpg"></sprite>
+  <sprite Title="Zoom swirls of color" Width="320" Height="200" Row="2" Column="2" File="bkg09.jpg"></sprite>
 </sprites>

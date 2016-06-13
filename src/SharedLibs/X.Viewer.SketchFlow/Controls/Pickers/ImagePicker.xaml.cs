@@ -53,7 +53,7 @@ namespace X.Viewer.SketchFlow.Controls.Pickers
                 brush.Stretch = Stretch.UniformToFill;
                 brush.AlignmentX = AlignmentX.Left;
                 brush.AlignmentY = AlignmentY.Top;
-                brush.Transform = new CompositeTransform() { ScaleX = 1.65, ScaleY = 1.65, TranslateX = col * (-140), TranslateY = row * (-87) };
+                brush.Transform = new CompositeTransform() { ScaleX = 2.35, ScaleY = 2.35, TranslateX = col * (-140), TranslateY = row * (-87) };
                 listOfImages.Add(new ImageListItem() {
                     Title = sprite.Attributes("Title").First().Value,
                     SpriteSheetBrush = brush,
