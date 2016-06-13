@@ -17,9 +17,9 @@
                 <xv:ContentView x:Name="ctlViewer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></xv:ContentView>
                 <!--<Border  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="#66D3D3D3" BorderThickness="1" Margin="5" ></Border>-->
             </extui:ShellWithExtensions.ContentMain>
-            <extui:ShellWithExtensions.Footer>
+            <!--<extui:ShellWithExtensions.Footer>
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFBB540F" Height="25"></Grid>
-            </extui:ShellWithExtensions.Footer>
+            </extui:ShellWithExtensions.Footer>-->
         </extui:ShellWithExtensions>
     </Grid>
 </Page>
