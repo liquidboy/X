@@ -79,7 +79,7 @@
                         <ContentControl x:Name="ctlExtraTabs" Grid.Row="1" Grid.Column="1" Content="{TemplateBinding ContentExtraTabs}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" ></ContentControl>
 
                         <Grid Grid.Column="2" Grid.Row="1" Background="{TemplateBinding ExtensionBackground}">
-                            <Border BorderThickness="1,0,0,0" BorderBrush="#FFDEDEDE" Margin="0,3,40,3" HorizontalAlignment="Right" Visibility="{TemplateBinding IsShowingBorders}"></Border>
+                            <Border BorderThickness="1,0,0,0" BorderBrush="#FFDEDEDE" Margin="0,3,0,3" HorizontalAlignment="Left" Visibility="{TemplateBinding IsShowingBorders}"></Border>
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel x:Name="grdDockedExtensionRight" Orientation="Horizontal">
                                     <ContentControl x:Name="ctlExtensionsBarRight" Content="{TemplateBinding BarRight}"  Margin="0,0,0,0" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" ></ContentControl>
@@ -87,7 +87,7 @@
                             </StackPanel>
                         </Grid>
                         <Grid Grid.Column="0" Grid.Row="1" Background="{TemplateBinding ExtensionBackground}">
-                            <Border BorderThickness="0,0,1,0" BorderBrush="#FFDEDEDE" Margin="40,3,0,3" HorizontalAlignment="Left" Visibility="{TemplateBinding IsShowingBorders}"></Border>
+                            <Border BorderThickness="0,0,1,0" BorderBrush="#FFDEDEDE" Margin="0,3,0,3" HorizontalAlignment="Right" Visibility="{TemplateBinding IsShowingBorders}"></Border>
                             <StackPanel x:Name="grdDockedExtensionLeft" Orientation="Horizontal" >
                                 <ContentControl x:Name="ctlExtensionsBarLeft" Content="{TemplateBinding BarLeft}"  Margin="0,0,0,0" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" ></ContentControl>
                             </StackPanel>
