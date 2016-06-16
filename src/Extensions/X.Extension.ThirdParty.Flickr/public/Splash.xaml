@@ -11,5 +11,12 @@
     <Grid>
         <Rectangle Fill="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Rectangle>
         <TextBlock Text="SPLASH PAGE" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="30"></TextBlock>
+        <GridView ItemsSource="{Binding FavouritePhotos}" >
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <Image Width="108" Height="108" Stretch="UniformToFill" Source="{Binding SquareThumbnailUrl}"></Image>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
     </Grid>
 </UserControl>

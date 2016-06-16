@@ -44,6 +44,9 @@ namespace X.Extension.ThirdParty.Flickr.Services
                     returnData.Add("splash-page", "Splash.xaml");
                     returnData.Add("default", "splash-page");
                     break;
+                case "DATA":
+                    returnData.Add("FavouritePhotos", "list");
+                    break;
             }
             
             await args.Request.SendResponseAsync(returnData);

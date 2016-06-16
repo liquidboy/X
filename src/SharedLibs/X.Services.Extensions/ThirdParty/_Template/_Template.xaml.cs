@@ -1,6 +1,7 @@
 ﻿using CoreLib.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -78,8 +79,20 @@ namespace X.Services.ThirdParty
                 else {
 
                     var ef = Extensions.ExtensionsService.Instance.GetExtensionByAppExtensionUniqueId(ExtensionManifest.AppExtensionUniqueID);
-                    var result = await ef.MakeUWPCommandCall("UI", "Call");
 
+                    var resultData = await ef.MakeUWPCommandCall("DATA", "Call");
+                    dynamic data = null;
+                    if (resultData != null)
+                    {
+                        data = new ExpandoObject();
+                        foreach (var val in resultData)
+                        {
+                            if ((string)val.Value == "list") { ((IDictionary<string, object>)data)[val.Key] = new List<object>() { "","","" }; }
+                        }
+                    }
+
+
+                    var result = await ef.MakeUWPCommandCall("UI", "Call");
                     if (result != null) {
                         //var newEl = new StackPanel() { Orientation = Orientation.Vertical };
                         var newEl = new Grid() { HorizontalAlignment = HorizontalAlignment.Stretch, VerticalAlignment = VerticalAlignment.Stretch };
@@ -114,9 +127,13 @@ namespace X.Services.ThirdParty
                         {
 
                         }
+                        if (data != null) newEl.DataContext = data;
                         ctlContent.Children.Add(newEl);
                     }
-                    
+
+
+
+
                 }
                 
                 switch (ExtensionManifest.LaunchInDockPositions)
