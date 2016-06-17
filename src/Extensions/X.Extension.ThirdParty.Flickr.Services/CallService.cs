@@ -47,6 +47,11 @@ namespace X.Extension.ThirdParty.Flickr.Services
                 case "DATA":
                     returnData.Add("FavouritePhotos", "list");
                     break;
+                case "FavouritePhotos":
+                    returnData.Add("content", "a,b,c,d");
+                    returnData.Add("count", "4");
+                    returnData.Add("page", "1");
+                    break;
             }
             
             await args.Request.SendResponseAsync(returnData);

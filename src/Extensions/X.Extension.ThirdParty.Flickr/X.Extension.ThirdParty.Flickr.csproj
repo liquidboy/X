@@ -144,6 +144,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\SharedLibs\X.UI.APIKeys\X.UI.APIKeys.csproj">
+      <Project>{23257002-db11-4bfa-837c-649b558575e5}</Project>
+      <Name>X.UI.APIKeys</Name>
+    </ProjectReference>
     <ProjectReference Include="..\X.Extension.ThirdParty.Flickr.Services\X.Extension.ThirdParty.Flickr.Services.csproj">
       <Project>{d8b7aa03-67cb-4763-9370-8891600a557a}</Project>
       <Name>X.Extension.ThirdParty.Flickr.Services</Name>
