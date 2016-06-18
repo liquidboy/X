@@ -21,7 +21,10 @@ namespace X.Extension.ThirdParty.Flickr.VM
     {
         public string Title { get; set; } = "Splash";
         public string Version { get; set; } = "1.0.0.1";
-        public PhotoCollection FavouritePhotos { get; set; }
+
+
+        private PhotoCollection _FavouritePhotos;
+        public PhotoCollection FavouritePhotos { get { return _FavouritePhotos; } set { _FavouritePhotos = value; RaisePropertyChanged(); } }
 
 
         public FlickrNet.Flickr _flickr = null;

@@ -12,10 +12,10 @@
     <Grid>
         <Rectangle Fill="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Rectangle>
         <TextBlock Text="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="30"></TextBlock>
-        <GridView ItemsSource="{Binding FavouritePhotos}" >
+        <GridView ItemsSource="{Binding FavouritePhotos}" Margin="10,100,0,10">
             <GridView.ItemTemplate>
                 <DataTemplate>
-                    <Image Width="108" Height="108" Stretch="UniformToFill" Source="{Binding SquareThumbnailUrl}"></Image>
+                    <Image Width="104" Height="104" Stretch="UniformToFill" Source="{Binding SquareThumbnailUrl}"></Image>
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
