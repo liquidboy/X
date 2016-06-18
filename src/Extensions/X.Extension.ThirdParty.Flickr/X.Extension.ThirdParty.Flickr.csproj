@@ -148,6 +148,10 @@
       <Project>{23257002-db11-4bfa-837c-649b558575e5}</Project>
       <Name>X.UI.APIKeys</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SharedLibs\X.UI.LiteTab\X.UI.LiteTab.csproj">
+      <Project>{7564864b-e139-42a3-b53f-0714d118edae}</Project>
+      <Name>X.UI.LiteTab</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SharedLibs\X.UI.UserCard\X.UI.UserCard.csproj">
       <Project>{5020ec7c-3018-4af2-9481-8b0efe491170}</Project>
       <Name>X.UI.UserCard</Name>

@@ -14,6 +14,7 @@ using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using X.Services.Data;
+using X.UI.LiteTab;
 
 namespace X.Extension.ThirdParty.Flickr.VM
 {
@@ -37,12 +38,15 @@ namespace X.Extension.ThirdParty.Flickr.VM
         Person _LoggedInUser;
         Visibility _IsLoginVisible = Visibility.Collapsed;
         Visibility _IsAPIKeyVisible = Visibility.Collapsed;
+        Visibility _IsTabsVisible = Visibility.Collapsed;
+        
 
         public Visibility IsLoginVisible { get { return _IsLoginVisible; } set { _IsLoginVisible = value; RaisePropertyChanged(); } } 
         public Visibility IsAPIKeyVisible { get { return _IsAPIKeyVisible; } set { _IsAPIKeyVisible = value; RaisePropertyChanged(); } }
         public Person LoggedInUser { get { return _LoggedInUser; } set { _LoggedInUser = value; RaisePropertyChanged(); } }
+        public Visibility IsTabsVisible { get { return _IsTabsVisible; } set { _IsTabsVisible = value; RaisePropertyChanged(); } }
 
-
+        public List<Tab> Tabs { get; set; } = new List<Tab>();
 
         private RelayCommand<string> _requestFlickrLogin;
         public RelayCommand<string> RequestFlickrLogin
@@ -61,6 +65,8 @@ namespace X.Extension.ThirdParty.Flickr.VM
 
         public SplashVM() {
             _flickr = new FlickrNet.Flickr();
+            Tabs.Add(new Tab() { Name = "Your Favourites", IsSelected = true});
+            Tabs.Add(new Tab() { Name = "Public" });
             GetAPIData();
             PopulatePassportData();
         }
@@ -82,6 +88,7 @@ namespace X.Extension.ThirdParty.Flickr.VM
             if (data != null && data.Count > 0)
             {
                 IsLoginVisible = Visibility.Collapsed;
+                IsTabsVisible = Visibility.Visible;
 
                 var dm = data[0];
 
@@ -113,6 +120,7 @@ namespace X.Extension.ThirdParty.Flickr.VM
             else {
                 //no passport so show login button
                 IsLoginVisible = Visibility.Visible;
+                IsTabsVisible = Visibility.Collapsed;
             }
         }
 

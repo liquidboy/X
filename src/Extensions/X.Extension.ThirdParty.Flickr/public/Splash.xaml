@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:xuiak="using:X.UI.APIKeys"
     xmlns:xuiuc="using:X.UI.UserCard"
+    xmlns:xuitl="using:X.UI.LiteTab"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -10,17 +11,26 @@
     d:DesignWidth="400">
 
     <Grid>
-        <Rectangle Fill="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Rectangle>
-        <TextBlock Text="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="30"></TextBlock>
-        <GridView ItemsSource="{Binding FavouritePhotos}" Margin="10,100,0,10">
+        <xuiuc:CircularCard Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" 
+                            PrimaryName="{Binding LoggedInUser.RealName}" SecondaryName="{Binding LoggedInUser.UserName}" 
+                            Foreground="Black" AvatarUri="{Binding LoggedInUser.BuddyIconUrl}"></xuiuc:CircularCard>
+        <Grid Margin="0,110,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Visibility="{Binding IsTabsVisible}">
+            <xuitl:TabList x:Name="tlMain" Grid.Row="0"  Orientation="Horizontal" Margin="0,0,0,0" 
+                           TabItemBorderColor="DarkGray" Height="40"
+                           GlowColor="White" HorizontalAlignment="Center" 
+                           ItemsSource="{Binding Tabs}"
+                           VerticalAlignment="Top">
+            </xuitl:TabList>
+        </Grid>
+        <GridView ItemsSource="{Binding FavouritePhotos}" Margin="4,155,0,10">
             <GridView.ItemTemplate>
                 <DataTemplate>
-                    <Image Width="104" Height="104" Stretch="UniformToFill" Source="{Binding SquareThumbnailUrl}"></Image>
+                    <Image Width="106" Height="106" Stretch="UniformToFill" Source="{Binding SquareThumbnailUrl}"></Image>
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
         <Button Content="Login" Command="{Binding RequestFlickrLogin}" CommandParameter="RequestLogin" Visibility="{Binding IsLoginVisible}"></Button>
         <xuiak:ApiEditor Visibility="{Binding IsAPIKeyVisible}"></xuiak:ApiEditor>
-        <xuiuc:CircularCard Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" PrimaryName="{Binding LoggedInUser.RealName}" SecondaryName="{Binding LoggedInUser.UserName}" Foreground="Black" AvatarUri="{Binding LoggedInUser.BuddyIconUrl}"></xuiuc:CircularCard>
+        
     </Grid>
 </UserControl>

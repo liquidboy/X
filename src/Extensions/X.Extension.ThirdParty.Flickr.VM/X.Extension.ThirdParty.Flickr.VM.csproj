@@ -124,6 +124,10 @@
       <Project>{9d98bf69-e061-4f8c-b8c9-ce65116374b8}</Project>
       <Name>X.Services.Image</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SharedLibs\X.UI.LiteTab\X.UI.LiteTab.csproj">
+      <Project>{7564864b-e139-42a3-b53f-0714d118edae}</Project>
+      <Name>X.UI.LiteTab</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">
     <VisualStudioVersion>15.0</VisualStudioVersion>
