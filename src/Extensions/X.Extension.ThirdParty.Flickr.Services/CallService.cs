@@ -44,13 +44,8 @@ namespace X.Extension.ThirdParty.Flickr.Services
                     returnData.Add("splash-page", "Splash.xaml");
                     returnData.Add("default", "splash-page");
                     break;
-                case "DATA":
-                    returnData.Add("FavouritePhotos", "list");
-                    break;
-                case "FavouritePhotos":
-                    returnData.Add("content", "a,b,c,d");
-                    returnData.Add("count", "4");
-                    returnData.Add("page", "1");
+                case "VM":
+                    returnData.Add("splash-page", "X.Extension.ThirdParty.Flickr.VM|SplashVM");
                     break;
             }
             

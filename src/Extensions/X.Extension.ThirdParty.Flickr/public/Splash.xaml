@@ -10,7 +10,7 @@
 
     <Grid>
         <Rectangle Fill="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Rectangle>
-        <TextBlock Text="SPLASH PAGE" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="30"></TextBlock>
+        <TextBlock Text="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="30"></TextBlock>
         <GridView ItemsSource="{Binding FavouritePhotos}" >
             <GridView.ItemTemplate>
                 <DataTemplate>

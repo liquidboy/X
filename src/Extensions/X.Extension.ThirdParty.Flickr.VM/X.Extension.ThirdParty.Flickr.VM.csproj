@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6EF45F7F-FC6B-49F3-AB26-3AE0678FAE05}</ProjectGuid>
+    <ProjectGuid>{93951C5E-AF5D-4F2A-8CB4-CF24025C0CC5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>X.Services.Extensions</RootNamespace>
-    <AssemblyName>X.Services.Extensions</AssemblyName>
+    <RootNamespace>X.Extension.ThirdParty.Flickr.VM</RootNamespace>
+    <AssemblyName>X.Extension.ThirdParty.Flickr.VM</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.14332.0</TargetPlatformVersion>
@@ -107,52 +107,26 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExtensionHelper.cs" />
-    <Compile Include="ExtensionManifest.cs" />
-    <Compile Include="ExtensionLite.cs" />
-    <Compile Include="ExtensionsService.cs" />
+    <Compile Include="SplashVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ExtensionToImageSourceConverter.cs" />
-    <Compile Include="ThirdParty\_Template\_Template.xaml.cs">
-      <DependentUpon>_Template.xaml</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="Properties\X.Services.Extensions.rd.xml" />
+    <EmbeddedResource Include="Properties\X.Extension.ThirdParty.Flickr.VM.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Extensions\X.Extension.ThirdParty.Flickr.VM\X.Extension.ThirdParty.Flickr.VM.csproj">
-      <Project>{93951c5e-af5d-4f2a-8cb4-cf24025c0cc5}</Project>
-      <Name>X.Extension.ThirdParty.Flickr.VM</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.CoreLib\X.CoreLib.csproj">
+    <ProjectReference Include="..\..\SharedLibs\X.CoreLib\X.CoreLib.csproj">
       <Project>{d273509d-612c-47c3-b2a6-c203d96b90d3}</Project>
       <Name>X.CoreLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\X.Extensions\X.Extensions.csproj">
-      <Project>{bd6d553a-4777-4d54-9289-3e9e4289604f}</Project>
-      <Name>X.Extensions</Name>
+    <ProjectReference Include="..\..\SharedLibs\X.Services.Data\X.Services.Data.csproj">
+      <Project>{9cf3fa6f-8edd-4c98-a505-a6614aa214cd}</Project>
+      <Name>X.Services.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\X.Services.Settings\X.Services.Settings.csproj">
-      <Project>{63151622-a00d-49bc-a162-86035a2cc7c6}</Project>
-      <Name>X.Services.Settings</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.UI.Toolbar\X.UI.Toolbar.csproj">
-      <Project>{3d1b671c-1cd1-424e-bfea-14c28b0f1938}</Project>
-      <Name>X.UI.Toolbar</Name>
+    <ProjectReference Include="..\..\SharedLibs\X.Services.Image\X.Services.Image.csproj">
+      <Project>{9d98bf69-e061-4f8c-b8c9-ce65116374b8}</Project>
+      <Name>X.Services.Image</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="ThirdParty\_Template\_Template.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="ThirdParty\_Template\_Template.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
-    <VisualStudioVersion>14.0</VisualStudioVersion>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">
+    <VisualStudioVersion>15.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

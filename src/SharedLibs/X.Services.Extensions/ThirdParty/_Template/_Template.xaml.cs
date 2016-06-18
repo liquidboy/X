@@ -1,4 +1,5 @@
 ﻿using CoreLib.Extensions;
+using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -18,6 +19,8 @@ using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using X.Extensions;
+using System.Collections.Specialized;
+using System.Reflection;
 
 namespace X.Services.ThirdParty
 {
@@ -77,32 +80,22 @@ namespace X.Services.ThirdParty
                     ctlContent.Children.Add(newEl);
                 }
                 else {
-
+                    ViewModelBase vm = null;
                     var ef = Extensions.ExtensionsService.Instance.GetExtensionByAppExtensionUniqueId(ExtensionManifest.AppExtensionUniqueID);
 
-                    var resultData = await ef.MakeUWPCommandCall("DATA", "Call");
-                    dynamic data = null;
+                    var resultData = await ef.MakeUWPCommandCall("VM", "Call");
+                    var vms = new StringDictionary();
                     if (resultData != null)
-                    {
-                        data = new ExpandoObject();
                         foreach (var val in resultData)
-                        {
-                            if ((string)val.Value == "list") { ((IDictionary<string, object>)data)[val.Key] = new List<object>() { "","","" }; }
-                        }
-                    }
+                            vms.Add(val.Key, (string)val.Value);
+                    
 
 
                     var result = await ef.MakeUWPCommandCall("UI", "Call");
                     if (result != null) {
-                        //var newEl = new StackPanel() { Orientation = Orientation.Vertical };
                         var newEl = new Grid() { HorizontalAlignment = HorizontalAlignment.Stretch, VerticalAlignment = VerticalAlignment.Stretch };
-                        //foreach (var val in result)
-                        //{
-                        //    newEl.Children.Add(new TextBlock() { Text = $"{val.Key}  - {val.Value}" });
-                        //}
                         if (result.ContainsKey("default"))
                         {
-                            
                             var keyValueForDefault = result.Where(x => x.Key == "default").First();
                             var defaultPage = result.Where(x => x.Key == (string)keyValueForDefault.Value).First();
 
@@ -122,12 +115,15 @@ namespace X.Services.ThirdParty
                                 }
                             }
 
-                            
-                        }else
-                        {
+                            var assemblyToLoad = vms[(string)keyValueForDefault.Value];
+                            var assemblyParts = assemblyToLoad.Split("|".ToCharArray());
 
+                            var assembly = Assembly.Load(new AssemblyName(assemblyParts[0]));
+                            var type = assembly.GetType($"{assemblyParts[0]}.{assemblyParts[1]}");
+                            vm = (ViewModelBase)Activator.CreateInstance(type);
                         }
-                        if (data != null) newEl.DataContext = data;
+                        
+                        if (vm != null) newEl.DataContext = vm;
                         ctlContent.Children.Add(newEl);
                     }
 
