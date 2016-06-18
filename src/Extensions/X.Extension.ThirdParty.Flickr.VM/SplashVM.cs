@@ -29,12 +29,16 @@ namespace X.Extension.ThirdParty.Flickr.VM
         OAuthRequestToken RequestToken;
 
         bool IsLoggedIn = false;
-        Person _LoggedInUser;
-        public Person LoggedInUser { get { return _LoggedInUser; } set { _LoggedInUser = value; RaisePropertyChanged(); } }
         APIKeyDataModel apiKey;
 
+        Person _LoggedInUser;
+        Visibility _IsLoginVisible = Visibility.Collapsed;
+        Visibility _IsAPIKeyVisible = Visibility.Collapsed;
 
-        public Visibility IsLoginVisible { get; set; } = Visibility.Collapsed;
+        public Visibility IsLoginVisible { get { return _IsLoginVisible; } set { _IsLoginVisible = value; RaisePropertyChanged(); } } 
+        public Visibility IsAPIKeyVisible { get { return _IsAPIKeyVisible; } set { _IsAPIKeyVisible = value; RaisePropertyChanged(); } }
+        public Person LoggedInUser { get { return _LoggedInUser; } set { _LoggedInUser = value; RaisePropertyChanged(); } }
+
 
 
         private RelayCommand<string> _requestFlickrLogin;
@@ -58,15 +62,19 @@ namespace X.Extension.ThirdParty.Flickr.VM
             PopulatePassportData();
         }
 
-        private async void GetAPIData() {
+        private void GetAPIData() {
             var apis = StorageService.Instance.Storage.RetrieveList<APIKeyDataModel>();
             if (apis != null && apis.Count > 0) apiKey = apis.Where(x => x.Type == "Flickr").FirstOrDefault();
+
+            if (apiKey == null) IsAPIKeyVisible = Visibility.Visible;
+            else IsAPIKeyVisible = Visibility.Collapsed;
         }
 
 
         private async void PopulatePassportData()
         {
-            
+            if (apiKey == null) { IsLoginVisible = Visibility.Visible; return; }
+
             var data = StorageService.Instance.Storage.RetrieveList<PassportDataModel>();
             if (data != null && data.Count > 0)
             {

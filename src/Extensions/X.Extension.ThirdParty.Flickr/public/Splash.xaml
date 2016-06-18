@@ -20,7 +20,7 @@
             </GridView.ItemTemplate>
         </GridView>
         <Button Content="Login" Command="{Binding RequestFlickrLogin}" CommandParameter="RequestLogin" Visibility="{Binding IsLoginVisible}"></Button>
-        <!--<xuiak:ApiEditor></xuiak:ApiEditor>-->
+        <xuiak:ApiEditor Visibility="{Binding IsAPIKeyVisible}"></xuiak:ApiEditor>
         <xuiuc:CircularCard Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" PrimaryName="{Binding LoggedInUser.RealName}" SecondaryName="{Binding LoggedInUser.UserName}" Foreground="Black" AvatarUri="{Binding LoggedInUser.BuddyIconUrl}"></xuiuc:CircularCard>
     </Grid>
 </UserControl>
