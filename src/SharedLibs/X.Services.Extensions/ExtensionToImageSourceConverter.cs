@@ -27,7 +27,7 @@ namespace X.Services.Extensions.Converters
             {
                 using (var stream = getImageStreamAsync(bi, url).Result)
                 {
-                    bi.SetSourceAsync(stream).AsTask().ConfigureAwait(false);
+                    if (stream != null) bi.SetSourceAsync(stream).AsTask().ConfigureAwait(false);
                 }
             }
             else if (url.Contains("http://") || url.Contains("https://"))
@@ -49,6 +49,7 @@ namespace X.Services.Extensions.Converters
                 var urlParts = url.Split("/".ToCharArray());
                 
                 var el = ExtensionsService.Instance.FindExtensionLiteInstance(urlParts[2]);
+                if (el == null) return null;
                 var packageDirectory = el.AppExtension.Package.InstalledLocation;
                 var publicDirectory = await packageDirectory.GetFolderAsync("public").AsTask().ConfigureAwait(false);
                 var imageFile = await publicDirectory.GetFileAsync(urlParts[urlParts.Length - 1]).AsTask().ConfigureAwait(false);
