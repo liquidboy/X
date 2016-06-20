@@ -107,6 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DelegateCommand.cs" />
     <Compile Include="LiteTabSelectedFontSizeConverter.cs" />
     <Compile Include="LiteTabSelectedThicknessConverter.cs" />
     <Compile Include="Tab.cs" />

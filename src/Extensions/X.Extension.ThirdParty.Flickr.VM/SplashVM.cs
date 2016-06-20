@@ -57,6 +57,14 @@ namespace X.Extension.ThirdParty.Flickr.VM
             }
         }
 
+        private RelayCommand<string> _tabChangedCommand;
+        public RelayCommand<string> TabChangedCommand
+        {
+            get
+            {
+                return _tabChangedCommand ?? (_tabChangedCommand = new RelayCommand<string>((arg) => {  }));
+            }
+        }
 
 
 

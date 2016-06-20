@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Windows.Graphics.Display;
 using Windows.Graphics.Imaging;
 using Windows.Storage.Streams;
@@ -27,14 +28,14 @@ namespace X.UI.LiteTab
 
 
         ItemsControl _icTabList;
-        int RenderTargetIndexFor_icTabList = 0;
+        //int RenderTargetIndexFor_icTabList = 0;
         List<X.UI.LiteTab.Tab> _data = new List<Tab>();
 
         Tab _selectedTab;
         public event EventHandler OnTabChanged;
-
-
-
+        
+        
+      
         public void Invalidate() { 
             //_bkgLayer?.DrawUIElements(_icTabList, RenderTargetIndexFor_icTabList); 
         }
@@ -58,13 +59,17 @@ namespace X.UI.LiteTab
             get { return (Brush)GetValue(TabItemBorderColorProperty); }
             set { SetValue(TabItemBorderColorProperty, value); }
         }
-
-
-
+        
         public Color GlowColor
         {
             get { return (Color)GetValue(GlowColorProperty); }
             set { SetValue(GlowColorProperty, value); }
+        }
+
+        public ICommand TabChangedCommand
+        {
+            get { return (ICommand)GetValue(TabChangedCommandProperty); }
+            set { SetValue(TabChangedCommandProperty, value); }
         }
 
 
@@ -73,6 +78,9 @@ namespace X.UI.LiteTab
 
 
 
+
+        public static readonly DependencyProperty TabChangedCommandProperty =
+            DependencyProperty.Register("TabChangedCommand", typeof(ICommand), typeof(TabList), new PropertyMetadata(null));
 
         public static readonly DependencyProperty GlowColorProperty =
             DependencyProperty.Register("GlowColor", typeof(Color), typeof(TabList), new PropertyMetadata(Colors.Black));
@@ -93,8 +101,8 @@ namespace X.UI.LiteTab
 
 
 
-       
-       
+
+
 
         public void ChangeSelectedTab(Tab tab) {
 
@@ -107,7 +115,8 @@ namespace X.UI.LiteTab
 
             Invalidate();
 
-            if (this.OnTabChanged != null) this.OnTabChanged(_selectedTab, EventArgs.Empty);
+            OnTabChanged?.Invoke(_selectedTab, EventArgs.Empty);
+            TabChangedCommand?.Execute(null);
         }
 
 

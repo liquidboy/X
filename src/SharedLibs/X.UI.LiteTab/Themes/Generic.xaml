@@ -72,7 +72,7 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate x:Name="inlineDT">
                                     <!--  Turned into a ControlTemplate so as to get to the Buttons click event -->
-                                    <local:TabListItem BorderBrush="{TemplateBinding TabItemBorderColor}" Foreground="{TemplateBinding Foreground}" ></local:TabListItem>
+                                    <local:TabListItem BorderBrush="{TemplateBinding TabItemBorderColor}" Foreground="{TemplateBinding Foreground}"></local:TabListItem>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                             <ItemsControl.ItemsPanel>

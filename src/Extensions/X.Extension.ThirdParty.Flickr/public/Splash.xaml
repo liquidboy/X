@@ -19,6 +19,7 @@
                            TabItemBorderColor="DarkGray" Height="40"
                            GlowColor="White" HorizontalAlignment="Center" 
                            ItemsSource="{Binding Tabs}"
+                           TabChangedCommand="{Binding TabChangedCommand}"
                            VerticalAlignment="Top">
             </xuitl:TabList>
         </Grid>
