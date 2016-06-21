@@ -36,6 +36,8 @@ namespace X.Extension.ThirdParty.Flickr.VM
         APIKeyDataModel apiKey;
 
         Person _LoggedInUser;
+
+
         Visibility _IsLoginVisible = Visibility.Collapsed;
         Visibility _IsAPIKeyVisible = Visibility.Collapsed;
         Visibility _IsTabsVisible = Visibility.Collapsed;
@@ -53,6 +55,17 @@ namespace X.Extension.ThirdParty.Flickr.VM
         public List<Tab> Tabs { get; set; } = new List<Tab>();
 
         private RelayCommand<string> _requestFlickrLogin;
+        private RelayCommand<Photo> _pictureSelectedCommand;
+        private RelayCommand<Tab> _tabChangedCommand;
+
+        
+        public RelayCommand<Photo> PictureSelectedCommand
+        {
+            get
+            {
+                return _pictureSelectedCommand ?? (_pictureSelectedCommand = new RelayCommand<Photo>((arg) => {  }));
+            }
+        }
         public RelayCommand<string> RequestFlickrLogin
         {
             get
@@ -60,8 +73,6 @@ namespace X.Extension.ThirdParty.Flickr.VM
                 return _requestFlickrLogin ?? (_requestFlickrLogin = new RelayCommand<string>((arg)=> { AttemptFlickrLogin(); }));
             }
         }
-
-        private RelayCommand<Tab> _tabChangedCommand;
         public RelayCommand<Tab> TabChangedCommand
         {
             get

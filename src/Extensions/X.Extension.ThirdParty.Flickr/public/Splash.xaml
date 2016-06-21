@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="300"
+    x:Name="root"
     d:DesignWidth="400">
 
     <Grid>
@@ -23,10 +24,12 @@
                            VerticalAlignment="Top">
             </xuitl:TabList>
         </Grid>
-        <GridView Visibility="{Binding IsFavouritesVisible}" ItemsSource="{Binding FavouritePhotos}" Margin="4,155,0,10">
+        <GridView Visibility="{Binding IsFavouritesVisible}" ItemsSource="{Binding FavouritePhotos}" Margin="4,155,0,10" >
             <GridView.ItemTemplate>
                 <DataTemplate>
-                    <Image Width="106" Height="106" Stretch="UniformToFill" Source="{Binding SquareThumbnailUrl}"></Image>
+                    <Button Padding="0" Margin="0" BorderThickness="0" Command="{Binding DataContext.PictureSelectedCommand, ElementName=root }" CommandParameter="{Binding }" >
+                        <Image Width="106" Height="106" Stretch="UniformToFill" Source="{Binding SquareThumbnailUrl}"></Image>
+                    </Button>
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
