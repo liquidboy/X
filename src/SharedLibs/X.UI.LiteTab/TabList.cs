@@ -116,7 +116,7 @@ namespace X.UI.LiteTab
             Invalidate();
 
             OnTabChanged?.Invoke(_selectedTab, EventArgs.Empty);
-            TabChangedCommand?.Execute(null);
+            TabChangedCommand?.Execute(tab);
         }
 
 

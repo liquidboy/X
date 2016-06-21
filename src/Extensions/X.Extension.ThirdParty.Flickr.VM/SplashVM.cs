@@ -39,8 +39,12 @@ namespace X.Extension.ThirdParty.Flickr.VM
         Visibility _IsLoginVisible = Visibility.Collapsed;
         Visibility _IsAPIKeyVisible = Visibility.Collapsed;
         Visibility _IsTabsVisible = Visibility.Collapsed;
-        
+        Visibility _IsFavouritesVisible = Visibility.Visible;
+        Visibility _IsPublicVisible = Visibility.Collapsed;
 
+
+        public Visibility IsPublicVisible { get { return _IsPublicVisible; } set { _IsPublicVisible = value; RaisePropertyChanged(); } }
+        public Visibility IsFavouritesVisible { get { return _IsFavouritesVisible; } set { _IsFavouritesVisible = value; RaisePropertyChanged(); } }
         public Visibility IsLoginVisible { get { return _IsLoginVisible; } set { _IsLoginVisible = value; RaisePropertyChanged(); } } 
         public Visibility IsAPIKeyVisible { get { return _IsAPIKeyVisible; } set { _IsAPIKeyVisible = value; RaisePropertyChanged(); } }
         public Person LoggedInUser { get { return _LoggedInUser; } set { _LoggedInUser = value; RaisePropertyChanged(); } }
@@ -57,12 +61,18 @@ namespace X.Extension.ThirdParty.Flickr.VM
             }
         }
 
-        private RelayCommand<string> _tabChangedCommand;
-        public RelayCommand<string> TabChangedCommand
+        private RelayCommand<Tab> _tabChangedCommand;
+        public RelayCommand<Tab> TabChangedCommand
         {
             get
             {
-                return _tabChangedCommand ?? (_tabChangedCommand = new RelayCommand<string>((arg) => {  }));
+                return _tabChangedCommand ?? (_tabChangedCommand = new RelayCommand<Tab>((arg) => {
+                    switch (arg.Name) {
+                        case "Public": IsPublicVisible = Visibility.Visible; IsFavouritesVisible = Visibility.Collapsed; break;
+                        case "Your Favourites": IsFavouritesVisible = Visibility.Visible; IsPublicVisible = Visibility.Collapsed; break;
+                        default:break;
+                    }
+                }));
             }
         }
 
