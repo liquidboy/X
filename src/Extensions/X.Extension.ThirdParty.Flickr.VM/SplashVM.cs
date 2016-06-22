@@ -22,6 +22,7 @@ namespace X.Extension.ThirdParty.Flickr.VM
     {
         public string Title { get; set; } = "Splash";
         public string Version { get; set; } = "1.0.0.1";
+        public string GroupingType { get; set; } = "Flickr";
 
 
         private PhotoCollection _FavouritePhotos;
@@ -102,7 +103,7 @@ namespace X.Extension.ThirdParty.Flickr.VM
 
         private void GetAPIData() {
             var apis = StorageService.Instance.Storage.RetrieveList<APIKeyDataModel>();
-            if (apis != null && apis.Count > 0) apiKey = apis.Where(x => x.Type == "Flickr").FirstOrDefault();
+            if (apis != null && apis.Count > 0) apiKey = apis.Where(x => x.Type == GroupingType).FirstOrDefault();
 
             if (apiKey == null) IsAPIKeyVisible = Visibility.Visible;
             else IsAPIKeyVisible = Visibility.Collapsed;
@@ -116,35 +117,35 @@ namespace X.Extension.ThirdParty.Flickr.VM
             var data = StorageService.Instance.Storage.RetrieveList<PassportDataModel>();
             if (data != null && data.Count > 0)
             {
-                IsLoginVisible = Visibility.Collapsed;
-                IsTabsVisible = Visibility.Visible;
+                var dm = data.Where(x => x.PassType == GroupingType).FirstOrDefault();
+                if (dm != null) {
+                    IsLoginVisible = Visibility.Collapsed;
+                    IsTabsVisible = Visibility.Visible;
+                    
+                    RequestToken = new OAuthRequestToken() { Token = dm.Token, TokenSecret = dm.TokenSecret };
+                    AccessToken = new OAuthAccessToken()
+                    {
+                        Username = dm.UserName,
+                        FullName = dm.FullName,
+                        ScreenName = dm.ScreenName,
+                        Token = dm.Token,
+                        TokenSecret = dm.TokenSecret,
+                        UserId = dm.UserId,
+                    };
+                    IsLoggedIn = true;
 
-                var dm = data[0];
+                    _flickr.OAuthAccessToken = AccessToken.Token;
+                    _flickr.OAuthAccessTokenSecret = AccessToken.TokenSecret;
 
-                RequestToken = new OAuthRequestToken() { Token = dm.Token, TokenSecret = dm.TokenSecret };
-                AccessToken = new OAuthAccessToken()
-                {
-                    Username = dm.UserName,
-                    FullName = dm.FullName,
-                    ScreenName = dm.ScreenName,
-                    Token = dm.Token,
-                    TokenSecret = dm.TokenSecret,
-                    UserId = dm.UserId,
-                };
-                IsLoggedIn = true;
+                    _flickr.ApiKey = apiKey.APIKey;
+                    _flickr.ApiSecret = apiKey.APISecret;
 
-                _flickr.OAuthAccessToken = AccessToken.Token;
-                _flickr.OAuthAccessTokenSecret = AccessToken.TokenSecret;
+                    var p = await _flickr.PeopleGetInfoAsync(AccessToken.UserId);
+                    if (!p.HasError) LoggedInUser = p.Result;
 
-                _flickr.ApiKey = apiKey.APIKey;
-                _flickr.ApiSecret = apiKey.APISecret;
-
-                var p = await _flickr.PeopleGetInfoAsync(AccessToken.UserId);
-                if (!p.HasError) LoggedInUser = p.Result;
-
-                var favs = await _flickr.FavoritesGetListAsync(AccessToken.UserId);
-                if (!favs.HasError) FavouritePhotos = favs.Result;
-
+                    var favs = await _flickr.FavoritesGetListAsync(AccessToken.UserId);
+                    if (!favs.HasError) FavouritePhotos = favs.Result;
+                }
             }
             else {
                 //no passport so show login button
@@ -275,7 +276,7 @@ namespace X.Extension.ThirdParty.Flickr.VM
                                 dm.Token = AccessToken.Token;
                                 dm.TokenSecret = AccessToken.TokenSecret;
                                 dm.Verifier = xoauth_verifier;
-                                dm.PassType = "Flickr";
+                                dm.PassType = GroupingType;
 
                                 dm.UserId = AccessToken.UserId;
                                 dm.UserName = AccessToken.Username;

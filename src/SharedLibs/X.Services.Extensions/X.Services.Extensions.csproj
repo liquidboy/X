@@ -123,6 +123,10 @@
       <Project>{93951c5e-af5d-4f2a-8cb4-cf24025c0cc5}</Project>
       <Name>X.Extension.ThirdParty.Flickr.VM</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Extensions\X.Extension.ThirdParty.Twitter.VM\X.Extension.ThirdParty.Twitter.VM.csproj">
+      <Project>{7b7a205f-dfad-4a96-8adc-e3393a474612}</Project>
+      <Name>X.Extension.ThirdParty.Twitter.VM</Name>
+    </ProjectReference>
     <ProjectReference Include="..\X.CoreLib\X.CoreLib.csproj">
       <Project>{d273509d-612c-47c3-b2a6-c203d96b90d3}</Project>
       <Name>X.CoreLib</Name>

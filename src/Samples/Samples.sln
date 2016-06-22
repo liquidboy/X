@@ -151,7 +151,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X.Player", "..\X.Player\X.P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X.Extension.ThirdParty.Flickr.VM", "..\Extensions\X.Extension.ThirdParty.Flickr.VM\X.Extension.ThirdParty.Flickr.VM.csproj", "{93951C5E-AF5D-4F2A-8CB4-CF24025C0CC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X.Extensions.ThirdParty.Twitter.VM", "..\Extensions\X.Extensions.ThirdParty.Twitter.VM\X.Extensions.ThirdParty.Twitter.VM.csproj", "{7B7A205F-DFAD-4A96-8ADC-E3393A474612}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X.Extension.ThirdParty.Twitter.VM", "..\Extensions\X.Extension.ThirdParty.Twitter.VM\X.Extension.ThirdParty.Twitter.VM.csproj", "{7B7A205F-DFAD-4A96-8ADC-E3393A474612}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

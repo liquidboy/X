@@ -7,8 +7,8 @@
     <ProjectGuid>{7B7A205F-DFAD-4A96-8ADC-E3393A474612}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>X.Extensions.ThirdParty.Twitter.VM</RootNamespace>
-    <AssemblyName>X.Extensions.ThirdParty.Twitter.VM</AssemblyName>
+    <RootNamespace>X.Extension.ThirdParty.Twitter.VM</RootNamespace>
+    <AssemblyName>X.Extension.ThirdParty.Twitter.VM</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.14332.0</TargetPlatformVersion>

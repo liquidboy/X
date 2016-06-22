@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("X.Extensions.ThirdParty.Twitter.VM")]
+[assembly: AssemblyTitle("X.Extension.ThirdParty.Twitter.VM")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("X.Extensions.ThirdParty.Twitter.VM")]
+[assembly: AssemblyProduct("X.Extension.ThirdParty.Twitter.VM")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

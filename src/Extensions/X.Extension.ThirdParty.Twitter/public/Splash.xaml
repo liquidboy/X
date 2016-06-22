@@ -1,0 +1,40 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:xuiak="using:X.UI.APIKeys"
+    xmlns:xuiuc="using:X.UI.UserCard"
+    xmlns:xuitl="using:X.UI.LiteTab"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    x:Name="root"
+    d:DesignWidth="400">
+
+    <Grid>
+        <xuiuc:CircularCard Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" 
+                            PrimaryName="{Binding LoggedInUser.RealName}" SecondaryName="{Binding LoggedInUser.UserName}" 
+                            Foreground="Black" AvatarUri="{Binding LoggedInUser.BuddyIconUrl}"></xuiuc:CircularCard>
+        <Grid Margin="0,110,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Visibility="{Binding IsTabsVisible}">
+            <xuitl:TabList x:Name="tlMain" Grid.Row="0"  Orientation="Horizontal" Margin="0,0,0,0" 
+                           TabItemBorderColor="DarkGray" Height="40"
+                           GlowColor="White" HorizontalAlignment="Center" 
+                           ItemsSource="{Binding Tabs}"
+                           TabChangedCommand="{Binding TabChangedCommand}"
+                           VerticalAlignment="Top">
+            </xuitl:TabList>
+        </Grid>
+        <GridView Visibility="{Binding IsFavouritesVisible}" ItemsSource="{Binding FavouritePhotos}" Margin="4,155,0,10" >
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <Button Padding="0" Margin="0" BorderThickness="0" Command="{Binding DataContext.PictureSelectedCommand, ElementName=root }" CommandParameter="{Binding }" >
+                        <Image Width="106" Height="106" Stretch="UniformToFill" Source="{Binding SquareThumbnailUrl}"></Image>
+                    </Button>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+        <Button Content="Login" Command="{Binding RequestFlickrLogin}" CommandParameter="RequestLogin" Visibility="{Binding IsLoginVisible}"></Button>
+        <xuiak:ApiEditor Visibility="{Binding IsAPIKeyVisible}"></xuiak:ApiEditor>
+        
+    </Grid>
+</UserControl>

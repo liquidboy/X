@@ -41,6 +41,11 @@ namespace X.Extension.ThirdParty.Twitter.Services
                 case "UI":
                     returnData.Add("sketch-test", "X.Extension.ThirdParty.Twitter.UI.Test");
                     returnData.Add("sketch-home", "X.Extension.ThirdParty.Twitter.UI.Home");
+                    returnData.Add("splash-page", "Splash.xaml");
+                    returnData.Add("default", "splash-page");
+                    break;
+                case "VM":
+                    returnData.Add("splash-page", "X.Extension.ThirdParty.Twitter.VM|SplashVM");
                     break;
             }
             

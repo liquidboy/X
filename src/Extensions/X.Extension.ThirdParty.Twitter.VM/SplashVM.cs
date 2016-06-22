@@ -18,11 +18,11 @@ using X.UI.LiteTab;
 
 namespace X.Extension.ThirdParty.Twitter.VM
 {
-    public class TwitterVM :ViewModelBase
+    public class SplashVM :ViewModelBase
     {
         public string Title { get; set; } = "Splash";
         public string Version { get; set; } = "1.0.0.1";
-
+        public string GroupingType { get; set; } = "Twitter";
 
         private PhotoCollection _FavouritePhotos;
         public PhotoCollection FavouritePhotos { get { return _FavouritePhotos; } set { _FavouritePhotos = value; RaisePropertyChanged(); } }
@@ -50,7 +50,7 @@ namespace X.Extension.ThirdParty.Twitter.VM
 
 
 
-        public TwitterVM() {
+        public SplashVM() {
             _flickr = new FlickrNet.Flickr();
             Tabs.Add(new Tab() { Name = "Your Favourites", IsSelected = true});
             Tabs.Add(new Tab() { Name = "Public" });
@@ -60,7 +60,7 @@ namespace X.Extension.ThirdParty.Twitter.VM
 
         private void GetAPIData() {
             var apis = StorageService.Instance.Storage.RetrieveList<APIKeyDataModel>();
-            if (apis != null && apis.Count > 0) apiKey = apis.Where(x => x.Type == "Twitter").FirstOrDefault();
+            if (apis != null && apis.Count > 0) apiKey = apis.Where(x => x.Type == GroupingType).FirstOrDefault();
 
            
         }
@@ -72,33 +72,32 @@ namespace X.Extension.ThirdParty.Twitter.VM
             var data = StorageService.Instance.Storage.RetrieveList<PassportDataModel>();
             if (data != null && data.Count > 0)
             {
-             
-                var dm = data[0];
+                var dm = data.Where(x => x.PassType == GroupingType).FirstOrDefault();
+                if (dm != null) {
+                    RequestToken = new OAuthRequestToken() { Token = dm.Token, TokenSecret = dm.TokenSecret };
+                    AccessToken = new OAuthAccessToken()
+                    {
+                        Username = dm.UserName,
+                        FullName = dm.FullName,
+                        ScreenName = dm.ScreenName,
+                        Token = dm.Token,
+                        TokenSecret = dm.TokenSecret,
+                        UserId = dm.UserId,
+                    };
+                    IsLoggedIn = true;
 
-                RequestToken = new OAuthRequestToken() { Token = dm.Token, TokenSecret = dm.TokenSecret };
-                AccessToken = new OAuthAccessToken()
-                {
-                    Username = dm.UserName,
-                    FullName = dm.FullName,
-                    ScreenName = dm.ScreenName,
-                    Token = dm.Token,
-                    TokenSecret = dm.TokenSecret,
-                    UserId = dm.UserId,
-                };
-                IsLoggedIn = true;
+                    _flickr.OAuthAccessToken = AccessToken.Token;
+                    _flickr.OAuthAccessTokenSecret = AccessToken.TokenSecret;
 
-                _flickr.OAuthAccessToken = AccessToken.Token;
-                _flickr.OAuthAccessTokenSecret = AccessToken.TokenSecret;
+                    _flickr.ApiKey = apiKey.APIKey;
+                    _flickr.ApiSecret = apiKey.APISecret;
 
-                _flickr.ApiKey = apiKey.APIKey;
-                _flickr.ApiSecret = apiKey.APISecret;
+                    var p = await _flickr.PeopleGetInfoAsync(AccessToken.UserId);
+                    if (!p.HasError) LoggedInUser = p.Result;
 
-                var p = await _flickr.PeopleGetInfoAsync(AccessToken.UserId);
-                if (!p.HasError) LoggedInUser = p.Result;
-
-                var favs = await _flickr.FavoritesGetListAsync(AccessToken.UserId);
-                if (!favs.HasError) FavouritePhotos = favs.Result;
-
+                    var favs = await _flickr.FavoritesGetListAsync(AccessToken.UserId);
+                    if (!favs.HasError) FavouritePhotos = favs.Result;
+                }
             }
             else {
                 //no passport so show login button
@@ -231,7 +230,7 @@ namespace X.Extension.ThirdParty.Twitter.VM
                                 dm.Token = AccessToken.Token;
                                 dm.TokenSecret = AccessToken.TokenSecret;
                                 dm.Verifier = xoauth_verifier;
-                                dm.PassType = "Flickr";
+                                dm.PassType = GroupingType;
 
                                 dm.UserId = AccessToken.UserId;
                                 dm.UserName = AccessToken.Username;
