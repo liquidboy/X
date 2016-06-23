@@ -24,8 +24,8 @@
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
-        <Button Content="Login" Command="{Binding RequestFlickrLogin}" CommandParameter="RequestLogin" Visibility="{Binding IsLoginVisible}"></Button>
-        <xuiak:ApiEditorHoriz Visibility="{Binding IsAPIKeyVisible}" HorizontalAlignment="Stretch" VerticalAlignment="Top"></xuiak:ApiEditorHoriz>
+        <Button Content="Login" Command="{Binding RequestTwitterLogin}" CommandParameter="RequestLogin" Visibility="{Binding IsLoginVisible}"></Button>
+        <xuiak:ApiEditorHoriz Visibility="{Binding IsAPIEditorVisible}" HorizontalAlignment="Stretch" VerticalAlignment="Top" ></xuiak:ApiEditorHoriz>
         
     </Grid>
 </UserControl>

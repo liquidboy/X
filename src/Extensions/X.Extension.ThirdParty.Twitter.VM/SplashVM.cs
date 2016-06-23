@@ -1,6 +1,7 @@
 ﻿using FlickrNet;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using LinqToTwitter;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -37,26 +38,30 @@ namespace X.Extension.ThirdParty.Twitter.VM
 
         Person _LoggedInUser;
         Visibility _IsLoginVisible;
+        Visibility _IsAPIEditorVisible;
 
 
-
+        public Visibility IsAPIEditorVisible { get { return _IsAPIEditorVisible; } set { _IsAPIEditorVisible = value; RaisePropertyChanged(); } }
         public Visibility IsLoginVisible { get { return _IsLoginVisible; } set { _IsLoginVisible = value; RaisePropertyChanged(); } } 
         public Person LoggedInUser { get { return _LoggedInUser; } set { _LoggedInUser = value; RaisePropertyChanged(); } }
-       
-        public List<Tab> Tabs { get; set; } = new List<Tab>();
 
 
 
-        
+        private RelayCommand<string> _requestTwitterLogin;
 
-
+        public RelayCommand<string> RequestTwitterLogin
+        {
+            get
+            {
+                return _requestTwitterLogin ?? (_requestTwitterLogin = new RelayCommand<string>((arg) => { AttemptTwitterLogin(); }));
+            }
+        }
 
 
         public SplashVM() {
             IsLoginVisible = Visibility.Collapsed;
+            IsAPIEditorVisible = Visibility.Visible;
             _flickr = new FlickrNet.Flickr();
-            Tabs.Add(new Tab() { Name = "Your Favourites", IsSelected = true});
-            Tabs.Add(new Tab() { Name = "Public" });
             GetAPIData();
             PopulatePassportData();
         }
@@ -71,10 +76,12 @@ namespace X.Extension.ThirdParty.Twitter.VM
 
         private async void PopulatePassportData()
         {
-            
             var data = StorageService.Instance.Storage.RetrieveList<PassportDataModel>();
             if (data != null && data.Count > 0)
             {
+                IsLoginVisible = Visibility.Visible;
+                IsAPIEditorVisible = Visibility.Collapsed;
+
                 var dm = data.Where(x => x.PassType == GroupingType).FirstOrDefault();
                 if (dm != null) {
                     RequestToken = new OAuthRequestToken() { Token = dm.Token, TokenSecret = dm.TokenSecret };
@@ -104,7 +111,8 @@ namespace X.Extension.ThirdParty.Twitter.VM
             }
             else {
                 //no passport so show login button
-             
+                IsLoginVisible = Visibility.Collapsed;
+                IsAPIEditorVisible = Visibility.Visible;
             }
         }
 
@@ -113,6 +121,9 @@ namespace X.Extension.ThirdParty.Twitter.VM
             try
             {
                 HttpClient httpClient = new HttpClient();
+                //var resp = await httpClient.GetAsync(new Uri(Url));
+                //return await resp.Content.ReadAsStringAsync();
+                
                 return await httpClient.GetStringAsync(new Uri(Url));
             }
             catch (Exception Err)
@@ -125,150 +136,68 @@ namespace X.Extension.ThirdParty.Twitter.VM
 
         public async void AttemptTwitterLogin()
         {
-            try
+
+
+            //var auth = new ApplicationOnlyAuthorizer
+            //{
+            //    CredentialStore = new InMemoryCredentialStore
+            //    {
+            //        ConsumerKey = apiKey.APIKey,
+            //        ConsumerSecret = apiKey.APISecret
+            //    }
+            //};
+
+            //await auth.AuthorizeAsync();
+
+
+            //var twitterCtx = new TwitterContext(auth);
+
+            //var srch =
+            //    (from search in twitterCtx.Search
+            //     where search.Type == SearchType.Search &&
+            //           search.Query == "d3d12"
+            //     select search)
+            //    .SingleOrDefault();
+
+
+            //twitterCtx.Dispose();
+
+
+
+
+            var authorizer = new UniversalAuthorizer
             {
-                //
-                // Acquiring a request token
-                //
-                TimeSpan SinceEpoch = DateTime.UtcNow - new DateTime(1970, 1, 1);
-                Random Rand = new Random();
-                String TwitterUrl = "https://api.twitter.com/oauth/request_token/";
-                Int32 Nonce = Rand.Next(1000000000);
-                //
-                // Compute base signature string and sign it.
-                //    This is a common operation that is required for all requests even after the token is obtained.
-                //    Parameters need to be sorted in alphabetical order
-                //    Keys and values should be URL Encoded.
-                //
-                String SigBaseStringParams = "oauth_callback=" + Uri.EscapeDataString(apiKey.APICallbackUrl); 
-                SigBaseStringParams += "&" + "oauth_consumer_key=" + apiKey.APIKey; 
-                SigBaseStringParams += "&" + "oauth_nonce=" + Nonce.ToString();
-                SigBaseStringParams += "&" + "oauth_signature_method=HMAC-SHA1";
-                SigBaseStringParams += "&" + "oauth_timestamp=" + Math.Round(SinceEpoch.TotalSeconds);
-                SigBaseStringParams += "&" + "oauth_version=1.0";
-                String SigBaseString = "GET&";
-                SigBaseString += Uri.EscapeDataString(TwitterUrl) + "&" + Uri.EscapeDataString(SigBaseStringParams);
-
-                Windows.Storage.Streams.IBuffer KeyMaterial = CryptographicBuffer.ConvertStringToBinary(apiKey.APISecret + "&", BinaryStringEncoding.Utf8);
-                MacAlgorithmProvider HmacSha1Provider = MacAlgorithmProvider.OpenAlgorithm("HMAC_SHA1");
-                CryptographicKey MacKey = HmacSha1Provider.CreateKey(KeyMaterial);
-                Windows.Storage.Streams.IBuffer DataToBeSigned = CryptographicBuffer.ConvertStringToBinary(SigBaseString, BinaryStringEncoding.Utf8);
-                Windows.Storage.Streams.IBuffer SignatureBuffer = CryptographicEngine.Sign(MacKey, DataToBeSigned);
-                String Signature = CryptographicBuffer.EncodeToBase64String(SignatureBuffer);
-
-                TwitterUrl += "?" + SigBaseStringParams + "&oauth_signature=" + Uri.EscapeDataString(Signature);
-                string GetResponse = await SendDataAsync(TwitterUrl);
-
-
-
-                if (GetResponse != null)
+                CredentialStore = new SingleUserInMemoryCredentialStore
                 {
-                    String oauth_token = null;
-                    String oauth_token_secret = null;
-                    String[] keyValPairs = GetResponse.Split('&');
+                    ConsumerKey = apiKey.APIKey,
+                    ConsumerSecret = apiKey.APISecret
+                },
+                SupportsCompression = true,
+                Callback = apiKey.APICallbackUrl
+            };
 
-                    for (int i = 0; i < keyValPairs.Length; i++)
-                    {
-                        String[] splits = keyValPairs[i].Split('=');
-                        switch (splits[0])
-                        {
-                            case "oauth_token":
-                                oauth_token = splits[1];
-                                break;
-                            case "oauth_token_secret":
-                                oauth_token_secret = splits[1];
-                                break;
-                        }
-                    }
-
-                    if (oauth_token != null)
-                    {
-
-                        RequestToken = new OAuthRequestToken() { Token = oauth_token, TokenSecret = oauth_token_secret };
+            await authorizer.AuthorizeAsync();
 
 
-                        TwitterUrl = "https://api.twitter.com/oauth/authorize?oauth_token=" + oauth_token + "&perms=write";
-                        System.Uri StartUri = new Uri(TwitterUrl);
-                        System.Uri EndUri = new Uri(apiKey.APICallbackUrl.Contains("http") ? apiKey.APICallbackUrl : $"http://{apiKey.APICallbackUrl}");
+            var dm = new PassportDataModel();
+            dm.Token = authorizer.CredentialStore.OAuthToken;
+            dm.TokenSecret = authorizer.CredentialStore.OAuthTokenSecret;
+            dm.Verifier = authorizer.Parameters["oauth_verifier"];
+            dm.PassType = GroupingType;
+
+            dm.UserId = authorizer.CredentialStore.UserID.ToString();
+            dm.UserName = authorizer.CredentialStore.ScreenName;
+            dm.FullName = authorizer.CredentialStore.ScreenName;
+            dm.ScreenName = authorizer.CredentialStore.ScreenName;
+
+            dm.APIKeyFKID = apiKey.Id;
 
 
+            StorageService.Instance.Storage.Insert(dm);
 
+            PopulatePassportData();
 
-
-                        //Desktop 
-                        WebAuthenticationResult WebAuthenticationResult = await WebAuthenticationBroker.AuthenticateAsync(
-                                                            WebAuthenticationOptions.None,
-                                                            StartUri,
-                                                            EndUri);
-                        if (WebAuthenticationResult.ResponseStatus == WebAuthenticationStatus.Success)
-                        {
-                            OutputToken(WebAuthenticationResult.ResponseData.ToString());
-                            String[] partsa = WebAuthenticationResult.ResponseData.ToString().Split('?');
-                            String[] partsb = partsa[1].Split('&');
-
-                            var xoauth_token = "";
-                            var xoauth_verifier = "";
-
-                            for (int i = 0; i < partsb.Length; i++)
-                            {
-                                String[] partsc = partsb[i].Split('=');
-                                switch (partsc[0])
-                                {
-                                    case "oauth_token":
-                                        xoauth_token = partsc[1];
-                                        break;
-                                    case "oauth_verifier":
-                                        xoauth_verifier = partsc[1];
-                                        break;
-                                }
-                            }
-
-
-                            var rat = await _flickr.OAuthGetAccessTokenAsync(RequestToken, xoauth_verifier);
-                            if (!rat.HasError)
-                            {
-                                AccessToken = rat.Result;
-
-                                var dm = new PassportDataModel();
-                                dm.Token = AccessToken.Token;
-                                dm.TokenSecret = AccessToken.TokenSecret;
-                                dm.Verifier = xoauth_verifier;
-                                dm.PassType = GroupingType;
-
-                                dm.UserId = AccessToken.UserId;
-                                dm.UserName = AccessToken.Username;
-                                dm.FullName = AccessToken.FullName;
-                                dm.ScreenName = AccessToken.ScreenName;
-
-                                dm.APIKeyFKID = apiKey.Id;
-
-
-                                StorageService.Instance.Storage.Insert(dm);
-
-                                PopulatePassportData();
-                            }
-
-                        }
-                        else if (WebAuthenticationResult.ResponseStatus == WebAuthenticationStatus.ErrorHttp)
-                        {
-                            OutputToken("HTTP Error returned by AuthenticateAsync() : " + WebAuthenticationResult.ResponseErrorDetail.ToString());
-                        }
-                        else
-                        {
-                            OutputToken("Error returned by AuthenticateAsync() : " + WebAuthenticationResult.ResponseStatus.ToString());
-                        }
-
-
-                    }
-                }
-            }
-            catch (Exception Error)
-            {
-                //
-                // Bad Parameter, SSL/TLS Errors and Network Unavailable errors are to be handled here.
-                //
-
-            }
+            
         }
 
 
