@@ -107,6 +107,9 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiEditorHoriz.xaml.cs">
+      <DependentUpon>ApiEditorHoriz.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ApiEditor.xaml.cs">
       <DependentUpon>ApiEditor.xaml</DependentUpon>
     </Compile>
@@ -127,6 +130,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="ApiEditorHoriz.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ApiEditor.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

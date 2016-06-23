@@ -36,21 +36,24 @@ namespace X.Extension.ThirdParty.Twitter.VM
         APIKeyDataModel apiKey;
 
         Person _LoggedInUser;
+        Visibility _IsLoginVisible;
 
 
-        
+
+        public Visibility IsLoginVisible { get { return _IsLoginVisible; } set { _IsLoginVisible = value; RaisePropertyChanged(); } } 
         public Person LoggedInUser { get { return _LoggedInUser; } set { _LoggedInUser = value; RaisePropertyChanged(); } }
        
         public List<Tab> Tabs { get; set; } = new List<Tab>();
 
-        
-        
 
+
+        
 
 
 
 
         public SplashVM() {
+            IsLoginVisible = Visibility.Collapsed;
             _flickr = new FlickrNet.Flickr();
             Tabs.Add(new Tab() { Name = "Your Favourites", IsSelected = true});
             Tabs.Add(new Tab() { Name = "Public" });

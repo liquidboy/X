@@ -12,32 +12,32 @@
     <Grid>
         <ScrollViewer Grid.Row="1" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto" >
             <StackPanel Orientation="Vertical" VerticalAlignment="Top" Margin="10,0,0,0">
-                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
                     <TextBlock TextWrapping="Wrap" Text="App Client ID:" VerticalAlignment="Center" Width="125"/>
                     <TextBox x:Name="FlickrClientID" Width="200" />
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
                     <TextBlock TextWrapping="Wrap" Text="Client Secret:" VerticalAlignment="Center" Width="125"/>
                     <TextBox x:Name="FlickrClientSecret" Width="200" />
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
                     <TextBlock TextWrapping="Wrap" Text="Redirect URL:" VerticalAlignment="Center" Width="125"/>
                     <TextBox x:Name="FlickrCallbackUrl" Width="200" />
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
                     <TextBlock TextWrapping="Wrap" Text="API Type:" VerticalAlignment="Center" Width="125"/>
                     <TextBox x:Name="tbAPIType" Width="200" />
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
                     <TextBlock TextWrapping="Wrap" Text="API Name:" VerticalAlignment="Center" Width="125"/>
                     <TextBox x:Name="tbAPIName" Width="200" />
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
                     <TextBlock TextWrapping="Wrap" Text="Developer Uri:" VerticalAlignment="Center" Width="125"/>
                     <TextBox x:Name="tbDeveloperUri" Width="200" />
                 </StackPanel>
                 <TextBlock x:Name="FlickrReturnedToken" Text="Press Launch to view returned token..." VerticalAlignment="Top" Width="325" TextWrapping="Wrap" Margin="0,10,0,0" Foreground="#FF979797" FontSize="10"/>
-                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
                     <Button x:Name="butSave" Content="Save" Width="325" Click="butSave_Click"/>
                 </StackPanel>
             </StackPanel>
