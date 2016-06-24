@@ -13,8 +13,8 @@
 
     <Grid>
         <xuiuc:CircularCard Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" 
-                            PrimaryName="{Binding LoggedInUser.RealName}" SecondaryName="{Binding LoggedInUser.UserName}" 
-                            Foreground="Black" AvatarUri="{Binding LoggedInUser.BuddyIconUrl}"></xuiuc:CircularCard>
+                            PrimaryName="{Binding LoggedInUser.Name}" SecondaryName="{Binding LoggedInUser.Location}" 
+                            Foreground="Black" AvatarUri="{Binding LoggedInUser.ProfileImageUrl}" Visibility="{Binding IsLoggedInVisibility }"></xuiuc:CircularCard>
         <GridView Visibility="{Binding IsFavouritesVisible}" ItemsSource="{Binding FavouritePhotos}" Margin="4,155,0,10" >
             <GridView.ItemTemplate>
                 <DataTemplate>

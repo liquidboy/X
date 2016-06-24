@@ -29,21 +29,24 @@ namespace X.Extension.ThirdParty.Twitter.VM
         public PhotoCollection FavouritePhotos { get { return _FavouritePhotos; } set { _FavouritePhotos = value; RaisePropertyChanged(); } }
 
 
-        public FlickrNet.Flickr _flickr = null;
-        OAuthAccessToken AccessToken;
-        OAuthRequestToken RequestToken;
+        public TwitterContext _twitterCtx = null;
+        //public FlickrNet.Flickr _flickr = null;
+        //OAuthAccessToken AccessToken;
+        //OAuthRequestToken RequestToken;
 
         bool IsLoggedIn = false;
         APIKeyDataModel apiKey;
 
-        Person _LoggedInUser;
+        User _LoggedInUser;
+        Visibility _IsLoggedInVisibility;
         Visibility _IsLoginVisible;
         Visibility _IsAPIEditorVisible;
 
 
         public Visibility IsAPIEditorVisible { get { return _IsAPIEditorVisible; } set { _IsAPIEditorVisible = value; RaisePropertyChanged(); } }
-        public Visibility IsLoginVisible { get { return _IsLoginVisible; } set { _IsLoginVisible = value; RaisePropertyChanged(); } } 
-        public Person LoggedInUser { get { return _LoggedInUser; } set { _LoggedInUser = value; RaisePropertyChanged(); } }
+        public Visibility IsLoginVisible { get { return _IsLoginVisible; } set { _IsLoginVisible = value; RaisePropertyChanged(); } }
+        public Visibility IsLoggedInVisibility { get { return _IsLoggedInVisibility; } set { _IsLoggedInVisibility = value; RaisePropertyChanged(); } }
+        public User LoggedInUser { get { return _LoggedInUser; } set { _LoggedInUser = value; RaisePropertyChanged(); } }
 
 
 
@@ -61,7 +64,7 @@ namespace X.Extension.ThirdParty.Twitter.VM
         public SplashVM() {
             IsLoginVisible = Visibility.Collapsed;
             IsAPIEditorVisible = Visibility.Visible;
-            _flickr = new FlickrNet.Flickr();
+            IsLoggedInVisibility = Visibility.Collapsed;
             GetAPIData();
             PopulatePassportData();
         }
@@ -81,32 +84,57 @@ namespace X.Extension.ThirdParty.Twitter.VM
             {
                 IsLoginVisible = Visibility.Visible;
                 IsAPIEditorVisible = Visibility.Collapsed;
+                IsLoggedInVisibility = Visibility.Collapsed;
 
                 var dm = data.Where(x => x.PassType == GroupingType).FirstOrDefault();
                 if (dm != null) {
-                    RequestToken = new OAuthRequestToken() { Token = dm.Token, TokenSecret = dm.TokenSecret };
-                    AccessToken = new OAuthAccessToken()
-                    {
-                        Username = dm.UserName,
-                        FullName = dm.FullName,
-                        ScreenName = dm.ScreenName,
-                        Token = dm.Token,
-                        TokenSecret = dm.TokenSecret,
-                        UserId = dm.UserId,
-                    };
+
                     IsLoggedIn = true;
 
-                    _flickr.OAuthAccessToken = AccessToken.Token;
-                    _flickr.OAuthAccessTokenSecret = AccessToken.TokenSecret;
+                    if (_twitterCtx == null)
+                    {
+                        var authorizer = new UniversalAuthorizer
+                        {
+                            CredentialStore = new SingleUserInMemoryCredentialStore
+                            {
+                                AccessToken = dm.Token,
+                                AccessTokenSecret = dm.TokenSecret,
+                                ConsumerKey = apiKey.APIKey,
+                                ConsumerSecret = apiKey.APISecret
+                            },
+                            SupportsCompression = true,
+                            Callback = apiKey.APICallbackUrl
+                        };
 
-                    _flickr.ApiKey = apiKey.APIKey;
-                    _flickr.ApiSecret = apiKey.APISecret;
+                        await authorizer.CredentialStore.LoadAsync();
 
-                    var p = await _flickr.PeopleGetInfoAsync(AccessToken.UserId);
-                    if (!p.HasError) LoggedInUser = p.Result;
+                        _twitterCtx = new TwitterContext(authorizer);
+                    }
 
-                    var favs = await _flickr.FavoritesGetListAsync(AccessToken.UserId);
-                    if (!favs.HasError) FavouritePhotos = favs.Result;
+                    
+                    var verifyResponse = await (from acct in _twitterCtx.Account
+                            where acct.Type == AccountType.VerifyCredentials
+                            select acct)
+                           .SingleOrDefaultAsync();
+
+                    LoggedInUser = verifyResponse.User;
+
+                    if (_LoggedInUser != null) {
+                        IsLoggedInVisibility = Visibility.Visible;
+                        IsLoginVisible = Visibility.Collapsed;
+                    }
+
+
+                    //var srch =
+                    //    (from search in twitterCtx.Search
+                    //     where search.Type == SearchType.Search &&
+                    //           search.Query == "d3d12"
+                    //     select search)
+                    //    .SingleOrDefault();
+
+
+
+
                 }
             }
             else {
@@ -136,35 +164,7 @@ namespace X.Extension.ThirdParty.Twitter.VM
 
         public async void AttemptTwitterLogin()
         {
-
-
-            //var auth = new ApplicationOnlyAuthorizer
-            //{
-            //    CredentialStore = new InMemoryCredentialStore
-            //    {
-            //        ConsumerKey = apiKey.APIKey,
-            //        ConsumerSecret = apiKey.APISecret
-            //    }
-            //};
-
-            //await auth.AuthorizeAsync();
-
-
-            //var twitterCtx = new TwitterContext(auth);
-
-            //var srch =
-            //    (from search in twitterCtx.Search
-            //     where search.Type == SearchType.Search &&
-            //           search.Query == "d3d12"
-            //     select search)
-            //    .SingleOrDefault();
-
-
-            //twitterCtx.Dispose();
-
-
-
-
+            
             var authorizer = new UniversalAuthorizer
             {
                 CredentialStore = new SingleUserInMemoryCredentialStore
@@ -178,6 +178,7 @@ namespace X.Extension.ThirdParty.Twitter.VM
 
             await authorizer.AuthorizeAsync();
 
+            _twitterCtx = new TwitterContext(authorizer);
 
             var dm = new PassportDataModel();
             dm.Token = authorizer.CredentialStore.OAuthToken;
@@ -206,6 +207,13 @@ namespace X.Extension.ThirdParty.Twitter.VM
         private void OutputToken(string TokenUri)
         {
             //FlickrReturnedToken.Text = TokenUri;
+        }
+
+
+        private void Unload() {
+
+            _twitterCtx?.Dispose();
+            _twitterCtx = null;
         }
     }
 }
