@@ -137,8 +137,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Content Include="public\Splash.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\SharedLibs\X.UI.UserCard\X.UI.UserCard.csproj">
+      <Project>{5020ec7c-3018-4af2-9481-8b0efe491170}</Project>
+      <Name>X.UI.UserCard</Name>
+    </ProjectReference>
     <ProjectReference Include="..\X.Extension.ThirdParty.OneDriveX.Services\X.Extension.ThirdParty.OneDriveX.Services.csproj">
       <Project>{14d7432b-ddec-4080-89d1-2b8c629b552d}</Project>
       <Name>X.Extension.ThirdParty.OneDriveX.Services</Name>

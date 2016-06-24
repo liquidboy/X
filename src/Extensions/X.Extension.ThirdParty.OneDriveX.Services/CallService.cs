@@ -41,6 +41,11 @@ namespace X.Extension.ThirdParty.OneDriveX.Services
                 case "UI":
                     returnData.Add("sketch-test", "X.Extension.ThirdParty.OneDriveX.UI.Test");
                     returnData.Add("sketch-home", "X.Extension.ThirdParty.OneDriveX.UI.Home");
+                    returnData.Add("splash-page", "Splash.xaml");
+                    returnData.Add("default", "splash-page");
+                    break;
+                case "VM":
+                    returnData.Add("splash-page", "X.Extension.ThirdParty.OneDriveX.VM|SplashVM");
                     break;
             }
             
