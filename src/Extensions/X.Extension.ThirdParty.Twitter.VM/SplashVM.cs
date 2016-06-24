@@ -25,16 +25,12 @@ namespace X.Extension.ThirdParty.Twitter.VM
         public string Version { get; set; } = "1.0.0.1";
         public string GroupingType { get; set; } = "Twitter";
 
-        private PhotoCollection _FavouritePhotos;
-        public PhotoCollection FavouritePhotos { get { return _FavouritePhotos; } set { _FavouritePhotos = value; RaisePropertyChanged(); } }
+        private List<Status> _Tweets;
+        public List<Status> Tweets { get { return _Tweets; } set { _Tweets = value; RaisePropertyChanged(); } }
 
 
         public TwitterContext _twitterCtx = null;
-        //public FlickrNet.Flickr _flickr = null;
-        //OAuthAccessToken AccessToken;
-        //OAuthRequestToken RequestToken;
-
-        bool IsLoggedIn = false;
+        
         APIKeyDataModel apiKey;
 
         User _LoggedInUser;
@@ -88,9 +84,7 @@ namespace X.Extension.ThirdParty.Twitter.VM
 
                 var dm = data.Where(x => x.PassType == GroupingType).FirstOrDefault();
                 if (dm != null) {
-
-                    IsLoggedIn = true;
-
+                    
                     if (_twitterCtx == null)
                     {
                         var authorizer = new UniversalAuthorizer
@@ -124,17 +118,8 @@ namespace X.Extension.ThirdParty.Twitter.VM
                         IsLoginVisible = Visibility.Collapsed;
                     }
 
-
-                    //var srch =
-                    //    (from search in twitterCtx.Search
-                    //     where search.Type == SearchType.Search &&
-                    //           search.Query == "d3d12"
-                    //     select search)
-                    //    .SingleOrDefault();
-
-
-
-
+                    await UpdateTweetsAsync();
+                    
                 }
             }
             else {
@@ -142,6 +127,17 @@ namespace X.Extension.ThirdParty.Twitter.VM
                 IsLoginVisible = Visibility.Collapsed;
                 IsAPIEditorVisible = Visibility.Visible;
             }
+        }
+
+
+        private async Task UpdateTweetsAsync() {
+
+            if (_twitterCtx == null) return;
+
+            Tweets = await (from tweet in _twitterCtx.Status
+                 where tweet.Type == StatusType.Home
+                 select tweet)
+                .ToListAsync();
         }
 
         private async Task<string> SendDataAsync(String Url)
