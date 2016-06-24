@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using Microsoft.OneDrive.Sdk;
 using System;
 using System.Collections.Generic;
@@ -22,9 +23,14 @@ namespace X.Extension.ThirdParty.OneDriveX.VM
 
         private IOneDriveClient oneDriveClient;
 
-        private async void MSAAuthenticate() {
+        private RelayCommand<string> _requestOnedriveLogin;
+
+        public RelayCommand<string> RequestOnedriveLogin { get { return _requestOnedriveLogin ?? (_requestOnedriveLogin = new RelayCommand<string>((arg) => { MSAAuthenticate(); })); } }
+
+        private async Task MSAAuthenticate() {
             if (oneDriveClient != null) return;
-            oneDriveClient = OneDriveClientExtensions.GetClientUsingWebAuthenticationBroker(_appIdMSA, _scopesMSA);
+            oneDriveClient = await OneDriveClientExtensions.GetAuthenticatedClientUsingWebAuthenticationBroker(_appIdMSA, _scopesMSA);
+            //oneDriveClient = OneDriveClientExtensions.GetClientUsingOnlineIdAuthenticator(_scopesMSA);
             await oneDriveClient?.AuthenticateAsync();
         }
 
