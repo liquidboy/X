@@ -117,6 +117,7 @@
     <Compile Include="Converters\ImageConverter.cs" />
     <Compile Include="Converters\ImageTypeToStringConverter.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
+    <Compile Include="Converters\DateToDaysAgoConverter.cs" />
     <Compile Include="Converters\StringDateToDaysAgoConverter.cs" />
     <Compile Include="Converters\StringEmptyToSmileyConverter.cs" />
     <Compile Include="Converters\StringEmptyToVisibilityConverter.cs" />

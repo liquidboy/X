@@ -17,7 +17,7 @@
         <GridView Visibility="{Binding IsLoggedInVisibility}" ItemsSource="{Binding Tweets}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="120,0,10,10" >
             <GridView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Width="180" MinHeight="110" Margin="0,10,0,0">
+                    <Grid Width="180" MinHeight="125" Margin="0" Padding="5">
                         <Border Margin="5,0,0,35" Padding="5,5,5,5" Background="White" CornerRadius="3">
                             <TextBlock Text="{Binding Text}" TextWrapping="WrapWholeWords" FontSize="10"></TextBlock>
                             <!--<Button Padding="0" Margin="0" BorderThickness="0" Background="Transparent" Command="{Binding DataContext.PictureSelectedCommand, ElementName=root }" CommandParameter="{Binding }" >
@@ -25,6 +25,7 @@
                         </Border>
                         <TextBlock Text="{Binding User.Name}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="35,0,0,13" Foreground="DarkGray" FontSize="11"></TextBlock>
                         <TextBlock Text="{Binding User.Location}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="35,0,0,5" Foreground="DarkGray" Opacity="0.7" FontSize="9"></TextBlock>
+                        <TextBlock Text="{Binding CreatedAt, Converter={StaticResource DateToDaysAgoConverter}}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,40" Foreground="DarkGray" Opacity="0.6" FontSize="9"></TextBlock>
                         <Ellipse  Width="30" Height="30" IsHitTestVisible="False" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding User.ProfileImageUrl}" Stretch="UniformToFill" />
