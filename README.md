@@ -61,3 +61,7 @@ And implementing them in a demo app "X.Browser" .. Which is a demonstration brow
 - Below video shows the SketchFlow app(viewer), will be used to create extensions/plugins all in browser (like the F12 developer tool but for designers/developers)
 
 [![SketchFlow Viewer](http://img.youtube.com/vi/9-cE2lF04cQ/0.jpg)](https://www.youtube.com/watch?v=9-cE2lF04cQ "Third-party Extensions model")
+
+- Below shows another sample HOST UWP app that loads 2 sample extensions Flickr/Twitter
+
+![lastrefreshed](https://pbs.twimg.com/media/ClwZkfFUoAAvSP6.jpg:large:large)
