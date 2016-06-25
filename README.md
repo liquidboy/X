@@ -43,7 +43,7 @@ The following components are reused across one or more components
 
 The following components are created as Extensions using the "App Extensibility Framework" recently introduced into Windows 10 in unveiled at Build2016
 
-These extensions will be built out over time 
+These extensions will be built out over time, the advantage of having these be extensions is that they can deploy as part of the store and are more manageable .. like a consumer friendly nuget for your apps :)
 
 * AWS
 * Azure
