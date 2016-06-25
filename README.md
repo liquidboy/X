@@ -64,4 +64,8 @@ And implementing them in a demo app "X.Browser" .. Which is a demonstration brow
 
 - Below shows another sample HOST UWP app that loads 2 sample extensions Flickr/Twitter
 
-![lastrefreshed](https://pbs.twimg.com/media/ClwZkfFUoAAvSP6.jpg:large:large)
+![lastrefreshed](https://pbs.twimg.com/media/ClwZkfFUoAAvSP6.jpg:large)
+
+- Below shows the X.Browser Host UWP loading the same two extensions as X.Player (Twitter/Flickr)
+
+![lastrefreshed](https://pbs.twimg.com/media/Clwm-snUoAAmvBz.jpg:large)
