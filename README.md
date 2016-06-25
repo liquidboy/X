@@ -38,8 +38,10 @@ The following components are reused across one or more components
 * Services.*
 * Extensions.*
 
-
 And implementing them in a demo app "X.Browser" .. Which is a demonstration browser application, that lets you browse web pages, media content, filesystem... 
+
+A second demo app was created "X.Player" which is a more light weight, < 30MB footprint, that is used solely to load extensions and a single view (not multiple views in tabs which the browser does)
+
 
 ![X.Browser 001](https://pbs.twimg.com/media/Cc3G7ufUUAQS6qK.jpg:large)
 
@@ -62,7 +64,7 @@ And implementing them in a demo app "X.Browser" .. Which is a demonstration brow
 
 [![SketchFlow Viewer](http://img.youtube.com/vi/9-cE2lF04cQ/0.jpg)](https://www.youtube.com/watch?v=9-cE2lF04cQ "Third-party Extensions model")
 
-- Below shows another sample HOST UWP app that loads 2 sample extensions Flickr/Twitter
+- Below shows another sample HOST UWP app, X.Player, that loads 2 sample extensions Flickr/Twitter
 
 ![lastrefreshed](https://pbs.twimg.com/media/ClwZkfFUoAAvSP6.jpg:large)
 
