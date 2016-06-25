@@ -22,6 +22,9 @@ Components still being fleshed out...
 * Toolbar
 * UserCard
 * ColorPicker
+* ZoomCanvas
+* APIKeys
+
 
 The following components are less generic, possibly designed with the intention of modularizing the monolithic X.Browser app.
 
@@ -38,8 +41,26 @@ The following components are reused across one or more components
 * Services.*
 * Extensions.*
 
+The following components are created as Extensions using the "App Extensibility Framework" recently introduced into Windows 10 in unveiled at Build2016
 
-And implementing them in a demo app "X.Browser" .. Which is a demonstration browser application, that lets you browse web pages, media content, filesystem... 
+These extensions will be built out over time, the advantage of having these be extensions is that they can deploy as part of the store and are more manageable .. like a consumer friendly nuget for your apps :)
+
+* AWS
+* Azure
+* Backgrounds
+* Facebook
+* Flickr
+* GitX
+* JsRTChakraCoreX
+* Office365
+* OneDriveX
+* Twitter
+
+There are 2 demonstration applications that pull all the above components together
+
+* "X.Browser" .. Which is a demonstration browser application, that lets you browse web pages, media content, filesystem...
+* "X.Player" which is a more light weight, < 30MB footprint, that is used solely to load extensions and a single view (not multiple views in tabs which the browser does)
+
 
 ![X.Browser 001](https://pbs.twimg.com/media/Cc3G7ufUUAQS6qK.jpg:large)
 
@@ -61,3 +82,11 @@ And implementing them in a demo app "X.Browser" .. Which is a demonstration brow
 - Below video shows the SketchFlow app(viewer), will be used to create extensions/plugins all in browser (like the F12 developer tool but for designers/developers)
 
 [![SketchFlow Viewer](http://img.youtube.com/vi/9-cE2lF04cQ/0.jpg)](https://www.youtube.com/watch?v=9-cE2lF04cQ "Third-party Extensions model")
+
+- Below shows another sample HOST UWP app, X.Player, that loads 2 sample extensions Flickr/Twitter
+
+![lastrefreshed](https://pbs.twimg.com/media/ClwZkfFUoAAvSP6.jpg:large)
+
+- Below shows the X.Browser Host UWP loading the same two extensions as X.Player (Twitter/Flickr)
+
+![lastrefreshed](https://pbs.twimg.com/media/Clwm-snUoAAmvBz.jpg:large)
