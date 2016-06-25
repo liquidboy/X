@@ -5,12 +5,14 @@
     xmlns:local="using:X.Browser"
     xmlns:vm="using:X.Browser.ViewModels"
     xmlns:extconv="using:X.Services.Extensions.Converters"
+    xmlns:clconv="using:CoreLib.Converters"
     RequestedTheme="Light">
 
     <Application.Resources>
         <ResourceDictionary>
             <!--<vm:ViewModelLocator x:Key="Locator" />-->
             <extconv:ExtensionToImageSourceConverter x:Key="ExtensionToImageSourceConverter" ></extconv:ExtensionToImageSourceConverter>
+            <clconv:DateToDaysAgoConverter x:Key="DateToDaysAgoConverter"></clconv:DateToDaysAgoConverter>
         </ResourceDictionary>
         
     </Application.Resources>
