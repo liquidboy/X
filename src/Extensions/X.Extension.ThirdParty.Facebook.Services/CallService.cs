@@ -41,6 +41,11 @@ namespace X.Extension.ThirdParty.Facebook.Services
                 case "UI":
                     returnData.Add("sketch-test", "X.Extension.ThirdParty.Facebook.UI.Test");
                     returnData.Add("sketch-home", "X.Extension.ThirdParty.Facebook.UI.Home");
+                    returnData.Add("splash-page", "Splash.xaml");
+                    returnData.Add("default", "splash-page");
+                    break;
+                case "VM":
+                    returnData.Add("splash-page", "X.Extension.ThirdParty.Facebook.VM|SplashVM");
                     break;
             }
             
