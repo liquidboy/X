@@ -21,19 +21,19 @@
         <GridView ItemsSource="{Binding Albums}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="4,10,0,10" >
             <GridView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Width="101" Height="145" Margin="3">
+                    <Grid Width="101" Height="170" Margin="3">
                         <Grid Width="98" Height="98" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,55">
                             <Ellipse Fill="Black" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Ellipse>
                         </Grid>
-                        <Border CornerRadius="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101" Height="80" Background="White">
+                        <Border CornerRadius="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101" Height="101" Background="White">
                         </Border>
-                        <Rectangle HorizontalAlignment="Left" VerticalAlignment="Top" Width="99" Height="78" Margin="1,1,0,0" >
+                        <Rectangle HorizontalAlignment="Left" VerticalAlignment="Top" Width="99" Height="99" Margin="1,1,0,0" >
                             <Rectangle.Fill>
                                 <ImageBrush ImageSource="{Binding ImageUrl}" Stretch="UniformToFill" />
                             </Rectangle.Fill>
                         </Rectangle>
                         <TextBlock Text="{Binding Name}" Foreground="Black" FontSize="10" Width="101" TextAlignment="Center" 
-                                   TextWrapping="WrapWholeWords" Margin="0,90,0,0"
+                                   TextWrapping="WrapWholeWords" Margin="0,115,0,0"
                                    HorizontalAlignment="Center" VerticalAlignment="Top"></TextBlock>
                     </Grid>
                 </DataTemplate>
