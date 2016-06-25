@@ -1,0 +1,24 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <!--nuget pack XboxMusicClient\XboxMusicClient.csproj -Build -Prop Configuration=Release -IncludeReferencedProjects -->
+    <id>$id$</id>
+    <version>$version$</version>
+    <!-- Needs to be specified explicitly as nuget.exe fails to load the DLL's metadata -->
+    <authors>Microsoft</authors>
+    <!-- Needs to be specified explicitly as nuget.exe fails to load the DLL's metadata -->
+    <owners>Microsoft</owners>
+    <projectUrl>http://music.xbox.com/developer</projectUrl>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <!-- Needs to be specified explicitly as nuget.exe fails to load the DLL's metadata -->
+    <description>Portable C# SDK for the Xbox Music Service API.</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright © Microsoft Corporation</copyright>
+    <tags></tags>
+    <dependencies>
+    </dependencies>
+  </metadata>
+  <files>
+  </files>
+</package>
