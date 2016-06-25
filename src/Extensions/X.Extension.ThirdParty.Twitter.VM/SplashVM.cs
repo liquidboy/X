@@ -70,8 +70,6 @@ namespace X.Extension.ThirdParty.Twitter.VM
         private void GetAPIData() {
             var apis = StorageService.Instance.Storage.RetrieveList<APIKeyDataModel>();
             if (apis != null && apis.Count > 0) apiKey = apis.Where(x => x.Type == GroupingType).FirstOrDefault();
-
-           
         }
 
 

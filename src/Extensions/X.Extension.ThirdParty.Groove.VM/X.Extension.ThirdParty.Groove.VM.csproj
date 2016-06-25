@@ -124,6 +124,10 @@
       <Project>{9d98bf69-e061-4f8c-b8c9-ce65116374b8}</Project>
       <Name>X.Services.Image</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SharedLibs\XBoxMusicClient\Contract\Contract.csproj">
+      <Project>{63F094AA-6C64-4947-83B1-678758CA8AA2}</Project>
+      <Name>Contract</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SharedLibs\XBoxMusicClient\XboxMusicClient\XBoxMusicClientUWP\XBoxMusicClientUWP.csproj">
       <Project>{18a8ed63-1361-4181-987f-f77f57859dd5}</Project>
       <Name>XBoxMusicClientUWP</Name>

@@ -38,8 +38,8 @@ namespace Microsoft.Xbox.Music.Platform.Client
     /// </summary>
     public class SimpleServiceClient : IDisposable
     {
-        private static readonly AssemblyName assemblyName = new AssemblyName(typeof(SimpleServiceClient).AssemblyQualifiedName);
-        private static readonly ProductInfoHeaderValue userAgent = new ProductInfoHeaderValue(assemblyName.Name, assemblyName.Version.ToString());
+        //private static readonly AssemblyName assemblyName = new AssemblyName(typeof(SimpleServiceClient).AssemblyQualifiedName);
+        //private static readonly ProductInfoHeaderValue userAgent = new ProductInfoHeaderValue(assemblyName.Name, assemblyName.Version.ToString());
 
         private static readonly TimeSpan defaultTimeout = TimeSpan.FromSeconds(60);
 
@@ -185,7 +185,7 @@ namespace Microsoft.Xbox.Music.Platform.Client
         {
             var client = new HttpClient(new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip });
             client.DefaultRequestHeaders.Add("Accept", "application/json");
-            client.DefaultRequestHeaders.UserAgent.Add(userAgent);
+            //client.DefaultRequestHeaders.UserAgent.Add(userAgent);
             client.Timeout = timeout;
 
             if (extraHeaders != null)

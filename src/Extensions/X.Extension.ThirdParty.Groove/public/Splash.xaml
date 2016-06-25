@@ -16,6 +16,20 @@
                             Margin="20,-10,0,0"
                             Foreground="Black" AvatarUri="{Binding LoggedInUser.ProfileImageUrl}" 
                             Visibility="{Binding IsLoggedInVisibility }"></xuiuc:CircularCard>
-        <Button Content="Login" Command="{Binding RequestLogin}" CommandParameter="RequestLogin" HorizontalAlignment="Center" VerticalAlignment="Center" ></Button>
+        
+
+        <GridView ItemsSource="{Binding Albums}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="4,10,0,10" >
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Width="101" Height="110" Margin="3">
+                        <Border CornerRadius="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101" Height="80" Background="White">
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+
+        <Button Content="Login" Visibility="{Binding IsLoginVisible}" Command="{Binding RequestLogin}" CommandParameter="RequestLogin" HorizontalAlignment="Center" VerticalAlignment="Center" ></Button>
+        <xuiak:ApiEditor Visibility="{Binding IsAPIEditorVisible}" HorizontalAlignment="Stretch" VerticalAlignment="Top" ></xuiak:ApiEditor>
     </Grid>
 </UserControl>
