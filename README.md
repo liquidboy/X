@@ -22,6 +22,9 @@ Components still being fleshed out...
 * Toolbar
 * UserCard
 * ColorPicker
+* ZoomCanvas
+* APIKeys
+
 
 The following components are less generic, possibly designed with the intention of modularizing the monolithic X.Browser app.
 
@@ -38,9 +41,25 @@ The following components are reused across one or more components
 * Services.*
 * Extensions.*
 
-And implementing them in a demo app "X.Browser" .. Which is a demonstration browser application, that lets you browse web pages, media content, filesystem... 
+The following components are created as Extensions using the "App Extensibility Framework" recently introduced into Windows 10 in unveiled at Build2016
 
-A second demo app was created "X.Player" which is a more light weight, < 30MB footprint, that is used solely to load extensions and a single view (not multiple views in tabs which the browser does)
+These extensions will be built out over time 
+
+* AWS
+* Azure
+* Backgrounds
+* Facebook
+* Flickr
+* GitX
+* JsRTChakraCoreX
+* Office365
+* OneDriveX
+* Twitter
+
+There are 2 demonstration applications that pull all the above components together
+
+* "X.Browser" .. Which is a demonstration browser application, that lets you browse web pages, media content, filesystem...
+* "X.Player" which is a more light weight, < 30MB footprint, that is used solely to load extensions and a single view (not multiple views in tabs which the browser does)
 
 
 ![X.Browser 001](https://pbs.twimg.com/media/Cc3G7ufUUAQS6qK.jpg:large)
