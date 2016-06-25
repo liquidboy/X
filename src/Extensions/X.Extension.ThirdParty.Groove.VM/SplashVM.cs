@@ -69,14 +69,14 @@ namespace X.Extension.ThirdParty.Groove.VM
         private async Task AttemptLoginAsync() {
             if (_client != null) return;
             _client = XboxMusicClientFactory.CreateXboxMusicClient(apiKey.APIKey, apiKey.APISecret);
-            await MakeCall("Sia", 20);
+            await MakeCallAsync("Sia", Namespace.music, 20);
             IsLoginVisible = Visibility.Collapsed;
         }
 
-        private async Task MakeCall(string query, int maxItems = 5) {
+        private async Task MakeCallAsync(string qry, Namespace nspc = Namespace.music, int maxItems = 5) {
             if (_client == null) return;
             string country = null;
-            ContentResponse searchResponse = await _client.SearchAsync(Namespace.music, query, filter: SearchFilter.Albums, maxItems: maxItems, country: country);
+            ContentResponse searchResponse = await _client.SearchAsync(nspc, qry, source: ContentSource.Catalog, filter: SearchFilter.Albums, maxItems: maxItems, country: country);
             var count = searchResponse.Albums.TotalItemCount;
             Albums = searchResponse.Albums.Items;
         }
