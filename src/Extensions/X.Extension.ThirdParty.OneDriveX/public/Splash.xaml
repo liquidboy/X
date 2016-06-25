@@ -16,6 +16,6 @@
                             Margin="20,-10,0,0"
                             Foreground="Black" AvatarUri="{Binding LoggedInUser.ProfileImageUrl}" 
                             Visibility="{Binding IsLoggedInVisibility }"></xuiuc:CircularCard>
-        <Button Content="Login" Command="{Binding RequestOnedriveLogin}" CommandParameter="RequestLogin" ></Button>
+        <Button Content="Login" Command="{Binding RequestOnedriveLogin}" CommandParameter="RequestLogin" HorizontalAlignment="Center" VerticalAlignment="Center" ></Button>
     </Grid>
 </UserControl>

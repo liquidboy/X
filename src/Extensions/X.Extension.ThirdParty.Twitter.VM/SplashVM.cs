@@ -26,8 +26,10 @@ namespace X.Extension.ThirdParty.Twitter.VM
         public string GroupingType { get; set; } = "Twitter";
 
         private List<Status> _Tweets;
-        public List<Status> Tweets { get { return _Tweets; } set { _Tweets = value; RaisePropertyChanged(); } }
+        public List<Status> Tweets { get { return _Tweets; } set { _Tweets = value; RaisePropertyChanged(); TweetUsers = _Tweets.Select(x => x.User.ProfileImageUrl).Distinct().ToList();  } }
 
+        private List<string> _TweetUsers;
+        public List<string> TweetUsers { get { return _TweetUsers; } set { _TweetUsers = value; RaisePropertyChanged(); } }
 
         public TwitterContext _twitterCtx = null;
         

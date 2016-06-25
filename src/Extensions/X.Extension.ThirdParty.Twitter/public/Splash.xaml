@@ -12,13 +12,18 @@
     d:DesignWidth="400">
     <Grid>
         <xuiuc:CircularCard Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                            PrimaryName="{Binding LoggedInUser.Name}" SecondaryName="{Binding LoggedInUser.Location}" Margin="20,-10,0,0"
+                            PrimaryName="{Binding LoggedInUser.Name}" SecondaryName="{Binding LoggedInUser.Location}" Margin="40,-25,0,0"
                             Foreground="Black" AvatarUri="{Binding LoggedInUser.ProfileImageUrl}" Visibility="{Binding IsLoggedInVisibility }"></xuiuc:CircularCard>
         <GridView Visibility="{Binding IsLoggedInVisibility}" ItemsSource="{Binding Tweets}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="120,0,10,10" >
             <GridView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Width="180" MinHeight="125" Margin="0" Padding="5">
-                        <Border Margin="5,0,0,35" Padding="5,5,5,5" Background="White" CornerRadius="3">
+                    <Grid Width="180" MinHeight="130" Margin="0" Padding="5">
+                        <Border CornerRadius="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="20" Height="20" Background="White" Margin="15,0,0,40">
+                            <Border.RenderTransform>
+                                <CompositeTransform Rotation="45"></CompositeTransform>
+                            </Border.RenderTransform>
+                        </Border>
+                        <Border Margin="0,0,0,38" Padding="5,5,5,5" Background="White" CornerRadius="3">
                             <TextBlock Text="{Binding Text}" TextWrapping="WrapWholeWords" FontSize="10"></TextBlock>
                             <!--<Button Padding="0" Margin="0" BorderThickness="0" Background="Transparent" Command="{Binding DataContext.PictureSelectedCommand, ElementName=root }" CommandParameter="{Binding }" >
                             </Button>-->
@@ -35,8 +40,29 @@
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="120,-38,40,10" >
+            <TextBlock Text="Filter by : " Foreground="Gray" FontSize="10" Margin="0,15,10,0"></TextBlock>
+            <ItemsControl Visibility="{Binding IsLoggedInVisibility}"  ItemsSource="{Binding TweetUsers}" Height="30" ScrollViewer.VerticalScrollBarVisibility="Hidden" >
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"></StackPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Width="20" MinHeight="20" Margin="5,0,0,0">
+                            <Ellipse  Width="20" Height="20" IsHitTestVisible="False" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="{Binding }" Stretch="UniformToFill" />
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
         <Button Content="Login" Command="{Binding RequestTwitterLogin}" CommandParameter="RequestLogin" Visibility="{Binding IsLoginVisible}"></Button>
         <xuiak:ApiEditorHoriz Visibility="{Binding IsAPIEditorVisible}" HorizontalAlignment="Stretch" VerticalAlignment="Top" ></xuiak:ApiEditorHoriz>
-        
+
     </Grid>
 </UserControl>
