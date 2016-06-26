@@ -144,7 +144,17 @@ namespace X.Extension.ThirdParty.Flickr.VM
                     if (!p.HasError) LoggedInUser = p.Result;
 
                     var favs = await _flickr.FavoritesGetListAsync(AccessToken.UserId);
-                    if (!favs.HasError) FavouritePhotos = favs.Result;
+                    if (!favs.HasError) {
+                        var temp = new PhotoCollection();
+                        foreach (var fav in favs.Result)
+                        {
+                            //fav.MachineTags = "https://c1.staticflickr.com/1/523/buddyicons/118877287@N03_l.jpg?1437204284#118877287@N03";
+                            fav.MachineTags = $"https://c1.staticflickr.com/{fav.IconFarm}/{fav.IconServer}/buddyicons/{fav.UserId}.jpg?";
+                            temp.Add(fav);
+                        }
+                        FavouritePhotos = temp;
+                    }
+                    
                 }
             }
             else {

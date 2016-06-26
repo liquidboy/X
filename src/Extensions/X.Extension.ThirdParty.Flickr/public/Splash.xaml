@@ -27,14 +27,27 @@
         <GridView Visibility="{Binding IsFavouritesVisible}" ItemsSource="{Binding FavouritePhotos}" Margin="4,155,0,10" >
             <GridView.ItemTemplate>
                 <DataTemplate>
-                    <Button Padding="0" Margin="0" BorderThickness="0" Command="{Binding DataContext.PictureSelectedCommand, ElementName=root }" CommandParameter="{Binding }" >
-                        <Image Width="106" Height="106" Stretch="UniformToFill" Source="{Binding SquareThumbnailUrl}"></Image>
-                    </Button>
+                    <Grid>
+                        <Button Padding="0" Margin="0" BorderThickness="0" 
+                                Command="{Binding DataContext.PictureSelectedCommand, ElementName=root }" 
+                                CommandParameter="{Binding }" >
+                            <Image Width="106" Height="106" Stretch="UniformToFill" Source="{Binding SquareThumbnailUrl}"></Image>
+                        </Button>
+                        <Grid Width="30" MinHeight="30" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5,0,0,5">
+                            <Ellipse  Width="30" Height="30" IsHitTestVisible="False" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="{Binding MachineTags}" Stretch="UniformToFill" />
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </Grid>
+                    </Grid>
+                    
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
         <Button Content="Login" Command="{Binding RequestFlickrLogin}" CommandParameter="RequestLogin" Visibility="{Binding IsLoginVisible}"></Button>
         <xuiak:ApiEditor Visibility="{Binding IsAPIKeyVisible}"></xuiak:ApiEditor>
-        
+
+        <!--background-image: url(//c1.staticflickr.com/1/523/buddyicons/118877287@N03_l.jpg?1437204284#118877287@N03);-->
     </Grid>
 </UserControl>

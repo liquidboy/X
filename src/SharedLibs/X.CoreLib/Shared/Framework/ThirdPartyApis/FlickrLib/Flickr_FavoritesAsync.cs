@@ -90,7 +90,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public async Task<FlickrResult<PhotoCollection>> FavoritesGetListAsync(string userId)
         {
-            return await FavoritesGetListAsync(userId, DateTime.MinValue, DateTime.MinValue, PhotoSearchExtras.None, 0, 0);
+            return await FavoritesGetListAsync(userId, DateTime.MinValue, DateTime.MinValue, PhotoSearchExtras.IconServer, 0, 0);
         }
 
         /// <summary>
