@@ -16,6 +16,8 @@
                             Margin="20,-10,0,0"
                             Foreground="Black" AvatarUri="{Binding LoggedInUser.ProfileImageUrl}" 
                             Visibility="{Binding IsLoggedInVisibility }"></xuiuc:CircularCard>
-        <Button Content="Login" Command="{Binding RequestLogin}" CommandParameter="RequestLogin" HorizontalAlignment="Center" VerticalAlignment="Center" ></Button>
+
+        <Button Content="Login" Visibility="{Binding IsLoginVisible}" Command="{Binding RequestLogin}" CommandParameter="RequestLogin" HorizontalAlignment="Center" VerticalAlignment="Center" ></Button>
+        <xuiak:ApiEditor Visibility="{Binding IsAPIEditorVisible}"></xuiak:ApiEditor>
     </Grid>
 </UserControl>

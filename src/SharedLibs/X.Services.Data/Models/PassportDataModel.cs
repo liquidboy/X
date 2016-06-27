@@ -15,6 +15,7 @@ namespace X.Services.Data
         public string Token { get; set; }
         public string TokenSecret { get; set; }
         public string Verifier { get; set; }
+        public DateTime TokenExpiry { get; set; }
 
 
         public string FullName { get; set; }

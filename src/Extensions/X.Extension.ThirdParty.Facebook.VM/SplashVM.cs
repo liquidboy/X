@@ -9,30 +9,98 @@ using System.Threading.Tasks;
 using System.Dynamic;
 using Windows.Security.Authentication.Web;
 using System.Text.RegularExpressions;
+using Windows.UI.Xaml;
+using X.Services.Data;
 
 namespace X.Extension.ThirdParty.Facebook.VM
 {
     public class SplashVM : ViewModelBase
     {
-        string _appId = "2356103186";
-        string _appIdSecret = "366a1024a3327074d46153bacb818697";
+        public string Title { get; set; } = "Splash";
+        public string Version { get; set; } = "1.0.0.1";
+        public string GroupingType { get; set; } = "Facebook";
+
+        APIKeyDataModel apiKey;
         private string _accessToken = "";
         private DateTime _tokenExpiry;
 
-        private RelayCommand<string> _requestLogin;
-
-        public RelayCommand<string> RequestLogin { get { return _requestLogin ?? (_requestLogin = new RelayCommand<string>((arg) => { AttemptLogin(); })); } }
 
         FacebookClient _client;
         //https://blogs.msdn.microsoft.com/wsdevsol/2015/02/12/integrating-facebook-authentication-in-universal-windows-apps/
 
 
+        private RelayCommand<string> _requestLogin;
+
+        public RelayCommand<string> RequestLogin { get { return _requestLogin ?? (_requestLogin = new RelayCommand<string>((arg) => { AttemptLogin(); })); } }
+
+        Visibility _IsLoginVisible;
+        public Visibility IsLoginVisible { get { return _IsLoginVisible; } set { _IsLoginVisible = value; RaisePropertyChanged(); } }
+
+        Visibility _IsAPIEditorVisible;
+        public Visibility IsAPIEditorVisible { get { return _IsAPIEditorVisible; } set { _IsAPIEditorVisible = value; RaisePropertyChanged(); } }
+
+        Visibility _IsLoggedInVisible;
+        public Visibility IsLoggedInVisible { get { return _IsLoggedInVisible; } set { _IsLoggedInVisible = value; RaisePropertyChanged(); } }
+
+
+        public SplashVM()
+        {
+            IsLoginVisible = Visibility.Collapsed;
+            IsAPIEditorVisible = Visibility.Visible;
+            IsLoggedInVisible = Visibility.Collapsed;
+            GetAPIData();
+            PopulatePassportData();
+        }
+
+        private void GetAPIData()
+        {
+            var apis = StorageService.Instance.Storage.RetrieveList<APIKeyDataModel>();
+            if (apis != null && apis.Count > 0) apiKey = apis.Where(x => x.Type == GroupingType).FirstOrDefault();
+        }
+
+        private async void PopulatePassportData()
+        {
+            //if theres a filled in passport then user is already logged in
+            var data = StorageService.Instance.Storage.RetrieveList<PassportDataModel>().Where(x=>x.PassType == GroupingType).ToList();
+            if (data != null && data.Count > 0) { 
+                var dm = data.Where(x => x.PassType == GroupingType).FirstOrDefault();
+                if (dm != null)
+                {
+                    _accessToken = dm.Token;
+                    //_tokenExpiry = dm.TokenExpiry;
+
+
+                    IsLoginVisible = Visibility.Collapsed;
+                    IsAPIEditorVisible = Visibility.Collapsed;
+                    IsLoggedInVisible = Visibility.Visible;
+                    return;
+                }
+            }
+
+            //no filled in passport so user is NOT logged in
+            IsLoggedInVisible = Visibility.Collapsed;
+
+            if (apiKey != null && !string.IsNullOrEmpty(apiKey.APIKey))
+            {
+                //an apikey has been filled in
+                IsLoginVisible = Visibility.Visible;
+                IsAPIEditorVisible = Visibility.Collapsed;
+            }
+            else
+            {
+                //an apikey has NOT been filled in
+                IsLoginVisible = Visibility.Collapsed;
+                IsAPIEditorVisible = Visibility.Visible;
+            }
+        }
 
         private async void AttemptLogin() {
             if (_client != null) return;
+            if (apiKey == null) return;
+
             _client = new FacebookClient();
-            _client.AppId = _appId;
-            _client.AppSecret = _appIdSecret;
+            _client.AppId = apiKey.APIKey;
+            _client.AppSecret = apiKey.APISecret;
 
             var scope = "public_profile, email";
 
@@ -40,7 +108,7 @@ namespace X.Extension.ThirdParty.Facebook.VM
             var fb = new FacebookClient();
             Uri loginUrl = fb.GetLoginUrl(new
             {
-                client_id = _appId,
+                client_id = apiKey.APIKey,
                 redirect_uri = redirectUri,
                 response_type = "token",
                 scope = scope
@@ -82,7 +150,26 @@ namespace X.Extension.ThirdParty.Facebook.VM
 
                     _accessToken = access_token.Value;
                     _tokenExpiry = DateTime.Now.AddSeconds(double.Parse(expires_in.Value));
+                    
+                    var dm = new PassportDataModel();
+                    dm.Token = _accessToken;
+                    dm.TokenExpiry = _tokenExpiry;
+                    //dm.TokenSecret = AccessToken.TokenSecret;
+                    //dm.Verifier = xoauth_verifier;
+                    dm.PassType = GroupingType;
+                    //dm.UserId = AccessToken.UserId;
+                    //dm.UserName = AccessToken.Username;
+                    //dm.FullName = AccessToken.FullName;
+                    //dm.ScreenName = AccessToken.ScreenName;
 
+                    dm.APIKeyFKID = apiKey.Id;
+                    
+                    StorageService.Instance.Storage.Insert(dm);
+                    
+                    IsLoggedInVisible = Visibility.Visible;
+                    IsLoginVisible = Visibility.Collapsed;
+                    IsAPIEditorVisible = Visibility.Collapsed;
+                    
                     break;
                 case WebAuthenticationStatus.UserCancel:
                     //Debug.WriteLine("Operation aborted");
