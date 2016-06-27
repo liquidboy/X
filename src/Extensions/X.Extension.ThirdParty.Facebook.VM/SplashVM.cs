@@ -89,7 +89,7 @@ namespace X.Extension.ThirdParty.Facebook.VM
 
                     await GetUserAsync();
                     ProfileImageUrl =  GetProfileImageUrl(UserId);
-                    await GetUserFeedAsync();
+                    //await GetUserFeedAsync();
                     return;
                 }
             }
