@@ -27,7 +27,7 @@ namespace X.Extension.ThirdParty.Facebook.VM
 
         FacebookClient _client;
         //https://blogs.msdn.microsoft.com/wsdevsol/2015/02/12/integrating-facebook-authentication-in-universal-windows-apps/
-
+        //http://bsubramanyamraju.blogspot.com.au/2014/12/windowsphone-store-81-facebook.html
 
         private RelayCommand<string> _requestLogin;
 
@@ -41,6 +41,15 @@ namespace X.Extension.ThirdParty.Facebook.VM
 
         Visibility _IsLoggedInVisible;
         public Visibility IsLoggedInVisible { get { return _IsLoggedInVisible; } set { _IsLoggedInVisible = value; RaisePropertyChanged(); } }
+
+        string _ProfileImageUrl;
+        public string ProfileImageUrl { get { return _ProfileImageUrl; } set { _ProfileImageUrl = value; RaisePropertyChanged(); } }
+
+        string _UserId;
+        public string UserId { get { return _UserId; } set { _UserId = value; RaisePropertyChanged(); } }
+
+        string _UserName;
+        public string UserName { get { return _UserName; } set { _UserName = value; RaisePropertyChanged(); } }
 
 
         public SplashVM()
@@ -60,12 +69,16 @@ namespace X.Extension.ThirdParty.Facebook.VM
 
         private async void PopulatePassportData()
         {
+            
             //if theres a filled in passport then user is already logged in
             var data = StorageService.Instance.Storage.RetrieveList<PassportDataModel>().Where(x=>x.PassType == GroupingType).ToList();
             if (data != null && data.Count > 0) { 
                 var dm = data.Where(x => x.PassType == GroupingType).FirstOrDefault();
                 if (dm != null)
                 {
+                    //delete if necessar
+                    //StorageService.Instance.Storage.DeleteById<PassportDataModel>(dm.Id.ToString());
+
                     _accessToken = dm.Token;
                     //_tokenExpiry = dm.TokenExpiry;
 
@@ -73,6 +86,10 @@ namespace X.Extension.ThirdParty.Facebook.VM
                     IsLoginVisible = Visibility.Collapsed;
                     IsAPIEditorVisible = Visibility.Collapsed;
                     IsLoggedInVisible = Visibility.Visible;
+
+                    await GetUserAsync();
+                    ProfileImageUrl =  GetProfileImageUrl(UserId);
+                    await GetUserFeedAsync();
                     return;
                 }
             }
@@ -102,7 +119,8 @@ namespace X.Extension.ThirdParty.Facebook.VM
             _client.AppId = apiKey.APIKey;
             _client.AppSecret = apiKey.APISecret;
 
-            var scope = "public_profile, email";
+            //var scope = "public_profile, email";
+            var scope = "public_profile,user_friends,email, user_about_me, user_hometown, user_location, user_photos, user_posts, user_status, user_videos, user_website";
 
             var redirectUri = WebAuthenticationBroker.GetCurrentApplicationCallbackUri().ToString();
             var fb = new FacebookClient();
@@ -123,15 +141,22 @@ namespace X.Extension.ThirdParty.Facebook.VM
 
         }
 
-        private async void MakeCall() {
+        private string GetProfileImageUrl(string userId, string type = "square") {
+            return $"https://graph.facebook.com/{userId}/picture?type={type}&access_token={_accessToken}";
+        }
+
+        private async Task GetUserAsync()
+        {
             _client = new FacebookClient(_accessToken);
-            dynamic parameters = new ExpandoObject();
-            parameters.message = "FacebookString";
-            dynamic result = await _client.PostTaskAsync("me/feed", parameters);
-            var id = result.id;
+            dynamic result = await _client.GetTaskAsync("me");
+            UserId = result.id;
+            UserName = result.name;
+        }
 
-
- 
+        private async Task GetUserFeedAsync()
+        {
+            _client = new FacebookClient(_accessToken);
+            dynamic result = await _client.GetTaskAsync("me/posts");
         }
 
         public async Task ParseAuthenticationResult(WebAuthenticationResult result)

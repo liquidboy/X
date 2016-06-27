@@ -11,11 +11,11 @@
     x:Name="root"
     d:DesignWidth="400">
     <Grid>
-        <xuiuc:CircularCard Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                            PrimaryName="{Binding LoggedInUser.Name}" SecondaryName="{Binding LoggedInUser.Location}" 
-                            Margin="20,-10,0,0"
-                            Foreground="Black" AvatarUri="{Binding LoggedInUser.ProfileImageUrl}" 
-                            Visibility="{Binding IsLoggedInVisibility }"></xuiuc:CircularCard>
+        <xuiuc:CircularCard Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" 
+                            PrimaryName="{Binding UserName}" SecondaryName="?" 
+                            Margin="20,-10,0,0" IsAvatarOnRight="True"
+                            Foreground="Black" AvatarUri="{Binding ProfileImageUrl}" 
+                            Visibility="{Binding IsLoggedInVisible }"></xuiuc:CircularCard>
 
         <Button Content="Login" Visibility="{Binding IsLoginVisible}" Command="{Binding RequestLogin}" CommandParameter="RequestLogin" HorizontalAlignment="Center" VerticalAlignment="Center" ></Button>
         <xuiak:ApiEditor Visibility="{Binding IsAPIEditorVisible}"></xuiak:ApiEditor>
