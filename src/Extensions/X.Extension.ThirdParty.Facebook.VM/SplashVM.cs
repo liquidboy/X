@@ -89,7 +89,7 @@ namespace X.Extension.ThirdParty.Facebook.VM
 
                     await GetUserAsync();
                     ProfileImageUrl =  GetProfileImageUrl(UserId);
-                    //await GetUserFeedAsync();
+                    await GetUserFeedAsync(UserId);
                     return;
                 }
             }
@@ -136,7 +136,7 @@ namespace X.Extension.ThirdParty.Facebook.VM
             Uri endUri = new Uri(redirectUri, UriKind.Absolute);
 
             WebAuthenticationResult result = await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, startUri, endUri);
-            await ParseAuthenticationResult(result);
+            ParseAuthenticationResult(result);
 
 
         }
@@ -153,13 +153,14 @@ namespace X.Extension.ThirdParty.Facebook.VM
             UserName = result.name;
         }
 
-        private async Task GetUserFeedAsync()
+        private async Task GetUserFeedAsync(string userid)
         {
             _client = new FacebookClient(_accessToken);
-            dynamic result = await _client.GetTaskAsync("me/posts");
+            //dynamic result = await _client.GetTaskAsync("me/feed");
+            dynamic result = await _client.GetTaskAsync($"{userid}/feed");
         }
 
-        public async Task ParseAuthenticationResult(WebAuthenticationResult result)
+        public void ParseAuthenticationResult(WebAuthenticationResult result)
         {
             switch (result.ResponseStatus)
             {
