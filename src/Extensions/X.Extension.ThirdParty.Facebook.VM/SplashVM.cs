@@ -28,6 +28,8 @@ namespace X.Extension.ThirdParty.Facebook.VM
         FacebookClient _client;
         //https://blogs.msdn.microsoft.com/wsdevsol/2015/02/12/integrating-facebook-authentication-in-universal-windows-apps/
         //http://bsubramanyamraju.blogspot.com.au/2014/12/windowsphone-store-81-facebook.html
+        //https://developers.facebook.com/docs/
+
 
         private RelayCommand<string> _requestLogin;
 
@@ -50,6 +52,9 @@ namespace X.Extension.ThirdParty.Facebook.VM
 
         string _UserName;
         public string UserName { get { return _UserName; } set { _UserName = value; RaisePropertyChanged(); } }
+
+        dynamic facebookStatuses;
+        public dynamic FacebookStatuses { get { return facebookStatuses; } set { facebookStatuses = value; RaisePropertyChanged(); } }
 
 
         public SplashVM()
@@ -158,6 +163,9 @@ namespace X.Extension.ThirdParty.Facebook.VM
             _client = new FacebookClient(_accessToken);
             //dynamic result = await _client.GetTaskAsync("me/feed");
             dynamic result = await _client.GetTaskAsync($"{userid}/feed");
+            if (result.Count == 2) {
+                FacebookStatuses = result[0];
+            }
         }
 
         public void ParseAuthenticationResult(WebAuthenticationResult result)

@@ -17,6 +17,19 @@
                             Foreground="Black" AvatarUri="{Binding ProfileImageUrl}" 
                             Visibility="{Binding IsLoggedInVisible }"></xuiuc:CircularCard>
 
+
+        <ItemsControl Margin="5,120,5,0" Visibility="{Binding IsLoggedInVisible}"  ItemsSource="{Binding FacebookStatuses}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  ScrollViewer.VerticalScrollBarVisibility="Hidden" >
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical"></StackPanel>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding story}"></TextBlock>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
         <Button Content="Login" Visibility="{Binding IsLoginVisible}" Command="{Binding RequestLogin}" CommandParameter="RequestLogin" HorizontalAlignment="Center" VerticalAlignment="Center" ></Button>
         <xuiak:ApiEditor Visibility="{Binding IsAPIEditorVisible}"></xuiak:ApiEditor>
     </Grid>
