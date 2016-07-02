@@ -90,3 +90,5 @@ There are 2 demonstration applications that pull all the above components togeth
 - Below shows the X.Browser Host UWP loading the same two extensions as X.Player (Twitter/Flickr)
 
 ![lastrefreshed](https://pbs.twimg.com/media/Clwm-snUoAAmvBz.jpg:large)
+
+Come chat with me on Twitter : https://twitter.com/josefajardo
