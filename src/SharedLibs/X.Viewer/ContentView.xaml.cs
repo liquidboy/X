@@ -137,6 +137,24 @@ namespace X.Viewer
 
                     cv.Renderer.UpdateSource((string)e.NewValue);
                 }
+                else if (uriNew.Contains(".flickr"))
+                {
+                    cv.Renderer = new Flickr.FlickrRenderer();
+                    cv.Renderer.SendMessage += Renderer_SendMessage;
+                    cv.Renderer.Load();
+                    cv.layoutRoot.Children.Add(cv.Renderer.RenderElement);
+
+                    cv.Renderer.UpdateSource((string)e.NewValue);
+                }
+                else if (uriNew.Contains(".twitter"))
+                {
+                    cv.Renderer = new Twitter.TwitterRenderer();
+                    cv.Renderer.SendMessage += Renderer_SendMessage;
+                    cv.Renderer.Load();
+                    cv.layoutRoot.Children.Add(cv.Renderer.RenderElement);
+
+                    cv.Renderer.UpdateSource((string)e.NewValue);
+                }
                 else
                 {
                     cv.Renderer = new WebViewRenderer();

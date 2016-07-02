@@ -1,22 +1,5 @@
-﻿using CoreLib.Extensions;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using WeakEvent;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
+﻿using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using X.Extensions;
 
 namespace X.Player
 {
@@ -33,7 +16,8 @@ namespace X.Player
         {
             //await ctlShellExt.InitExtensions();
             header.InitChrome(App.Current, ApplicationView.GetForCurrentView());
-            ctlViewer.Uri = "viewer://sketchflow-application.sketch";
+            //ctlViewer.Uri = "viewer://sketchflow-application.sketch";
+            ctlViewer.Uri = "viewer://flickr-application.flickr";
         }
         
         

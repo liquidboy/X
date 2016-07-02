@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A705ECFF-11E6-4D30-8FBB-BF1224CDF22D}</ProjectGuid>
+    <ProjectGuid>{94C3AE76-D0B2-43BE-80B9-817183DB9608}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>X.Viewer</RootNamespace>
-    <AssemblyName>X.Viewer</AssemblyName>
+    <RootNamespace>X.Viewer.Twitter</RootNamespace>
+    <AssemblyName>X.Viewer.Twitter</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.14332.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.14332.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -107,18 +107,15 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContentView.xaml.cs">
-      <DependentUpon>ContentView.xaml</DependentUpon>
+    <Compile Include="TwitterRenderer.cs" />
+    <Compile Include="TwitterView.xaml.cs">
+      <DependentUpon>TwitterView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\X.Viewer.rd.xml" />
+    <EmbeddedResource Include="Properties\X.Viewer.Twitter.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ContentView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Generic.xaml">
+    <Page Include="TwitterView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -128,65 +125,9 @@
       <Project>{d273509d-612c-47c3-b2a6-c203d96b90d3}</Project>
       <Name>X.CoreLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\X.Viewer.Direct2D\X.Viewer.Direct2D.csproj">
-      <Project>{eb771d7b-a35e-4421-b0ae-6e0eac23cc1d}</Project>
-      <Name>X.Viewer.Direct2D</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.Viewer.DotnetCLI\X.Viewer.DotnetCLI.csproj">
-      <Project>{5942b71d-e165-4f37-b51c-e4ca49ed6ee6}</Project>
-      <Name>X.Viewer.DotnetCLI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.Viewer.FFMpeg\X.Viewer.FFMpeg.csproj">
-      <Project>{7ced88a8-bde0-4784-9816-c694d24c628d}</Project>
-      <Name>X.Viewer.FFMpeg</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.Viewer.Flickr\X.Viewer.Flickr.csproj">
-      <Project>{ab4f35e7-4040-4ef0-8047-363782439d11}</Project>
-      <Name>X.Viewer.Flickr</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.Viewer.MapView\X.Viewer.MapView.csproj">
-      <Project>{5cf5189b-47e5-403b-acc7-80dd5dc8fb71}</Project>
-      <Name>X.Viewer.MapView</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.Viewer.MediaView\X.Viewer.MediaView.csproj">
-      <Project>{f137a399-43b8-4a26-b2d5-d47bc002d549}</Project>
-      <Name>X.Viewer.MediaView</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.Viewer.SketchFlow\X.Viewer.SketchFlow.csproj">
-      <Project>{76cbfc4c-bce1-4938-898c-1f570cc1314e}</Project>
-      <Name>X.Viewer.SketchFlow</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.Viewer.Tiles\X.Viewer.Tiles.csproj">
-      <Project>{0ee8b5f2-bafc-4ba7-a6cb-80b35d89c7cc}</Project>
-      <Name>X.Viewer.Tiles</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.Viewer.Twitter\X.Viewer.Twitter.csproj">
-      <Project>{94c3ae76-d0b2-43be-80b9-817183db9608}</Project>
-      <Name>X.Viewer.Twitter</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.Viewer.UrhoSharp\X.Viewer.UrhoSharp.csproj">
-      <Project>{4ee65a2f-ae4a-4e4b-a45b-2526f9d39b74}</Project>
-      <Name>X.Viewer.UrhoSharp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.Viewer.WebView\X.Viewer.WebView.csproj">
-      <Project>{eeb55f2d-9afe-48f0-8d44-2ed3ed12e36d}</Project>
-      <Name>X.Viewer.WebView</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.Viewer.Win2D\X.Viewer.Win2D.csproj">
-      <Project>{ef311f83-d265-4c38-9ab4-364e002eb1ee}</Project>
-      <Name>X.Viewer.Win2D</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.Viewer.WinComposition\X.Viewer.WinComposition.csproj">
-      <Project>{fd4ba47d-972f-48b1-b87d-e95292027111}</Project>
-      <Name>X.Viewer.WinComposition</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.Viewer.XAML\X.Viewer.XAML.csproj">
-      <Project>{34bf0178-8597-43c8-8dad-509bb7085984}</Project>
-      <Name>X.Viewer.XAML</Name>
-    </ProjectReference>
   </ItemGroup>
-  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
-    <VisualStudioVersion>14.0</VisualStudioVersion>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">
+    <VisualStudioVersion>15.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
