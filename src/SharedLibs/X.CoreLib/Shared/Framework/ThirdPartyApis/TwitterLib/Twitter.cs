@@ -37,11 +37,11 @@ namespace FlickrNet
         /// a segment of uploading has been completed. This is approximately 50 bytes. The total
         /// uploaded is recorded in the <see cref="UploadProgressEventArgs"/> class.
         /// </summary>
-        public event EventHandler<UploadProgressEventArgs> OnUploadProgress;
+        //public event EventHandler<UploadProgressEventArgs> OnUploadProgress;
 
-#if !(MONOTOUCH || WindowsCE || SILVERLIGHT)
-        private static bool isServiceSet;
-#endif
+//#if !(MONOTOUCH || WindowsCE || SILVERLIGHT)
+//        private static bool isServiceSet;
+//#endif
         private static SupportedService defaultService = SupportedService.Flickr;
 
         private SupportedService service = SupportedService.Flickr;

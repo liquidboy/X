@@ -199,7 +199,7 @@ namespace FavouriteMX.Shared.Models
                     TileUpdateManager.CreateTileUpdaterForApplication().Clear();
                 }
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
             }
         }

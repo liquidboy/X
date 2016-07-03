@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 
 
 //[assembly: ComVisible(false)]
-[assembly: CLSCompliant(true)]
+//[assembly: CLSCompliant(true)]
 
 
 

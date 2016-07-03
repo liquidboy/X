@@ -154,7 +154,8 @@ namespace CoreLib.Effects
                     surfaceBrush.Stretch = CompositionStretch.UniformToFill;
                 }
             }
-            catch (Exception ex) {
+            catch //(Exception ex) 
+            {
                 return false;
             }
 

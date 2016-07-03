@@ -198,7 +198,7 @@ namespace X.Viewer.SketchFlow
         }
 
 
-        bool IsMovingStamp = false;
+        //bool IsMovingStamp = false;
         bool IsResizingStamp = false;
         UIElement _currentStamp;
         double _stampStartWidth = 0;
@@ -419,7 +419,7 @@ namespace X.Viewer.SketchFlow
             IsMovingPage = false;
             IsResizingPage = false;
             IsResizingStamp = false;
-            IsMovingStamp = false;
+            //IsMovingStamp = false;
 
             _currentPageLayout = null;
             _currentStamp = null;

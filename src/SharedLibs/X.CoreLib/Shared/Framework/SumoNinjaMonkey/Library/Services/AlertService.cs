@@ -13,12 +13,12 @@ namespace SumoNinjaMonkey.Framework.Services
 {
     public class AlertService
     {
-        private static bool _isEnabled = false;
+        //private static bool _isEnabled = false;
 
         public static List<AlertMessage> AlertMessages = new List<AlertMessage>();
         private static List<AlertMessage> _shadowAlertMessages = new List<AlertMessage>();
 
-        private static bool _isSavingToDb = false;
+        //private static bool _isSavingToDb = false;
         //private static SqliteDatabase _db;
 
         ////private static DispatcherTimer _dtSave;
@@ -46,14 +46,14 @@ namespace SumoNinjaMonkey.Framework.Services
 
         public static void Start()
         {
-            _isEnabled = true;
+            //_isEnabled = true;
             //_dtSave.Start();
         }
 
         public static void Stop()
         {
             //_dtSave.Stop();
-            _isEnabled = false;
+            //_isEnabled = false;
         }
 
 

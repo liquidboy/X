@@ -72,7 +72,7 @@ namespace FlickrNet
                 return string.Empty;
             }
 
-            return string.Empty;
+            //return string.Empty;
         }
 
         private async Task<FlickrResult<T>> GetResponseAsync<T>(Dictionary<string, string> parameters) where T : IFlickrParsable, new()

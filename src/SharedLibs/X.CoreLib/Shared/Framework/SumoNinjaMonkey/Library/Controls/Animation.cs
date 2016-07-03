@@ -59,7 +59,7 @@ namespace SumoNinjaMonkey.Framework.Controls
             });
 
 
-            el.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, invokedHandler);
+            el.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, invokedHandler).GetResults();
         }
     }
 }

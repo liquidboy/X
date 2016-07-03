@@ -109,7 +109,7 @@ namespace SumoNinjaMonkey.Framework.Collections
 
         public Windows.Foundation.IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
         {
-            return Task.Run<LoadMoreItemsResult>(async () =>
+            return Task.Run<LoadMoreItemsResult>(() =>
             {
                 LoadMoreMethod.DynamicInvoke();
                 return new LoadMoreItemsResult() { Count = count };

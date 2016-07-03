@@ -238,7 +238,7 @@ namespace X.Extensions.ThirdParty.Flickr
                     }
                 }
             }
-            catch (Exception Error)
+            catch //(Exception Error)
             {
                 //rootPage.NotifyUser(Error.Message, NotifyType.ErrorMessage);
             }

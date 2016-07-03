@@ -123,7 +123,8 @@ namespace CoreLib.Converters
                 }
 
             }
-            catch (Exception ex) { }
+            catch //(Exception ex) 
+            { }
 
             return bitmapImage;
         }

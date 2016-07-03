@@ -13,6 +13,8 @@ namespace X.Viewer.DotnetCLI
     {
         FrameworkElement _renderElement;
 
+        public event EventHandler<ContentViewEventArgs> SendMessage;
+        
         public FrameworkElement RenderElement
         {
             get
@@ -28,7 +30,7 @@ namespace X.Viewer.DotnetCLI
 
         public string Uri { get; set; }
 
-        public event EventHandler<ContentViewEventArgs> SendMessage;
+        //public event EventHandler<ContentViewEventArgs> SendMessage;
 
         public async Task CaptureThumbnail(InMemoryRandomAccessStream ms)
         {

@@ -420,7 +420,7 @@ namespace X.Services.Extensions
                     // load it
                     //await nExt.Load();
                 }
-                catch (Exception ex)
+                catch //(Exception ex)
                 {
                     //chances are if it fails retrieving properties that the app was added with no properties .. Uninstall the app and reinstall it and hopefully the latest metadata will be there
                 }

@@ -38,7 +38,8 @@ namespace X.Extensions.ThirdParty.GitX
 
                 if (OnLoggedIn != null) OnLoggedIn(null, EventArgs.Empty);
             }
-            catch (Exception ex) { }
+            catch //(Exception ex) 
+            { }
             
         }
         

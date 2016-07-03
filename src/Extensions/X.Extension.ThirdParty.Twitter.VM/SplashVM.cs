@@ -150,7 +150,7 @@ namespace X.Extension.ThirdParty.Twitter.VM
                 
                 return await httpClient.GetStringAsync(new Uri(Url));
             }
-            catch (Exception Err)
+            catch //(Exception Err)
             {
                 //rootPage.NotifyUser("Error getting data from server." + Err.Message, NotifyType.StatusMessage);
             }

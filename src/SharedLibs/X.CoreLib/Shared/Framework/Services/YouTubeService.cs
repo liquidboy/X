@@ -492,7 +492,7 @@ namespace X.CoreLib.Shared.Services
                 }
                 result = youtubeDataItem;
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
                 result = null;
             }

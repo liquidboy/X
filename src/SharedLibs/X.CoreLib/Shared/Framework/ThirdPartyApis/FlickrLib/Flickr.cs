@@ -39,9 +39,9 @@ namespace FlickrNet
         /// </summary>
         public event EventHandler<UploadProgressEventArgs> OnUploadProgress;
 
-#if !(MONOTOUCH || WindowsCE || SILVERLIGHT)
-        private static bool isServiceSet;
-#endif
+//#if !(MONOTOUCH || WindowsCE || SILVERLIGHT)
+//        private static bool isServiceSet;
+//#endif
         private static SupportedService defaultService = SupportedService.Flickr;
 
         private SupportedService service = SupportedService.Flickr;

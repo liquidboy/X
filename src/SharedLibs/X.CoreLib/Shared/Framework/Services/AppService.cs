@@ -28,7 +28,7 @@ namespace X.CoreLib.Shared.Services
                 else
                 {
                     var nc = NetworkInformation.GetInternetConnectionProfile().GetNetworkConnectivityLevel();
-                    if (nc == null) return false;
+                    //if (nc == null) return false;
                     if (nc == NetworkConnectivityLevel.None) return false;
                     if (nc == NetworkConnectivityLevel.LocalAccess) return true; //return false;
                     if (nc == NetworkConnectivityLevel.ConstrainedInternetAccess ||
@@ -37,7 +37,8 @@ namespace X.CoreLib.Shared.Services
                     return false;
                 }
             }
-            catch(Exception ex) { 
+            catch //(Exception ex) 
+            { 
             
             }
             return true;
@@ -55,7 +56,7 @@ namespace X.CoreLib.Shared.Services
 
         private async static Task GetSettingsLocalAndCloud()
         {
-            bool doPullFromCloud = false;
+            //bool doPullFromCloud = false;
 
             //DEFAULT SETTINGS
             var defaultSetting = new AppWideSetting();
@@ -151,7 +152,7 @@ namespace X.CoreLib.Shared.Services
                     AppDatabase.Current.SaveAppState("AppWideSetting", forStorage2);
                 }
             }
-            catch (Exception ex)
+            catch // (Exception ex)
             {
 
             }

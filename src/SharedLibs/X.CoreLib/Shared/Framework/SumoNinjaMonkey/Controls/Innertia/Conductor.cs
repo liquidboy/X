@@ -7,7 +7,7 @@ namespace SumoNinjaMonkey.Framework.Controls.Innertia
 {
     public static class Conductor
     {
-        private static DispatcherTimer innertialCanvasDispatchTimer;
+        //private static DispatcherTimer innertialCanvasDispatchTimer;
 
         public static event EventHandler Beat;
 

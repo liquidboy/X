@@ -120,10 +120,10 @@ namespace SumoNinjaMonkey.Framework.Controls
 
         private void mainGrid_PointerMoved(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            return;
-            Point pt = e.GetCurrentPoint(recCP).RawPosition;
+            //return;
+            //Point pt = e.GetCurrentPoint(recCP).RawPosition;
 
-            TiltEffect(pt);
+            //TiltEffect(pt);
         }
 
         private void mainGrid_PointerPressed(object sender, PointerRoutedEventArgs e)

@@ -63,7 +63,7 @@ namespace CoreLib.Effects
                 await InitializeResources();
                 await Draw();
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
             }
             

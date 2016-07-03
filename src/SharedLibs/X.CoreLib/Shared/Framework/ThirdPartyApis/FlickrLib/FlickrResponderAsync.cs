@@ -95,7 +95,7 @@ namespace FlickrNet
                 }
             }
 
-            return null;
+            //return null;
         }
 
         private async static Task<FlickrResult<string>> DownloadDataAsync(string method,string hashCall, string baseUrl, string data, string contentType, string authHeader)

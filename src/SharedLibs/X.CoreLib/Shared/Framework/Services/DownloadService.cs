@@ -18,7 +18,7 @@ namespace X.CoreLib.Shared.Services
     {
         private static DownloadService _downloadService = null;
 
-        public event EventHandler DownloadCountChanged;
+        //public event EventHandler DownloadCountChanged;
 
         //private int _downloadCount = 0;
         //public int DownloadCount {
@@ -56,7 +56,7 @@ namespace X.CoreLib.Shared.Services
             public string StorageFolder { get; set; }
         }
 
-        private CancellationTokenSource _OneDownloadAtATimeCancellationToken;
+        //private CancellationTokenSource _OneDownloadAtATimeCancellationToken;
 
         private Queue<DownloadRequest> _downloadVideoRequests = new Queue<DownloadRequest>();
         private Queue<DownloadRequest> _downloadPictureRequests = new Queue<DownloadRequest>();
@@ -135,7 +135,8 @@ namespace X.CoreLib.Shared.Services
                 await ExecuteDownload(dr, cancellationToken).AsAsyncAction().AsTask(cancellationToken);
                 //}
             }
-            catch (Exception ex) {
+            catch //(Exception ex) 
+            {
 
             }
 
@@ -227,11 +228,7 @@ namespace X.CoreLib.Shared.Services
 
                     foundFile = null;
                 }
-                catch (FileNotFoundException ex)
-                {
-
-                }
-                catch (Exception ex)
+                catch //(Exception ex)
                 {
                     //unhandled exception
 
@@ -240,12 +237,12 @@ namespace X.CoreLib.Shared.Services
 
 
                 //StorageFile file = await FileExists(folderUri, fileUri, request.Type);
-                bool isNewDownload = false;
+                //bool isNewDownload = false;
 
                 if (!fileFound)
                 {
 
-                    isNewDownload = true;
+                    //isNewDownload = true;
                     var file = await appFolder.CreateFileAsync(fileUri, CreationCollisionOption.ReplaceExisting).AsTask(ct);
                     
                     //SendSystemWideMessage("DASHBOARD", "", action: "SEND INFORMATION NOTIFICATION", text1: "Download started '" + fileUri + "'", int1: 2);
@@ -350,7 +347,7 @@ namespace X.CoreLib.Shared.Services
                 request = null;
                 return;
             }
-            catch (WebException ex)
+            catch //(WebException ex)
             {
                 return;
             }

@@ -21,6 +21,8 @@ namespace X.Viewer.FFmpeg
         MediaElement _media;
         MediaControls _mediaControls;
 
+        public event EventHandler<ContentViewEventArgs> SendMessage;
+
         public FrameworkElement RenderElement
         {
             get
@@ -36,7 +38,7 @@ namespace X.Viewer.FFmpeg
 
         public string Uri { get; set; }
 
-        public event EventHandler<ContentViewEventArgs> SendMessage;
+        //public event EventHandler<ContentViewEventArgs> SendMessage;
 
 
         public async Task CaptureThumbnail(Windows.Storage.Streams.InMemoryRandomAccessStream ms)

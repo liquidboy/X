@@ -218,7 +218,7 @@ namespace X.Services.Image
 
                 return true;
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
                 return false;
             }

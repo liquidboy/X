@@ -20,7 +20,7 @@ namespace CoreLib.Converters
                     result = new BitmapImage(new Uri((string)value));
                 }
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
                 result = new BitmapImage();
             }
