@@ -33,7 +33,7 @@ namespace X.Extension.ThirdParty.Flickr.VM
         OAuthAccessToken AccessToken;
         OAuthRequestToken RequestToken;
 
-        bool IsLoggedIn = false;
+        //bool IsLoggedIn = false;
         APIKeyDataModel apiKey;
 
         Person _LoggedInUser;
@@ -132,7 +132,7 @@ namespace X.Extension.ThirdParty.Flickr.VM
                         TokenSecret = dm.TokenSecret,
                         UserId = dm.UserId,
                     };
-                    IsLoggedIn = true;
+                    //IsLoggedIn = true;
 
                     _flickr.OAuthAccessToken = AccessToken.Token;
                     _flickr.OAuthAccessTokenSecret = AccessToken.TokenSecret;
@@ -171,7 +171,7 @@ namespace X.Extension.ThirdParty.Flickr.VM
                 HttpClient httpClient = new HttpClient();
                 return await httpClient.GetStringAsync(new Uri(Url));
             }
-            catch (Exception Err)
+            catch // (Exception Err)
             {
                 //rootPage.NotifyUser("Error getting data from server." + Err.Message, NotifyType.StatusMessage);
             }
@@ -313,7 +313,7 @@ namespace X.Extension.ThirdParty.Flickr.VM
                     }
                 }
             }
-            catch (Exception Error)
+            catch //(Exception Error)
             {
                 //rootPage.NotifyUser(Error.Message, NotifyType.ErrorMessage);
             }

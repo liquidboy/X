@@ -190,7 +190,7 @@ namespace X.Viewer
 
 
             }
-            catch (Exception ea)
+            catch //(Exception ea)
             {
                 // normally this exception is raised from the Invokcation of a webview script natively .. 
                 // todo: work out what to do if we can't find a favicon

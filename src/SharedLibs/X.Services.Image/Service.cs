@@ -61,7 +61,7 @@ namespace X.Services.Image
                 else _tileFolder = await _localFolder.CreateFolderAsync(folderName);
 
             }
-            catch (System.IO.FileNotFoundException ex)
+            catch //(System.IO.FileNotFoundException ex)
             {
                 //todo: what would ever cause this ??! need to work out how to handle this type of error
             }
