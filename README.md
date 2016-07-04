@@ -3,7 +3,7 @@
 Quickly build rich UI's in your Universal Application .. 
 
 
-[IMPORTANT : UAP SQLITE has a bug ...  (SQLite.UAP.2015, Version=3.10.2)   for x64 fails to pass thru the 64 bit dll's. RUN the application as an x86 platform app for the time being till the extension is resolved]
+[IMPORTANT : This project depends on Windows SDK Anniversary Edition 14366]
 
 
 Components still being fleshed out...
