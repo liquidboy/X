@@ -1,7 +1,12 @@
 ﻿{
   "dependencies": {
     "Microsoft.ApplicationInsights.WindowsApps": "1.0.0",
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0"
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
+    "SharpDX": "3.0.2",
+    "SharpDX.Direct2D1": "3.0.2",
+    "SharpDX.Direct3D12": "3.0.2",
+    "SharpDX.DXGI": "3.0.2",
+    "SharpDX.Mathematics": "3.0.2"
   },
   "frameworks": {
     "uap10.0": {}
