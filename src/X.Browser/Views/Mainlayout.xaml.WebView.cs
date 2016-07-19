@@ -114,57 +114,63 @@ namespace X.Browser.Views
 
                         await Task.Delay(1000);
 
-                        //capture screenshot
-                        using (InMemoryRandomAccessStream ms = new InMemoryRandomAccessStream())
-                        {
-                            //todo :drive this from the x.webview
-                            await wvMain.Renderer?.CaptureThumbnail(ms);
-                            //await wvMain.CapturePreviewToStreamAsync(ms);
+                        if (vm.SelectedTab != null) {
 
-                            //img: Banner 400 width
-                            //ms.Seek(0);
-                            await X.Services.Image.Service.Instance.GenerateResizedImageAsync(400, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + ".png", X.Services.Image.Service.location.MediumFolder);
+                            //capture screenshot
+                            using (InMemoryRandomAccessStream ms = new InMemoryRandomAccessStream())
+                            {
+                                //todo :drive this from the x.webview
+                                await wvMain.Renderer?.CaptureThumbnail(ms);
+                                //await wvMain.CapturePreviewToStreamAsync(ms);
 
-                            //img: Thumbnail
-                            ms.Seek(0);
-                            await X.Services.Image.Service.Instance.GenerateResizedImageAsync(180, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + ".png", X.Services.Image.Service.location.ThumbFolder);
+                                //img: Banner 400 width
+                                //ms.Seek(0);
+                                await X.Services.Image.Service.Instance.GenerateResizedImageAsync(400, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + ".png", X.Services.Image.Service.location.MediumFolder);
 
-                            //img: Tile
-                            ms.Seek(0);
-                            await X.Services.Image.Service.Instance.GenerateResizedImageAsync(71, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + ".png", X.Services.Image.Service.location.TileFolder, 71);
+                                //img: Thumbnail
+                                ms.Seek(0);
+                                await X.Services.Image.Service.Instance.GenerateResizedImageAsync(180, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + ".png", X.Services.Image.Service.location.ThumbFolder);
 
-                            ms.Seek(0);
-                            await X.Services.Image.Service.Instance.GenerateResizedImageAsync(150, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + "-150x150.png", X.Services.Image.Service.location.TileFolder, 150);
+                                //img: Tile
+                                ms.Seek(0);
+                                await X.Services.Image.Service.Instance.GenerateResizedImageAsync(71, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + ".png", X.Services.Image.Service.location.TileFolder, 71);
 
-                            ms.Seek(0);
-                            await X.Services.Image.Service.Instance.GenerateResizedImageAsync(310, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + "-310x150.png", X.Services.Image.Service.location.TileFolder, 150);
+                                ms.Seek(0);
+                                await X.Services.Image.Service.Instance.GenerateResizedImageAsync(150, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + "-150x150.png", X.Services.Image.Service.location.TileFolder, 150);
 
-                            ms.Seek(0);
-                            await X.Services.Image.Service.Instance.GenerateResizedImageAsync(310, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + "-310x310.png", X.Services.Image.Service.location.TileFolder, 310);
+                                ms.Seek(0);
+                                await X.Services.Image.Service.Instance.GenerateResizedImageAsync(310, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + "-310x150.png", X.Services.Image.Service.location.TileFolder, 150);
+
+                                ms.Seek(0);
+                                await X.Services.Image.Service.Instance.GenerateResizedImageAsync(310, wvMain.ActualWidth, wvMain.ActualHeight, ms, uriHash + "-310x310.png", X.Services.Image.Service.location.TileFolder, 310);
 
 
-                            //update tile
-                            //var sxxxxx = Windows.Storage.ApplicationData.Current.LocalFolder;
-                            X.Services.Tile.Service.UpdatePrimaryTile("X.Browser",
-                                "ms-appdata:///local/tile/" + uriHash + "-150x150.png",
-                                "ms-appdata:///local/tile/" + uriHash + "-310x150.png",
-                                "ms-appdata:///local/tile/" + uriHash + "-310x310.png",
-                                "ms-appdata:///local/tile/" + uriHash + ".png"
-                                );
+                                //update tile
+                                //var sxxxxx = Windows.Storage.ApplicationData.Current.LocalFolder;
+                                X.Services.Tile.Service.UpdatePrimaryTile("X.Browser",
+                                    "ms-appdata:///local/tile/" + uriHash + "-150x150.png",
+                                    "ms-appdata:///local/tile/" + uriHash + "-310x150.png",
+                                    "ms-appdata:///local/tile/" + uriHash + "-310x310.png",
+                                    "ms-appdata:///local/tile/" + uriHash + ".png"
+                                    );
 
-                            ms.Dispose();
+                                ms.Dispose();
+
+                            }
+
+
+                            //update thumb in VM
+                            var fullUriHash = string.Concat(X.Services.Image.Service.Instance.MediumLocation, "\\", uriHash, ".png");
+                            //if (!vm.SelectedTab.ThumbUri.Equals(fullUriHash)) {
+                            vm.SelectedTab.ThumbUri = fullUriHash + "?v=" + Guid.NewGuid().ToString();
+                            vm.SelectedTab.ExternalRaisePropertyChanged("ThumbUri");
+                            //}
+
+                            vm.SelectedTab.LastRefreshedDate = DateTime.UtcNow;
 
                         }
 
 
-                        //update thumb in VM
-                        var fullUriHash = string.Concat(X.Services.Image.Service.Instance.MediumLocation, "\\", uriHash, ".png");
-                        //if (!vm.SelectedTab.ThumbUri.Equals(fullUriHash)) {
-                        vm.SelectedTab.ThumbUri = fullUriHash + "?v=" + Guid.NewGuid().ToString();
-                        vm.SelectedTab.ExternalRaisePropertyChanged("ThumbUri");
-                        //}
-
-                        vm.SelectedTab.LastRefreshedDate = DateTime.UtcNow;
 
                         isCapturingImage = false;
                     }
