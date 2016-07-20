@@ -105,6 +105,8 @@ namespace X.Extension.ThirdParty.Flickr.VM
             var apis = StorageService.Instance.Storage.RetrieveList<APIKeyDataModel>();
             if (apis != null && apis.Count > 0) apiKey = apis.Where(x => x.Type == GroupingType).FirstOrDefault();
 
+            // StorageService.Instance.Storage.DeleteById<APIKeyDataModel>(apiKey.Id.ToString());
+
             if (apiKey == null) IsAPIKeyVisible = Visibility.Visible;
             else IsAPIKeyVisible = Visibility.Collapsed;
         }
@@ -117,6 +119,9 @@ namespace X.Extension.ThirdParty.Flickr.VM
             var data = StorageService.Instance.Storage.RetrieveList<PassportDataModel>();
             if (data != null && data.Count > 0)
             {
+                IsLoginVisible = Visibility.Visible;
+                IsTabsVisible = Visibility.Collapsed;
+
                 var dm = data.Where(x => x.PassType == GroupingType).FirstOrDefault();
                 if (dm != null) {
                     IsLoginVisible = Visibility.Collapsed;
