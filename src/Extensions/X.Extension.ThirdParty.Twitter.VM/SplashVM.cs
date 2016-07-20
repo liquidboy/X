@@ -70,11 +70,16 @@ namespace X.Extension.ThirdParty.Twitter.VM
         private void GetAPIData() {
             var apis = StorageService.Instance.Storage.RetrieveList<APIKeyDataModel>();
             if (apis != null && apis.Count > 0) apiKey = apis.Where(x => x.Type == GroupingType).FirstOrDefault();
+
+            if (apiKey == null) IsAPIEditorVisible = Visibility.Visible;
+            else IsAPIEditorVisible = Visibility.Collapsed;
         }
 
 
         private async void PopulatePassportData()
         {
+            if (apiKey == null) { IsLoginVisible = Visibility.Visible; return; }
+
             var data = StorageService.Instance.Storage.RetrieveList<PassportDataModel>();
             if (data != null && data.Count > 0)
             {
@@ -124,8 +129,8 @@ namespace X.Extension.ThirdParty.Twitter.VM
             }
             else {
                 //no passport so show login button
-                IsLoginVisible = Visibility.Collapsed;
-                IsAPIEditorVisible = Visibility.Visible;
+                IsLoginVisible = Visibility.Visible;
+                IsAPIEditorVisible = Visibility.Collapsed;
             }
         }
 
