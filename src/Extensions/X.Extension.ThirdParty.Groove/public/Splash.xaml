@@ -47,7 +47,7 @@
             </Border>
             <TextBlock Text=" for :" Margin="0,5,5,0" FontSize="9"></TextBlock>
             <Border BorderBrush="LightGray" BorderThickness="1" Padding="5" Margin="0,0,5,0">
-                <TextBlock Text="Sia" FontSize="9"></TextBlock>
+                <TextBlock Text="{Binding SearchTerm}" FontSize="9"></TextBlock>
             </Border>
         </StackPanel>
         

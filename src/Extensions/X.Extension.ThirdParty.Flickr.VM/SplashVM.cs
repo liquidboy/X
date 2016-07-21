@@ -173,6 +173,7 @@ namespace X.Extension.ThirdParty.Flickr.VM
         {
             try
             {
+                // Windows.Web.Http.HttpClient httpClient = new Windows.Web.Http.HttpClient();
                 HttpClient httpClient = new HttpClient();
                 return await httpClient.GetStringAsync(new Uri(Url));
             }

@@ -34,12 +34,15 @@ namespace X.Extension.ThirdParty.Groove.VM
         Visibility _IsAPIEditorVisible;
         public Visibility IsAPIEditorVisible { get { return _IsAPIEditorVisible; } set { _IsAPIEditorVisible = value; RaisePropertyChanged(); } }
 
+        string _SearchTerm;
+        public string SearchTerm { get { return _SearchTerm; } set { _SearchTerm = value; RaisePropertyChanged(); } }
 
 
         public SplashVM()
         {
             IsLoginVisible = Visibility.Collapsed;
             IsAPIEditorVisible = Visibility.Visible;
+            SearchTerm = "Radiohead";
             GetAPIData();
             PopulatePassportData();
         }
@@ -69,7 +72,7 @@ namespace X.Extension.ThirdParty.Groove.VM
         private async Task AttemptLoginAsync() {
             if (_client != null) return;
             _client = XboxMusicClientFactory.CreateXboxMusicClient(apiKey.APIKey, apiKey.APISecret);
-            await MakeCallAsync("Sia", Namespace.music, 20);
+            await MakeCallAsync(SearchTerm, Namespace.music, 20);
             IsLoginVisible = Visibility.Collapsed;
         }
 
