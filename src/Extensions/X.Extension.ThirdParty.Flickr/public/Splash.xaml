@@ -4,6 +4,7 @@
     xmlns:xuiak="using:X.UI.APIKeys"
     xmlns:xuiuc="using:X.UI.UserCard"
     xmlns:xuitl="using:X.UI.LiteTab"
+    xmlns:xuicomp="using:X.UI.Composition"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"

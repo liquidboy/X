@@ -210,6 +210,10 @@
       <Project>{5ebc59ca-877f-4446-8d8b-7a18b1ffd3dd}</Project>
       <Name>X.UI.Chrome</Name>
     </ProjectReference>
+    <ProjectReference Include="..\X.UI.Composition\X.UI.Composition.csproj">
+      <Project>{c356cb80-451e-4260-9a4a-c9515b93c44d}</Project>
+      <Name>X.UI.Composition</Name>
+    </ProjectReference>
     <ProjectReference Include="..\X.UI.LiteTab\X.UI.LiteTab.csproj">
       <Project>{7564864b-e139-42a3-b53f-0714d118edae}</Project>
       <Name>X.UI.LiteTab</Name>
