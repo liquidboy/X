@@ -111,6 +111,9 @@
     <Compile Include="CompositionList.xaml.cs">
       <DependentUpon>CompositionList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CompositionShadow.xaml.cs">
+      <DependentUpon>CompositionShadow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="HackPassThruValueConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SurfaceLoader.cs" />
@@ -119,6 +122,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="CompositionList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CompositionShadow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

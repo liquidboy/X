@@ -29,12 +29,29 @@
             Margin="4,10,0,10" >
             <xuicomp:CompositionList.ListDataTemplate>
                 <DataTemplate>
-                    <Grid Width="101" Height="170" Margin="3">
+                    <Grid Width="101" Height="170" Margin="3,6,3,3">
                         <Grid Width="98" Height="98" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,55">
-                            <Ellipse Fill="Black" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Ellipse>
+                            <xuicomp:CompositionShadow
+                                BlurRadius="8"
+                                Color="Black">
+                                <Ellipse
+                                    Fill="Black"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"></Ellipse>
+                            </xuicomp:CompositionShadow>
                         </Grid>
-                        <Border CornerRadius="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101" Height="101" Background="White">
-                        </Border>
+                        <xuicomp:CompositionShadow
+                            BlurRadius="12"
+                            Color="Gray">
+                            <Border
+                                CornerRadius="2"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Width="101"
+                                Height="101"
+                                Background="White">
+                            </Border>
+                        </xuicomp:CompositionShadow>
                         <!--<Rectangle HorizontalAlignment="Left" VerticalAlignment="Top" Width="99" Height="99" Margin="1,1,0,0" >
                             <Rectangle.Fill>
                                 <ImageBrush ImageSource="{Binding ImageUrl}" Stretch="UniformToFill" />

@@ -54,18 +54,20 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Bottom"
                             Margin="5,0,0,5">
-                            <Ellipse
-                                Width="30"
-                                Height="30"
-                                IsHitTestVisible="False"
-                                VerticalAlignment="Bottom"
-                                HorizontalAlignment="Left">
-                                <Ellipse.Fill>
-                                    <ImageBrush
-                                        ImageSource="{Binding MachineTags}"
-                                        Stretch="UniformToFill" />
-                                </Ellipse.Fill>
-                            </Ellipse>
+                            <xuicomp:CompositionShadow BlurRadius="12" Color="White">
+                                <Ellipse
+                                    Width="30"
+                                    Height="30"
+                                    IsHitTestVisible="False"
+                                    VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Left">
+                                    <Ellipse.Fill>
+                                        <ImageBrush
+                                            ImageSource="{Binding MachineTags}"
+                                            Stretch="UniformToFill" />
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                            </xuicomp:CompositionShadow>
                         </Grid>
                     </Grid>
                 </DataTemplate>
