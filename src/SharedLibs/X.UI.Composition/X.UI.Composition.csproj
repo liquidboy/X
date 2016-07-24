@@ -114,7 +114,6 @@
     <Compile Include="HackPassThruValueConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SurfaceLoader.cs" />
-    <Compile Include="ThumbnailLighting.cs" />
     <Compile Include="VisualTreeHelperExtensions.cs" />
     <EmbeddedResource Include="Properties\X.UI.Composition.rd.xml" />
   </ItemGroup>
