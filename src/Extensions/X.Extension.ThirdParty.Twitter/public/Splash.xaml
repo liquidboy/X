@@ -4,6 +4,7 @@
     xmlns:xuiak="using:X.UI.APIKeys"
     xmlns:xuiuc="using:X.UI.UserCard"
     xmlns:xuitl="using:X.UI.LiteTab"
+    xmlns:xuicomp="using:X.UI.Composition"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -14,8 +15,13 @@
         <xuiuc:CircularCard Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" 
                             PrimaryName="{Binding LoggedInUser.Name}" SecondaryName="{Binding LoggedInUser.Location}" Margin="40,-25,0,0"
                             Foreground="Black" AvatarUri="{Binding LoggedInUser.ProfileImageUrl}" Visibility="{Binding IsLoggedInVisibility }"></xuiuc:CircularCard>
-        <GridView Visibility="{Binding IsLoggedInVisibility}" ItemsSource="{Binding Tweets}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="120,0,10,10" >
-            <GridView.ItemTemplate>
+
+        <xuicomp:CompositionList
+            Visibility="{Binding IsLoggedInVisibility}"
+            DataContext="{Binding DataContext, ElementName=root}"
+            SelectedLight="PointSpecular"
+            ItemsSource="{Binding Tweets}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="120,0,10,10" >
+            <xuicomp:CompositionList.ListDataTemplate>
                 <DataTemplate>
                     <Grid Width="180" MinHeight="130" Margin="0" Padding="5">
                         <Border CornerRadius="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="20" Height="20" Background="White" Margin="15,0,0,40">
@@ -23,23 +29,27 @@
                                 <CompositeTransform Rotation="45"></CompositeTransform>
                             </Border.RenderTransform>
                         </Border>
-                        <Border Margin="0,0,0,38" Padding="5,5,5,5" Background="White" CornerRadius="3">
-                            <TextBlock Text="{Binding Text}" TextWrapping="WrapWholeWords" FontSize="10"></TextBlock>
-                            <!--<Button Padding="0" Margin="0" BorderThickness="0" Background="Transparent" Command="{Binding DataContext.PictureSelectedCommand, ElementName=root }" CommandParameter="{Binding }" >
-                            </Button>-->
-                        </Border>
+                        <xuicomp:CompositionShadow BlurRadius="6" Color="White">
+                            <Border Margin="0,0,0,38" Padding="5,5,5,5" Background="White" CornerRadius="3">
+                                <TextBlock Text="{Binding Text}" TextWrapping="WrapWholeWords" FontSize="10"></TextBlock>
+                                <!--<Button Padding="0" Margin="0" BorderThickness="0" Background="Transparent" Command="{Binding DataContext.PictureSelectedCommand, ElementName=root }" CommandParameter="{Binding }" >
+                                </Button>-->
+                            </Border>
+                        </xuicomp:CompositionShadow>
                         <TextBlock Text="{Binding User.Name}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="35,0,0,13" Foreground="DarkGray" FontSize="11"></TextBlock>
                         <TextBlock Text="{Binding User.Location}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="35,0,0,5" Foreground="DarkGray" Opacity="0.7" FontSize="9"></TextBlock>
                         <TextBlock Text="{Binding CreatedAt, Converter={StaticResource DateToDaysAgoConverter}}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,40" Foreground="DarkGray" Opacity="0.6" FontSize="9"></TextBlock>
-                        <Ellipse  Width="30" Height="30" IsHitTestVisible="False" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                            <Ellipse.Fill>
-                                <ImageBrush ImageSource="{Binding User.ProfileImageUrl}" Stretch="UniformToFill" />
-                            </Ellipse.Fill>
-                        </Ellipse>
+                        <xuicomp:CompositionShadow BlurRadius="12" Color="Gray" OffsetY="90">
+                            <Ellipse  Width="30" Height="30" IsHitTestVisible="False" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="{Binding User.ProfileImageUrl}" Stretch="UniformToFill" />
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </xuicomp:CompositionShadow>
                     </Grid>
                 </DataTemplate>
-            </GridView.ItemTemplate>
-        </GridView>
+            </xuicomp:CompositionList.ListDataTemplate>
+        </xuicomp:CompositionList>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="120,-38,40,10" >
             <TextBlock Text="Filter by : " Foreground="Gray" FontSize="10" Margin="0,15,10,0"></TextBlock>
             <ItemsControl Visibility="{Binding IsLoggedInVisibility}"  ItemsSource="{Binding TweetUsers}" Height="30" ScrollViewer.VerticalScrollBarVisibility="Hidden" >

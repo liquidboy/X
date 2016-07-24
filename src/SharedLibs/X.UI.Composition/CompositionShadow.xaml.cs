@@ -56,6 +56,10 @@ namespace X.UI.Composition
             ElementCompositionPreview.SetElementChildVisual(ShadowElement, _shadowVisual);
         }
 
+        public void ForceRedraw() {
+            ConfigureShadowVisualForCastingElement();
+        }
+
         /// <summary>
         /// The blur radius of the drop shadow.
         /// </summary>
