@@ -6,6 +6,7 @@
     xmlns:vm="using:X.Browser.ViewModels"
     xmlns:extconv="using:X.Services.Extensions.Converters"
     xmlns:clconv="using:CoreLib.Converters"
+    xmlns:xuicomp="using:X.UI.Composition"
     RequestedTheme="Light">
 
     <Application.Resources>

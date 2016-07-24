@@ -240,6 +240,10 @@
       <Project>{5ebc59ca-877f-4446-8d8b-7a18b1ffd3dd}</Project>
       <Name>X.UI.Chrome</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.UI.Composition\X.UI.Composition.csproj">
+      <Project>{c356cb80-451e-4260-9a4a-c9515b93c44d}</Project>
+      <Name>X.UI.Composition</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharedLibs\X.UI.EffectLayer\X.UI.EffectLayer.csproj">
       <Project>{5470d5d0-10cb-4d3d-8026-0a49254a21be}</Project>
       <Name>X.UI.EffectLayer</Name>
