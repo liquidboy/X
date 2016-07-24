@@ -29,6 +29,7 @@
             ItemsSource="{Binding FavouritePhotos}"
             ListVisibility="{Binding IsFavouritesVisible}"
             DataContext="{Binding DataContext, ElementName=root}"
+            SelectedLight="PointSpecular"
             Margin="4,155,0,10"></xuicomp:CompositionList>
         <!--<GridView Visibility="{Binding IsFavouritesVisible}" ItemsSource="{Binding FavouritePhotos}" Margin="4,155,0,10" >
             <GridView.ItemTemplate>

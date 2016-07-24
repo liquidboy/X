@@ -39,6 +39,17 @@ namespace X.UI.Composition
         private DistantLight _distantLight;
         private SpotLight _spotLight;
 
+
+
+        public LightingTypes SelectedLight
+        {
+            get { return (LightingTypes)GetValue(SelectedLightProperty); }
+            set { SetValue(SelectedLightProperty, value); }
+        }
+
+        public static readonly DependencyProperty SelectedLightProperty = DependencyProperty.Register("SelectedLight", typeof(LightingTypes), typeof(CompositionList), new PropertyMetadata(LightingTypes.PointDiffuse));
+
+
         public enum LightingTypes
         {
             PointDiffuse,
@@ -113,7 +124,8 @@ namespace X.UI.Composition
             // Create the sperical normal map.  The normals will give the appearance of a sphere, and the alpha channel is used
             // for masking off the rectangular edges.
             //
-            CompositionDrawingSurface normalMap = await SurfaceLoader.LoadFromUri(new Uri("ms-appx:///X.UI.Composition.Assets/SphericalWithMask.png"));
+            //CompositionDrawingSurface normalMap = await SurfaceLoader.LoadFromUri(new Uri("ms-appx:///X.UI.Composition.Assets/SphericalWithMask.png"));
+            CompositionDrawingSurface normalMap = await SurfaceLoader.LoadFromUri(new Uri("ms-appx:///X.UI.Composition.Assets/BeveledEdges.jpg"));
             _circleNormalsBrush = _compositor.CreateSurfaceBrush(normalMap);
             _circleNormalsBrush.Stretch = CompositionStretch.Fill;
 
@@ -138,12 +150,17 @@ namespace X.UI.Composition
                 foreach (ListViewItem item in gvMain.ItemsPanelRoot.Children)
                 {
                     CompositionImage image = item.ContentTemplateRoot.GetFirstDescendantOfType<CompositionImage>();
+                    //var imgs = item.ContentTemplateRoot.GetDescendantsOfType<CompositionImage>();
+                    //CompositionImage image = imgs.Last();
                     SetImageEffect(image);
                 }
             }
         }
 
-        LightingTypes _selectedLight = LightingTypes.PointDiffuse;
+
+
+
+        //LightingTypes _selectedLight = LightingTypes.PointDiffuse;
         private void SetImageEffect(CompositionImage image)
         {
             // Create the effect brush and bind the normal map
@@ -151,7 +168,7 @@ namespace X.UI.Composition
 
             //ComboBoxItem item = LightingSelection.SelectedValue as ComboBoxItem;
             //switch ((LightingTypes)item.Tag)
-            switch (_selectedLight)
+            switch (SelectedLight)
             {
                 case LightingTypes.SpotLightSpecular:
                 case LightingTypes.PointSpecular:
@@ -178,7 +195,7 @@ namespace X.UI.Composition
 
             //ComboBoxItem item = LightingSelection.SelectedValue as ComboBoxItem;
             //switch ((LightingTypes)item.Tag)
-            switch (_selectedLight)
+            switch (SelectedLight)
             {
                 case LightingTypes.PointDiffuse:
                     {
@@ -466,6 +483,10 @@ namespace X.UI.Composition
 
         private void gvMain_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
         {
+
+            //var imgs = args.ItemContainer.ContentTemplateRoot.GetFirstDescendantOfType<CompositionImage>();
+            //CompositionImage image = imgs.First();
+
             CompositionImage image = args.ItemContainer.ContentTemplateRoot.GetFirstDescendantOfType<CompositionImage>();
             dynamic thumbnail = args.Item as dynamic;
             Uri uri = new Uri(thumbnail.SquareThumbnailUrl);
@@ -482,7 +503,7 @@ namespace X.UI.Composition
             Vector2 offset = e.GetCurrentPoint(gvMain).Position.ToVector2();
             //ComboBoxItem item = LightingSelection.SelectedValue as ComboBoxItem;
             //switch ((LightingTypes)item.Tag)
-            switch(_selectedLight)
+            switch(SelectedLight)
             {
                 case LightingTypes.PointDiffuse:
                 case LightingTypes.PointSpecular:

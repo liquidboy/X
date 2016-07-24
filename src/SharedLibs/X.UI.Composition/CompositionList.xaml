@@ -60,6 +60,13 @@
                                     Stretch="UniformToFill" />
                             </Ellipse.Fill>
                         </Ellipse>
+                        <!--<local:CompositionImage
+                            Width="30"
+                            Height="30"
+                            Stretch="UniformToFill"
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Left"
+                            Source="{Binding MachineTags}"></local:CompositionImage>-->
                     </Grid>
                 </Grid>
 
