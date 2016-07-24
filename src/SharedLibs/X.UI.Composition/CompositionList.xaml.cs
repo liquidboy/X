@@ -1,21 +1,34 @@
-﻿using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.Effects;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
+using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Effects;
 using System.Numerics;
 using System.Threading.Tasks;
-using Windows.Foundation;
 using Windows.Graphics.Effects;
 using Windows.UI;
 using Windows.UI.Composition;
 using Windows.UI.Composition.Effects;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Hosting;
+
+
 
 namespace X.UI.Composition
 {
-    public sealed class ThumbnailLighting : Control
+
+
+    public sealed partial class CompositionList : UserControl
     {
         private Compositor _compositor;
         private CompositionEffectFactory _effectFactory;
@@ -36,8 +49,14 @@ namespace X.UI.Composition
             DistantSpecular,
         }
 
-        public ThumbnailLighting()
+        public CompositionList()
         {
+            this.InitializeComponent();
+
+            this.Loaded += CompositionList_Loaded;
+            this.Unloaded += CompositionList_Unloaded;
+
+            SurfaceLoader.Initialize(ElementCompositionPreview.GetElementVisual(this).Compositor);
             
             // Get the current compositor
             _compositor = ElementCompositionPreview.GetElementVisual(this).Compositor;
@@ -46,27 +65,49 @@ namespace X.UI.Composition
             //
             // Create the lights
             //
-
             _ambientLight = _compositor.CreateAmbientLight();
             _pointLight = _compositor.CreatePointLight();
             _distantLight = _compositor.CreateDistantLight();
             _spotLight = _compositor.CreateSpotLight();
-
-            this.Loaded += ThumbnailLighting_Loaded;
-            this.Unloaded += ThumbnailLighting_Unloaded;
         }
 
-        private void ThumbnailLighting_Unloaded(object sender, RoutedEventArgs e)
+        private void CompositionList_Unloaded(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
-        private async void ThumbnailLighting_Loaded(object sender, RoutedEventArgs e)
+        private async void CompositionList_Loaded(object sender, RoutedEventArgs e)
         {
             await InitControl();
+
+            UpdateLightingEffect();
         }
 
-        private async Task InitControl() {
+        public Visibility ListVisibility
+        {
+            get { return (Visibility)GetValue(ListVisibilityProperty); }
+            set { SetValue(ListVisibilityProperty, value); }
+        }
+
+        public static readonly DependencyProperty ListVisibilityProperty =
+            DependencyProperty.Register("ListVisibility", typeof(Visibility), typeof(CompositionList), new PropertyMetadata(Visibility.Visible));
+
+
+
+
+        public object ItemsSource
+        {
+            get { return (object)GetValue(ItemsSourceProperty); }
+            set { SetValue(ItemsSourceProperty, value); }
+        }
+
+        public static readonly DependencyProperty ItemsSourceProperty =
+            DependencyProperty.Register("ItemsSource", typeof(object), typeof(CompositionList), new PropertyMetadata(null));
+
+
+
+        private async Task InitControl()
+        {
 
             //
             // Create the sperical normal map.  The normals will give the appearance of a sphere, and the alpha channel is used
@@ -90,20 +131,19 @@ namespace X.UI.Composition
             UpdateEffectBrush();
         }
 
-
         private void UpdateEffectBrush()
         {
-            //if (ThumbnailList.ItemsPanelRoot != null)
-            //{
-            //    foreach (ListViewItem item in ThumbnailList.ItemsPanelRoot.Children)
-            //    {
-            //        CompositionImage image = item.ContentTemplateRoot.GetFirstDescendantOfType<CompositionImage>();
-            //        SetImageEffect(image);
-            //    }
-            //}
+            if (gvMain.ItemsPanelRoot != null)
+            {
+                foreach (ListViewItem item in gvMain.ItemsPanelRoot.Children)
+                {
+                    CompositionImage image = item.ContentTemplateRoot.GetFirstDescendantOfType<CompositionImage>();
+                    SetImageEffect(image);
+                }
+            }
         }
 
-        LightingTypes _selectedLight = LightingTypes.SpotLightSpecular;
+        LightingTypes _selectedLight = LightingTypes.PointDiffuse;
         private void SetImageEffect(CompositionImage image)
         {
             // Create the effect brush and bind the normal map
@@ -138,7 +178,7 @@ namespace X.UI.Composition
 
             //ComboBoxItem item = LightingSelection.SelectedValue as ComboBoxItem;
             //switch ((LightingTypes)item.Tag)
-            switch(_selectedLight)
+            switch (_selectedLight)
             {
                 case LightingTypes.PointDiffuse:
                     {
@@ -165,10 +205,10 @@ namespace X.UI.Composition
 
                         _effectFactory = _compositor.CreateEffectFactory(graphicsEffect);
 
-                        //// Set the light coordinate space and add the target
-                        //Visual lightRoot = ElementCompositionPreview.GetElementVisual(ThumbnailList);
-                        //_pointLight.CoordinateSpace = lightRoot;
-                        //_pointLight.Targets.Add(lightRoot);
+                        // Set the light coordinate space and add the target
+                        Visual lightRoot = ElementCompositionPreview.GetElementVisual(gvMain);
+                        _pointLight.CoordinateSpace = lightRoot;
+                        _pointLight.Targets.Add(lightRoot);
                     }
                     break;
 
@@ -219,11 +259,11 @@ namespace X.UI.Composition
 
                         _effectFactory = _compositor.CreateEffectFactory(graphicsEffect);
 
-                        //// Set the light coordinate space and add the target
-                        //Visual lightRoot = ElementCompositionPreview.GetElementVisual(ThumbnailList);
-                        //_ambientLight.Targets.Add(lightRoot);
-                        //_pointLight.CoordinateSpace = lightRoot;
-                        //_pointLight.Targets.Add(lightRoot);
+                        // Set the light coordinate space and add the target
+                        Visual lightRoot = ElementCompositionPreview.GetElementVisual(gvMain);
+                        _ambientLight.Targets.Add(lightRoot);
+                        _pointLight.CoordinateSpace = lightRoot;
+                        _pointLight.Targets.Add(lightRoot);
                     }
                     break;
 
@@ -252,13 +292,13 @@ namespace X.UI.Composition
 
                         _effectFactory = _compositor.CreateEffectFactory(graphicsEffect);
 
-                        //// Set the light coordinate space and add the target
-                        //Visual lightRoot = ElementCompositionPreview.GetElementVisual(ThumbnailList);
-                        //_spotLight.CoordinateSpace = lightRoot;
-                        //_spotLight.Targets.Add(lightRoot);
-                        //_spotLight.InnerConeAngle = (float)(Math.PI / 15);
-                        //_spotLight.OuterConeAngle = (float)(Math.PI / 10);
-                        //_spotLight.Direction = new Vector3(0, 0, -1);
+                        // Set the light coordinate space and add the target
+                        Visual lightRoot = ElementCompositionPreview.GetElementVisual(gvMain);
+                        _spotLight.CoordinateSpace = lightRoot;
+                        _spotLight.Targets.Add(lightRoot);
+                        _spotLight.InnerConeAngle = (float)(Math.PI / 15);
+                        _spotLight.OuterConeAngle = (float)(Math.PI / 10);
+                        _spotLight.Direction = new Vector3(0, 0, -1);
                     };
                     break;
 
@@ -310,14 +350,14 @@ namespace X.UI.Composition
                         // Create the effect factory
                         _effectFactory = _compositor.CreateEffectFactory(graphicsEffect);
 
-                        //// Set the light coordinate space and add the target
-                        //Visual lightRoot = ElementCompositionPreview.GetElementVisual(ThumbnailList);
-                        //_ambientLight.Targets.Add(lightRoot);
-                        //_spotLight.CoordinateSpace = lightRoot;
-                        //_spotLight.Targets.Add(lightRoot);
-                        //_spotLight.InnerConeAngle = (float)(Math.PI / 15);
-                        //_spotLight.OuterConeAngle = (float)(Math.PI / 10);
-                        //_spotLight.Direction = new Vector3(0, 0, -1);
+                        // Set the light coordinate space and add the target
+                        Visual lightRoot = ElementCompositionPreview.GetElementVisual(gvMain);
+                        _ambientLight.Targets.Add(lightRoot);
+                        _spotLight.CoordinateSpace = lightRoot;
+                        _spotLight.Targets.Add(lightRoot);
+                        _spotLight.InnerConeAngle = (float)(Math.PI / 15);
+                        _spotLight.OuterConeAngle = (float)(Math.PI / 10);
+                        _spotLight.Direction = new Vector3(0, 0, -1);
                     };
                     break;
 
@@ -354,9 +394,9 @@ namespace X.UI.Composition
 
                         _effectFactory = _compositor.CreateEffectFactory(graphicsEffect);
 
-                        //Visual lightRoot = ElementCompositionPreview.GetElementVisual(ThumbnailList);
-                        //_distantLight.CoordinateSpace = lightRoot;
-                        //_distantLight.Targets.Add(lightRoot);
+                        Visual lightRoot = ElementCompositionPreview.GetElementVisual(gvMain);
+                        _distantLight.CoordinateSpace = lightRoot;
+                        _distantLight.Targets.Add(lightRoot);
                     };
                     break;
 
@@ -407,9 +447,9 @@ namespace X.UI.Composition
 
                         _effectFactory = _compositor.CreateEffectFactory(graphicsEffect);
 
-                        //Visual lightRoot = ElementCompositionPreview.GetElementVisual(ThumbnailList);
-                        //_distantLight.CoordinateSpace = lightRoot;
-                        //_distantLight.Targets.Add(lightRoot);
+                        Visual lightRoot = ElementCompositionPreview.GetElementVisual(gvMain);
+                        _distantLight.CoordinateSpace = lightRoot;
+                        _distantLight.Targets.Add(lightRoot);
                     };
                     break;
 
@@ -422,6 +462,48 @@ namespace X.UI.Composition
 
             // Update all the image to have the new effect
             UpdateEffectBrush();
+        }
+
+        private void gvMain_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
+        {
+            CompositionImage image = args.ItemContainer.ContentTemplateRoot.GetFirstDescendantOfType<CompositionImage>();
+            dynamic thumbnail = args.Item as dynamic;
+            Uri uri = new Uri(thumbnail.SquareThumbnailUrl);
+
+            // Setup the brush for this image
+            SetImageEffect(image);
+
+            // Update the image URI
+            image.Source = uri;
+        }
+
+        private void gvMain_PointerMoved(object sender, PointerRoutedEventArgs e)
+        {
+            Vector2 offset = e.GetCurrentPoint(gvMain).Position.ToVector2();
+            //ComboBoxItem item = LightingSelection.SelectedValue as ComboBoxItem;
+            //switch ((LightingTypes)item.Tag)
+            switch(_selectedLight)
+            {
+                case LightingTypes.PointDiffuse:
+                case LightingTypes.PointSpecular:
+                    _pointLight.Offset = new Vector3(offset.X, offset.Y, 75);
+                    break;
+
+                case LightingTypes.SpotLightDiffuse:
+                case LightingTypes.SpotLightSpecular:
+                    _spotLight.Offset = new Vector3(offset.X, offset.Y, 100);
+                    break;
+
+                case LightingTypes.DistantDiffuse:
+                case LightingTypes.DistantSpecular:
+                    Vector3 position = new Vector3((float)gvMain.ActualWidth / 2, (float)gvMain.ActualHeight / 2, 200);
+                    Vector3 lookAt = new Vector3((float)gvMain.ActualWidth - offset.X, (float)gvMain.ActualHeight - offset.Y, 0);
+                    _distantLight.Direction = Vector3.Normalize(lookAt - position);
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 }

@@ -108,12 +108,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompositionImage.cs" />
+    <Compile Include="CompositionList.xaml.cs">
+      <DependentUpon>CompositionList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HackPassThruValueConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SurfaceLoader.cs" />
     <Compile Include="ThumbnailLighting.cs" />
+    <Compile Include="VisualTreeHelperExtensions.cs" />
     <EmbeddedResource Include="Properties\X.UI.Composition.rd.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="CompositionList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AppX\X.UI.Composition.Assets\BeveledEdges.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

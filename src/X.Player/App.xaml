@@ -6,6 +6,7 @@
     xmlns:xuiuc="using:X.UI.UserCard"
     xmlns:extconv="using:X.Services.Extensions.Converters"
     xmlns:clconv="using:CoreLib.Converters"
+    xmlns:xuicomp="using:X.UI.Composition"
     RequestedTheme="Light">
     <Application.Resources>
         <ResourceDictionary>

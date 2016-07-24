@@ -127,6 +127,7 @@
     <Compile Include="Converters\StringFromDictionaryConverter.cs" />
     <Compile Include="Converters\StripHtmlTagsConverter.cs" />
     <Compile Include="Converters\SurroundStringConverter.cs" />
+    <Compile Include="Converters\HackPassThruValueConverter.cs" />
     <Compile Include="Converters\UriToBitmapImageConverter.cs" />
     <Compile Include="Converters\ValueDividedConverter.cs" />
     <Compile Include="Effects\CompositionExtensions.cs" />

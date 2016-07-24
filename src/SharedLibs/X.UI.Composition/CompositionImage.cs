@@ -14,7 +14,7 @@ using Windows.UI.Xaml.Media;
 
 namespace X.UI.Composition
 {
-    public sealed class CompositionImage : Control
+    public sealed class CompositionImage : UserControl
     {
         private bool _unloaded;
         private Compositor _compositor;
@@ -33,10 +33,8 @@ namespace X.UI.Composition
         private bool _sharedSurface;
 
         static private CompositionBrush _defaultPlaceholderBrush;
-        static private ScalarKeyFrameAnimation
-                                            _fadeOutAnimation;
-        static private Vector2KeyFrameAnimation
-                                            _scaleAnimation;
+        static private ScalarKeyFrameAnimation _fadeOutAnimation;
+        static private Vector2KeyFrameAnimation _scaleAnimation;
         static bool _staticsInitialized;
 
         public CompositionImage()
@@ -308,18 +306,44 @@ namespace X.UI.Composition
             }
         }
 
+        //public Uri Source
+        //{
+        //    get { return _uri; }
+        //    set
+        //    {
+        //        try {
+        //            if (_uri != value)
+        //            {
+        //                _uri = value;
+        //                LoadSurface();
+        //            }
+        //        }
+        //        catch (Exception ex) {
+
+        //        }
+        //    }
+        //}
+
+
+
         public Uri Source
         {
-            get { return _uri; }
-            set
+            get { return (Uri)GetValue(SourceProperty); }
+            set { SetValue(SourceProperty, value); }
+        }
+
+        public static readonly DependencyProperty SourceProperty = DependencyProperty.Register("Source", typeof(Uri), typeof(CompositionImage), new PropertyMetadata(null, OnPropertySourceChanged));
+
+        private static void OnPropertySourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if(e.NewValue != null)
             {
-                if (_uri != value)
-                {
-                    _uri = value;
-                    LoadSurface();
-                }
+                var instance = d as CompositionImage;
+                instance._uri = (Uri)e.NewValue;
+                instance.LoadSurface();
             }
         }
+
 
         public bool IsContentLoaded
         {
@@ -511,4 +535,5 @@ namespace X.UI.Composition
             set { _placeholderDelay = value; }
         }
     }
+    
 }

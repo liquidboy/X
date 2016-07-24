@@ -25,7 +25,12 @@
                            VerticalAlignment="Top">
             </xuitl:TabList>
         </Grid>
-        <GridView Visibility="{Binding IsFavouritesVisible}" ItemsSource="{Binding FavouritePhotos}" Margin="4,155,0,10" >
+        <xuicomp:CompositionList
+            ItemsSource="{Binding FavouritePhotos}"
+            ListVisibility="{Binding IsFavouritesVisible}"
+            DataContext="{Binding DataContext, ElementName=root}"
+            Margin="4,155,0,10"></xuicomp:CompositionList>
+        <!--<GridView Visibility="{Binding IsFavouritesVisible}" ItemsSource="{Binding FavouritePhotos}" Margin="4,155,0,10" >
             <GridView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -42,10 +47,9 @@
                             </Ellipse>
                         </Grid>
                     </Grid>
-                    
                 </DataTemplate>
             </GridView.ItemTemplate>
-        </GridView>
+        </GridView>-->
         <Button Content="Login" Command="{Binding RequestFlickrLogin}" CommandParameter="RequestLogin" Visibility="{Binding IsLoginVisible}"></Button>
         <xuiak:ApiEditor Visibility="{Binding IsAPIKeyVisible}"></xuiak:ApiEditor>
 

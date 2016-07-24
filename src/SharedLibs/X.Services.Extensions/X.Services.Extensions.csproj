@@ -151,6 +151,10 @@
       <Project>{63151622-a00d-49bc-a162-86035a2cc7c6}</Project>
       <Name>X.Services.Settings</Name>
     </ProjectReference>
+    <ProjectReference Include="..\X.UI.Composition\X.UI.Composition.csproj">
+      <Project>{c356cb80-451e-4260-9a4a-c9515b93c44d}</Project>
+      <Name>X.UI.Composition</Name>
+    </ProjectReference>
     <ProjectReference Include="..\X.UI.Toolbar\X.UI.Toolbar.csproj">
       <Project>{3d1b671c-1cd1-424e-bfea-14c28b0f1938}</Project>
       <Name>X.UI.Toolbar</Name>
