@@ -17,9 +17,46 @@
                             Margin="20,-10,0,0"
                             Foreground="Black" AvatarUri="{Binding LoggedInUser.ProfileImageUrl}" 
                             Visibility="{Binding IsLoggedInVisibility }"></xuiuc:CircularCard>
-        
 
-        <GridView ItemsSource="{Binding Albums}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="4,10,0,10" >
+
+        <xuicomp:CompositionList
+            ItemsSource="{Binding Albums}"
+            DataContext="{Binding DataContext, ElementName=root}"
+            SelectedLight="PointSpecular"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            ThumbnailFieldName="ImageUrl"
+            Margin="4,10,0,10" >
+            <xuicomp:CompositionList.ListDataTemplate>
+                <DataTemplate>
+                    <Grid Width="101" Height="170" Margin="3">
+                        <Grid Width="98" Height="98" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,55">
+                            <Ellipse Fill="Black" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Ellipse>
+                        </Grid>
+                        <Border CornerRadius="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101" Height="101" Background="White">
+                        </Border>
+                        <!--<Rectangle HorizontalAlignment="Left" VerticalAlignment="Top" Width="99" Height="99" Margin="1,1,0,0" >
+                            <Rectangle.Fill>
+                                <ImageBrush ImageSource="{Binding ImageUrl}" Stretch="UniformToFill" />
+                            </Rectangle.Fill>
+                        </Rectangle>-->
+                        <xuicomp:CompositionImage
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Width="99"
+                            Height="99"
+                            Margin="1,1,0,0"
+                            Stretch="UniformToFill"
+                            Source="{Binding ImageUrl}"></xuicomp:CompositionImage>
+                        <TextBlock Text="{Binding Name}" Foreground="Black" FontSize="10" Width="101" TextAlignment="Center" 
+                                   TextWrapping="WrapWholeWords" Margin="0,115,0,0"
+                                   HorizontalAlignment="Center" VerticalAlignment="Top"></TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </xuicomp:CompositionList.ListDataTemplate>
+        </xuicomp:CompositionList>
+
+        <!--<GridView ItemsSource="{Binding Albums}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="4,10,0,10" >
             <GridView.ItemTemplate>
                 <DataTemplate>
                     <Grid Width="101" Height="170" Margin="3">
@@ -39,7 +76,7 @@
                     </Grid>
                 </DataTemplate>
             </GridView.ItemTemplate>
-        </GridView>
+        </GridView>-->
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-30,30,0">
             <TextBlock Text="searcy by:" Margin="0,5,5,0" FontSize="9"></TextBlock>

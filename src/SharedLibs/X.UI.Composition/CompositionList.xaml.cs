@@ -493,21 +493,43 @@ namespace X.UI.Composition
             UpdateEffectBrush();
         }
 
+
+
+        public string ThumbnailFieldName
+        {
+            get { return (string)GetValue(ThumbnailFieldNameProperty); }
+            set { SetValue(ThumbnailFieldNameProperty, value); }
+        }
+
+        public static readonly DependencyProperty ThumbnailFieldNameProperty =
+            DependencyProperty.Register("ThumbnailFieldName", typeof(string), typeof(CompositionList), new PropertyMetadata(string.Empty));
+
+
+
         private void gvMain_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
         {
+            if (string.IsNullOrEmpty(ThumbnailFieldName)) return;
 
-            //var imgs = args.ItemContainer.ContentTemplateRoot.GetFirstDescendantOfType<CompositionImage>();
-            //CompositionImage image = imgs.First();
+            try
+            {
+                //var imgs = args.ItemContainer.ContentTemplateRoot.GetFirstDescendantOfType<CompositionImage>();
+                //CompositionImage image = imgs.First();
 
-            CompositionImage image = args.ItemContainer.ContentTemplateRoot.GetFirstDescendantOfType<CompositionImage>();
-            dynamic thumbnail = args.Item as dynamic;
-            Uri uri = new Uri(thumbnail.SquareThumbnailUrl);
+                CompositionImage image = args.ItemContainer.ContentTemplateRoot.GetFirstDescendantOfType<CompositionImage>();
+                dynamic thumbnail = args.Item as dynamic;
+                //Uri uri = new Uri(thumbnail.SquareThumbnailUrl);
+                var propertyInfo = thumbnail.GetType().GetProperty(ThumbnailFieldName);
+                var value = propertyInfo.GetValue(thumbnail, null);
+                Uri uri = new Uri(value);
 
-            // Setup the brush for this image
-            SetImageEffect(image);
+                // Setup the brush for this image
+                SetImageEffect(image);
 
-            // Update the image URI
-            image.Source = uri;
+                // Update the image URI
+                image.Source = uri;
+            }
+            catch (Exception ex) { }
+
         }
 
         private void gvMain_PointerMoved(object sender, PointerRoutedEventArgs e)

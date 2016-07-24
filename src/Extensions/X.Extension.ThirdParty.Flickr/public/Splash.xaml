@@ -30,6 +30,7 @@
             ListVisibility="{Binding IsFavouritesVisible}"
             DataContext="{Binding DataContext, ElementName=root}"
             SelectedLight="PointSpecular"
+            ThumbnailFieldName="SquareThumbnailUrl"
             Margin="4,155,0,10">
             <xuicomp:CompositionList.ListDataTemplate>
                 <DataTemplate>
