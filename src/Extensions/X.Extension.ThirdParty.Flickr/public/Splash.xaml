@@ -30,7 +30,46 @@
             ListVisibility="{Binding IsFavouritesVisible}"
             DataContext="{Binding DataContext, ElementName=root}"
             SelectedLight="PointSpecular"
-            Margin="4,155,0,10"></xuicomp:CompositionList>
+            Margin="4,155,0,10">
+            <xuicomp:CompositionList.ListDataTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Button
+                            Padding="0"
+                            Margin="0"
+                            BorderThickness="0"
+                            Command="{Binding DataContext.PictureSelectedCommand, ElementName=root }"
+                            CommandParameter="{Binding }">
+                            <xuicomp:CompositionImage
+                                Width="106"
+                                Height="106"
+                                Stretch="UniformToFill"
+                                Source="{Binding SquareThumbnailUrl}"></xuicomp:CompositionImage>
+   
+                        </Button>
+                        <Grid
+                            Width="30"
+                            MinHeight="30"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            Margin="5,0,0,5">
+                            <Ellipse
+                                Width="30"
+                                Height="30"
+                                IsHitTestVisible="False"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Left">
+                                <Ellipse.Fill>
+                                    <ImageBrush
+                                        ImageSource="{Binding MachineTags}"
+                                        Stretch="UniformToFill" />
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </xuicomp:CompositionList.ListDataTemplate>
+        </xuicomp:CompositionList>
         <!--<GridView Visibility="{Binding IsFavouritesVisible}" ItemsSource="{Binding FavouritePhotos}" Margin="4,155,0,10" >
             <GridView.ItemTemplate>
                 <DataTemplate>

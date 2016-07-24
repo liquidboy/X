@@ -50,6 +50,18 @@ namespace X.UI.Composition
         public static readonly DependencyProperty SelectedLightProperty = DependencyProperty.Register("SelectedLight", typeof(LightingTypes), typeof(CompositionList), new PropertyMetadata(LightingTypes.PointDiffuse));
 
 
+
+        public DataTemplate ListDataTemplate
+        {
+            get { return (DataTemplate)GetValue(ListDataTemplateProperty); }
+            set { SetValue(ListDataTemplateProperty, value); }
+        }
+
+        public static readonly DependencyProperty ListDataTemplateProperty = DependencyProperty.Register("ListDataTemplate", typeof(DataTemplate), typeof(CompositionList), new PropertyMetadata(null));
+
+
+
+
         public enum LightingTypes
         {
             PointDiffuse,

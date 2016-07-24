@@ -21,8 +21,9 @@
         ItemsSource="{Binding ItemsSource, ElementName=root }"
         ContainerContentChanging="gvMain_ContainerContentChanging"
         PointerMoved="gvMain_PointerMoved"
+        ItemTemplate="{Binding ListDataTemplate, ElementName=root}"
         >
-        <GridView.ItemTemplate>
+        <!--<GridView.ItemTemplate>
             <DataTemplate>
                 <Grid>
                     <Button
@@ -36,11 +37,11 @@
                             Height="106"
                             Stretch="UniformToFill"
                             Source="{Binding SquareThumbnailUrl}"></local:CompositionImage>
-                        <!--<Image
+                        --><!--<Image
                             Width="106"
                             Height="106"
                             Stretch="UniformToFill"
-                            Source="{Binding SquareThumbnailUrl}"></Image>-->
+                            Source="{Binding SquareThumbnailUrl}"></Image>--><!--
                     </Button>
                     <Grid
                         Width="30"
@@ -60,17 +61,16 @@
                                     Stretch="UniformToFill" />
                             </Ellipse.Fill>
                         </Ellipse>
-                        <!--<local:CompositionImage
+                        --><!--<local:CompositionImage
                             Width="30"
                             Height="30"
                             Stretch="UniformToFill"
                             VerticalAlignment="Bottom"
                             HorizontalAlignment="Left"
-                            Source="{Binding MachineTags}"></local:CompositionImage>-->
+                            Source="{Binding MachineTags}"></local:CompositionImage>--><!--
                     </Grid>
                 </Grid>
-
             </DataTemplate>
-        </GridView.ItemTemplate>
+        </GridView.ItemTemplate>-->
     </GridView>
 </UserControl>
