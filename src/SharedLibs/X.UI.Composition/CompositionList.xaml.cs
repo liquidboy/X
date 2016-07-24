@@ -79,12 +79,10 @@ namespace X.UI.Composition
             this.Loaded += CompositionList_Loaded;
             this.Unloaded += CompositionList_Unloaded;
 
-            SurfaceLoader.Initialize(ElementCompositionPreview.GetElementVisual(this).Compositor);
-            
             // Get the current compositor
             _compositor = ElementCompositionPreview.GetElementVisual(this).Compositor;
-
-
+            SurfaceLoader.Initialize(_compositor);
+            
             //
             // Create the lights
             //

@@ -210,12 +210,14 @@ namespace X.UI.Composition
             _unloaded = true;
 
             // TODO: Remove this workaround after 14332
-            //ReleaseSurface();
+            ReleaseSurface();
 
             if (_sprite != null)
             {
                 // TODO: Remove this workaround after 14332
-                // _sprite.Dispose();
+                ElementCompositionPreview.SetElementChildVisual(this, null);
+
+                _sprite.Dispose();
                 _sprite = null;
             }
         }
