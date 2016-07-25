@@ -119,17 +119,24 @@ namespace X.UI.UserCard
             get { return (bool)GetValue(IsAvatarOnRightProperty); }
             set { SetValue(IsAvatarOnRightProperty, value); }
         }
+        
+        public double BlurOffsetX
+        {
+            get { return (double)GetValue(BlurOffsetXProperty); }
+            set { SetValue(BlurOffsetXProperty, value); }
+        }
+        
+        public double BlurOffsetY
+        {
+            get { return (double)GetValue(BlurOffsetYProperty); }
+            set { SetValue(BlurOffsetYProperty, value); }
+        }
 
 
+        public static readonly DependencyProperty BlurOffsetYProperty = DependencyProperty.Register("BlurOffsetY", typeof(double), typeof(CircularCard), new PropertyMetadata(0));
 
-
-
-
-
-
-
-
-
+        public static readonly DependencyProperty BlurOffsetXProperty = DependencyProperty.Register("BlurOffsetX", typeof(double), typeof(CircularCard), new PropertyMetadata(0));
+        
         public static readonly DependencyProperty IsAvatarOnRightProperty = DependencyProperty.Register("IsAvatarOnRight", typeof(bool), typeof(CircularCard), new PropertyMetadata(true, OnPropertyChanged));
 
         public static readonly DependencyProperty AvatarUriProperty = DependencyProperty.Register("AvatarUri", typeof(ImageSource), typeof(CircularCard), new PropertyMetadata(null, OnPropertyChanged));

@@ -80,8 +80,15 @@ namespace X.Extension.ThirdParty.Groove.VM
             if (_client == null) return;
             string country = null;
             ContentResponse searchResponse = await _client.SearchAsync(nspc, qry, source: ContentSource.Catalog, filter: SearchFilter.Albums, maxItems: maxItems, country: country);
-            var count = searchResponse.Albums.TotalItemCount;
-            Albums = searchResponse.Albums.Items;
+            if (searchResponse.Albums != null)
+            {
+                var count = searchResponse.Albums.TotalItemCount;
+                Albums = searchResponse.Albums.Items;
+            }
+            else {
+                Albums = null;
+            }
+            
         }
 
 

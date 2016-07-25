@@ -13,7 +13,7 @@
     d:DesignWidth="400">
 
     <Grid>
-        <xuiuc:CircularCard Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" 
+        <xuiuc:CircularCard Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" BlurOffsetX="20" BlurOffsetY="0"
                             PrimaryName="{Binding LoggedInUser.RealName}" SecondaryName="{Binding LoggedInUser.UserName}" 
                             Foreground="Black" AvatarUri="{Binding LoggedInUser.BuddyIconUrl}"></xuiuc:CircularCard>
         <Grid Margin="0,110,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Visibility="{Binding IsTabsVisible}">

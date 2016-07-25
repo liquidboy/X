@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 
 using Windows.UI;
 using Windows.UI.Composition;
@@ -221,12 +222,14 @@ namespace X.UI.Composition
 
         private static void OnOffsetXChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            if (e.NewValue is int && (int)e.NewValue == 0) return;
             ((CompositionShadow)d).OnOffsetXChanged((double)e.NewValue);
         }
 
         private static void OnOffsetYChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((CompositionShadow)d).OnOffsetYChanged((double)e.NewValue);
+            if (e.NewValue is int && (int)e.NewValue == 0) return;
+            ((CompositionShadow)d).OnOffsetYChanged((double)e.NewValue); 
         }
 
         private static void OnOffsetZChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

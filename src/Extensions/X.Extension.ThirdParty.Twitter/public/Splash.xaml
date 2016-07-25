@@ -12,7 +12,7 @@
     x:Name="root"
     d:DesignWidth="400">
     <Grid>
-        <xuiuc:CircularCard Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+        <xuiuc:CircularCard Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" BlurOffsetX="5" BlurOffsetY="0"
                             PrimaryName="{Binding LoggedInUser.Name}" SecondaryName="{Binding LoggedInUser.Location}" Margin="40,-25,0,0"
                             Foreground="Black" AvatarUri="{Binding LoggedInUser.ProfileImageUrl}" Visibility="{Binding IsLoggedInVisibility }"></xuiuc:CircularCard>
 
@@ -52,7 +52,11 @@
         </xuicomp:CompositionList>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="120,-38,40,10" >
             <TextBlock Text="Filter by : " Foreground="Gray" FontSize="10" Margin="0,15,10,0"></TextBlock>
-            <ItemsControl Visibility="{Binding IsLoggedInVisibility}"  ItemsSource="{Binding TweetUsers}" Height="30" ScrollViewer.VerticalScrollBarVisibility="Hidden" >
+            <ItemsControl 
+                Visibility="{Binding IsLoggedInVisibility}"  
+                ItemsSource="{Binding TweetUsers}" 
+                Height="30" 
+                ScrollViewer.VerticalScrollBarVisibility="Hidden" >
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal"></StackPanel>
@@ -61,11 +65,13 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid Width="20" MinHeight="20" Margin="5,0,0,0">
-                            <Ellipse  Width="20" Height="20" IsHitTestVisible="False" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                                <Ellipse.Fill>
-                                    <ImageBrush ImageSource="{Binding }" Stretch="UniformToFill" />
-                                </Ellipse.Fill>
-                            </Ellipse>
+                            <xuicomp:CompositionShadow BlurRadius="12" Color="Gray" OffsetY="10">
+                                <Ellipse  Width="20" Height="20" IsHitTestVisible="False" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="{Binding }" Stretch="UniformToFill" />
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                            </xuicomp:CompositionShadow>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
