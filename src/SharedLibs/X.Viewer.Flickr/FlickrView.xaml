@@ -12,10 +12,33 @@
 
     <Grid>
         <xuicomp:CompositionShadow OffsetX="20" OffsetY="20" Color="Gray" BlurRadius="8">
-            <Border BorderBrush="WhiteSmoke" BorderThickness="1" Margin="20" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="LightGray" Padding="2">
+            <Border BorderBrush="WhiteSmoke" BorderThickness="1" Margin="20, 20,20,100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="LightGray" Padding="2">
                 <Image
                     Source="assets/001.jpg" Stretch="UniformToFill"></Image>
             </Border>
         </xuicomp:CompositionShadow>
+        
+        <xuicomp:CompositionShadow
+            Color="#FFFBAB00"
+            BlurRadius="13" ShadowOpacity="0.8" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20">
+            <Border BorderBrush="Gold" BorderThickness="1" Width="300" Height="60"
+                Background="#FFC5A703">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Margin="0,5,0,0">
+                    <TextBlock
+                        Text="Orange Forests of Dyree"
+                        FontSize="18.5"
+                        Foreground="Black"
+                        FontWeight="Bold"
+                        TextAlignment="Center"></TextBlock>
+                    <TextBlock
+                        Text="Sandra Cooners Jnr"
+                        FontSize="12.5"
+                        Foreground="Black"
+                        FontStyle="Italic"
+                        TextAlignment="Center"></TextBlock>
+                </StackPanel>
+            </Border>
+        </xuicomp:CompositionShadow>
+        
     </Grid>
 </UserControl>
