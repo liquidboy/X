@@ -129,9 +129,14 @@
       <Project>{c356cb80-451e-4260-9a4a-c9515b93c44d}</Project>
       <Name>X.UI.Composition</Name>
     </ProjectReference>
+    <ProjectReference Include="..\X.UI.UserCard\X.UI.UserCard.csproj">
+      <Project>{5020ec7c-3018-4af2-9481-8b0efe491170}</Project>
+      <Name>X.UI.UserCard</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\001.jpg" />
+    <Content Include="assets\Sandra.PNG" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

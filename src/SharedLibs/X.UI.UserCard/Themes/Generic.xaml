@@ -32,7 +32,10 @@
                 <ControlTemplate TargetType="local:CircularCard">
                     <Grid>
                         <!--<xuiel:EffectLayer x:Name="bkgLayer" HorizontalAlignment="Stretch"  GlowFill="Transparent" VerticalAlignment="Stretch" GlowAmount="{TemplateBinding GlowAmount}" GlowColor="{TemplateBinding GlowColor}" ShowGlowArea="False" ></xuiel:EffectLayer>-->
-                        <StackPanel x:Name="root" Orientation="Vertical">
+                        <StackPanel
+                            x:Name="root"
+                            Orientation="Vertical"
+                            FlowDirection="{Binding IsAvatarOnRight, Converter={StaticResource RightToFlowDirectionConverter}}">
                             <xuicomp:CompositionShadow BlurRadius="12" Color="Gray" OffsetY="{TemplateBinding BlurOffsetY}" OffsetX="{TemplateBinding BlurOffsetX}">
                                 <Ellipse  Width="55" Height="55" IsHitTestVisible="False" VerticalAlignment="Top" >
                                     <Ellipse.Fill>

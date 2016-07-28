@@ -137,7 +137,7 @@ namespace X.UI.UserCard
 
         public static readonly DependencyProperty BlurOffsetXProperty = DependencyProperty.Register("BlurOffsetX", typeof(double), typeof(CircularCard), new PropertyMetadata(0));
         
-        public static readonly DependencyProperty IsAvatarOnRightProperty = DependencyProperty.Register("IsAvatarOnRight", typeof(bool), typeof(CircularCard), new PropertyMetadata(true, OnPropertyChanged));
+        public static readonly DependencyProperty IsAvatarOnRightProperty = DependencyProperty.Register("IsAvatarOnRight", typeof(bool), typeof(CircularCard), new PropertyMetadata(false, OnPropertyChanged));
 
         public static readonly DependencyProperty AvatarUriProperty = DependencyProperty.Register("AvatarUri", typeof(ImageSource), typeof(CircularCard), new PropertyMetadata(null, OnPropertyChanged));
         
