@@ -11,7 +11,73 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
     <UserControl.Resources>
-
+        <Style
+            x:Key="gvis"
+            TargetType="GridViewItem">
+            <Setter
+                Property="FontFamily"
+                Value="{ThemeResource ContentControlThemeFontFamily}" />
+            <Setter
+                Property="FontSize"
+                Value="{ThemeResource ControlContentThemeFontSize}" />
+            
+            <Setter
+                Property="Foreground"
+                Value="{ThemeResource GridViewItemForeground}" />
+            <Setter
+                Property="TabNavigation"
+                Value="Local" />
+            <Setter
+                Property="IsHoldingEnabled"
+                Value="True" />
+            <Setter
+                Property="HorizontalContentAlignment"
+                Value="Center" />
+            <Setter
+                Property="VerticalContentAlignment"
+                Value="Center" />
+            <Setter
+                Property="Margin"
+                Value="0,0,4,4" />
+            <Setter
+                Property="MinWidth"
+                Value="{ThemeResource GridViewItemMinWidth}" />
+            <Setter
+                Property="MinHeight"
+                Value="{ThemeResource GridViewItemMinHeight}" />
+            <Setter
+                Property="AllowDrop"
+                Value="False" />
+            <Setter
+                Property="UseSystemFocusVisuals"
+                Value="True" />
+            <Setter
+                Property="FocusVisualMargin"
+                Value="-2" />
+            <Setter
+                Property="FocusVisualPrimaryBrush"
+                Value="PowderBlue" />
+            <Setter
+                Property="FocusVisualPrimaryThickness"
+                Value="2" />
+            <Setter
+                Property="FocusVisualSecondaryBrush"
+                Value="Plum" />
+            <Setter
+                Property="FocusVisualSecondaryThickness"
+                Value="1" />
+            <Setter
+                Property="Template">
+                <Setter.Value>
+                    <ControlTemplate
+                        TargetType="GridViewItem">
+                        <ListViewItemPresenter
+                            x:Name="listViewItemPresenter">
+                        </ListViewItemPresenter>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
     <GridView
         x:Name="gvMain"
@@ -21,56 +87,7 @@
         ItemsSource="{Binding ItemsSource, ElementName=root }"
         ContainerContentChanging="gvMain_ContainerContentChanging"
         PointerMoved="gvMain_PointerMoved"
-        ItemTemplate="{Binding ListDataTemplate, ElementName=root}"
-        >
-        <!--<GridView.ItemTemplate>
-            <DataTemplate>
-                <Grid>
-                    <Button
-                        Padding="0"
-                        Margin="0"
-                        BorderThickness="0"
-                        Command="{Binding DataContext.PictureSelectedCommand, ElementName=root }"
-                        CommandParameter="{Binding }">
-                        <local:CompositionImage
-                            Width="106"
-                            Height="106"
-                            Stretch="UniformToFill"
-                            Source="{Binding SquareThumbnailUrl}"></local:CompositionImage>
-                        --><!--<Image
-                            Width="106"
-                            Height="106"
-                            Stretch="UniformToFill"
-                            Source="{Binding SquareThumbnailUrl}"></Image>--><!--
-                    </Button>
-                    <Grid
-                        Width="30"
-                        MinHeight="30"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Bottom"
-                        Margin="5,0,0,5">
-                        <Ellipse
-                            Width="30"
-                            Height="30"
-                            IsHitTestVisible="False"
-                            VerticalAlignment="Bottom"
-                            HorizontalAlignment="Left">
-                            <Ellipse.Fill>
-                                <ImageBrush
-                                    ImageSource="{Binding MachineTags}"
-                                    Stretch="UniformToFill" />
-                            </Ellipse.Fill>
-                        </Ellipse>
-                        --><!--<local:CompositionImage
-                            Width="30"
-                            Height="30"
-                            Stretch="UniformToFill"
-                            VerticalAlignment="Bottom"
-                            HorizontalAlignment="Left"
-                            Source="{Binding MachineTags}"></local:CompositionImage>--><!--
-                    </Grid>
-                </Grid>
-            </DataTemplate>
-        </GridView.ItemTemplate>-->
+        ItemContainerStyle="{StaticResource gvis}"
+        ItemTemplate="{Binding ListDataTemplate, ElementName=root}">
     </GridView>
 </UserControl>
