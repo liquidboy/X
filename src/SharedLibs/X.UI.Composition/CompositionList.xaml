@@ -20,7 +20,6 @@
             <Setter
                 Property="FontSize"
                 Value="{ThemeResource ControlContentThemeFontSize}" />
-            
             <Setter
                 Property="Foreground"
                 Value="{ThemeResource GridViewItemForeground}" />

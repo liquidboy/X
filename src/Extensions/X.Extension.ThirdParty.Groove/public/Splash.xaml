@@ -26,48 +26,129 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             ThumbnailFieldName="ImageUrl"
-            Margin="4,10,0,10" >
+            Margin="0,10,0,10" >
             <xuicomp:CompositionList.ListDataTemplate>
                 <DataTemplate>
-                    <Grid Width="101" Height="170" Margin="3,6,3,3">
-                        <Grid Width="98" Height="98" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,55">
-                            <xuicomp:CompositionShadow
-                                BlurRadius="8"
-                                Color="Black">
-                                <Ellipse
-                                    Fill="Black"
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Stretch"></Ellipse>
-                            </xuicomp:CompositionShadow>
-                        </Grid>
+                    <Grid Margin="2,0,0,0">
                         <xuicomp:CompositionShadow
-                            BlurRadius="12"
+                            BlurRadius="6"
+                            OffsetX="0" OffsetY="2"
                             Color="Gray">
                             <Border
-                                CornerRadius="2"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                Width="101"
-                                Height="101"
-                                Background="White">
+                                Margin="0,2,0,2"
+                                CornerRadius="0,0,4,4"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch">
+                                <Border.Background>
+                                    <LinearGradientBrush
+                                        EndPoint="0.958,0.49"
+                                        StartPoint="0.03,0.49">
+                                        <GradientStop
+                                            Color="#FFCACDD4" />
+                                        <GradientStop
+                                            Color="#FFE1E1E5"
+                                            Offset="1" />
+                                        <GradientStop
+                                            Color="#FFD2D5DB"
+                                            Offset="0.063" />
+                                        <GradientStop
+                                            Color="#FFBEC1CA"
+                                            Offset="0.134" />
+                                        <GradientStop
+                                            Color="#FFBCC0C9"
+                                            Offset="0.351" />
+                                        <GradientStop
+                                            Color="#FFB4B9C0"
+                                            Offset="0.481" />
+                                        <GradientStop
+                                            Color="#FFA4A9B0"
+                                            Offset="0.603" />
+                                        <GradientStop
+                                            Color="#FF737781"
+                                            Offset="0.736" />
+                                        <GradientStop
+                                            Color="#FFA5A8B0"
+                                            Offset="0.803" />
+                                        <GradientStop
+                                            Color="#FFBBBEC5"
+                                            Offset="0.854" />
+                                        <GradientStop
+                                            Color="#FFDDE0E5"
+                                            Offset="0.23" />
+                                        <GradientStop
+                                            Color="#FF9EA3AC"
+                                            Offset="0.427" />
+                                        <GradientStop
+                                            Color="#FFBBBFC8"
+                                            Offset="0.544" />
+                                        <GradientStop
+                                            Color="#FF92959E"
+                                            Offset="0.678" />
+                                        <GradientStop
+                                            Color="#FFE7E9ED"
+                                            Offset="0.921" />
+                                        <GradientStop
+                                            Color="#FFE0E1E5"
+                                            Offset="0.962" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
                             </Border>
                         </xuicomp:CompositionShadow>
-                        <!--<Rectangle HorizontalAlignment="Left" VerticalAlignment="Top" Width="99" Height="99" Margin="1,1,0,0" >
-                            <Rectangle.Fill>
-                                <ImageBrush ImageSource="{Binding ImageUrl}" Stretch="UniformToFill" />
-                            </Rectangle.Fill>
-                        </Rectangle>-->
-                        <xuicomp:CompositionImage
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top"
-                            Width="99"
-                            Height="99"
-                            Margin="1,1,0,0"
-                            Stretch="UniformToFill"
-                            Source="{Binding ImageUrl}"></xuicomp:CompositionImage>
-                        <TextBlock Text="{Binding Name}" Foreground="Black" FontSize="10" Width="101" TextAlignment="Center" 
-                                   TextWrapping="WrapWholeWords" Margin="0,115,0,0"
-                                   HorizontalAlignment="Center" VerticalAlignment="Top"></TextBlock>
+                        <Grid
+                            Width="101"
+                            Height="170"
+                            Margin="3,6,3,3">
+                            <Grid
+                                Width="98"
+                                Height="98"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Bottom"
+                                Margin="0,0,0,55">
+                                <xuicomp:CompositionShadow
+                                    BlurRadius="8"
+                                    Color="Black">
+                                    <Ellipse
+                                        Fill="Black"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"></Ellipse>
+                                </xuicomp:CompositionShadow>
+                            </Grid>
+                            <xuicomp:CompositionShadow
+                                BlurRadius="12"
+                                Color="Gray">
+                                <Border
+                                    CornerRadius="2"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    Width="101"
+                                    Height="101"
+                                    Background="White">
+                                </Border>
+                            </xuicomp:CompositionShadow>
+                            <!--<Rectangle HorizontalAlignment="Left" VerticalAlignment="Top" Width="99" Height="99" Margin="1,1,0,0" >
+                                <Rectangle.Fill>
+                                    <ImageBrush ImageSource="{Binding ImageUrl}" Stretch="UniformToFill" />
+                                </Rectangle.Fill>
+                            </Rectangle>-->
+                            <xuicomp:CompositionImage
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Width="99"
+                                Height="99"
+                                Margin="1,1,0,0"
+                                Stretch="UniformToFill"
+                                Source="{Binding ImageUrl}"></xuicomp:CompositionImage>
+                            <TextBlock
+                                Text="{Binding Name}"
+                                Foreground="Black"
+                                FontSize="10"
+                                Width="101"
+                                TextAlignment="Center"
+                                TextWrapping="WrapWholeWords"
+                                Margin="0,115,0,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top"></TextBlock>
+                        </Grid>
                     </Grid>
                 </DataTemplate>
             </xuicomp:CompositionList.ListDataTemplate>
