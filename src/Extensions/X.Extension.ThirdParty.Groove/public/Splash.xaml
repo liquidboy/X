@@ -12,6 +12,13 @@
     d:DesignHeight="300"
     x:Name="root"
     d:DesignWidth="400">
+    <UserControl.Resources>
+        <x:Double x:Key="vinylSize">96</x:Double>
+        <x:Double x:Key="albumCoverSize">97</x:Double>
+        <x:Double x:Key="albumShadowSize">99</x:Double>
+        <x:Double x:Key="panelWidth">99</x:Double>
+        <x:Double x:Key="panelHeight">170</x:Double>
+    </UserControl.Resources>
     <Grid>
         <xuiuc:CircularCard Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" 
                             PrimaryName="{Binding LoggedInUser.Name}" SecondaryName="{Binding LoggedInUser.Location}" 
@@ -37,12 +44,12 @@
                         <xuisk:SilverlightPanel
                             SourceObject="{Binding ElementName=grdMain}"></xuisk:SilverlightPanel>
                         <Grid
-                            Width="101"
-                            Height="170"
+                            Width="{StaticResource panelWidth}"
+                            Height="{StaticResource panelHeight}"
                             Margin="3,6,3,3">
                             <Grid
-                                Width="98"
-                                Height="98"
+                                Width="{StaticResource vinylSize}"
+                                Height="{StaticResource vinylSize}"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Bottom"
                                 Margin="0,0,0,55">
@@ -62,8 +69,8 @@
                                     CornerRadius="2"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top"
-                                    Width="101"
-                                    Height="101"
+                                    Width="{StaticResource albumShadowSize}"
+                                    Height="{StaticResource albumShadowSize}"
                                     Background="White">
                                 </Border>
                             </xuicomp:CompositionShadow>
@@ -75,8 +82,8 @@
                             <xuicomp:CompositionImage
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
-                                Width="99"
-                                Height="99"
+                                Width="{StaticResource albumCoverSize}"
+                                Height="{StaticResource albumCoverSize}"
                                 Margin="1,1,0,0"
                                 Stretch="UniformToFill"
                                 Source="{Binding ImageUrl}"></xuicomp:CompositionImage>
@@ -84,10 +91,10 @@
                                 Text="{Binding Name}"
                                 Foreground="Black"
                                 FontSize="10"
-                                Width="101"
+                                Width="{StaticResource panelWidth}"
                                 TextAlignment="Center"
                                 TextWrapping="WrapWholeWords"
-                                Margin="0,115,0,0"
+                                Margin="0,120,0,0"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Top"></TextBlock>
                         </Grid>
@@ -95,28 +102,6 @@
                 </DataTemplate>
             </xuicomp:CompositionList.ListDataTemplate>
         </xuicomp:CompositionList>
-
-        <!--<GridView ItemsSource="{Binding Albums}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="4,10,0,10" >
-            <GridView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Width="101" Height="170" Margin="3">
-                        <Grid Width="98" Height="98" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,55">
-                            <Ellipse Fill="Black" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Ellipse>
-                        </Grid>
-                        <Border CornerRadius="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101" Height="101" Background="White">
-                        </Border>
-                        <Rectangle HorizontalAlignment="Left" VerticalAlignment="Top" Width="99" Height="99" Margin="1,1,0,0" >
-                            <Rectangle.Fill>
-                                <ImageBrush ImageSource="{Binding ImageUrl}" Stretch="UniformToFill" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                        <TextBlock Text="{Binding Name}" Foreground="Black" FontSize="10" Width="101" TextAlignment="Center" 
-                                   TextWrapping="WrapWholeWords" Margin="0,115,0,0"
-                                   HorizontalAlignment="Center" VerticalAlignment="Top"></TextBlock>
-                    </Grid>
-                </DataTemplate>
-            </GridView.ItemTemplate>
-        </GridView>-->
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-30,30,0">
             <TextBlock Text="searcy by:" Margin="0,5,5,0" FontSize="9"></TextBlock>
