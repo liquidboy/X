@@ -107,6 +107,9 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GoldPanel.xaml.cs">
+      <DependentUpon>GoldPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SilverlightPanel.xaml.cs">
       <DependentUpon>SilverlightPanel.xaml</DependentUpon>
@@ -124,6 +127,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="GoldPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SilverlightPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
