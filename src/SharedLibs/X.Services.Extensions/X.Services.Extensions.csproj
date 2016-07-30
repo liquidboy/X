@@ -155,6 +155,10 @@
       <Project>{c356cb80-451e-4260-9a4a-c9515b93c44d}</Project>
       <Name>X.UI.Composition</Name>
     </ProjectReference>
+    <ProjectReference Include="..\X.UI.Skeuomorphism\X.UI.Skeuomorphism.csproj">
+      <Project>{5b7af558-e880-459f-ae34-571581eab278}</Project>
+      <Name>X.UI.Skeuomorphism</Name>
+    </ProjectReference>
     <ProjectReference Include="..\X.UI.Toolbar\X.UI.Toolbar.csproj">
       <Project>{3d1b671c-1cd1-424e-bfea-14c28b0f1938}</Project>
       <Name>X.UI.Toolbar</Name>

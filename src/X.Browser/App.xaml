@@ -7,6 +7,8 @@
     xmlns:extconv="using:X.Services.Extensions.Converters"
     xmlns:clconv="using:CoreLib.Converters"
     xmlns:xuicomp="using:X.UI.Composition"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:Interactions="using:Microsoft.Xaml.Interactions.Core"
     RequestedTheme="Light">
 
     <Application.Resources>

@@ -114,6 +114,14 @@
     <EmbeddedResource Include="Properties\X.UI.UserCard.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\X.CoreLib\X.CoreLib.csproj">
+      <Project>{d273509d-612c-47c3-b2a6-c203d96b90d3}</Project>
+      <Name>X.CoreLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\X.Services.Extensions\X.Services.Extensions.csproj">
+      <Project>{6ef45f7f-fc6b-49f3-ab26-3ae0678fae05}</Project>
+      <Name>X.Services.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\X.UI.Composition\X.UI.Composition.csproj">
       <Project>{c356cb80-451e-4260-9a4a-c9515b93c44d}</Project>
       <Name>X.UI.Composition</Name>

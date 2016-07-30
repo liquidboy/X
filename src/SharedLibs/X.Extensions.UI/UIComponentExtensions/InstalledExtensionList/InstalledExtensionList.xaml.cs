@@ -43,7 +43,7 @@ namespace X.Extensions.UIComponentExtensions
             remove { _SendMessageSource.Unsubscribe(value); }
         }
 
-        public async void RecieveMessage(object message)
+        public void RecieveMessage(object message)
         {
             if (message is ResponseListOfInstalledExtensionsEventArgs ) {
                 var ea = (ResponseListOfInstalledExtensionsEventArgs)message;

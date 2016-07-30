@@ -30,7 +30,7 @@ namespace X.Extensions.UIComponentExtensions
             await X.Services.Extensions.ExtensionsService.Instance.Install(this);
             
             var el = new _Template(new ExtensionManifest("Installed Extensions UI", "ms-appx:///Extensions/UIComponentExtensions/InstalledExtensionList/InstalledExtensionList.png", "Sample Extensions", "1.0", "A UI to manage all the installed extensions", ExtensionInToolbarPositions.None, ExtensionInToolbarPositions.Right) { ContentControl = "X.Extensions.UIComponentExtensions.InstalledExtensionList", AssemblyName = "X.Extensions.UI" });
-            X.Services.Extensions.ExtensionsService.Instance.Install(el);
+            await X.Services.Extensions.ExtensionsService.Instance.Install(el);
             butExtensionStore.ExtensionUniqueId = el.ExtensionManifest.UniqueID;
             
             LoadExtensions();

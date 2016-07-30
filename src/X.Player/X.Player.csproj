@@ -182,6 +182,10 @@
       <Project>{7564864b-e139-42a3-b53f-0714d118edae}</Project>
       <Name>X.UI.LiteTab</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.UI.Skeuomorphism\X.UI.Skeuomorphism.csproj">
+      <Project>{5b7af558-e880-459f-ae34-571581eab278}</Project>
+      <Name>X.UI.Skeuomorphism</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharedLibs\X.UI.UserCard\X.UI.UserCard.csproj">
       <Project>{5020ec7c-3018-4af2-9481-8b0efe491170}</Project>
       <Name>X.UI.UserCard</Name>

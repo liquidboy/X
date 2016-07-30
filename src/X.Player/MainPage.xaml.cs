@@ -12,7 +12,7 @@ namespace X.Player
             this.InitializeComponent();
         }
         
-        public async void ProcessArguments(string arguments, string tileId)
+        public void ProcessArguments(string arguments, string tileId)
         {
             //await ctlShellExt.InitExtensions();
             header.InitChrome(App.Current, ApplicationView.GetForCurrentView());
