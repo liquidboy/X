@@ -23,6 +23,7 @@ namespace X.Extension.ThirdParty.Flickr.VM
         public string Title { get; set; } = "Splash";
         public string Version { get; set; } = "1.0.0.1";
         public string GroupingType { get; set; } = "Flickr";
+        public string HostPackageFamilyName { get; set; } = "6d918283-1709-4827-80b0-bce015b85d11_tcz6rsq1yejk0";
 
 
         private PhotoCollection _FavouritePhotos;
@@ -64,7 +65,7 @@ namespace X.Extension.ThirdParty.Flickr.VM
         {
             get
             {
-                return _pictureSelectedCommand ?? (_pictureSelectedCommand = new RelayCommand<Photo>((arg) => {  }));
+                return _pictureSelectedCommand ?? (_pictureSelectedCommand = new RelayCommand<Photo>((arg) => { RetrievePhotoDetails(arg);  }));
             }
         }
         public RelayCommand<string> RequestFlickrLogin
@@ -328,6 +329,69 @@ namespace X.Extension.ThirdParty.Flickr.VM
         private void OutputToken(string TokenUri)
         {
             //FlickrReturnedToken.Text = TokenUri;
+        }
+
+        private async void RetrievePhotoDetails(Photo photo) {
+
+            var dataToPass = new List<KeyValuePair<string, object>>();
+
+            dataToPass.Add(new KeyValuePair<string, object>("Title", photo.Title));
+            dataToPass.Add(new KeyValuePair<string, object>("ThumbnailUrl", photo.ThumbnailUrl));
+            dataToPass.Add(new KeyValuePair<string, object>("LargeUrl", photo.LargeUrl));
+            dataToPass.Add(new KeyValuePair<string, object>("Medium640Url", photo.Medium640Url));
+            dataToPass.Add(new KeyValuePair<string, object>("MediumUrl", photo.MediumUrl));
+            dataToPass.Add(new KeyValuePair<string, object>("SmallUrl", photo.SmallUrl));
+            dataToPass.Add(new KeyValuePair<string, object>("IconServer", photo.IconServer));
+            dataToPass.Add(new KeyValuePair<string, object>("Server", photo.Server));
+            dataToPass.Add(new KeyValuePair<string, object>("IconFarm", photo.IconFarm));
+            dataToPass.Add(new KeyValuePair<string, object>("Farm", photo.Farm));
+            dataToPass.Add(new KeyValuePair<string, object>("PhotoId", photo.PhotoId));
+
+            await MakeUWPCommandCall("LoadFlickrPhoto", "Call", dataToPass);
+        }
+
+
+
+        public async Task<Windows.Foundation.Collections.ValueSet> MakeUWPCommandCall(string commandCall, string serviceName, List<KeyValuePair<string, object>> dataToPass)
+        {
+
+            using (var connection = new Windows.ApplicationModel.AppService.AppServiceConnection())
+            {
+                connection.AppServiceName = serviceName;
+                connection.PackageFamilyName = HostPackageFamilyName;
+                var status = await connection.OpenAsync();
+                if (status != Windows.ApplicationModel.AppService.AppServiceConnectionStatus.Success)
+                {
+                    throw new NotImplementedException("Failed app service connection");
+                }
+                else
+                {
+                    var request = new Windows.Foundation.Collections.ValueSet();
+                    request.Add("Command", commandCall);
+
+                    if (dataToPass != null && dataToPass.Count > 0)
+                    {
+                        foreach (var data in dataToPass)
+                        {
+                            //message.Add(new KeyValuePair<string, object>("AppExtensionDisplayName", AppExtension.AppInfo.DisplayInfo.DisplayName));
+                            request.Add(new KeyValuePair<string, object>(data.Key, data.Value));
+                        }
+                    }
+
+                    Windows.ApplicationModel.AppService.AppServiceResponse response = await connection.SendMessageAsync(request);
+                    if (response.Status == Windows.ApplicationModel.AppService.AppServiceResponseStatus.Success)
+                    {
+                        var message = response.Message as Windows.Foundation.Collections.ValueSet;
+                        if (message != null && message.Count > 0)
+                        {
+                            
+                        }
+                        return (message != null && message.Count > 0) ? message : null;
+                    }
+                }
+
+            }
+            return null;
         }
     }
 }

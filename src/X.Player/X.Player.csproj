@@ -194,6 +194,10 @@
       <Project>{a705ecff-11e6-4d30-8fbb-bf1224cdf22d}</Project>
       <Name>X.Viewer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\X.Player.Services\X.Player.Services.csproj">
+      <Project>{e0784682-1c01-4aad-b87a-32835d01047a}</Project>
+      <Name>X.Player.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">
     <VisualStudioVersion>15.0</VisualStudioVersion>

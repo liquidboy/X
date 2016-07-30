@@ -42,6 +42,9 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
+        <uap:Extension Category="windows.appService" EntryPoint="X.Player.Services.CallHost">
+          <uap:AppService Name="Call" />
+        </uap:Extension>
         <uap3:Extension Category="windows.appExtensionHost">
           <uap3:AppExtensionHost>
             <uap3:Name>X.Extensions</uap3:Name>
