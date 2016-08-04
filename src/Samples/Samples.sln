@@ -190,6 +190,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X.UI.Skeuomorphism", "..\Sh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X.Player.Services", "..\X.Player.Services\X.Player.Services.csproj", "{E0784682-1C01-4AAD-B87A-32835D01047A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F7F04AC6-214B-4BFB-8CD7-009626A24D5E}"
+	ProjectSection(SolutionItems) = preProject
+		readme.txt = readme.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
