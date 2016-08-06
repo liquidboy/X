@@ -108,7 +108,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyObject.cs" />
+    <Compile Include="Deployment.cs" />
     <Compile Include="EventObject.cs" />
+    <Compile Include="IUnknown.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SLError.cs" />
     <Compile Include="Utils.cs" />

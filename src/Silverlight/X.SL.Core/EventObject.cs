@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace X.SL.Core
 {
-    public class EventObject : IDisposable
+    public class EventObject : IUnknown, IDisposable
     {
         enum Flags
         {

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{038A0E5A-B3F6-42E7-8FED-157003740170}</ProjectGuid>
+    <ProjectGuid>{6B2DC366-F84B-4F10-9F2D-0B3160153732}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>X.SL.Xap</RootNamespace>
-    <AssemblyName>X.SL.Xap</AssemblyName>
+    <RootNamespace>X.Zlib</RootNamespace>
+    <AssemblyName>X.Zlib</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.14366.0</TargetPlatformVersion>
@@ -107,23 +107,12 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Xap.cs" />
+    <Compile Include="Adler32.cs" />
+    <Compile Include="Crc32.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\X.SL.Xap.rd.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\SharedLibs\X.Zlib\X.Zlib.csproj">
-      <Project>{6b2dc366-f84b-4f10-9f2d-0b3160153732}</Project>
-      <Name>X.Zlib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.SL.Core\X.SL.Core.csproj">
-      <Project>{e85c7f84-a584-47f2-914a-ea2dab588647}</Project>
-      <Name>X.SL.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.SL.XamlLoader\X.SL.XamlLoader.csproj">
-      <Project>{6ec4e227-8587-439c-8a55-90343b07fcd9}</Project>
-      <Name>X.SL.XamlLoader</Name>
-    </ProjectReference>
+    <Compile Include="ZlibDeflateStream.cs" />
+    <Compile Include="ZlibInflateStream.cs" />
+    <EmbeddedResource Include="Properties\X.Zlib.rd.xml" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">
     <VisualStudioVersion>15.0</VisualStudioVersion>
