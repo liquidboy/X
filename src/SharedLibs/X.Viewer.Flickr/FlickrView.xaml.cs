@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -15,11 +16,20 @@ using Windows.UI.Xaml.Navigation;
 
 namespace X.Viewer.Flickr
 {
-    public sealed partial class FlickrView : UserControl
+    public sealed partial class FlickrView : UserControl, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private object _photo;
+        public object Photo { get { return _photo; } set { _photo = value; RaisePropertyChanged("Photo");  } }
+
         public FlickrView()
         {
             this.InitializeComponent();
+        }
+
+        private void RaisePropertyChanged(string name) {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }

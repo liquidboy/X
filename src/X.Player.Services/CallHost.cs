@@ -1,4 +1,5 @@
 ﻿using CoreLib.Extensions;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.AppService;
 using Windows.ApplicationModel.Background;
 using Windows.Foundation.Collections;
+using X.CoreLib.GenericMessages;
 
 namespace X.Player.Services
 {
@@ -40,7 +42,9 @@ namespace X.Player.Services
 
             switch (command) {
                 case "LoadFlickrPhoto":
+                    //note : this is now done directly from the extension as i just found out mvvmlight events work
                     //X.Services.Extensions.ExtensionsService.Instance.SendMessage("LoadFlickrPhoto", ExtensionType.UIComponent);
+                    Messenger.Default.Send(new LoadPhoto());
                     break;
             }
             

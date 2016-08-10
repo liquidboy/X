@@ -159,6 +159,7 @@
     <Compile Include="Extensions\IGalleryService.cs" />
     <Compile Include="Extensions\IReceiver.cs" />
     <Compile Include="Extensions\ISender.cs" />
+    <Compile Include="GenericMessages\LoadPhoto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shared\F12\ConsoleUI.xaml.cs">
       <DependentUpon>ConsoleUI.xaml</DependentUpon>

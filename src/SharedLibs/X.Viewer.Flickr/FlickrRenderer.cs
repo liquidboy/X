@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Messaging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using X.CoreLib.GenericMessages;
 
 namespace X.Viewer.Flickr
 {
@@ -38,11 +40,18 @@ namespace X.Viewer.Flickr
         public void Load()
         {
             _renderElement = new FlickrView();
+
+            Messenger.Default.Register<LoadPhoto>(this, DoLoadPhoto);
+        }
+
+        private void DoLoadPhoto(LoadPhoto msg)
+        {
+            ((FlickrView)_renderElement).Photo = msg.Photo;
         }
 
         public void Unload()
         {
-            //throw new NotImplementedException();
+            Messenger.Default.Unregister<LoadPhoto>(this, DoLoadPhoto);
         }
 
         public void UpdateSource(string uri)

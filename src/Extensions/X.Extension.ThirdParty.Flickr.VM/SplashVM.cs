@@ -1,6 +1,7 @@
 ﻿using FlickrNet;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,6 +14,7 @@ using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml;
+using X.CoreLib.GenericMessages;
 using X.Services.Data;
 using X.UI.LiteTab;
 
@@ -333,21 +335,25 @@ namespace X.Extension.ThirdParty.Flickr.VM
 
         private async void RetrievePhotoDetails(Photo photo) {
 
-            var dataToPass = new List<KeyValuePair<string, object>>();
+            //var dataToPass = new List<KeyValuePair<string, object>>();
 
-            dataToPass.Add(new KeyValuePair<string, object>("Title", photo.Title));
-            dataToPass.Add(new KeyValuePair<string, object>("ThumbnailUrl", photo.ThumbnailUrl));
-            dataToPass.Add(new KeyValuePair<string, object>("LargeUrl", photo.LargeUrl));
-            dataToPass.Add(new KeyValuePair<string, object>("Medium640Url", photo.Medium640Url));
-            dataToPass.Add(new KeyValuePair<string, object>("MediumUrl", photo.MediumUrl));
-            dataToPass.Add(new KeyValuePair<string, object>("SmallUrl", photo.SmallUrl));
-            dataToPass.Add(new KeyValuePair<string, object>("IconServer", photo.IconServer));
-            dataToPass.Add(new KeyValuePair<string, object>("Server", photo.Server));
-            dataToPass.Add(new KeyValuePair<string, object>("IconFarm", photo.IconFarm));
-            dataToPass.Add(new KeyValuePair<string, object>("Farm", photo.Farm));
-            dataToPass.Add(new KeyValuePair<string, object>("PhotoId", photo.PhotoId));
+            //dataToPass.Add(new KeyValuePair<string, object>("Title", photo.Title));
+            //dataToPass.Add(new KeyValuePair<string, object>("ThumbnailUrl", photo.ThumbnailUrl));
+            //dataToPass.Add(new KeyValuePair<string, object>("LargeUrl", photo.LargeUrl));
+            //dataToPass.Add(new KeyValuePair<string, object>("Medium640Url", photo.Medium640Url));
+            //dataToPass.Add(new KeyValuePair<string, object>("MediumUrl", photo.MediumUrl));
+            //dataToPass.Add(new KeyValuePair<string, object>("SmallUrl", photo.SmallUrl));
+            //dataToPass.Add(new KeyValuePair<string, object>("IconServer", photo.IconServer));
+            //dataToPass.Add(new KeyValuePair<string, object>("Server", photo.Server));
+            //dataToPass.Add(new KeyValuePair<string, object>("IconFarm", photo.IconFarm));
+            //dataToPass.Add(new KeyValuePair<string, object>("Farm", photo.Farm));
+            //dataToPass.Add(new KeyValuePair<string, object>("PhotoId", photo.PhotoId));
 
-            await MakeUWPCommandCall("LoadFlickrPhoto", "Call", dataToPass);
+            //await MakeUWPCommandCall("LoadFlickrPhoto", "Call", dataToPass);
+
+
+            //note : amazingly mvvmlight message bus works perfectly with extensions talking to the host
+            Messenger.Default.Send(new LoadPhoto() { Photo = photo });
         }
 
 
