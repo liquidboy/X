@@ -68,16 +68,18 @@
         
         <xuiuc:CircularCard
             Grid.Row="0"
+            AlignImage="Left"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
-            BlurOffsetX="27"
+            BlurOffsetX="0"
             BlurOffsetY="0"
-            PrimaryName="Sandra Debson"
+            PrimaryName="{Binding UserName}"
             SecondaryName=""
             Foreground="Black"
             IsAvatarOnRight="False"
             Margin="0,0,20,-10"
-            AvatarUri="assets/Sandra.png"></xuiuc:CircularCard>
+            DataContext="{Binding ElementName=root,Path=User}"
+            AvatarUri="{Binding BuddyIconUrl}"></xuiuc:CircularCard>
 
     </Grid>
 </UserControl>

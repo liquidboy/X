@@ -36,11 +36,23 @@
                             x:Name="root"
                             Orientation="Vertical"
                             FlowDirection="{Binding IsAvatarOnRight, Converter={StaticResource RightToFlowDirectionConverter}}">
-                            <xuicomp:CompositionShadow BlurRadius="12" Color="Gray" OffsetY="{TemplateBinding BlurOffsetY}" OffsetX="{TemplateBinding BlurOffsetX}">
-                                <Ellipse  Width="55" Height="55" IsHitTestVisible="False" VerticalAlignment="Top" >
+                            <xuicomp:CompositionShadow
+                                BlurRadius="12"
+                                Color="Gray"
+                                OffsetY="{TemplateBinding BlurOffsetY}"
+                                OffsetX="{TemplateBinding BlurOffsetX}">
+                                <Ellipse
+                                    Width="55"
+                                    Height="55"
+                                    IsHitTestVisible="False"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="{Binding AlignImage}">
                                     <Ellipse.Fill>
-                                        <ImageBrush ImageSource="{Binding AvatarUri}" Stretch="UniformToFill" />
+                                        <ImageBrush
+                                            ImageSource="{Binding AvatarUri}"
+                                            Stretch="UniformToFill" />
                                     </Ellipse.Fill>
+   
                                 </Ellipse>
                             </xuicomp:CompositionShadow>
                             <StackPanel Orientation="Vertical">

@@ -434,6 +434,7 @@ namespace FlickrNet
         {
 
             if (string.IsNullOrEmpty(date)) return DateTime.MinValue;
+            if (date.Equals("0000-01-01 00:00:00")) return DateTime.MinValue;
 
             DateTime output;
 

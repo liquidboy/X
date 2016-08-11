@@ -23,6 +23,9 @@ namespace X.Viewer.Flickr
         private object _photo;
         public object Photo { get { return _photo; } set { _photo = value; RaisePropertyChanged("Photo");  } }
 
+        private object _user;
+        public object User { get { return _user; } set { _user = value; RaisePropertyChanged("User"); } }
+
         public FlickrView()
         {
             this.InitializeComponent();

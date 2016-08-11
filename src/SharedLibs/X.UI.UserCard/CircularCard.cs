@@ -131,7 +131,22 @@ namespace X.UI.UserCard
             get { return (double)GetValue(BlurOffsetYProperty); }
             set { SetValue(BlurOffsetYProperty, value); }
         }
+        
+        public HorizontalAlignment AlignImage
+        {
+            get { return (HorizontalAlignment)GetValue(AlignImageProperty); }
+            set { SetValue(AlignImageProperty, value); }
+        }
 
+
+
+
+
+
+
+
+
+        public static readonly DependencyProperty AlignImageProperty = DependencyProperty.Register("AlignImage", typeof(HorizontalAlignment), typeof(CircularCard), new PropertyMetadata(HorizontalAlignment.Center));
 
         public static readonly DependencyProperty BlurOffsetYProperty = DependencyProperty.Register("BlurOffsetY", typeof(double), typeof(CircularCard), new PropertyMetadata(0));
 

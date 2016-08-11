@@ -354,6 +354,11 @@ namespace X.Extension.ThirdParty.Flickr.VM
 
             //note : amazingly mvvmlight message bus works perfectly with extensions talking to the host
             Messenger.Default.Send(new LoadPhoto() { Photo = photo });
+
+
+
+            var foundUser = await _flickr.PeopleGetInfoAsync(photo.UserId);
+            if (!foundUser.HasError) { Messenger.Default.Send(new LoadPhotoDetail() { User = foundUser.Result }); }
         }
 
 

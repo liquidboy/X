@@ -41,10 +41,8 @@ namespace X.Player.Services
             var command = msg["Command"] as string;
 
             switch (command) {
-                case "LoadFlickrPhoto":
-                    //note : this is now done directly from the extension as i just found out mvvmlight events work
-                    //X.Services.Extensions.ExtensionsService.Instance.SendMessage("LoadFlickrPhoto", ExtensionType.UIComponent);
-                    Messenger.Default.Send(new LoadPhoto());
+                case "XXXXXXX":
+                    //Messenger.Default.Send(new LoadPhoto());
                     break;
             }
             
@@ -53,3 +51,4 @@ namespace X.Player.Services
         }
     }
 }
+//note : these should only contain WINDOWS services that we want the X.Player to support ...
