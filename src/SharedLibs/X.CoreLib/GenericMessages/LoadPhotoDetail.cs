@@ -9,5 +9,6 @@ namespace X.CoreLib.GenericMessages
     public class LoadPhotoDetail
     {
         public object User { get; set; }
+        public object Comments { get; set; }
     }
 }
