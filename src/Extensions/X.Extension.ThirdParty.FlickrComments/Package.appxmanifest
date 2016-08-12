@@ -8,15 +8,15 @@
   IgnorableNamespaces="uap uap3 mp">
 
   <Identity
-    Name="299fbe71-6b79-416f-b68c-a6097a230391"
-    Publisher="CN=jose.fajardo"
+    Name="cdb82af3-5805-42f7-bb9e-9c2dcc2f45f9"
+    Publisher="CN=fajar"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="299fbe71-6b79-416f-b68c-a6097a230391" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="cdb82af3-5805-42f7-bb9e-9c2dcc2f45f9" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>X.Extension.ThirdParty.Flickr</DisplayName>
-    <PublisherDisplayName>jose.fajardo</PublisherDisplayName>
+    <DisplayName>X.Extension.ThirdParty.FlickrComments</DisplayName>
+    <PublisherDisplayName>fajar</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -31,33 +31,33 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="X.Extension.ThirdParty.Flickr.App">
+      EntryPoint="X.Extension.ThirdParty.FlickrComments.App">
       <uap:VisualElements
-        DisplayName="X.Extension.ThirdParty.Flickr"
+        DisplayName="X.Extension.ThirdParty.FlickrComments"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="X.Extension.ThirdParty.Flickr"
+        Description="X.Extension.ThirdParty.FlickrComments"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <uap:Extension Category="windows.appService" EntryPoint="X.Extension.ThirdParty.Flickr.Services.CallService">
+        <uap:Extension Category="windows.appService" EntryPoint="X.Extension.ThirdParty.FlickrComments.Services.CallService">
           <uap:AppService Name="Call" />
         </uap:Extension>
         <uap3:Extension Category="windows.appExtension">
-          <uap3:AppExtension Name="X.Extensions" Id="X.Extension.ThirdParty.Flickr" PublicFolder="public" DisplayName="Flickr Extension (3rd Party)">
+          <uap3:AppExtension Name="X.Extensions" Id="X.Extension.ThirdParty.FlickrComments" PublicFolder="public" DisplayName="FlickrComments Extension (3rd Party)">
             <uap3:Properties>
               <Logo>ms-appx:///Assets/Flickr.png</Logo>
-              <Title>Flickr Profile</Title>
+              <Title>Flickr Comments</Title>
               <IconUrl>Logo-50x50.png</IconUrl>
               <Publisher>Jose Fajardo</Publisher>
               <Version>1.0</Version>
-              <Abstract>Manage your Flickr account</Abstract>
+              <Abstract>See Flickr Comments</Abstract>
               <FoundInToolbarPositions>Top</FoundInToolbarPositions>
-              <LaunchInDockPositions>Left</LaunchInDockPositions>
-              <ContentControl>X.Extension.ThirdParty.Flickr.Content</ContentControl>
-              <AssemblyName>X.Extension.ThirdParty.Flickr</AssemblyName>
+              <LaunchInDockPositions>Right</LaunchInDockPositions>
+              <ContentControl>X.Extension.ThirdParty.FlickrComments.Content</ContentControl>
+              <AssemblyName>X.Extension.ThirdParty.FlickrComments</AssemblyName>
               <IsExtEnabled>true</IsExtEnabled>
               <IsUWPExtension>true</IsUWPExtension>
             </uap3:Properties>
@@ -65,7 +65,6 @@
         </uap3:Extension>
       </Extensions>
     </Application>
-    
   </Applications>
 
   <Capabilities>
