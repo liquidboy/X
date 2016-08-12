@@ -362,8 +362,8 @@ namespace X.Extension.ThirdParty.Flickr.VM
             var foundUser = await _flickr.PeopleGetInfoAsync(photo.UserId);
             if (!foundUser.HasError) { photoDetail.User = foundUser.Result;  Messenger.Default.Send(photoDetail); }
 
-            var foundComments = await _flickr.PhotosCommentsGetListAsync(photo.PhotoId);
-            if (!foundComments.HasError) { photoDetail.Comments = foundComments.Result;  Messenger.Default.Send(photoDetail); }
+            //var foundComments = await _flickr.PhotosCommentsGetListAsync(photo.PhotoId);
+            //if (!foundComments.HasError) { photoDetail.Comments = foundComments.Result;  Messenger.Default.Send(photoDetail); }
 
         }
 
