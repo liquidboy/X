@@ -60,6 +60,7 @@ namespace X.Services.Extensions
                     case "AssemblyName": Manifest.AssemblyName = GetValueFromProperty(prop.Value); break;
                     case "IsExtEnabled": Manifest.IsExtEnabled = bool.Parse(GetValueFromProperty(prop.Value)); AppSettings.AppExtensionEnabled = Manifest.IsExtEnabled; break;
                     case "IsUWPExtension": Manifest.IsUWPExtension = bool.Parse(GetValueFromProperty(prop.Value)); break;
+                    case "Size": Manifest.Size = int.Parse(GetValueFromProperty(prop.Value)); break;
                 }
             }
 

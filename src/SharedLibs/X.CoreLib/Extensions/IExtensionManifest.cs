@@ -29,6 +29,7 @@ namespace CoreLib.Extensions
         ExtensionInToolbarPositions LaunchInDockPositions { get; set; }
         bool IsUWPExtension { get; set; }
         string AppExtensionUniqueID { get; set; }
+        int Size { get; set; }
 
     }
 }

@@ -66,6 +66,8 @@ namespace X.Services.Extensions
 
         public string AppExtensionUniqueID { get; set; }
 
+        public int Size { get; set; }
+
         public ExtensionManifest()
         { }
 

@@ -51,7 +51,7 @@ namespace CoreLib.Extensions
         public ExtensionInToolbarPositions FoundInToolbarPositions { get; set; }
         public ExtensionInToolbarPositions LaunchInDockPositions { get; set; }
         public string AppExtensionUniqueID { get; set; }
-        
+        public int Size { get; set; }
 
     }
 }

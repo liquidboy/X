@@ -157,12 +157,14 @@ namespace X.UI.Composition
         {
             if (gvMain.ItemsPanelRoot != null)
             {
-                foreach (ListViewItem item in gvMain.ItemsPanelRoot.Children)
+                foreach (var item in gvMain.ItemsPanelRoot.Children)
                 {
-                    CompositionImage image = item.ContentTemplateRoot.GetFirstDescendantOfType<CompositionImage>();
-                    //var imgs = item.ContentTemplateRoot.GetDescendantsOfType<CompositionImage>();
-                    //CompositionImage image = imgs.Last();
-                    SetImageEffect(image);
+                    if (item is ListViewItem) { 
+                        CompositionImage image = ((ListViewItem)item).ContentTemplateRoot.GetFirstDescendantOfType<CompositionImage>();
+                        //var imgs = item.ContentTemplateRoot.GetDescendantsOfType<CompositionImage>();
+                        //CompositionImage image = imgs.Last();
+                        SetImageEffect(image);
+                    }
                 }
             }
         }

@@ -176,8 +176,8 @@ namespace X.Services.Extensions
                 newElExt.SendMessage += DoSendMessage;
 
                 if (md.LaunchInDockPositions == ExtensionInToolbarPositions.Left || md.LaunchInDockPositions == ExtensionInToolbarPositions.Right)
-                    newElExt.Width = 350;
-                else newElExt.Height = 200;
+                    newElExt.Width = found.Manifest.Size > 0 ? found.Manifest.Size : 350;
+                else newElExt.Height = found.Manifest.Size > 0 ? found.Manifest.Size : 200;
 
                 found.Extension = newElExt;
             }
