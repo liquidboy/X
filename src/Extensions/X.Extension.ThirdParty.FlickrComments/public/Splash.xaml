@@ -3,13 +3,52 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xuicomp="using:X.UI.Composition"
     mc:Ignorable="d"
     d:DesignHeight="300"
     x:Name="root"
     d:DesignWidth="400">
 
     <Grid>
-        <TextBlock
-            Text="comments"></TextBlock>
+        <ScrollViewer
+            Margin="0,0,2,10"
+            Padding="0">
+            <ItemsControl ItemsSource="{Binding Comments}" >
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,0,20,10" >
+                            <!--<Image
+                                Width="30" Height="30"
+                                HorizontalAlignment="Left" VerticalAlignment="Top"
+                                Source="{Binding AuthorBuddyIcon}"></Image>-->
+                            <xuicomp:CompositionShadow
+                                BlurRadius="12"
+                                Color="Gray"
+                                Margin="4,6,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top">
+                                <Ellipse
+                                    Width="30"
+                                    Height="30"
+                                    IsHitTestVisible="False">
+                                    <Ellipse.Fill>
+                                        <ImageBrush
+                                            ImageSource="{Binding AuthorBuddyIcon}"
+                                            Stretch="UniformToFill" />
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                            </xuicomp:CompositionShadow>
+                            <TextBlock
+                                Margin="42,8,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                TextWrapping="WrapWholeWords"
+                                FontSize="11"
+                                Text="{Binding CommentHtml}"></TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </UserControl>

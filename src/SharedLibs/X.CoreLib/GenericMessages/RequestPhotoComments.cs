@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace X.CoreLib.GenericMessages
 {
-    public class LoadPhotoDetail
+    public class RequestPhotoComments
     {
-        public object User { get; set; }
-        public object Comments { get; set; }
     }
 }

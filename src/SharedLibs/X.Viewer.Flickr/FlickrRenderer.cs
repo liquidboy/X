@@ -42,7 +42,7 @@ namespace X.Viewer.Flickr
             _renderElement = new FlickrView();
 
             Messenger.Default.Register<LoadPhoto>(this, DoLoadPhoto);
-            Messenger.Default.Register<LoadPhotoDetail>(this, DoLoadPhotoDetail);
+            Messenger.Default.Register<LoadPhotoUser>(this, DoLoadPhotoUser);
         }
 
         private void DoLoadPhoto(LoadPhoto msg)
@@ -50,7 +50,7 @@ namespace X.Viewer.Flickr
             ((FlickrView)_renderElement).Photo = msg.Photo;
         }
 
-        private void DoLoadPhotoDetail(LoadPhotoDetail msg)
+        private void DoLoadPhotoUser(LoadPhotoUser msg)
         {
             ((FlickrView)_renderElement).User = msg.User;
         }
@@ -58,7 +58,7 @@ namespace X.Viewer.Flickr
         public void Unload()
         {
             Messenger.Default.Unregister<LoadPhoto>(this, DoLoadPhoto);
-            Messenger.Default.Unregister<LoadPhotoDetail>(this, DoLoadPhotoDetail);
+            Messenger.Default.Unregister<LoadPhotoUser>(this, DoLoadPhotoUser);
         }
 
         public void UpdateSource(string uri)

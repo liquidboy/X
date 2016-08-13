@@ -27,12 +27,29 @@ namespace X.Extension.ThirdParty.FlickrComments.VM
         public string GroupingType { get; set; } = "FlickrComments";
         public string HostPackageFamilyName { get; set; } = "cdb82af3-5805-42f7-bb9e-9c2dcc2f45f9_1v77q6cebkz10";
 
-        
+
+        private object _comments;
+        public object Comments { get { return _comments; } set { _comments = value; RaisePropertyChanged(); } }
 
 
         public SplashVM() {
-            
+            LoadMessangerRegistrations();
+
+            Messenger.Default.Send(new RequestPhotoComments());
         }
 
+        private void LoadMessangerRegistrations()
+        {
+            Messenger.Default.Register<LoadPhotoComments>(this, DoLoadPhotoComments);
+        }
+
+        private void DoLoadPhotoComments(LoadPhotoComments msg) {
+            Comments = msg.Comments;
+        }
+
+        public void UnloadMessangerRegistrations()
+        {
+            Messenger.Default.Unregister<LoadPhotoComments>(this, DoLoadPhotoComments);
+        }
     }
 }

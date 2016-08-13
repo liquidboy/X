@@ -159,7 +159,9 @@
     <Compile Include="Extensions\IGalleryService.cs" />
     <Compile Include="Extensions\IReceiver.cs" />
     <Compile Include="Extensions\ISender.cs" />
-    <Compile Include="GenericMessages\LoadPhotoDetail.cs" />
+    <Compile Include="GenericMessages\LoadPhotoComments.cs" />
+    <Compile Include="GenericMessages\RequestPhotoComments.cs" />
+    <Compile Include="GenericMessages\LoadPhotoUser.cs" />
     <Compile Include="GenericMessages\LoadPhoto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shared\F12\ConsoleUI.xaml.cs">

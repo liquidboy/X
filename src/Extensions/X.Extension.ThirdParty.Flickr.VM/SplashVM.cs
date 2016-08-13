@@ -58,6 +58,9 @@ namespace X.Extension.ThirdParty.Flickr.VM
 
         public List<Tab> Tabs { get; set; } = new List<Tab>();
 
+        PhotoCommentCollection photoComments;
+        Person photoUser;
+
         private RelayCommand<string> _requestFlickrLogin;
         private RelayCommand<Photo> _pictureSelectedCommand;
         private RelayCommand<Tab> _tabChangedCommand;
@@ -100,8 +103,22 @@ namespace X.Extension.ThirdParty.Flickr.VM
             _flickr = new FlickrNet.Flickr();
             Tabs.Add(new Tab() { Name = "Your Favourites", IsSelected = true});
             Tabs.Add(new Tab() { Name = "Public" });
+            LoadMessangerRegistrations();
             GetAPIData();
             PopulatePassportData();
+        }
+
+        private void LoadMessangerRegistrations() {
+            Messenger.Default.Register<RequestPhotoComments>(this, DoRequestPhotoComments);
+        }
+
+        public void UnloadMessangerRegistrations() {
+            Messenger.Default.Unregister<RequestPhotoComments>(this, DoRequestPhotoComments);
+        }
+
+        private void DoRequestPhotoComments(RequestPhotoComments msg)
+        {
+            if (photoComments != null) Messenger.Default.Send(new LoadPhotoComments() { Comments = photoComments });
         }
 
         private void GetAPIData() {
@@ -354,16 +371,12 @@ namespace X.Extension.ThirdParty.Flickr.VM
 
             //note : amazingly mvvmlight message bus works perfectly with extensions talking to the host
             Messenger.Default.Send(new LoadPhoto() { Photo = photo });
-
-
-
-            var photoDetail = new LoadPhotoDetail();
-
+            
             var foundUser = await _flickr.PeopleGetInfoAsync(photo.UserId);
-            if (!foundUser.HasError) { photoDetail.User = foundUser.Result;  Messenger.Default.Send(photoDetail); }
-
-            //var foundComments = await _flickr.PhotosCommentsGetListAsync(photo.PhotoId);
-            //if (!foundComments.HasError) { photoDetail.Comments = foundComments.Result;  Messenger.Default.Send(photoDetail); }
+            if (!foundUser.HasError) { photoUser = foundUser.Result;  Messenger.Default.Send( new LoadPhotoUser() { User = photoUser } ); }
+            
+            var foundComments = await _flickr.PhotosCommentsGetListAsync(photo.PhotoId);
+            if (!foundComments.HasError) { photoComments = foundComments.Result; Messenger.Default.Send(new LoadPhotoComments() { Comments = photoComments }); }
 
         }
 

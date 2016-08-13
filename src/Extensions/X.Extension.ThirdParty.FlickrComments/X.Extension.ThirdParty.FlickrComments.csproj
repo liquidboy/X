@@ -144,6 +144,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\SharedLibs\X.UI.Composition\X.UI.Composition.csproj">
+      <Project>{c356cb80-451e-4260-9a4a-c9515b93c44d}</Project>
+      <Name>X.UI.Composition</Name>
+    </ProjectReference>
     <ProjectReference Include="..\X.Extension.ThirdParty.FlickrComments.Services\X.Extension.ThirdParty.FlickrComments.Services.csproj">
       <Project>{3c0404fc-b3f1-4eff-937e-0121fc322f84}</Project>
       <Name>X.Extension.ThirdParty.FlickrComments.Services</Name>
