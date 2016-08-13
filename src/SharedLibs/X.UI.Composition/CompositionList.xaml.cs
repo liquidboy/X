@@ -173,6 +173,8 @@ namespace X.UI.Composition
         //LightingTypes _selectedLight = LightingTypes.PointDiffuse;
         private void SetImageEffect(CompositionImage image)
         {
+            if (_effectFactory == null) return;
+
             // Create the effect brush and bind the normal map
             CompositionEffectBrush brush = _effectFactory.CreateBrush();
 

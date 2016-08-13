@@ -39,7 +39,7 @@
                                 </Ellipse>
                             </xuicomp:CompositionShadow>
                             <TextBlock
-                                Margin="42,8,0,0"
+                                Margin="42,10,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 TextWrapping="WrapWholeWords"
