@@ -28,28 +28,37 @@ namespace X.Extension.ThirdParty.FlickrHistory.VM
         public string HostPackageFamilyName { get; set; } = "e10f99d4-4b05-4716-8c6a-4588ec9bef21_1v77q6cebkz10";
 
 
-        private object _comments;
-        public object Comments { get { return _comments; } set { _comments = value; RaisePropertyChanged(); } }
+        private ObservableCollection<object> _history;
+        public ObservableCollection<object> History { get { return _history; } set { _history = value; RaisePropertyChanged(); } }
 
 
         public SplashVM() {
             LoadMessangerRegistrations();
+            History = new ObservableCollection<object>();
 
             //Messenger.Default.Send(new RequestPhotoComments());
         }
 
         private void LoadMessangerRegistrations()
         {
-            //Messenger.Default.Register<LoadPhotoComments>(this, DoLoadPhotoComments);
+            Messenger.Default.Register<LoadPhoto>(this, DoLoadPhoto);
+            Messenger.Default.Register<LoadPhotoUser>(this, DoLoadPhotoUser);
         }
 
-        //private void DoLoadPhotoComments(LoadPhotoComments msg) {
-        //    Comments = msg.Comments;
-        //}
+        private void DoLoadPhoto(LoadPhoto msg)
+        {
+            //Comments = msg.Comments;
+        }
+
+        private void DoLoadPhotoUser(LoadPhotoUser msg)
+        {
+            History.Add(msg.User);
+        }
 
         public void UnloadMessangerRegistrations()
         {
-            //Messenger.Default.Unregister<LoadPhotoComments>(this, DoLoadPhotoComments);
+            Messenger.Default.Unregister<LoadPhoto>(this, DoLoadPhoto);
+            Messenger.Default.Unregister<LoadPhotoUser>(this, DoLoadPhotoUser);
         }
     }
 }

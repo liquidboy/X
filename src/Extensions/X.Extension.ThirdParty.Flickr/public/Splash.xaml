@@ -31,7 +31,7 @@
             DataContext="{Binding DataContext, ElementName=root}"
             SelectedLight="PointSpecular"
             ThumbnailFieldName="SquareThumbnailUrl"
-            Margin="4,155,0,10">
+            Margin="4,155,0,30">
             <xuicomp:CompositionList.ListDataTemplate>
                 <DataTemplate>
                     <Grid>

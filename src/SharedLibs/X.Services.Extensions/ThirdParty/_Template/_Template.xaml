@@ -31,7 +31,7 @@
             </StackPanel>
 
 
-            <Grid x:Name="ctlContent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" ></Grid>
+            <Grid x:Name="ctlContent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.RowSpan="2" ></Grid>
 
 
 

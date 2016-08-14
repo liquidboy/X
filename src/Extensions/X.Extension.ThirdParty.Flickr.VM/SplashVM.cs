@@ -58,8 +58,12 @@ namespace X.Extension.ThirdParty.Flickr.VM
 
         public List<Tab> Tabs { get; set; } = new List<Tab>();
 
+        //last selectect Photo
+        Photo selectedPhoto;
         PhotoCommentCollection photoComments;
         Person photoUser;
+        
+
 
         private RelayCommand<string> _requestFlickrLogin;
         private RelayCommand<Photo> _pictureSelectedCommand;
@@ -350,8 +354,9 @@ namespace X.Extension.ThirdParty.Flickr.VM
             //FlickrReturnedToken.Text = TokenUri;
         }
 
-        private async void RetrievePhotoDetails(Photo photo) {
-
+        private async void RetrievePhotoDetails(Photo photo)
+        {
+            selectedPhoto = photo;
             //var dataToPass = new List<KeyValuePair<string, object>>();
 
             //dataToPass.Add(new KeyValuePair<string, object>("Title", photo.Title));
