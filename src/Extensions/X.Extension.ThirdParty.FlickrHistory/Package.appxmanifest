@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+  IgnorableNamespaces="uap uap3 mp">
+
+  <Identity
+    Name="e10f99d4-4b05-4716-8c6a-4588ec9bef21"
+    Publisher="CN=fajar"
+    Version="1.0.0.0" />
+
+  <mp:PhoneIdentity PhoneProductId="e10f99d4-4b05-4716-8c6a-4588ec9bef21" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+
+  <Properties>
+    <DisplayName>X.Extension.ThirdParty.FlickrHistory</DisplayName>
+    <PublisherDisplayName>fajar</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="x-generate"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="App"
+      Executable="$targetnametoken$.exe"
+      EntryPoint="X.Extension.ThirdParty.FlickrHistory.App">
+      <uap:VisualElements
+        DisplayName="X.Extension.ThirdParty.FlickrHistory"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png"
+        Description="X.Extension.ThirdParty.FlickrHistory"
+        BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.appService" EntryPoint="X.Extension.ThirdParty.FlickrHistory.Services.CallService">
+          <uap:AppService Name="Call" />
+        </uap:Extension>
+        <uap3:Extension Category="windows.appExtension">
+          <uap3:AppExtension Name="X.Extensions" Id="X.Extension.ThirdParty.FlickrHistory" PublicFolder="public" DisplayName="FlickrHistory Extension (3rd Party)">
+            <uap3:Properties>
+              <Logo>ms-appx:///Assets/Flickr.png</Logo>
+              <Title>Flickr History</Title>
+              <IconUrl>Logo-50x50.png</IconUrl>
+              <Publisher>Jose Fajardo</Publisher>
+              <Version>1.0</Version>
+              <Abstract>See Flickr History</Abstract>
+              <FoundInToolbarPositions>Top</FoundInToolbarPositions>
+              <LaunchInDockPositions>Bottom</LaunchInDockPositions>
+              <ContentControl>X.Extension.ThirdParty.FlickrHistory.Content</ContentControl>
+              <AssemblyName>X.Extension.ThirdParty.FlickrHistory</AssemblyName>
+              <IsExtEnabled>true</IsExtEnabled>
+              <Size>70</Size>
+              <IsUWPExtension>true</IsUWPExtension>
+            </uap3:Properties>
+          </uap3:AppExtension>
+        </uap3:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <Capability Name="internetClient" />
+  </Capabilities>
+</Package>
