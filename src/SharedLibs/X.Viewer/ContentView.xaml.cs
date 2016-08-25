@@ -83,87 +83,25 @@ namespace X.Viewer
                 if (string.IsNullOrEmpty((string)e.NewValue)) return;
 
                 var uriNew = (string)e.NewValue;
-
-
-                if (uriNew.Contains(".mp4") || uriNew.Contains(".mpeg") || uriNew.Contains(".avi") || uriNew.Contains(".webm") || uriNew.Contains(".ogv") || uriNew.Contains(".3gp") || uriNew.Contains(".mkv"))
-                {
-                    cv.Renderer = new FFmpeg.FFmpegRenderer();
-                    cv.Renderer.SendMessage += Renderer_SendMessage;
-                    cv.Renderer.Load();
-                    cv.layoutRoot.Children.Add(cv.Renderer.RenderElement);
-                    //cv.Renderer.UpdateSource(new Uri("ms-appx:///Assets/Videos/sample01.mp4"));
-                    cv.Renderer.UpdateSource(uriNew);
-                }
-                else if (uriNew.Contains(".tile")){
-                    cv.Renderer = new Tiles.TileRenderer();
-                    cv.Renderer.SendMessage += Renderer_SendMessage;
-                    cv.Renderer.Load();
-                    cv.layoutRoot.Children.Add(cv.Renderer.RenderElement);
-
-                    cv.Renderer.UpdateSource((string)e.NewValue);
-                }
-                else if (uriNew.Contains(".dotnet"))
-                {
-                    cv.Renderer = new DotnetCLI.DotnetCLIRenderer();
-                    cv.Renderer.SendMessage += Renderer_SendMessage;
-                    cv.Renderer.Load();
-                    cv.layoutRoot.Children.Add(cv.Renderer.RenderElement);
-
-                    cv.Renderer.UpdateSource((string)e.NewValue);
-                }
-                else if (uriNew.Contains(".map"))
-                {
-                    cv.Renderer = new MapView.MapViewRenderer();
-                    cv.Renderer.SendMessage += Renderer_SendMessage;
-                    cv.Renderer.Load();
-                    cv.layoutRoot.Children.Add(cv.Renderer.RenderElement);
-
-                    cv.Renderer.UpdateSource((string)e.NewValue);
-                }
-                else if (uriNew.Contains(".sketch"))
-                {
-                    cv.Renderer = new SketchFlow.SketchFlowRenderer();
-                    cv.Renderer.SendMessage += Renderer_SendMessage;
-                    cv.Renderer.Load();
-                    cv.layoutRoot.Children.Add(cv.Renderer.RenderElement);
-                    cv.Renderer.UpdateSource((string)e.NewValue);
-                }
-                else if (uriNew.Contains(".urho"))
-                {
-                    cv.Renderer = new UrhoSharp.UrhoRenderer();
-                    cv.Renderer.SendMessage += Renderer_SendMessage;
-                    cv.Renderer.Load();
-                    cv.layoutRoot.Children.Add(cv.Renderer.RenderElement);
-
-                    cv.Renderer.UpdateSource((string)e.NewValue);
-                }
-                else if (uriNew.Contains(".flickr"))
-                {
-                    cv.Renderer = new Flickr.FlickrRenderer();
-                    cv.Renderer.SendMessage += Renderer_SendMessage;
-                    cv.Renderer.Load();
-                    cv.layoutRoot.Children.Add(cv.Renderer.RenderElement);
-
-                    cv.Renderer.UpdateSource((string)e.NewValue);
-                }
-                else if (uriNew.Contains(".twitter"))
-                {
-                    cv.Renderer = new Twitter.TwitterRenderer();
-                    cv.Renderer.SendMessage += Renderer_SendMessage;
-                    cv.Renderer.Load();
-                    cv.layoutRoot.Children.Add(cv.Renderer.RenderElement);
-
-                    cv.Renderer.UpdateSource((string)e.NewValue);
-                }
-                else
-                {
-                    cv.Renderer = new WebViewRenderer();
-                    cv.Renderer.SendMessage += Renderer_SendMessage;
-                    cv.Renderer.Load();
-                    cv.layoutRoot.Children.Add(cv.Renderer.RenderElement);
-
-                    cv.Renderer.UpdateSource((string)e.NewValue);
-                }
+                
+                if (uriNew.Contains(".mp4") || uriNew.Contains(".mpeg") || uriNew.Contains(".avi") 
+                    || uriNew.Contains(".webm") || uriNew.Contains(".ogv") || uriNew.Contains(".3gp") 
+                    || uriNew.Contains(".mkv"))
+                    cv.Renderer = new FFmpeg.FFmpegRenderer(); 
+                else if (uriNew.Contains(".tile")) cv.Renderer = new Tiles.TileRenderer();
+                else if (uriNew.Contains(".dotnet")) cv.Renderer = new DotnetCLI.DotnetCLIRenderer();
+                else if (uriNew.Contains(".map")) cv.Renderer = new MapView.MapViewRenderer();
+                else if (uriNew.Contains(".sketch")) cv.Renderer = new SketchFlow.SketchFlowRenderer();
+                else if (uriNew.Contains(".urho")) cv.Renderer = new UrhoSharp.UrhoRenderer();
+                else if (uriNew.Contains(".flickr")) cv.Renderer = new Flickr.FlickrRenderer();
+                else if (uriNew.Contains(".twitter")) cv.Renderer = new Twitter.TwitterRenderer();
+                else if (uriNew.Contains(".comp")) cv.Renderer = new WinComposition.DirectCompositionRenderer();
+                else cv.Renderer = new WebViewRenderer();
+                
+                cv.Renderer.SendMessage += Renderer_SendMessage;
+                cv.Renderer.Load();
+                cv.layoutRoot.Children.Add(cv.Renderer.RenderElement);
+                cv.Renderer.UpdateSource(uriNew);
 
                 _cv = cv;
 
