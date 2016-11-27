@@ -3,7 +3,7 @@
 Quickly build rich UI's in your Universal Application .. 
 
 
-[IMPORTANT : This project depends on Windows SDK Anniversary Edition 14366]
+[IMPORTANT : This project depends on Windows SDK Anniversary Edition 14393]
 
 
 Components still being fleshed out...
