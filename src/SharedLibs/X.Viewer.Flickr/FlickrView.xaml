@@ -25,15 +25,21 @@
                     VerticalAlignment="Stretch"
                     Background="LightGray"
                     Padding="2" >
-                    <Image
-                        Source="{Binding LargeUrl}" Stretch="UniformToFill"></Image>
+                    <xuicomp:LightPanel x:Name="lpImage" SelectedLight="PointSpecular">
+                        <xuicomp:LightPanel.Content>
+                            <!--<Image
+                        Source="{Binding LargeUrl}" Stretch="UniformToFill"></Image>-->
+                            <xuicomp:CompositionImage
+                        Source="{Binding LargeUrl}" Stretch="UniformToFill"></xuicomp:CompositionImage>
+                        </xuicomp:LightPanel.Content>
+                    </xuicomp:LightPanel>
                 </Border>
             </xuicomp:CompositionShadow>
         
             <xuicomp:CompositionShadow
                 Color="Gray"
                 BlurRadius="13" ShadowOpacity="0.8" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20">
-                <xuicomp:LightPanel SelectedLight="PointSpecular">
+                <xuicomp:LightPanel x:Name="lpPlaque" SelectedLight="PointSpecular">
                     <xuicomp:LightPanel.Content>
                         <Border
                             BorderBrush="LightGray"
@@ -81,5 +87,6 @@
             DataContext="{Binding ElementName=root,Path=User}"
             AvatarUri="{Binding BuddyIconUrl}"></xuiuc:CircularCard>
 
+        <Button Content="test" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="150" Height="30" Click="Button_Click"></Button>
     </Grid>
 </UserControl>

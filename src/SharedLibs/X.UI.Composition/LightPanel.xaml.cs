@@ -132,18 +132,24 @@ namespace X.UI.Composition
             UpdateEffectBrush();
         }
 
+        public void Redraw() {
+            UpdateLightingEffect();
+            UpdateEffectBrush();
+        }
+
         private void UpdateEffectBrush()
         {
-            //if (gvMain.ItemsPanelRoot != null)
-            //{
-            //    foreach (ListViewItem item in gvMain.ItemsPanelRoot.Children)
-            //    {
-            //        CompositionImage image = item.ContentTemplateRoot.GetFirstDescendantOfType<CompositionImage>();
-            //        //var imgs = item.ContentTemplateRoot.GetDescendantsOfType<CompositionImage>();
-            //        //CompositionImage image = imgs.Last();
-            //        SetImageEffect(image);
-            //    }
-            //}
+            if (ccMain.Content != null && ccMain.Content is CompositionImage)
+            {
+                //foreach (ListViewItem item in gvMain.ItemsPanelRoot.Children)
+                //{
+                //  CompositionImage image = item.ContentTemplateRoot.GetFirstDescendantOfType<CompositionImage>();
+                    CompositionImage image = (CompositionImage)ccMain.Content;
+                    //var imgs = item.ContentTemplateRoot.GetDescendantsOfType<CompositionImage>();
+                    //CompositionImage image = imgs.Last();
+                    SetImageEffect(image);
+                //}
+            }
         }
 
 
@@ -152,6 +158,8 @@ namespace X.UI.Composition
         //LightingTypes _selectedLight = LightingTypes.PointDiffuse;
         private void SetImageEffect(CompositionImage image)
         {
+            if (_effectFactory == null) return;
+
             // Create the effect brush and bind the normal map
             CompositionEffectBrush brush = _effectFactory.CreateBrush();
 
@@ -177,6 +185,11 @@ namespace X.UI.Composition
 
         private void UpdateLightingEffect()
         {
+            if (_effectFactory != null) { 
+                _effectFactory.Dispose();
+                _effectFactory = null;
+            }
+
             _ambientLight.Targets.RemoveAll();
             _pointLight.Targets.RemoveAll();
             _distantLight.Targets.RemoveAll();
@@ -502,6 +515,7 @@ namespace X.UI.Composition
             Vector2 offset = e.GetCurrentPoint(gvMain).Position.ToVector2();
             //ComboBoxItem item = LightingSelection.SelectedValue as ComboBoxItem;
             //switch ((LightingTypes)item.Tag)
+            //System.Diagnostics.Debug.Write($"x:{offset.X}  y:{offset.Y}");
             switch(SelectedLight)
             {
                 case LightingTypes.PointDiffuse:

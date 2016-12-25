@@ -34,5 +34,35 @@ namespace X.Viewer.Flickr
         private void RaisePropertyChanged(string name) {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+
+        private void Button_Click(Object sender, RoutedEventArgs e)
+        {
+            var lt = UI.Composition.LightPanel.LightingTypes.DistantDiffuse;
+            switch (lpPlaque.SelectedLight) {
+                case UI.Composition.LightPanel.LightingTypes.DistantDiffuse:
+                    lt = UI.Composition.LightPanel.LightingTypes.DistantSpecular;
+                    break;
+                case UI.Composition.LightPanel.LightingTypes.DistantSpecular:
+                    lt = UI.Composition.LightPanel.LightingTypes.PointDiffuse;
+                    break;
+                case UI.Composition.LightPanel.LightingTypes.PointDiffuse:
+                    lt = UI.Composition.LightPanel.LightingTypes.PointSpecular;
+                    break;
+                case UI.Composition.LightPanel.LightingTypes.PointSpecular:
+                    lt = UI.Composition.LightPanel.LightingTypes.SpotLightDiffuse;
+                    break;
+                case UI.Composition.LightPanel.LightingTypes.SpotLightDiffuse:
+                    lt = UI.Composition.LightPanel.LightingTypes.SpotLightSpecular;
+                    break;
+                case UI.Composition.LightPanel.LightingTypes.SpotLightSpecular:
+                    lt = UI.Composition.LightPanel.LightingTypes.DistantDiffuse;
+                    break;
+            }
+
+            lpPlaque.SelectedLight = lt;
+            lpImage.SelectedLight = lt;
+
+            lpImage.Redraw();
+        }
     }
 }

@@ -18,8 +18,9 @@
         HorizontalAlignment="Stretch"
         VerticalAlignment="Stretch"
         PointerMoved="gvMain_PointerMoved"
+        Background="#02FFFFFF"
         >
-        <ContentControl Content="{Binding ElementName=root, Path=Content}">
+        <ContentControl x:Name="ccMain" Content="{Binding ElementName=root, Path=Content}">
             
         </ContentControl>
     </Grid>
