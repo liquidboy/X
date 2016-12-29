@@ -19,7 +19,7 @@
                     VerticalAlignment="Stretch"
                     Background="LightGray"
                     Padding="2" >
-                <xuicomp:LightPanel x:Name="lpImage" SelectedLight="PointSpecular">
+                <xuicomp:LightPanel x:Name="lpImage" SelectedLight="PointDiffuse">
                     <xuicomp:LightPanel.Content>
                         <xuicomp:CompositionImage
                         Source="http://www.cosmicbooknews.com/sites/default/files/doctor-strange-deleted-scene.jpg" Stretch="UniformToFill"></xuicomp:CompositionImage>
@@ -36,11 +36,11 @@
                 <ComboBoxItem Tag="lpImage" IsSelected="True">Background Image</ComboBoxItem>
             </ComboBox>
 
-            <Button x:Name="butChangeLight" Margin="0,20,10,0" Click="butChangeLight_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Content="PointSpecular" ></Button>
+            <Button x:Name="butChangeLight" Margin="0,20,10,0" Click="butChangeLight_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Content="PointDiffuse" ></Button>
 
             
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,20,10,0">
-                <settings:PointSpecular x:Name="settingsPointSpecular"></settings:PointSpecular>
+                <settings:PointDiffuse x:Name="settingsPointDiffuse"></settings:PointDiffuse>
             </Grid>
         </StackPanel>
         

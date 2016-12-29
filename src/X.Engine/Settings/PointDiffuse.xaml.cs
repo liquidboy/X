@@ -16,10 +16,10 @@ using X.UI.Composition;
 
 namespace X.Engine.Settings
 {
-    public sealed partial class PointSpecular : UserControl
+    public sealed partial class PointDiffuse : UserControl
     {
         private LightPanel _lp;
-        public PointSpecular()
+        public PointDiffuse()
         {
             this.InitializeComponent();
         }
