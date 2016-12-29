@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using X.UI.Composition;
 
 namespace X.Engine
 {
@@ -20,6 +21,8 @@ namespace X.Engine
     public sealed partial class MainPage : Page
     {
         bool running = true;
+        LightPanel _selectedLightPanel;
+
         D3D12Pipeline _pipeline;
 
         public MainPage()
@@ -36,12 +39,15 @@ namespace X.Engine
 
         private void layoutRoot_Loaded(object sender, RoutedEventArgs e)
         {
-            _pipeline = new D3D12Pipeline();
+            //_pipeline = new D3D12Pipeline();
 
-            _pipeline.InitPipeline(Window.Current.CoreWindow, (int)Window.Current.Bounds.Width, (int)Window.Current.Bounds.Height);
+            //_pipeline.InitPipeline(Window.Current.CoreWindow, (int)Window.Current.Bounds.Width, (int)Window.Current.Bounds.Height);
 
-            DoWorkAsyncInfiniteLoop(_pipeline);
-            
+            //DoWorkAsyncInfiniteLoop(_pipeline);
+
+            _selectedLightPanel = lpImage;
+            settingsPointSpecular.InitUI(0, 0.75f, 0);
+            settingsPointSpecular.SetLightPanel(ref _selectedLightPanel);
         }
 
 
@@ -61,5 +67,62 @@ namespace X.Engine
             }
         }
 
+        private void butChangeLight_Click(Object sender, RoutedEventArgs e)
+        {
+            var lt = UI.Composition.LightPanel.LightingTypes.DistantDiffuse;
+            var ltn = string.Empty;
+
+            hideAllSettings();
+
+            switch (_selectedLightPanel.SelectedLight)
+            {
+                case UI.Composition.LightPanel.LightingTypes.DistantDiffuse:
+                    lt = UI.Composition.LightPanel.LightingTypes.DistantSpecular;
+                    ltn = UI.Composition.LightPanel.LightingTypes.DistantSpecular.ToString();
+                    break;
+                case UI.Composition.LightPanel.LightingTypes.DistantSpecular:
+                    lt = UI.Composition.LightPanel.LightingTypes.PointDiffuse;
+                    ltn = UI.Composition.LightPanel.LightingTypes.DistantSpecular.ToString();
+                    break;
+                case UI.Composition.LightPanel.LightingTypes.PointDiffuse:
+                    settingsPointSpecular.Visibility = Visibility.Visible;
+                    lt = UI.Composition.LightPanel.LightingTypes.PointSpecular;
+                    ltn = UI.Composition.LightPanel.LightingTypes.PointSpecular.ToString();
+                    break;
+                case UI.Composition.LightPanel.LightingTypes.PointSpecular:
+                    lt = UI.Composition.LightPanel.LightingTypes.SpotLightDiffuse;
+                    ltn = UI.Composition.LightPanel.LightingTypes.SpotLightDiffuse.ToString();
+                    break;
+                case UI.Composition.LightPanel.LightingTypes.SpotLightDiffuse:
+                    lt = UI.Composition.LightPanel.LightingTypes.SpotLightSpecular;
+                    ltn = UI.Composition.LightPanel.LightingTypes.SpotLightSpecular.ToString();
+                    break;
+                case UI.Composition.LightPanel.LightingTypes.SpotLightSpecular:
+                    lt = UI.Composition.LightPanel.LightingTypes.DistantDiffuse;
+                    ltn = UI.Composition.LightPanel.LightingTypes.DistantDiffuse.ToString();
+                    break;
+            }
+
+            butChangeLight.Content = ltn;
+            _selectedLightPanel.SelectedLight = lt;
+            _selectedLightPanel.Redraw();
+        }
+
+        private void hideAllSettings() {
+            settingsPointSpecular.Visibility = Visibility.Collapsed;
+        }
+
+        private void cbLightElements_SelectionChanged(Object sender, SelectionChangedEventArgs e)
+        {
+            var selected = (string)((ComboBoxItem)e.AddedItems[0]).Tag;
+
+            switch (selected.ToString()) {
+                case "lpImage":
+                    _selectedLightPanel = lpImage;
+                    break;
+            }
+
+            settingsPointSpecular?.SetLightPanel(ref _selectedLightPanel);
+        }
     }
 }

@@ -5,9 +5,46 @@
     xmlns:local="using:X.Engine"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xuicomp="using:X.UI.Composition"
+    xmlns:settings="using:X.Engine.Settings"
     mc:Ignorable="d">
 
     <Grid x:Name="layoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Loaded="layoutRoot_Loaded">
+        <xuicomp:CompositionShadow OffsetX="20" OffsetY="20" Color="Gray" BlurRadius="15" Margin="0,0,270,0">
+            <Border
+                    BorderBrush="WhiteSmoke"
+                    BorderThickness="1"
+                    Margin="20, 20,20,100"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Background="LightGray"
+                    Padding="2" >
+                <xuicomp:LightPanel x:Name="lpImage" SelectedLight="PointSpecular">
+                    <xuicomp:LightPanel.Content>
+                        <xuicomp:CompositionImage
+                        Source="http://www.cosmicbooknews.com/sites/default/files/doctor-strange-deleted-scene.jpg" Stretch="UniformToFill"></xuicomp:CompositionImage>
+                        <!--<Image
+                        Source="/Files/glitter-19a.jpg" Stretch="UniformToFill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Image>-->
+                    </xuicomp:LightPanel.Content>
+                </xuicomp:LightPanel>
+            </Border>
+        </xuicomp:CompositionShadow>
 
+        <StackPanel Orientation="Vertical" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="270">
+
+            <ComboBox x:Name="cbLightElements" SelectionChanged="cbLightElements_SelectionChanged">
+                <ComboBoxItem Tag="lpImage" IsSelected="True">Background Image</ComboBoxItem>
+            </ComboBox>
+
+            <Button x:Name="butChangeLight" Margin="0,20,10,0" Click="butChangeLight_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Content="PointSpecular" ></Button>
+
+            
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,20,10,0">
+                <settings:PointSpecular x:Name="settingsPointSpecular"></settings:PointSpecular>
+            </Grid>
+        </StackPanel>
+        
+
+        
     </Grid>
 </Page>

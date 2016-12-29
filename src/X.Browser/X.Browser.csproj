@@ -240,6 +240,10 @@
       <Project>{5ebc59ca-877f-4446-8d8b-7a18b1ffd3dd}</Project>
       <Name>X.UI.Chrome</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.UI.ColorPicker\X.UI.ColorPicker.csproj">
+      <Project>{528a34d6-0337-48aa-bba8-da2ac30bbb6e}</Project>
+      <Name>X.UI.ColorPicker</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharedLibs\X.UI.Composition\X.UI.Composition.csproj">
       <Project>{c356cb80-451e-4260-9a4a-c9515b93c44d}</Project>
       <Name>X.UI.Composition</Name>
@@ -287,6 +291,10 @@
     <ProjectReference Include="..\SharedLibs\X.UI.RichTab\X.UI.RichTab.csproj">
       <Project>{1f02dc50-9fbb-49ab-968a-db4a5e09006d}</Project>
       <Name>X.UI.RichTab</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.UI.RichText\X.UI.RichText.csproj">
+      <Project>{85a3ec90-ceaa-4139-9d1c-c2239b656154}</Project>
+      <Name>X.UI.RichText</Name>
     </ProjectReference>
     <ProjectReference Include="..\SharedLibs\X.UI.Skeuomorphism\X.UI.Skeuomorphism.csproj">
       <Project>{5b7af558-e880-459f-ae34-571581eab278}</Project>
