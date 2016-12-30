@@ -42,12 +42,20 @@
 
         <StackPanel Orientation="Vertical" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="270">
 
-            <ComboBox x:Name="cbLightElements" SelectionChanged="cbLightElements_SelectionChanged">
+            <TextBlock Text="UI Element :" Margin="0,20,0,0"  ></TextBlock>
+            <ComboBox x:Name="cbLightElements" Margin="0,20,0,0" SelectionChanged="cbLightElements_SelectionChanged">
                 <ComboBoxItem Tag="lpImage" IsSelected="True">Background</ComboBoxItem>
                 <ComboBoxItem Tag="lpAvatar">Avatar</ComboBoxItem>
             </ComboBox>
 
-            <Button x:Name="butChangeLight" Margin="0,20,10,0" Click="butChangeLight_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Content="PointDiffuse" ></Button>
+            <TextBlock Text="Brush Type :" Margin="0,20,0,0"  ></TextBlock>
+            <ComboBox x:Name="cbBrushType" Margin="0,20,0,0"  SelectionChanged="cbBrushType_SelectionChanged">
+                <ComboBoxItem Tag="circle">Circle</ComboBoxItem>
+                <ComboBoxItem Tag="flat" IsSelected="True">Flat</ComboBoxItem>
+            </ComboBox>
+
+            <TextBlock Text="Light Type :" Margin="0,20,0,0"  ></TextBlock>
+            <Button x:Name="butChangeLight" Margin="0,20,0,0" Click="butChangeLight_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Content="PointDiffuse" ></Button>
 
             
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,20,10,0">

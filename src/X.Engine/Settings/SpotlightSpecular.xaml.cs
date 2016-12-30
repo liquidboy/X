@@ -19,6 +19,7 @@ namespace X.Engine.Settings
     public sealed partial class SpotlightSpecular : UserControl
     {
         private LightPanel _lp;
+        
         public SpotlightSpecular()
         {
             this.InitializeComponent();

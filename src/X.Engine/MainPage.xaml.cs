@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using X.UI.Composition;
+using static X.UI.Composition.LightPanel;
 
 namespace X.Engine
 {
@@ -22,6 +23,7 @@ namespace X.Engine
     {
         bool running = true;
         LightPanel _selectedLightPanel;
+        BrushType _selectedBrushType = BrushType.Flat;
 
         D3D12Pipeline _pipeline;
 
@@ -168,6 +170,23 @@ namespace X.Engine
                     break;
             }
 
+        }
+
+        private void cbBrushType_SelectionChanged(Object sender, SelectionChangedEventArgs e)
+        {
+            var selected = (string)((ComboBoxItem)e.AddedItems[0]).Tag;
+
+            switch (selected.ToString())
+            {
+                case "circle":
+                    _selectedBrushType =  BrushType.Circle;
+                    break;
+                case "flat":
+                    _selectedBrushType = BrushType.Flat;
+                    break;
+            }
+            _selectedLightPanel?.UpdateBrushType(_selectedBrushType);
+            UpdateLightPanel(_selectedLightPanel.SelectedLight);
         }
     }
 }

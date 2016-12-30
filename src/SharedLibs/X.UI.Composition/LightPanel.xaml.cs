@@ -196,7 +196,7 @@ namespace X.UI.Composition
 
         public void UpdateLightingEffect_PointDiffuse(float AmbientAmount = 0, float DiffuseAmount = .75f, 
             float SpecularAmount = 0, string NormalMapSource = "NormalMap", bool forceUpdate = false, BrushType brushType = BrushType.Flat) {
-            _currentBrushType = brushType;
+            //_currentBrushType = brushType;
             var sceneLightingEffect = new SceneLightingEffect()
             {
                 AmbientAmount = AmbientAmount,
@@ -226,7 +226,7 @@ namespace X.UI.Composition
             float DiffuseAmount2 = 0f, float SpecularAmount2 = 1, float SpecularShine2 = 100f, 
             string NormalMapSource2 = "NormalMap", bool forceUpdate = false, BrushType brushType = BrushType.Flat)
         {
-            _currentBrushType = brushType;
+            //_currentBrushType = brushType;
             IGraphicsEffect graphicsEffect = new CompositeEffect()
             {
                 Mode = CanvasComposite.DestinationIn,
@@ -275,7 +275,7 @@ namespace X.UI.Composition
             float SpecularAmount = 0, string NormalMapSource = "NormalMap", float InnerConeAngle = 15,
             float OuterConeAngle = 10, bool forceUpdate = false, BrushType brushType = BrushType.Flat)
         {
-            _currentBrushType = brushType;
+            //_currentBrushType = brushType;
             var sceneLightingEffect = new SceneLightingEffect()
             {
                 AmbientAmount = AmbientAmount,
@@ -308,7 +308,7 @@ namespace X.UI.Composition
             string NormalMapSource2 = "NormalMap", float InnerConeAngle = 15,
             float OuterConeAngle = 10, bool forceUpdate = false, BrushType brushType = BrushType.Flat)
         {
-            _currentBrushType = brushType;
+            //_currentBrushType = brushType;
             IGraphicsEffect graphicsEffect = new CompositeEffect()
             {
                 Mode = CanvasComposite.DestinationIn,
@@ -358,7 +358,7 @@ namespace X.UI.Composition
         public void UpdateLightingEffect_DistantDiffuse(float AmbientAmount = 0, float DiffuseAmount = .5f,
     float SpecularAmount = 0, string NormalMapSource = "NormalMap", bool forceUpdate = false, BrushType brushType = BrushType.Flat)
         {
-            _currentBrushType = brushType;
+            //_currentBrushType = brushType;
             var sceneLightingEffect = new SceneLightingEffect()
             {
                 AmbientAmount = AmbientAmount,
@@ -389,7 +389,7 @@ namespace X.UI.Composition
             float DiffuseAmount2 = 0f, float SpecularAmount2 = 1, float SpecularShine2 = 100f,
             string NormalMapSource2 = "NormalMap", bool forceUpdate = false, BrushType brushType = BrushType.Flat)
         {
-            _currentBrushType = brushType;
+            //_currentBrushType = brushType;
             IGraphicsEffect graphicsEffect = new CompositeEffect()
             {
                 Mode = CanvasComposite.DestinationIn,
@@ -433,8 +433,7 @@ namespace X.UI.Composition
 
             if (forceUpdate) UpdateEffectBrush(_currentBrushType);
         }
-
-
+        
         private void UpdateLightingEffect()
         {
             if (_effectFactory != null) { 
@@ -559,7 +558,10 @@ namespace X.UI.Composition
             // Update all the image to have the new effect
             UpdateEffectBrush(_currentBrushType);
         }
-        
+
+        public void UpdateBrushType(BrushType brushType) {
+            _currentBrushType = brushType;
+        }
 
         //private void gvMain_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
         //{
