@@ -43,6 +43,7 @@
                 <settings:PointDiffuse x:Name="settingsPointDiffuse"></settings:PointDiffuse>
                 <settings:PointSpecular x:Name="settingsPointSpecular" Visibility="Collapsed"></settings:PointSpecular>
                 <settings:SpotlightDiffuse x:Name="settingsSpotlightDiffuse" Visibility="Collapsed"></settings:SpotlightDiffuse>
+                <settings:SpotlightSpecular x:Name="settingsSpotlightSpecular" Visibility="Collapsed"></settings:SpotlightSpecular>
             </Grid>
         </StackPanel>
         

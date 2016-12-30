@@ -48,6 +48,7 @@ namespace X.Engine
             _selectedLightPanel = lpImage;
             settingsPointDiffuse.InitUI(0, 0.75f, 0);
             settingsSpotlightDiffuse.InitUI(0, 0.75f, 0, 15, 10);
+            settingsSpotlightSpecular.InitUI(.6f, 1, 0, 0, 0, 1, 100, 15, 10);
             settingsPointSpecular.InitUI(.6f, 1, 0, 0, 0, 1, 100);
             settingsPointDiffuse.SetLightPanel(ref _selectedLightPanel);
         }
@@ -98,6 +99,7 @@ namespace X.Engine
                     ltn = UI.Composition.LightPanel.LightingTypes.SpotLightDiffuse.ToString();
                     break;
                 case UI.Composition.LightPanel.LightingTypes.SpotLightDiffuse:
+                    settingsSpotlightSpecular.Visibility = Visibility.Visible;
                     lt = UI.Composition.LightPanel.LightingTypes.SpotLightSpecular;
                     ltn = UI.Composition.LightPanel.LightingTypes.SpotLightSpecular.ToString();
                     break;
@@ -118,6 +120,7 @@ namespace X.Engine
             settingsPointDiffuse.Visibility = Visibility.Collapsed;
             settingsPointSpecular.Visibility = Visibility.Collapsed;
             settingsSpotlightDiffuse.Visibility = Visibility.Collapsed;
+            settingsSpotlightSpecular.Visibility = Visibility.Collapsed;
         }
 
         private void cbLightElements_SelectionChanged(Object sender, SelectionChangedEventArgs e)
@@ -150,6 +153,7 @@ namespace X.Engine
                     settingsSpotlightDiffuse?.SetLightPanel(ref _selectedLightPanel);
                     break;
                 case UI.Composition.LightPanel.LightingTypes.SpotLightSpecular:
+                    settingsSpotlightSpecular?.SetLightPanel(ref _selectedLightPanel);
                     break;
             }
 

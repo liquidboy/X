@@ -290,6 +290,60 @@ namespace X.UI.Composition
             if (forceUpdate) UpdateEffectBrush();
         }
 
+        public void UpdateLightingEffect_SpotLightSpecular(float AmbientAmount1 = 0.6f, float DiffuseAmount1 = 1f,
+            float SpecularAmount1 = 0, string NormalMapSource1 = "NormalMap", float AmbientAmount2 = 0,
+            float DiffuseAmount2 = 0f, float SpecularAmount2 = 1, float SpecularShine2 = 100f,
+            string NormalMapSource2 = "NormalMap", float InnerConeAngle = 15,
+            float OuterConeAngle = 10, bool forceUpdate = false)
+        {
+
+            IGraphicsEffect graphicsEffect = new CompositeEffect()
+            {
+                Mode = CanvasComposite.DestinationIn,
+                Sources =
+                            {
+                                new ArithmeticCompositeEffect()
+                                {
+                                    Source1Amount = 1,
+                                    Source2Amount = 1,
+                                    MultiplyAmount = 0,
+
+                                    Source1 = new ArithmeticCompositeEffect()
+                                    {
+                                        MultiplyAmount = 1,
+                                        Source1Amount = 0,
+                                        Source2Amount = 0,
+                                        Source1 = new CompositionEffectSourceParameter("ImageSource"),
+                                        Source2 = new SceneLightingEffect()
+                                        {
+                                            AmbientAmount = AmbientAmount1,
+                                            DiffuseAmount = DiffuseAmount1,
+                                            SpecularAmount = SpecularAmount1,
+                                            NormalMapSource = new CompositionEffectSourceParameter(NormalMapSource1),
+                                        }
+                                    },
+                                    Source2 = new SceneLightingEffect()
+                                    {
+                                        AmbientAmount = AmbientAmount2,
+                                        DiffuseAmount = DiffuseAmount2,
+                                        SpecularAmount = SpecularAmount2,
+                                        SpecularShine = SpecularShine2,
+                                        NormalMapSource = new CompositionEffectSourceParameter(NormalMapSource2),
+                                    }
+                                },
+                                new CompositionEffectSourceParameter("NormalMap"),
+                            }
+            };
+
+            _effectFactory = _compositor.CreateEffectFactory(graphicsEffect);
+
+            _spotLight.InnerConeAngle = (float)(Math.PI / InnerConeAngle);
+            _spotLight.OuterConeAngle = (float)(Math.PI / OuterConeAngle);
+
+            if (forceUpdate) UpdateEffectBrush();
+        }
+
+
         private void UpdateLightingEffect()
         {
             if (_effectFactory != null) { 
@@ -361,54 +415,15 @@ namespace X.UI.Composition
                         // Result = (Image * .6) + (Image * Diffuse color) + (Specular color)
                         //
 
-                        IGraphicsEffect graphicsEffect = new CompositeEffect()
-                        {
-                            Mode = CanvasComposite.DestinationIn,
-                            Sources =
-                            {
-                                new ArithmeticCompositeEffect()
-                                {
-                                    Source1Amount = 1,
-                                    Source2Amount = 1,
-                                    MultiplyAmount = 0,
-
-                                    Source1 = new ArithmeticCompositeEffect()
-                                    {
-                                        MultiplyAmount = 1,
-                                        Source1Amount = 0,
-                                        Source2Amount = 0,
-                                        Source1 = new CompositionEffectSourceParameter("ImageSource"),
-                                        Source2 = new SceneLightingEffect()
-                                        {
-                                            AmbientAmount = .6f,
-                                            DiffuseAmount = 1f,
-                                            SpecularAmount = 0f,
-                                            NormalMapSource = new CompositionEffectSourceParameter("NormalMap"),
-                                        }
-                                    },
-                                    Source2 = new SceneLightingEffect()
-                                    {
-                                        AmbientAmount = 0,
-                                        DiffuseAmount = 0f,
-                                        SpecularAmount = 1f,
-                                        SpecularShine = 100,
-                                        NormalMapSource = new CompositionEffectSourceParameter("NormalMap"),
-                                    }
-                                },
-                                new CompositionEffectSourceParameter("NormalMap"),
-                            }
-                        };
-
-                        // Create the effect factory
-                        _effectFactory = _compositor.CreateEffectFactory(graphicsEffect);
+                        UpdateLightingEffect_SpotLightSpecular();
+                        
 
                         // Set the light coordinate space and add the target
                         Visual lightRoot = ElementCompositionPreview.GetElementVisual(gvMain);
                         _ambientLight.Targets.Add(lightRoot);
                         _spotLight.CoordinateSpace = lightRoot;
                         _spotLight.Targets.Add(lightRoot);
-                        _spotLight.InnerConeAngle = (float)(Math.PI / 15);
-                        _spotLight.OuterConeAngle = (float)(Math.PI / 10);
+                        
                         _spotLight.Direction = new Vector3(0, 0, -1);
                     };
                     break;
