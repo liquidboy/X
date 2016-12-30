@@ -47,6 +47,7 @@ namespace X.Engine
 
             _selectedLightPanel = lpImage;
             settingsPointDiffuse.InitUI(0, 0.75f, 0);
+            settingsPointSpecular.InitUI(.6f, 1, 0, 0, 0, 1, 100);
             settingsPointDiffuse.SetLightPanel(ref _selectedLightPanel);
         }
 
@@ -86,6 +87,7 @@ namespace X.Engine
                     ltn = UI.Composition.LightPanel.LightingTypes.PointDiffuse.ToString();
                     break;
                 case UI.Composition.LightPanel.LightingTypes.PointDiffuse:
+                    settingsPointSpecular.Visibility = Visibility.Visible;
                     lt = UI.Composition.LightPanel.LightingTypes.PointSpecular;
                     ltn = UI.Composition.LightPanel.LightingTypes.PointSpecular.ToString();
                     break;
@@ -103,6 +105,8 @@ namespace X.Engine
                     break;
             }
 
+            UpdateLightPanel(lt);
+
             butChangeLight.Content = ltn;
             _selectedLightPanel.SelectedLight = lt;
             _selectedLightPanel.Redraw();
@@ -110,6 +114,7 @@ namespace X.Engine
 
         private void hideAllSettings() {
             settingsPointDiffuse.Visibility = Visibility.Collapsed;
+            settingsPointSpecular.Visibility = Visibility.Collapsed;
         }
 
         private void cbLightElements_SelectionChanged(Object sender, SelectionChangedEventArgs e)
@@ -121,8 +126,29 @@ namespace X.Engine
                     _selectedLightPanel = lpImage;
                     break;
             }
+            UpdateLightPanel(_selectedLightPanel.SelectedLight);
+        }
 
-            settingsPointDiffuse?.SetLightPanel(ref _selectedLightPanel);
+        private void UpdateLightPanel(UI.Composition.LightPanel.LightingTypes lightType) {
+
+            switch (lightType)
+            {
+                case UI.Composition.LightPanel.LightingTypes.DistantDiffuse:
+                    break;
+                case UI.Composition.LightPanel.LightingTypes.DistantSpecular:
+                    break;
+                case UI.Composition.LightPanel.LightingTypes.PointDiffuse:
+                    settingsPointDiffuse?.SetLightPanel(ref _selectedLightPanel);
+                    break;
+                case UI.Composition.LightPanel.LightingTypes.PointSpecular:
+                    settingsPointSpecular?.SetLightPanel(ref _selectedLightPanel);
+                    break;
+                case UI.Composition.LightPanel.LightingTypes.SpotLightDiffuse:
+                    break;
+                case UI.Composition.LightPanel.LightingTypes.SpotLightSpecular:
+                    break;
+            }
+
         }
     }
 }

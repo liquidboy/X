@@ -209,6 +209,57 @@ namespace X.UI.Composition
             if (forceUpdate) UpdateEffectBrush();
         }
 
+        public void UpdateLightingEffect_PointSpecular(float AmbientAmount1 = 0.6f, float DiffuseAmount1 = 1f,
+            float SpecularAmount1 = 0, string NormalMapSource1 = "NormalMap", float AmbientAmount2 = 0, 
+            float DiffuseAmount2 = 0f, float SpecularAmount2 = 1, float SpecularShine2 = 100f, 
+            string NormalMapSource2 = "NormalMap", bool forceUpdate = false)
+        {
+
+            IGraphicsEffect graphicsEffect = new CompositeEffect()
+            {
+                Mode = CanvasComposite.DestinationIn,
+                Sources =
+                            {
+                                new ArithmeticCompositeEffect()
+                                {
+                                    Source1Amount = 1,
+                                    Source2Amount = 1,
+                                    MultiplyAmount = 0,
+
+                                    Source1 = new ArithmeticCompositeEffect()
+                                    {
+                                        MultiplyAmount = 1,
+                                        Source1Amount = 0,
+                                        Source2Amount = 0,
+                                        Source1 = new CompositionEffectSourceParameter("ImageSource"),
+                                        Source2 = new SceneLightingEffect()
+                                        {
+                                            AmbientAmount = AmbientAmount1,
+                                            DiffuseAmount = DiffuseAmount1,
+                                            SpecularAmount = SpecularAmount1,
+                                            NormalMapSource = new CompositionEffectSourceParameter(NormalMapSource1),
+                                        }
+                                    },
+                                    Source2 = new SceneLightingEffect()
+                                    {
+                                        AmbientAmount = AmbientAmount2,
+                                        DiffuseAmount = DiffuseAmount2,
+                                        SpecularAmount = SpecularAmount2,
+                                        SpecularShine = SpecularShine2,
+                                        NormalMapSource = new CompositionEffectSourceParameter(NormalMapSource2),
+                                    }
+                                },
+                                new CompositionEffectSourceParameter("NormalMap"),
+                            }
+            };
+
+            _effectFactory = _compositor.CreateEffectFactory(graphicsEffect);
+
+
+            if (forceUpdate) UpdateEffectBrush();
+        }
+
+
 
         private void UpdateLightingEffect()
         {
@@ -247,46 +298,7 @@ namespace X.UI.Composition
                         // Result =    Ambient   +       Diffuse           +     Specular
                         // Result = (Image * .6) + (Image * Diffuse color) + (Specular color)
                         //
-
-                        IGraphicsEffect graphicsEffect = new CompositeEffect()
-                        {
-                            Mode = CanvasComposite.DestinationIn,
-                            Sources =
-                            {
-                                new ArithmeticCompositeEffect()
-                                {
-                                    Source1Amount = 1,
-                                    Source2Amount = 1,
-                                    MultiplyAmount = 0,
-
-                                    Source1 = new ArithmeticCompositeEffect()
-                                    {
-                                        MultiplyAmount = 1,
-                                        Source1Amount = 0,
-                                        Source2Amount = 0,
-                                        Source1 = new CompositionEffectSourceParameter("ImageSource"),
-                                        Source2 = new SceneLightingEffect()
-                                        {
-                                            AmbientAmount = .6f,
-                                            DiffuseAmount = 1f,
-                                            SpecularAmount = 0f,
-                                            NormalMapSource = new CompositionEffectSourceParameter("NormalMap"),
-                                        }
-                                    },
-                                    Source2 = new SceneLightingEffect()
-                                    {
-                                        AmbientAmount = 0,
-                                        DiffuseAmount = 0f,
-                                        SpecularAmount = 1f,
-                                        SpecularShine = 100,
-                                        NormalMapSource = new CompositionEffectSourceParameter("NormalMap"),
-                                    }
-                                },
-                                new CompositionEffectSourceParameter("NormalMap"),
-                            }
-                        };
-
-                        _effectFactory = _compositor.CreateEffectFactory(graphicsEffect);
+                        UpdateLightingEffect_PointSpecular();
 
                         // Set the light coordinate space and add the target
                         Visual lightRoot = ElementCompositionPreview.GetElementVisual(gvMain);
