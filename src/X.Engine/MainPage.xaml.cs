@@ -51,6 +51,8 @@ namespace X.Engine
             settingsSpotlightSpecular.InitUI(.6f, 1, 0, 0, 0, 1, 100, 15, 10);
             settingsPointSpecular.InitUI(.6f, 1, 0, 0, 0, 1, 100);
             settingsPointDiffuse.SetLightPanel(ref _selectedLightPanel);
+            settingsDistantDiffuse.InitUI(0, 0.5f, 0);
+            settingsDistantSpecular.InitUI(.6f, 1, 0, 0, 0, 1, 100);
         }
 
 
@@ -80,6 +82,7 @@ namespace X.Engine
             switch (_selectedLightPanel.SelectedLight)
             {
                 case UI.Composition.LightPanel.LightingTypes.DistantDiffuse:
+                    settingsDistantSpecular.Visibility = Visibility.Visible;
                     lt = UI.Composition.LightPanel.LightingTypes.DistantSpecular;
                     ltn = UI.Composition.LightPanel.LightingTypes.DistantSpecular.ToString();
                     break;
@@ -104,6 +107,7 @@ namespace X.Engine
                     ltn = UI.Composition.LightPanel.LightingTypes.SpotLightSpecular.ToString();
                     break;
                 case UI.Composition.LightPanel.LightingTypes.SpotLightSpecular:
+                    settingsDistantDiffuse.Visibility = Visibility.Visible;
                     lt = UI.Composition.LightPanel.LightingTypes.DistantDiffuse;
                     ltn = UI.Composition.LightPanel.LightingTypes.DistantDiffuse.ToString();
                     break;
@@ -121,6 +125,8 @@ namespace X.Engine
             settingsPointSpecular.Visibility = Visibility.Collapsed;
             settingsSpotlightDiffuse.Visibility = Visibility.Collapsed;
             settingsSpotlightSpecular.Visibility = Visibility.Collapsed;
+            settingsDistantDiffuse.Visibility = Visibility.Collapsed;
+            settingsDistantSpecular.Visibility = Visibility.Collapsed;
         }
 
         private void cbLightElements_SelectionChanged(Object sender, SelectionChangedEventArgs e)
@@ -140,8 +146,10 @@ namespace X.Engine
             switch (lightType)
             {
                 case UI.Composition.LightPanel.LightingTypes.DistantDiffuse:
+                    settingsDistantDiffuse?.SetLightPanel(ref _selectedLightPanel);
                     break;
                 case UI.Composition.LightPanel.LightingTypes.DistantSpecular:
+                    settingsDistantSpecular?.SetLightPanel(ref _selectedLightPanel);
                     break;
                 case UI.Composition.LightPanel.LightingTypes.PointDiffuse:
                     settingsPointDiffuse?.SetLightPanel(ref _selectedLightPanel);

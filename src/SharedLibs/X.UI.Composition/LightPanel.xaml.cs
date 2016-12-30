@@ -343,6 +343,85 @@ namespace X.UI.Composition
             if (forceUpdate) UpdateEffectBrush();
         }
 
+        public void UpdateLightingEffect_DistantDiffuse(float AmbientAmount = 0, float DiffuseAmount = .5f,
+    float SpecularAmount = 0, string NormalMapSource = "NormalMap", bool forceUpdate = false)
+        {
+
+            var sceneLightingEffect = new SceneLightingEffect()
+            {
+                AmbientAmount = AmbientAmount,
+                DiffuseAmount = DiffuseAmount,
+                SpecularAmount = SpecularAmount,
+                NormalMapSource = new CompositionEffectSourceParameter(NormalMapSource),
+            };
+            
+            IGraphicsEffect graphicsEffect = new CompositeEffect()
+            {
+                Mode = CanvasComposite.Add,
+                Sources =
+                    {
+                        new CompositionEffectSourceParameter("ImageSource"),
+                        sceneLightingEffect
+                    }
+            };
+
+            _effectFactory = _compositor.CreateEffectFactory(graphicsEffect);
+
+
+            if (forceUpdate) UpdateEffectBrush();
+        }
+
+
+        public void UpdateLightingEffect_DistantSpecular(float AmbientAmount1 = 0.6f, float DiffuseAmount1 = 1f,
+            float SpecularAmount1 = 0, string NormalMapSource1 = "NormalMap", float AmbientAmount2 = 0,
+            float DiffuseAmount2 = 0f, float SpecularAmount2 = 1, float SpecularShine2 = 100f,
+            string NormalMapSource2 = "NormalMap", bool forceUpdate = false)
+        {
+
+            IGraphicsEffect graphicsEffect = new CompositeEffect()
+            {
+                Mode = CanvasComposite.DestinationIn,
+                Sources =
+                            {
+                                new ArithmeticCompositeEffect()
+                                {
+                                    Source1Amount = 1,
+                                    Source2Amount = 1,
+                                    MultiplyAmount = 0,
+
+                                    Source1 = new ArithmeticCompositeEffect()
+                                    {
+                                        MultiplyAmount = 1,
+                                        Source1Amount = 0,
+                                        Source2Amount = 0,
+                                        Source1 = new CompositionEffectSourceParameter("ImageSource"),
+                                        Source2 = new SceneLightingEffect()
+                                        {
+                                            AmbientAmount = AmbientAmount1,
+                                            DiffuseAmount = DiffuseAmount1,
+                                            SpecularAmount = SpecularAmount1,
+                                            NormalMapSource = new CompositionEffectSourceParameter(NormalMapSource1),
+                                        }
+                                    },
+                                    Source2 = new SceneLightingEffect()
+                                    {
+                                        AmbientAmount = AmbientAmount2,
+                                        DiffuseAmount = DiffuseAmount2,
+                                        SpecularAmount = SpecularAmount2,
+                                        SpecularShine = SpecularShine2,
+                                        NormalMapSource = new CompositionEffectSourceParameter(NormalMapSource2),
+                                    }
+                                },
+                                new CompositionEffectSourceParameter("NormalMap"),
+                            }
+            };
+            
+            _effectFactory = _compositor.CreateEffectFactory(graphicsEffect);
+
+
+            if (forceUpdate) UpdateEffectBrush();
+        }
+
 
         private void UpdateLightingEffect()
         {
@@ -435,31 +514,7 @@ namespace X.UI.Composition
                         // Result = (Image) + (.5 * Diffuse color)
                         //
 
-                        IGraphicsEffect graphicsEffect = new CompositeEffect()
-                        {
-                            Mode = CanvasComposite.DestinationIn,
-                            Sources =
-                            {
-                                new CompositeEffect()
-                                {
-                                    Mode = CanvasComposite.Add,
-                                    Sources =
-                                    {
-                                        new CompositionEffectSourceParameter("ImageSource"),
-                                        new SceneLightingEffect()
-                                        {
-                                            AmbientAmount = 0,
-                                            DiffuseAmount = .5f,
-                                            SpecularAmount = 0,
-                                            NormalMapSource = new CompositionEffectSourceParameter("NormalMap"),
-                                        }
-                                    }
-                                },
-                                new CompositionEffectSourceParameter("NormalMap"),
-                            }
-                        };
-
-                        _effectFactory = _compositor.CreateEffectFactory(graphicsEffect);
+                        UpdateLightingEffect_DistantDiffuse();
 
                         Visual lightRoot = ElementCompositionPreview.GetElementVisual(gvMain);
                         _distantLight.CoordinateSpace = lightRoot;
@@ -474,45 +529,7 @@ namespace X.UI.Composition
                         // Result = (Image * Diffuse color) + (Specular color)
                         //
 
-                        IGraphicsEffect graphicsEffect = new CompositeEffect()
-                        {
-                            Mode = CanvasComposite.DestinationIn,
-                            Sources =
-                            {
-                                new ArithmeticCompositeEffect()
-                                {
-                                    Source1Amount = 1,
-                                    Source2Amount = 1,
-                                    MultiplyAmount = 0,
-
-                                    Source1 = new ArithmeticCompositeEffect()
-                                    {
-                                        MultiplyAmount = 1,
-                                        Source1Amount = 0,
-                                        Source2Amount = 0,
-                                        Source1 = new CompositionEffectSourceParameter("ImageSource"),
-                                        Source2 = new SceneLightingEffect()
-                                        {
-                                            AmbientAmount = .6f,
-                                            DiffuseAmount = 1f,
-                                            SpecularAmount = 0f,
-                                            NormalMapSource = new CompositionEffectSourceParameter("NormalMap"),
-                                        }
-                                    },
-                                    Source2 = new SceneLightingEffect()
-                                    {
-                                        AmbientAmount = 0,
-                                        DiffuseAmount = 0f,
-                                        SpecularAmount = 1f,
-                                        SpecularShine = 100,
-                                        NormalMapSource = new CompositionEffectSourceParameter("NormalMap"),
-                                    }
-                                },
-                                new CompositionEffectSourceParameter("NormalMap"),
-                            }
-                        };
-
-                        _effectFactory = _compositor.CreateEffectFactory(graphicsEffect);
+                        UpdateLightingEffect_DistantSpecular();
 
                         Visual lightRoot = ElementCompositionPreview.GetElementVisual(gvMain);
                         _distantLight.CoordinateSpace = lightRoot;

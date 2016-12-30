@@ -103,6 +103,12 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\DistantDiffuse.xaml.cs">
+      <DependentUpon>DistantDiffuse.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\DistantSpecular.xaml.cs">
+      <DependentUpon>DistantSpecular.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Settings\SpotlightSpecular.xaml.cs">
       <DependentUpon>SpotlightSpecular.xaml</DependentUpon>
     </Compile>
@@ -139,6 +145,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Settings\DistantDiffuse.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Settings\DistantSpecular.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

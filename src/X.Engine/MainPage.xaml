@@ -44,6 +44,8 @@
                 <settings:PointSpecular x:Name="settingsPointSpecular" Visibility="Collapsed"></settings:PointSpecular>
                 <settings:SpotlightDiffuse x:Name="settingsSpotlightDiffuse" Visibility="Collapsed"></settings:SpotlightDiffuse>
                 <settings:SpotlightSpecular x:Name="settingsSpotlightSpecular" Visibility="Collapsed"></settings:SpotlightSpecular>
+                <settings:DistantDiffuse x:Name="settingsDistantDiffuse" Visibility="Collapsed"></settings:DistantDiffuse>
+                <settings:DistantSpecular x:Name="settingsDistantSpecular" Visibility="Collapsed"></settings:DistantSpecular>
             </Grid>
         </StackPanel>
         
