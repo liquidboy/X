@@ -30,10 +30,21 @@
             </Border>
         </xuicomp:CompositionShadow>
 
+        <xuicomp:LightPanel x:Name="lpAvatar" SelectedLight="PointSpecular" Width="100" Height="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,40,0,0">
+            <xuicomp:LightPanel.Content>
+                <xuicomp:CompositionImage
+                        Source="http://img.cinemablend.com/cb/d/2/2/1/4/7/d22147c71c1e53d6f3344a0f8709c4023b59653e6f5fed733f333a83b19b6ac7.jpg" Stretch="UniformToFill"></xuicomp:CompositionImage>
+                <!--<Image
+                        Source="/Files/glitter-19a.jpg" Stretch="UniformToFill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Image>-->
+            </xuicomp:LightPanel.Content>
+        </xuicomp:LightPanel>
+
+
         <StackPanel Orientation="Vertical" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="270">
 
             <ComboBox x:Name="cbLightElements" SelectionChanged="cbLightElements_SelectionChanged">
-                <ComboBoxItem Tag="lpImage" IsSelected="True">Background Image</ComboBoxItem>
+                <ComboBoxItem Tag="lpImage" IsSelected="True">Background</ComboBoxItem>
+                <ComboBoxItem Tag="lpAvatar">Avatar</ComboBoxItem>
             </ComboBox>
 
             <Button x:Name="butChangeLight" Margin="0,20,10,0" Click="butChangeLight_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Content="PointDiffuse" ></Button>

@@ -39,6 +39,24 @@ namespace X.UI.Composition
         private DistantLight _distantLight;
         private SpotLight _spotLight;
 
+        private BrushType _currentBrushType = BrushType.Flat;
+        
+        public enum BrushType
+        {
+            Circle,
+            Flat
+        }
+
+        public enum LightingTypes
+        {
+            PointDiffuse,
+            PointSpecular,
+            SpotLightDiffuse,
+            SpotLightSpecular,
+            DistantDiffuse,
+            DistantSpecular,
+        }
+
 
 
         public LightingTypes SelectedLight
@@ -61,17 +79,6 @@ namespace X.UI.Composition
             DependencyProperty.Register("Content", typeof(FrameworkElement), typeof(LightPanel), new PropertyMetadata(null));
 
 
-
-
-        public enum LightingTypes
-        {
-            PointDiffuse,
-            PointSpecular,
-            SpotLightDiffuse,
-            SpotLightSpecular,
-            DistantDiffuse,
-            DistantSpecular,
-        }
 
         public LightPanel()
         {
@@ -113,8 +120,8 @@ namespace X.UI.Composition
             // Create the sperical normal map.  The normals will give the appearance of a sphere, and the alpha channel is used
             // for masking off the rectangular edges.
             //
-            //CompositionDrawingSurface normalMap = await SurfaceLoader.LoadFromUri(new Uri("ms-appx:///X.UI.Composition.Assets/SphericalWithMask.png"));
-            CompositionDrawingSurface normalMap = await SurfaceLoader.LoadFromUri(new Uri("ms-appx:///X.UI.Composition.Assets/BeveledEdges.jpg"));
+            CompositionDrawingSurface normalMap = await SurfaceLoader.LoadFromUri(new Uri("ms-appx:///X.UI.Composition.Assets/SphericalWithMask.png"));
+            //CompositionDrawingSurface normalMap = await SurfaceLoader.LoadFromUri(new Uri("ms-appx:///X.UI.Composition.Assets/BeveledEdges.jpg"));
             _circleNormalsBrush = _compositor.CreateSurfaceBrush(normalMap);
             _circleNormalsBrush.Stretch = CompositionStretch.Fill;
 
@@ -129,15 +136,15 @@ namespace X.UI.Composition
             _flatNormalsBrush.Stretch = CompositionStretch.Fill;
 
             // Update the effect brushes now that the normal maps are available.
-            UpdateEffectBrush();
+            UpdateEffectBrush(_currentBrushType);
         }
 
         public void Redraw() {
             UpdateLightingEffect();
-            UpdateEffectBrush();
+            UpdateEffectBrush(_currentBrushType);
         }
 
-        private void UpdateEffectBrush()
+        private void UpdateEffectBrush(BrushType brushType)
         {
             if (ccMain.Content != null && ccMain.Content is CompositionImage)
             {
@@ -147,7 +154,7 @@ namespace X.UI.Composition
                     CompositionImage image = (CompositionImage)ccMain.Content;
                     //var imgs = item.ContentTemplateRoot.GetDescendantsOfType<CompositionImage>();
                     //CompositionImage image = imgs.Last();
-                    SetImageEffect(image);
+                    SetImageEffect(image, brushType);
                 //}
             }
         }
@@ -156,7 +163,7 @@ namespace X.UI.Composition
 
 
         //LightingTypes _selectedLight = LightingTypes.PointDiffuse;
-        private void SetImageEffect(CompositionImage image)
+        private void SetImageEffect(CompositionImage image, BrushType tbrushType)
         {
             if (_effectFactory == null) return;
 
@@ -171,20 +178,25 @@ namespace X.UI.Composition
                 case LightingTypes.PointSpecular:
                 case LightingTypes.DistantDiffuse:
                 case LightingTypes.DistantSpecular:
-                    brush.SetSourceParameter("NormalMap", _circleNormalsBrush);
+                    brush.SetSourceParameter("NormalMap", UseThisBrush(tbrushType));
                     break;
                 default:
-                    brush.SetSourceParameter("NormalMap", _flatNormalsBrush);
+                    brush.SetSourceParameter("NormalMap", UseThisBrush(tbrushType));
                     break;
             }
 
             // Update the CompositionImage to use the custom effect brush
             image.Brush = brush;
         }
+        
+        private CompositionSurfaceBrush UseThisBrush(BrushType type) {
+            if (type == BrushType.Circle) { return _circleNormalsBrush; }
+            return _flatNormalsBrush;
+        }
 
         public void UpdateLightingEffect_PointDiffuse(float AmbientAmount = 0, float DiffuseAmount = .75f, 
-            float SpecularAmount = 0, string NormalMapSource = "NormalMap", bool forceUpdate = false) {
-            
+            float SpecularAmount = 0, string NormalMapSource = "NormalMap", bool forceUpdate = false, BrushType brushType = BrushType.Flat) {
+            _currentBrushType = brushType;
             var sceneLightingEffect = new SceneLightingEffect()
             {
                 AmbientAmount = AmbientAmount,
@@ -206,15 +218,15 @@ namespace X.UI.Composition
             _effectFactory = _compositor.CreateEffectFactory(graphicsEffect);
 
 
-            if (forceUpdate) UpdateEffectBrush();
+            if (forceUpdate) UpdateEffectBrush(_currentBrushType);
         }
 
         public void UpdateLightingEffect_PointSpecular(float AmbientAmount1 = 0.6f, float DiffuseAmount1 = 1f,
             float SpecularAmount1 = 0, string NormalMapSource1 = "NormalMap", float AmbientAmount2 = 0, 
             float DiffuseAmount2 = 0f, float SpecularAmount2 = 1, float SpecularShine2 = 100f, 
-            string NormalMapSource2 = "NormalMap", bool forceUpdate = false)
+            string NormalMapSource2 = "NormalMap", bool forceUpdate = false, BrushType brushType = BrushType.Flat)
         {
-
+            _currentBrushType = brushType;
             IGraphicsEffect graphicsEffect = new CompositeEffect()
             {
                 Mode = CanvasComposite.DestinationIn,
@@ -256,14 +268,14 @@ namespace X.UI.Composition
             _effectFactory = _compositor.CreateEffectFactory(graphicsEffect);
 
 
-            if (forceUpdate) UpdateEffectBrush();
+            if (forceUpdate) UpdateEffectBrush(_currentBrushType);
         }
 
         public void UpdateLightingEffect_SpotLightDiffuse(float AmbientAmount = 0, float DiffuseAmount = .75f,
             float SpecularAmount = 0, string NormalMapSource = "NormalMap", float InnerConeAngle = 15,
-            float OuterConeAngle = 10, bool forceUpdate = false)
+            float OuterConeAngle = 10, bool forceUpdate = false, BrushType brushType = BrushType.Flat)
         {
-
+            _currentBrushType = brushType;
             var sceneLightingEffect = new SceneLightingEffect()
             {
                 AmbientAmount = AmbientAmount,
@@ -287,16 +299,16 @@ namespace X.UI.Composition
             _spotLight.InnerConeAngle = (float)(Math.PI / InnerConeAngle);
             _spotLight.OuterConeAngle = (float)(Math.PI / OuterConeAngle);
 
-            if (forceUpdate) UpdateEffectBrush();
+            if (forceUpdate) UpdateEffectBrush(_currentBrushType);
         }
 
         public void UpdateLightingEffect_SpotLightSpecular(float AmbientAmount1 = 0.6f, float DiffuseAmount1 = 1f,
             float SpecularAmount1 = 0, string NormalMapSource1 = "NormalMap", float AmbientAmount2 = 0,
             float DiffuseAmount2 = 0f, float SpecularAmount2 = 1, float SpecularShine2 = 100f,
             string NormalMapSource2 = "NormalMap", float InnerConeAngle = 15,
-            float OuterConeAngle = 10, bool forceUpdate = false)
+            float OuterConeAngle = 10, bool forceUpdate = false, BrushType brushType = BrushType.Flat)
         {
-
+            _currentBrushType = brushType;
             IGraphicsEffect graphicsEffect = new CompositeEffect()
             {
                 Mode = CanvasComposite.DestinationIn,
@@ -340,13 +352,13 @@ namespace X.UI.Composition
             _spotLight.InnerConeAngle = (float)(Math.PI / InnerConeAngle);
             _spotLight.OuterConeAngle = (float)(Math.PI / OuterConeAngle);
 
-            if (forceUpdate) UpdateEffectBrush();
+            if (forceUpdate) UpdateEffectBrush(_currentBrushType);
         }
 
         public void UpdateLightingEffect_DistantDiffuse(float AmbientAmount = 0, float DiffuseAmount = .5f,
-    float SpecularAmount = 0, string NormalMapSource = "NormalMap", bool forceUpdate = false)
+    float SpecularAmount = 0, string NormalMapSource = "NormalMap", bool forceUpdate = false, BrushType brushType = BrushType.Flat)
         {
-
+            _currentBrushType = brushType;
             var sceneLightingEffect = new SceneLightingEffect()
             {
                 AmbientAmount = AmbientAmount,
@@ -368,16 +380,16 @@ namespace X.UI.Composition
             _effectFactory = _compositor.CreateEffectFactory(graphicsEffect);
 
 
-            if (forceUpdate) UpdateEffectBrush();
+            if (forceUpdate) UpdateEffectBrush(_currentBrushType);
         }
 
 
         public void UpdateLightingEffect_DistantSpecular(float AmbientAmount1 = 0.6f, float DiffuseAmount1 = 1f,
             float SpecularAmount1 = 0, string NormalMapSource1 = "NormalMap", float AmbientAmount2 = 0,
             float DiffuseAmount2 = 0f, float SpecularAmount2 = 1, float SpecularShine2 = 100f,
-            string NormalMapSource2 = "NormalMap", bool forceUpdate = false)
+            string NormalMapSource2 = "NormalMap", bool forceUpdate = false, BrushType brushType = BrushType.Flat)
         {
-
+            _currentBrushType = brushType;
             IGraphicsEffect graphicsEffect = new CompositeEffect()
             {
                 Mode = CanvasComposite.DestinationIn,
@@ -419,7 +431,7 @@ namespace X.UI.Composition
             _effectFactory = _compositor.CreateEffectFactory(graphicsEffect);
 
 
-            if (forceUpdate) UpdateEffectBrush();
+            if (forceUpdate) UpdateEffectBrush(_currentBrushType);
         }
 
 
@@ -545,7 +557,7 @@ namespace X.UI.Composition
             //UpdateAnimations();
 
             // Update all the image to have the new effect
-            UpdateEffectBrush();
+            UpdateEffectBrush(_currentBrushType);
         }
         
 

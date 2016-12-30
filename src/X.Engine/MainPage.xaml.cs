@@ -137,6 +137,9 @@ namespace X.Engine
                 case "lpImage":
                     _selectedLightPanel = lpImage;
                     break;
+                case "lpAvatar":
+                    _selectedLightPanel = lpAvatar;
+                    break;
             }
             UpdateLightPanel(_selectedLightPanel.SelectedLight);
         }
