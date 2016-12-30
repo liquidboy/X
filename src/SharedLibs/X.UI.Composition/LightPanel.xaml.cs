@@ -259,7 +259,36 @@ namespace X.UI.Composition
             if (forceUpdate) UpdateEffectBrush();
         }
 
+        public void UpdateLightingEffect_SpotLightDiffuse(float AmbientAmount = 0, float DiffuseAmount = .75f,
+            float SpecularAmount = 0, string NormalMapSource = "NormalMap", float InnerConeAngle = 15,
+            float OuterConeAngle = 10, bool forceUpdate = false)
+        {
 
+            var sceneLightingEffect = new SceneLightingEffect()
+            {
+                AmbientAmount = AmbientAmount,
+                DiffuseAmount = DiffuseAmount,
+                SpecularAmount = SpecularAmount,
+                NormalMapSource = new CompositionEffectSourceParameter(NormalMapSource),
+            };
+
+            IGraphicsEffect graphicsEffect = new CompositeEffect()
+            {
+                Mode = CanvasComposite.Add,
+                Sources =
+                {
+                    new CompositionEffectSourceParameter("ImageSource"),
+                    sceneLightingEffect
+                }
+            };
+
+            _effectFactory = _compositor.CreateEffectFactory(graphicsEffect);
+
+            _spotLight.InnerConeAngle = (float)(Math.PI / InnerConeAngle);
+            _spotLight.OuterConeAngle = (float)(Math.PI / OuterConeAngle);
+
+            if (forceUpdate) UpdateEffectBrush();
+        }
 
         private void UpdateLightingEffect()
         {
@@ -314,31 +343,13 @@ namespace X.UI.Composition
                         // Result = Ambient +      Diffuse
                         // Result =  Image  + (Diffuse color * .75)
                         //
-
-                        IGraphicsEffect graphicsEffect = new CompositeEffect()
-                        {
-                            Mode = CanvasComposite.Add,
-                            Sources =
-                            {
-                                new CompositionEffectSourceParameter("ImageSource"),
-                                new SceneLightingEffect()
-                                {
-                                    AmbientAmount = 0,
-                                    DiffuseAmount = .75f,
-                                    SpecularAmount = 0,
-                                    NormalMapSource = new CompositionEffectSourceParameter("NormalMap"),
-                                }
-                            }
-                        };
-
-                        _effectFactory = _compositor.CreateEffectFactory(graphicsEffect);
+                        UpdateLightingEffect_SpotLightDiffuse();
+                        
 
                         // Set the light coordinate space and add the target
                         Visual lightRoot = ElementCompositionPreview.GetElementVisual(gvMain);
                         _spotLight.CoordinateSpace = lightRoot;
                         _spotLight.Targets.Add(lightRoot);
-                        _spotLight.InnerConeAngle = (float)(Math.PI / 15);
-                        _spotLight.OuterConeAngle = (float)(Math.PI / 10);
                         _spotLight.Direction = new Vector3(0, 0, -1);
                     };
                     break;

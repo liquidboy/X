@@ -12,31 +12,31 @@
     <Grid >
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Vertical">
-                <TextBlock Text="DiffuseAmount1 : " Margin="0,0,0,10"></TextBlock>
+                <TextBlock Text="Diffuse Amount 1 : " Margin="0,0,0,10"></TextBlock>
                 <Slider x:Name="sldDiffuseAmount" Minimum="0" Maximum="1" StepFrequency="0.1" Margin="0,0,0,0" ValueChanged="sldDiffuseAmount_ValueChanged"></Slider>
             </StackPanel>
             <StackPanel Orientation="Vertical">
-                <TextBlock Text="AmbientAmount1 : " Margin="0,0,0,10"></TextBlock>
+                <TextBlock Text="Ambient Amount 1 : " Margin="0,0,0,10"></TextBlock>
                 <Slider x:Name="sldAmbientAmount" Minimum="0" Maximum="1" StepFrequency="0.1" Margin="0,0,0,0" ValueChanged="sldAmbientAmount_ValueChanged"></Slider>
             </StackPanel>
             <StackPanel Orientation="Vertical">
-                <TextBlock Text="SpecularAmount1 : " Margin="0,0,0,10"></TextBlock>
+                <TextBlock Text="Specular Amount 1 : " Margin="0,0,0,10"></TextBlock>
                 <Slider x:Name="sldSpecularAmount" Minimum="0" Maximum="1" StepFrequency="0.1" Margin="0,0,0,0" ValueChanged="sldSpecularAmount_ValueChanged"></Slider>
             </StackPanel>
             <StackPanel Orientation="Vertical">
-                <TextBlock Text="DiffuseAmount2 : " Margin="0,30,0,10"></TextBlock>
+                <TextBlock Text="Diffuse Amount 2 : " Margin="0,30,0,10"></TextBlock>
                 <Slider x:Name="sldDiffuseAmount2" Minimum="0" Maximum="1" StepFrequency="0.1" Margin="0,0,0,0" ValueChanged="sldDiffuseAmount2_ValueChanged"></Slider>
             </StackPanel>
             <StackPanel Orientation="Vertical">
-                <TextBlock Text="AmbientAmount2 : " Margin="0,0,0,10"></TextBlock>
+                <TextBlock Text="Ambient Amount 2 : " Margin="0,0,0,10"></TextBlock>
                 <Slider x:Name="sldAmbientAmount2" Minimum="0" Maximum="1" StepFrequency="0.1" Margin="0,0,0,0" ValueChanged="sldAmbientAmount2_ValueChanged"></Slider>
             </StackPanel>
             <StackPanel Orientation="Vertical">
-                <TextBlock Text="SpecularAmount2 : " Margin="0,0,0,10"></TextBlock>
+                <TextBlock Text="Specular Amount 2 : " Margin="0,0,0,10"></TextBlock>
                 <Slider x:Name="sldSpecularAmount2" Minimum="0" Maximum="1" StepFrequency="0.1" Margin="0,0,0,0" ValueChanged="sldSpecularAmount2_ValueChanged"></Slider>
             </StackPanel>
             <StackPanel Orientation="Vertical">
-                <TextBlock Text="SpecularShine2 : " Margin="0,0,0,10"></TextBlock>
+                <TextBlock Text="Specular Shine 2 : " Margin="0,0,0,10"></TextBlock>
                 <Slider x:Name="sldSpecularShine2" Minimum="0" Maximum="200" StepFrequency="1" Margin="0,0,0,0" ValueChanged="sldSpecularShine2_ValueChanged"></Slider>
             </StackPanel>
         </StackPanel>

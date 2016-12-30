@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="X.Engine.Settings.PointDiffuse"
+    x:Class="X.Engine.Settings.SpotlightDiffuse"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:X.Engine.Settings"
@@ -22,6 +22,14 @@
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="Specular Amount : " Margin="0,0,0,10"></TextBlock>
                 <Slider x:Name="sldSpecularAmount" Minimum="0" Maximum="1" StepFrequency="0.1" Margin="0,0,0,0" ValueChanged="sldSpecularAmount_ValueChanged"></Slider>
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Inner Cone Angle : " Margin="0,0,0,10"></TextBlock>
+                <Slider x:Name="sldInnerConeAngle" Minimum="0" Maximum="180" StepFrequency="1" Margin="0,0,0,0" ValueChanged="sldInnerConeAngle_ValueChanged"></Slider>
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Outer Cone Angle : " Margin="0,0,0,10"></TextBlock>
+                <Slider x:Name="sldOuterConeAngle" Minimum="0" Maximum="180" StepFrequency="1" Margin="0,0,0,0" ValueChanged="sldOuterConeAngle_ValueChanged"></Slider>
             </StackPanel>
         </StackPanel>
     </Grid>
