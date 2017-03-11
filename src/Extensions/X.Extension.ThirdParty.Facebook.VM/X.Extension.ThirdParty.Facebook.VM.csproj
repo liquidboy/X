@@ -112,10 +112,6 @@
     <EmbeddedResource Include="Properties\X.Extension.ThirdParty.Facebook.VM.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SharedLibs\FacebookClient\Facebook.Client\Facebook.Client.csproj">
-      <Project>{92f08580-4e1d-488a-9e6b-039f3feda7ef}</Project>
-      <Name>Facebook.Client</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\SharedLibs\X.CoreLib\X.CoreLib.csproj">
       <Project>{d273509d-612c-47c3-b2a6-c203d96b90d3}</Project>
       <Name>X.CoreLib</Name>

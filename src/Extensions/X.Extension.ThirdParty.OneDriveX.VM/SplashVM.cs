@@ -28,30 +28,30 @@ namespace X.Extension.ThirdParty.OneDriveX.VM
         public RelayCommand<string> RequestOnedriveLogin { get { return _requestOnedriveLogin ?? (_requestOnedriveLogin = new RelayCommand<string>((arg) => { MSAAuthenticate(); })); } }
 
         private async Task MSAAuthenticate() {
-            if (oneDriveClient != null) return;
-            oneDriveClient = await OneDriveClientExtensions.GetAuthenticatedClientUsingWebAuthenticationBroker(_appIdMSA, _scopesMSA);
-            //oneDriveClient = OneDriveClientExtensions.GetClientUsingOnlineIdAuthenticator(_scopesMSA);
-            await oneDriveClient?.AuthenticateAsync();
+            //if (oneDriveClient != null) return;
+            //oneDriveClient = await OneDriveClientExtensions.GetAuthenticatedClientUsingWebAuthenticationBroker(_appIdMSA, _scopesMSA);
+            ////oneDriveClient = OneDriveClientExtensions.GetClientUsingOnlineIdAuthenticator(_scopesMSA);
+            //await oneDriveClient?.AuthenticateAsync();
         }
 
         private async void AADAuthenticate()
         {
-            if (oneDriveClient != null) return;
-            oneDriveClient = BusinessClientExtensions.GetClient(
-                new AppConfig()
-                {
-                    ActiveDirectoryAppId = _clientIDAAD,
-                    ActiveDirectoryClientSecret = _clientSecretAAD,
-                    ActiveDirectoryReturnUrl = _returnUrlAAD,
-                    ActiveDirectoryServiceEndpointUrl = _oneDriveApiEndpointAAD,
-                    ActiveDirectoryServiceResource = _serviceResourceIdAAD,
-                    ActiveDirectoryAuthenticationServiceUrl = _serviceUrlAAD
-                });
-            await oneDriveClient?.AuthenticateAsync();
+            //if (oneDriveClient != null) return;
+            //oneDriveClient = BusinessClientExtensions.GetClient(
+            //    new AppConfig()
+            //    {
+            //        ActiveDirectoryAppId = _clientIDAAD,
+            //        ActiveDirectoryClientSecret = _clientSecretAAD,
+            //        ActiveDirectoryReturnUrl = _returnUrlAAD,
+            //        ActiveDirectoryServiceEndpointUrl = _oneDriveApiEndpointAAD,
+            //        ActiveDirectoryServiceResource = _serviceResourceIdAAD,
+            //        ActiveDirectoryAuthenticationServiceUrl = _serviceUrlAAD
+            //    });
+            //await oneDriveClient?.AuthenticateAsync();
         }
 
         private async void SignOut() {
-            await oneDriveClient?.SignOutAsync();
+            //await oneDriveClient?.SignOutAsync();
         }
 
     }

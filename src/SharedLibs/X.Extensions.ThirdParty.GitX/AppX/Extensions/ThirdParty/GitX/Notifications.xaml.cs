@@ -41,12 +41,12 @@ namespace X.Extensions.ThirdParty.GitX
             
             switch (tab.Name) {
                 case "Notifications":
-                    var data1 = await InstanceLocator.Instance.GitClient.Notification.GetAllForCurrent( new Octokit.NotificationsRequest() { All = true });
-                    lbCommon.ItemsSource = data1.Reverse();
-                    lbCommon.Visibility = Visibility.Visible;
-                    lbCommon.ItemTemplateToUse = 1;
-
-                    //var found = data1.Where(x => x.Subject.Title.Contains("Reenable Open")).FirstOrDefault();
+                    //var data1 = await InstanceLocator.Instance.GitClient.Notification.GetAllForCurrent( new Octokit.NotificationsRequest() { All = true });
+                    //lbCommon.ItemsSource = data1.Reverse();
+                    //lbCommon.Visibility = Visibility.Visible;
+                    //lbCommon.ItemTemplateToUse = 1;
+                    //
+                    ////var found = data1.Where(x => x.Subject.Title.Contains("Reenable Open")).FirstOrDefault();
 
                     break;
                 case "Watching":

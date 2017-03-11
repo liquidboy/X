@@ -119,10 +119,6 @@
     <EmbeddedResource Include="Properties\X.Services.Extensions.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Extensions\X.Extension.ThirdParty.Facebook.VM\X.Extension.ThirdParty.Facebook.VM.csproj">
-      <Project>{671b78f1-ca5f-46ab-bbc5-41654af8c6be}</Project>
-      <Name>X.Extension.ThirdParty.Facebook.VM</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Extensions\X.Extension.ThirdParty.Flickr.VM\X.Extension.ThirdParty.Flickr.VM.csproj">
       <Project>{93951c5e-af5d-4f2a-8cb4-cf24025c0cc5}</Project>
       <Name>X.Extension.ThirdParty.Flickr.VM</Name>
