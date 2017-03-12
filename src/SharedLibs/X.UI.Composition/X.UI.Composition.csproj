@@ -142,12 +142,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AppX\X.UI.Composition.Assets\BeveledEdges.jpg">
+    <Content Include="AppX\X.UI.Composition.Assets\BeveledEdges.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AppX\X.UI.Composition.Assets\SphericalWithMask.png">
+    </Content>
+    <Content Include="AppX\X.UI.Composition.Assets\SphericalWithMask.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\X.CoreLib\X.CoreLib.csproj">
