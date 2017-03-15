@@ -12,19 +12,60 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+using X.CoreLib.Shared.Framework.Services.DataEntity;
 
 namespace X.Desktop
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
+
     public sealed partial class MainPage : Page
     {
+        public class OrderHeader : SQLiteDataEntity
+        {
+            public string Title { get; set; }
+            public DateTime DateStamp { get; set; }
+            public Guid OrderID { get; set; }
+            public long Quantity { get; set; }
+            public double TotalCost { get; set; }
+        }
+
+
         public MainPage()
         {
             this.InitializeComponent();
+
+            TestOrderHeaderModel();
+        }
+
+        public void TestOrderHeaderModel()
+        {
+            this.InitializeComponent();
+            
+            AppDatabase.Current.Init();
+            
+            //create new
+            var oh = new OrderHeader();
+            oh.OrderID = Guid.NewGuid();
+            oh.Title = "test title";
+            oh.DateStamp = DateTime.UtcNow;
+            oh.Quantity = 100;
+            oh.TotalCost = 199.00;
+            var newid = oh.Save();
+
+            //search
+            var result = oh.Find("id = " + newid);
+
+            //load 
+            if (oh.Retrieve(newid))
+            {
+                //delete
+                oh.Delete(newid);
+            }
+
+            //delete
+            oh.DeleteAll();
         }
     }
+
+
+  
 }

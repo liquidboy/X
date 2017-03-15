@@ -5,9 +5,10 @@
     xmlns:local="using:X.Desktop"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xuicp="using:X.UI.ColorPicker"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <xuicp:ColorSwatchSquare x:Name="ctlColorPicker" Width="300" Height="300" Swatch="Square2" />
     </Grid>
 </Page>
