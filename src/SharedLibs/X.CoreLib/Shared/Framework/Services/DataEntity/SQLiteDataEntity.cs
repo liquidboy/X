@@ -18,13 +18,13 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
             InitEntityDatabase();
         }
 
+        //todo: optimization on columns to determine if they changed and thus do a DeleteAllColumns and rebuild
         public void InitEntityDatabase()
         {
             AppDatabase.Current.AddTable(_tableName, "jose");
             var table = AppDatabase.Current.Tables[_tableName];
 
-            table.DeleteAllColumns();
-
+            table.DeleteAllColumns();  //note: we delete all columns and rebuild them from the current class to ensure new columns exist
 
             var props = this.GetType().GetTypeInfo().DeclaredProperties;
             foreach (var prop in props)

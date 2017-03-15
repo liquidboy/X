@@ -59,6 +59,10 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
 
         public void AddTable(string tableName, string userName)
         {
+            var exists = DoesTableExist(tableName);
+
+            if (exists) return;
+
             var newTable = new Table()
             {
                 Name = tableName,
@@ -77,6 +81,12 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
 
             }
 
+        }
+
+        public bool DoesTableExist(string name)
+        {
+            var row = this.SqliteDb.Query<Table>("SELECT * FROM 'Table' WHERE Name = ?", name);
+            return row.Count() > 0;
         }
 
         private void refreshTables()
