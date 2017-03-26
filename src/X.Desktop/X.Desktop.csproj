@@ -11,8 +11,8 @@
     <AssemblyName>X.Desktop</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.15021.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.15021.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.15052.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -108,6 +108,7 @@
     <None Include="X.Desktop_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\glitter-13.jpg" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -143,6 +144,10 @@
     <ProjectReference Include="..\SharedLibs\X.UI.Composition\X.UI.Composition.csproj">
       <Project>{c356cb80-451e-4260-9a4a-c9515b93c44d}</Project>
       <Name>X.UI.Composition</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedLibs\X.UI.EffectLayer\X.UI.EffectLayer.csproj">
+      <Project>{5470d5d0-10cb-4d3d-8026-0a49254a21be}</Project>
+      <Name>X.UI.EffectLayer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

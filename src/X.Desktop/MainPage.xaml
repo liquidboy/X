@@ -6,9 +6,32 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:xuicp="using:X.UI.ColorPicker"
+    xmlns:xuishell="using:X.UI.Chrome"
+    xmlns:xuiel="using:X.UI.EffectLayer"
+    xmlns:snmc="using:SumoNinjaMonkey.Framework.Controls"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <xuicp:ColorSwatchSquare x:Name="ctlColorPicker" Width="300" Height="300" Swatch="Square2" />
+        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="Assets/glitter-13.jpg" Stretch="UniformToFill" ></Image>
+        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Rectangle.Fill>
+                <xuiel:BackdropTintBlurBrush></xuiel:BackdropTintBlurBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <xuishell:Header x:Name="ctlHeader" Title="iTunes" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="32" Background="Transparent">
+            <!--<xuishell:Header.TitleContent>
+                <ContentControl>
+                    <Grid HorizontalAlignment="Stretch" Background="Black" VerticalAlignment="Stretch">
+                        
+                    </Grid>
+                </ContentControl>
+            </xuishell:Header.TitleContent>-->
+        </xuishell:Header>
+        <!--<xuicp:ColorSwatchSquare x:Name="ctlColorPicker" Width="300" Height="300" Swatch="Square2" />-->
+        <!--<snmc:DataEntryPanel Width="400" Height="400">
+            <snmc:DataEntryPanel.MetaData>
+                slider|0|100|20|300|30|test slider
+            </snmc:DataEntryPanel.MetaData>
+        </snmc:DataEntryPanel>-->
     </Grid>
 </Page>

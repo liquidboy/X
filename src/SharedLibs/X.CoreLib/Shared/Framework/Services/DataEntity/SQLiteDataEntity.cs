@@ -7,7 +7,7 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
 {
     public class SQLiteDataEntity
     {
-
+        public string _defaultCreator = "admin";
         public Guid UniqueId { get; set; }
         private int _internalRowId;
 
@@ -21,7 +21,7 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         //todo: optimization on columns to determine if they changed and thus do a DeleteAllColumns and rebuild
         public void InitEntityDatabase()
         {
-            AppDatabase.Current.AddTable(_tableName, "jose");
+            AppDatabase.Current.AddTable(_tableName, _defaultCreator);
             var table = AppDatabase.Current.Tables[_tableName];
 
             table.DeleteAllColumns();  //note: we delete all columns and rebuild them from the current class to ensure new columns exist
@@ -29,10 +29,10 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
             var props = this.GetType().GetTypeInfo().DeclaredProperties;
             foreach (var prop in props)
             {
-                table.AddColumn(prop.Name, "jose");
+                table.AddColumn(prop.Name, _defaultCreator);
             }
 
-            table.AddColumn("UniqueId", "jose");
+            table.AddColumn("UniqueId", _defaultCreator);
         }
 
         public int Save()
@@ -67,7 +67,7 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
 
                 udo["UniqueId"] = UniqueId.ToString();
 
-                _internalRowId = table.AddRow(udo, "jose");
+                _internalRowId = table.AddRow(udo, _defaultCreator);
             }
 
 

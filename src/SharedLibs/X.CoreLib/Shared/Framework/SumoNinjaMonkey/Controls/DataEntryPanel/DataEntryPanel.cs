@@ -1,20 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using GalaSoft.MvvmLight.Messaging;
 using SumoNinjaMonkey.Framework.Controls.Messages;
-using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Documents;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Shapes;
 
 namespace SumoNinjaMonkey.Framework.Controls
@@ -526,7 +520,7 @@ namespace SumoNinjaMonkey.Framework.Controls
 
         public static readonly DependencyProperty GeneralBackgroundColorProperty =
             DependencyProperty.Register("GeneralBackgroundColor", typeof(Brush), typeof(DataEntryPanel), new PropertyMetadata(Colors.WhiteSmoke));
-
         
+
     }
 }

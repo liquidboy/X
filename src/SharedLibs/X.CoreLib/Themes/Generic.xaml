@@ -1,0 +1,33 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:local="using:SumoNinjaMonkey.Framework.Controls"
+    >
+    <Style TargetType="local:DataEntryPanel">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:DataEntryPanel">
+                    <Grid x:Name="mainGrid" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5" >
+                        <!--<Grid.Transitions>
+                            <TransitionCollection>
+                                <ContentThemeTransition VerticalOffset="0"  />
+                            </TransitionCollection>
+                        </Grid.Transitions>-->
+                        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{TemplateBinding GeneralBackgroundColor}" />
+                        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="40" Fill="{TemplateBinding HeaderBackgroundColor}" />
+                        <TextBlock Text="{TemplateBinding HeaderLabel}" Margin="15,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{TemplateBinding HeaderForegroundColor}" FontSize="18" />
+                        <StackPanel x:Name="spChildren" Margin="10,40,10,10" >
+                            <StackPanel.ChildrenTransitions>
+                                <TransitionCollection>
+                                    <EntranceThemeTransition IsStaggeringEnabled="True" FromHorizontalOffset="-200" />
+                                </TransitionCollection>
+                            </StackPanel.ChildrenTransitions>
+                        </StackPanel>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
