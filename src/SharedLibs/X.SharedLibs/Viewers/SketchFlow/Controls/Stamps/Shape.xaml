@@ -1,0 +1,83 @@
+﻿<UserControl
+    x:Class="X.Viewer.SketchFlow.Controls.Stamps.Shape"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:X.Viewer.SketchFlow.Controls.Stamps"
+    xmlns:localPickers="using:X.Viewer.SketchFlow.Controls.Pickers"
+    xmlns:sc="using:CoreLib.Converters"
+    xmlns:lc="using:X.Viewer.SketchFlow.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xuip="using:X.UI.Path"
+    xmlns:xuilt="using:X.UI.LiteTab"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    x:Name="root"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+        <sc:BooleanToVisibilityConverter x:Name="TrueToVisibleConverter" ></sc:BooleanToVisibilityConverter>
+        <lc:StampTypeToContentConverter x:Key="StampTypeToContentConverter"></lc:StampTypeToContentConverter>
+    </UserControl.Resources>
+    <Grid>
+        
+        
+        <!-- Markers : WIDTH & HEIGHT -->
+        <local:MarkersHV x:Name="grdGridMarkers" 
+                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed" ParentWidth="{Binding ElementName=root, Path=Width}" ParentHeight="{Binding ElementName=root, Path=Height}">
+        </local:MarkersHV>
+
+
+        <!-- Shape -->
+        <ContentControl x:Name="elContent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Stretch" Background="Yellow" VerticalContentAlignment="Stretch" Content="{Binding ElementName=root, Path=StampData, Converter={StaticResource StampTypeToContentConverter}}">
+            <ContentControl.RenderTransform>
+                <CompositeTransform Rotation="0"></CompositeTransform>
+            </ContentControl.RenderTransform>
+        </ContentControl>
+        <!--<Rectangle x:Name="el" 
+                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stroke="DarkOrange" StrokeThickness="1" RenderTransformOrigin="0.5,0.5">
+            <Rectangle.RenderTransform><CompositeTransform Rotation="0"></CompositeTransform></Rectangle.RenderTransform>
+        </Rectangle>-->
+        
+        
+        <!-- Edge Buttons -->
+        <local:ResizeMoveEdges x:Name="edges" 
+                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="-15,-15,-15,-15" PerformAction="edges_PerformAction" ></local:ResizeMoveEdges>
+
+        
+        <!-- Markers : ROTATION  -->
+        <local:MarkersR x:Name="grdGridRotationMarkers" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" RotationAngle="{Binding ElementName=grdGridRotationMarkers, Path=RenderTransform.Rotation}"></local:MarkersR>
+        
+        
+        <!-- Edge Button Dialogs-->
+        <StackPanel x:Name="spToolbar" 
+                    Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-20,-105,-200" Visibility="Collapsed" Canvas.ZIndex="100">
+            <Button x:Name="butStamp" Background="LightGray" Click="butStamp_Click">
+                <xuip:Path PathType="Stamp" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butGridMarker" Background="LightGray" Click="butGridMarker_Click">
+                <xuip:Path PathType="GridMarker" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butLock" Background="Green" Click="butLock_Click" >
+                <xuip:Path PathType="Lock1" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butUnlock" Background="Red" Visibility="Collapsed" Click="butUnlock_Click">
+                <xuip:Path PathType="Unlock1" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butClose" Background="LightGray" Click="butClose_Click">
+                <xuip:Path PathType="Trash1" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+        </StackPanel>
+
+
+        <StackPanel Orientation="Vertical" Margin="-380,-150,0,-350" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="leftCenterToolBar" Visibility="Collapsed" Background="#FFE6E6E6" Padding="10">
+            <xuilt:TabList x:Name="tlLeftCenterToolbar" TabItemBorderColor="DarkGray" HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Horizontal" Foreground="Black" Margin="0,0,0,5" >
+
+            </xuilt:TabList>
+            <localPickers:StampColorPicker x:Name="cpMain" Width="300" Height="300" ColorChanged="cpMain_ColorChanged" ></localPickers:StampColorPicker>
+        </StackPanel>
+
+
+      
+        
+    </Grid>
+</UserControl>

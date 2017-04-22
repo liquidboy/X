@@ -1,0 +1,1273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6E375CA3-963D-4586-9A47-CBC69F4AAF89}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>X.SharedLibs</RootNamespace>
+    <AssemblyName>X.SharedLibs</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.15063.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <PlatformTarget>ARM</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <PlatformTarget>ARM</PlatformTarget>
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AppX\Extensions\FirstParty\Settings\Content.xaml.cs">
+      <DependentUpon>Content.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Browser.ViewModels\AddTabVM.cs" />
+    <Compile Include="Browser.ViewModels\BrowserVM.cs" />
+    <Compile Include="Browser.ViewModels\BrowserVM.Tabs.cs">
+      <DependentUpon>BrowserVM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Browser.ViewModels\BrowserVM.Themes.cs">
+      <DependentUpon>BrowserVM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Browser.ViewModels\ExtensionViewModel.cs" />
+    <Compile Include="Browser.ViewModels\Messages\CloseAddTabFlyout.cs" />
+    <Compile Include="Browser.ViewModels\Messages\HideOnebox.cs" />
+    <Compile Include="Browser.ViewModels\Messages\SetAddTabSearchBoxFocus.cs" />
+    <Compile Include="Browser.ViewModels\Messages\SetMoreTabSearchBoxFocus.cs" />
+    <Compile Include="Browser.ViewModels\Messages\ShowOnebox.cs" />
+    <Compile Include="Browser.ViewModels\NameValue.cs" />
+    <Compile Include="Browser.ViewModels\TabThumbnailSprite.cs" />
+    <Compile Include="Browser.ViewModels\TabViewModel.cs" />
+    <Compile Include="Browser.ViewModels\ViewModelLocator.cs" />
+    <Compile Include="Browser.ViewModels\WebPageViewModel.cs" />
+    <Compile Include="Corelib\Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Corelib\Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Corelib\Converters\BoolToVisibilityInvertedConverter.cs" />
+    <Compile Include="Corelib\Converters\CleanStatusConverter.cs" />
+    <Compile Include="Corelib\Converters\DataToPathConverter.cs" />
+    <Compile Include="Corelib\Converters\DateToDaysAgoConverter.cs" />
+    <Compile Include="Corelib\Converters\DebugStepIntoPropertyConverter.cs" />
+    <Compile Include="Corelib\Converters\EnumTypeToListConverter.cs" />
+    <Compile Include="Corelib\Converters\HackPassThruValueConverter.cs" />
+    <Compile Include="Corelib\Converters\ImageConverter.cs" />
+    <Compile Include="Corelib\Converters\ImageTypeToStringConverter.cs" />
+    <Compile Include="Corelib\Converters\InverseBooleanConverter.cs" />
+    <Compile Include="Corelib\Converters\StringDateToDaysAgoConverter.cs" />
+    <Compile Include="Corelib\Converters\StringEmptyToSmileyConverter.cs" />
+    <Compile Include="Corelib\Converters\StringEmptyToVisibilityConverter.cs" />
+    <Compile Include="Corelib\Converters\StringEmptyToVisibilityInvertedConverter.cs" />
+    <Compile Include="Corelib\Converters\StringFormatConverter.cs" />
+    <Compile Include="Corelib\Converters\StringFromDictionaryConverter.cs" />
+    <Compile Include="Corelib\Converters\StripHtmlTagsConverter.cs" />
+    <Compile Include="Corelib\Converters\SurroundStringConverter.cs" />
+    <Compile Include="Corelib\Converters\UriToBitmapImageConverter.cs" />
+    <Compile Include="Corelib\Converters\ValueDividedConverter.cs" />
+    <Compile Include="Corelib\Effects\CompositionExtensions.cs" />
+    <Compile Include="Corelib\Effects\CompositionManager.cs" />
+    <Compile Include="Corelib\Effects\ContrastEffect.cs" />
+    <Compile Include="Corelib\Effects\ExposureEffect.cs" />
+    <Compile Include="Corelib\Effects\GammaTransferEffect.cs" />
+    <Compile Include="Corelib\Effects\GrayscaleEffect.cs" />
+    <Compile Include="Corelib\Effects\HueRotationEffect.cs" />
+    <Compile Include="Corelib\Effects\ICompositionEffect.cs" />
+    <Compile Include="Corelib\Effects\InvertEffect.cs" />
+    <Compile Include="Corelib\Effects\SaturationEffect.cs" />
+    <Compile Include="Corelib\Effects\SepiaEffect.cs" />
+    <Compile Include="Corelib\Effects\ShadowEffect.cs" />
+    <Compile Include="Corelib\Effects\TemperatureAndTintEffect.cs" />
+    <Compile Include="Corelib\Extensions\ExtensionInToolbarPositions.cs" />
+    <Compile Include="Corelib\Extensions\ExtensionManifest.cs" />
+    <Compile Include="Corelib\Extensions\ExtensionPosition.cs" />
+    <Compile Include="Corelib\Extensions\ExtensionType.cs" />
+    <Compile Include="Corelib\Extensions\IExtension.cs" />
+    <Compile Include="Corelib\Extensions\IExtensionContent.cs" />
+    <Compile Include="Corelib\Extensions\IExtensionHost.cs" />
+    <Compile Include="Corelib\Extensions\IExtensionLite.cs" />
+    <Compile Include="Corelib\Extensions\IExtensionManifest.cs" />
+    <Compile Include="Corelib\Extensions\IExtensionsService.cs" />
+    <Compile Include="Corelib\Extensions\IGalleryInformation.cs" />
+    <Compile Include="Corelib\Extensions\IGalleryService.cs" />
+    <Compile Include="Corelib\Extensions\IReceiver.cs" />
+    <Compile Include="Corelib\Extensions\ISender.cs" />
+    <Compile Include="Corelib\Extensions\IUWPExtensionsService.cs" />
+    <Compile Include="Corelib\Extensions\IUWPSender.cs" />
+    <Compile Include="Corelib\GenericMessages\LoadPhoto.cs" />
+    <Compile Include="Corelib\GenericMessages\LoadPhotoComments.cs" />
+    <Compile Include="Corelib\GenericMessages\LoadPhotoUser.cs" />
+    <Compile Include="Corelib\GenericMessages\RequestPhotoComments.cs" />
+    <Compile Include="Corelib\Shared\F12\ConsoleUI.xaml.cs">
+      <DependentUpon>ConsoleUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corelib\Shared\F12\F12Service.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\AppService.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\AzureMobileService.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\Database\AppDatabase.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\Database\AppDatabase.SolutionOM.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\Database\AppDatabase.Twitter.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\Database\AppDatabase.YouTube.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\DataEntity\AppDatabase.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\DataEntity\SQLiteDataEntity.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\DownloadService.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\GestureService.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\NavigationServiceBase.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\Net\AuthenticatedUri.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\Net\Ext\HttpUtilityExtensions.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\Net\Ext\StreamExtensions.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\Net\Http.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\Net\HttpGetRequest.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\Net\HttpPostFile.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\Net\HttpPostRequest.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\Net\HttpResponse.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\Net\IHttpRequest.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\OrchestratorService.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\RenderingService.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\TileService.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\WindowLayoutService.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\YouTubeService.cs" />
+    <Compile Include="Corelib\Shared\Framework\SQLite.cs" />
+    <Compile Include="Corelib\Shared\Framework\SQLiteAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\Clippy\Blackboard.xaml.cs">
+      <DependentUpon>Blackboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\DataEntryPanel\DataEntryPanel.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\DataEntryPanel\DataEntryResponseMessage.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\DataEntryPanel\DPMandatory.xaml.cs">
+      <DependentUpon>DPMandatory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\Explosions\DrawingSurface.xaml.cs">
+      <DependentUpon>DrawingSurface.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\Explosions\Explosion.xaml.cs">
+      <DependentUpon>Explosion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\Explosions\ExplosionRectangle.xaml.cs">
+      <DependentUpon>ExplosionRectangle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\Explosions\IExplosion.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\Explosions\Spark.xaml.cs">
+      <DependentUpon>Spark.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\Innertia\Conductor.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\Innertia\InnertialLayer.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\Pads\Pad0to9.xaml.cs">
+      <DependentUpon>Pad0to9.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\Pads\PadAtoZ.xaml.cs">
+      <DependentUpon>PadAtoZ.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\PathToD2DPathGeometryConverter.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\RadialMenu\Arc.xaml.cs">
+      <DependentUpon>Arc.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\RadialMenu\ArcMenuItemSelectedMessage.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\RadialMenu\dummyControl.xaml.cs">
+      <DependentUpon>dummyControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\RadialMenu\RadialMenu.xaml.cs">
+      <DependentUpon>RadialMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\ResizeableRect\MoveableDot.xaml.cs">
+      <DependentUpon>MoveableDot.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\ResizeableRect\ResizeableRectangle.xaml.cs">
+      <DependentUpon>ResizeableRectangle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\Ribbon\IconGroup.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\Ribbon\IconItem.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\Ribbon\Ribbon.xaml.cs">
+      <DependentUpon>Ribbon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\Ribbon\RibbonTabItem.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\TiltTile.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\TiltTileWall.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\TiltTileWithImageBackground.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\Utilities.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Collections\BaseDataCommon.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Collections\BaseDataGroup.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Collections\BaseDataItem.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Collections\BaseDataSource.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Collections\BindableBase.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Collections\ObservableVector.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Collections\ObservableVectorExtensionClass.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Collections\VectorChangedEventArgs.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Collections\VectorEnumerator.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\Animation.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\Avatar.xaml.cs">
+      <DependentUpon>Avatar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\Clip.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\FluidMovingScaledPicture.xaml.cs">
+      <DependentUpon>FluidMovingScaledPicture.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\GeneralSystemWideMessage.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\GlowingButton.xaml.cs">
+      <DependentUpon>GlowingButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\INavigableItem.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\InputBoxView.xaml.cs">
+      <DependentUpon>InputBoxView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\MarqueLabel.xaml.cs">
+      <DependentUpon>MarqueLabel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\MsgBoxView.xaml.cs">
+      <DependentUpon>MsgBoxView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\NotificationView.xaml.cs">
+      <DependentUpon>NotificationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\PopupView.xaml.cs">
+      <DependentUpon>PopupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\SeeMoreItemTemplateSelector.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\ShadowBorder.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\SmallShadowBorder.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\TiltEffect.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\Timeline.xaml.cs">
+      <DependentUpon>Timeline.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Data\BaseModel.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Services\AlertService.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Services\ErrorService.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Services\InputBoxService.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Services\LoggingService.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Services\MsgBoxService.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Services\NotificationService.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Services\PopupService.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\SqliteDatabase.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\ActivityEvent.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\ActivityItem.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\ActivityItemCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\ApiKeyRequiredException.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\AssemblyInfo.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\AssemblyInfoMore.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Auth.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\AuthenticationRequiredException.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Blog.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\BlogCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\BlogService.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\BlogServiceCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\BoundaryBox.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Cache.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Cluster.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\ClusterCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Collection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\CollectionCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\CollectionInfo.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\CollectionSet.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Contact.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\ContactCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Context.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\CsvFile.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\CsvFileCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\DateGranularity.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\EchoResponseDictionary.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Enums.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\ExceptionHandler.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\ExifTag.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\ExifTagCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\FavoriteContext.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\FavoriteContextPhoto.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\FlickrApiException.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\FlickrConfigurationManager.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\FlickrConfigurationSettings.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\FlickrException.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\FlickrResponder.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\FlickrResponderAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\FlickrResult.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\FlickrWebException.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_ActivityAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_AuthAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_AuthCalc.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_BlogsAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_CollectionsAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_CommonsAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_ContactsAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_FavoritesAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_GalleriesAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_GetResponseAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_GroupsAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_InterestingnessAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_MachineTagsAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_NotesAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_OAuth.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_OAuthAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_PandaAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_PeopleAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_PhotoNotesAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_PhotosAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_PhotosCommentsAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_PhotosetsAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_PhotosGeoAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_PhotosMiscAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_PhotosPeopleAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_PlacesAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_PrefsAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_ReflectionAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_StatsAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_TagsAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_TestAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_UploadAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Flickr_UrlsAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Gallery.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\GalleryCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\GalleryPhoto.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\GalleryPhotoCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\GeoAccuracy.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\GeoContext.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\GeoPermissions.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\GeoPermissionType.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\GlobalSuppressions.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\GroupCategory.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Groups.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\GroupSearchResultCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\HotTag.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\HotTagCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\IFlickrParsable.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Institution.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\InstitutionCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\LicenseCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Licenses.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\LicenseType.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\LockFile.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\MD5Core.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\MediaType.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Member.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\MemberCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\MemberGroupInfo.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\MemberGroupInfoCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\MemberTypes.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\MethodCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Namespace.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\NamespaceCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\NoResponse.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Note.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\NoteCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\OAuthAccessToken.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\OAuthException.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\OAuthRequestToken.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PagedPhotoCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Pair.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PairCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PandaPhotoCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\ParsingException.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PartialSearchOptions.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PeoplePhotoCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PersistentCache.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Person.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Photo.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PhotoCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PhotoComment.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PhotoCommentCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PhotoCountCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PhotoFavorite.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PhotoFavoriteCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PhotoInfo.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PhotoNote.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PhotoNoteCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PhotoPermissions.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PhotoPerson.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PhotoPersonCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PhotoSearchExtras.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PhotoSearchOptions.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PhotoSearchOrder.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Photoset.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PhotoSetCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PhotosetCommentCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PhotosetPhotoCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Place.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PlaceCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PlaceInfo.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PlaceType.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PlaceTypeInfo.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PlaceTypeInfoCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PoolPrivacy.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PopularitySort.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PopularPhoto.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PopularPhotoCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Predicate.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PredicateCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PublicGroupInfo.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\PublicGroupInfoCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\ResponseXmlException.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\SafeNativeMethods.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\SerializableAttribute.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\ShapeDataCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\ShapeDataSL.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\SignatureRequiredException.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Sizes.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\StatDomain.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\StatDomainCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\StatReferrer.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\StatReferrerCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Stats.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\StatViews.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Tags.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Ticket.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\TicketCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Timezone.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\UnknownResponseSL.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\UploadProgressEvent.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\User.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\UserGeoPermissions.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\UtilityMethods.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\Value.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\ValueCollection.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\FlickrLib\VideoInfo.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\TwitterLib\Twitter.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\TwitterLib\TwitterResponder.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\TwitterLib\TwitterResponderAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\TwitterLib\Twitter_GetResponseAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\TwitterLib\Twitter_OAuth.cs" />
+    <Compile Include="Corelib\Shared\Framework\ThirdPartyApis\TwitterLib\Twitter_OAuthAsync.cs" />
+    <Compile Include="Corelib\Shared\Framework\XNATweener\Back.cs" />
+    <Compile Include="Corelib\Shared\Framework\XNATweener\BaseTweener.cs" />
+    <Compile Include="Corelib\Shared\Framework\XNATweener\Bounce.cs" />
+    <Compile Include="Corelib\Shared\Framework\XNATweener\Circular.cs" />
+    <Compile Include="Corelib\Shared\Framework\XNATweener\Cubic.cs" />
+    <Compile Include="Corelib\Shared\Framework\XNATweener\Elastic.cs" />
+    <Compile Include="Corelib\Shared\Framework\XNATweener\Exponential.cs" />
+    <Compile Include="Corelib\Shared\Framework\XNATweener\ITweener.cs" />
+    <Compile Include="Corelib\Shared\Framework\XNATweener\Linear.cs" />
+    <Compile Include="Corelib\Shared\Framework\XNATweener\Loop.cs" />
+    <Compile Include="Corelib\Shared\Framework\XNATweener\Quadratic.cs" />
+    <Compile Include="Corelib\Shared\Framework\XNATweener\Quartic.cs" />
+    <Compile Include="Corelib\Shared\Framework\XNATweener\Quintic.cs" />
+    <Compile Include="Corelib\Shared\Framework\XNATweener\Sinusoidal.cs" />
+    <Compile Include="Corelib\Shared\Framework\XNATweener\Tweener.cs" />
+    <Compile Include="Corelib\Shared\Framework\XNATweener\Vector2Tweener.cs" />
+    <Compile Include="Corelib\Shared\Framework\XNATweener\Vector3Tweener.cs" />
+    <Compile Include="Corelib\Shared\MVVM\Models\AppContext.cs" />
+    <Compile Include="Corelib\Shared\MVVM\Models\DefaultViewModel.cs" />
+    <Compile Include="Corelib\Shared\MVVM\Views\BaseUserControl.cs" />
+    <Compile Include="Corelib\Shared\MVVM\Views\BaseUserPage.cs" />
+    <Compile Include="Corelib\Shared\MVVM\Views\GlobalState.cs" />
+    <Compile Include="Corelib\Shared\MVVM\Views\IPopupUserControl.cs" />
+    <Compile Include="Corelib\Shared\MVVM\Views\IToolbarUserControl.cs" />
+    <Compile Include="Corelib\Sprites\IVisualTree.cs" />
+    <Compile Include="Corelib\Sprites\IVisualTreeElement.cs" />
+    <Compile Include="Corelib\Sprites\SpriteBatch.cs" />
+    <Compile Include="Corelib\Viewer\ContentViewEventArgs.cs" />
+    <Compile Include="Corelib\Viewer\IContentRenderer.cs" />
+    <Compile Include="Corelib\Viewer\IContentView.cs" />
+    <Compile Include="Corelib\WriteableBitmapExtensions.cs" />
+    <Compile Include="Extensions.FirstParty.Settings\Installer.cs" />
+    <Compile Include="Extensions.UI\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Extensions.UI\Shared\ExtensionUtils.cs" />
+    <Compile Include="Extensions.UI\Shell\ShellWithExtensions.cs" />
+    <Compile Include="Extensions.UI\StringEmptyToVisibilityConverter.cs" />
+    <Compile Include="Extensions.UI\StringEmptyToVisibilityInvertedConverter.cs" />
+    <Compile Include="Extensions.UI\ToolbarPositionToImageConverter.cs" />
+    <Compile Include="Extensions.UI\UIComponentExtensions\ExtensionsIconBarBottom.xaml.cs">
+      <DependentUpon>ExtensionsIconBarBottom.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions.UI\UIComponentExtensions\ExtensionsIconBarLeft.xaml.cs">
+      <DependentUpon>ExtensionsIconBarLeft.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions.UI\UIComponentExtensions\ExtensionsIconBarRight.xaml.cs">
+      <DependentUpon>ExtensionsIconBarRight.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions.UI\UIComponentExtensions\ExtensionsIconBarTop.xaml.cs">
+      <DependentUpon>ExtensionsIconBarTop.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions.UI\UIComponentExtensions\InstalledExtensionList\InstalledExtensionList.xaml.cs">
+      <DependentUpon>InstalledExtensionList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions.UI\UIComponentExtensions\Toast.xaml.cs">
+      <DependentUpon>Toast.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Contracts\BaseEventArgs.cs" />
+    <Compile Include="Extensions\Contracts\CloseExtensionEventArgs.cs" />
+    <Compile Include="Extensions\Contracts\InlineToastEventArgs.cs" />
+    <Compile Include="Extensions\Contracts\LaunchExtensionEventArgs.cs" />
+    <Compile Include="Extensions\Contracts\LoadInstalledExtensionsEventArgs.cs" />
+    <Compile Include="Extensions\Contracts\LoadWebViewEventArgs.cs" />
+    <Compile Include="Extensions\Contracts\OSToastEventArgs.cs" />
+    <Compile Include="Extensions\Contracts\RequestListOfBottomToolbarExtensionsEventArgs.cs" />
+    <Compile Include="Extensions\Contracts\RequestListOfInstalledExtensionsEventArgs.cs" />
+    <Compile Include="Extensions\Contracts\RequestListOfLeftToolbarExtensionsEventArgs.cs" />
+    <Compile Include="Extensions\Contracts\RequestListOfRightToolbarExtensionsEventArgs.cs" />
+    <Compile Include="Extensions\Contracts\RequestListOfTopToolbarExtensionsEventArgs.cs" />
+    <Compile Include="Extensions\Contracts\RequestRefreshToolbarExtensionsEventArgs.cs" />
+    <Compile Include="Extensions\Contracts\ResponseListOfBottomToolbarExtensionsEventArgs.cs" />
+    <Compile Include="Extensions\Contracts\ResponseListOfInstalledExtensionsEventArgs.cs" />
+    <Compile Include="Extensions\Contracts\ResponseListOfLeftToolbarExtensionsEventArgs.cs" />
+    <Compile Include="Extensions\Contracts\ResponseListOfRightToolbarExtensionsEventArgs.cs" />
+    <Compile Include="Extensions\Contracts\ResponseListOfTopToolbarExtensionsEventArgs.cs" />
+    <Compile Include="Extensions\NavigationFailedExtensioin\HandleNavigationFailedAsInlineToast.cs" />
+    <Compile Include="Extensions\NewWindowRequestExtensions\HandleNewWindowAsInlineLink.cs" />
+    <Compile Include="Extensions\OSShellExtensions\OSToast.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services.Data\IAzureTableBase.cs" />
+    <Compile Include="Services.Data\ISqliteBase.cs" />
+    <Compile Include="Services.Data\Models\APIKeyDataModel.cs" />
+    <Compile Include="Services.Data\Models\BaseDataModel.cs" />
+    <Compile Include="Services.Data\Models\DataModelsManager.cs" />
+    <Compile Include="Services.Data\Models\ExtensionManifestDataModel.cs" />
+    <Compile Include="Services.Data\Models\IDataModel.cs" />
+    <Compile Include="Services.Data\Models\IWebPageDataModel.cs" />
+    <Compile Include="Services.Data\Models\PassportDataModel.cs" />
+    <Compile Include="Services.Data\Models\SketchFlow\ISketchDataModel.cs" />
+    <Compile Include="Services.Data\Models\SketchFlow\ISketchPageDataModel.cs" />
+    <Compile Include="Services.Data\Models\SketchFlow\ISketchPageLayerDataModel.cs" />
+    <Compile Include="Services.Data\Models\SketchFlow\ISketchPageLayerXamlFragmentDataModel.cs" />
+    <Compile Include="Services.Data\Models\SketchFlow\SketchDataModel.cs" />
+    <Compile Include="Services.Data\Models\SketchFlow\SketchPageDataModel.cs" />
+    <Compile Include="Services.Data\Models\SketchFlow\SketchPageLayerDataModel.cs" />
+    <Compile Include="Services.Data\Models\SketchFlow\SketchPageLayerXamlFragmentDataModel.cs" />
+    <Compile Include="Services.Data\Models\WebPageDataModel.cs" />
+    <Compile Include="Services.Data\SqliteDatabase.cs" />
+    <Compile Include="Services.Data\StorageDatabase.cs" />
+    <Compile Include="Services.Data\StorageDatabaseAzure.cs" />
+    <Compile Include="Services.Data\StorageService.cs" />
+    <Compile Include="Services.Extensions\ExtensionHelper.cs" />
+    <Compile Include="Services.Extensions\ExtensionLite.cs" />
+    <Compile Include="Services.Extensions\ExtensionManifest.cs" />
+    <Compile Include="Services.Extensions\ExtensionsService.cs" />
+    <Compile Include="Services.Extensions\ExtensionToImageSourceConverter.cs" />
+    <Compile Include="Services.Extensions\ThirdParty\_Template\_Template.xaml.cs">
+      <DependentUpon>_Template.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Services.Image\Service.cs" />
+    <Compile Include="Services.Settings\AppSettings.cs" />
+    <Compile Include="Services.Tile\Service.cs" />
+    <Compile Include="Services.Toast\Service.cs" />
+    <Compile Include="UI.AddTab\DoSearchEventArgs.cs" />
+    <Compile Include="UI.AddTab\LoadCompletedEventArgs.cs" />
+    <Compile Include="UI.AddTab\Tab.cs" />
+    <Compile Include="UI.APIKeys\ApiEditor.xaml.cs">
+      <DependentUpon>ApiEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI.APIKeys\ApiEditorHoriz.xaml.cs">
+      <DependentUpon>ApiEditorHoriz.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI.APIKeys\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI.Chrome\Header.cs" />
+    <Compile Include="UI.Chrome\Shell.cs" />
+    <Compile Include="UI.ColorPicker\ColorSwatchSquare.cs" />
+    <Compile Include="UI.ColorPicker\SwatchToImageUrlConverter.cs" />
+    <Compile Include="UI.ColorPicker\ValueDividedConverter.cs" />
+    <Compile Include="UI.Composition\CompositionImage.cs" />
+    <Compile Include="UI.Composition\CompositionList.xaml.cs">
+      <DependentUpon>CompositionList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI.Composition\CompositionShadow.xaml.cs">
+      <DependentUpon>CompositionShadow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI.Composition\HackPassThruValueConverter.cs" />
+    <Compile Include="UI.Composition\LightPanel.xaml.cs">
+      <DependentUpon>LightPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI.Composition\SurfaceLoader.cs" />
+    <Compile Include="UI.Composition\VisualTreeHelperExtensions.cs" />
+    <Compile Include="UI.EffectLayer\AsyncHelpers.cs" />
+    <Compile Include="UI.EffectLayer\BackdropTintBlurBrush.cs" />
+    <Compile Include="UI.EffectLayer\EffectLayer.cs" />
+    <Compile Include="UI.EffectLayer\GlowEffectGraph.cs" />
+    <Compile Include="UI.EffectLayer\IEffectGraph.cs" />
+    <Compile Include="UI.EffectLayer\PathToD2DPathGeometryConverter.cs" />
+    <Compile Include="UI.EffectLayer\ShadowEffectGraph.cs" />
+    <Compile Include="UI.LiteDataGrid\LiteDataGrid.cs" />
+    <Compile Include="UI.LiteTab\DelegateCommand.cs" />
+    <Compile Include="UI.LiteTab\LiteTabSelectedFontSizeConverter.cs" />
+    <Compile Include="UI.LiteTab\LiteTabSelectedThicknessConverter.cs" />
+    <Compile Include="UI.LiteTab\Tab.cs" />
+    <Compile Include="UI.LiteTab\TabList.cs" />
+    <Compile Include="UI.LiteTab\TabListItem.cs" />
+    <Compile Include="UI.MoreTab\BooleanToVisibilityConverter.cs" />
+    <Compile Include="UI.MoreTab\IsPinnedToColorConverter.cs" />
+    <Compile Include="UI.MoreTab\IsPinnedToImageUriConverter.cs" />
+    <Compile Include="UI.MoreTab\LastRefreshedDateConverter.cs" />
+    <Compile Include="UI.MoreTab\Tab.cs" />
+    <Compile Include="UI.OneBox\BooleanToVisibilityConverter.cs" />
+    <Compile Include="UI.OneBox\ModernUri.xaml.cs">
+      <DependentUpon>ModernUri.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI.OneBox\ModernUriParams.xaml.cs">
+      <DependentUpon>ModernUriParams.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI.Path\Path.cs" />
+    <Compile Include="UI.RichButton\IsEnabledToOpacityConverter.cs" />
+    <Compile Include="UI.RichButton\PathTypeToVisibilityConverter.cs" />
+    <Compile Include="UI.RichButton\RichButton.cs" />
+    <Compile Include="UI.RichButton\TextToVisibilityConverter.cs" />
+    <Compile Include="UI.RichImage\MultiImageView.xaml.cs">
+      <DependentUpon>MultiImageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI.RichInput\Input.cs" />
+    <Compile Include="UI.RichInput\InputComboBoxItem.cs" />
+    <Compile Include="UI.RichInput\InputModel.cs" />
+    <Compile Include="UI.RichInput\InputType.cs" />
+    <Compile Include="UI.RichScrollViewer\ScrollViewer.cs" />
+    <Compile Include="UI.RichTab\BooleanToVisibilityConverter.cs" />
+    <Compile Include="UI.RichTab\CleanFaviconConverter.cs" />
+    <Compile Include="UI.RichTab\CommandExecutor.cs" />
+    <Compile Include="UI.RichTab\InverseBooleanConverter.cs" />
+    <Compile Include="UI.RichTab\TabButton.cs" />
+    <Compile Include="UI.RichTab\TabList.cs" />
+    <Compile Include="UI.RichTab\TabsMarginLeftConverter.cs" />
+    <Compile Include="UI.RichText\RichTextBlock.xaml.cs">
+      <DependentUpon>RichTextBlock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI.Skeuomorphism\GoldPanel.xaml.cs">
+      <DependentUpon>GoldPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI.Skeuomorphism\SilverlightPanel.xaml.cs">
+      <DependentUpon>SilverlightPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI.Toolbar\CustomControl1.cs" />
+    <Compile Include="UI.Toolbar\ImageButton.cs" />
+    <Compile Include="UI.Toolbar\Toolbar.cs" />
+    <Compile Include="UI.Toolbar\ToolbarRoutedEventArgs.cs" />
+    <Compile Include="UI.UserCard\CircularCard.cs" />
+    <Compile Include="UI.UserCard\RightToFlowDirectionConverter.cs" />
+    <Compile Include="UI.UserCard\SmallCard.cs" />
+    <Compile Include="UI.ZoomCanvas\Canvas.cs" />
+    <Compile Include="Viewers\Direct2D\D2DRenderer.cs" />
+    <Compile Include="Viewers\DotnetCLI\CommandLine.xaml.cs">
+      <DependentUpon>CommandLine.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\DotnetCLI\DotnetCLIRenderer.cs" />
+    <Compile Include="Viewers\FFMpeg\FFmpegRenderer.cs" />
+    <Compile Include="Viewers\FFMpeg\MediaControls.xaml.cs">
+      <DependentUpon>MediaControls.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\Flickr\FlickrRenderer.cs" />
+    <Compile Include="Viewers\Flickr\FlickrView.xaml.cs">
+      <DependentUpon>FlickrView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\MapView\MapLayer.xaml.cs">
+      <DependentUpon>MapLayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\MapView\MapViewRenderer.cs" />
+    <Compile Include="Viewers\MediaView\MediaControls.xaml.cs">
+      <DependentUpon>MediaControls.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\MediaView\MediaElementRenderer.cs" />
+    <Compile Include="Viewers\SketchFlow\Controls\MenuFlyoutPathItem.cs" />
+    <Compile Include="Viewers\SketchFlow\Controls\PageContent.xaml.cs">
+      <DependentUpon>PageContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\SketchFlow\Controls\PageLayers.xaml.cs">
+      <DependentUpon>PageLayers.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\SketchFlow\Controls\PageLayout.xaml.cs">
+      <DependentUpon>PageLayout.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\SketchFlow\Controls\Pickers\ImagePicker.xaml.cs">
+      <DependentUpon>ImagePicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\SketchFlow\Controls\Pickers\LoadSketchPicker.xaml.cs">
+      <DependentUpon>LoadSketchPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\SketchFlow\Controls\Pickers\SaveSketchPicker.xaml.cs">
+      <DependentUpon>SaveSketchPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\SketchFlow\Controls\Pickers\StampColorPicker.xaml.cs">
+      <DependentUpon>StampColorPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\SketchFlow\Controls\Pickers\TextPicker.xaml.cs">
+      <DependentUpon>TextPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\SketchFlow\Controls\Stamps\Circle.xaml.cs">
+      <DependentUpon>Circle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\SketchFlow\Controls\Stamps\common\IStamp.cs" />
+    <Compile Include="Viewers\SketchFlow\Controls\Stamps\common\IStampEventArgs.cs" />
+    <Compile Include="Viewers\SketchFlow\Controls\Stamps\common\MarkersHV.xaml.cs">
+      <DependentUpon>MarkersHV.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\SketchFlow\Controls\Stamps\common\MarkersR.xaml.cs">
+      <DependentUpon>MarkersR.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\SketchFlow\Controls\Stamps\common\ResizeMoveEdges.xaml.cs">
+      <DependentUpon>ResizeMoveEdges.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\SketchFlow\Controls\Stamps\Picture.xaml.cs">
+      <DependentUpon>Picture.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\SketchFlow\Controls\Stamps\Rectangle.xaml.cs">
+      <DependentUpon>Rectangle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\SketchFlow\Controls\Stamps\Shape.xaml.cs">
+      <DependentUpon>Shape.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\SketchFlow\Controls\Stamps\Text.xaml.cs">
+      <DependentUpon>Text.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\SketchFlow\Controls\Toolbar.xaml.cs">
+      <DependentUpon>Toolbar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\SketchFlow\Converters\IsSelectedToColorConverter.cs" />
+    <Compile Include="Viewers\SketchFlow\Converters\LayerEnabledToColorConverter.cs" />
+    <Compile Include="Viewers\SketchFlow\Converters\StampTypeToContentConverter.cs" />
+    <Compile Include="Viewers\SketchFlow\Converters\UIElementAsClipConverter.cs" />
+    <Compile Include="Viewers\SketchFlow\Converters\XamlFragmentEnabledToColorConverter.cs" />
+    <Compile Include="Viewers\SketchFlow\Converters\XamlFragmentsToContentConverter.cs" />
+    <Compile Include="Viewers\SketchFlow\SharedEnums.cs" />
+    <Compile Include="Viewers\SketchFlow\SketchFlowRenderer.cs" />
+    <Compile Include="Viewers\SketchFlow\SketchView.xaml.cs">
+      <DependentUpon>SketchView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\SketchFlow\SketchView.xaml.Persist.cs" />
+    <Compile Include="Viewers\SketchFlow\ViewModels.cs" />
+    <Compile Include="Viewers\Tiles\TileEditor.xaml.cs">
+      <DependentUpon>TileEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\Tiles\TileLayouts.xaml.cs">
+      <DependentUpon>TileLayouts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\Tiles\TileRenderer.cs" />
+    <Compile Include="Viewers\Twitter\TwitterRenderer.cs" />
+    <Compile Include="Viewers\Twitter\TwitterView.xaml.cs">
+      <DependentUpon>TwitterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\UrhoSharp\Bar.cs" />
+    <Compile Include="Viewers\UrhoSharp\RandomHelper.cs" />
+    <Compile Include="Viewers\UrhoSharp\SceneVisual.xaml.cs">
+      <DependentUpon>SceneVisual.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\UrhoSharp\UrhoRenderer.cs" />
+    <Compile Include="Viewers\UrhoSharp\UrhoScene.cs" />
+    <Compile Include="Viewers\WebView\WebViewRenderer.cs" />
+    <Compile Include="Viewers\Win2D\Win2DRenderer.cs" />
+    <Compile Include="Viewers\WinComposition\CompositionLayer.xaml.cs">
+      <DependentUpon>CompositionLayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\WinComposition\DirectCompositionRenderer.cs" />
+    <Compile Include="Viewers\XAML\XAMLRenderer.cs" />
+    <Compile Include="Viewer\ContentView.xaml.cs">
+      <DependentUpon>ContentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Win32\NativeLib.cs" />
+    <Compile Include="Zlib\Adler32.cs" />
+    <Compile Include="Zlib\Crc32.cs" />
+    <Compile Include="Zlib\ZlibDeflateStream.cs" />
+    <Compile Include="Zlib\ZlibInflateStream.cs" />
+    <EmbeddedResource Include="Properties\X.SharedLibs.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="linqtotwitter">
+      <Version>4.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Azure.Mobile.Client">
+      <Version>3.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>5.2.3</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
+      <Version>2.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="MvvmLightLibs">
+      <Version>5.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="ThomasLevesque.WeakEvent">
+      <Version>1.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Win2D.uwp">
+      <Version>1.20.0</Version>
+    </PackageReference>
+    <PackageReference Include="WriteableBitmapEx">
+      <Version>1.5.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="AppX\Extensions\FirstParty\Settings\Content.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corelib\Shared\F12\ConsoleUI.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\Clippy\Blackboard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\DataEntryPanel\DPMandatory.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\Explosions\DrawingSurface.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\Explosions\Explosion.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\Explosions\ExplosionRectangle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\Explosions\Spark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\Pads\Pad0to9.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\Pads\PadAtoZ.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\RadialMenu\Arc.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\RadialMenu\dummyControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\RadialMenu\RadialMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\ResizeableRect\MoveableDot.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\ResizeableRect\ResizeableRectangle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corelib\Shared\Framework\SumoNinjaMonkey\Controls\Ribbon\Ribbon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\Avatar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\FluidMovingScaledPicture.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\GlowingButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\InputBoxView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\MarqueLabel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\MsgBoxView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\NotificationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\PopupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\Controls\Timeline.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Extensions.UI\Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Extensions.UI\UIComponentExtensions\ExtensionsIconBarBottom.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Extensions.UI\UIComponentExtensions\ExtensionsIconBarLeft.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Extensions.UI\UIComponentExtensions\ExtensionsIconBarRight.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Extensions.UI\UIComponentExtensions\ExtensionsIconBarTop.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Extensions.UI\UIComponentExtensions\InstalledExtensionList\InstalledExtensionList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Extensions.UI\UIComponentExtensions\Toast.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Services.Extensions\ThirdParty\_Template\_Template.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI.APIKeys\ApiEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI.APIKeys\ApiEditorHoriz.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI.APIKeys\Settings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI.Composition\CompositionList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI.Composition\CompositionShadow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI.Composition\LightPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI.OneBox\ModernUri.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI.OneBox\ModernUriParams.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI.RichImage\MultiImageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI.RichText\RichTextBlock.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI.Skeuomorphism\GoldPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI.Skeuomorphism\SilverlightPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\DotnetCLI\CommandLine.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\FFMpeg\MediaControls.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\Flickr\FlickrView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\MapView\MapLayer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\MediaView\MediaControls.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\SketchFlow\Controls\PageContent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\SketchFlow\Controls\PageLayers.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\SketchFlow\Controls\PageLayout.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\SketchFlow\Controls\Pickers\ImagePicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\SketchFlow\Controls\Pickers\LoadSketchPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\SketchFlow\Controls\Pickers\SaveSketchPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\SketchFlow\Controls\Pickers\StampColorPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\SketchFlow\Controls\Pickers\TextPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\SketchFlow\Controls\Stamps\Circle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\SketchFlow\Controls\Stamps\common\MarkersHV.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\SketchFlow\Controls\Stamps\common\MarkersR.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\SketchFlow\Controls\Stamps\common\ResizeMoveEdges.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\SketchFlow\Controls\Stamps\Picture.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\SketchFlow\Controls\Stamps\Rectangle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\SketchFlow\Controls\Stamps\Shape.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\SketchFlow\Controls\Stamps\Text.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\SketchFlow\Controls\Toolbar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\SketchFlow\SketchView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\Tiles\TileEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\Tiles\TileLayouts.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\Twitter\TwitterView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\UrhoSharp\SceneVisual.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\WinComposition\CompositionLayer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewer\ContentView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.UI.Composition.Toolkit\Microsoft.UI.Composition.Toolkit.vcxproj">
+      <Project>{08a7d060-593a-4978-8dcc-b2029aca7c95}</Project>
+      <Name>Microsoft.UI.Composition.Toolkit</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UI.RichImage\assets\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AppX\Extensions\FirstParty\Settings\Settings.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <Content Include="AppX\X.UI.Composition.Assets\BeveledEdges.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AppX\X.UI.Composition.Assets\SphericalWithMask.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Extensions.UI\Assets\Extensions\separator.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Extensions.UI\Assets\Extensions\tb-bottom-full.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Extensions.UI\Assets\Extensions\tb-bottom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Extensions.UI\Assets\Extensions\tb-left.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Extensions.UI\Assets\Extensions\tb-lefttop.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Extensions.UI\Assets\Extensions\tb-lefttopright.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Extensions.UI\Assets\Extensions\tb-none.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Extensions.UI\Assets\Extensions\tb-right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Extensions.UI\Assets\Extensions\tb-rightbottom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Extensions.UI\Assets\Extensions\tb-top.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Extensions.UI\Assets\Extensions\tb-topbottom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Extensions.UI\Assets\Extensions\tb-topright.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Extensions.UI\Assets\Extensions\tb-toprightbottom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Extensions.UI\ThirdParty\_SharedAssets\close1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Extensions.UI\ThirdParty\_SharedAssets\close2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Extensions.UI\ThirdParty\_SharedAssets\close3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Extensions.UI\ThirdParty\_SharedAssets\close4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Extensions.UI\UIComponentExtensions\InstalledExtensionList\InstalledExtensionList.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Services.Extensions\ThirdParty\_Template\_Template.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AppX\X.UI.ColorPicker.Assets\ColorSwatchCircle.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AppX\X.UI.ColorPicker.Assets\ColorSwatchSquare1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AppX\X.UI.ColorPicker.Assets\ColorSwatchSquare2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Viewers\Flickr\assets\001.jpg" />
+    <Content Include="Viewers\Flickr\assets\Sandra.PNG" />
+    <EmbeddedResource Include="UI.MoreTab\Assets\Pinned-sel.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI.MoreTab\Assets\Pinned-nor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

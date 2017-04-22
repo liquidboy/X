@@ -1,0 +1,92 @@
+﻿<UserControl
+    x:Class="X.UI.Composition.CompositionList"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:X.UI.Composition"
+    xmlns:lc="using:X.UI.Composition.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    x:Name="root"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+        <Style
+            x:Key="gvis"
+            TargetType="GridViewItem">
+            <Setter
+                Property="FontFamily"
+                Value="{ThemeResource ContentControlThemeFontFamily}" />
+            <Setter
+                Property="FontSize"
+                Value="{ThemeResource ControlContentThemeFontSize}" />
+            <Setter
+                Property="Foreground"
+                Value="{ThemeResource GridViewItemForeground}" />
+            <Setter
+                Property="TabNavigation"
+                Value="Local" />
+            <Setter
+                Property="IsHoldingEnabled"
+                Value="True" />
+            <Setter
+                Property="HorizontalContentAlignment"
+                Value="Center" />
+            <Setter
+                Property="VerticalContentAlignment"
+                Value="Center" />
+            <Setter
+                Property="Margin"
+                Value="0,0,4,4" />
+            <Setter
+                Property="MinWidth"
+                Value="{ThemeResource GridViewItemMinWidth}" />
+            <Setter
+                Property="MinHeight"
+                Value="{ThemeResource GridViewItemMinHeight}" />
+            <Setter
+                Property="AllowDrop"
+                Value="False" />
+            <Setter
+                Property="UseSystemFocusVisuals"
+                Value="True" />
+            <Setter
+                Property="FocusVisualMargin"
+                Value="-2" />
+            <Setter
+                Property="FocusVisualPrimaryBrush"
+                Value="PowderBlue" />
+            <Setter
+                Property="FocusVisualPrimaryThickness"
+                Value="2" />
+            <Setter
+                Property="FocusVisualSecondaryBrush"
+                Value="Plum" />
+            <Setter
+                Property="FocusVisualSecondaryThickness"
+                Value="1" />
+            <Setter
+                Property="Template">
+                <Setter.Value>
+                    <ControlTemplate
+                        TargetType="GridViewItem">
+                        <ListViewItemPresenter
+                            x:Name="listViewItemPresenter">
+                        </ListViewItemPresenter>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <GridView
+        x:Name="gvMain"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch"
+        Visibility="{Binding ListVisibility}"
+        ItemsSource="{Binding ItemsSource, ElementName=root }"
+        ContainerContentChanging="gvMain_ContainerContentChanging"
+        PointerMoved="gvMain_PointerMoved"
+        ItemContainerStyle="{StaticResource gvis}"
+        ItemTemplate="{Binding ListDataTemplate, ElementName=root}">
+    </GridView>
+</UserControl>

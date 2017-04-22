@@ -1,0 +1,27 @@
+﻿<UserControl
+    x:Class="X.Viewer.SketchFlow.Controls.Stamps.MarkersR"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:X.Viewer.SketchFlow.Controls.Stamps"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:sc="using:CoreLib.Converters"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="root"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+        <sc:BooleanToVisibilityConverter x:Name="TrueToVisibleConverter" ></sc:BooleanToVisibilityConverter>
+    </UserControl.Resources>
+    <Grid x:Name="grdGridRotationMarkers" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RenderTransform>
+            <CompositeTransform Rotation="{Binding RotationAngle, ElementName=root}"></CompositeTransform>
+        </Grid.RenderTransform>
+        <Line HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="-10,0,-10,0" Stroke="DarkOrange" Opacity="0.3" StrokeThickness="1" X2="20" RenderTransformOrigin="0.5,0.5"  />
+        <Line HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0,-10,0,-10" Stroke="DarkOrange" Opacity="0.3" StrokeThickness="1" Y2="20" RenderTransformOrigin="0.5,0.5"  />
+
+        <Border Background="DarkOrange" Padding="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-40,-10,0,-10" Visibility="{Binding ElementName=root, Path=RotationAngle, Converter={StaticResource TrueToVisibleConverter}}">
+            <TextBlock Text="{Binding ElementName=root, Path=RotationAngle}" Foreground="White" FontSize="8"></TextBlock>
+        </Border>
+    </Grid>
+</UserControl>

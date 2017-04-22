@@ -1,0 +1,70 @@
+﻿<UserControl
+    x:Class="X.Viewer.SketchFlow.Controls.PageLayers"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:X.Viewer.SketchFlow.Controls"
+    xmlns:converters="using:X.Viewer.SketchFlow.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+        <converters:LayerEnabledToColorConverter x:Key="LayerEnabledToColorConverter" />
+        <converters:XamlFragmentEnabledToColorConverter  x:Key="XamlFragmentEnabledToColorConverter" />
+    </UserControl.Resources>
+    <StackPanel x:Name="layoutRoot" Orientation="Horizontal" Margin="-55,0,0,0">
+        <ItemsControl ItemsSource="{Binding Layers}" >
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="0,3,0,0" >
+                        <Border x:Name="butEnableDisable" BorderBrush="LightGray" BorderThickness="1" Width="30" Height="15" Background="{Binding IsEnabled,  Converter={StaticResource LayerEnabledToColorConverter}}" PointerPressed="butEnableDisable_PointerPressed"></Border>
+                        <Border x:Name="butEdit" Width="20" Height="15" Background="Gray" PointerPressed="butEdit_PointerPressed" >
+                            <TextBlock HorizontalAlignment="Stretch" TextAlignment="Center" FontSize="10" Foreground="White"></TextBlock>
+                        </Border>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <ItemsControl ItemsSource="{Binding ExpandedLayers}" Margin="0,0,0,-18">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom"></StackPanel>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical" Margin="5,0,0,0" >
+                        <ItemsControl ItemsSource="{Binding XamlFragments}" >
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,3" >
+                                        <Border x:Name="butXamlFragLayer" BorderBrush="LightGray" BorderThickness="1" Width="30" Height="15" Background="{Binding IsEnabled,  Converter={StaticResource XamlFragmentEnabledToColorConverter}}" PointerPressed="butXamlFragLayer_PointerPressed"></Border>
+                                        <Button x:Name="butXamlFragLayerEdit" Width="20" Height="15" Background="Gray" Click="butXamlFragLayerEdit_Click" >
+                                            <Button.Flyout>
+                                                <MenuFlyout Placement="Right">
+                                                    <MenuFlyoutItem x:Name="miXamlFragEdit" Text="Edit" Click="miXamlFragEdit_Click"></MenuFlyoutItem>
+                                                    <MenuFlyoutItem x:Name="miXamlFragDelete" Text="Delete" Click="miXamlFragDelete_Click"></MenuFlyoutItem>
+                                                    <MenuFlyoutItem x:Name="miXamlFragMoveUp" Text="Move Up" Click="miXamlFragMoveUp_Click"></MenuFlyoutItem>
+                                                    <MenuFlyoutItem x:Name="miXamlFragMoveDown" Text="Move Down" Click="miXamlFragMoveDown_Click"></MenuFlyoutItem>
+                                                    <MenuFlyoutItem x:Name="miXamlFragMoveLeft" Text="Move Left" Click="miXamlFragMoveLeft_Click" ></MenuFlyoutItem>
+                                                    <MenuFlyoutItem x:Name="miXamlFragMoveRight" Text="Move Right" Click="miXamlFragMoveRight_Click" ></MenuFlyoutItem>
+                                                </MenuFlyout>
+                                            </Button.Flyout>
+                                        </Button>
+                                    </StackPanel>
+                                    
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <Border Background="DarkOrange" BorderBrush="DarkOrange" BorderThickness="1" Width="50" Height="15">
+                            <TextBlock HorizontalAlignment="Stretch" TextAlignment="Center" VerticalAlignment="Center" FontSize="10" Foreground="White" Text="{Binding LayerNumber}"></TextBlock>
+                        </Border>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
+    
+    
+</UserControl>

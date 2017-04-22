@@ -1,0 +1,67 @@
+﻿<UserControl
+    x:Class="X.UI.Skeuomorphism.GoldPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:X.UI.Skeuomorphism"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid>
+        <Border
+            CornerRadius="2">
+            <Border.Background>
+                <LinearGradientBrush
+                    EndPoint="0.958,0.49"
+                    StartPoint="0.03,0.49">
+                    <GradientStop
+                        Color="#FFBE9C55" />
+                    <GradientStop
+                        Color="#FFE0C56E"
+                        Offset="1" />
+                    <GradientStop
+                        Color="#FFC1A159"
+                        Offset="0.063" />
+                    <GradientStop
+                        Color="#FFD2B75E"
+                        Offset="0.134" />
+                    <GradientStop
+                        Color="#FFF2DB71"
+                        Offset="0.351" />
+                    <GradientStop
+                        Color="#FFE0C164"
+                        Offset="0.481" />
+                    <GradientStop
+                        Color="#FFC4A449"
+                        Offset="0.603" />
+                    <GradientStop
+                        Color="#FF96711E"
+                        Offset="0.736" />
+                    <GradientStop
+                        Color="#FFAC8633"
+                        Offset="0.803" />
+                    <GradientStop
+                        Color="#FFD5B55C"
+                        Offset="0.879" />
+                    <GradientStop
+                        Color="#FFFDF285"
+                        Offset="0.23" />
+                    <GradientStop
+                        Color="#FFDAC25D"
+                        Offset="0.427" />
+                    <GradientStop
+                        Color="#FFD9BA5F"
+                        Offset="0.544" />
+                    <GradientStop
+                        Color="#FFB29037"
+                        Offset="0.678" />
+                    <GradientStop
+                        Color="#FFE7CC72"
+                        Offset="0.921" />
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+    </Grid>
+</UserControl>

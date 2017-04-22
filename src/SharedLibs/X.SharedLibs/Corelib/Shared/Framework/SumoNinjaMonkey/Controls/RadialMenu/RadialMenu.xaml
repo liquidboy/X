@@ -1,0 +1,63 @@
+﻿<UserControl x:Name="userControl"
+    x:Class="SumoNinjaMonkey.Framework.Controls.RadialMenu"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SumoNinjaMonkey.Framework.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400" Width="Auto">
+	<UserControl.Resources>
+		<Storyboard x:Name="sbShowMainMenu">        
+            <DoubleAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(MainOuterCircleBorderBackgroundDiameterAnim)" Storyboard.TargetName="userControl">
+				<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="314">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+			</DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(MainOuterCircleBorderWidthAnim)" Storyboard.TargetName="userControl">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="20" >
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+        <Storyboard x:Name="sbHideMainMenu">
+            <DoubleAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(MainOuterCircleBorderBackgroundDiameterAnim)" Storyboard.TargetName="userControl">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="260" >
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ExponentialEase/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(MainOuterCircleBorderWidthAnim)" Storyboard.TargetName="userControl">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" >
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ExponentialEase/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+		<Storyboard x:Name="sbToggleActivationButton">
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="elab2">
+				<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="1"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:1.2" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+    </UserControl.Resources>        
+    <Grid x:Name="layoutRoot">              
+        <Ellipse x:Name="elcb1" Margin="0" Stroke="#FFF5D8FB" VerticalAlignment="Center" Height="260"  Width="260" StrokeThickness="0"/>
+        <Grid x:Name="grdMainActivationButton" HorizontalAlignment="Center" VerticalAlignment="Center" PointerReleased="grdMainActivationButton_PointerReleased"  >
+            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="Black" Opacity="0.01" />
+            <Ellipse x:Name="elab1" HorizontalAlignment="Center" Height="35" Stroke="#FF8906A4" StrokeThickness="3" VerticalAlignment="Center" Width="35" />
+            <Ellipse x:Name="elab2" HorizontalAlignment="Center" Height="41" Stroke="#FF8906A4" StrokeThickness="2" VerticalAlignment="Center" Width="41" Opacity="0"/>
+        </Grid>
+        <Grid x:Name="grdButtons" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            
+        </Grid>
+    </Grid>
+</UserControl>

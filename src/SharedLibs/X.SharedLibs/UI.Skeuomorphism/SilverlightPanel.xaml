@@ -1,0 +1,102 @@
+﻿<UserControl
+    x:Class="X.UI.Skeuomorphism.SilverlightPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:X.UI.Skeuomorphism"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:Interactions="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:xuicomp="using:X.UI.Composition"
+    mc:Ignorable="d"
+    x:Name="root"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <Grid x:Name="layoutRoot">
+        <Interactivity:Interaction.Behaviors>
+            <Interactions:EventTriggerBehavior
+                EventName="PointerEntered"
+                SourceObject="{Binding ElementName=root, Path=SourceObject}">
+                <Interactions:ChangePropertyAction
+                    TargetObject="{Binding ElementName=csMain}"
+                    PropertyName="Visibility"
+                    Value="Visible" />
+            </Interactions:EventTriggerBehavior>
+            <Interactions:EventTriggerBehavior
+                EventName="PointerExited"
+                SourceObject="{Binding ElementName=root, Path=SourceObject}">
+                <Interactions:ChangePropertyAction
+                    TargetObject="{Binding ElementName=csMain}"
+                    PropertyName="Visibility"
+                    Value="Collapsed" />
+            </Interactions:EventTriggerBehavior>
+        </Interactivity:Interaction.Behaviors>
+        <xuicomp:CompositionShadow
+            x:Name="csMain"
+            BlurRadius="6"
+            Visibility="Collapsed"
+            OffsetX="0"
+            OffsetY="2"
+            Color="Gray">
+            <Border
+                Margin="0,2,0,2"
+                CornerRadius="0,0,4,4"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch">
+                <Border.Background>
+                    <LinearGradientBrush
+                        EndPoint="0.958,0.49"
+                        StartPoint="0.03,0.49">
+                        <GradientStop
+                            Color="#FFCACDD4" />
+                        <GradientStop
+                            Color="#FFE1E1E5"
+                            Offset="1" />
+                        <GradientStop
+                            Color="#FFD2D5DB"
+                            Offset="0.063" />
+                        <GradientStop
+                            Color="#FFBEC1CA"
+                            Offset="0.134" />
+                        <GradientStop
+                            Color="#FFBCC0C9"
+                            Offset="0.351" />
+                        <GradientStop
+                            Color="#FFB4B9C0"
+                            Offset="0.481" />
+                        <GradientStop
+                            Color="#FFA4A9B0"
+                            Offset="0.603" />
+                        <GradientStop
+                            Color="#FF737781"
+                            Offset="0.736" />
+                        <GradientStop
+                            Color="#FFA5A8B0"
+                            Offset="0.803" />
+                        <GradientStop
+                            Color="#FFBBBEC5"
+                            Offset="0.854" />
+                        <GradientStop
+                            Color="#FFDDE0E5"
+                            Offset="0.23" />
+                        <GradientStop
+                            Color="#FF9EA3AC"
+                            Offset="0.427" />
+                        <GradientStop
+                            Color="#FFBBBFC8"
+                            Offset="0.544" />
+                        <GradientStop
+                            Color="#FF92959E"
+                            Offset="0.678" />
+                        <GradientStop
+                            Color="#FFE7E9ED"
+                            Offset="0.921" />
+                        <GradientStop
+                            Color="#FFE0E1E5"
+                            Offset="0.962" />
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+        </xuicomp:CompositionShadow>
+    </Grid>
+</UserControl>

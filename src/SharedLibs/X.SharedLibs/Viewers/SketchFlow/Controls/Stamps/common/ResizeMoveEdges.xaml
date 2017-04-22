@@ -1,0 +1,46 @@
+﻿<UserControl
+    x:Class="X.Viewer.SketchFlow.Controls.Stamps.ResizeMoveEdges"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:X.Viewer.SketchFlow.Controls.Stamps"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xuip="using:X.UI.Path"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid x:Name="layoutRoot" >
+        <Rectangle x:Name="bottomTouchArea" Fill="#00FFFFFF" PointerEntered="layoutRoot_PointerEntered" PointerExited="layoutRoot_PointerExited"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="-50,-50,-50,-50"></Rectangle>
+        <Grid x:Name="butTopLeft" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-2,-10,0,0"   PointerPressed="butTopLeft_PointerPressed" Opacity="0.2" PointerEntered="General_PointerEntered" PointerExited="General_PointerExited">
+            <Grid.RenderTransform>
+                <CompositeTransform Rotation="45"/>
+            </Grid.RenderTransform>
+            <xuip:Path PathType="Corners" Width="20" Height="20" Foreground="LightGray"></xuip:Path>
+            <Ellipse Width="10" Height="10" Fill="LightGray"></Ellipse>
+        </Grid>
+        <Grid x:Name="butCenterLeft" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-15,0,0,0" PointerPressed="butCenterLeft_PointerPressed" Opacity="0.2" PointerEntered="General_PointerEntered" PointerExited="General_PointerExited">
+            <xuip:Path PathType="Pallette1" Width="20" Height="20" Foreground="LightGray"></xuip:Path>
+        </Grid>
+        <Grid x:Name="butTopRight" Width="20" Height="15" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-5,-15,0"  PointerPressed="butTopRight_PointerPressed" Opacity="0.2" PointerEntered="General_PointerEntered" PointerExited="General_PointerExited">
+            <xuip:Path PathType="Toolbar2" Width="20" Height="15" Foreground="LightGray"></xuip:Path>
+        </Grid>
+        <Grid x:Name="butBottomLeft" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Bottom" PointerPressed="butBottomLeft_PointerPressed" Margin="-15,0,0,-10" Opacity="0.2" PointerEntered="General_PointerEntered" PointerExited="General_PointerExited">
+            <xuip:Path PathType="Rotate1" Width="20" Height="20" Foreground="LightGray"></xuip:Path>
+        </Grid>
+        <Grid x:Name="butBottomRight" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-10,-10"  PointerPressed="butBottomRight_PointerPressed" Opacity="0.2" PointerEntered="General_PointerEntered" PointerExited="General_PointerExited">
+            <Grid.RenderTransform>
+                <CompositeTransform Rotation="0"/>
+            </Grid.RenderTransform>
+            <xuip:Path PathType="CornersLTRB" Width="20" Height="20" Foreground="LightGray"></xuip:Path>
+            <Ellipse Width="10" Height="10" Fill="LightGray"></Ellipse>
+        </Grid>
+        <Grid x:Name="butCenterRight" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,15,-7,0" PointerPressed="butCenterRight_PointerPressed" Opacity="0.2" PointerEntered="General_PointerEntered" PointerExited="General_PointerExited">
+            <Grid.RenderTransform>
+                <CompositeTransform Rotation="-42"/>
+            </Grid.RenderTransform>
+            <xuip:Path PathType="CornersLTRB" Width="20" Height="20" Foreground="LightGray"></xuip:Path>
+            <Ellipse Width="10" Height="10" Fill="LightGray"></Ellipse>
+        </Grid>
+    </Grid>
+</UserControl>

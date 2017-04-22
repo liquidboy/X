@@ -1,0 +1,34 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:xuic="using:X.UI.Chrome"
+    xmlns:extcontrols="using:X.Extensions.UIComponentExtensions"
+    xmlns:local="using:X.Extensions.UI">
+
+    <Style TargetType="local:ShellWithExtensions" >
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:ShellWithExtensions">
+                    <xuic:Shell x:Name="ctlShell" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" xuic:Shell.ContentMain="{TemplateBinding ContentMain}" 
+                                xuic:Shell.IsShowingBorders="Visible" xuic:Shell.ExtensionBackground="#FFF2F2F2">
+                        <xuic:Shell.BarTop>
+                            <extcontrols:ExtensionsIconBarTop x:Name="ctlExtensionsBarTop" HorizontalAlignment="Stretch" Margin="0,0,0,0"></extcontrols:ExtensionsIconBarTop>
+                        </xuic:Shell.BarTop>
+                        <xuic:Shell.BarBottom>
+                            <extcontrols:ExtensionsIconBarBottom x:Name="ctlExtensionsBarBottom" Margin="0,0,0,0"></extcontrols:ExtensionsIconBarBottom>
+                        </xuic:Shell.BarBottom>
+                        <xuic:Shell.BarLeft>
+                            <extcontrols:ExtensionsIconBarLeft x:Name="ctlExtensionsBarLeft" Padding="0,10,0,10"></extcontrols:ExtensionsIconBarLeft>
+                        </xuic:Shell.BarLeft>
+                        <xuic:Shell.BarRight>
+                            <extcontrols:ExtensionsIconBarRight x:Name="ctlExtensionsBarRight" Padding="0,10,0,10"></extcontrols:ExtensionsIconBarRight>
+                        </xuic:Shell.BarRight>
+                        <xuic:Shell.Footer>
+                            <ContentControl x:Name="ctlFooter" Content="{TemplateBinding Footer}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ></ContentControl>
+                        </xuic:Shell.Footer>
+                    </xuic:Shell>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

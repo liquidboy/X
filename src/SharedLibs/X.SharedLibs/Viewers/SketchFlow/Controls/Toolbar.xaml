@@ -1,0 +1,106 @@
+﻿<UserControl
+    x:Class="X.Viewer.SketchFlow.Controls.Toolbar"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:X.Viewer.SketchFlow.Controls"
+    xmlns:lp="using:X.Viewer.SketchFlow.Controls.Pickers"
+    xmlns:xuip="using:X.UI.Path"
+    xmlns:xuiri="using:X.UI.RichInput"
+    xmlns:xuildg="using:X.UI.LiteDataGrid"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
+            <Button x:Name="butToolbar" Click="butToolbar_Click" Background="LightGray">
+                <xuip:Path PathType="Toolbar1" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butOne" Click="butOne_Click" Background="LightGray">
+                <xuip:Path PathType="Camera" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+        </StackPanel>
+        <StackPanel x:Name="spToolbar" Margin="0,37,45,0" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed">
+            <Button x:Name="butAddPage"  Background="LightGray" Click="butAddPage_Click">
+                <xuip:Path PathType="PageAdd" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butColorPicker"  Background="LightGray">
+                <xuip:Path PathType="ColorPicker" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butShape"  Background="LightGray" Click="butShape_Click">
+                <xuip:Path PathType="Shape" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butImage"  Background="LightGray" Click="butImage_Click">
+                <xuip:Path PathType="Image" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butGlobalStamp"  Background="LightGray">
+                <xuip:Path PathType="Stamp" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butText" Background="LightGray" Click="butText_Click">
+                <xuip:Path PathType="Text" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butSave" Background="LightGray" >
+                <Button.Content>
+                    <xuip:Path PathType="Save" Width="25" Height="25" Foreground="White"></xuip:Path>
+                </Button.Content>
+                <Button.Flyout>
+                    <Flyout Placement="Left">
+                        <lp:SaveSketchPicker x:Name="pikSaveSketch" PerformAction="pikSaveSketch_PerformAction" />
+                    </Flyout>  
+                </Button.Flyout>
+            </Button>
+            <Button x:Name="butLoad" Background="LightGray" Click="butLoad_Click" >
+                <Button.Content>
+                    <xuip:Path PathType="Market" Width="25" Height="25" Foreground="White"></xuip:Path>
+                </Button.Content>
+                <Button.Flyout >
+                    <Flyout Placement="Left">
+                        <lp:LoadSketchPicker x:Name="pikLoadSketch" PerformAction="pikLoadSketch_PerformAction"></lp:LoadSketchPicker>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+        </StackPanel>
+        <StackPanel x:Name="spPageSizes" Margin="0,37,90,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed">
+            <Button x:Name="but640360" Background="LightGray" Click="but640360_Click">
+                <xuip:Path PathType="MobileLayout" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="but200200" Background="LightGray" Click="but200200_Click">
+                <xuip:Path PathType="TileLayout" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="but1200600" Background="LightGray" Click="but1200600_Click">
+                <xuip:Path PathType="TabletLayout" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="but1600900" Background="LightGray" Click="but1600900_Click">
+                <xuip:Path PathType="DesktopLayout" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="but1400768" Background="LightGray" Click="but1400768_Click">
+                <xuip:Path PathType="LaptopLayout" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="but18001200" Background="LightGray" Click="but18001200_Click">
+                <xuip:Path PathType="TVLayout" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+        </StackPanel>
+        <StackPanel x:Name="spShapes" Margin="0,111,90,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed">
+            <Button x:Name="butCircle" Background="LightGray" Click="butCircle_Click">
+                <xuip:Path PathType="Circle" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butStar" Background="LightGray" Click="butGenericStamp_Click">
+                <xuip:Path PathType="Star" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butRectangle" Background="LightGray" Click="butRectangle_Click">
+                <xuip:Path PathType="Rectangle" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butDiamond" Background="LightGray" Click="butGenericStamp_Click">
+                <xuip:Path PathType="Diamond" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butHeart" Background="LightGray" Click="butGenericStamp_Click">
+                <xuip:Path PathType="Heart" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+            <Button x:Name="butCloud" Background="LightGray" Click="butGenericStamp_Click">
+                <xuip:Path PathType="Cloud" Width="25" Height="25" Foreground="White"></xuip:Path>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>
