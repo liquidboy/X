@@ -11,8 +11,8 @@
     <AssemblyName>X.Player.Services</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.14366.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.14366.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.15063.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -112,17 +112,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SharedLibs\X.CoreLib\X.CoreLib.csproj">
-      <Project>{D273509D-612C-47C3-B2A6-C203D96B90D3}</Project>
-      <Name>X.CoreLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SharedLibs\X.Services.Extensions\X.Services.Extensions.csproj">
-      <Project>{6ef45f7f-fc6b-49f3-ab26-3ae0678fae05}</Project>
-      <Name>X.Services.Extensions</Name>
-    </ProjectReference>
+    <Folder Include="Messages\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Messages\" />
+    <ProjectReference Include="..\SharedLibs\X.SharedLibs\X.SharedLibs.csproj">
+      <Project>{6e375ca3-963d-4586-9a47-cbc69f4aaf89}</Project>
+      <Name>X.SharedLibs</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">
     <VisualStudioVersion>15.0</VisualStudioVersion>

@@ -11,8 +11,8 @@
     <AssemblyName>X.Extensions.ThirdParty.GitX</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.14366.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.14366.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.15063.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -155,29 +155,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\X.CoreLib\X.CoreLib.csproj">
-      <Project>{d273509d-612c-47c3-b2a6-c203d96b90d3}</Project>
-      <Name>X.CoreLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.UI.LiteDataGrid\X.UI.LiteDataGrid.csproj">
-      <Project>{dbaffcc8-1ac5-4a13-8cd8-57a3d1d4e243}</Project>
-      <Name>X.UI.LiteDataGrid</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.UI.LiteTab\X.UI.LiteTab.csproj">
-      <Project>{7564864b-e139-42a3-b53f-0714d118edae}</Project>
-      <Name>X.UI.LiteTab</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.UI.Path\X.UI.Path.csproj">
-      <Project>{9da51ef4-2dae-40d8-92ec-cc81162669df}</Project>
-      <Name>X.UI.Path</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.UI.RichButton\X.UI.RichButton.csproj">
-      <Project>{9e6a2f9c-a1f8-4d56-af2b-cb323a841e2e}</Project>
-      <Name>X.UI.RichButton</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X.UI.RichInput\X.UI.RichInput.csproj">
-      <Project>{1ddc0313-f305-4091-ad21-2b3d99bb5550}</Project>
-      <Name>X.UI.RichInput</Name>
+    <ProjectReference Include="..\X.SharedLibs\X.SharedLibs.csproj">
+      <Project>{6e375ca3-963d-4586-9a47-cbc69f4aaf89}</Project>
+      <Name>X.SharedLibs</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

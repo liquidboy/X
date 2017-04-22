@@ -255,9 +255,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\X.CoreLib\X.CoreLib.csproj">
-      <Project>{d273509d-612c-47c3-b2a6-c203d96b90d3}</Project>
-      <Name>X.CoreLib</Name>
+    <ProjectReference Include="..\X.SharedLibs\X.SharedLibs.csproj">
+      <Project>{6e375ca3-963d-4586-9a47-cbc69f4aaf89}</Project>
+      <Name>X.SharedLibs</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

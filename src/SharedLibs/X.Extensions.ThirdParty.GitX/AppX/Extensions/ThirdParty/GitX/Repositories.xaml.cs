@@ -33,13 +33,13 @@ namespace X.Extensions.ThirdParty.GitX
 
         private async void TlMain_OnTabChanged(object sender, EventArgs e)
         {
-            if (!(sender is UI.LiteTab.Tab)) return;
+            if (!(sender is X.UI.LiteTab.Tab)) return;
 
             lbRepos.ItemsSource = null;
             lbRepos.Visibility = Visibility.Collapsed;
 
 
-            var tab = sender as UI.LiteTab.Tab;
+            var tab = sender as X.UI.LiteTab.Tab;
 
             switch (tab.Name)
             {
