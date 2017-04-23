@@ -23,8 +23,8 @@ namespace X.Extensions.UI
             if (toolbarPosition.Equals(ExtensionInToolbarPositions.Bottom)) positions += "bottom";
             if (toolbarPosition.Equals(ExtensionInToolbarPositions.BottomFull)) positions += "bottom-full";
             
-            if (positions.Length == 0) return "ms-appx:///X.Extensions.UI/Assets/Extensions/tb-none.png";
-            else return "ms-appx:///X.Extensions.UI/Assets/Extensions/tb-" + positions + ".png";
+            if (positions.Length == 0) return "ms-appx:///X.SharedLibs/AppX/X.Extensions.UI/tb-none.png";
+            else return "ms-appx:///X.SharedLibs/AppX/X.Extensions.UI/tb-" + positions + ".png";
 
         }
         public object ConvertBack(object value, Type targetType, object parameter, string language)

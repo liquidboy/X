@@ -16,8 +16,8 @@
     <Grid x:Name="layoutRoot" Background="{x:Bind Background}">
         <StackPanel Orientation="Horizontal">
             <xuitb:Toolbar x:Name="spExtensions" Orientation="Horizontal" Click="spExtensions_Click" />
-            <Border VerticalAlignment="Stretch" BorderBrush="Black" Width="11" BorderThickness="1,0,0,0" Opacity="0.1" Margin="15,0,0,0" ></Border>
-            <xuitb:ImageButton x:Name="butExtensionStore" IconUri="ms-appx:///X.Extensions.UI/UIComponentExtensions/InstalledExtensionList/InstalledExtensionList.png" Width="20" Height="20" Margin="0,0, 10,0" PointerReleased="butExtensionStore_PointerReleased" />
+            <Border VerticalAlignment="Stretch" BorderBrush="White" Width="11" BorderThickness="1,0,0,0" Opacity="0.3" Margin="15,0,0,0" ></Border>
+            <xuitb:ImageButton x:Name="butExtensionStore" IconUri="ms-appx:///X.SharedLibs/AppX/Extensions/UIComponentExtensions/InstalledExtensionList/InstalledExtensionList.png" Width="20" Height="20" Margin="0,0, 10,0" PointerReleased="butExtensionStore_PointerReleased" />
         </StackPanel>
     </Grid>
 </UserControl>

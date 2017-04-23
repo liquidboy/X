@@ -46,8 +46,8 @@ namespace X.Browser.Views
                 X.Extensions.FirstParty.Settings.Installer.GetManifest(),
             });
 
-            await X.Services.Extensions.ExtensionsService.Instance.PopulateAllUWPExtensions();
-            X.Extensions.UI.Shared.ExtensionUtils.UpdateUWPExtensionsWithStateSavedData(X.Services.Extensions.ExtensionsService.Instance.GetUWPExtensions());
+            // await X.Services.Extensions.ExtensionsService.Instance.PopulateAllUWPExtensions();
+            // X.Extensions.UI.Shared.ExtensionUtils.UpdateUWPExtensionsWithStateSavedData(X.Services.Extensions.ExtensionsService.Instance.GetUWPExtensions());
 
 
             ctlExtensionsBarTop.InstallMyself(); // does Install + LoadExtensions

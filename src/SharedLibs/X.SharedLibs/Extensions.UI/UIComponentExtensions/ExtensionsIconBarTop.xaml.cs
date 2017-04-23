@@ -28,8 +28,9 @@ namespace X.Extensions.UIComponentExtensions
         public async void InstallMyself() {
             
             await X.Services.Extensions.ExtensionsService.Instance.Install(this);
-            
-            var el = new _Template(new ExtensionManifest("Installed Extensions UI", "ms-appx:///Extensions/UIComponentExtensions/InstalledExtensionList/InstalledExtensionList.png", "Sample Extensions", "1.0", "A UI to manage all the installed extensions", ExtensionInToolbarPositions.None, ExtensionInToolbarPositions.Right) { ContentControl = "X.Extensions.UIComponentExtensions.InstalledExtensionList", AssemblyName = "X.Extensions.UI" });
+
+            //var el = new _Template(new ExtensionManifest("Installed Extensions UI", "ms-appx:///Assets/Extensions/UIComponentExtensions/InstalledExtensionList/InstalledExtensionList.png", "Sample Extensions", "1.0", "A UI to manage all the installed extensions", ExtensionInToolbarPositions.None, ExtensionInToolbarPositions.Right) { ContentControl = "X.Extensions.UIComponentExtensions.InstalledExtensionList", AssemblyName = "X.SharedLibs" });
+            var el = new _Template(new ExtensionManifest("Installed Extensions UI", "ms-appx:///X.SharedLibs/AppX/Extensions/UIComponentExtensions/InstalledExtensionList/InstalledExtensionList.png", "Sample Extensions", "1.0", "A UI to manage all the installed extensions", ExtensionInToolbarPositions.None, ExtensionInToolbarPositions.Right) { ContentControl = "X.Extensions.UIComponentExtensions.InstalledExtensionList", AssemblyName = "X.SharedLibs" });
             await X.Services.Extensions.ExtensionsService.Instance.Install(el);
             butExtensionStore.ExtensionUniqueId = el.ExtensionManifest.UniqueID;
             

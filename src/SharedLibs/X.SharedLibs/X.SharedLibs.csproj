@@ -106,7 +106,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AppX\Extensions\FirstParty\Settings\Content.xaml.cs">
+    <Compile Include="Extensions.FirstParty.Settings\Content.xaml.cs">
       <DependentUpon>Content.xaml</DependentUpon>
     </Compile>
     <Compile Include="Browser.ViewModels\AddTabVM.cs" />
@@ -864,7 +864,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="AppX\Extensions\FirstParty\Settings\Content.xaml">
+    <Page Include="Extensions.FirstParty.Settings\Content.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1178,49 +1178,64 @@
     <Content Include="AppX\Extensions\FirstParty\Settings\Settings.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="AppX\Extensions\UIComponentExtensions\InstalledExtensionList\InstalledExtensionList.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AppX\X.Extensions.UI\close1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AppX\X.Extensions.UI\close2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AppX\X.Extensions.UI\close3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AppX\X.Extensions.UI\close4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AppX\X.Extensions.UI\separator.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AppX\X.Extensions.UI\tb-bottom-full.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AppX\X.Extensions.UI\tb-bottom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AppX\X.Extensions.UI\tb-left.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AppX\X.Extensions.UI\tb-lefttop.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AppX\X.Extensions.UI\tb-lefttopright.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AppX\X.Extensions.UI\tb-none.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AppX\X.Extensions.UI\tb-right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AppX\X.Extensions.UI\tb-rightbottom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AppX\X.Extensions.UI\tb-top.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AppX\X.Extensions.UI\tb-topbottom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AppX\X.Extensions.UI\tb-topright.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AppX\X.Extensions.UI\tb-toprightbottom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="AppX\X.UI.Composition.Assets\BeveledEdges.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="AppX\X.UI.Composition.Assets\SphericalWithMask.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Extensions.UI\Assets\Extensions\separator.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Extensions.UI\Assets\Extensions\tb-bottom-full.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Extensions.UI\Assets\Extensions\tb-bottom.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Extensions.UI\Assets\Extensions\tb-left.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Extensions.UI\Assets\Extensions\tb-lefttop.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Extensions.UI\Assets\Extensions\tb-lefttopright.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Extensions.UI\Assets\Extensions\tb-none.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Extensions.UI\Assets\Extensions\tb-right.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Extensions.UI\Assets\Extensions\tb-rightbottom.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Extensions.UI\Assets\Extensions\tb-top.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Extensions.UI\Assets\Extensions\tb-topbottom.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Extensions.UI\Assets\Extensions\tb-topright.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Extensions.UI\Assets\Extensions\tb-toprightbottom.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Extensions.UI\ThirdParty\_SharedAssets\close1.png">
