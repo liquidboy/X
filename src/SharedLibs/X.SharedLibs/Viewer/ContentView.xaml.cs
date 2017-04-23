@@ -93,8 +93,8 @@ namespace X.Viewer
                 else if (uriNew.Contains(".map")) cv.Renderer = new MapView.MapViewRenderer();
                 else if (uriNew.Contains(".sketch")) cv.Renderer = new SketchFlow.SketchFlowRenderer();
                 else if (uriNew.Contains(".urho")) cv.Renderer = new UrhoSharp.UrhoRenderer();
-                else if (uriNew.Contains(".flickr")) cv.Renderer = new Flickr.FlickrRenderer();
-                else if (uriNew.Contains(".twitter")) cv.Renderer = new Twitter.TwitterRenderer();
+                // else if (uriNew.Contains(".flickr")) cv.Renderer = new Flickr.FlickrRenderer();
+                // else if (uriNew.Contains(".twitter")) cv.Renderer = new Twitter.TwitterRenderer();
                 else if (uriNew.Contains(".comp")) cv.Renderer = new WinComposition.DirectCompositionRenderer();
                 else cv.Renderer = new WebViewRenderer();
                 

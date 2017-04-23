@@ -64,7 +64,7 @@ namespace X.Browser
                 this.QueryNames = new ObservableCollection<NameValue>();
                 foreach (var qnp in parts)
                 {
-                    if (qnp.Length > 0)
+                    if (qnp.Length > 1)
                     {
                         var qnpParts = qnp.Split("=".ToCharArray());
                         var qn = qnpParts[0];

@@ -162,12 +162,12 @@ namespace X.Browser.Views
                             //update thumb in VM
                             var fullUriHash = string.Concat(X.Services.Image.Service.Instance.MediumLocation, "\\", uriHash, ".png");
                             //if (!vm.SelectedTab.ThumbUri.Equals(fullUriHash)) {
-                            vm.SelectedTab.ThumbUri = fullUriHash + "?v=" + Guid.NewGuid().ToString();
-                            vm.SelectedTab.ExternalRaisePropertyChanged("ThumbUri");
-                            //}
-
-                            vm.SelectedTab.LastRefreshedDate = DateTime.UtcNow;
-
+                            if (vm.SelectedTab!=null) {
+                                vm.SelectedTab.ThumbUri = fullUriHash + "?v=" + Guid.NewGuid().ToString();
+                                vm.SelectedTab.ExternalRaisePropertyChanged("ThumbUri");
+                                vm.SelectedTab.LastRefreshedDate = DateTime.UtcNow;
+                            }
+                            
                         }
 
 
