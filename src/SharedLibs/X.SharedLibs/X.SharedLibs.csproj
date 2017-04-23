@@ -964,10 +964,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Extensions.UI\Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Extensions.UI\UIComponentExtensions\ExtensionsIconBarBottom.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

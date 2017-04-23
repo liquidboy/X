@@ -22,6 +22,8 @@
     xmlns:uiuc="using:X.UI.UserCard"
     xmlns:uizc="using:X.UI.ZoomCanvas"
     xmlns:uivw="using:X.Viewer"
+    xmlns:uiece="using:X.Extensions.UIComponentExtensions"
+    xmlns:uieui="using:X.Extensions.UI"
     >
 
     <!-- ======= -->
@@ -4220,5 +4222,39 @@
     <!-- UI.Viewer -->
     <!-- ========= -->
 
-    
+
+    <!-- ============= -->
+    <!-- Extensions.UI -->
+    <!-- ============= -->
+    <Style TargetType="uieui:ShellWithExtensions" >
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="uieui:ShellWithExtensions">
+                    <uichrome:Shell x:Name="ctlShell" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" uichrome:Shell.ContentMain="{TemplateBinding ContentMain}" 
+                                uichrome:Shell.IsShowingBorders="Visible" uichrome:Shell.ExtensionBackground="#FFF2F2F2">
+                        <uichrome:Shell.BarTop>
+                            <uiece:ExtensionsIconBarTop x:Name="ctlExtensionsBarTop" HorizontalAlignment="Stretch" Margin="0,0,0,0"></uiece:ExtensionsIconBarTop>
+                        </uichrome:Shell.BarTop>
+                        <uichrome:Shell.BarBottom>
+                            <uiece:ExtensionsIconBarBottom x:Name="ctlExtensionsBarBottom" Margin="0,0,0,0"></uiece:ExtensionsIconBarBottom>
+                        </uichrome:Shell.BarBottom>
+                        <uichrome:Shell.BarLeft>
+                            <uiece:ExtensionsIconBarLeft x:Name="ctlExtensionsBarLeft" Padding="0,10,0,10"></uiece:ExtensionsIconBarLeft>
+                        </uichrome:Shell.BarLeft>
+                        <uichrome:Shell.BarRight>
+                            <uiece:ExtensionsIconBarRight x:Name="ctlExtensionsBarRight" Padding="0,10,0,10"></uiece:ExtensionsIconBarRight>
+                        </uichrome:Shell.BarRight>
+                        <uichrome:Shell.Footer>
+                            <ContentControl x:Name="ctlFooter" Content="{TemplateBinding Footer}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ></ContentControl>
+                        </uichrome:Shell.Footer>
+                    </uichrome:Shell>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+
+
 </ResourceDictionary>
