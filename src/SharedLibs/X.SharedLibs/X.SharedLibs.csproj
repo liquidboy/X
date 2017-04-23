@@ -1175,9 +1175,9 @@
     <Folder Include="UI.RichImage\assets\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AppX\Extensions\FirstParty\Settings\Settings.png">
+    <Content Include="AppX\Extensions\FirstParty\Settings\Settings.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    </Content>
     <Content Include="AppX\X.UI.Composition.Assets\BeveledEdges.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
