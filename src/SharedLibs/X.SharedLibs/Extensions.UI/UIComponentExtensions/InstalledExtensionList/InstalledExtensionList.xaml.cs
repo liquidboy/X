@@ -179,6 +179,18 @@ namespace X.Extensions.UIComponentExtensions
             _SendMessageSource?.Raise(this, new RequestRefreshToolbarExtensionsEventArgs() { ReceiverType = ExtensionType.UIComponent });
         }
 
+        private void tlMain_OnTabChanged(object sender, EventArgs e)
+        {
+            if (svExtensions.Visibility == Visibility.Visible) {
+                svExtensions.Visibility = Visibility.Collapsed;
+                svStore.Visibility = Visibility.Visible;
+            }
+            else {
+                svExtensions.Visibility = Visibility.Visible;
+                svStore.Visibility = Visibility.Collapsed;
+            }
+        }
+
         //private void butClose_PointerReleased(object sender, PointerRoutedEventArgs e)
         //{
         //    SendMessage?.Invoke(this, new CloseExtensionEventArgs() { ReceiverType = ExtensionType.UIComponent, ExtensionUniqueGuid = ExtensionManifest.UniqueID });

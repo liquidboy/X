@@ -24,7 +24,7 @@
             <RowDefinition Height="20"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <xuitl:TabList x:Name="tlMain" Grid.Row="0"  Orientation="Horizontal" Margin="0,0,0,0" TabItemBorderColor="DarkGray" GlowColor="White" HorizontalAlignment="Center" VerticalAlignment="Top">
+        <xuitl:TabList x:Name="tlMain" OnTabChanged="tlMain_OnTabChanged" Grid.Row="0"  Orientation="Horizontal" Margin="0,0,0,0" TabItemBorderColor="DarkGray" GlowColor="White" HorizontalAlignment="Center" VerticalAlignment="Top">
 
         </xuitl:TabList>
 
@@ -42,7 +42,7 @@
             <Border VerticalAlignment="Bottom" BorderBrush="#FFB9B9B9" BorderThickness="0,0,0,1" Width="30"></Border>
         </StackPanel>-->
 
-        <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,10,0,10" Grid.Row="1">
+        <ScrollViewer x:Name="svExtensions" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,10,0,10" Grid.Row="1">
             <ItemsControl x:Name="icMain" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  >
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -100,7 +100,9 @@
             </ItemsControl>
         </ScrollViewer>
 
-
+        <ScrollViewer x:Name="svStore" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,10,0,10" Grid.Row="1" Visibility="Collapsed">
+            
+        </ScrollViewer>
 
         <TextBlock x:Name="tbExtensionCount" FontSize="12" FontFamily="Segoe UI" Margin="0,0,5,5" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="Gray" Grid.Row="2"></TextBlock>
     </Grid>
