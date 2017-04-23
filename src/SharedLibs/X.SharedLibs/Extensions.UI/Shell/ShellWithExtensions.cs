@@ -126,8 +126,8 @@ namespace X.Extensions.UI
                 X.Extensions.FirstParty.Settings.Installer.GetManifest(),
             });
 
-            // await X.Services.Extensions.ExtensionsService.Instance.PopulateAllUWPExtensions();
-            // X.Extensions.UI.Shared.ExtensionUtils.UpdateUWPExtensionsWithStateSavedData(X.Services.Extensions.ExtensionsService.Instance.GetUWPExtensions());
+            await X.Services.Extensions.ExtensionsService.Instance.PopulateAllUWPExtensions();
+            X.Extensions.UI.Shared.ExtensionUtils.UpdateUWPExtensionsWithStateSavedData(X.Services.Extensions.ExtensionsService.Instance.GetUWPExtensions());
 
             ctlExtensionsBarTop.InstallMyself();
             ctlExtensionsBarBottom.InstallMyself();
