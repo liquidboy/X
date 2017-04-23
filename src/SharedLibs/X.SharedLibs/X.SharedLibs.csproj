@@ -652,6 +652,7 @@
     <Compile Include="UI.Composition\SurfaceLoader.cs" />
     <Compile Include="UI.Composition\VisualTreeHelperExtensions.cs" />
     <Compile Include="UI.EffectLayer\AsyncHelpers.cs" />
+    <Compile Include="UI.EffectLayer\TransparentWindowBrush.cs" />
     <Compile Include="UI.EffectLayer\BackdropTintBlurBrush.cs" />
     <Compile Include="UI.EffectLayer\EffectLayer.cs" />
     <Compile Include="UI.EffectLayer\GlowEffectGraph.cs" />

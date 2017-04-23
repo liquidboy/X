@@ -10,10 +10,17 @@
     xmlns:xuiel="using:X.UI.EffectLayer"
     xmlns:snmc="using:SumoNinjaMonkey.Framework.Controls"
     mc:Ignorable="d">
-
+    <!--<Page.Background>
+        <xuiel:TransparentWindowBrush></xuiel:TransparentWindowBrush>
+    </Page.Background>-->
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="Assets/glitter-13.jpg" Stretch="UniformToFill" ></Image>
-        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="Assets/glitter-13.jpg" Stretch="UniformToFill" Margin="150,0,0,0"></Image>
+        <Rectangle HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="150">
+            <Rectangle.Fill>
+                <xuiel:TransparentWindowBrush></xuiel:TransparentWindowBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="150,0,0,0">
             <Rectangle.Fill>
                 <xuiel:BackdropTintBlurBrush></xuiel:BackdropTintBlurBrush>
             </Rectangle.Fill>
