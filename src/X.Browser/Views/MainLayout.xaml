@@ -210,12 +210,9 @@
 
     <Grid x:Name="layoutRoot" Background="{Binding Accent1Brush}">
 
-
-        <!-- ADD/MORE TAB BOTTOM BORDER -->
-        <Border Margin="0,0,250,0" BorderThickness="0,0,0,1" BorderBrush="#FFBB9104" Opacity="0.5" Width="95" Height="40" HorizontalAlignment="Right" VerticalAlignment="Top"></Border>
-
         <!-- VIEWS -->
-        <xuichrome:Shell x:Name="ctlShell" Margin="0,160,0,0" Background="{Binding Accent1Brush}" PointerEntered="grid_PointerEntered" xuichrome:Shell.ExtensionBackground="#FFF2F2F2" xuichrome:Shell.TopBackground="Black" >
+        <!--<xuichrome:Shell x:Name="ctlShell" Margin="0,160,0,0" Background="{Binding Accent1Brush}" PointerEntered="grid_PointerEntered" xuichrome:Shell.ExtensionBackground="#FFF2F2F2" xuichrome:Shell.TopBackground="Black" >-->
+        <xuichrome:Shell x:Name="ctlShell" Margin="0,40,0,0" Background="{Binding Accent1Brush}" PointerEntered="grid_PointerEntered" xuichrome:Shell.ExtensionBackground="#FFF2F2F2" xuichrome:Shell.TopBackground="Black" >
             <xuichrome:Shell.ContentMain>
                 <xviewer:ContentView x:Name="wvMain" Grid.Row="1" Uri="{Binding SelectedTab.Uri}" SendMessage="wvMain_SendMessage" Canvas.ZIndex="100" >
 
@@ -279,7 +276,7 @@
         </xuichrome:Header>
 
         <!-- ADD/MORE TAB & USER CARD -->
-        <Border Margin="0,0,250,0" BorderThickness="0,0,0,1" BorderBrush="#FFBB9104" Opacity="0.5" Width="95" Height="40" HorizontalAlignment="Right" VerticalAlignment="Top"></Border>
+        <!--<Border Margin="0,0,250,0" BorderThickness="0,0,0,1" BorderBrush="#FFBB9104" Opacity="0.5" Width="95" Height="40" HorizontalAlignment="Right" VerticalAlignment="Top"></Border>-->
         <StackPanel Orientation="Horizontal" Margin="0,0,140,2" HorizontalAlignment="Right" VerticalAlignment="Top">
             <!-- MORE TAB -->
             <Button
@@ -351,7 +348,7 @@
 
         
         <!-- THUMBNAIL VIEW -->
-        <Grid Margin="0,40,0,0" VerticalAlignment="Top" Height="120">
+        <!--<Grid Margin="0,40,0,0" VerticalAlignment="Top" Height="120">
             <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
                 <Rectangle.Fill>
                     <xuiel:TransparentWindowBrush></xuiel:TransparentWindowBrush>
@@ -385,13 +382,15 @@
                     </DataTemplate>
                 </GridView.ItemTemplate>
             </GridView>
-        </Grid>
+        </Grid>-->
         
         <!-- DX LAYER -->
-        <Canvas x:Name="canvasDXLayer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed" Margin="0,120,0,0"  />
+        <!--<Canvas x:Name="canvasDXLayer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed" Margin="0,120,0,0"  />-->
+        <Canvas x:Name="canvasDXLayer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed" Margin="0,40,0,0"  />
 
         <!-- Toast -->
-        <extcontrols:Toast x:Name="ctlToast" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="60,220,0,0" Width="280" Height="90" />
+        <!--<extcontrols:Toast x:Name="ctlToast" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="60,220,0,0" Width="280" Height="90" />-->
+        <extcontrols:Toast x:Name="ctlToast" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="60,180,0,0" Width="280" Height="90" />
 
     </Grid>
 </Page>
