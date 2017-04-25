@@ -35,13 +35,13 @@ namespace X.UI.EffectLayer
             // Define Effect graph
             // COLOR SWAP
             Matrix5x4 mat = new Matrix5x4()
-                    {
-                        M11 = 0,  M12 = 0f, M13 = 1f, M14 = 0,
-                        M21 = 0f, M22 = 1f, M23 = 0f, M24 = 0,
-                        M31 = 1f, M32 = 0f, M33 = 0f, M34 = 0,
-                        M41 = 0f, M42 = 0f, M43 = 0f, M44 = 1,
-                        M51 = 0,  M52 = 0,  M53 = 0,  M54 = 0
-                    };
+            {
+                M11 = 0,  M12 = 0f, M13 = 1f, M14 = 0,
+                M21 = 0f, M22 = 1f, M23 = 0f, M24 = 0,
+                M31 = 1f, M32 = 0f, M33 = 0f, M34 = 0,
+                M41 = 0f, M42 = 0f, M43 = 0f, M44 = 1,
+                M51 = 0,  M52 = 0,  M53 = 0,  M54 = 0
+            };
 
             //// COLOR MASK (DOESNT WORK ???)
             // Matrix5x4 mat = new Matrix5x4()

@@ -16,9 +16,11 @@
     xmlns:xviewer="using:X.Viewer"
     xmlns:xonebox="using:X.UI.OneBox"
     xmlns:converters="using:X.Browser.Converters"
+    xmlns:uiclconv="using:CoreLib.Converters"
     xmlns:xuiat="using:X.UI.AddTab"
     xmlns:xuimt="using:X.UI.MoreTab"
     xmlns:xuiuc="using:X.UI.UserCard"
+    xmlns:xuiel="using:X.UI.EffectLayer"
     mc:Ignorable="d">
     <Page.Resources>
         <converters:BooleanToVisibilityConverter x:Key="TrueToVisibleConverter" />
@@ -209,9 +211,11 @@
     <Grid x:Name="layoutRoot" Background="{Binding Accent1Brush}">
 
 
+        <!-- ADD/MORE TAB BOTTOM BORDER -->
+        <Border Margin="0,0,250,0" BorderThickness="0,0,0,1" BorderBrush="#FFBB9104" Opacity="0.5" Width="95" Height="40" HorizontalAlignment="Right" VerticalAlignment="Top"></Border>
 
-
-        <xuichrome:Shell x:Name="ctlShell" Margin="0,40,0,0" Background="{Binding Accent1Brush}" PointerEntered="grid_PointerEntered" xuichrome:Shell.ExtensionBackground="#FFF2F2F2" xuichrome:Shell.TopBackground="Black" >
+        <!-- VIEWS -->
+        <xuichrome:Shell x:Name="ctlShell" Margin="0,160,0,0" Background="{Binding Accent1Brush}" PointerEntered="grid_PointerEntered" xuichrome:Shell.ExtensionBackground="#FFF2F2F2" xuichrome:Shell.TopBackground="Black" >
             <xuichrome:Shell.ContentMain>
                 <xviewer:ContentView x:Name="wvMain" Grid.Row="1" Uri="{Binding SelectedTab.Uri}" SendMessage="wvMain_SendMessage" Canvas.ZIndex="100" >
 
@@ -259,7 +263,11 @@
                 <ContentControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" >
                     <Grid>
                         <!--title header background guides for mouse cursor-->
-                        <Rectangle Fill="{Binding Accent1Brush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Rectangle>
+                        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Rectangle.Fill>
+                                <xuiel:TransparentWindowBrush></xuiel:TransparentWindowBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
                         <Rectangle x:Name="recResizeTop" Height="5" HorizontalAlignment="Stretch" Fill="White" Opacity="0.3" VerticalAlignment="Top"  />
                         <Rectangle x:Name="recDragTop" Height="15" HorizontalAlignment="Stretch" Fill="White" Opacity="0.1" VerticalAlignment="Top" IsHitTestVisible="True" />
 
@@ -270,7 +278,8 @@
             </xuichrome:Header.TitleContent>
         </xuichrome:Header>
 
-        
+        <!-- ADD/MORE TAB & USER CARD -->
+        <Border Margin="0,0,250,0" BorderThickness="0,0,0,1" BorderBrush="#FFBB9104" Opacity="0.5" Width="95" Height="40" HorizontalAlignment="Right" VerticalAlignment="Top"></Border>
         <StackPanel Orientation="Horizontal" Margin="0,0,140,2" HorizontalAlignment="Right" VerticalAlignment="Top">
             <!-- MORE TAB -->
             <Button
@@ -334,16 +343,55 @@
                 </Grid>
             </Button>
 
+            <!-- USER CARD -->
             <xuiuc:SmallCard Foreground="Black" IsAvatarOnRight="True" PrimaryName="Jose Fajardo" SecondaryName="online" Margin="10,5,0,0" AvatarUri="ms-appx:///Assets/jose.png">
 
             </xuiuc:SmallCard>
         </StackPanel>
 
+        
+        <!-- THUMBNAIL VIEW -->
+        <Grid Margin="0,40,0,0" VerticalAlignment="Top" Height="120">
+            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                <Rectangle.Fill>
+                    <xuiel:TransparentWindowBrush></xuiel:TransparentWindowBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            <GridView ItemsSource="{Binding Tabs}" VerticalAlignment="Center" Margin="0,0,0,0" SelectedItem="{Binding SelectedTab}" SelectionMode="None">
+                <GridView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Width="185" Height="120" >
+                            <Grid Padding="10,15,10,5" Visibility="{Binding HasFocus, Converter={StaticResource InverseBooleanConverter}}">
+                                <Image Source="{Binding ThumbUri}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="UniformToFill" Margin="5,5,0,5" Opacity="0.7" >
+                                    <Image.Projection>
+                                        <PlaneProjection RotationY="35"/>
+                                    </Image.Projection>
+                                </Image>
+                                <Image Source="{Binding FaviconUri}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Stretch="UniformToFill" Margin="0,0,0,5" Width="20" Height="20" >
+
+                                </Image>
+                            </Grid>
+                            <Grid Background="Black" Visibility="{Binding HasFocus, Converter={StaticResource TrueToVisibleConverter}}">
+                                <Image Source="{Binding ThumbUri}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="UniformToFill" Margin="5" Opacity="1" >
+                                    <Image.Projection>
+                                        <PlaneProjection RotationY="0"/>
+                                    </Image.Projection>
+                                </Image>
+                                <Image Source="{Binding FaviconUri}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Stretch="UniformToFill" Margin="10" Width="20" Height="20" >
+
+                                </Image>
+                            </Grid>
+                        </Grid>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+        </Grid>
+        
         <!-- DX LAYER -->
-        <Canvas x:Name="canvasDXLayer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed" />
+        <Canvas x:Name="canvasDXLayer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed" Margin="0,120,0,0"  />
 
         <!-- Toast -->
-        <extcontrols:Toast x:Name="ctlToast" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="60,100,0,0" Width="280" Height="90" />
+        <extcontrols:Toast x:Name="ctlToast" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="60,220,0,0" Width="280" Height="90" />
 
     </Grid>
 </Page>

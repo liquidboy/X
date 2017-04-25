@@ -28,6 +28,7 @@ namespace X.Browser
         public TabViewModel()
         {
             ChildTabs = new ObservableCollection<TabViewModel>();
+            this.HasFocus = false;
         }
 
 
