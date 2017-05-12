@@ -11,8 +11,8 @@
     <AssemblyName>X.Extension.ThirdParty.Flickr</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.14366.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.14366.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.15063.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -144,21 +144,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SharedLibs\X.UI.APIKeys\X.UI.APIKeys.csproj">
-      <Project>{23257002-db11-4bfa-837c-649b558575e5}</Project>
-      <Name>X.UI.APIKeys</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SharedLibs\X.UI.Composition\X.UI.Composition.csproj">
-      <Project>{c356cb80-451e-4260-9a4a-c9515b93c44d}</Project>
-      <Name>X.UI.Composition</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SharedLibs\X.UI.LiteTab\X.UI.LiteTab.csproj">
-      <Project>{7564864b-e139-42a3-b53f-0714d118edae}</Project>
-      <Name>X.UI.LiteTab</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SharedLibs\X.UI.UserCard\X.UI.UserCard.csproj">
-      <Project>{5020ec7c-3018-4af2-9481-8b0efe491170}</Project>
-      <Name>X.UI.UserCard</Name>
+    <ProjectReference Include="..\..\SharedLibs\X.SharedLibs\X.SharedLibs.csproj">
+      <Project>{6e375ca3-963d-4586-9a47-cbc69f4aaf89}</Project>
+      <Name>X.SharedLibs</Name>
     </ProjectReference>
     <ProjectReference Include="..\X.Extension.ThirdParty.Flickr.Services\X.Extension.ThirdParty.Flickr.Services.csproj">
       <Project>{d8b7aa03-67cb-4763-9370-8891600a557a}</Project>

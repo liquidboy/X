@@ -11,8 +11,8 @@
     <AssemblyName>X.Extension.ThirdParty.FlickrComments</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.14366.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.14366.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.15063.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -144,9 +144,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SharedLibs\X.UI.Composition\X.UI.Composition.csproj">
-      <Project>{c356cb80-451e-4260-9a4a-c9515b93c44d}</Project>
-      <Name>X.UI.Composition</Name>
+    <ProjectReference Include="..\..\SharedLibs\X.SharedLibs\X.SharedLibs.csproj">
+      <Project>{6e375ca3-963d-4586-9a47-cbc69f4aaf89}</Project>
+      <Name>X.SharedLibs</Name>
     </ProjectReference>
     <ProjectReference Include="..\X.Extension.ThirdParty.FlickrComments.Services\X.Extension.ThirdParty.FlickrComments.Services.csproj">
       <Project>{3c0404fc-b3f1-4eff-937e-0121fc322f84}</Project>

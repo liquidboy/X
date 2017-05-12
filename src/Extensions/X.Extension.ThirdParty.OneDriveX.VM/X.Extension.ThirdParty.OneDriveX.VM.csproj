@@ -11,8 +11,8 @@
     <AssemblyName>X.Extension.ThirdParty.OneDriveX.VM</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.14366.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.14366.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.15063.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -112,17 +112,9 @@
     <EmbeddedResource Include="Properties\X.Extension.ThirdParty.OneDriveX.VM.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SharedLibs\X.CoreLib\X.CoreLib.csproj">
-      <Project>{d273509d-612c-47c3-b2a6-c203d96b90d3}</Project>
-      <Name>X.CoreLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SharedLibs\X.Services.Data\X.Services.Data.csproj">
-      <Project>{9cf3fa6f-8edd-4c98-a505-a6614aa214cd}</Project>
-      <Name>X.Services.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SharedLibs\X.Services.Image\X.Services.Image.csproj">
-      <Project>{9d98bf69-e061-4f8c-b8c9-ce65116374b8}</Project>
-      <Name>X.Services.Image</Name>
+    <ProjectReference Include="..\..\SharedLibs\X.SharedLibs\X.SharedLibs.csproj">
+      <Project>{6e375ca3-963d-4586-9a47-cbc69f4aaf89}</Project>
+      <Name>X.SharedLibs</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">
