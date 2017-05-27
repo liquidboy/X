@@ -1,0 +1,30 @@
+﻿<Page
+    x:Class="X.NeonShell.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:X.NeonShell"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xuieb="using:X.SharedLibs.UI.EffectLayer.Brushes"
+    xmlns:xuiee="using:X.SharedLibs.UI.EffectLayer.Effects"
+    xmlns:xuishell="using:X.UI.Chrome"
+    mc:Ignorable="d">
+    <Page.Lights>
+        <xuiee:PointLightEffect/>
+        <xuiee:AmbientLightEffect/>
+    </Page.Lights>
+    <Grid >
+        <Grid.Background>
+            <xuieb:HostBlurBrush BlurColor="White" BlurAmount="50"/>
+        </Grid.Background>
+        <xuishell:Header x:Name="ctlHeader" Title="FavouriteMX" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="32" Background="Transparent" xuiee:PointLightEffect.IsTarget="True" xuiee:AmbientLightEffect.IsTarget="True">
+            <!--<xuishell:Header.TitleContent>
+                <ContentControl>
+                    <Grid HorizontalAlignment="Stretch" Background="Black" VerticalAlignment="Stretch">
+                        
+                    </Grid>
+                </ContentControl>
+            </xuishell:Header.TitleContent>-->
+        </xuishell:Header>
+    </Grid>
+</Page>

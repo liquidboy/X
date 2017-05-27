@@ -652,6 +652,9 @@
     <Compile Include="UI.Composition\SurfaceLoader.cs" />
     <Compile Include="UI.Composition\VisualTreeHelperExtensions.cs" />
     <Compile Include="UI.EffectLayer\AsyncHelpers.cs" />
+    <Compile Include="UI.EffectLayer\Brushes\HostBlurBrush.cs" />
+    <Compile Include="UI.EffectLayer\Effects\AmbientLightEffect.cs" />
+    <Compile Include="UI.EffectLayer\Effects\PointLightEffect.cs" />
     <Compile Include="UI.EffectLayer\TransparentWindowBrush.cs" />
     <Compile Include="UI.EffectLayer\BackdropTintBlurBrush.cs" />
     <Compile Include="UI.EffectLayer\EffectLayer.cs" />
@@ -1163,12 +1166,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.UI.Composition.Toolkit\Microsoft.UI.Composition.Toolkit.vcxproj">
-      <Project>{08a7d060-593a-4978-8dcc-b2029aca7c95}</Project>
-      <Name>Microsoft.UI.Composition.Toolkit</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="UI.RichImage\assets\" />
   </ItemGroup>
   <ItemGroup>
@@ -1270,6 +1267,12 @@
     <EmbeddedResource Include="UI.MoreTab\Assets\Pinned-nor.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.UI.Composition.Toolkit\Microsoft.UI.Composition.Toolkit.vcxproj">
+      <Project>{08a7d060-593a-4978-8dcc-b2029aca7c95}</Project>
+      <Name>Microsoft.UI.Composition.Toolkit</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
