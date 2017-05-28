@@ -1267,7 +1267,7 @@ namespace X.CoreLib.Shared.Services
             FavouriteMXPictureFolder = "";
             WatchMXVideoFolder = "";
             ExplorerMXDocumentsFolder = "";
-            AMSUrl = "https://uapx.azurewebsites.net";
+            AMSUrl = "http://uapx.azurewebsites.net";
             AMSKey = "";
             
         }

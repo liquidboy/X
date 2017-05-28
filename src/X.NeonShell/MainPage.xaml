@@ -26,5 +26,6 @@
                 </ContentControl>
             </xuishell:Header.TitleContent>-->
         </xuishell:Header>
+        <Frame x:Name="ContentFrame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,32,0,0"/>
     </Grid>
 </Page>
