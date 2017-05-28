@@ -44,11 +44,11 @@ namespace X.NeonShell
         {
             if (_fvm.IsFlickrLoginDetailsCached())
             {
-                ContentFrame.Navigate(typeof(FlickrHomeView));
+                ContentFrame.Navigate(typeof(YourDashboardView));
             }
             else
             {
-                ContentFrame.Navigate(typeof(FlickrLoginView));
+                ContentFrame.Navigate(typeof(PublicDashboardView));
             }
         }
 

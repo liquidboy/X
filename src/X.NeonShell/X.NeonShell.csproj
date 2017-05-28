@@ -96,21 +96,32 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="ContinuationManager.cs" />
-    <Compile Include="Controls\ContextMenuView.xaml.cs">
+    <Compile Include="Features\AuthenticationCard\AuthenticationCardView.xaml.cs">
+      <DependentUpon>AuthenticationCardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Features\AuthenticationCard\AuthenticationCardViewModel.cs" />
+    <Compile Include="Features\HamburgerNavigation\HamburgerNavigationView.xaml.cs">
+      <DependentUpon>HamburgerNavigationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Features\HamburgerNavigation\HamburgerNavigationViewModel.cs" />
+    <Compile Include="Features\PublicDashboard\PublicDashboardViewModel.cs" />
+    <Compile Include="Features\YourAccount\YourAccountViewModel.cs" />
+    <Compile Include="Features\YourDashboard\YourDashboardViewModel.cs" />
+    <Compile Include="MVVM\Controls\ContextMenuView.xaml.cs">
       <DependentUpon>ContextMenuView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ContextMenuService.cs" />
-    <Compile Include="Services\NavigationService.cs" />
-    <Compile Include="ViewModels\DefaultViewModel.cs" />
-    <Compile Include="ViewModels\FlickrViewModel.cs" />
-    <Compile Include="Views\FlickrHomeView.xaml.cs">
+    <Compile Include="MVVM\Services\ContextMenuService.cs" />
+    <Compile Include="MVVM\Services\NavigationService.cs" />
+    <Compile Include="MVVM\ViewModels\DefaultViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\FlickrViewModel.cs" />
+    <Compile Include="MVVM\Views\FlickrHomeView.xaml.cs">
       <DependentUpon>FlickrHomeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FlickrLoginView.xaml.cs">
+    <Compile Include="MVVM\Views\FlickrLoginView.xaml.cs">
       <DependentUpon>FlickrLoginView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -135,7 +146,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Controls\ContextMenuView.xaml">
+    <Page Include="Features\AuthenticationCard\AuthenticationCardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Features\HamburgerNavigation\HamburgerNavigationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Features\PublicDashboard\PublicDashboardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Features\YourAccount\YourAccountView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Features\YourDashboard\YourDashboardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\Controls\ContextMenuView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -143,11 +174,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\FlickrHomeView.xaml">
+    <Page Include="MVVM\Views\FlickrHomeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\FlickrLoginView.xaml">
+    <Page Include="MVVM\Views\FlickrLoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -171,6 +202,7 @@
       <Name>SQLite for Universal Windows Platform</Name>
     </SDKReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
