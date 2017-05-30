@@ -7,16 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:xuieb="using:X.SharedLibs.UI.EffectLayer.Brushes"
     xmlns:xuiee="using:X.SharedLibs.UI.EffectLayer.Effects"
+    xmlns:xnsfhn="using:X.NeonShell.Features.HamburgerNavigation"
     xmlns:xuishell="using:X.UI.Chrome"
     mc:Ignorable="d">
     <Page.Lights>
         <xuiee:PointLightEffect/>
         <xuiee:AmbientLightEffect/>
     </Page.Lights>
-    <Grid >
-        <Grid.Background>
-            <xuieb:HostBlurBrush BlurColor="White" BlurAmount="50"/>
-        </Grid.Background>
+    <Grid Background="WhiteSmoke">
         <xuishell:Header x:Name="ctlHeader" Title="FavouriteMX" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="32" Background="Transparent" xuiee:PointLightEffect.IsTarget="True" xuiee:AmbientLightEffect.IsTarget="True">
             <!--<xuishell:Header.TitleContent>
                 <ContentControl>
@@ -26,6 +24,39 @@
                 </ContentControl>
             </xuishell:Header.TitleContent>-->
         </xuishell:Header>
-        <Frame x:Name="ContentFrame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,32,0,0"/>
+
+        <SplitView 
+            x:Name="MainSplitView"
+            DisplayMode="CompactInline"
+            IsPaneOpen="True"
+            Margin="0,32,0,0">
+
+            <SplitView.Pane>
+                <xnsfhn:HamburgerNavigationView x:Name="ctlHamburgerNavigationView" OnNavigationChanged="NavigationChanged"  ></xnsfhn:HamburgerNavigationView>
+            </SplitView.Pane>
+
+            <SplitView.Content>
+                <Grid>
+                    <Grid.Background>
+                        <xuieb:HostBlurBrush BlurColor="White" BlurAmount="20"/>
+                    </Grid.Background>
+                    <Frame x:Name="ContentFrame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0"/>
+                </Grid>
+            </SplitView.Content>
+        </SplitView>
+
+        <Button 
+                x:Name="HamburgerButton"
+                Content="&#xE700;"
+                FontSize="16"
+                FontFamily="Segoe MDL2 Assets"
+                Width="48"
+                Height="48"
+                Margin="0,32,0,0"
+                Background="Transparent"
+                BorderThickness="0"
+                VerticalAlignment="Top"
+                Click="HamburgerButton_Click"/>
+
     </Grid>
 </Page>

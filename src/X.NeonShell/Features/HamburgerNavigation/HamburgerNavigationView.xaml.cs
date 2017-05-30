@@ -12,8 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
+using X.NeonShell.Extensions;
 
 namespace X.NeonShell.Features.HamburgerNavigation
 {
@@ -23,5 +22,44 @@ namespace X.NeonShell.Features.HamburgerNavigation
         {
             this.InitializeComponent();
         }
+
+        private void NavRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            RadioButton rb = (RadioButton)sender;
+            OnNavigationChanged?.Invoke(null, new NavigationChangedArgs() { Data = (string)rb.Tag, FriendlyText = (string)rb.Content });
+        }
+
+
+        
+        public void SetSelectedMenuItem(string contentName) {
+
+            foreach (var rb in this.FindVisualChildList<RadioButton>())
+            {
+                if (contentName == ConvertRadioButtonToView((string)rb.Content))
+                {
+                    rb.IsChecked = true;
+                    return;
+                }
+            }
+            
+        }
+
+        private string ConvertRadioButtonToView(string content) {
+            var ctn = "";
+            switch (content)
+            {
+                case "Home": ctn = "PublicDashboardView"; break;
+                case "Your Account": ctn = "YourAccountView"; break;
+                case "Your Photos": ctn = "YourDashboardView"; break;
+            }
+            return ctn;
+        }
+        
+        public event EventHandler<NavigationChangedArgs> OnNavigationChanged;
+    }
+
+    public class NavigationChangedArgs : EventArgs {
+        public string Data;
+        public string FriendlyText;
     }
 }

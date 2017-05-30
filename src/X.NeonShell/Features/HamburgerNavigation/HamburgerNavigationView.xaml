@@ -5,11 +5,140 @@
     xmlns:local="using:X.NeonShell.Features.HamburgerNavigation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xuieb="using:X.SharedLibs.UI.EffectLayer.Brushes"
+    xmlns:xuiee="using:X.SharedLibs.UI.EffectLayer.Effects"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
+    <!--<UserControl.Lights>
+        <xuiee:PointLightEffect/>
+        <xuiee:AmbientLightEffect/>
+    </UserControl.Lights>-->
+    <UserControl.Resources>
+        <Style x:Key="NavRadioButtonStyle" TargetType="RadioButton">
+            <Setter Property="Background" Value="{ThemeResource RadioButtonBackground}"/>
+            <Setter Property="Foreground" Value="{ThemeResource RadioButtonForeground}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Height" Value="48"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="UseSystemFocusVisuals" Value="True"/>
+            <Setter Property="FocusVisualMargin" Value="-7,-3,-7,-3"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Grid x:Name="RootGrid" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="48"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="RootGrid">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ListViewItemBackgroundPointerOver}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="RootGrid">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ListViewItemBackgroundPressed}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="CheckStates">
+                                    <VisualState x:Name="Checked">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="checker" Storyboard.TargetProperty="Visibility">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Unchecked"/>
+                                    <VisualState x:Name="Indeterminate"/>
+                                </VisualStateGroup>
 
+                                <VisualStateGroup x:Name="VisualStateGroup">
+                                    <VisualState x:Name="VisualState_Wide">
+                                        <VisualState.StateTriggers>
+                                            <AdaptiveTrigger MinWindowWidth="800"/>
+                                        </VisualState.StateTriggers>
+                                    </VisualState>
+                                    <VisualState x:Name="VisualState_Normal">
+                                        <VisualState.StateTriggers>
+                                            <AdaptiveTrigger MinWindowWidth="600"/>
+                                        </VisualState.StateTriggers>
+                                    </VisualState>
+                                    <VisualState x:Name="VisualState_Narrow">
+                                        <VisualState.StateTriggers>
+                                            <AdaptiveTrigger MinWindowWidth="0"/>
+                                        </VisualState.StateTriggers>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <Border x:Name="B" Grid.ColumnSpan="2" BorderThickness="0,1">
+                                <Border.BorderBrush>
+                                    <xuieb:HostBlurBrush BlurAmount="10" xuiee:PointLightEffect.IsTarget="True" xuiee:AmbientLightEffect.IsTarget="True"/>
+                                </Border.BorderBrush>
+                                <!--<Border.Background>
+                                    <xuieb:HostBlurBrush BlurAmount="10" xuiee:PointLightEffect.IsTarget="True" xuiee:AmbientLightEffect.IsTarget="True"/>
+                                </Border.Background>-->
+                            </Border>
+
+                            <Grid Width="48" Height="48">
+                                <Border 
+                                    x:Name="checker"
+                                    Background="{ThemeResource SystemControlBackgroundAccentBrush}" 
+                                    Width="4"
+                                    Margin="2,2,0,2"
+                                    HorizontalAlignment="Left"
+                                    Visibility="Collapsed"/>
+
+                                <TextBlock 
+                                    x:Name="icon"
+                                    Text="{TemplateBinding Tag}" 
+                                    FontFamily="Segoe MDL2 Assets"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                            </Grid>
+                            <ContentPresenter
+                                x:Name="ContentPresenter" 
+                                AutomationProperties.AccessibilityView="Raw" 
+                                ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                ContentTransitions="{TemplateBinding ContentTransitions}"
+                                Content="{TemplateBinding Content}" 
+                                Grid.Column="1" 
+                                Foreground="{TemplateBinding Foreground}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                TextWrapping="Wrap" 
+                                Margin="12,0,0,0"
+                                VerticalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
     <Grid>
+        <Grid.Background>
+            <xuieb:HostBlurBrush BlurColor="WhiteSmoke" BlurAmount="20"/>
+        </Grid.Background>
+        <StackPanel 
+            x:Name="NavStackPanel"
+            Padding="0,48,0,0" xuiee:PointLightEffect.IsTarget="True" xuiee:AmbientLightEffect.IsTarget="True">
 
+            <RadioButton Tag="&#xE10F;" Content="Home" Style="{StaticResource NavRadioButtonStyle}" Checked="NavRadioButton_Checked"/>
+
+            <RadioButton Tag="&#xE1CE;" Content="Your Account" Style="{StaticResource NavRadioButtonStyle}" Checked="NavRadioButton_Checked"/>
+
+            <RadioButton Tag="&#xE11B;" Content="Your Photos" Style="{StaticResource NavRadioButtonStyle}" Checked="NavRadioButton_Checked"/>
+        </StackPanel>
     </Grid>
 </UserControl>

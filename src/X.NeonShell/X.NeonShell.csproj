@@ -124,6 +124,7 @@
     <Compile Include="MVVM\Views\FlickrLoginView.xaml.cs">
       <DependentUpon>FlickrLoginView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VisualTreeExtendsion.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

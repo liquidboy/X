@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -13,6 +14,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using X.NeonShell.Features.HamburgerNavigation;
 using X.NeonShell.ViewModels;
 using X.NeonShell.Views;
 
@@ -27,10 +29,28 @@ namespace X.NeonShell
         public MainPage()
         {
             this.InitializeComponent();
+
             InitVM();
             InitChrome();
+            InitNavigation();
             InitView();
+            
         }
+
+        private void InitNavigation() {
+            ContentFrame.Navigated += (s, args) =>
+            {
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                ContentFrame.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
+                
+                ctlHamburgerNavigationView.SetSelectedMenuItem(ContentFrame.SourcePageType.Name);
+
+            };
+
+            SystemNavigationManager.GetForCurrentView().BackRequested += MainPage_BackRequested;
+
+        }
+
 
         private void InitVM() {
             if (_fvm == null)
@@ -39,6 +59,18 @@ namespace X.NeonShell
                 this.DataContext = _fvm;
             }
         }
+
+        private void InitChrome()
+        {
+            ctlHeader.InitChrome(App.Current, ApplicationView.GetForCurrentView());
+        }
+
+        private void InitView() {
+            CheckIfFlickrLoggedIn();
+            
+        }
+
+
 
         public void CheckIfFlickrLoggedIn()
         {
@@ -52,14 +84,36 @@ namespace X.NeonShell
             }
         }
 
-        private void InitChrome()
+
+        private void MainPage_BackRequested(object sender, BackRequestedEventArgs e)
         {
-            ctlHeader.InitChrome(App.Current, ApplicationView.GetForCurrentView());
+            if (ContentFrame.CanGoBack)
+            {
+                e.Handled = true;
+                ContentFrame.GoBack();
+            }
         }
 
-        private void InitView() {
-            CheckIfFlickrLoggedIn();
-            
+        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainSplitView.IsPaneOpen = !MainSplitView.IsPaneOpen;
+        }
+
+        private void NavigationChanged(object sender, NavigationChangedArgs e)
+        {
+            switch (e.FriendlyText)
+            {
+                case "Home":
+                    ContentFrame.Navigate(typeof(PublicDashboardView));
+                    break;
+                case "Your Account":
+                    ContentFrame.Navigate(typeof(YourAccountView));
+                    break;
+                case "Your Photos":
+                    ContentFrame.Navigate(typeof(YourDashboardView));
+                    break;
+            }
+
         }
     }
 }

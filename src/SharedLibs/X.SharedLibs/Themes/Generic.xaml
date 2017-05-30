@@ -68,10 +68,10 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="uichrome:Header">
-                    <Grid x:Name="root" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="{TemplateBinding Height}">
+                    <Grid x:Name="root" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="{TemplateBinding Height}" Margin="0,0,0,0">
                         <Rectangle Fill="{TemplateBinding Background}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Rectangle>
                         <!--<xuiel:EffectLayer x:Name="bkgLayer" HorizontalAlignment="Stretch"  GlowFill="Transparent" VerticalAlignment="Stretch" GlowAmount="{TemplateBinding GlowAmount}" GlowColor="{TemplateBinding GlowColor}" ShowGlowArea="False" ></xuiel:EffectLayer>-->
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Height="25">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Height="25" Margin="48,0,0,0">
                             <Image HorizontalAlignment="Left" Stretch="UniformToFill" Source="{TemplateBinding IconUri}" Width="20" Height="20" Margin="4,4,0,0" />
                             <TextBlock x:Name="tbTitle" Text="{TemplateBinding Title}" FontSize="13" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0" Foreground="{TemplateBinding Foreground}"></TextBlock>
                         </StackPanel>
@@ -90,7 +90,7 @@
                             </Rectangle.Fill>
                         </Rectangle>
 
-                        <ContentControl x:Name="ccTitle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+                        <ContentControl x:Name="ccTitle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="48,0,0,0" />
 
                         <Rectangle  x:Name="recSmallTitle" Height="15" Fill="White" HorizontalAlignment="Stretch" VerticalAlignment="Top" Opacity="0.01"  ></Rectangle>
                     </Grid>

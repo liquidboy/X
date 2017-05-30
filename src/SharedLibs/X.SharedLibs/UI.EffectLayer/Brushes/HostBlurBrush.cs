@@ -16,7 +16,7 @@ namespace X.SharedLibs.UI.EffectLayer.Brushes
 
         // Using a DependencyProperty as the backing store for BlurColor.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty BlurColorProperty =
-            DependencyProperty.Register("BlurColor", typeof(Color), typeof(HostBlurBrush), new PropertyMetadata(Color.FromArgb(255, 30, 30, 30), OnBlurColorPropertyChanged));
+            DependencyProperty.Register("BlurColor", typeof(Color), typeof(HostBlurBrush), new PropertyMetadata(Color.FromArgb(255, 210, 210, 210), OnBlurColorPropertyChanged));
 
         private static void OnBlurColorPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -50,14 +50,15 @@ namespace X.SharedLibs.UI.EffectLayer.Brushes
             GaussianBlurEffect blurEffect = new GaussianBlurEffect()
             {
                 BlurAmount = BlurAmount,
-                BorderMode = EffectBorderMode.Hard,
+                BorderMode = EffectBorderMode.Soft,
                 Optimization = EffectOptimization.Balanced,
                 Source = new ArithmeticCompositeEffect()
                 {
                     MultiplyAmount = 0,
-                    Source1Amount = .3f,
-                    Source2Amount = .7f,
+                    Source1Amount = .7f,
+                    Source2Amount = .3f,
                     Source1 = new CompositionEffectSourceParameter("backdrop"),
+                    // Source2 = new CompositionEffectSourceParameter("backdrop")
                     Source2 = new ColorSourceEffect()
                     {
                         Color = BlurColor
