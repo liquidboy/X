@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using X.NeonShell.Features;
 using X.NeonShell.Features.HamburgerNavigation;
 using X.NeonShell.ViewModels;
 using X.NeonShell.Views;

@@ -13,8 +13,11 @@
     <Page.Lights>
         <xuiee:PointLightEffect/>
         <xuiee:AmbientLightEffect/>
+        <!--<xuiee:SpotLightEffect/>
+        <xuiee:DistantLightEffect/>-->
     </Page.Lights>
     <Grid Background="WhiteSmoke">
+        
         <xuishell:Header x:Name="ctlHeader" Title="FavouriteMX" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="32" Background="Transparent" xuiee:PointLightEffect.IsTarget="True" xuiee:AmbientLightEffect.IsTarget="True">
             <!--<xuishell:Header.TitleContent>
                 <ContentControl>
@@ -40,11 +43,12 @@
                     <Grid.Background>
                         <xuieb:HostBlurBrush BlurColor="White" BlurAmount="20"/>
                     </Grid.Background>
-                    <Frame x:Name="ContentFrame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0"/>
+                    <!--<Image Source="Assets/xxxxx.jpg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="UniformToFill" ></Image>-->
+                    <Frame x:Name="ContentFrame" />
                 </Grid>
             </SplitView.Content>
         </SplitView>
-
+        
         <Button 
                 x:Name="HamburgerButton"
                 Content="&#xE700;"
@@ -58,5 +62,6 @@
                 VerticalAlignment="Top"
                 Click="HamburgerButton_Click"/>
 
+        
     </Grid>
 </Page>

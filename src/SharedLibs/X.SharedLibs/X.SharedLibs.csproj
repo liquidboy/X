@@ -653,6 +653,8 @@
     <Compile Include="UI.Composition\VisualTreeHelperExtensions.cs" />
     <Compile Include="UI.EffectLayer\AsyncHelpers.cs" />
     <Compile Include="UI.EffectLayer\Brushes\HostBlurBrush.cs" />
+    <Compile Include="UI.EffectLayer\Effects\SpotLightEffect.cs" />
+    <Compile Include="UI.EffectLayer\Effects\DistantLightEffect.cs" />
     <Compile Include="UI.EffectLayer\Effects\AmbientLightEffect.cs" />
     <Compile Include="UI.EffectLayer\Effects\PointLightEffect.cs" />
     <Compile Include="UI.EffectLayer\TransparentWindowBrush.cs" />
