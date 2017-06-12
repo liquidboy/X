@@ -17,8 +17,11 @@
         <xuiee:DistantLightEffect/>-->
     </Page.Lights>
     <Grid Background="WhiteSmoke">
-        
-        <xuishell:Header x:Name="ctlHeader" Title="FavouriteMX" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="32" Background="Transparent" xuiee:PointLightEffect.IsTarget="True" xuiee:AmbientLightEffect.IsTarget="True">
+
+        <xuishell:Header x:Name="ctlHeader" Title="FavouriteMX" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="32" xuiee:PointLightEffect.IsTarget="True" xuiee:AmbientLightEffect.IsTarget="True">
+            <xuishell:Header.Background>
+                <xuieb:HostBlurBrush BlurColor="White" BlurAmount="20"/>
+            </xuishell:Header.Background>
             <!--<xuishell:Header.TitleContent>
                 <ContentControl>
                     <Grid HorizontalAlignment="Stretch" Background="Black" VerticalAlignment="Stretch">
