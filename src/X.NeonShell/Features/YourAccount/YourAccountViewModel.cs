@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace X.NeonShell.Features.YourAccount
+namespace X.NeonShell.Features
 {
     class YourAccountViewModel
     {

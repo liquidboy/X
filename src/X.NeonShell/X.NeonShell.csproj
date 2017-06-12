@@ -103,7 +103,6 @@
     <Compile Include="Features\HamburgerNavigation\HamburgerNavigationView.xaml.cs">
       <DependentUpon>HamburgerNavigationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Features\HamburgerNavigation\HamburgerNavigationViewModel.cs" />
     <Compile Include="Features\PublicDashboard\PublicDashboardView.xaml.cs">
       <DependentUpon>PublicDashboardView.xaml</DependentUpon>
     </Compile>
@@ -133,6 +132,7 @@
     <Compile Include="MVVM\Views\FlickrLoginView.xaml.cs">
       <DependentUpon>FlickrLoginView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SetupData.cs" />
     <Compile Include="VisualTreeExtendsion.cs" />
   </ItemGroup>
   <ItemGroup>

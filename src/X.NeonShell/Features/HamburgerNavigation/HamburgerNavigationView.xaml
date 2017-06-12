@@ -130,15 +130,13 @@
         <Grid.Background>
             <xuieb:HostBlurBrush BlurColor="WhiteSmoke" BlurAmount="20"/>
         </Grid.Background>
-        <StackPanel 
-            x:Name="NavStackPanel"
-            Padding="0,48,0,0" xuiee:PointLightEffect.IsTarget="True" xuiee:AmbientLightEffect.IsTarget="True">
+        <ItemsControl ItemsSource="{x:Bind TreeItems}" Margin="0,48,0,0" xuiee:PointLightEffect.IsTarget="True" xuiee:AmbientLightEffect.IsTarget="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <RadioButton Tag="{Binding Icon}" Content="{Binding Title}" Style="{StaticResource NavRadioButtonStyle}" Checked="NavRadioButton_Checked"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
 
-            <RadioButton Tag="&#xE10F;" Content="Home" Style="{StaticResource NavRadioButtonStyle}" Checked="NavRadioButton_Checked"/>
-
-            <RadioButton Tag="&#xE1CE;" Content="Your Account" Style="{StaticResource NavRadioButtonStyle}" Checked="NavRadioButton_Checked"/>
-
-            <RadioButton Tag="&#xE11B;" Content="Your Photos" Style="{StaticResource NavRadioButtonStyle}" Checked="NavRadioButton_Checked"/>
-        </StackPanel>
     </Grid>
 </UserControl>

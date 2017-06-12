@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace X.NeonShell.Features.YourDashboard
+namespace X.NeonShell.Features
 {
     class YourDashboardViewModel
     {

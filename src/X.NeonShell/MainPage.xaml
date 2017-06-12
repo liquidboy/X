@@ -35,7 +35,7 @@
             Margin="0,32,0,0">
 
             <SplitView.Pane>
-                <xnsfhn:HamburgerNavigationView x:Name="ctlHamburgerNavigationView" OnNavigationChanged="NavigationChanged"  ></xnsfhn:HamburgerNavigationView>
+                <xnsfhn:HamburgerNavigationView x:Name="ctlHamburgerNavigationView" OnNavigationChanged="NavigationChanged" TreeItems="{x:Bind Scenarios}" ></xnsfhn:HamburgerNavigationView>
             </SplitView.Pane>
 
             <SplitView.Content>

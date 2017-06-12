@@ -24,12 +24,17 @@ namespace X.NeonShell
 
     public sealed partial class MainPage : Page
     {
+        public static MainPage Current;
+        
         FlickrViewModel _fvm;
-
-
+        
         public MainPage()
         {
             this.InitializeComponent();
+
+            // This is a static public property that allows downstream pages (loaded in a Frame) to get a handle 
+            // to the MainPage instance in order to call methods & access properties that are in this class.
+            Current = this;
 
             InitVM();
             InitChrome();
@@ -37,6 +42,7 @@ namespace X.NeonShell
             InitView();
             
         }
+
 
         private void InitNavigation() {
             ContentFrame.Navigated += (s, args) =>
@@ -51,8 +57,7 @@ namespace X.NeonShell
             SystemNavigationManager.GetForCurrentView().BackRequested += MainPage_BackRequested;
 
         }
-
-
+        
         private void InitVM() {
             if (_fvm == null)
             {

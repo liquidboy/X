@@ -30,33 +30,49 @@ namespace X.NeonShell.Features.HamburgerNavigation
         }
 
 
-        
+
+        public List<Scenario> TreeItems
+        {
+            get { return (List<Scenario>)GetValue(TreeItemsProperty); }
+            set { SetValue(TreeItemsProperty, value); }
+        }
+
+        public static readonly DependencyProperty TreeItemsProperty =
+            DependencyProperty.Register("TreeItems", typeof(List<Scenario>), typeof(HamburgerNavigationView), new PropertyMetadata(null));
+
+
+
+
         public void SetSelectedMenuItem(string contentName) {
 
             foreach (var rb in this.FindVisualChildList<RadioButton>())
             {
-                if (contentName == ConvertRadioButtonToView((string)rb.Content))
+                if (contentName == ((Scenario)rb.DataContext).ClassType.Name)
                 {
                     rb.IsChecked = true;
                     return;
                 }
             }
-            
-        }
-
-        private string ConvertRadioButtonToView(string content) {
-            var ctn = "";
-            switch (content)
-            {
-                case "Home": ctn = "PublicDashboardView"; break;
-                case "Your Account": ctn = "YourAccountView"; break;
-                case "Your Photos": ctn = "YourDashboardView"; break;
-            }
-            return ctn;
         }
         
         public event EventHandler<NavigationChangedArgs> OnNavigationChanged;
+
+
+        
     }
+
+    //public class TagBindingConverter : IValueConverter
+    //{
+    //    public object Convert(object value, Type targetType, object parameter, string language)
+    //    {
+    //        return System.Net.WebUtility.HtmlDecode((string)value);
+    //    }
+
+    //    public object ConvertBack(object value, Type targetType, object parameter, string language)
+    //    {
+    //        return true;
+    //    }
+    //}
 
     public class NavigationChangedArgs : EventArgs {
         public string Data;
