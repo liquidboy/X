@@ -5,9 +5,13 @@
     xmlns:local="using:X.NeonShell.Features.YourDashboard"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xuieb="using:X.SharedLibs.UI.EffectLayer.Brushes"
     mc:Ignorable="d">
 
     <Grid >
-        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Your Dashboard</TextBlock>
+
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Your Photos</TextBlock>
+        </Grid>
     </Grid>
 </Page>
