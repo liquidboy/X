@@ -71,6 +71,7 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
                     udo[prop.Name] = prop.GetValue(instance, null).ToString();
                 }
                 udo["UniqueId"] = instance.UniqueId.ToString();
+                _table.UpdateRowData(instance._internalRowId, udo);
             }
             else
             {

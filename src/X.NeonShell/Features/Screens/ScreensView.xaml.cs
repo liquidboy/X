@@ -41,6 +41,9 @@ namespace X.NeonShell.Features
             };
             var newid = screenCtx.Save(oh);
 
+            oh.Title = "updated title";
+            newid = screenCtx.Save(oh);
+
 
             var count = screenCtx.FindAll();
             if (count > 0) {
