@@ -20,7 +20,8 @@ namespace X.Desktop
 
     public sealed partial class MainPage : Page
     {
-        public class OrderHeader : SQLiteDataEntity
+        public class OrderHeaderContext : SQLiteDataEntity<OrderHeader> { }
+        public class OrderHeader : BaseEntity
         {
             public string Title { get; set; }
             public DateTime DateStamp { get; set; }
@@ -29,7 +30,8 @@ namespace X.Desktop
             public double TotalCost { get; set; }
         }
 
-        public class OrderLiteItem : SQLiteDataEntity 
+        public class OrderLiteItemContext : SQLiteDataEntity<OrderLiteItem> { }
+        public class OrderLiteItem : BaseEntity
         {
             public Guid OrderID { get; set; }
             public long Quantity { get; set; }
@@ -38,7 +40,8 @@ namespace X.Desktop
             public int OrderHeaderId { get; set; }
         }
 
-        public class OrderFooter : SQLiteDataEntity
+        public class OrderFooterContext : SQLiteDataEntity<OrderFooter> { }
+        public class OrderFooter : BaseEntity
         {
             public Guid OrderID { get; set; }
             public string ShippingAddress { get; set; }
@@ -70,35 +73,39 @@ namespace X.Desktop
             
             AppDatabase.Current.Init();
 
+            var ohctx = new OrderHeaderContext();
+            var olictx = new OrderLiteItemContext();
+            var ofctx = new OrderFooterContext();
+
             //create new
             var oh = new OrderHeader() { OrderID = Guid.NewGuid(), Title = "test title",
                 DateStamp = DateTime.UtcNow, Quantity = 100, TotalCost = 199.00 };
-            var newid = oh.Save();
+            var newid = ohctx.Save(oh);
 
             var oli = new OrderLiteItem() { Quantity = 1, Product = "XBox Scorpio", UnitCost = 499.00,
                 OrderID = oh.OrderID, OrderHeaderId = newid };
-            oli.Save();
+            olictx.Save(oli);
 
             var of = new OrderFooter() { OrderID = oh.OrderID, PickupBy = "jose",
                 ShippingAddress = "Home", OrderHeaderId = newid };
-            of.Save();
+            ofctx.Save(of);
 
 
             //search
-            var resultOrderHeader = oh.Find("id = " + newid);
-            var resultOrderLineItems = oli.Find("'OrderHeaderId' = " + newid );
-            var resultOrderFooter = of.Find("'ShippingAddress' = 'Home'" );
+            var resultOrderHeader = ohctx.Find("id = " + newid);
+            var resultOrderLineItems = olictx.Find("'OrderHeaderId' = " + newid );
+            var resultOrderFooter = ofctx.Find("'ShippingAddress' = 'Home'" );
 
 
             //load 
-            if (oh.Retrieve(newid))
+            if (ohctx.Retrieve(newid) != null)
             {
                 //delete
-                oh.Delete(newid);
+                ohctx.Delete(newid);
             }
 
             //delete
-            oh.DeleteAll();
+            ohctx.DeleteAll();
         }
     }
 

@@ -5,30 +5,41 @@ using System.Text;
 
 namespace X.CoreLib.Shared.Framework.Services.DataEntity
 {
-    public class SQLiteDataEntity
+    public class BaseEntity {
+        public Guid UniqueId { get; set; }
+        public int internalRowId;
+    }
+
+    public class SQLiteDataEntity<T> where T : BaseEntity, new()
     {
         public string _defaultCreator = "admin";
-        public Guid UniqueId { get; set; }
-        private int _internalRowId;
+        // public Guid UniqueId { get; set; }
+        // private int _internalRowId;
 
         string _tableName;
         public SQLiteDataEntity() { SQLiteDataEntityImpl(true); }
         public SQLiteDataEntity(bool initDb) { SQLiteDataEntityImpl(initDb); }
         private void SQLiteDataEntityImpl(bool initDb = true)
         {
-            _tableName = this.GetType().Name;
+            _tableName = typeof(T).Name;
             if (initDb) { InitEntityDatabase(); }
         }
 
+
+        public static SQLiteDataEntity<T> Create() {
+            return new SQLiteDataEntity<T>();
+        }
+        
+
         //todo: optimization on columns to determine if they changed and thus do a DeleteAllColumns and rebuild
-        public void InitEntityDatabase()
+        private void InitEntityDatabase()
         {
             AppDatabase.Current.AddTable(_tableName, _defaultCreator);
             var table = AppDatabase.Current.Tables[_tableName];
 
             table.DeleteAllColumns();  //note: we delete all columns and rebuild them from the current class to ensure new columns exist
 
-            var props = this.GetType().GetTypeInfo().DeclaredProperties;
+            var props = typeof(T).GetTypeInfo().DeclaredProperties;
             foreach (var prop in props)
             {
                 table.AddColumn(prop.Name, _defaultCreator);
@@ -37,23 +48,23 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
             table.AddColumn("UniqueId", _defaultCreator);
         }
 
-        public int Save()
+        public int Save(T instance)
         {
             var table = AppDatabase.Current.Tables[_tableName];
 
-            if (UniqueId == Guid.Empty) UniqueId = Guid.NewGuid();
+            if (instance.UniqueId == Guid.Empty) instance.UniqueId = Guid.NewGuid();
 
-            if (_internalRowId > 0)
+            if (instance.internalRowId > 0)
             {
                 //update
-                var udo = table.GetRowDataAsJson(_internalRowId);
+                var udo = table.GetRowDataAsJson(instance.internalRowId);
 
-                var props = this.GetType().GetTypeInfo().DeclaredProperties;
+                var props = typeof(T).GetTypeInfo().DeclaredProperties;
                 foreach (var prop in props)
                 {
-                    udo[prop.Name] = prop.GetValue(this, null).ToString();
+                    udo[prop.Name] = prop.GetValue(instance, null).ToString();
                 }
-                udo["UniqueId"] = UniqueId.ToString();
+                udo["UniqueId"] = instance.UniqueId.ToString();
             }
             else
             {
@@ -61,60 +72,56 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
 
                 var udo = table.GetEmptyRowAsJson();
 
-                var props = this.GetType().GetTypeInfo().DeclaredProperties;
+                var props = typeof(T).GetTypeInfo().DeclaredProperties;
                 foreach (var prop in props)
                 {
-                    udo[prop.Name] = prop.GetValue(this, null).ToString();
+                    udo[prop.Name] = prop.GetValue(instance, null).ToString();
                 }
 
-                udo["UniqueId"] = UniqueId.ToString();
+                udo["UniqueId"] = instance.UniqueId.ToString();
 
-                _internalRowId = table.AddRow(udo, _defaultCreator);
+                instance.internalRowId = table.AddRow(udo, _defaultCreator);
             }
-
-
-
-
-
-            return _internalRowId;
+            
+            return instance.internalRowId;
         }
-        public bool Retrieve(int id)
+        public T Retrieve(int id)
         {
+            T obj = new T();
 
-            clear();
+            // clear();
 
             try
             {
                 var table = AppDatabase.Current.Tables[_tableName];
                 var udo = table.GetRowDataAsJson(id);
 
-
-                _internalRowId = id;
-
-                var props = this.GetType().GetTypeInfo().DeclaredProperties;
+                obj.internalRowId = id;
+                
+                var props = typeof(T).GetTypeInfo().DeclaredProperties;
                 foreach (var prop in props)
                 {
                     switch (prop.PropertyType.Name)
                     {
-                        case "String": prop.SetValue(this, (string)udo[prop.Name]); break;
-                        case "Guid": prop.SetValue(this, Guid.Parse((string)udo[prop.Name])); break;
-                        case "DateTime": prop.SetValue(this, DateTime.Parse((string)udo[prop.Name])); break;
-                        case "Long": prop.SetValue(this, long.Parse((string)udo[prop.Name])); break;
-                        case "Int": prop.SetValue(this, int.Parse((string)udo[prop.Name])); break;
-                        case "Double": prop.SetValue(this, Double.Parse((string)udo[prop.Name])); break;
+                        case "String": prop.SetValue(obj, (string)udo[prop.Name]); break;
+                        case "Guid": prop.SetValue(obj, Guid.Parse((string)udo[prop.Name])); break;
+                        case "DateTime": prop.SetValue(obj, DateTime.Parse((string)udo[prop.Name])); break;
+                        case "Long": prop.SetValue(obj, long.Parse((string)udo[prop.Name])); break;
+                        case "Int": prop.SetValue(obj, int.Parse((string)udo[prop.Name])); break;
+                        case "Double": prop.SetValue(obj, Double.Parse((string)udo[prop.Name])); break;
                     }
-
                 }
+                obj.UniqueId = Guid.Parse((string)udo["UniqueId"]);
 
-                return true;
+                return obj;
             }
             catch (Exception ex)
             {
-                _internalRowId = 0;
-                UniqueId = Guid.Empty;
+                obj.internalRowId = 0;
+                obj.UniqueId = Guid.Empty;
             }
 
-            return false;
+            return obj;
         }
 
         public List<TableRow> FindResult;
@@ -130,16 +137,16 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
             FindResult = table.GetRows();
             return FindResult.Count;
         }
-        public void Delete()
+        public void Delete(T instance)
         {
             var table = AppDatabase.Current.Tables[_tableName];
 
-            if (_internalRowId > 0)
+            if (instance.internalRowId > 0)
             {
-                table.DeleteRow(_internalRowId);
+                table.DeleteRow(instance.internalRowId);
             }
 
-            clear();
+            clear(instance);
         }
         public void Delete(int id)
         {
@@ -152,16 +159,16 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
             table.DeleteAllRows();
         }
 
-        private void clear()
+        private void clear(T instance)
         {
-            var props = this.GetType().GetTypeInfo().DeclaredProperties;
+            var props = typeof(T).GetTypeInfo().DeclaredProperties;
             foreach (var prop in props)
             {
-                prop.SetValue(this, null);
+                prop.SetValue(instance, null);
             }
 
-            this._internalRowId = 0;
-            this.UniqueId = Guid.Empty;
+            instance.internalRowId = 0;
+            instance.UniqueId = Guid.Empty;
         }
     }
 }

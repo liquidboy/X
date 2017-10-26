@@ -29,44 +29,45 @@ namespace X.NeonShell.Features
 
         private void InitData() {
             AppDatabase.Current.Init();
+            var screenCtx = ScreenContext.Create();
+
+            //create new
+            var oh = new Screen()
+            {
+                ScreenID = Guid.NewGuid(),
+                Title = "test screen",
+                DateStamp = DateTime.UtcNow,
+            };
+            var newid = screenCtx.Save(oh);
 
 
-            ////create new
-            //var oh = new Screen()
-            //{
-            //    ScreenID = Guid.NewGuid(),
-            //    Title = "test screen",
-            //    DateStamp = DateTime.UtcNow,
-            //};
-            //var newid = oh.Save();
-
-            var oh = new Screen(false);
-            var count = oh.FindAll();
+            var count = screenCtx.FindAll();
             if (count > 0) {
                 tbCounter.Text = count.ToString();
             }
 
-            ////load newly added
-            //if (oh.Retrieve(newid))
-            //{
-            //    //delete newly added
-            //    // oh.Delete(newid);
-            //}
+            //load newly added
+            if (screenCtx.Retrieve(newid) != null)
+            {
+                //delete newly added
+                //screenCtx.Delete(newid);
+            }
 
-            //delete
-            //oh.DeleteAll();
+            ////delete
+            //screenCtx.DeleteAll();
 
         }
     }
 
-
-
-    public class Screen : SQLiteDataEntity
-    {
+    public class Screen : BaseEntity {
         public string Title { get; set; }
         public DateTime DateStamp { get; set; }
         public Guid ScreenID { get; set; }
 
-        public Screen(bool initDb = true) : base(initDb) { }
+    }
+
+    public class ScreenContext : SQLiteDataEntity<Screen>
+    {
+
     }
 }
