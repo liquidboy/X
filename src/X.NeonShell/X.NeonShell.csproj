@@ -107,6 +107,10 @@
       <DependentUpon>PublicDashboardView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Features\PublicDashboard\PublicDashboardViewModel.cs" />
+    <Compile Include="Features\Screens\ScreensView.xaml.cs">
+      <DependentUpon>ScreensView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Screens\ScreensViewModel.cs" />
     <Compile Include="Features\YourAccount\YourAccountView.xaml.cs">
       <DependentUpon>YourAccountView.xaml</DependentUpon>
     </Compile>
@@ -168,6 +172,10 @@
     <Page Include="Features\PublicDashboard\PublicDashboardView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Features\Screens\ScreensView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Features\YourAccount\YourAccountView.xaml">
       <SubType>Designer</SubType>

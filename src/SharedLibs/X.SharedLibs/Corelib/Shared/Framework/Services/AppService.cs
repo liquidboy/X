@@ -64,11 +64,10 @@ namespace X.CoreLib.Shared.Services
             defaultSetting.ExplorerMXDocumentsFolder = "ExplorerMX";
             defaultSetting.FavouriteMXPictureFolder = "FavouriteMX";
             defaultSetting.WatchMXVideoFolder = "WatchMX";
-            defaultSetting.FlickrKey = "xxxx";
-            defaultSetting.FlickrSecret = "xxxx";
-            defaultSetting.AMSUrl = "https://uapx.azurewebsites.net";
-            defaultSetting.AMSKey = "xxxx";
-
+            defaultSetting.FlickrKey = "102e389a942747faebb958c4db95c098";
+            defaultSetting.FlickrSecret = "774b263b4d3a2578";
+            defaultSetting.AMSUrl = "https://developermx.azure-mobile.net/";
+            defaultSetting.AMSKey = "bnIWZFbEKBzNJXtXgMgAxHLtsOaYfW28";
 
             string forStorage = string.Format(
                 "{0}|{1}|{2}|{3}|{4}|{5}|{6}",

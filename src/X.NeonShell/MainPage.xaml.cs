@@ -118,6 +118,9 @@ namespace X.NeonShell
                 case "Your Photos":
                     ContentFrame.Navigate(typeof(YourDashboardView));
                     break;
+                case "Screens":
+                    ContentFrame.Navigate(typeof(ScreensView));
+                    break;
             }
 
         }

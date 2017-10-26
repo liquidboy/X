@@ -12,10 +12,12 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         private int _internalRowId;
 
         string _tableName;
-        public SQLiteDataEntity()
+        public SQLiteDataEntity() { SQLiteDataEntityImpl(true); }
+        public SQLiteDataEntity(bool initDb) { SQLiteDataEntityImpl(initDb); }
+        private void SQLiteDataEntityImpl(bool initDb = true)
         {
             _tableName = this.GetType().Name;
-            InitEntityDatabase();
+            if (initDb) { InitEntityDatabase(); }
         }
 
         //todo: optimization on columns to determine if they changed and thus do a DeleteAllColumns and rebuild
@@ -120,6 +122,12 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         {
             var table = AppDatabase.Current.Tables[_tableName];
             FindResult = table.Find(whereQuery);
+            return FindResult.Count;
+        }
+        public int FindAll()
+        {
+            var table = AppDatabase.Current.Tables[_tableName];
+            FindResult = table.GetRows();
             return FindResult.Count;
         }
         public void Delete()

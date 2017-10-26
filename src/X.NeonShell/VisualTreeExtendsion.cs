@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Media;
 
 namespace X.NeonShell.Extensions
 {
-    public static class VisualTreeExtendsion
+    public static class VisualTreeExtension
     {
         public static T FindVisualChild<T>(this DependencyObject obj) where T : DependencyObject
         {

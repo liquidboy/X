@@ -10,7 +10,7 @@ namespace X.NeonShell
 {
     public partial class MainPage : Page
     {
-
+        // http://modernicons.io/segoe-mdl2/cheatsheet/
         List<Scenario> scenarios = new List<Scenario>
         {
             new Scenario(){
@@ -30,6 +30,12 @@ namespace X.NeonShell
                 Icon= System.Net.WebUtility.HtmlDecode("&#xE11B;"),
                 Description = "",
                 ClassType=typeof(YourDashboardView)
+            },
+            new Scenario() {
+                Title = "Screens",
+                Icon= System.Net.WebUtility.HtmlDecode("&#xE11B;"),
+                Description = "",
+                ClassType=typeof(ScreensView)
             }
         };
 
