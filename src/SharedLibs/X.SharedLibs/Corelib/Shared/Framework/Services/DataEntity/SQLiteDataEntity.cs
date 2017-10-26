@@ -7,57 +7,63 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
 {
     public class BaseEntity {
         public Guid UniqueId { get; set; }
-        public int internalRowId;
+        public int _internalRowId;
     }
 
     public class SQLiteDataEntity<T> where T : BaseEntity, new()
     {
         public string _defaultCreator = "admin";
-        // public Guid UniqueId { get; set; }
-        // private int _internalRowId;
-
+        private bool _isReadOnly = false;
+        
         string _tableName;
+        TableDatabase _table;
+
         public SQLiteDataEntity() { SQLiteDataEntityImpl(true); }
-        public SQLiteDataEntity(bool initDb) { SQLiteDataEntityImpl(initDb); }
-        private void SQLiteDataEntityImpl(bool initDb = true)
+        public SQLiteDataEntity(bool initDb, bool isReadOnly) { SQLiteDataEntityImpl(initDb, isReadOnly); }
+        private void SQLiteDataEntityImpl(bool initDb = true, bool isReadOnly = false)
         {
             _tableName = typeof(T).Name;
+            _isReadOnly = isReadOnly;
             if (initDb) { InitEntityDatabase(); }
+            else { _table = AppDatabase.Current.Tables[_tableName]; }
         }
 
 
         public static SQLiteDataEntity<T> Create() {
             return new SQLiteDataEntity<T>();
         }
-        
+        public static SQLiteDataEntity<T> CreateReadOnly()
+        {
+            return new SQLiteDataEntity<T>(false, true);
+        }
 
         //todo: optimization on columns to determine if they changed and thus do a DeleteAllColumns and rebuild
         private void InitEntityDatabase()
         {
             AppDatabase.Current.AddTable(_tableName, _defaultCreator);
-            var table = AppDatabase.Current.Tables[_tableName];
+            _table = AppDatabase.Current.Tables[_tableName];
 
-            table.DeleteAllColumns();  //note: we delete all columns and rebuild them from the current class to ensure new columns exist
+            _table.DeleteAllColumns();  //note: we delete all columns and rebuild them from the current class to ensure new columns exist
 
             var props = typeof(T).GetTypeInfo().DeclaredProperties;
             foreach (var prop in props)
             {
-                table.AddColumn(prop.Name, _defaultCreator);
+                _table.AddColumn(prop.Name, _defaultCreator);
             }
 
-            table.AddColumn("UniqueId", _defaultCreator);
+            _table.AddColumn("UniqueId", _defaultCreator);
         }
 
         public int Save(T instance)
         {
-            var table = AppDatabase.Current.Tables[_tableName];
-
+            if (_isReadOnly) return 0;
+            
             if (instance.UniqueId == Guid.Empty) instance.UniqueId = Guid.NewGuid();
 
-            if (instance.internalRowId > 0)
+            if (instance._internalRowId > 0)
             {
                 //update
-                var udo = table.GetRowDataAsJson(instance.internalRowId);
+                var udo = _table.GetRowDataAsJson(instance._internalRowId);
 
                 var props = typeof(T).GetTypeInfo().DeclaredProperties;
                 foreach (var prop in props)
@@ -70,7 +76,7 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
             {
                 //add
 
-                var udo = table.GetEmptyRowAsJson();
+                var udo = _table.GetEmptyRowAsJson();
 
                 var props = typeof(T).GetTypeInfo().DeclaredProperties;
                 foreach (var prop in props)
@@ -80,10 +86,10 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
 
                 udo["UniqueId"] = instance.UniqueId.ToString();
 
-                instance.internalRowId = table.AddRow(udo, _defaultCreator);
+                instance._internalRowId = _table.AddRow(udo, _defaultCreator);
             }
             
-            return instance.internalRowId;
+            return instance._internalRowId;
         }
         public T Retrieve(int id)
         {
@@ -93,10 +99,9 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
 
             try
             {
-                var table = AppDatabase.Current.Tables[_tableName];
-                var udo = table.GetRowDataAsJson(id);
+                var udo = _table.GetRowDataAsJson(id);
 
-                obj.internalRowId = id;
+                obj._internalRowId = id;
                 
                 var props = typeof(T).GetTypeInfo().DeclaredProperties;
                 foreach (var prop in props)
@@ -117,7 +122,7 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
             }
             catch (Exception ex)
             {
-                obj.internalRowId = 0;
+                obj._internalRowId = 0;
                 obj.UniqueId = Guid.Empty;
             }
 
@@ -127,36 +132,33 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         public List<TableRow> FindResult;
         public int Find(string whereQuery)
         {
-            var table = AppDatabase.Current.Tables[_tableName];
-            FindResult = table.Find(whereQuery);
+            FindResult = _table.Find(whereQuery);
             return FindResult.Count;
         }
         public int FindAll()
         {
-            var table = AppDatabase.Current.Tables[_tableName];
-            FindResult = table.GetRows();
+            FindResult = _table.GetRows();
             return FindResult.Count;
         }
         public void Delete(T instance)
         {
-            var table = AppDatabase.Current.Tables[_tableName];
+            if (_isReadOnly) return;
 
-            if (instance.internalRowId > 0)
+            if (instance._internalRowId > 0)
             {
-                table.DeleteRow(instance.internalRowId);
+                _table.DeleteRow(instance._internalRowId);
             }
 
             clear(instance);
         }
         public void Delete(int id)
         {
-            var table = AppDatabase.Current.Tables[_tableName];
-            table.DeleteRow(id);
+            if (_isReadOnly) return;
+            _table.DeleteRow(id);
         }
         public void DeleteAll()
         {
-            var table = AppDatabase.Current.Tables[_tableName];
-            table.DeleteAllRows();
+            _table.DeleteAllRows();
         }
 
         private void clear(T instance)
@@ -167,7 +169,7 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
                 prop.SetValue(instance, null);
             }
 
-            instance.internalRowId = 0;
+            instance._internalRowId = 0;
             instance.UniqueId = Guid.Empty;
         }
     }

@@ -29,6 +29,7 @@ namespace X.NeonShell.Features
 
         private void InitData() {
             AppDatabase.Current.Init();
+            //var screenCtx = ScreenContext.CreateReadOnly();
             var screenCtx = ScreenContext.Create();
 
             //create new
@@ -50,11 +51,11 @@ namespace X.NeonShell.Features
             if (screenCtx.Retrieve(newid) != null)
             {
                 //delete newly added
-                //screenCtx.Delete(newid);
+                screenCtx.Delete(newid);
             }
 
-            ////delete
-            //screenCtx.DeleteAll();
+            //delete
+            screenCtx.DeleteAll();
 
         }
     }
