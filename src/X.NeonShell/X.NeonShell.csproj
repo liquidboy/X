@@ -96,6 +96,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="ContinuationManager.cs" />
+    <Compile Include="Data\Screen.cs" />
     <Compile Include="Features\AuthenticationCard\AuthenticationCardView.xaml.cs">
       <DependentUpon>AuthenticationCardView.xaml</DependentUpon>
     </Compile>

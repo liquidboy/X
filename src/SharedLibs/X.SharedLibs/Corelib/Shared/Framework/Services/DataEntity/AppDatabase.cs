@@ -35,7 +35,7 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         public Dictionary<string, TableDatabase> Tables;
 
         private AppDatabase()
-            : base("App.db")
+            : base("xapp.db")
         {
 
 
