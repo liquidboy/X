@@ -14,18 +14,18 @@
         <xuiel:TransparentWindowBrush></xuiel:TransparentWindowBrush>
     </Page.Background>-->
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="Assets/glitter-13.jpg" Stretch="UniformToFill" Margin="150,0,0,0"></Image>
-        <Rectangle HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="150">
+        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="Assets/glitter-13.jpg" Stretch="UniformToFill" Margin="0,0,0,0"></Image>
+        <Rectangle HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="150" Visibility="Collapsed">
             <Rectangle.Fill>
                 <xuiel:TransparentWindowBrush></xuiel:TransparentWindowBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="150,0,0,0">
+        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0">
             <Rectangle.Fill>
                 <xuiel:BackdropTintBlurBrush></xuiel:BackdropTintBlurBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <xuishell:Header x:Name="ctlHeader" Title="iTunes" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="32" Background="Transparent">
+        <xuishell:Header x:Name="ctlHeader" Title="bing" IconUri="https://www.bing.com/favicon.ico" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="32" Background="Transparent">
             <!--<xuishell:Header.TitleContent>
                 <ContentControl>
                     <Grid HorizontalAlignment="Stretch" Background="Black" VerticalAlignment="Stretch">

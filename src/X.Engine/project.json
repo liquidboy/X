@@ -1,7 +1,7 @@
 ﻿{
   "dependencies": {
     "Microsoft.ApplicationInsights.WindowsApps": "1.1.1",
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.3.1",
+    "Microsoft.NETCore.UniversalWindowsPlatform": "6.1.2",
     "SharpDX": "3.1.2-beta109",
     "SharpDX.Direct2D1": "3.1.2-beta109",
     "SharpDX.Direct3D12": "3.1.2-beta109",
@@ -9,7 +9,7 @@
     "SharpDX.Mathematics": "3.1.2-beta109"
   },
   "frameworks": {
-    "uap10.0": {}
+    "uap10.0.17134": {}
   },
   "runtimes": {
     "win10-arm": {},

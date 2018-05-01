@@ -41,7 +41,7 @@ namespace X.Viewer
             dtMaxLoadTime.Tick += DtMaxLoadTime_Tick;
 
 
-            _renderElement = new WebView();
+            _renderElement = new WebView(WebViewExecutionMode.SeparateProcess);
 
 
             _renderElement.ScriptNotify += wvMain_ScriptNotify;
