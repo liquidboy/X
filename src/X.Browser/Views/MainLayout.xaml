@@ -260,11 +260,11 @@
                 <ContentControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" >
                     <Grid>
                         <!--title header background guides for mouse cursor-->
-                        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <!--<Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                             <Rectangle.Fill>
                                 <xuiel:TransparentWindowBrush></xuiel:TransparentWindowBrush>
                             </Rectangle.Fill>
-                        </Rectangle>
+                        </Rectangle>-->
                         <Rectangle x:Name="recResizeTop" Height="5" HorizontalAlignment="Stretch" Fill="White" Opacity="0.3" VerticalAlignment="Top"  />
                         <Rectangle x:Name="recDragTop" Height="15" HorizontalAlignment="Stretch" Fill="White" Opacity="0.1" VerticalAlignment="Top" IsHitTestVisible="True" />
 

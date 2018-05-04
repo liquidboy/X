@@ -40,9 +40,7 @@ namespace X.Viewer
             dtMaxLoadTime.Interval = TimeSpan.FromSeconds(7);
             dtMaxLoadTime.Tick += DtMaxLoadTime_Tick;
 
-
             _renderElement = new WebView(WebViewExecutionMode.SeparateProcess);
-
 
             _renderElement.ScriptNotify += wvMain_ScriptNotify;
             _renderElement.ContentLoading += wvMain_ContentLoading;
@@ -235,27 +233,25 @@ namespace X.Viewer
         public async Task CaptureThumbnail(Windows.Storage.Streams.InMemoryRandomAccessStream ms)
         {
             //rendering the UIElement instead of using the capture api as this is causing a memory leak
-            //await _renderElement.CapturePreviewToStreamAsync(ms);
+            await _renderElement.CapturePreviewToStreamAsync(ms);
 
-            var renderTargetBitmap = new RenderTargetBitmap();
-            await renderTargetBitmap.RenderAsync(_renderElement);
+            //var renderTargetBitmap = new RenderTargetBitmap();
+            //await renderTargetBitmap.RenderAsync(_renderElement);
 
-            var pixels = await renderTargetBitmap.GetPixelsAsync();
+            //var pixels = await renderTargetBitmap.GetPixelsAsync();
 
-            var logicalDpi = DisplayInformation.GetForCurrentView().LogicalDpi;
-            var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, ms);
-            encoder.SetPixelData(
-                BitmapPixelFormat.Bgra8,
-                BitmapAlphaMode.Ignore,
-                (uint)renderTargetBitmap.PixelWidth,
-                (uint)renderTargetBitmap.PixelHeight,
-                logicalDpi,
-                logicalDpi,
-                pixels.ToArray());
+            //var logicalDpi = DisplayInformation.GetForCurrentView().LogicalDpi;
+            //var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, ms);
+            //encoder.SetPixelData(
+            //    BitmapPixelFormat.Bgra8,
+            //    BitmapAlphaMode.Ignore,
+            //    (uint)renderTargetBitmap.PixelWidth,
+            //    (uint)renderTargetBitmap.PixelHeight,
+            //    logicalDpi,
+            //    logicalDpi,
+            //    pixels.ToArray());
 
-            await encoder.FlushAsync();
-
-
+            //await encoder.FlushAsync();
         }
 
         public void SendMessageThru(object source, ContentViewEventArgs ea)

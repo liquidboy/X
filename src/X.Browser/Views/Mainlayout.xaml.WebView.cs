@@ -121,8 +121,7 @@ namespace X.Browser.Views
                                 //capture screenshot
                                 using (InMemoryRandomAccessStream ms = new InMemoryRandomAccessStream())
                                 {
-
-
+                                    
                                     //todo :drive this from the x.webview
                                     await wvMain.Renderer?.CaptureThumbnail(ms);
                                     //await wvMain.CapturePreviewToStreamAsync(ms);
@@ -176,7 +175,9 @@ namespace X.Browser.Views
                             }
 
                         }
-                        catch { }
+                        catch (Exception ex){
+                            var errrrr = ex.Message;
+                        }
                         
 
 

@@ -35,7 +35,7 @@ namespace X.Browser.Views
 
 
                 var visual = fe.TransformToVisual(layoutRoot);
-                var point1 = visual.TransformPoint(new Point(0, 40));
+                var point1 = visual.TransformPoint(new Point(0, 0));
                 var point2 = new Point(point1.X + fe.ActualWidth + 180, point1.Y + fe.ActualHeight + 140);
 
                 //hide all the current tabs in the canvas

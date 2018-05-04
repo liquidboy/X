@@ -90,7 +90,7 @@
                             </Rectangle.Fill>
                         </Rectangle>
 
-                        <ContentControl x:Name="ccTitle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="48,0,0,0" />
+                        <ContentControl x:Name="ccTitle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="0,0,0,0" />
 
                         <Rectangle  x:Name="recSmallTitle" Height="15" Fill="White" HorizontalAlignment="Stretch" VerticalAlignment="Top" Opacity="0.01"  ></Rectangle>
                     </Grid>
