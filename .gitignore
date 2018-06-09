@@ -213,3 +213,6 @@ ModelManifest.xml
 src/Samples/Samples.VC.opendb
 /src/Samples/Samples.VC.VC.opendb
 /src/Samples/Samples.VC.db
+/src/Microsoft.UI.Composition.Toolkit/Microsoft.UI.Composition.Toolkit.dll
+/src/Microsoft.UI.Composition.Toolkit/Microsoft.UI.Composition.Toolkit.winmd
+/src/Microsoft.UI.Composition.Toolkit/Microsoft.UI.Composition.Toolkit_h.h
