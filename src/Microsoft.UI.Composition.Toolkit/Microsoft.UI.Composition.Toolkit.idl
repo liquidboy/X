@@ -1,0 +1,144 @@
+import "inspectable.idl";
+import "AsyncInfo.idl";
+import "EventToken.idl";
+import "Windows.Foundation.idl";
+import "Windows.Graphics.DirectX.idl";
+import "Windows.Storage.idl";
+import "Windows.UI.Composition.idl";
+
+namespace Microsoft.UI.Composition.Toolkit
+{
+    delegate CompositionGraphicsDeviceLostEventHandler;
+    delegate CompositionImageLoadedEventHandler;
+
+    interface ICompositionGraphicsDevice;
+    interface ICompositionGraphicsDeviceStatics;
+    interface ICompositionImageFactory;
+    interface ICompositionImageFactoryStatics;
+    interface ICompositionImageOptions;
+    interface ICompositionImage;
+
+    runtimeclass CompositionGraphicsDevice;
+    runtimeclass CompositionImage;
+    runtimeclass CompositionImageFactory;
+    runtimeclass CompositionImageOptions;
+
+    typedef enum CompositionImageLoadStatus CompositionImageLoadStatus;
+
+    [version(0x00000001)]
+    enum CompositionImageLoadStatus
+    {
+        Success            = 0,
+        FileAccessError    = 1,
+        DecodeError        = 2,
+        NotEnoughResources = 3,
+        Other              = 4
+    };
+
+    [uuid(0BE20CB6-FE18-3023-9680-F4AA2108BCEE)]
+    [version(0x00000001)]
+    delegate HRESULT CompositionGraphicsDeviceLostEventHandler([in] CompositionGraphicsDevice* sender);
+
+    [uuid(5B3AA813-CEBF-38B9-8F31-D23EB8C24F86)]
+    [version(0x00000001)]
+    delegate HRESULT CompositionImageLoadedEventHandler([in] CompositionImage* sender, [in] CompositionImageLoadStatus status);
+
+    [exclusiveto(CompositionGraphicsDevice)]
+    [uuid(4A0E578E-68FA-3394-905A-D4D9D8AE30CA)]
+    [version(0x00000001)]
+    interface ICompositionGraphicsDevice : IInspectable
+    {
+        [eventadd] HRESULT DeviceLost([in] CompositionGraphicsDeviceLostEventHandler* handler, [out] [retval] EventRegistrationToken* token);
+        [eventremove] HRESULT DeviceLost([in] EventRegistrationToken token);
+        HRESULT CreateDrawingSurface([in] Windows.Foundation.Size sizePixels, [in] Windows.Graphics.DirectX.DirectXPixelFormat pixelFormat, [in] Windows.Graphics.DirectX.DirectXAlphaMode alphaMode, [out] [retval] Windows.UI.Composition.ICompositionSurface** surface);
+        HRESULT AcquireDrawingLock();
+        HRESULT ReleaseDrawingLock();
+    }
+
+    [exclusiveto(CompositionGraphicsDevice)]
+    [uuid(BC22813B-C736-3176-9D45-75F86BEAE8B6)]
+    [version(0x00000001)]
+    interface ICompositionGraphicsDeviceStatics : IInspectable
+    {
+        HRESULT CreateCompositionGraphicsDevice([in] Windows.UI.Composition.Compositor* compositor, [out] [retval] CompositionGraphicsDevice** device);
+    }
+
+    [exclusiveto(CompositionImageFactory)]
+    [uuid(25372FEC-3FA1-3C03-980F-FC48BA44680F)]
+    [version(0x00000001)]
+    interface ICompositionImageFactory : IInspectable
+    {
+        [overload("CreateImageFromUri")] HRESULT CreateImageFromUri2([in] Windows.Foundation.Uri* uri, [out] [retval] CompositionImage** image);
+        [overload("CreateImageFromUri")] HRESULT CreateImageFromUri1([in] Windows.Foundation.Uri* uri, [in] CompositionImageOptions* options, [out] [retval] CompositionImage** image);
+        [overload("CreateImageFromFile")] HRESULT CreateImageFromFile2([in] Windows.Storage.StorageFile* file, [out] [retval] CompositionImage** image);
+        [overload("CreateImageFromFile")] HRESULT CreateImageFromFile1([in] Windows.Storage.StorageFile* file, [in] CompositionImageOptions* options, [out] [retval] CompositionImage** image);
+        HRESULT CreateImageFromPixels([in] UINT32 pixelsSize, [in] [size_is(pixelsSize)] BYTE* pixels, [in] INT32 pixelWidth, [in] INT32 pixelHeight, [out] [retval] CompositionImage** image);
+    }
+
+    [exclusiveto(CompositionImageFactory)]
+    [uuid(EB167AED-6BF0-39AE-90B1-7C05FF0F308F)]
+    [version(0x00000001)]
+    interface ICompositionImageFactoryStatics : IInspectable
+    {
+        HRESULT CreateCompositionImageFactory([in] Windows.UI.Composition.Compositor* compositor, [out] [retval] CompositionImageFactory** factory);
+    }
+
+    [exclusiveto(CompositionImageOptions)]
+    [uuid(8554C61C-F17B-3602-868B-C17C9F7BC449)]
+    [version(0x00000001)]
+    interface ICompositionImageOptions : IInspectable
+    {
+        [propget] HRESULT DecodeWidth([out] [retval] INT32* value);
+        [propput] HRESULT DecodeWidth([in] INT32 value);
+        [propget] HRESULT DecodeHeight([out] [retval] INT32* value);
+        [propput] HRESULT DecodeHeight([in] INT32 value);
+    }
+
+
+    [exclusiveto(CompositionImage)]
+    [uuid(D5E4B2E9-82F7-3A11-8D7A-E58B892E054C)]
+    [version(0x00000001)]
+    interface ICompositionImage : IInspectable
+    {
+        [eventadd] HRESULT ImageLoaded([in] CompositionImageLoadedEventHandler* handler, [out] [retval] EventRegistrationToken* token);
+        [eventremove] HRESULT ImageLoaded([in] EventRegistrationToken token);
+        [propget] HRESULT Size([out] [retval] Windows.Foundation.Size* value);
+        [propget] HRESULT Surface([out] [retval] Windows.UI.Composition.ICompositionSurface** value);
+    }
+
+    [marshaling_behavior(agile)]
+    [static(ICompositionGraphicsDeviceStatics, 0x00000001)]
+    [threading(both)]
+    [version(0x00000001)]
+    runtimeclass CompositionGraphicsDevice
+    {
+        [default] interface ICompositionGraphicsDevice;
+        interface Windows.Foundation.IClosable;
+    }
+
+    [marshaling_behavior(agile)]
+    [threading(both)]
+    [version(0x00000001)]
+    runtimeclass CompositionImage
+    {
+        [default] interface ICompositionImage;
+    }
+
+    [marshaling_behavior(agile)]
+    [static(ICompositionImageFactoryStatics, 0x00000001)]
+    [threading(both)]
+    [version(0x00000001)]
+    runtimeclass CompositionImageFactory
+    {
+        [default] interface ICompositionImageFactory;
+    }
+
+    [activatable(0x00000001)]
+    [marshaling_behavior(agile)]
+    [threading(both)]
+    [version(0x00000001)]
+    runtimeclass CompositionImageOptions
+    {
+        [default] interface ICompositionImageOptions;
+    }
+}

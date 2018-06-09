@@ -1,10 +1,10 @@
 ﻿{
   "dependencies": {
-    "Microsoft.NETCore.UniversalWindowsPlatform": "6.1.2",
+    "Microsoft.NETCore.UniversalWindowsPlatform": "6.1.5",
     "Octokit": "0.24.1-alpha0001"
   },
   "frameworks": {
-    "uap10.0.17134": {}
+    "uap10.0.17682": {}
   },
   "runtimes": {
     "win10-arm": {},

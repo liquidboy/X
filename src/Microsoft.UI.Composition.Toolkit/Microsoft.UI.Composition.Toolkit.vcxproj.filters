@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Midl Include="Microsoft.UI.Composition.Toolkit.idl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CompositionGraphicsDevice.cpp" />
+    <ClCompile Include="CompositionImage.cpp" />
+    <ClCompile Include="CompositionImageFactory.cpp" />
+    <ClCompile Include="CompositionImageOptions.cpp" />
+    <ClCompile Include="module.cpp" />
+    <ClCompile Include="pch.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CompositionGraphicsDevice.h" />
+    <ClInclude Include="CompositionImage.h" />
+    <ClInclude Include="CompositionImageFactory.h" />
+    <ClInclude Include="CompositionImageOptions.h" />
+    <ClInclude Include="module.h" />
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="module.def" />
+  </ItemGroup>
+</Project>

@@ -1,11 +1,11 @@
 ﻿{
   "dependencies": {
     "linqtotwitter": "4.2.0-beta2",
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.3.1",
+    "Microsoft.NETCore.UniversalWindowsPlatform": "6.1.5",
     "MvvmLightLibs": "5.4.0-alpha"
   },
   "frameworks": {
-    "uap10.0": {}
+    "uap10.0.17682": {}
   },
   "runtimes": {
     "win10-arm": {},

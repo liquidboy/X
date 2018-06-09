@@ -11,8 +11,8 @@
     <AssemblyName>X.Extension.ThirdParty.AWS</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.17134.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.17134.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.17682.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.17682.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -146,15 +146,12 @@
       <Project>{6e375ca3-963d-4586-9a47-cbc69f4aaf89}</Project>
       <Name>X.SharedLibs</Name>
     </ProjectReference>
-    <ProjectReference Include="..\X.Extension.ThirdParty.AWS.Services\X.Extension.ThirdParty.AWS.Services.csproj">
-      <Project>{56c8feca-ed1b-4bd6-8fe2-7bbcb3e9bcc1}</Project>
-      <Name>X.Extension.ThirdParty.AWS.Services</Name>
+    <ProjectReference Include="..\X.Extension.ThirdParty.Azure.Services\X.Extension.ThirdParty.Azure.Services.csproj">
+      <Project>{5f279874-3b01-4014-b0b6-ed73afeea10e}</Project>
+      <Name>X.Extension.ThirdParty.Azure.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.ApplicationInsights">
-      <Version>2.3.0-beta2</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.ApplicationInsights.PersistenceChannel">
       <Version>2.0.0-beta3</Version>
     </PackageReference>
@@ -162,7 +159,7 @@
       <Version>1.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>5.3.1</Version>
+      <Version>6.1.5</Version>
     </PackageReference>
     <PackageReference Include="ThomasLevesque.WeakEvent">
       <Version>1.0.1</Version>
