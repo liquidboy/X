@@ -59,7 +59,7 @@ namespace X.Viewer.SketchFlow
                 {
                     foreach (var fsp in foundSP)
                     {
-                        var pg = new SketchPage() { Title = fsp.Title, Width = (int)fsp.Width, Height = (int)fsp.Height, Top = (int)fsp.Top, Left = (int)fsp.Left };
+                        var pg = new SketchPage(false) { Title = fsp.Title, Width = (int)fsp.Width, Height = (int)fsp.Height, Top = (int)fsp.Top, Left = (int)fsp.Left };
 
                         var foundSPL = StorageService.Instance.Storage.RetrieveByField<SketchPageLayerDataModel>("SketchPageId", fsp.Id.ToString());
                         if (foundSPL != null && foundSPL.Count() > 0)

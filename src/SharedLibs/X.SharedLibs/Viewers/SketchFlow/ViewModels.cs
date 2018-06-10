@@ -55,13 +55,26 @@ namespace X.Viewer.SketchFlow
 
     public int Id { get; set; }
 
+
+    void SketchPageImpl(bool createDefaultLayer) {
+      Layers = new ObservableCollection<PageLayer>();
+      if (createDefaultLayer) {
+        var defaultLayer = new PageLayer();
+        Layers.Add(defaultLayer);
+        //SelectedLayer = defaultLayer;
+      }
+    }
+
     public SketchPage()
     {
-      Layers = new ObservableCollection<PageLayer>();
-      var defaultLayer = new PageLayer();
-      Layers.Add(defaultLayer);
-      //SelectedLayer = defaultLayer;
+      SketchPageImpl(true);
     }
+
+    public SketchPage(bool createDefaultLayer = false)
+    {
+      SketchPageImpl(createDefaultLayer);
+    }
+
     public void ExternalPC(string propertyName)
     {
       RaisePropertyChanged(propertyName);
