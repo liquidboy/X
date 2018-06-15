@@ -53,10 +53,10 @@
         </Grid>
 
         <StackPanel>
-            <ListView x:Name="LayerListView" ItemsSource="{x:Bind Layer.LayerCollection, Mode=OneWay}" ItemTemplate="{StaticResource LayerTemplate}" Margin="40,0,0,0"/>
-            <ListView x:Name="EffectsListView" ItemsSource="{x:Bind Layer.Effects, Mode=OneWay}" ItemTemplate="{StaticResource EffectTemplate}"/>
+            <ListView x:Name="LayerListView" ItemsSource="{Binding Layer.LayerCollection, Mode=OneWay}" ItemTemplate="{StaticResource LayerTemplate}" Margin="40,0,0,0"/>
+            <ListView x:Name="EffectsListView" ItemsSource="{Binding Layer.Effects, Mode=OneWay}" ItemTemplate="{StaticResource EffectTemplate}"/>
 
-            <Rectangle Visibility="{x:Bind Layer.ShowSeparator, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" Fill="{ThemeResource SystemControlForegroundBaseLowBrush}" Height="1"/>
+            <Rectangle Visibility="{Binding Layer.ShowSeparator, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" Fill="{ThemeResource SystemControlForegroundBaseLowBrush}" Height="1"/>
         </StackPanel>
     </StackPanel>
 </UserControl>
