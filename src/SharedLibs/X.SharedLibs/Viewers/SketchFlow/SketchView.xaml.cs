@@ -132,6 +132,7 @@ namespace X.Viewer.SketchFlow
         var rect3 = AddPage(310, 150, (int)rect2.X, (int)(rect2.Y + rect2.Z + 55));
         AddPage(150, 150, -1, (int)rect3.Y);
       }
+      else if (actionToPerform == "AddEntityContainer") AddPage(600, 600);
       else if (actionToPerform == "SaveSketch")
       {
         var tbea = e as ToolbarEventArgs;
@@ -166,8 +167,17 @@ namespace X.Viewer.SketchFlow
       if (e is Controls.ToolbarEventArgs)
       {
         var ea = e as Controls.ToolbarEventArgs;
-        if (ea.ActionType == "AddStamp" || ea.ActionType == "AddImage" || ea.ActionType == "AddText")
-          CreateStamp(ea.StampType, ea.StartPoint.X, ea.StartPoint.Y, 85, 85, data: ea.Data);
+
+        switch (ea.ActionType) {
+          case "AddStamp":
+          case "AddImage":
+          case "AddText":
+            CreateStamp(ea.StampType, ea.StartPoint.X, ea.StartPoint.Y, 85, 85, data: ea.Data);
+            break;
+          case "AddEntityDM":
+            CreateEntity(ea.StampType, ea.StartPoint.X, ea.StartPoint.Y, 85, 85, data: ea.Data);
+            break;
+        }
       }
 
 
@@ -198,6 +208,29 @@ namespace X.Viewer.SketchFlow
       ((IStamp)nc).PerformAction += Stamp_PerformAction;
       cvMainAdorner.Children.Add(nc);
     }
+
+    private void CreateEntity(Type type, double x, double y, double w, double h, UIElement template = null, string data = "")
+    {
+      FrameworkElement nc = null;
+      if (string.IsNullOrEmpty(data))
+        nc = (FrameworkElement)Activator.CreateInstance(type, new object[] { });
+      else
+      {
+        nc = new Controls.Stamps.Shape();
+        ((Controls.Stamps.Shape)nc).StampData = data;
+        ((Controls.Stamps.Shape)nc).StampType = type;
+      }
+
+      nc.Width = w; nc.Height = h;
+      nc.SetValue(Windows.UI.Xaml.Controls.Canvas.LeftProperty, Math.Abs(x));
+      nc.SetValue(Windows.UI.Xaml.Controls.Canvas.TopProperty, Math.Abs(y));
+      if (template != null) ((IStamp)nc).GenerateFromXAML(template);
+
+      ((IStamp)nc).PerformAction += Stamp_PerformAction;
+      cvMainAdorner.Children.Add(nc);
+    }
+
+
 
 
     //bool IsMovingStamp = false;
@@ -265,6 +298,8 @@ namespace X.Viewer.SketchFlow
 
       }
     }
+
+
 
     public string RandomString(int length)
     {

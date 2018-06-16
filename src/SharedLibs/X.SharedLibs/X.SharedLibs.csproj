@@ -766,6 +766,9 @@
     <Compile Include="Viewers\SketchFlow\Controls\Pickers\TextPicker.xaml.cs">
       <DependentUpon>TextPicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Viewers\SketchFlow\Controls\Stamps\Entity.xaml.cs">
+      <DependentUpon>Entity.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Viewers\SketchFlow\Controls\Stamps\Circle.xaml.cs">
       <DependentUpon>Circle.xaml</DependentUpon>
     </Compile>
@@ -1099,6 +1102,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Viewers\SketchFlow\Controls\Pickers\TextPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\SketchFlow\Controls\Stamps\Entity.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
