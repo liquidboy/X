@@ -134,8 +134,11 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
       var fillXaml = fillColor.Length > 0 ? $"Fill=\"{fillColor}\"" : "";
 
       var newStroke = el.StrokeThickness * (1 / scaleX);
-
-      return $"<Ellipse x:Name=\"{uid}\" HorizontalAlignment=\"Left\" VerticalAlignment=\"Top\" Height=\"{ (this.Height * (1 / scaleY)) }\" Width=\"{ (this.Width * (1 / scaleX)) }\"  StrokeThickness=\"{ newStroke }\" Stroke=\"{ ((SolidColorBrush)el.Stroke).Color.ToString() }\" Canvas.Left=\"{ leftToUse }\" Canvas.Top=\"{ topToUse }\" RenderTransformOrigin=\"0.5,0.5\" { fillXaml } >{ rotationXaml }</Ellipse>";
+      var xaml = $"<StackPanel Orientation=\"Vertical\" Canvas.Left=\"{ leftToUse }\" Canvas.Top=\"{ topToUse }\" >";
+      xaml += $"<Border Background=\"{ ((SolidColorBrush)elBgTxt.Background).Color.ToString() }\" Padding=\"5,2,5,2\" Height=\"25\" HorizontalAlignment=\"Center\" VerticalAlignment=\"Top\" Margin=\"0,0,0,10\"><TextBlock Foreground=\"White\" FontSize=\"14\" Text=\"{elTxt.Text}\" TextWrapping=\"WrapWholeWords\" RenderTransformOrigin=\"0.5,0.5\" IsColorFontEnabled=\"True\"><TextBlock.RenderTransform><CompositeTransform Rotation=\"0\"></CompositeTransform></TextBlock.RenderTransform></TextBlock></Border>";
+      xaml += $"<Ellipse x:Name=\"{uid}\" HorizontalAlignment=\"Left\" VerticalAlignment=\"Top\" Height=\"{ (el.Height * (1 / scaleY)) }\" Width=\"{ (el.Width * (1 / scaleX)) }\" RenderTransformOrigin=\"0.5,0.5\" { fillXaml } >{ rotationXaml }</Ellipse>";
+      xaml += $"</StackPanel>";
+      return xaml;
     }
 
     public void PopulateFromUIElement(UIElement element)

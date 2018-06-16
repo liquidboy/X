@@ -236,7 +236,11 @@ namespace X.Viewer.SketchFlow.Controls
       PerformAction?.Invoke(null, new ToolbarEventArgs() { ActionType = "AddEntityDM", StartPoint = pt, StampType = typeof(Stamps.Entity) });
     }
 
-    
+    private void butEntityProperty_Click(object sender, RoutedEventArgs e)
+    {
+      var pt = getPoint((UIElement)sender);
+      PerformAction?.Invoke(null, new ToolbarEventArgs() { ActionType = "AddEntityProperty", StartPoint = pt, StampType = typeof(Stamps.Entity) });
+    }
   }
 
 

@@ -112,6 +112,9 @@
       <Button x:Name="butEntityDataModel" Background="LightGray" Click="butEntityDataModel_Click">
         <xuip:Path PathType="HollowCircle" Width="25" Height="25" Foreground="White"></xuip:Path>
       </Button>
+      <Button x:Name="butEntityProperty" Background="LightGray" Click="butEntityProperty_Click">
+        <xuip:Path PathType="DottedCircle" Width="25" Height="25" Foreground="White"></xuip:Path>
+      </Button>
     </StackPanel>
   </Grid>
 </UserControl>
