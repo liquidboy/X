@@ -29,7 +29,6 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
             tlLeftCenterToolbar.AddTab("Colors", isSelected: true);
             tlLeftCenterToolbar.AddTab("Text");
-
             tlLeftCenterToolbar.OnTabChanged += TlLeftCenterToolbar_OnTabChanged;
 
 

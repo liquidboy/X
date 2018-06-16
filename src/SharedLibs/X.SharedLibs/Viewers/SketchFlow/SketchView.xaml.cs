@@ -175,7 +175,7 @@ namespace X.Viewer.SketchFlow
             CreateStamp(ea.StampType, ea.StartPoint.X, ea.StartPoint.Y, 85, 85, data: ea.Data);
             break;
           case "AddEntityDM":
-            CreateEntity(ea.StampType, ea.StartPoint.X, ea.StartPoint.Y, 85, 85, data: ea.Data);
+            CreateEntity(ea.StampType, ea.StartPoint.X, ea.StartPoint.Y, 95, 130, data: ea.Data);
             break;
         }
       }
