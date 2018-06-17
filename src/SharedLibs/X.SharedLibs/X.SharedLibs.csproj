@@ -766,6 +766,12 @@
     <Compile Include="Viewers\SketchFlow\Controls\Pickers\TextPicker.xaml.cs">
       <DependentUpon>TextPicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Viewers\SketchFlow\Controls\Stamps\EntityMethod.xaml.cs">
+      <DependentUpon>EntityMethod.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\SketchFlow\Controls\Stamps\EntityProperty.xaml.cs">
+      <DependentUpon>EntityProperty.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Viewers\SketchFlow\Controls\Stamps\Entity.xaml.cs">
       <DependentUpon>Entity.xaml</DependentUpon>
     </Compile>
@@ -1102,6 +1108,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Viewers\SketchFlow\Controls\Pickers\TextPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\SketchFlow\Controls\Stamps\EntityMethod.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\SketchFlow\Controls\Stamps\EntityProperty.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

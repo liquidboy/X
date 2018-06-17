@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="X.Viewer.SketchFlow.Controls.Stamps.Entity"
+    x:Class="X.Viewer.SketchFlow.Controls.Stamps.EntityProperty"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:X.Viewer.SketchFlow.Controls.Stamps"
@@ -20,25 +20,17 @@
 
 
     <!-- Markers : WIDTH & HEIGHT -->
-    <local:MarkersHV x:Name="grdGridMarkers" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed" ParentWidth="{Binding ElementName=el, Path=Width}" ParentHeight="{Binding ElementName=el, Path=Height}">
-    </local:MarkersHV>
+    <!--<local:MarkersHV x:Name="grdGridMarkers" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed" ParentWidth="{Binding ElementName=elParent, Path=ActualWidth}" ParentHeight="{Binding ElementName=elParent, Path=ActualHeight}">
+    </local:MarkersHV>-->
 
-    <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left">
-      <!-- Shape -->
-      <Border x:Name="elBgTxt" Background="DarkOrange" Padding="5,2,5,2" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,10">
-        <TextBlock x:Name="elTxt" Foreground="White" FontSize="14" Text="[text]" TextWrapping="WrapWholeWords" RenderTransformOrigin="0.5,0.5" IsColorFontEnabled="True">
-          <TextBlock.RenderTransform>
-            <CompositeTransform Rotation="0"></CompositeTransform>
-          </TextBlock.RenderTransform>
-        </TextBlock>
-      </Border>
-
-      <Ellipse x:Name="el" HorizontalAlignment="Center" Fill="DarkOrange" RenderTransformOrigin="0.5,0.5" Height="90" Width="90">
-        <Ellipse.RenderTransform>
-          <CompositeTransform Rotation="0"></CompositeTransform>
-        </Ellipse.RenderTransform>
-      </Ellipse>
-
+    <!-- Shape -->
+    <StackPanel x:Name="elParent" Orientation="Horizontal" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+      <StackPanel.RenderTransform>
+        <CompositeTransform Rotation="0"></CompositeTransform>
+      </StackPanel.RenderTransform>
+      <Ellipse x:Name="el" Stroke="DarkOrange" RenderTransformOrigin="0.5,0.5" Height="30" Width="30"></Ellipse>
+      <TextBlock x:Name="elTxt" Foreground="DarkOrange" FontSize="16" Text="[text]" TextWrapping="WrapWholeWords" IsColorFontEnabled="True" VerticalAlignment="Center" Margin="10,0,0,0">
+      </TextBlock>
     </StackPanel>
     
 
@@ -55,9 +47,9 @@
       <Button x:Name="butStamp" Background="LightGray" Click="butStamp_Click">
         <xuip:Path PathType="Stamp" Width="25" Height="25" Foreground="White"></xuip:Path>
       </Button>
-      <Button x:Name="butGridMarker" Background="LightGray" Click="butGridMarker_Click">
+      <!--<Button x:Name="butGridMarker" Background="LightGray" Click="butGridMarker_Click">
         <xuip:Path PathType="GridMarker" Width="25" Height="25" Foreground="White"></xuip:Path>
-      </Button>
+      </Button>-->
       <Button x:Name="butLock" Background="Green" Click="butLock_Click" >
         <xuip:Path PathType="Lock1" Width="25" Height="25" Foreground="White"></xuip:Path>
       </Button>

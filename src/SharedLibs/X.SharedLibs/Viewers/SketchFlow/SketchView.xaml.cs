@@ -172,11 +172,12 @@ namespace X.Viewer.SketchFlow
           case "AddStamp":
           case "AddImage":
           case "AddText":
-            CreateStamp(ea.StampType, ea.StartPoint.X, ea.StartPoint.Y, 85, 85, data: ea.Data);
-            break;
+            CreateStamp(ea.StampType, ea.StartPoint.X, ea.StartPoint.Y, 85, 85, data: ea.Data); break;
           case "AddEntityDM":
-            CreateEntity(ea.StampType, ea.StartPoint.X, ea.StartPoint.Y, 95, 130, data: ea.Data);
-            break;
+            CreateEntity(ea.StampType, ea.StartPoint.X, ea.StartPoint.Y, 95, 130, data: ea.Data); break;
+          case "AddEntityMethod":
+          case "AddEntityProperty":
+            CreateEntity(ea.StampType, ea.StartPoint.X, ea.StartPoint.Y, 150, 50, data: ea.Data); break;
         }
       }
 
@@ -387,8 +388,8 @@ namespace X.Viewer.SketchFlow
           //{
 
           var frag = plea.Fragment;
-
           var found = _currentPageLayoutForStamps?.FindContentElementByName(frag.Uid) as FrameworkElement;
+
           if (found != null)
           {
             var gtFound = cvMainAdorner.TransformToVisual(found);
@@ -408,7 +409,17 @@ namespace X.Viewer.SketchFlow
             //cvMainAdorner.Children.Add(el);
 
             //only if the stamp is being created in the viewable area
-            if (top > 20) CreateStamp(frag.Type, left, top, width, height, template: found, data: frag.Data);
+            if (top > 20) {
+              switch (frag.Type.Name) {
+                case "EntityProperty": 
+                case "EntityMethod":
+                  CreateEntity(frag.Type, left, top, width, height, template: found, data: frag.Data);
+                  break;
+                default:
+                  CreateStamp(frag.Type, left, top, width, height, template: found, data: frag.Data);
+                  break;
+              }
+            }
           }
 
 

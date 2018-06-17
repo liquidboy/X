@@ -20,11 +20,11 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 {
 
 
-  public sealed partial class Entity : UserControl, IStamp
+  public sealed partial class EntityMethod : UserControl, IStamp
   {
     public event EventHandler PerformAction;
 
-    public Entity()
+    public EntityMethod()
     {
       this.InitializeComponent();
 
@@ -32,8 +32,8 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
       tlLeftCenterToolbar.AddTab("Text");
       tlLeftCenterToolbar.OnTabChanged += TlLeftCenterToolbar_OnTabChanged;
 
-      this.Unloaded += Entity_Unloaded;
-      cpMain.ColorTypes = new List<string>() { "Stroke", "Fill" };
+      this.Unloaded += EntityMethod_Unloaded;
+      cpMain.ColorTypes = new List<string>() { "Text Color", "Circle Color" };
       tpMain.FontFamilies = new List<string>() { "Neue Haas Grotesk Text Pro", "FangSong", "Kokila", "Cambria", "Courier New", "Gadugi", "Georgia", "Leelawadee UI", "Lucida Console", "Segoe MDL2 Assets", "Segoe UI", "Segoe UI Emoji", "Verdana" };
     }
 
@@ -51,7 +51,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
       }
     }
 
-    private void Entity_Unloaded(object sender, RoutedEventArgs e)
+    private void EntityMethod_Unloaded(object sender, RoutedEventArgs e)
     {
 
     }
@@ -76,72 +76,78 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
     private void butClose_Click(object sender, RoutedEventArgs e)
     {
-      PerformAction?.Invoke(this, new EntityEventArgs() { ActionType = eActionTypes.CloseStamp });
+      PerformAction?.Invoke(this, new EntityMethodEventArgs() { ActionType = eActionTypes.CloseStamp });
     }
 
     private void butStamp_Click(object sender, RoutedEventArgs e)
     {
-      PerformAction?.Invoke(this, new EntityEventArgs() { ActionType = eActionTypes.CreateFromStamp });
+      PerformAction?.Invoke(this, new EntityMethodEventArgs() { ActionType = eActionTypes.CreateFromStamp });
     }
 
 
 
     public void UpdateRotation(double angle)
     {
-      ((CompositeTransform)el.RenderTransform).Rotation = angle;
-      //((CompositeTransform)grdGridRotationMarkers.RenderTransform).Rotation = angle;
+      ((CompositeTransform)elParent.RenderTransform).Rotation = angle;
       grdGridRotationMarkers.RotationAngle = angle;
-
-
-      //    ((CompositeTransform)x1.RenderTransform).Rotation = Math.Cos(angle);
-      //    ((CompositeTransform)x2.RenderTransform).Rotation = Math.Cos(angle);
-      //    ((CompositeTransform)y1.RenderTransform).Rotation = Math.Cos(angle);
-      //    ((CompositeTransform)y2.RenderTransform).Rotation = Math.Cos(angle);
     }
 
     private void cpMain_ColorChanged(object sender, EventArgs e)
     {
       var cpea = e as ColorPickerEventArgs;
-      if (cpea.ColorType == "Stroke") {
+      if (cpea.ColorType == "Text Color") {
+        elTxt.Foreground = (Brush)sender;
+      }
+      else if (cpea.ColorType == "Circle Color")
+      {
         el.Stroke = (Brush)sender;
-        elBgTxt.BorderBrush = (Brush)sender;
-      }
-      else if (cpea.ColorType == "Fill") {
-        el.Fill = (Brush)sender;
-        elBgTxt.Background = (Brush)sender;
       }
     }
 
-    private void butGridMarker_Click(object sender, RoutedEventArgs e)
-    {
-      PerformAction?.Invoke(this, new EntityEventArgs() { ActionType = eActionTypes.ToggleGridMarkers });
+    //private void butGridMarker_Click(object sender, RoutedEventArgs e)
+    //{
+    //  PerformAction?.Invoke(this, new EntityMethodEventArgs() { ActionType = eActionTypes.ToggleGridMarkers });
 
-      if (grdGridMarkers.Visibility == Visibility.Visible) grdGridMarkers.Visibility = Visibility.Collapsed;
-      else grdGridMarkers.Visibility = Visibility.Visible;
+    //  if (grdGridMarkers.Visibility == Visibility.Visible) grdGridMarkers.Visibility = Visibility.Collapsed;
+    //  else grdGridMarkers.Visibility = Visibility.Visible;
 
-      grdGridRotationMarkers.Visibility = grdGridMarkers.Visibility;
-    }
+    //  grdGridRotationMarkers.Visibility = grdGridMarkers.Visibility;
+    //}
 
 
     public string GenerateXAML(string uid, double scaleX, double scaleY, double left, double top)
     {
-      var rotationAngle = ((CompositeTransform)el.RenderTransform).Rotation;
+      var rotationAngle = ((CompositeTransform)elParent.RenderTransform).Rotation;
       var leftToUse = left;
       var topToUse = top;
-      var rotationXaml = $"<Ellipse.RenderTransform><CompositeTransform Rotation=\"{ rotationAngle }\" /></Ellipse.RenderTransform>";
+      var rotationXaml = $"<StackPanel.RenderTransform><CompositeTransform Rotation=\"{ rotationAngle }\" /></StackPanel.RenderTransform>";
       if (rotationAngle == 0) rotationXaml = "";
+      var newFontSize = elTxt.FontSize * (1 / scaleX);
 
-      var fillColor = (el.Fill != null) ? ((SolidColorBrush)el.Fill).Color.ToString() : "";
-      var fillXaml = fillColor.Length > 0 ? $"Fill=\"{fillColor}\"" : "";
+      var xamlTemplate = @"
+        <StackPanel x:Name=""{0}"" Orientation=""Horizontal"" RenderTransformOrigin=""0.5,0.5"" VerticalAlignment=""Top"" HorizontalAlignment=""Stretch"" Canvas.Left=""{1}"" Canvas.Top=""{2}"">
+          <StackPanel.RenderTransform>
+            <CompositeTransform Rotation=""{3}""></CompositeTransform>
+          </StackPanel.RenderTransform>
+          <Rectangle Stroke=""{4}"" RenderTransformOrigin=""0.5,0.5"" Height=""{5}"" Width=""{6}""></Rectangle>
+          <TextBlock Foreground=""{7}"" FontSize=""{8}"" Text=""{9}"" TextWrapping=""WrapWholeWords"" IsColorFontEnabled=""True"" VerticalAlignment=""Center"" Margin=""10,0,0,0"">
+          </TextBlock>
+        </StackPanel>
+      ";
 
-      var newStroke = el.StrokeThickness * (1 / scaleX);
-
-      var xamlBuilder = new StringBuilder();
-      xamlBuilder.AppendLine($"<StackPanel x:Name=\"{uid}\" Orientation=\"Vertical\" Canvas.Left=\"{ leftToUse }\" Canvas.Top=\"{ topToUse }\" >");
-      xamlBuilder.AppendLine($"<Border Background=\"{ ((SolidColorBrush)elBgTxt.Background).Color.ToString() }\" Padding=\"5,2,5,2\" Height=\"25\" HorizontalAlignment=\"Center\" VerticalAlignment=\"Top\" Margin=\"0,0,0,10\"><TextBlock Foreground=\"White\" FontSize=\"14\" Text=\"{elTxt.Text}\" TextWrapping=\"WrapWholeWords\" RenderTransformOrigin=\"0.5,0.5\" IsColorFontEnabled=\"True\"><TextBlock.RenderTransform><CompositeTransform Rotation=\"0\"></CompositeTransform></TextBlock.RenderTransform></TextBlock></Border>");
-      xamlBuilder.AppendLine($"<Ellipse Height=\"{ (el.Height * (1 / scaleY)) }\" Width=\"{ (el.Width * (1 / scaleX)) }\" RenderTransformOrigin=\"0.5,0.5\" { fillXaml } >{ rotationXaml }</Ellipse>");
-      xamlBuilder.AppendLine($"</StackPanel>");
-      return xamlBuilder.ToString();
+      return string.Format(
+          xamlTemplate,
+          uid,
+          leftToUse,
+          topToUse,
+          rotationAngle,
+          ((SolidColorBrush)el.Stroke).Color.ToString(),
+          (el.Height * (1 / scaleY)),
+          (el.Width * (1 / scaleX)),
+          ((SolidColorBrush)elTxt.Foreground).Color.ToString(),
+          newFontSize,
+          elTxt.Text
+        );
     }
 
     public void PopulateFromUIElement(UIElement element)
@@ -165,17 +171,22 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
     public void GenerateFromXAML(UIElement template)
     {
-      if (template is Ellipse)
+      if (template is StackPanel)
       {
-        var elTemplate = template as Ellipse;
-        try { ((CompositeTransform)el.RenderTransform).Rotation = ((CompositeTransform)elTemplate.RenderTransform).Rotation; } catch { }
-        el.Stroke = elTemplate.Stroke;
-        el.StrokeThickness = elTemplate.StrokeThickness;
-        el.Fill = elTemplate.Fill;
+        var elTemplate = template as StackPanel;
+        var elChild1Rectangle = elTemplate.Children[0] as Windows.UI.Xaml.Shapes.Rectangle ;
+        var elChild2TextBlock = elTemplate.Children[0] as TextBlock;
+        try { ((CompositeTransform)elParent.RenderTransform).Rotation = ((CompositeTransform)elTemplate.RenderTransform).Rotation; } catch { }
+        el.Stroke = elChild1Rectangle.Stroke;
+        el.Height = elChild1Rectangle.Height;
+        el.Width = elChild1Rectangle.Width;
+        elTxt.Text = elChild2TextBlock.Text;
+        elTxt.Foreground = elChild2TextBlock.Foreground;
+        elTxt.FontSize = elChild2TextBlock.FontSize;
       }
     }
 
-    public void UpdateStrokeThickness(double thickness) { el.StrokeThickness = thickness; }
+    public void UpdateStrokeThickness(double thickness) { if (thickness > 0) elTxt.FontSize = thickness;  }
     public string GetData() { return string.Empty; }
 
     private void tpMain_TextChanged(object sender, EventArgs e)
@@ -186,7 +197,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
     }
   }
 
-  public class EntityEventArgs : EventArgs, IStampEventArgs
+  public class EntityMethodEventArgs : EventArgs, IStampEventArgs
   {
     public eActionTypes ActionType { get; set; }
 
