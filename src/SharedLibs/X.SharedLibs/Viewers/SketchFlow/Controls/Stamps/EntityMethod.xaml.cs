@@ -30,6 +30,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
       tlLeftCenterToolbar.AddTab("Colors", isSelected: true);
       tlLeftCenterToolbar.AddTab("Text");
+      tlLeftCenterToolbar.AddTab("Lines");
       tlLeftCenterToolbar.OnTabChanged += TlLeftCenterToolbar_OnTabChanged;
 
       this.Unloaded += EntityMethod_Unloaded;
@@ -48,6 +49,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
       {
         case "Colors": colorPicker.Visibility = Visibility.Visible; break;
         case "Text": textPicker.Visibility = Visibility.Visible; break;
+        case "Lines": break;
       }
     }
 
@@ -175,7 +177,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
       {
         var elTemplate = template as StackPanel;
         var elChild1Rectangle = elTemplate.Children[0] as Windows.UI.Xaml.Shapes.Rectangle ;
-        var elChild2TextBlock = elTemplate.Children[0] as TextBlock;
+        var elChild2TextBlock = elTemplate.Children[1] as TextBlock;
         try { ((CompositeTransform)elParent.RenderTransform).Rotation = ((CompositeTransform)elTemplate.RenderTransform).Rotation; } catch { }
         el.Stroke = elChild1Rectangle.Stroke;
         el.Height = elChild1Rectangle.Height;

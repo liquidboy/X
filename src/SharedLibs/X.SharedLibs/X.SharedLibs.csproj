@@ -763,6 +763,9 @@
     <Compile Include="Viewers\SketchFlow\Controls\Pickers\StampColorPicker.xaml.cs">
       <DependentUpon>StampColorPicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Viewers\SketchFlow\Controls\Pickers\EntityLinePicker.xaml.cs">
+      <DependentUpon>EntityLinePicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Viewers\SketchFlow\Controls\Pickers\TextPicker.xaml.cs">
       <DependentUpon>TextPicker.xaml</DependentUpon>
     </Compile>
@@ -1104,6 +1107,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Viewers\SketchFlow\Controls\Pickers\StampColorPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\SketchFlow\Controls\Pickers\EntityLinePicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
