@@ -177,6 +177,7 @@ namespace X.Viewer.SketchFlow
             CreateEntity(ea.StampType, ea.StartPoint.X, ea.StartPoint.Y, 95, 130, data: ea.Data); break;
           case "AddEntityMethod":
           case "AddEntityProperty":
+          case "AddEntityLines":
             CreateEntity(ea.StampType, ea.StartPoint.X, ea.StartPoint.Y, 150, 50, data: ea.Data); break;
         }
       }

@@ -247,6 +247,12 @@ namespace X.Viewer.SketchFlow.Controls
       var pt = getPoint((UIElement)sender);
       PerformAction?.Invoke(null, new ToolbarEventArgs() { ActionType = "AddEntityMethod", StartPoint = pt, StampType = typeof(Stamps.EntityMethod) });
     }
+
+    private void butEntityLines_Click(object sender, RoutedEventArgs e)
+    {
+      var pt = getPoint((UIElement)sender);
+      PerformAction?.Invoke(null, new ToolbarEventArgs() { ActionType = "AddEntityLines", StartPoint = pt, StampType = typeof(Stamps.EntityLines) });
+    }
   }
 
 

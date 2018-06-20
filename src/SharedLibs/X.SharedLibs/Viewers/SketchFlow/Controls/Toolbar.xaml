@@ -118,6 +118,9 @@
       <Button x:Name="butEntityMethod" Background="LightGray" Click="butEntityMethod_Click">
         <xuip:Path PathType="RoundedEndSquare" Width="25" Height="25" Foreground="White"></xuip:Path>
       </Button>
+      <Button x:Name="butEntityLines" Background="LightGray" Click="butEntityLines_Click">
+        <xuip:Path PathType="VerticalLines" Width="25" Height="25" Foreground="White"></xuip:Path>
+      </Button>
     </StackPanel>
   </Grid>
 </UserControl>

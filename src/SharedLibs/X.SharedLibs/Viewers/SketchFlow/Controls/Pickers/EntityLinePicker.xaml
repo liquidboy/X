@@ -11,14 +11,35 @@
     x:Name="root"
     d:DesignHeight="300"
     d:DesignWidth="400">
-    <Grid>
-        <xuiri:Input x:Name="rcb" HorizontalAlignment="Stretch" VerticalAlignment="Top" FontSize="12"  Width="300" Height="30" Type="combobox" Label="Property" LabelFontSize="9" LabelTranslateY="-15"  FocusForegroundColor="White" FocusColor="DarkGray" FocusHoverColor="DarkGray" BorderBrush="DarkGray" Margin="-1,-1,0,0" Foreground="White" PlaceholderText="From" ItemsSource="{Binding ElementName=root, Path=AllowedListOfEntities}" ValueChanged="rcb_ValueChanged" GlowAmount="0">
-            <xuiri:Input.ItemTemplate>
-                <DataTemplate>
-                    <xuiri:InputComboBoxItem Foreground="White" Content="{Binding }" ></xuiri:InputComboBoxItem>
-                </DataTemplate>
-            </xuiri:Input.ItemTemplate>
-        </xuiri:Input>
-        
+  <Grid>
+    <Grid HorizontalAlignment="Stretch">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="30px"></RowDefinition>
+        <RowDefinition Height="*"></RowDefinition>
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"></ColumnDefinition>
+        <ColumnDefinition Width="*"></ColumnDefinition>
+      </Grid.ColumnDefinitions>
+
+
+      <xuiri:Input x:Name="rcb" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="12" Type="combobox" Label="Property" LabelFontSize="9" LabelTranslateY="-15"  FocusForegroundColor="White" FocusColor="DarkGray" FocusHoverColor="DarkGray" BorderBrush="DarkGray" Margin="-1,-1,0,0" Foreground="White" PlaceholderText="From" ItemsSource="{Binding ElementName=root, Path=AllowedListOfEntities}" ValueChanged="rcb_ValueChanged" GlowAmount="0">
+        <xuiri:Input.ItemTemplate>
+          <DataTemplate>
+            <xuiri:InputComboBoxItem Foreground="White" Content="{Binding }" ></xuiri:InputComboBoxItem>
+          </DataTemplate>
+        </xuiri:Input.ItemTemplate>
+      </xuiri:Input>
+
+      <xuiri:Input x:Name="rcb2" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="12" Type="combobox" Label="Property" LabelFontSize="9" LabelTranslateY="-15"  FocusForegroundColor="White" FocusColor="DarkGray" FocusHoverColor="DarkGray" BorderBrush="DarkGray" Margin="-1,-1,0,0" Foreground="White" PlaceholderText="To" ItemsSource="{Binding ElementName=root, Path=AllowedListOfEntities}" ValueChanged="rcb_ValueChanged" GlowAmount="0">
+        <xuiri:Input.ItemTemplate>
+          <DataTemplate>
+            <xuiri:InputComboBoxItem Foreground="White" Content="{Binding }" ></xuiri:InputComboBoxItem>
+          </DataTemplate>
+        </xuiri:Input.ItemTemplate>
+      </xuiri:Input>
+      
     </Grid>
+    
+  </Grid>
 </UserControl>
