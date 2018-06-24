@@ -24,8 +24,8 @@
     </local:MarkersHV>-->
 
     <!-- Shape -->
-    <Canvas x:Name="el" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Red"></Canvas>
-    
+    <Rectangle x:Name="el" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="Black" Opacity="0.2"></Rectangle>
+    <TextBlock x:Name="elDebug" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Margin="10" FontSize="10"></TextBlock>
 
     <!-- Edge Buttons -->
     <local:ResizeMoveEdges x:Name="edges" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="-15,-15,-15,-15" PerformAction="edges_PerformAction" ></local:ResizeMoveEdges>

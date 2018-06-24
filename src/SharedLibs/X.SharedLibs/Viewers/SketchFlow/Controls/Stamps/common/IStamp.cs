@@ -7,14 +7,17 @@ using Windows.UI.Xaml;
 
 namespace X.Viewer.SketchFlow.Controls.Stamps
 {
-    interface IStamp
-    {
-        event EventHandler PerformAction;
-        string GenerateXAML(string uid, double scaleX, double scaleY, double left, double top);
-        void GenerateFromXAML(UIElement template);
-        void PopulateFromUIElement(UIElement element);
-        void UpdateRotation(double angle);
-        void UpdateStrokeThickness(double thickness);
-        string GetData();
-    }
+  interface IStamp
+  {
+    event EventHandler PerformAction;
+    string GenerateXAML(string uid, double scaleX, double scaleY, double left, double top);
+    void GenerateFromXAML(UIElement template);
+    void PopulateFromUIElement(UIElement element);
+    void UpdateRotation(double angle);
+    void UpdateStrokeThickness(double thickness);
+    void UpdatedDimension(double width, double height);
+    void UpdatedPosition(double x, double y);
+
+    string GetData();
+  }
 }

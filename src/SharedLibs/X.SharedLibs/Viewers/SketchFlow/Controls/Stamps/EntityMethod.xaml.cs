@@ -95,7 +95,8 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
     private void cpMain_ColorChanged(object sender, EventArgs e)
     {
       var cpea = e as ColorPickerEventArgs;
-      if (cpea.ColorType == "Text Color") {
+      if (cpea.ColorType == "Text Color")
+      {
         elTxt.Foreground = (Brush)sender;
       }
       else if (cpea.ColorType == "Circle Color")
@@ -174,7 +175,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
       if (template is StackPanel)
       {
         var elTemplate = template as StackPanel;
-        var elChild1Rectangle = elTemplate.Children[0] as Windows.UI.Xaml.Shapes.Rectangle ;
+        var elChild1Rectangle = elTemplate.Children[0] as Windows.UI.Xaml.Shapes.Rectangle;
         var elChild2TextBlock = elTemplate.Children[1] as TextBlock;
         try { ((CompositeTransform)elParent.RenderTransform).Rotation = ((CompositeTransform)elTemplate.RenderTransform).Rotation; } catch { }
         el.Stroke = elChild1Rectangle.Stroke;
@@ -186,7 +187,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
       }
     }
 
-    public void UpdateStrokeThickness(double thickness) { if (thickness > 0) elTxt.FontSize = thickness;  }
+    public void UpdateStrokeThickness(double thickness) { if (thickness > 0) elTxt.FontSize = thickness; }
     public string GetData() { return string.Empty; }
 
     private void tpMain_TextChanged(object sender, EventArgs e)
@@ -194,6 +195,16 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
       var tea = e as TextPickerEventArgs;
       elTxt.Text = tea.Text;
       if (!string.IsNullOrEmpty(tea.FontFamily)) elTxt.FontFamily = new FontFamily(tea.FontFamily);
+    }
+
+    public void UpdatedDimension(double width, double height)
+    {
+
+    }
+
+    public void UpdatedPosition(double x, double y)
+    {
+
     }
   }
 

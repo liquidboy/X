@@ -177,6 +177,15 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
       elTxt.Text = tea.Text;
       if (!string.IsNullOrEmpty(tea.FontFamily)) elTxt.FontFamily = new FontFamily(tea.FontFamily);
     }
+
+    public void UpdatedDimension(double width, double height)
+    {
+
+    }
+    public void UpdatedPosition(double x, double y)
+    {
+
+    }
   }
 
   public class EntityPropertyEventArgs : EventArgs, IStampEventArgs

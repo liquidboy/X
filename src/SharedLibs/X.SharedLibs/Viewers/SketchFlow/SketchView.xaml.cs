@@ -580,10 +580,11 @@ namespace X.Viewer.SketchFlow
         if (stampe.ActionType == eActionTypes.MoveTopLeft)
         {
           console2.Text = $"sx : {ptStart.Position.X}  { _stampStartX }  sy :  { ptStart.Position.Y } { _stampStartY }    ";
-
-          _currentStamp.SetValue(Windows.UI.Xaml.Controls.Canvas.LeftProperty, _stampStartX + (ptEnd.Position.X - ptStart.Position.X));
-          _currentStamp.SetValue(Windows.UI.Xaml.Controls.Canvas.TopProperty, _stampStartY + (ptEnd.Position.Y - ptStart.Position.Y));
-
+          var newX = _stampStartX + (ptEnd.Position.X - ptStart.Position.X);
+          var newY = _stampStartY + (ptEnd.Position.Y - ptStart.Position.Y);
+          _currentStamp.SetValue(Windows.UI.Xaml.Controls.Canvas.LeftProperty, newX);
+          _currentStamp.SetValue(Windows.UI.Xaml.Controls.Canvas.TopProperty, newY);
+          if (_currentStamp is IStamp) ((IStamp)_currentStamp).UpdatedPosition(newX, newY);
         }
         else if (stampe.ActionType == eActionTypes.RotateBottomLeft)
         {
@@ -597,8 +598,11 @@ namespace X.Viewer.SketchFlow
         }
         else if (stampe.ActionType == eActionTypes.ResizeBottomRight)
         {
-          ((FrameworkElement)_currentStamp).Width = _stampStartWidth + (ptEnd.Position.X - ptStart.Position.X);
-          ((FrameworkElement)_currentStamp).Height = _stampStartHeight + (ptEnd.Position.Y - ptStart.Position.Y);
+          var newWidth = _stampStartWidth + (ptEnd.Position.X - ptStart.Position.X);
+          var newHeight = _stampStartHeight + (ptEnd.Position.Y - ptStart.Position.Y);
+          ((FrameworkElement)_currentStamp).Width = newWidth;
+          ((FrameworkElement)_currentStamp).Height = newHeight;
+          if (_currentStamp is IStamp) ((IStamp)_currentStamp).UpdatedDimension(newWidth, newHeight);
         }
         else if (stampe.ActionType == eActionTypes.ResizeCenterRight)
         {

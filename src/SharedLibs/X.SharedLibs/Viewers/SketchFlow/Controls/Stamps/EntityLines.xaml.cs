@@ -1,7 +1,10 @@
-﻿using System;
+﻿using SumoNinjaMonkey.Services.Controls;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using Windows.Foundation;
@@ -24,6 +27,8 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
   {
     public event EventHandler PerformAction;
 
+    private PageContent _foundSelectedPageContent;
+
     public EntityLines()
     {
       this.InitializeComponent();
@@ -36,6 +41,26 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
       this.Unloaded += EntityLines_Unloaded;
       cpMain.ColorTypes = new List<string>() { "Text Color", "Circle Color" };
       tpMain.FontFamilies = new List<string>() { "Neue Haas Grotesk Text Pro", "FangSong", "Kokila", "Cambria", "Courier New", "Gadugi", "Georgia", "Leelawadee UI", "Lucida Console", "Segoe MDL2 Assets", "Segoe UI", "Segoe UI Emoji", "Verdana" };
+
+      setupPageLayout();
+    }
+
+    private void setupPageLayout() {
+
+      List<PageLayout> found = new List<PageLayout>();
+      this.FindChildren<PageLayout>(found, Window.Current.Content);
+
+      foreach (var pl in found)
+      {
+        var sp = (SketchPage)pl.DataContext;
+
+        if (sp.SelectedLayer != null)
+        {
+          List<PageContent> foundPCs = new List<PageContent>();
+          pl.FindChildren(foundPCs, pl);
+          _foundSelectedPageContent = foundPCs?.First();
+        }
+      }
     }
 
     private void TlLeftCenterToolbar_OnTabChanged(object sender, EventArgs e)
@@ -72,8 +97,46 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
         if (leftCenterToolBar.Visibility == Visibility.Visible) leftCenterToolBar.Visibility = Visibility.Collapsed;
         else leftCenterToolBar.Visibility = Visibility.Visible;
       }
+      else if (ea.ActionType == eActionTypes.MoveTopLeft)
+      {
+        if (_foundSelectedPageContent != null) {
+          determineBoundElements();
+        }
+      }
+      else if (ea.ActionType == eActionTypes.ResizeBottomRight)
+      {
+        if (_foundSelectedPageContent != null)
+        {
+          determineBoundElements();
+        }
+      }
 
       PerformAction?.Invoke(this, e);
+    }
+
+
+    private void determineBoundElements() {
+      
+
+      var gt = edges.TransformToVisual(Window.Current.Content);
+      var gtTopLeft = gt.TransformPoint(new Point(0, 0));
+      var boundingRect = new Rect(gtTopLeft.X, gtTopLeft.Y, edges.ActualWidth, edges.ActualHeight);
+      var foundElements = VisualTreeHelper.FindElementsInHostCoordinates(boundingRect, _foundSelectedPageContent, true);
+      var stampCount = 0;
+      if (foundElements?.Count() > 0)
+      {
+        var stampInstances = foundElements.Where(x => ((FrameworkElement)x).Name.Contains("stamp_"));
+        if (stampInstances?.Count() > 0)
+        {
+          stampCount = stampInstances.Count();
+        }
+      }
+
+      elDebug.Text = $@"x: {gtTopLeft.X.ToString("F0", CultureInfo.InvariantCulture)}
+y: {gtTopLeft.Y.ToString("F0", CultureInfo.InvariantCulture)}
+width: {edges.ActualWidth.ToString("F0", CultureInfo.InvariantCulture)}
+height: {edges.ActualHeight.ToString("F0", CultureInfo.InvariantCulture)}
+stamp count: {stampCount}";
     }
 
     private void butClose_Click(object sender, RoutedEventArgs e)
@@ -199,6 +262,15 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
       //var tea = e as TextPickerEventArgs;
       //elTxt.Text = tea.Text;
       //if (!string.IsNullOrEmpty(tea.FontFamily)) elTxt.FontFamily = new FontFamily(tea.FontFamily);
+    }
+
+    public void UpdatedDimension(double width, double height)
+    {
+      determineBoundElements();
+    }
+    public void UpdatedPosition(double x, double y)
+    {
+      determineBoundElements();
     }
   }
 
