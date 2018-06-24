@@ -272,6 +272,12 @@ stamp count: {stampCount}";
     {
       determineBoundElements();
     }
+
+    public void UpdatedSelectedPage()
+    {
+      setupPageLayout();
+    }
+
   }
 
   public class EntityLinesEventArgs : EventArgs, IStampEventArgs

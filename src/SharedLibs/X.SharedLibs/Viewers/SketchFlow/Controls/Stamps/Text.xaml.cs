@@ -180,6 +180,12 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
     {
 
     }
+
+    public void UpdatedSelectedPage()
+    {
+
+    }
+
   }
 
   public class TextEventArgs : EventArgs, IStampEventArgs

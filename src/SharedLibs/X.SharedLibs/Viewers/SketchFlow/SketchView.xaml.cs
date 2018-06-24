@@ -211,6 +211,15 @@ namespace X.Viewer.SketchFlow
       cvMainAdorner.Children.Add(nc);
     }
 
+    private void CallToAllStamps(string action) {
+      foreach (var child in cvMainAdorner.Children) {  
+        if (child is IStamp) {
+          IStamp stamp = (IStamp)child;
+          if (action == "PageSelected") stamp.UpdatedSelectedPage();
+        }
+      }
+    }
+
     private void CreateEntity(Type type, double x, double y, double w, double h, UIElement template = null, string data = "")
     {
       FrameworkElement nc = null;
@@ -365,6 +374,8 @@ namespace X.Viewer.SketchFlow
         ptStartPt.X = (double)_currentPageLayout.GetValue(Windows.UI.Xaml.Controls.Canvas.LeftProperty);
         ptStartPt.Y = (double)_currentPageLayout.GetValue(Windows.UI.Xaml.Controls.Canvas.TopProperty);
 
+        CallToAllStamps("PageSelected");
+
       }
       else if (e is PageLayerEventArgs)
       {
@@ -394,10 +405,10 @@ namespace X.Viewer.SketchFlow
           if (found != null)
           {
             var gtFound = cvMainAdorner.TransformToVisual(found);
-            var ptFound = gtFound.TransformPoint(new Windows.Foundation.Point(0, 0));
+            var ptFound = gtFound.TransformPoint(new Point(0, 0));
 
             var gtPL = cvMainAdorner.TransformToVisual(_currentPageLayoutForStamps);
-            var ptPL = gtPL.TransformPoint(new Windows.Foundation.Point(0, 0));
+            var ptPL = gtPL.TransformPoint(new Point(0, 0));
 
             var width = found.Width * cvMainContainer.Scale;
             var height = found.Height * cvMainContainer.Scale;

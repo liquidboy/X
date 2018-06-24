@@ -165,6 +165,11 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
     {
 
     }
+
+    public void UpdatedSelectedPage()
+    {
+
+    }
   }
 
   public class CircleEventArgs : EventArgs, IStampEventArgs

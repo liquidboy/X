@@ -17,6 +17,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
     void UpdateStrokeThickness(double thickness);
     void UpdatedDimension(double width, double height);
     void UpdatedPosition(double x, double y);
+    void UpdatedSelectedPage();
 
     string GetData();
   }
