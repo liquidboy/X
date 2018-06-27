@@ -169,7 +169,14 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
     }
 
     public void UpdateStrokeThickness(double thickness) { if (thickness > 0) elTxt.FontSize = thickness; }
-    public string GetData() { return string.Empty; }
+    public string GetData(string uid) {
+      return $@"
+        {{
+          ""uid"":""{uid}"",
+          ""displayName"":""{elTxt.Text}""
+        }}
+      ";
+    }
 
     private void tpMain_TextChanged(object sender, EventArgs e)
     {

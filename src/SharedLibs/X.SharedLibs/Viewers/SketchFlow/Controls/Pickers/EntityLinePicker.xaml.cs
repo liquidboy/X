@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -15,27 +16,32 @@ using Windows.UI.Xaml.Navigation;
 
 namespace X.Viewer.SketchFlow.Controls.Pickers
 {
-    public sealed partial class EntityLinePicker : UserControl
+  public sealed partial class EntityLinePicker : UserControl
+  {
+    public event EventHandler LineChanged;
+
+    public ObservableCollection<String> AllowedListOfEntities { get; set; } = new ObservableCollection<string>();
+
+    public EntityLinePicker()
     {
-        public event EventHandler TextChanged;
-
-        public List<String> AllowedListOfEntities { get; set; } = new List<string>();
-
-        public EntityLinePicker()
-        {
-            this.InitializeComponent();
-        }
-
-
-        private void rcb_ValueChanged(object sender, RoutedEventArgs e)
-        {
-            //TextChanged?.Invoke(sender, new TextPickerEventArgs() { Text = (string)tbMain.Text, FontFamily = (string)rcb.Value2 });
-        }
+      this.InitializeComponent();
     }
 
-    public class EntityLinePickerEventArgs : EventArgs
+
+    private void rcb1_ValueChanged(object sender, RoutedEventArgs e)
     {
-        public string Text;
-        public string FontFamily;
+      //TextChanged?.Invoke(sender, new TextPickerEventArgs() { Text = (string)tbMain.Text, FontFamily = (string)rcb.Value2 });
     }
+
+    private void rcb2_ValueChanged(object sender, RoutedEventArgs e)
+    {
+      //TextChanged?.Invoke(sender, new TextPickerEventArgs() { Text = (string)tbMain.Text, FontFamily = (string)rcb.Value2 });
+    }
+  }
+
+  public class EntityLinePickerEventArgs : EventArgs
+  {
+    public string Line1;
+    public string Line2;
+  }
 }

@@ -170,7 +170,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
     }
 
     public void UpdateStrokeThickness(double thickness) { }
-    public string GetData() { return string.Empty; }
+    public string GetData(string uid) { return string.Empty; }
 
     public async void LoadPictureLibrary()
     {

@@ -170,7 +170,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
     }
 
     public void UpdateStrokeThickness(double thickness) { if (thickness > 0) el.FontSize = thickness; }
-    public string GetData() { return string.Empty; }
+    public string GetData(string uid) { return string.Empty; }
 
     public void UpdatedDimension(double width, double height)
     {

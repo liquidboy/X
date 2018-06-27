@@ -69,6 +69,9 @@
       <Border x:Name="textPicker" Visibility="Collapsed">
         <localPickers:TextPicker x:Name="tpMain" Width="300" Height="300" TextChanged="tpMain_TextChanged" ></localPickers:TextPicker>
       </Border>
+      <Border x:Name="linePicker" Visibility="Collapsed">
+        <localPickers:EntityLinePicker x:Name="lpMain" Width="300" Height="300" ></localPickers:EntityLinePicker>
+      </Border>
     </StackPanel>
 
 

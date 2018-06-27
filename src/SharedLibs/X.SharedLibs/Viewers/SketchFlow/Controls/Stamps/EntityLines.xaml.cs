@@ -41,7 +41,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
       this.Unloaded += EntityLines_Unloaded;
       cpMain.ColorTypes = new List<string>() { "Text Color", "Circle Color" };
       tpMain.FontFamilies = new List<string>() { "Neue Haas Grotesk Text Pro", "FangSong", "Kokila", "Cambria", "Courier New", "Gadugi", "Georgia", "Leelawadee UI", "Lucida Console", "Segoe MDL2 Assets", "Segoe UI", "Segoe UI Emoji", "Verdana" };
-
+      
       setupPageLayout();
     }
 
@@ -69,12 +69,13 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
       textPicker.Visibility = Visibility.Collapsed;
       colorPicker.Visibility = Visibility.Collapsed;
+      linePicker.Visibility = Visibility.Collapsed;
 
       switch (tab.Name)
       {
         case "Colors": colorPicker.Visibility = Visibility.Visible; break;
         case "Text": textPicker.Visibility = Visibility.Visible; break;
-        case "Lines": break;
+        case "Lines": linePicker.Visibility = Visibility.Visible;break;
       }
     }
 
@@ -123,14 +124,20 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
       var boundingRect = new Rect(gtTopLeft.X, gtTopLeft.Y, edges.ActualWidth, edges.ActualHeight);
       var foundElements = VisualTreeHelper.FindElementsInHostCoordinates(boundingRect, _foundSelectedPageContent, true);
       var stampCount = 0;
+      lpMain.AllowedListOfEntities.Clear();
       if (foundElements?.Count() > 0)
       {
         var stampInstances = foundElements.Where(x => ((FrameworkElement)x).Name.Contains("stamp_"));
         if (stampInstances?.Count() > 0)
         {
+          foreach (FrameworkElement si in stampInstances) {
+            lpMain.AllowedListOfEntities.Add(si.Name);
+          }
           stampCount = stampInstances.Count();
         }
       }
+
+      
 
       elDebug.Text = $@"x: {gtTopLeft.X.ToString("F0", CultureInfo.InvariantCulture)}
 y: {gtTopLeft.Y.ToString("F0", CultureInfo.InvariantCulture)}
@@ -255,7 +262,7 @@ stamp count: {stampCount}";
     public void UpdateStrokeThickness(double thickness) {
       //if (thickness > 0) elTxt.FontSize = thickness;
     }
-    public string GetData() { return string.Empty; }
+    public string GetData(string uid) { return string.Empty; }
 
     private void tpMain_TextChanged(object sender, EventArgs e)
     {

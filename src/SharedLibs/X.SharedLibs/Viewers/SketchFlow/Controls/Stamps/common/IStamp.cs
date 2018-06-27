@@ -19,6 +19,6 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
     void UpdatedPosition(double x, double y);
     void UpdatedSelectedPage();
 
-    string GetData();
+    string GetData(string uid);
   }
 }

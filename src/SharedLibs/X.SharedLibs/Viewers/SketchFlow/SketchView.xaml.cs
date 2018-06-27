@@ -299,7 +299,7 @@ namespace X.Viewer.SketchFlow
               var ptCenter = gt.TransformPoint(new Windows.Foundation.Point(0, 0));
               var uid = RandomString(15);
               var str = stamp.GenerateXAML(uid, cvMainContainer.Scale, cvMainContainer.Scale, ptCenter.X, ptCenter.Y);
-              npl.XamlFragments.Add(new XamlFragment() { Uid = uid, Xaml = str, Type = stamp.GetType(), Data = stamp.GetData() });
+              npl.XamlFragments.Add(new XamlFragment() { Uid = uid, Xaml = str, Type = stamp.GetType(), Data = stamp.GetData(uid) });
 
               //plvm.Layers.Add(npl);
               plvm.ExternalPC("Layers");

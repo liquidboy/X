@@ -191,7 +191,7 @@ namespace X.Viewer.SketchFlow.Controls.Stamps
 
     public void UpdateStrokeThickness(double thickness) { ((Windows.UI.Xaml.Shapes.Shape)elContent.Content).StrokeThickness = thickness; }
 
-    public string GetData() { return StampData; }
+    public string GetData(string uid) { return StampData; }
 
     public void UpdatedDimension(double width, double height)
     {
