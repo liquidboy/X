@@ -76,22 +76,13 @@ namespace X.ModernDesktop.SimTower.Models
     public void OnPointerMoved(object sender, PointerRoutedEventArgs e)
     {
       var pt = e.GetCurrentPoint((Windows.UI.Xaml.UIElement)sender);
-      CurrentSlotPosition = new Slot(RoundDown((int)pt.Position.X, (int)SlotDimension.X), RoundDown((int)pt.Position.Y, (int)SlotDimension.Y));
+      CurrentSlotPosition = new Slot(Utilities.RoundDown((int)pt.Position.X, (int)SlotDimension.X), Utilities.RoundDown((int)pt.Position.Y, (int)SlotDimension.Y));
       CurrentSlot = new Slot((int)(CurrentSlotPosition.X / SlotDimension.X), (int)(CurrentSlotPosition.Y / SlotDimension.Y));
 
       RaisePropertyChanged("CurrentSlotPosition");
       RaisePropertyChanged("CurrentSlot");
     }
 
-    int RoundUp(int toRound, int slotSize)
-    {
-      if (toRound % slotSize == 0) return toRound;
-      return (slotSize - toRound % slotSize) + toRound;
-    }
-
-    int RoundDown(int toRound, int slotSize)
-    {
-      return toRound - toRound % slotSize;
-    }
+    
   }
 }

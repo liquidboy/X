@@ -9,7 +9,7 @@ namespace X.ModernDesktop.SimTower.Models
   class MapNode
   {
     Slot position;
-    MapNode neighbours;
+    MapNode[] neighbours = new MapNode[4];
 
     enum Direction {
       UP = 0,
@@ -20,6 +20,26 @@ namespace X.ModernDesktop.SimTower.Models
 
     bool hasElevator;
     bool hasServiceElevator;
+
+
+    FloorNode floorNode;
+    internal List<MapNode> nodesOnFloor;
+
+    public MapNode(FloorNode floor) {
+      hasElevator = false;
+      hasServiceElevator = false;
+      floorNode = floor;
+      nodesOnFloor = null;
+      init();
+    }
+
+    void init() {
+      neighbours[(int)Direction.UP] = null;
+      neighbours[(int)Direction.DOWN] = null;
+      neighbours[(int)Direction.LEFT] = null;
+      neighbours[(int)Direction.RIGHT] = null;
+    }
+
 
   }
 }

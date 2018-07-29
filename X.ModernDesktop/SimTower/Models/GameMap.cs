@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace X.ModernDesktop.SimTower.Models
 {
-    class GameMap
-    {
+  class GameMap
+  {
+    public SortedDictionary<Slot, MapNode> gameMap;
+    public SortedDictionary<int, List<MapNode>> mapNodesByFloor;
+    public SortedDictionary<int, FloorNode> floorNodes;
+
+    MapNode addNode(Slot slot) {
+      //if (floorNodes.Count(slot.Y) == 0) {
+      //}
+      return null;
     }
+  }
 }

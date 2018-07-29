@@ -112,9 +112,11 @@
       <DependentUpon>SimTowerPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SimTower\Models\Board.cs" />
+    <Compile Include="SimTower\Models\FloorNode.cs" />
     <Compile Include="SimTower\Models\GameMap.cs" />
     <Compile Include="SimTower\Models\MapNode.cs" />
     <Compile Include="SimTower\Models\Slot.cs" />
+    <Compile Include="SimTower\Utilities.cs" />
     <Compile Include="SimTower\Views\Board.xaml.cs">
       <DependentUpon>Board.xaml</DependentUpon>
     </Compile>
@@ -221,9 +223,7 @@
       <Name>SamplesCommon</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SimTower\DataTypes\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
