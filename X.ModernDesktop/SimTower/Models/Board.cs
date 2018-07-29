@@ -25,10 +25,8 @@ namespace X.ModernDesktop.SimTower.Models
 
 
     public bool IsCurrentSlotVisible { get; set; }
-    public int CurrentSlotPositionX { get; set; }
-    public int CurrentSlotPositionY { get; set; }
-    public int CurrentSlotX { get; set; }
-    public int CurrentSlotY { get; set; }
+    public Slot CurrentSlotPosition { get; set; }
+    public Slot CurrentSlot { get; set; }
 
 
     private const int maxZSteps = 10;
@@ -78,17 +76,11 @@ namespace X.ModernDesktop.SimTower.Models
     public void OnPointerMoved(object sender, PointerRoutedEventArgs e)
     {
       var pt = e.GetCurrentPoint((Windows.UI.Xaml.UIElement)sender);
-      CurrentSlotPositionX = RoundDown((int)pt.Position.X, (int)SlotDimension.X);
-      CurrentSlotPositionY = RoundDown((int)pt.Position.Y, (int)SlotDimension.Y);
-      //CurrentSlotPosition = new Vector4(CurrentSlotPositionX, (int)pt.Position.Y, (int)pt.Position.X + SlotDimension.X, (int)pt.Position.Y + SlotDimension.Y);
+      CurrentSlotPosition = new Slot(RoundDown((int)pt.Position.X, (int)SlotDimension.X), RoundDown((int)pt.Position.Y, (int)SlotDimension.Y));
+      CurrentSlot = new Slot((int)(CurrentSlotPosition.X / SlotDimension.X), (int)(CurrentSlotPosition.Y / SlotDimension.Y));
 
-      CurrentSlotX = (int)(CurrentSlotPositionX / SlotDimension.X);
-      CurrentSlotY = (int)(CurrentSlotPositionY / SlotDimension.Y);
-
-      RaisePropertyChanged("CurrentSlotPositionX");
-      RaisePropertyChanged("CurrentSlotPositionY");
-      RaisePropertyChanged("CurrentSlotX");
-      RaisePropertyChanged("CurrentSlotY");
+      RaisePropertyChanged("CurrentSlotPosition");
+      RaisePropertyChanged("CurrentSlot");
     }
 
     int RoundUp(int toRound, int slotSize)

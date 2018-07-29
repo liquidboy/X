@@ -15,14 +15,13 @@
 
       <Canvas x:Name="belowGround" Background="Brown" Width="{x:Bind GameBoard.BelowGroundDimension.Z}" Height="{x:Bind GameBoard.BelowGroundDimension.W}" Canvas.Left="{x:Bind GameBoard.BelowGroundDimension.X}" Canvas.Top="{x:Bind GameBoard.BelowGroundDimension.Y}"></Canvas>
 
-      <Border BorderBrush="White" Width="{x:Bind GameBoard.SlotDimension.X}" Height="{x:Bind GameBoard.SlotDimension.Y}" Canvas.Left="{Binding CurrentSlotPositionX}" Canvas.Top="{Binding CurrentSlotPositionY}" Visibility="{Binding IsCurrentSlotVisible}" BorderThickness="2"></Border>
+      <Border BorderBrush="White" Width="{x:Bind GameBoard.SlotDimension.X}" Height="{x:Bind GameBoard.SlotDimension.Y}" Canvas.Left="{Binding CurrentSlotPosition.X}" Canvas.Top="{Binding CurrentSlotPosition.Y}" Visibility="{Binding IsCurrentSlotVisible}" BorderThickness="2"></Border>
 
       
     </Canvas>
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
-      <TextBlock Text="{Binding CurrentSlotX}"></TextBlock>
-      <TextBlock Text="{Binding CurrentSlotY}" Margin="20,0,0,0"></TextBlock>
+      <TextBlock Text="{Binding CurrentSlot}"></TextBlock>
     </StackPanel>
   </Grid>
 </UserControl>
