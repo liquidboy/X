@@ -8,13 +8,21 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
+  <Grid x:Name="layoutRoot" >
+    <Canvas Height="{x:Bind GameBoard.BoardHeight}" Width="{x:Bind GameBoard.BoardWidth}" Background="Black" PointerEntered="{x:Bind GameBoard.OnPointerEntered}" PointerExited="{x:Bind GameBoard.OnPointerExited}" PointerMoved="{x:Bind GameBoard.OnPointerMoved}" >
 
-  <Canvas x:Name="layoutRoot" Height="{x:Bind GameBoard.BoardHeight}" Width="{x:Bind GameBoard.BoardWidth}" Background="Black" PointerEntered="{x:Bind GameBoard.OnPointerEntered}" PointerExited="{x:Bind GameBoard.OnPointerExited}" PointerMoved="{x:Bind GameBoard.OnPointerMoved}" >
+      <Canvas x:Name="aboveGround" Background="Cyan" Width="{x:Bind GameBoard.AboveGroundDimension.Z}" Height="{x:Bind GameBoard.AboveGroundDimension.W}" Canvas.Left="{x:Bind GameBoard.AboveGroundDimension.X}" Canvas.Top="{x:Bind GameBoard.AboveGroundDimension.Y}"></Canvas>
 
-    <Canvas x:Name="aboveGround" Background="Cyan" Width="{x:Bind GameBoard.AboveGroundDimension.Z}" Height="{x:Bind GameBoard.AboveGroundDimension.W}" Canvas.Left="{x:Bind GameBoard.AboveGroundDimension.X}" Canvas.Top="{x:Bind GameBoard.AboveGroundDimension.Y}"></Canvas>
+      <Canvas x:Name="belowGround" Background="Brown" Width="{x:Bind GameBoard.BelowGroundDimension.Z}" Height="{x:Bind GameBoard.BelowGroundDimension.W}" Canvas.Left="{x:Bind GameBoard.BelowGroundDimension.X}" Canvas.Top="{x:Bind GameBoard.BelowGroundDimension.Y}"></Canvas>
 
-    <Canvas x:Name="belowGround" Background="Brown" Width="{x:Bind GameBoard.BelowGroundDimension.Z}" Height="{x:Bind GameBoard.BelowGroundDimension.W}" Canvas.Left="{x:Bind GameBoard.BelowGroundDimension.X}" Canvas.Top="{x:Bind GameBoard.BelowGroundDimension.Y}"></Canvas>
+      <Border BorderBrush="White" Width="{x:Bind GameBoard.SlotDimension.X}" Height="{x:Bind GameBoard.SlotDimension.Y}" Canvas.Left="{Binding CurrentSlotPositionX}" Canvas.Top="{Binding CurrentSlotPositionY}" Visibility="{Binding IsCurrentSlotVisible}" BorderThickness="2"></Border>
 
-    <Rectangle Fill="White" Width="{x:Bind GameBoard.SlotDimension.X}" Height="{x:Bind GameBoard.SlotDimension.Y}" Canvas.Left="{Binding CurrentSlotPositionX}" Canvas.Top="{Binding CurrentSlotPositionY}" Visibility="{Binding IsCurrentSlotVisible}"></Rectangle>
-  </Canvas>
+      
+    </Canvas>
+
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+      <TextBlock Text="{Binding CurrentSlotX}"></TextBlock>
+      <TextBlock Text="{Binding CurrentSlotY}" Margin="20,0,0,0"></TextBlock>
+    </StackPanel>
+  </Grid>
 </UserControl>
