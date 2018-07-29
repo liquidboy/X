@@ -21,8 +21,6 @@ using X.Viewer.SketchFlow.Controls.Pickers;
 
 namespace X.Viewer.SketchFlow.Controls.Stamps
 {
-
-
   public sealed partial class EntityLines : UserControl, IStamp
   {
     public event EventHandler PerformAction;

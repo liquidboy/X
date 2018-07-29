@@ -10,9 +10,7 @@
     xmlns:xuip="using:X.UI.Path"
     xmlns:xuilt="using:X.UI.LiteTab"
     mc:Ignorable="d"
-    d:DesignHeight="500"
-    x:Name="root"
-    d:DesignWidth="400">
+    x:Name="root">
   <UserControl.Resources>
     <sc:BooleanToVisibilityConverter x:Name="TrueToVisibleConverter" ></sc:BooleanToVisibilityConverter>
   </UserControl.Resources>
@@ -32,7 +30,9 @@
 
 
     <!-- Markers : ROTATION  -->
-    <local:MarkersR x:Name="grdGridRotationMarkers" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" RotationAngle="{Binding ElementName=grdGridRotationMarkers, Path=RenderTransform.Rotation}"></local:MarkersR>
+    <local:MarkersR x:Name="grdGridRotationMarkers" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" >
+      
+    </local:MarkersR>
 
 
     <!-- Edge Button Dialogs-->

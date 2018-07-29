@@ -15,14 +15,12 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using X.CoreLib.Shared.Framework.Services.DataEntity;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
 namespace X.ModernDesktop
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class SQLitePage: Page
   {
     public class OrderHeaderContext : SQLiteDataEntity<OrderHeader> { }
     public class OrderHeader : BaseEntity
@@ -54,7 +52,7 @@ namespace X.ModernDesktop
     }
 
 
-    public MainPage()
+    public SQLitePage()
     {
       this.InitializeComponent();
 

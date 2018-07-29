@@ -805,6 +805,9 @@
     <Compile Include="Viewers\SketchFlow\Controls\Stamps\Shape.xaml.cs">
       <DependentUpon>Shape.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Viewers\SketchFlow\Controls\Stamps\StampUserControl.xaml.cs">
+      <DependentUpon>StampUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Viewers\SketchFlow\Controls\Stamps\Text.xaml.cs">
       <DependentUpon>Text.xaml</DependentUpon>
     </Compile>
@@ -1165,6 +1168,10 @@
     <Page Include="Viewers\SketchFlow\Controls\Stamps\Shape.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\SketchFlow\Controls\Stamps\StampUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Viewers\SketchFlow\Controls\Stamps\Text.xaml">
       <Generator>MSBuild:Compile</Generator>
