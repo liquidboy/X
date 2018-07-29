@@ -33,7 +33,10 @@ namespace X.ModernDesktop.SimTower.Models
 
     public event PropertyChangedEventHandler PropertyChanged;
 
+    public GameMap gameMap { get; set; }
+
     public Board() {
+      gameMap = new GameMap();
       initBoard(100, 200, 15);
     }
     public Board(int xSlots, int ySlots, int groundSlotY) {

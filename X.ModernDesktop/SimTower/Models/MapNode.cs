@@ -8,10 +8,10 @@ namespace X.ModernDesktop.SimTower.Models
 {
   class MapNode
   {
-    Slot position;
-    MapNode[] neighbours = new MapNode[4];
+    internal Slot position;
+    internal MapNode[] neighbours = new MapNode[4];
 
-    enum Direction {
+    internal enum Direction {
       UP = 0,
       DOWN = 1,
       LEFT = 2,
