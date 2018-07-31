@@ -29,5 +29,6 @@ namespace X.ModernDesktop.SimTower.Views
       GameBoard = new Models.Board(30,50,10);
       this.layoutRoot.DataContext = GameBoard;
     }
+
   }
 }
