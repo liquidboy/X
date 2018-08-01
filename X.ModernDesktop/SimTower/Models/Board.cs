@@ -91,9 +91,10 @@ namespace X.ModernDesktop.SimTower.Models
       if (!startSelection) return;
 
       var pt = e.GetCurrentPoint((Windows.UI.Xaml.UIElement)sender);
+
+      //SELECTION RECTANGLE
       CurrentSlotPositionMiddle = new Slot(Utilities.RoundDown((int)pt.Position.X, (int)SlotDimension.X), Utilities.RoundDown((int)pt.Position.Y, (int)SlotDimension.Y));
       CurrentSlotMiddle = new Slot((int)(CurrentSlotPositionMiddle.X / SlotDimension.X), (int)(CurrentSlotPositionMiddle.Y / SlotDimension.Y));
-
       RaisePropertyChanged("CurrentSlotPositionMiddle");
       RaisePropertyChanged("CurrentSlotMiddle");
 
@@ -113,6 +114,13 @@ namespace X.ModernDesktop.SimTower.Models
 
       RaisePropertyChanged("CurrentSelectionXY");
       RaisePropertyChanged("CurrentSelectionWH");
+
+      //SELECTION END SQUARE
+      CurrentSlotPositionEnd = new Slot(Utilities.RoundDown((int)pt.Position.X, (int)SlotDimension.X), Utilities.RoundDown((int)pt.Position.Y, (int)SlotDimension.Y));
+      CurrentSlotEnd = new Slot((int)(CurrentSlotPositionEnd.X / SlotDimension.X), (int)(CurrentSlotPositionEnd.Y / SlotDimension.Y));
+      RaisePropertyChanged("CurrentSlotPositionEnd");
+      RaisePropertyChanged("CurrentSlotEnd");
+
     }
 
     bool startSelection = false;
@@ -122,6 +130,8 @@ namespace X.ModernDesktop.SimTower.Models
       startSelection = true;
 
       var pt = e.GetCurrentPoint((Windows.UI.Xaml.UIElement)sender);
+
+      //SELECTION START SQUARE
       CurrentSlotPositionStart = new Slot(Utilities.RoundDown((int)pt.Position.X, (int)SlotDimension.X), Utilities.RoundDown((int)pt.Position.Y, (int)SlotDimension.Y));
       CurrentSlotStart = new Slot((int)(CurrentSlotPositionStart.X / SlotDimension.X), (int)(CurrentSlotPositionStart.Y / SlotDimension.Y));
       RaisePropertyChanged("CurrentSlotPositionStart");
@@ -132,12 +142,7 @@ namespace X.ModernDesktop.SimTower.Models
     {
       startSelection = false;
 
-      var pt = e.GetCurrentPoint((Windows.UI.Xaml.UIElement)sender);
-      CurrentSlotPositionEnd = new Slot(Utilities.RoundDown((int)pt.Position.X, (int)SlotDimension.X), Utilities.RoundDown((int)pt.Position.Y, (int)SlotDimension.Y));
-      CurrentSlotEnd = new Slot((int)(CurrentSlotPositionEnd.X / SlotDimension.X), (int)(CurrentSlotPositionEnd.Y / SlotDimension.Y));
-
-      RaisePropertyChanged("CurrentSlotPositionEnd");
-      RaisePropertyChanged("CurrentSlotEnd");
+      
     }
 
     #endregion
