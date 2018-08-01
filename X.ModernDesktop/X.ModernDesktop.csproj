@@ -112,9 +112,13 @@
       <DependentUpon>SimTowerPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SimTower\Models\Board.cs" />
+    <Compile Include="SimTower\Models\Factory.cs" />
+    <Compile Include="SimTower\Models\Floor.cs" />
     <Compile Include="SimTower\Models\FloorNode.cs" />
     <Compile Include="SimTower\Models\GameMap.cs" />
+    <Compile Include="SimTower\Models\Item.cs" />
     <Compile Include="SimTower\Models\MapNode.cs" />
+    <Compile Include="SimTower\Models\Prototype.cs" />
     <Compile Include="SimTower\Models\Slot.cs" />
     <Compile Include="SimTower\Utilities.cs" />
     <Compile Include="SimTower\Views\Board.xaml.cs">
