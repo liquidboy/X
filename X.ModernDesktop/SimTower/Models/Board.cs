@@ -107,9 +107,9 @@ namespace X.ModernDesktop.SimTower.Models
       y2 = Math.Max(CurrentSlotPositionStart.Y, CurrentSlotPositionMiddle.Y);
 
       int w = 0; int h = 0;
-      w = (int)(((x2 - x1) + 1) * SlotDimension.X);
-      h = (int)(((y2 - y1) + 1) * SlotDimension.Y);
-      CurrentSelectionWH = new Slot(w, h);
+      w = (int)(Math.Abs(x2 - x1) + SlotDimension.X);
+      h = (int)(Math.Abs(y2 - y1) + SlotDimension.Y);
+      CurrentSelectionWH = new Slot(Utilities.RoundDown(w, (int)SlotDimension.X), Utilities.RoundDown(h, (int)SlotDimension.Y));
 
       RaisePropertyChanged("CurrentSelectionXY");
       RaisePropertyChanged("CurrentSelectionWH");

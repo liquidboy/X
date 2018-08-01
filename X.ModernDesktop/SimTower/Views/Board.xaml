@@ -17,7 +17,7 @@
 
       <Border BorderBrush="White" Width="{x:Bind GameBoard.SlotDimension.X}" Height="{x:Bind GameBoard.SlotDimension.Y}" Canvas.Left="{Binding CurrentSlotPositionStart.X}" Canvas.Top="{Binding CurrentSlotPositionStart.Y}" Visibility="{Binding IsCurrentSlotVisible}" BorderThickness="2"></Border>
 
-      <Border BorderBrush="Black" Width="{x:Bind GameBoard.CurrentSelectionWH.X}" Height="{x:Bind GameBoard.CurrentSelectionWH.Y}" Canvas.Left="{Binding CurrentSelectionXY.X}" Canvas.Top="{Binding CurrentSelectionXY.Y}" Visibility="{Binding IsCurrentSlotVisible}" BorderThickness="2"></Border>
+      <Border BorderBrush="Black" Width="{Binding CurrentSelectionWH.X}" Height="{Binding CurrentSelectionWH.Y}" Canvas.Left="{Binding CurrentSelectionXY.X}" Canvas.Top="{Binding CurrentSelectionXY.Y}" Visibility="{Binding IsCurrentSlotVisible}" BorderThickness="2"></Border>
 
       <Border BorderBrush="White" Width="{x:Bind GameBoard.SlotDimension.X}" Height="{x:Bind GameBoard.SlotDimension.Y}" Canvas.Left="{Binding CurrentSlotPositionEnd.X}" Canvas.Top="{Binding CurrentSlotPositionEnd.Y}" Visibility="{Binding IsCurrentSlotVisible}" BorderThickness="2"></Border>
       
