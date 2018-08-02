@@ -112,13 +112,23 @@
       <DependentUpon>SimTowerPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SimTower\Models\Board.cs" />
-    <Compile Include="SimTower\Models\Factory.cs" />
-    <Compile Include="SimTower\Models\Floor.cs" />
+    <Compile Include="SimTower\Models\Item\Restaurant.cs" />
+    <Compile Include="SimTower\Models\Item\PartyHall.cs" />
+    <Compile Include="SimTower\Models\Item\Office.cs" />
+    <Compile Include="SimTower\Models\Item\Metro.cs" />
+    <Compile Include="SimTower\Models\Item\FastFood.cs" />
+    <Compile Include="SimTower\Models\Item\Condo.cs" />
+    <Compile Include="SimTower\Models\Item\Cinema.cs" />
+    <Compile Include="SimTower\Models\Item\Factory.cs" />
+    <Compile Include="SimTower\Models\Item\Elevator.cs" />
+    <Compile Include="SimTower\Models\Item\Stairs.cs" />
+    <Compile Include="SimTower\Models\Item\Lobby.cs" />
+    <Compile Include="SimTower\Models\Item\Floor.cs" />
     <Compile Include="SimTower\Models\FloorNode.cs" />
     <Compile Include="SimTower\Models\GameMap.cs" />
-    <Compile Include="SimTower\Models\Item.cs" />
+    <Compile Include="SimTower\Models\Item\Item.cs" />
     <Compile Include="SimTower\Models\MapNode.cs" />
-    <Compile Include="SimTower\Models\Prototype.cs" />
+    <Compile Include="SimTower\Models\Item\Prototype.cs" />
     <Compile Include="SimTower\Models\Slot.cs" />
     <Compile Include="SimTower\Utilities.cs" />
     <Compile Include="SimTower\Views\Board.xaml.cs">
