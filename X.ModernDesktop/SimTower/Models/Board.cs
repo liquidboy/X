@@ -6,6 +6,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Input;
+using X.ModernDesktop.SimTower.Models.Item;
 
 namespace X.ModernDesktop.SimTower.Models
 {
@@ -142,9 +143,14 @@ namespace X.ModernDesktop.SimTower.Models
     {
       startSelection = false;
 
-      
+      DrawFloor();
     }
 
     #endregion
+
+    IPrototype toolPrototype;
+    private void DrawFloor() {
+      
+    }
   }
 }

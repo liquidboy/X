@@ -16,5 +16,7 @@ namespace X.ModernDesktop.SimTower.Models.Item
     int EntranceOffset { get; set; }
     int ExitOffset { get; set;  }
 
+    Item Make();
+
   }
 }

@@ -22,5 +22,10 @@ namespace X.ModernDesktop.SimTower.Models.Item
 
     public int EntranceOffset { get => 1; set => throw new NotImplementedException(); }
     public int ExitOffset { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+    public Item Make()
+    {
+      throw new NotImplementedException();
+    }
   }
 }

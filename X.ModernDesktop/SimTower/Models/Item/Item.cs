@@ -8,6 +8,8 @@ namespace X.ModernDesktop.SimTower.Models.Item
 {
   class Item
   {
+    public Slot Position { get; set; }
+
     public static IPrototype makePrototype() {
       Type t = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType;
       IPrototype p = (IPrototype)Activator.CreateInstance(t);
@@ -15,5 +17,9 @@ namespace X.ModernDesktop.SimTower.Models.Item
       p.ExitOffset = 0;
       return p;
     }
+
+    public void Init() {
+    }
+
   }
 }

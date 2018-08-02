@@ -30,14 +30,29 @@ namespace X.ModernDesktop.SimTower.Models.Item
       prototypes = new List<IPrototype>();
       prototypesById = new Dictionary<string, IPrototype>();
 
+      prototypes.Add(Cinema.makePrototype());
+      prototypes.Add(Condo.makePrototype());
+      prototypes.Add(Elevator.makePrototype());
+      prototypes.Add(FastFood.makePrototype());
       prototypes.Add(Floor.makePrototype());
-
-
+      prototypes.Add(Lobby.makePrototype());
+      prototypes.Add(Metro.makePrototype());
+      prototypes.Add(Office.makePrototype());
+      prototypes.Add(PartyHall.makePrototype());
+      prototypes.Add(Restaurant.makePrototype());
+      prototypes.Add(Stairs.makePrototype());
     }
 
-    public Item Make(string prototypesId, Slot position) {
+    public Item Make(IPrototype prototype, Slot position) {
+      Item item = prototype.Make();
+      item.Position = position;
+      item.Init();
+      return item;
+    }
 
-      return null;
+    public Item Make(string prototypeId, Slot position) {
+      IPrototype prototype = prototypesById[prototypeId];
+      return Make(prototype, position);
     }
   }
 }
