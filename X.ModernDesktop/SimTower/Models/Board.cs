@@ -120,6 +120,7 @@ namespace X.ModernDesktop.SimTower.Models
 
     public void OnPointerReleased(object sender, PointerRoutedEventArgs e)
     {
+      CurrentSelection.ChangeSelection(e.GetCurrentPoint((Windows.UI.Xaml.UIElement)sender), SlotDimension);
       CurrentSelection.EndSelection(e.GetCurrentPoint((Windows.UI.Xaml.UIElement)sender), SlotDimension);
 
 
@@ -164,16 +165,16 @@ namespace X.ModernDesktop.SimTower.Models
         {
           var floor = floorItem.Value;
           if (floor.IsDirty) {
-            Rectangle rect = floor.IsInVisualTree ? (Rectangle)floor.Control : new Rectangle();
-            
-            rect.Width = (floor.Size.X + 1) * SlotDimension.X;
-            rect.Height = floor.Size.Y * SlotDimension.Y;
-            rect.SetValue(Canvas.LeftProperty, floor.Position.X * SlotDimension.X);
-            rect.SetValue(Canvas.TopProperty, (AboveGroundSlotsAvailable - floor.Position.Y - 1) * SlotDimension.Y);
-            rect.Fill = new SolidColorBrush(Colors.Yellow);
+            Views.Floor ctl = floor.IsInVisualTree ? (Views.Floor)floor.Control : new Views.Floor();
+
+            ctl.Width = (floor.Size.X + 1) * SlotDimension.X;
+            ctl.Height = floor.Size.Y * SlotDimension.Y;
+            ctl.SetValue(Canvas.LeftProperty, floor.Position.X * SlotDimension.X);
+            ctl.SetValue(Canvas.TopProperty, (AboveGroundSlotsAvailable - floor.Position.Y - 1) * SlotDimension.Y);
+            ctl.DataContext = floor;
 
             if (!floor.IsInVisualTree) {
-              floor.Control = rect;
+              floor.Control = ctl;
               _renderSurface.Children.Add(floor.Control);
               floor.IsInVisualTree = true;
             }

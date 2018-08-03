@@ -33,17 +33,10 @@ namespace X.ModernDesktop.SimTower.Models.Item
     }
 
     private void LoadPrototypes() {
-      prototypes.Add(Cinema.makePrototype<Cinema>());
-      prototypes.Add(Condo.makePrototype<Condo>());
+
       prototypes.Add(Elevator.makePrototype<Elevator>());
-      prototypes.Add(FastFood.makePrototype<FastFood>());
       prototypes.Add(Floor.makePrototype<Floor>());
       prototypes.Add(Lobby.makePrototype<Lobby>());
-      prototypes.Add(Metro.makePrototype<Metro>());
-      prototypes.Add(Office.makePrototype<Office>());
-      prototypes.Add(PartyHall.makePrototype<PartyHall>());
-      prototypes.Add(Restaurant.makePrototype<Restaurant>());
-      prototypes.Add(Stairs.makePrototype<Stairs>());
 
       foreach(var prototype in prototypes)
       {

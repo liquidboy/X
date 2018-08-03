@@ -113,16 +113,8 @@
     </Compile>
     <Compile Include="SimTower\Models\Board.cs" />
     <Compile Include="SimTower\Models\Item\IDrawable.cs" />
-    <Compile Include="SimTower\Models\Item\Restaurant.cs" />
-    <Compile Include="SimTower\Models\Item\PartyHall.cs" />
-    <Compile Include="SimTower\Models\Item\Office.cs" />
-    <Compile Include="SimTower\Models\Item\Metro.cs" />
-    <Compile Include="SimTower\Models\Item\FastFood.cs" />
-    <Compile Include="SimTower\Models\Item\Condo.cs" />
-    <Compile Include="SimTower\Models\Item\Cinema.cs" />
     <Compile Include="SimTower\Models\Item\Factory.cs" />
     <Compile Include="SimTower\Models\Item\Elevator.cs" />
-    <Compile Include="SimTower\Models\Item\Stairs.cs" />
     <Compile Include="SimTower\Models\Item\Lobby.cs" />
     <Compile Include="SimTower\Models\Item\Floor.cs" />
     <Compile Include="SimTower\Models\FloorNode.cs" />
@@ -136,6 +128,9 @@
     <Compile Include="SimTower\Utilities.cs" />
     <Compile Include="SimTower\Views\Board.xaml.cs">
       <DependentUpon>Board.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SimTower\Views\Floor.xaml.cs">
+      <DependentUpon>Floor.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +176,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SimTower\Views\Board.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SimTower\Views\Floor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
