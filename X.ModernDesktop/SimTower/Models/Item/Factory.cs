@@ -23,13 +23,16 @@ namespace X.ModernDesktop.SimTower.Models.Item
 
   class Factory
   {
-    List<IPrototype> prototypes;
-    Dictionary<string, IPrototype> prototypesById;
+    public List<IPrototype> prototypes;
+    public Dictionary<string, IPrototype> prototypesById;
 
-    Factory() {
+    public Factory() {
       prototypes = new List<IPrototype>();
       prototypesById = new Dictionary<string, IPrototype>();
+      LoadPrototypes();
+    }
 
+    private void LoadPrototypes() {
       prototypes.Add(Cinema.makePrototype());
       prototypes.Add(Condo.makePrototype());
       prototypes.Add(Elevator.makePrototype());

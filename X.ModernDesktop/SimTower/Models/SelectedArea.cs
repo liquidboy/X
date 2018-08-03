@@ -27,8 +27,8 @@ namespace X.ModernDesktop.SimTower.Models
     public Slot SlotStart { get => _SlotStart; set => SetProperty(ref _SlotStart, value); }
 
 
-    public Slot SlotPositionMiddle { get => _SlotPositionMiddle; set => SetProperty(ref _SlotPositionMiddle, value); }
-    public Slot SlotMiddle { get => _SlotMiddle; set => SetProperty(ref _SlotMiddle, value); }
+    public Slot SlotPositionDelta { get => _SlotPositionMiddle; set => SetProperty(ref _SlotPositionMiddle, value); }
+    public Slot SlotDelta { get => _SlotMiddle; set => SetProperty(ref _SlotMiddle, value); }
     public Slot SelectionXY { get => _SelectionXY; set => SetProperty(ref _SelectionXY, value); }
     public Slot SelectionWH { get => _SelectionWH; set => SetProperty(ref _SelectionWH, value); }
 
@@ -68,17 +68,17 @@ namespace X.ModernDesktop.SimTower.Models
 
     private void SetSelectionSlotDetails(PointerPoint pt, Vector2 slotDimension)
     {
-      SlotPositionMiddle = new Slot(Utilities.RoundDown((int)pt.Position.X, (int)slotDimension.X), Utilities.RoundDown((int)pt.Position.Y, (int)slotDimension.Y));
-      SlotMiddle = new Slot((int)(SlotPositionMiddle.X / slotDimension.X), (int)(SlotPositionMiddle.Y / slotDimension.Y));
+      SlotPositionDelta = new Slot(Utilities.RoundDown((int)pt.Position.X, (int)slotDimension.X), Utilities.RoundDown((int)pt.Position.Y, (int)slotDimension.Y));
+      SlotDelta = new Slot((int)(SlotPositionDelta.X / slotDimension.X), (int)(SlotPositionDelta.Y / slotDimension.Y));
 
       int x1 = 0; int y1 = 0;
-      x1 = Math.Min(SlotPositionStart.X, SlotPositionMiddle.X);
-      y1 = Math.Min(SlotPositionStart.Y, SlotPositionMiddle.Y);
+      x1 = Math.Min(SlotPositionStart.X, SlotPositionDelta.X);
+      y1 = Math.Min(SlotPositionStart.Y, SlotPositionDelta.Y);
       SelectionXY = new Slot(x1, y1);
 
       int x2 = 0; int y2 = 0;
-      x2 = Math.Max(SlotPositionStart.X, SlotPositionMiddle.X);
-      y2 = Math.Max(SlotPositionStart.Y, SlotPositionMiddle.Y);
+      x2 = Math.Max(SlotPositionStart.X, SlotPositionDelta.X);
+      y2 = Math.Max(SlotPositionStart.Y, SlotPositionDelta.Y);
 
       int w = 0; int h = 0;
       w = (int)(Math.Abs(x2 - x1) + slotDimension.X);

@@ -28,6 +28,7 @@
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
       <TextBlock Text="{Binding CurrentSelection.SlotStart}"></TextBlock>
       <TextBlock Text="{Binding CurrentSelection.SlotEnd}"></TextBlock>
+      <TextBlock Text="{Binding FloorLevel}" Margin="10,0,0,0"></TextBlock>
     </StackPanel>
   </Grid>
 </UserControl>
