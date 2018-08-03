@@ -129,6 +129,7 @@
     <Compile Include="SimTower\Models\Item\Item.cs" />
     <Compile Include="SimTower\Models\MapNode.cs" />
     <Compile Include="SimTower\Models\Item\Prototype.cs" />
+    <Compile Include="SimTower\Models\SelectedArea.cs" />
     <Compile Include="SimTower\Models\Slot.cs" />
     <Compile Include="SimTower\Utilities.cs" />
     <Compile Include="SimTower\Views\Board.xaml.cs">

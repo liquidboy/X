@@ -16,16 +16,12 @@ namespace SumoNinjaMonkey.Framework.Collections
                 return false;
             }
             storage = value;
-            this.OnPropertyChanged(propertyName);
+            OnPropertyChanged(propertyName);
             return true;
         }
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if (propertyChanged != null)
-            {
-                propertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
