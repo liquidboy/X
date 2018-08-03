@@ -2,7 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using Windows.UI;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Shapes;
 using X.ModernDesktop.SimTower.Models.Item;
 
 
@@ -39,17 +43,20 @@ namespace X.ModernDesktop.SimTower.Models
     Dictionary<int, Floor> floorItems;
     private int _floorLevel;
 
+    private Canvas _renderSurface;
+
     public Board()
     {
-      initBoard(100, 200, 15);
+      initBoard(100, 200, 15, null);
     }
-    public Board(int xSlots, int ySlots, int groundSlotY)
+    public Board(int xSlots, int ySlots, int groundSlotY, Canvas renderSurface)
     {
-      initBoard(xSlots, ySlots, groundSlotY);
+      initBoard(xSlots, ySlots, groundSlotY, renderSurface);
     }
 
-    private void initBoard(int xSlots, int ySlots, int groundSlotY)
+    private void initBoard(int xSlots, int ySlots, int groundSlotY, Canvas renderSurface)
     {
+      _renderSurface = renderSurface;
       gameMap = new GameMap();
       itemFactory = new Factory();
       items = new List<Item.Item>();
@@ -114,6 +121,10 @@ namespace X.ModernDesktop.SimTower.Models
     public void OnPointerReleased(object sender, PointerRoutedEventArgs e)
     {
       CurrentSelection.EndSelection(e.GetCurrentPoint((Windows.UI.Xaml.UIElement)sender), SlotDimension);
+
+
+
+      // TEST : draw floor
       ExtendFloor(
         floorFromSlot(CurrentSelection.SlotEnd.Y),
         Math.Min(CurrentSelection.SlotStart.X, CurrentSelection.SlotEnd.X),
@@ -125,25 +136,53 @@ namespace X.ModernDesktop.SimTower.Models
     private void ExtendFloor(int floorSlotY, int minSlotX, int maxSlotX)
     {
       FloorLevelDebug = floorSlotY;
-      
-      
-
-      Floor f = (Floor)itemFactory.Make(itemFactory.prototypesById["floor"], new Slot(minSlotX, floorSlotY));
-      f.Size = new Slot(maxSlotX - minSlotX, f.Size.Y);
-
-      //items.Add(f);
-      //if (itemsByType.ContainsKey(f.Id)) itemsByType[f.Id].Add(f);
-      //else itemsByType.Add(f.Id, new List<Item.Item>() { f });
-
-      if (floorItems.ContainsKey(floorSlotY)) {
+    
+      if (floorItems.ContainsKey(floorSlotY))
+      {
         var existingFloor = floorItems[floorSlotY];
+
+        var x1 = Math.Min(minSlotX, existingFloor.Position.X);
+        var x2 = Math.Max(maxSlotX, existingFloor.Position.X + existingFloor.Size.X);
+
+        existingFloor.Position = new Slot(x1, floorSlotY);
+        existingFloor.Size = new Slot(x2-x1, 1);
+      }
+      else {
+        Floor f = (Floor)itemFactory.Make(itemFactory.prototypesById["floor"],
+        position: new Slot(minSlotX, floorSlotY), 
+        size: new Slot(maxSlotX - minSlotX, 1));
+
+        floorItems.Add(floorSlotY, f);
       }
 
-      floorItems.Add(floorSlotY, f);
-
-
-
+      Draw();
     }
+
+    private void Draw() {
+      if (_renderSurface != null) {
+        foreach (var floorItem in floorItems)
+        {
+          var floor = floorItem.Value;
+          if (floor.IsDirty) {
+            Rectangle rect = floor.IsInVisualTree ? (Rectangle)floor.Control : new Rectangle();
+            
+            rect.Width = (floor.Size.X + 1) * SlotDimension.X;
+            rect.Height = floor.Size.Y * SlotDimension.Y;
+            rect.SetValue(Canvas.LeftProperty, floor.Position.X * SlotDimension.X);
+            rect.SetValue(Canvas.TopProperty, (AboveGroundSlotsAvailable - floor.Position.Y - 1) * SlotDimension.Y);
+            rect.Fill = new SolidColorBrush(Colors.Yellow);
+
+            if (!floor.IsInVisualTree) {
+              floor.Control = rect;
+              _renderSurface.Children.Add(floor.Control);
+              floor.IsInVisualTree = true;
+            }
+
+          }
+        }
+      }
+    }
+
 
   }
 }

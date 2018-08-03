@@ -15,6 +15,10 @@
 
       <Canvas x:Name="belowGround" Background="Brown" Width="{x:Bind GameBoard.BelowGroundDimension.Z}" Height="{x:Bind GameBoard.BelowGroundDimension.W}" Canvas.Left="{x:Bind GameBoard.BelowGroundDimension.X}" Canvas.Top="{x:Bind GameBoard.BelowGroundDimension.Y}"></Canvas>
 
+      <Canvas x:Name="towerItems" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        
+      </Canvas>
+      
 
       <Border BorderBrush="Black" Width="{Binding CurrentSelection.SelectionWH.X}" Height="{Binding CurrentSelection.SelectionWH.Y}" Canvas.Left="{Binding CurrentSelection.SelectionXY.X}" Canvas.Top="{Binding CurrentSelection.SelectionXY.Y}" Visibility="{Binding CurrentSelection.IsVisible}" BorderThickness="2"></Border>
 

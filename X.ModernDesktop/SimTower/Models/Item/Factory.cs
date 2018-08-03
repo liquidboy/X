@@ -52,15 +52,22 @@ namespace X.ModernDesktop.SimTower.Models.Item
     }
 
     public Item Make(IPrototype prototype, Slot position) {
-      Item item = prototype.Make();
-      item.Position = position;
-      item.Init();
-      return item;
+      return Make(prototype, position, null);
     }
 
     public Item Make(string prototypeId, Slot position) {
       IPrototype prototype = prototypesById[prototypeId];
       return Make(prototype, position);
+    }
+
+    public Item Make(IPrototype prototype, Slot position, Slot size) {
+      Item item = prototype.Make();
+      item.Position = position;
+      if (size != null) {
+        ((IPrototype)item).Size = size;
+      }
+      item.Init();
+      return item;
     }
   }
 }

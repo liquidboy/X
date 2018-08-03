@@ -112,6 +112,7 @@
       <DependentUpon>SimTowerPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SimTower\Models\Board.cs" />
+    <Compile Include="SimTower\Models\Item\IDrawable.cs" />
     <Compile Include="SimTower\Models\Item\Restaurant.cs" />
     <Compile Include="SimTower\Models\Item\PartyHall.cs" />
     <Compile Include="SimTower\Models\Item\Office.cs" />
@@ -128,7 +129,7 @@
     <Compile Include="SimTower\Models\GameMap.cs" />
     <Compile Include="SimTower\Models\Item\Item.cs" />
     <Compile Include="SimTower\Models\MapNode.cs" />
-    <Compile Include="SimTower\Models\Item\Prototype.cs" />
+    <Compile Include="SimTower\Models\Item\IPrototype.cs" />
     <Compile Include="SimTower\Models\SelectedArea.cs" />
     <Compile Include="SimTower\Models\SelectedTool.cs" />
     <Compile Include="SimTower\Models\Slot.cs" />

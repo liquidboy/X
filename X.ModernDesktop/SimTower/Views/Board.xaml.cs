@@ -26,7 +26,7 @@ namespace X.ModernDesktop.SimTower.Views
     }
 
     private void InitializeBoard() {
-      GameBoard = new Models.Board(30,50,10);
+      GameBoard = new Models.Board(30,50,10, towerItems);
       this.layoutRoot.DataContext = GameBoard;
     }
 
