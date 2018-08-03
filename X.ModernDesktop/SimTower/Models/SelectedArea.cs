@@ -47,6 +47,7 @@ namespace X.ModernDesktop.SimTower.Models
     }
 
     public void ChangeSelection(PointerPoint pt, Vector2 slotDimension) {
+      if (!IsInSelectionMode) return;
       SetSelectionSlotDetails(pt, slotDimension);
       SetEndSlotDetails(pt, slotDimension);
     }

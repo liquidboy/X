@@ -71,22 +71,17 @@ namespace X.ModernDesktop.SimTower.Models
 
     public void OnPointerMoved(object sender, PointerRoutedEventArgs e)
     {
-      if (!CurrentSelection.IsInSelectionMode) return;
-      var pt = e.GetCurrentPoint((Windows.UI.Xaml.UIElement)sender);
-      CurrentSelection.ChangeSelection(pt, SlotDimension);
+      CurrentSelection.ChangeSelection(e.GetCurrentPoint((Windows.UI.Xaml.UIElement)sender), SlotDimension);
     }
 
     public void OnPointerPressed(object sender, PointerRoutedEventArgs e)
     {
-      var pt = e.GetCurrentPoint((Windows.UI.Xaml.UIElement)sender);
-      CurrentSelection.BeginSelection(pt, SlotDimension);
+      CurrentSelection.BeginSelection(e.GetCurrentPoint((Windows.UI.Xaml.UIElement)sender), SlotDimension);
     }
 
     public void OnPointerReleased(object sender, PointerRoutedEventArgs e)
     {
-      var pt = e.GetCurrentPoint((Windows.UI.Xaml.UIElement)sender);
-      CurrentSelection.EndSelection(pt, SlotDimension);
-
+      CurrentSelection.EndSelection(e.GetCurrentPoint((Windows.UI.Xaml.UIElement)sender), SlotDimension);
       DrawFloor();
     }
 
