@@ -11,7 +11,7 @@ namespace X.ModernDesktop.SimTower.Models.Item
     string Id { get; }
     string Name { get; }
     int Price { get; }
-    Slot Size { get; }
+    Slot Size { get; set; }
     int Icon { get; }
     int EntranceOffset { get; set; }
     int ExitOffset { get; set;  }

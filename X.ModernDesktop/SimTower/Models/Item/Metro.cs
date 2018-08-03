@@ -16,12 +16,14 @@ namespace X.ModernDesktop.SimTower.Models.Item
 
     public int Price => 1000000;
 
-    public Slot Size => new Slot(30,3);
+    private Slot _Size = new Slot(30, 3);
+    public Slot Size { get => _Size; set => _Size = value; }
 
     public int Icon => (int)IconNumbers.ICON_METRO;
 
-    public int EntranceOffset { get => 2; set => throw new NotImplementedException(); }
-    public int ExitOffset { get => 2; set => throw new NotImplementedException(); }
+    public int EntranceOffset { get => 2; set => _EntranceOffset = value; }
+    public int ExitOffset { get => 2; set => _ExitOffset = value; }
+
 
     public Item Make()
     {

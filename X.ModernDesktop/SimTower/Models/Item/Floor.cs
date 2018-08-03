@@ -15,17 +15,20 @@ namespace X.ModernDesktop.SimTower.Models.Item
     public string Name => "Floor";
 
     public int Price => 500;
-
-    public Slot Size => new Slot(1,1);
-
+    
+    private Slot _Size = new Slot(1, 1);
+    public Slot Size { get => _Size; set => _Size = value; }
+    
     public int Icon => (int)IconNumbers.ICON_FLOOR;
 
-    public int EntranceOffset { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    public int ExitOffset { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public int EntranceOffset { get => _EntranceOffset; set => _EntranceOffset = value; }
+    public int ExitOffset { get => _ExitOffset; set => _ExitOffset = value; }
+
 
     public Item Make()
     {
-      throw new NotImplementedException();
+      // todo : make an item and do stuff with it
+      return this; 
     }
   }
 }

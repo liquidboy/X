@@ -25,8 +25,7 @@ namespace X.ModernDesktop.SimTower.Models
       {
         f = new FloorNode(mapNodesByFloor[slot.Y]);
         floorNodes[slot.Y] = f;
-        f.position.X = int.MinValue;
-        f.position.Y = slot.Y;
+        f.position = new Slot(int.MinValue, slot.Y);
       }
       else f = floorNodes[slot.Y];
 

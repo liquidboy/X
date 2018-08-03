@@ -33,17 +33,22 @@ namespace X.ModernDesktop.SimTower.Models.Item
     }
 
     private void LoadPrototypes() {
-      prototypes.Add(Cinema.makePrototype());
-      prototypes.Add(Condo.makePrototype());
-      prototypes.Add(Elevator.makePrototype());
-      prototypes.Add(FastFood.makePrototype());
-      prototypes.Add(Floor.makePrototype());
-      prototypes.Add(Lobby.makePrototype());
-      prototypes.Add(Metro.makePrototype());
-      prototypes.Add(Office.makePrototype());
-      prototypes.Add(PartyHall.makePrototype());
-      prototypes.Add(Restaurant.makePrototype());
-      prototypes.Add(Stairs.makePrototype());
+      prototypes.Add(Cinema.makePrototype<Cinema>());
+      prototypes.Add(Condo.makePrototype<Condo>());
+      prototypes.Add(Elevator.makePrototype<Elevator>());
+      prototypes.Add(FastFood.makePrototype<FastFood>());
+      prototypes.Add(Floor.makePrototype<Floor>());
+      prototypes.Add(Lobby.makePrototype<Lobby>());
+      prototypes.Add(Metro.makePrototype<Metro>());
+      prototypes.Add(Office.makePrototype<Office>());
+      prototypes.Add(PartyHall.makePrototype<PartyHall>());
+      prototypes.Add(Restaurant.makePrototype<Restaurant>());
+      prototypes.Add(Stairs.makePrototype<Stairs>());
+
+      foreach(var prototype in prototypes)
+      {
+        prototypesById.Add(prototype.Id, prototype);
+      }
     }
 
     public Item Make(IPrototype prototype, Slot position) {

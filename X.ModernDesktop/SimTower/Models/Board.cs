@@ -26,7 +26,7 @@ namespace X.ModernDesktop.SimTower.Models
     public SelectedArea CurrentSelection { get; set; }
     public SelectedTool CurrentSelectedTool { get; set; }
 
-    public int FloorLevel { get => _floorLevel; set => SetProperty(ref _floorLevel, value); }
+    public int FloorLevelDebug { get => _floorLevel; set => SetProperty(ref _floorLevel, value); }
 
 
     private const int maxZSteps = 10;
@@ -34,20 +34,14 @@ namespace X.ModernDesktop.SimTower.Models
     public GameMap gameMap { get; set; }
     private Factory itemFactory;
     List<X.ModernDesktop.SimTower.Models.Item.Item> items;
-    Dictionary<int, List<X.ModernDesktop.SimTower.Models.Item.Item>> itemSetByInt;
+    Dictionary<int, List<X.ModernDesktop.SimTower.Models.Item.Item>> itemsByFloor;
+    Dictionary<string, List<X.ModernDesktop.SimTower.Models.Item.Item>> itemsByType;
     Dictionary<int, Floor> floorItems;
     private int _floorLevel;
 
     public Board()
     {
-      gameMap = new GameMap();
-      itemFactory = new Factory();
-      items = new List<Item.Item>();
-      itemSetByInt = new Dictionary<int, List<Item.Item>>();
-      floorItems = new Dictionary<int, Floor>();
-
       initBoard(100, 200, 15);
-
     }
     public Board(int xSlots, int ySlots, int groundSlotY)
     {
@@ -56,6 +50,13 @@ namespace X.ModernDesktop.SimTower.Models
 
     private void initBoard(int xSlots, int ySlots, int groundSlotY)
     {
+      gameMap = new GameMap();
+      itemFactory = new Factory();
+      items = new List<Item.Item>();
+      itemsByFloor = new Dictionary<int, List<Item.Item>>();
+      itemsByType = new Dictionary<string, List<Item.Item>>();
+      floorItems = new Dictionary<int, Floor>();
+
       SlotsAvailable = new Vector3(xSlots, ySlots, maxZSteps);
       GroundLevelSlotPositionY = groundSlotY;
       AboveGroundSlotsAvailable = ySlots - groundSlotY;
@@ -115,22 +116,32 @@ namespace X.ModernDesktop.SimTower.Models
       CurrentSelection.EndSelection(e.GetCurrentPoint((Windows.UI.Xaml.UIElement)sender), SlotDimension);
       ExtendFloor(
         floorFromSlot(CurrentSelection.SlotEnd.Y),
-        Math.Min(CurrentSelection.SelectionXY.X, CurrentSelection.SelectionWH.X),
-        Math.Max(CurrentSelection.SelectionXY.X, CurrentSelection.SelectionWH.X));
+        Math.Min(CurrentSelection.SlotStart.X, CurrentSelection.SlotEnd.X),
+        Math.Max(CurrentSelection.SlotStart.X, CurrentSelection.SlotEnd.X));
     }
 
     #endregion
 
-    private void ExtendFloor(int floor, int minX, int maxX)
+    private void ExtendFloor(int floorSlotY, int minSlotX, int maxSlotX)
     {
-      FloorLevel = floor;
+      FloorLevelDebug = floorSlotY;
+      
+      
 
-      // Look for existing floor to extend
-      //Floor f = floorItems[floor];
+      Floor f = (Floor)itemFactory.Make(itemFactory.prototypesById["floor"], new Slot(minSlotX, floorSlotY));
+      f.Size = new Slot(maxSlotX - minSlotX, f.Size.Y);
+
+      //items.Add(f);
+      //if (itemsByType.ContainsKey(f.Id)) itemsByType[f.Id].Add(f);
+      //else itemsByType.Add(f.Id, new List<Item.Item>() { f });
+
+      if (floorItems.ContainsKey(floorSlotY)) {
+        var existingFloor = floorItems[floorSlotY];
+      }
+
+      floorItems.Add(floorSlotY, f);
 
 
-
-      //Floor f = (Floor)itemFactory.Make(itemFactory.prototypesById["floor"], CurrentSelection.SelectionXY);
 
     }
 

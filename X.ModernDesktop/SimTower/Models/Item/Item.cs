@@ -8,11 +8,15 @@ namespace X.ModernDesktop.SimTower.Models.Item
 {
   class Item
   {
+    internal int _EntranceOffset;
+    internal int _ExitOffset;
+
+
     public Slot Position { get; set; }
 
-    public static IPrototype makePrototype() {
-      Type t = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType;
-      IPrototype p = (IPrototype)Activator.CreateInstance(t);
+    public static IPrototype makePrototype<T>() {
+      //var currentMethod = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType;
+      IPrototype p = (IPrototype)Activator.CreateInstance(typeof(T));
       p.EntranceOffset = 0;
       p.ExitOffset = 0;
       return p;
