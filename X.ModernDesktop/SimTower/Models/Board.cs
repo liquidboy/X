@@ -141,27 +141,53 @@ namespace X.ModernDesktop.SimTower.Models
     private void LayFloor(int floorSlotY, int minSlotX, int maxSlotX)
     {
       FloorLevelDebug = floorSlotY;
-    
+
       //floor cannot be created in patches along the same level
       //floor can only be created in blocks of 1 height
       //ground floor - allow floor to start anywhere 
       //above ground - needs to be placed above an existing floor tile
       //below ground - needs to be placed below an existing floor tile
 
+
+      if (floorSlotY > 0 && !floorItems.ContainsKey(floorSlotY - 1)) return;
+      if (floorSlotY < 0 && !floorItems.ContainsKey(floorSlotY + 1)) return;
+
+      // get adjance floor to ensure level is created correctly
+      Floor adjacentFloor = null;
+      if (floorSlotY > 0) { adjacentFloor = floorItems[floorSlotY - 1]; }
+      else if (floorSlotY < 0) adjacentFloor = floorItems[floorSlotY + 1];
+
+      // ensure min left compared to adjacent level
+      int minSlotXAllowed = minSlotX;
+      if (adjacentFloor != null) {
+        int tempMinSlotXAllowed = adjacentFloor.Position.X;
+        tempMinSlotXAllowed = minSlotX < tempMinSlotXAllowed ? tempMinSlotXAllowed : minSlotX;
+        minSlotXAllowed = tempMinSlotXAllowed;
+      }
+
+      // ensure max right compared to adjacent level
+      int maxSlotXAllowed = maxSlotX;
+      if (adjacentFloor != null) {
+        int tempMaxSlotXAllowed = adjacentFloor.Position.X + adjacentFloor.Size.X;
+        tempMaxSlotXAllowed = maxSlotX > tempMaxSlotXAllowed ? tempMaxSlotXAllowed : maxSlotX;
+        maxSlotXAllowed = tempMaxSlotXAllowed;
+      }
+      
+
       if (floorItems.ContainsKey(floorSlotY)) // EXTEND EXISTING FLOOR
       {
         var existingFloor = floorItems[floorSlotY];
 
-        var x1 = Math.Min(minSlotX, existingFloor.Position.X);
-        var x2 = Math.Max(maxSlotX, existingFloor.Position.X + existingFloor.Size.X);
+        var x1 = Math.Min(minSlotXAllowed, existingFloor.Position.X);
+        var x2 = Math.Max(maxSlotXAllowed, existingFloor.Position.X + existingFloor.Size.X);
 
         existingFloor.Position = new Slot(x1, floorSlotY);
-        existingFloor.Size = new Slot(x2-x1, 1);
+        existingFloor.Size = new Slot(x2 - x1, 1);
       }
       else { //NEW FLOOR
         Floor f = (Floor)itemFactory.Make(itemFactory.prototypesById["floor"],
-        position: new Slot(minSlotX, floorSlotY), 
-        size: new Slot(maxSlotX - minSlotX, 1));
+        position: new Slot(minSlotXAllowed, floorSlotY), 
+        size: new Slot(maxSlotXAllowed - minSlotXAllowed, 1));
 
         floorItems.Add(floorSlotY, f);
       }
@@ -176,19 +202,24 @@ namespace X.ModernDesktop.SimTower.Models
           var floor = floorItem.Value;
           if (floor.IsDirty) {
             Views.Floor ctl = floor.IsInVisualTree ? (Views.Floor)floor.Control : new Views.Floor();
+            try
+            {
+              ctl.Width = (floor.Size.X + 1) * SlotDimension.X;
+              ctl.Height = floor.Size.Y * SlotDimension.Y;
+              ctl.SetValue(Canvas.LeftProperty, floor.Position.X * SlotDimension.X);
+              ctl.SetValue(Canvas.TopProperty, (AboveGroundSlotsAvailable - floor.Position.Y - 1) * SlotDimension.Y);
+              ctl.DataContext = floor;
 
-            ctl.Width = (floor.Size.X + 1) * SlotDimension.X;
-            ctl.Height = floor.Size.Y * SlotDimension.Y;
-            ctl.SetValue(Canvas.LeftProperty, floor.Position.X * SlotDimension.X);
-            ctl.SetValue(Canvas.TopProperty, (AboveGroundSlotsAvailable - floor.Position.Y - 1) * SlotDimension.Y);
-            ctl.DataContext = floor;
-
-            if (!floor.IsInVisualTree) {
-              floor.Control = ctl;
-              _renderSurface.Children.Add(floor.Control);
-              floor.IsInVisualTree = true;
+              if (!floor.IsInVisualTree)
+              {
+                floor.Control = ctl;
+                _renderSurface.Children.Add(floor.Control);
+                floor.IsInVisualTree = true;
+              }
             }
+            catch {
 
+            }
           }
         }
       }
