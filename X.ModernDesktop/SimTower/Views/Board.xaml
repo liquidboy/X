@@ -23,11 +23,11 @@
       <Border BorderBrush="White" Width="{x:Bind GameBoard.SlotDimension.X}" Height="{x:Bind GameBoard.SlotDimension.Y}" Canvas.Left="{Binding CurrentSelection.SlotPositionHover.X}" Canvas.Top="{Binding CurrentSelection.SlotPositionHover.Y}" Visibility="{Binding CurrentSelection.IsHoverVisible}" BorderThickness="2"></Border>
 
 
-      <Border BorderBrush="Black" Width="{Binding CurrentSelection.SelectionWH.X}" Height="{Binding CurrentSelection.SelectionWH.Y}" Canvas.Left="{Binding CurrentSelection.SelectionXY.X}" Canvas.Top="{Binding CurrentSelection.SelectionXY.Y}" Visibility="{Binding CurrentSelection.IsVisible}" BorderThickness="2"></Border>
+      <Border BorderBrush="Black" Width="{Binding CurrentSelection.SelectionWH.X}" Height="{Binding CurrentSelection.SelectionWH.Y}" Canvas.Left="{Binding CurrentSelection.SelectionXY.X}" Canvas.Top="{Binding CurrentSelection.SelectionXY.Y}" Visibility="{Binding CurrentSelection.IsSelectionVisible}" BorderThickness="2"></Border>
 
-      <Border BorderBrush="Orange" Width="{x:Bind GameBoard.SlotDimension.X}" Height="{x:Bind GameBoard.SlotDimension.Y}" Canvas.Left="{Binding CurrentSelection.SlotPositionStart.X}" Canvas.Top="{Binding CurrentSelection.SlotPositionStart.Y}" Visibility="{Binding CurrentSelection.IsVisible}" BorderThickness="2"></Border>
+      <Border BorderBrush="Orange" Width="{x:Bind GameBoard.SlotDimension.X}" Height="{x:Bind GameBoard.SlotDimension.Y}" Canvas.Left="{Binding CurrentSelection.SlotPositionStart.X}" Canvas.Top="{Binding CurrentSelection.SlotPositionStart.Y}" Visibility="{Binding CurrentSelection.IsSelectionVisible}" BorderThickness="2"></Border>
 
-      <Border BorderBrush="Red" Width="{x:Bind GameBoard.SlotDimension.X}" Height="{x:Bind GameBoard.SlotDimension.Y}" Canvas.Left="{Binding CurrentSelection.SlotPositionEnd.X}" Canvas.Top="{Binding CurrentSelection.SlotPositionEnd.Y}" Visibility="{Binding CurrentSelection.IsVisible}" BorderThickness="2"></Border>
+      <Border BorderBrush="Red" Width="{x:Bind GameBoard.SlotDimension.X}" Height="{x:Bind GameBoard.SlotDimension.Y}" Canvas.Left="{Binding CurrentSelection.SlotPositionEnd.X}" Canvas.Top="{Binding CurrentSelection.SlotPositionEnd.Y}" Visibility="{Binding CurrentSelection.IsSelectionVisible}" BorderThickness="2"></Border>
       
       
     </Canvas>

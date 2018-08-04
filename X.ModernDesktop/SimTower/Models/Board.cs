@@ -101,12 +101,13 @@ namespace X.ModernDesktop.SimTower.Models
 
     public void OnPointerExited(object sender, PointerRoutedEventArgs e)
     {
-      CurrentSelection.IsVisible = false;
+      CurrentSelection.IsSelectionVisible = false;
+      CurrentSelection.IsHoverCursorVisible = false;
     }
 
     public void OnPointerEntered(object sender, PointerRoutedEventArgs e)
     {
-      CurrentSelection.IsVisible = true;
+      CurrentSelection.IsSelectionVisible = false;
       CurrentSelection.IsHoverCursorVisible = true;
     }
 
@@ -129,7 +130,7 @@ namespace X.ModernDesktop.SimTower.Models
 
 
       // TEST : draw floor
-      ExtendFloor(
+      LayFloor(
         floorFromSlot(CurrentSelection.SlotEnd.Y),
         Math.Min(CurrentSelection.SlotStart.X, CurrentSelection.SlotEnd.X),
         Math.Max(CurrentSelection.SlotStart.X, CurrentSelection.SlotEnd.X));
@@ -137,7 +138,7 @@ namespace X.ModernDesktop.SimTower.Models
 
     #endregion
 
-    private void ExtendFloor(int floorSlotY, int minSlotX, int maxSlotX)
+    private void LayFloor(int floorSlotY, int minSlotX, int maxSlotX)
     {
       FloorLevelDebug = floorSlotY;
     
@@ -147,7 +148,7 @@ namespace X.ModernDesktop.SimTower.Models
       //above ground - needs to be placed above an existing floor tile
       //below ground - needs to be placed below an existing floor tile
 
-      if (floorItems.ContainsKey(floorSlotY))
+      if (floorItems.ContainsKey(floorSlotY)) // EXTEND EXISTING FLOOR
       {
         var existingFloor = floorItems[floorSlotY];
 
@@ -157,7 +158,7 @@ namespace X.ModernDesktop.SimTower.Models
         existingFloor.Position = new Slot(x1, floorSlotY);
         existingFloor.Size = new Slot(x2-x1, 1);
       }
-      else {
+      else { //NEW FLOOR
         Floor f = (Floor)itemFactory.Make(itemFactory.prototypesById["floor"],
         position: new Slot(minSlotX, floorSlotY), 
         size: new Slot(maxSlotX - minSlotX, 1));
