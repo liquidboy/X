@@ -8,6 +8,9 @@ namespace X.ModernDesktop.SimTower.Models
 {
   class SelectedArea : BindableBase
   {
+    private Slot _SlotPositionHover;
+    private Slot _SlotHover;
+
     private Slot _SlotPositionStart;
     private Slot _SlotStart;
     private Slot _SlotPositionMiddle;
@@ -17,16 +20,19 @@ namespace X.ModernDesktop.SimTower.Models
     private Slot _SlotPositionEnd;
     private Slot _SlotEnd;
     private bool _isVisible;
+    private bool _isHoverVisible;
 
     public bool IsVisible { get => _isVisible; set => SetProperty(ref _isVisible, value); }
-
+    public bool IsHoverCursorVisible { get => _isHoverVisible; set => SetProperty(ref _isHoverVisible, value); }
     public bool IsInSelectionMode { get; set; }
 
-
+    
+    public Slot SlotPositionHover { get => _SlotPositionHover; set => SetProperty(ref _SlotPositionHover, value); }
+    public Slot SlotHover { get => _SlotHover; set => SetProperty(ref _SlotHover, value); }
+    
     public Slot SlotPositionStart { get => _SlotPositionStart; set => SetProperty(ref _SlotPositionStart, value); }
     public Slot SlotStart { get => _SlotStart; set => SetProperty(ref _SlotStart, value); }
-
-
+    
     public Slot SlotPositionDelta { get => _SlotPositionMiddle; set => SetProperty(ref _SlotPositionMiddle, value); }
     public Slot SlotDelta { get => _SlotMiddle; set => SetProperty(ref _SlotMiddle, value); }
     public Slot SelectionXY { get => _SelectionXY; set => SetProperty(ref _SelectionXY, value); }
@@ -38,10 +44,12 @@ namespace X.ModernDesktop.SimTower.Models
 
 
     public void BeginSelection(PointerPoint pt, Vector2 slotDimension) {
+      IsHoverCursorVisible = false;
       IsInSelectionMode = true;
       SetStartSlotDetails(pt, slotDimension);
     }
     public void EndSelection(PointerPoint pt, Vector2 slotDimension) {
+      IsHoverCursorVisible = true;
       IsInSelectionMode = false;
       SetEndSlotDetails(pt, slotDimension);
     }
@@ -51,11 +59,20 @@ namespace X.ModernDesktop.SimTower.Models
       SetSelectionSlotDetails(pt, slotDimension);
       SetEndSlotDetails(pt, slotDimension);
     }
+    public void ChangeHoverCursor(PointerPoint pt, Vector2 slotDimension)
+    {
+      SetHoverSlotDetails(pt, slotDimension);
+    }
 
+    private void SetHoverSlotDetails(PointerPoint pt, Vector2 slotDimension)
+    {
+      if (IsInSelectionMode) return;
+      SlotPositionHover = new Slot(Utilities.RoundDown((int)pt.Position.X, (int)slotDimension.X), Utilities.RoundDown((int)pt.Position.Y, (int)slotDimension.Y));
+      SlotHover = new Slot((int)(SlotPositionHover.X / slotDimension.X), (int)(SlotPositionHover.Y / slotDimension.Y));
+    }
 
     private void SetStartSlotDetails(PointerPoint pt, Vector2 slotDimension)
     {
-      IsInSelectionMode = true;
       SlotPositionStart = new Slot(Utilities.RoundDown((int)pt.Position.X, (int)slotDimension.X), Utilities.RoundDown((int)pt.Position.Y, (int)slotDimension.Y));
       SlotStart = new Slot((int)(SlotPositionStart.X / slotDimension.X), (int)(SlotPositionStart.Y / slotDimension.Y));
     }

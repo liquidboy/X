@@ -2,7 +2,7 @@
     x:Class="X.ModernDesktop.SimTower.Views.Board"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:X.ModernDesktop.SimTower"
+    xmlns:lv="using:X.ModernDesktop.SimTower.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -11,14 +11,17 @@
   <Grid x:Name="layoutRoot" >
     <Canvas Height="{x:Bind GameBoard.BoardHeight}" Width="{x:Bind GameBoard.BoardWidth}" Background="Black" PointerEntered="{x:Bind GameBoard.OnPointerEntered}" PointerExited="{x:Bind GameBoard.OnPointerExited}" PointerMoved="{x:Bind GameBoard.OnPointerMoved}" PointerPressed="{x:Bind GameBoard.OnPointerPressed}" PointerReleased="{x:Bind GameBoard.OnPointerReleased}" >
 
-      <Canvas x:Name="aboveGround" Background="Cyan" Width="{x:Bind GameBoard.AboveGroundDimension.Z}" Height="{x:Bind GameBoard.AboveGroundDimension.W}" Canvas.Left="{x:Bind GameBoard.AboveGroundDimension.X}" Canvas.Top="{x:Bind GameBoard.AboveGroundDimension.Y}"></Canvas>
+      <lv:BackgroundAboveGround x:Name="aboveGround" Width="{x:Bind GameBoard.AboveGroundDimension.Z}" Height="{x:Bind GameBoard.AboveGroundDimension.W}" Canvas.Left="{x:Bind GameBoard.AboveGroundDimension.X}" Canvas.Top="{x:Bind GameBoard.AboveGroundDimension.Y}" ></lv:BackgroundAboveGround>
+      
 
-      <Canvas x:Name="belowGround" Background="Brown" Width="{x:Bind GameBoard.BelowGroundDimension.Z}" Height="{x:Bind GameBoard.BelowGroundDimension.W}" Canvas.Left="{x:Bind GameBoard.BelowGroundDimension.X}" Canvas.Top="{x:Bind GameBoard.BelowGroundDimension.Y}"></Canvas>
+      <lv:BackgroundBelowGround x:Name="belowGround" Width="{x:Bind GameBoard.BelowGroundDimension.Z}" Height="{x:Bind GameBoard.BelowGroundDimension.W}" Canvas.Left="{x:Bind GameBoard.BelowGroundDimension.X}" Canvas.Top="{x:Bind GameBoard.BelowGroundDimension.Y}"></lv:BackgroundBelowGround>
 
       <Canvas x:Name="towerItems" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         
       </Canvas>
-      
+
+      <Border BorderBrush="White" Width="{x:Bind GameBoard.SlotDimension.X}" Height="{x:Bind GameBoard.SlotDimension.Y}" Canvas.Left="{Binding CurrentSelection.SlotPositionHover.X}" Canvas.Top="{Binding CurrentSelection.SlotPositionHover.Y}" Visibility="{Binding CurrentSelection.IsHoverVisible}" BorderThickness="2"></Border>
+
 
       <Border BorderBrush="Black" Width="{Binding CurrentSelection.SelectionWH.X}" Height="{Binding CurrentSelection.SelectionWH.Y}" Canvas.Left="{Binding CurrentSelection.SelectionXY.X}" Canvas.Top="{Binding CurrentSelection.SelectionXY.Y}" Visibility="{Binding CurrentSelection.IsVisible}" BorderThickness="2"></Border>
 

@@ -126,6 +126,12 @@
     <Compile Include="SimTower\Models\SelectedTool.cs" />
     <Compile Include="SimTower\Models\Slot.cs" />
     <Compile Include="SimTower\Utilities.cs" />
+    <Compile Include="SimTower\Views\BackgroundAboveGround.xaml.cs">
+      <DependentUpon>BackgroundAboveGround.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SimTower\Views\BackgroundBelowGround.xaml.cs">
+      <DependentUpon>BackgroundBelowGround.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SimTower\Views\Board.xaml.cs">
       <DependentUpon>Board.xaml</DependentUpon>
     </Compile>
@@ -172,6 +178,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="SimTowerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SimTower\Views\BackgroundAboveGround.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SimTower\Views\BackgroundBelowGround.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

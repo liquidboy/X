@@ -12,6 +12,7 @@ using X.ModernDesktop.SimTower.Models.Item;
 
 namespace X.ModernDesktop.SimTower.Models
 {
+  //GAME
   class Board : BindableBase
   {
     public Vector3 SlotsAvailable { get; private set; }
@@ -37,9 +38,9 @@ namespace X.ModernDesktop.SimTower.Models
 
     public GameMap gameMap { get; set; }
     private Factory itemFactory;
-    List<X.ModernDesktop.SimTower.Models.Item.Item> items;
-    Dictionary<int, List<X.ModernDesktop.SimTower.Models.Item.Item>> itemsByFloor;
-    Dictionary<string, List<X.ModernDesktop.SimTower.Models.Item.Item>> itemsByType;
+    //List<X.ModernDesktop.SimTower.Models.Item.Item> items;
+    //Dictionary<int, List<X.ModernDesktop.SimTower.Models.Item.Item>> itemsByFloor;
+    //Dictionary<string, List<X.ModernDesktop.SimTower.Models.Item.Item>> itemsByType;
     Dictionary<int, Floor> floorItems;
     private int _floorLevel;
 
@@ -59,9 +60,9 @@ namespace X.ModernDesktop.SimTower.Models
       _renderSurface = renderSurface;
       gameMap = new GameMap();
       itemFactory = new Factory();
-      items = new List<Item.Item>();
-      itemsByFloor = new Dictionary<int, List<Item.Item>>();
-      itemsByType = new Dictionary<string, List<Item.Item>>();
+      //items = new List<Item.Item>();
+      //itemsByFloor = new Dictionary<int, List<Item.Item>>();
+      //itemsByType = new Dictionary<string, List<Item.Item>>();
       floorItems = new Dictionary<int, Floor>();
 
       SlotsAvailable = new Vector3(xSlots, ySlots, maxZSteps);
@@ -106,10 +107,12 @@ namespace X.ModernDesktop.SimTower.Models
     public void OnPointerEntered(object sender, PointerRoutedEventArgs e)
     {
       CurrentSelection.IsVisible = true;
+      CurrentSelection.IsHoverCursorVisible = true;
     }
 
     public void OnPointerMoved(object sender, PointerRoutedEventArgs e)
     {
+      CurrentSelection.ChangeHoverCursor(e.GetCurrentPoint((Windows.UI.Xaml.UIElement)sender), SlotDimension);
       CurrentSelection.ChangeSelection(e.GetCurrentPoint((Windows.UI.Xaml.UIElement)sender), SlotDimension);
     }
 
@@ -138,6 +141,12 @@ namespace X.ModernDesktop.SimTower.Models
     {
       FloorLevelDebug = floorSlotY;
     
+      //floor cannot be created in patches along the same level
+      //floor can only be created in blocks of 1 height
+      //ground floor - allow floor to start anywhere 
+      //above ground - needs to be placed above an existing floor tile
+      //below ground - needs to be placed below an existing floor tile
+
       if (floorItems.ContainsKey(floorSlotY))
       {
         var existingFloor = floorItems[floorSlotY];

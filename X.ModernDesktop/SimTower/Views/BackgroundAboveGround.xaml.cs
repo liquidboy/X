@@ -13,22 +13,15 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
+
 namespace X.ModernDesktop.SimTower.Views
 {
-  public sealed partial class Board : UserControl
+  public sealed partial class BackgroundAboveGround : UserControl
   {
-    Models.Board GameBoard { get; set; }
-
-    public Board()
+    public BackgroundAboveGround()
     {
       this.InitializeComponent();
-      this.InitializeBoard();
     }
-
-    private void InitializeBoard() {
-      GameBoard = new Models.Board(20,30,10, towerItems);
-      this.layoutRoot.DataContext = GameBoard;
-    }
-
   }
 }
