@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="X.ModernDesktop.SimTowerPage"
+    x:Class="X.ModernDesktop.SimTower.Windows.BoardPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:stv="using:X.ModernDesktop.SimTower.Views"
@@ -9,6 +9,8 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
   <Grid>
-    <stv:StartMenu Width="350px" Height="180px" HorizontalAlignment="Center" VerticalAlignment="Center"></stv:StartMenu>
+    <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="0,0,0,0">
+      <stv:Board></stv:Board>
+    </ScrollViewer>
   </Grid>
 </Page>

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
@@ -113,19 +114,19 @@ namespace X.ModernDesktop.SimTower.Models
 
     public void OnPointerMoved(object sender, PointerRoutedEventArgs e)
     {
-      CurrentSelection.ChangeHoverCursor(e.GetCurrentPoint((Windows.UI.Xaml.UIElement)sender), SlotDimension);
-      CurrentSelection.ChangeSelection(e.GetCurrentPoint((Windows.UI.Xaml.UIElement)sender), SlotDimension);
+      CurrentSelection.ChangeHoverCursor(e.GetCurrentPoint((UIElement)sender), SlotDimension);
+      CurrentSelection.ChangeSelection(e.GetCurrentPoint((UIElement)sender), SlotDimension);
     }
 
     public void OnPointerPressed(object sender, PointerRoutedEventArgs e)
     {
-      CurrentSelection.BeginSelection(e.GetCurrentPoint((Windows.UI.Xaml.UIElement)sender), SlotDimension);
+      CurrentSelection.BeginSelection(e.GetCurrentPoint((UIElement)sender), SlotDimension);
     }
 
     public void OnPointerReleased(object sender, PointerRoutedEventArgs e)
     {
-      CurrentSelection.ChangeSelection(e.GetCurrentPoint((Windows.UI.Xaml.UIElement)sender), SlotDimension);
-      CurrentSelection.EndSelection(e.GetCurrentPoint((Windows.UI.Xaml.UIElement)sender), SlotDimension);
+      CurrentSelection.ChangeSelection(e.GetCurrentPoint((UIElement)sender), SlotDimension);
+      CurrentSelection.EndSelection(e.GetCurrentPoint((UIElement)sender), SlotDimension);
 
 
 
