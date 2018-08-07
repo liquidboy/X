@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using X.ModernDesktop.SimTower.Models.Item;
 
 namespace X.ModernDesktop.SimTower.Models
 {
@@ -17,9 +18,18 @@ namespace X.ModernDesktop.SimTower.Models
       mapNodesByFloor = new SortedDictionary<int, List<MapNode>>();
       floorNodes = new SortedDictionary<int, FloorNode>();
     }
+    public void removeNode(Slot slot, X.ModernDesktop.SimTower.Models.Item.Item item)
+    {
+    }
 
-    MapNode addNode(Slot slot) {
-      
+    public MapNode findNode(Slot slot, X.ModernDesktop.SimTower.Models.Item.Item item)
+    {
+      return null;
+    }
+
+    public MapNode addNode(Slot slot, X.ModernDesktop.SimTower.Models.Item.Item item) {
+      if (item is null) return null;
+
       FloorNode f;
       if (!floorNodes.ContainsKey(slot.Y))
       {

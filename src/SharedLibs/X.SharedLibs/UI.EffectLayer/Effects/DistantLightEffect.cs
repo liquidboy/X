@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.UI;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
@@ -61,7 +62,7 @@ namespace X.SharedLibs.UI.EffectLayer.Effects
             newElement.PointerMoved += (s, e) =>
             {
                 var pos = e.GetCurrentPoint(newElement).Position;
-                ((DistantLight)CompositionLight).Color = Windows.UI.Colors.White;
+                ((DistantLight)CompositionLight).Color = Colors.White;
                 ((DistantLight)CompositionLight).Direction = new System.Numerics.Vector3((float)pos.X, (float)pos.Y, 40);
             };
         }

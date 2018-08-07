@@ -135,6 +135,7 @@ namespace X.ModernDesktop.SimTower.Models
         floorFromSlot(CurrentSelection.SlotEnd.Y),
         Math.Min(CurrentSelection.SlotStart.X, CurrentSelection.SlotEnd.X),
         Math.Max(CurrentSelection.SlotStart.X, CurrentSelection.SlotEnd.X));
+      Draw();
     }
 
     #endregion
@@ -191,9 +192,8 @@ namespace X.ModernDesktop.SimTower.Models
         size: new Slot(maxSlotXAllowed - minSlotXAllowed, 1));
 
         floorItems.Add(floorSlotY, f);
+        //gameMap.addNode(CurrentSelection.SlotStart, f);
       }
-
-      Draw();
     }
 
     private void Draw() {
