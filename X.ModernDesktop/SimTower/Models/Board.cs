@@ -192,7 +192,7 @@ namespace X.ModernDesktop.SimTower.Models
         size: new Slot(maxSlotXAllowed - minSlotXAllowed, 1));
 
         floorItems.Add(floorSlotY, f);
-        //gameMap.addNode(CurrentSelection.SlotStart, f);
+        gameMap.addNode(CurrentSelection.SlotStart, f);
       }
     }
 

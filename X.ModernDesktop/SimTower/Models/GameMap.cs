@@ -18,12 +18,30 @@ namespace X.ModernDesktop.SimTower.Models
       mapNodesByFloor = new SortedDictionary<int, List<MapNode>>();
       floorNodes = new SortedDictionary<int, FloorNode>();
     }
+
+    public void clear()
+    {
+      gameMap.Clear();
+      mapNodesByFloor.Clear();
+    }
+
     public void removeNode(Slot slot, X.ModernDesktop.SimTower.Models.Item.Item item)
     {
+      if (item is null) return;
+      MapNode n = gameMap[slot];
+      
+      // Delete and erase only if no other overlapping item
+      throw new NotImplementedException();
     }
 
     public MapNode findNode(Slot slot, X.ModernDesktop.SimTower.Models.Item.Item item)
     {
+      if (item is null) return null;
+
+      if (floorNodes.ContainsKey(slot.Y)) return floorNodes[slot.Y];
+      else return null;
+
+      throw new NotImplementedException();
       return null;
     }
 
