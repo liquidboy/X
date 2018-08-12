@@ -9,9 +9,9 @@ namespace X.ModernDesktop.SimTower.Models
 {
   class GameMap
   {
-    public SortedDictionary<Slot, MapNode> gameMap;
-    public SortedDictionary<int, List<MapNode>> mapNodesByFloor;
-    public SortedDictionary<int, FloorNode> floorNodes;
+    private SortedDictionary<Slot, MapNode> gameMap;
+    private SortedDictionary<int, List<MapNode>> mapNodesByFloor;
+    private SortedDictionary<int, FloorNode> floorNodes;
 
     public GameMap() {
       gameMap = new SortedDictionary<Slot, MapNode>();
@@ -29,9 +29,30 @@ namespace X.ModernDesktop.SimTower.Models
     {
       if (item is null) return;
       MapNode n = gameMap[slot];
-      
+
       // Delete and erase only if no other overlapping item
-      throw new NotImplementedException();
+      
+      if (n.neighbours[(int)MapNode.Direction.LEFT]!=null)
+      {
+        n.neighbours[(int)MapNode.Direction.LEFT].neighbours[(int)MapNode.Direction.RIGHT] = n.neighbours[(int)MapNode.Direction.RIGHT];
+      }
+
+      if (n.neighbours[(int)MapNode.Direction.RIGHT]!=null)
+      {
+        n.neighbours[(int)MapNode.Direction.RIGHT].neighbours[(int)MapNode.Direction.LEFT] = n.neighbours[(int)MapNode.Direction.LEFT];
+      }
+
+      gameMap.Remove(slot);
+
+      var mnl = mapNodesByFloor[slot.Y];
+      //mnl.Clear();
+      mnl.ForEach(x => {
+        if (x == n) {
+          x.Status = 1; // mark for deletion
+        }
+      });
+      mnl.RemoveAll(x => x.Status == 1); // using status lets delete
+      
     }
 
     public MapNode findNode(Slot slot, X.ModernDesktop.SimTower.Models.Item.Item item)
@@ -51,6 +72,7 @@ namespace X.ModernDesktop.SimTower.Models
       FloorNode f;
       if (!floorNodes.ContainsKey(slot.Y))
       {
+        if (!mapNodesByFloor.ContainsKey(slot.Y)) mapNodesByFloor[slot.Y] = new List<MapNode>();
         f = new FloorNode(mapNodesByFloor[slot.Y]);
         floorNodes[slot.Y] = f;
         f.position = new Slot(int.MinValue, slot.Y);
@@ -64,7 +86,7 @@ namespace X.ModernDesktop.SimTower.Models
         gameMap[slot] = n;
         n.position = slot;
 
-        if (mapNodesByFloor[slot.Y] == null) mapNodesByFloor[slot.Y].Add(n);
+        if (mapNodesByFloor[slot.Y].Count == 0) mapNodesByFloor[slot.Y].Add(n);
         else {
           MapNode left = null;
           MapNode right = null;

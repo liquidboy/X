@@ -10,6 +10,7 @@ namespace X.ModernDesktop.SimTower.Models
   {
     internal Slot position;
     internal MapNode[] neighbours = new MapNode[4];
+    public int Status = 0;  //1 = delete
 
     internal enum Direction {
       UP = 0,

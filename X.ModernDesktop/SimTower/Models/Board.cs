@@ -154,6 +154,33 @@ namespace X.ModernDesktop.SimTower.Models
       if (floorSlotY > 0 && !floorItems.ContainsKey(floorSlotY - 1)) return;
       if (floorSlotY < 0 && !floorItems.ContainsKey(floorSlotY + 1)) return;
 
+      var minMaxFloor = floorMinMax(floorSlotY, minSlotX, maxSlotX);
+      
+      if (floorItems.ContainsKey(floorSlotY)) // EXTEND EXISTING FLOOR
+      {
+        var existingFloor = floorItems[floorSlotY];
+
+        var x1 = Math.Min(minMaxFloor.minSlotXAllowed, existingFloor.Position.X);
+        var x2 = Math.Max(minMaxFloor.maxSlotXAllowed, existingFloor.Position.X + existingFloor.Size.X);
+
+        existingFloor.Position = new Slot(x1, floorSlotY);
+        existingFloor.Size = new Slot(x2 - x1, 1);
+
+        gameMap.removeNode(existingFloor.Position, existingFloor);
+        gameMap.addNode(existingFloor.Position, existingFloor);
+
+      }
+      else { //NEW FLOOR
+        Floor newFloor = (Floor)itemFactory.Make(itemFactory.prototypesById["floor"],
+        position: new Slot(minMaxFloor.minSlotXAllowed, floorSlotY), 
+        size: new Slot(minMaxFloor.maxSlotXAllowed - minMaxFloor.minSlotXAllowed, 1));
+
+        floorItems.Add(floorSlotY, newFloor);
+        gameMap.addNode(newFloor.Position, newFloor);
+      }
+    }
+
+    private (int minSlotXAllowed, int maxSlotXAllowed) floorMinMax(int floorSlotY, int minSlotX, int maxSlotX) {
       // get adjance floor to ensure level is created correctly
       Floor adjacentFloor = null;
       if (floorSlotY > 0) { adjacentFloor = floorItems[floorSlotY - 1]; }
@@ -161,7 +188,8 @@ namespace X.ModernDesktop.SimTower.Models
 
       // ensure min left compared to adjacent level
       int minSlotXAllowed = minSlotX;
-      if (adjacentFloor != null) {
+      if (adjacentFloor != null)
+      {
         int tempMinSlotXAllowed = adjacentFloor.Position.X;
         tempMinSlotXAllowed = minSlotX < tempMinSlotXAllowed ? tempMinSlotXAllowed : minSlotX;
         minSlotXAllowed = tempMinSlotXAllowed;
@@ -169,31 +197,19 @@ namespace X.ModernDesktop.SimTower.Models
 
       // ensure max right compared to adjacent level
       int maxSlotXAllowed = maxSlotX;
-      if (adjacentFloor != null) {
+      if (adjacentFloor != null)
+      {
         int tempMaxSlotXAllowed = adjacentFloor.Position.X + adjacentFloor.Size.X;
         tempMaxSlotXAllowed = maxSlotX > tempMaxSlotXAllowed ? tempMaxSlotXAllowed : maxSlotX;
         maxSlotXAllowed = tempMaxSlotXAllowed;
       }
-      
 
-      if (floorItems.ContainsKey(floorSlotY)) // EXTEND EXISTING FLOOR
-      {
-        var existingFloor = floorItems[floorSlotY];
+      return (minSlotXAllowed, maxSlotXAllowed);
+    }
 
-        var x1 = Math.Min(minSlotXAllowed, existingFloor.Position.X);
-        var x2 = Math.Max(maxSlotXAllowed, existingFloor.Position.X + existingFloor.Size.X);
 
-        existingFloor.Position = new Slot(x1, floorSlotY);
-        existingFloor.Size = new Slot(x2 - x1, 1);
-      }
-      else { //NEW FLOOR
-        Floor f = (Floor)itemFactory.Make(itemFactory.prototypesById["floor"],
-        position: new Slot(minSlotXAllowed, floorSlotY), 
-        size: new Slot(maxSlotXAllowed - minSlotXAllowed, 1));
+    private void LayLobby(int floorSlotY, int minSlotX, int maxSlotX) {
 
-        floorItems.Add(floorSlotY, f);
-        gameMap.addNode(CurrentSelection.SlotStart, f);
-      }
     }
 
     private void Draw() {
