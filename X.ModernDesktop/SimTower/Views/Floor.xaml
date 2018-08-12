@@ -12,6 +12,10 @@
 
   <Grid Background="{x:Bind SetBackgroundColor()}" BorderBrush="#FF040404" >
     <TextBlock FontSize="8" Text="{Binding Position.Y}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-20,0,0,0"></TextBlock>
-    <Border BorderBrush="#FF858585" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,1,0,3"/>
+    <Border BorderBrush="#FF858585" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,1,0,3" BackgroundSizing="OuterBorderEdge">
+      <Border.Background>
+        <ImageBrush ImageSource="ms-appx:///Assets/lobby.png" Stretch="Uniform" AlignmentX="Left" AlignmentY="Top"/>
+      </Border.Background>
+    </Border>
   </Grid>
 </UserControl>

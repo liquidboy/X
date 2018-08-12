@@ -156,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Bruno%27sFamily2015 %2813%29-X2.jpg" />
+    <Content Include="Assets\lobby.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
