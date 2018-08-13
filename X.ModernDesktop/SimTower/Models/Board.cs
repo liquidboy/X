@@ -252,7 +252,7 @@ namespace X.ModernDesktop.SimTower.Models
           if (otherItem.IsDirty) {
             var p = (IPrototype)otherItem;
             var ctl = otherItem.IsInVisualTree ? otherItem.Control : p.MakeUI();
-            DrawItem(ctl, otherItem, p.Size.X, p.Size.Y);
+            DrawItem(ctl, otherItem, p.Size.X-1, p.Size.Y);
           }
         }
       }
