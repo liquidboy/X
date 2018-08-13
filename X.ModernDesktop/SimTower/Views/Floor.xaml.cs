@@ -32,5 +32,14 @@ namespace X.ModernDesktop.SimTower.Views
       if(p.Position.Y >= 0) return new SolidColorBrush(Colors.SlateGray);
       return new SolidColorBrush(Colors.DarkSlateGray);
     }
+
+    public double SetBackgroundOpacity()
+    {
+      if (!(DataContext is IPrototype)) return 1d;
+
+      IPrototype p = (IPrototype)this.DataContext;
+      if (p.Position.Y >= 0) return 0.8d;
+      return 1d;
+    }
   }
 }

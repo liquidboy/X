@@ -141,6 +141,7 @@
     <Compile Include="SimTower\Views\StartMenu.xaml.cs">
       <DependentUpon>StartMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SimTower\Views\TiledBackground.cs" />
     <Compile Include="SimTower\Windows\BoardPage.xaml.cs">
       <DependentUpon>BoardPage.xaml</DependentUpon>
     </Compile>
@@ -156,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Bruno%27sFamily2015 %2813%29-X2.jpg" />
+    <Content Include="Assets\floor.png" />
     <Content Include="Assets\lobby.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
