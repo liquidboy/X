@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace X.ModernDesktop.SimTower.Models.Item
@@ -31,5 +32,9 @@ namespace X.ModernDesktop.SimTower.Models.Item
       return new Floor(); 
     }
 
+    public UIElement MakeUI()
+    {
+      return new Views.Floor();
+    }
   }
 }

@@ -16,6 +16,7 @@ namespace X.ModernDesktop.SimTower.Models.Item
     bool IsInVisualTree { get; set; }
 
     Item Make();
+    UIElement MakeUI();
 
   }
 }

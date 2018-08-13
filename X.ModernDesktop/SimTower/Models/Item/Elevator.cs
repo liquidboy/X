@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 
 namespace X.ModernDesktop.SimTower.Models.Item
 {
@@ -25,6 +26,11 @@ namespace X.ModernDesktop.SimTower.Models.Item
     public int ExitOffset { get => _ExitOffset; set => _ExitOffset = value; }
 
     public Item Make()
+    {
+      throw new NotImplementedException();
+    }
+
+    public UIElement MakeUI()
     {
       throw new NotImplementedException();
     }

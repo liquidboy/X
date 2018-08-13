@@ -41,7 +41,7 @@ namespace X.ModernDesktop.SimTower.Models
 
     public GameMap gameMap { get; set; }
     private Factory itemFactory;
-    //List<X.ModernDesktop.SimTower.Models.Item.Item> items;
+    List<X.ModernDesktop.SimTower.Models.Item.Item> items;
     //Dictionary<int, List<X.ModernDesktop.SimTower.Models.Item.Item>> itemsByFloor;
     //Dictionary<string, List<X.ModernDesktop.SimTower.Models.Item.Item>> itemsByType;
     Dictionary<int, Floor> floorItems;
@@ -63,7 +63,7 @@ namespace X.ModernDesktop.SimTower.Models
       _renderSurface = renderSurface;
       gameMap = new GameMap();
       itemFactory = new Factory();
-      //items = new List<Item.Item>();
+      items = new List<Item.Item>();
       //itemsByFloor = new Dictionary<int, List<Item.Item>>();
       //itemsByType = new Dictionary<string, List<Item.Item>>();
       floorItems = new Dictionary<int, Floor>();
@@ -134,11 +134,17 @@ namespace X.ModernDesktop.SimTower.Models
 
       // TEST : draw floor
       switch (SelectedTool) {
-        case "Floor":
+        case "floor":
           LayFloor(
             floorFromSlot(CurrentSelection.SlotEnd.Y),
             Math.Min(CurrentSelection.SlotStart.X, CurrentSelection.SlotEnd.X),
             Math.Max(CurrentSelection.SlotStart.X, CurrentSelection.SlotEnd.X));
+          break;
+        default:
+          LayItem(
+            SelectedTool,
+            floorFromSlot(CurrentSelection.SlotEnd.Y),
+            Math.Min(CurrentSelection.SlotStart.X, CurrentSelection.SlotEnd.X));
           break;
       }
       
@@ -146,6 +152,22 @@ namespace X.ModernDesktop.SimTower.Models
     }
 
     #endregion
+
+
+    private void LayItem(string itemId, int floorSlotY, int startSlotX)
+    {
+      if (floorSlotY > 0 && !floorItems.ContainsKey(floorSlotY - 1)) return;
+      if (floorSlotY < 0 && !floorItems.ContainsKey(floorSlotY + 1)) return;
+
+      var prototype = itemFactory.prototypesById[itemId];
+
+      var newItem = itemFactory.Make(prototype,
+        position: new Slot(startSlotX, floorSlotY),
+        size: new Slot(prototype.Size.X, 1));
+
+      items.Add(newItem);
+      
+    }
 
     private void LayFloor(int floorSlotY, int minSlotX, int maxSlotX)
     {
@@ -215,9 +237,6 @@ namespace X.ModernDesktop.SimTower.Models
     }
 
 
-    private void LayLobby(int floorSlotY, int minSlotX, int maxSlotX) {
-
-    }
 
     private void Draw() {
       if (_renderSurface != null) {
@@ -225,27 +244,40 @@ namespace X.ModernDesktop.SimTower.Models
         {
           var floor = floorItem.Value;
           if (floor.IsDirty) {
-            Views.Floor ctl = floor.IsInVisualTree ? (Views.Floor)floor.Control : new Views.Floor();
-            try
-            {
-              ctl.Width = (floor.Size.X + 1) * SlotDimension.X;
-              ctl.Height = floor.Size.Y * SlotDimension.Y;
-              ctl.SetValue(Canvas.LeftProperty, floor.Position.X * SlotDimension.X);
-              ctl.SetValue(Canvas.TopProperty, (AboveGroundSlotsAvailable - floor.Position.Y - 1) * SlotDimension.Y);
-              ctl.DataContext = floor;
-
-              if (!floor.IsInVisualTree)
-              {
-                floor.Control = ctl;
-                _renderSurface.Children.Add(floor.Control);
-                floor.IsInVisualTree = true;
-              }
-            }
-            catch {
-
-            }
+            var ctl = floor.IsInVisualTree ? floor.Control : floorItem.Value.MakeUI();
+            DrawItem(ctl, floor, floor.Size.X, floor.Size.Y);
           }
         }
+        foreach (var otherItem in items) {
+          if (otherItem.IsDirty) {
+            var p = (IPrototype)otherItem;
+            var ctl = otherItem.IsInVisualTree ? otherItem.Control : p.MakeUI();
+            DrawItem(ctl, otherItem, p.Size.X, p.Size.Y);
+          }
+        }
+      }
+    }
+
+    private void DrawItem(UIElement uie, Item.Item item, int sizeX, int sizeY) {
+      var ctlFE = (FrameworkElement)uie;
+      try
+      {
+        ctlFE.Width = (sizeX + 1) * SlotDimension.X;
+        ctlFE.Height = sizeY * SlotDimension.Y;
+        ctlFE.SetValue(Canvas.LeftProperty, item.Position.X * SlotDimension.X);
+        ctlFE.SetValue(Canvas.TopProperty, (AboveGroundSlotsAvailable - item.Position.Y - 1) * SlotDimension.Y);
+        ctlFE.DataContext = item;
+
+        if (!item.IsInVisualTree)
+        {
+          item.Control = ctlFE;
+          _renderSurface.Children.Add(item.Control);
+          item.IsInVisualTree = true;
+        }
+      }
+      catch
+      {
+
       }
     }
 

@@ -135,6 +135,9 @@
     <Compile Include="SimTower\Views\Board.xaml.cs">
       <DependentUpon>Board.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SimTower\Views\Lobby.xaml.cs">
+      <DependentUpon>Lobby.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SimTower\Views\Floor.xaml.cs">
       <DependentUpon>Floor.xaml</DependentUpon>
     </Compile>
@@ -204,6 +207,10 @@
     <Page Include="SimTower\Views\Board.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SimTower\Views\Lobby.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="SimTower\Views\Floor.xaml">
       <SubType>Designer</SubType>

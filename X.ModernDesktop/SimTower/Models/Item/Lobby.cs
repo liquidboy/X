@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 
 namespace X.ModernDesktop.SimTower.Models.Item
 {
@@ -16,7 +17,7 @@ namespace X.ModernDesktop.SimTower.Models.Item
 
     public int Price => 20000;
 
-    private Slot _Size = new Slot(4, 1);
+    private Slot _Size = new Slot(1, 1);
     public Slot Size { get => _Size; set => _Size = value; }
 
     public int Icon => (int)IconNumbers.ICON_LOBBY;
@@ -27,7 +28,12 @@ namespace X.ModernDesktop.SimTower.Models.Item
 
     public Item Make()
     {
-      throw new NotImplementedException();
+      return new Lobby();
+    }
+
+    public UIElement MakeUI()
+    {
+      return new Views.Lobby();
     }
   }
 }
