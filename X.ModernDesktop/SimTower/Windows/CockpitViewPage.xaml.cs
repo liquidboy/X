@@ -26,5 +26,13 @@ namespace X.ModernDesktop.SimTower.Windows
       //ApplicationView.PreferredLaunchViewSize = new Size(500, 500);
       //ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
     }
+
+    private void lbToolbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+      var lbi = (ListBoxItem)e.AddedItems[0];
+      var tool = (string)lbi.Content;
+
+      App.windowsEventAggregator.Publish<string>(tool);
+    }
   }
 }

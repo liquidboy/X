@@ -32,6 +32,8 @@ namespace X.ModernDesktop.SimTower.Models
     public SelectedArea CurrentSelection { get; set; }
     public SelectedTool CurrentSelectedTool { get; set; }
 
+    public string SelectedTool { get; set; }
+
     public int FloorLevelDebug { get => _floorLevel; set => SetProperty(ref _floorLevel, value); }
 
 
@@ -131,10 +133,13 @@ namespace X.ModernDesktop.SimTower.Models
 
 
       // TEST : draw floor
-      LayFloor(
+      if (SelectedTool == "Floor") {
+        LayFloor(
         floorFromSlot(CurrentSelection.SlotEnd.Y),
         Math.Min(CurrentSelection.SlotStart.X, CurrentSelection.SlotEnd.X),
         Math.Max(CurrentSelection.SlotStart.X, CurrentSelection.SlotEnd.X));
+      }
+      
       Draw();
     }
 
@@ -242,6 +247,8 @@ namespace X.ModernDesktop.SimTower.Models
       }
     }
 
-
+    public void SetTool(string tool) {
+      SelectedTool = tool;
+    }
   }
 }

@@ -30,5 +30,9 @@ namespace X.ModernDesktop.SimTower.Views
       this.layoutRoot.DataContext = GameBoard;
     }
 
+    public void SetTool(string tool) {
+      GameBoard.SetTool(tool);
+    }
+
   }
 }

@@ -8,7 +8,12 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid Background="Cyan">
-
-    </Grid>
+  <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+    <Grid Background="Cyan" Height="400" Width="220"></Grid>
+    <ListBox x:Name="lbToolbox" SelectionChanged="lbToolbox_SelectionChanged">
+      <ListBoxItem>Floor</ListBoxItem>
+      <ListBoxItem>Lobby</ListBoxItem>
+      <ListBoxItem>Elevator</ListBoxItem>
+    </ListBox>
+  </StackPanel>
 </Page>

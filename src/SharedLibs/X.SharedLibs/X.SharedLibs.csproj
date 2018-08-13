@@ -856,6 +856,7 @@
       <DependentUpon>ContentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Win32\NativeLib.cs" />
+    <Compile Include="Windows\WindowEventAggregator.cs" />
     <Compile Include="Windows\WindowService.cs" />
     <Compile Include="Zlib\Adler32.cs" />
     <Compile Include="Zlib\Crc32.cs" />

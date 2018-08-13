@@ -10,7 +10,7 @@
 
   <Grid>
     <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="0,0,0,0">
-      <stv:Board></stv:Board>
+      <stv:Board x:Name="ctlBoard"></stv:Board>
     </ScrollViewer>
   </Grid>
 </Page>

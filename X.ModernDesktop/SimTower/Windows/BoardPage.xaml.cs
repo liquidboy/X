@@ -3,18 +3,24 @@ using Windows.Foundation;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using X.SharedLibs.Windows;
 
 namespace X.ModernDesktop.SimTower.Windows
 {
-  public sealed partial class BoardPage : Page
+  public sealed partial class BoardPage : Page, ISubscriber<string>
   {
     public BoardPage()
     {
       this.InitializeComponent();
-
+      App.windowsEventAggregator.Subscribe(this);
       //ApplicationView.PreferredLaunchViewSize = new Size(600, 800);
       //ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
 
+    }
+
+    public void HandleMessage(string message)
+    {
+      ctlBoard.SetTool(message);
     }
 
     //protected async override void OnNavigatedTo(NavigationEventArgs e)
