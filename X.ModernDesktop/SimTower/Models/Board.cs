@@ -133,11 +133,13 @@ namespace X.ModernDesktop.SimTower.Models
 
 
       // TEST : draw floor
-      if (SelectedTool == "Floor") {
-        LayFloor(
-        floorFromSlot(CurrentSelection.SlotEnd.Y),
-        Math.Min(CurrentSelection.SlotStart.X, CurrentSelection.SlotEnd.X),
-        Math.Max(CurrentSelection.SlotStart.X, CurrentSelection.SlotEnd.X));
+      switch (SelectedTool) {
+        case "Floor":
+          LayFloor(
+            floorFromSlot(CurrentSelection.SlotEnd.Y),
+            Math.Min(CurrentSelection.SlotStart.X, CurrentSelection.SlotEnd.X),
+            Math.Max(CurrentSelection.SlotStart.X, CurrentSelection.SlotEnd.X));
+          break;
       }
       
       Draw();
