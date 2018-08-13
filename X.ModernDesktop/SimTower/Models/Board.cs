@@ -167,6 +167,9 @@ namespace X.ModernDesktop.SimTower.Models
 
       items.Add(newItem);
       
+      //todo : rework this for lobby that should work like floor and extend an existing lobby control
+      // that is on the same floor. All other items get their own slot
+
     }
 
     private void LayFloor(int floorSlotY, int minSlotX, int maxSlotX)
