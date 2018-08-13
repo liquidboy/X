@@ -1,6 +1,7 @@
 ﻿using SumoNinjaMonkey.Framework.Collections;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -42,7 +43,7 @@ namespace X.ModernDesktop.SimTower.Models
     public GameMap gameMap { get; set; }
     private Factory itemFactory;
     List<X.ModernDesktop.SimTower.Models.Item.Item> items;
-    //Dictionary<int, List<X.ModernDesktop.SimTower.Models.Item.Item>> itemsByFloor;
+    Dictionary<int, List<X.ModernDesktop.SimTower.Models.Item.Item>> itemsByFloor;
     //Dictionary<string, List<X.ModernDesktop.SimTower.Models.Item.Item>> itemsByType;
     Dictionary<int, Floor> floorItems;
     private int _floorLevel;
@@ -64,7 +65,7 @@ namespace X.ModernDesktop.SimTower.Models
       gameMap = new GameMap();
       itemFactory = new Factory();
       items = new List<Item.Item>();
-      //itemsByFloor = new Dictionary<int, List<Item.Item>>();
+      itemsByFloor = new Dictionary<int, List<Item.Item>>();
       //itemsByType = new Dictionary<string, List<Item.Item>>();
       floorItems = new Dictionary<int, Floor>();
 
@@ -156,20 +157,47 @@ namespace X.ModernDesktop.SimTower.Models
 
     private void LayItem(string itemId, int floorSlotY, int startSlotX)
     {
+      // only allow placing on existing layed out floors
       if (floorSlotY > 0 && !floorItems.ContainsKey(floorSlotY - 1)) return;
       if (floorSlotY < 0 && !floorItems.ContainsKey(floorSlotY + 1)) return;
 
+      // get toolbar prototype to know what we are making
       var prototype = itemFactory.prototypesById[itemId];
-
-      var newItem = itemFactory.Make(prototype,
-        position: new Slot(startSlotX, floorSlotY),
-        size: new Slot(prototype.Size.X, 1));
-
-      items.Add(newItem);
       
-      //todo : rework this for lobby that should work like floor and extend an existing lobby control
-      // that is on the same floor. All other items get their own slot
+      // create collection to hold items on a given floor
+      var itemsOnFloor = itemsByFloor.ContainsKey(floorSlotY) ? itemsByFloor[floorSlotY] : new List<Item.Item>();
+      if (itemsOnFloor.Count == 0) itemsByFloor.Add(floorSlotY, itemsOnFloor);
 
+      // get items on a given floor of prototype's type
+      var foundItemsOnFloorOfGivenType = itemsOnFloor.Where(x => ((IPrototype)x).Id == prototype.Id).ToList();
+
+      // check MAX rule of prototype per floor, don't allow more than Max
+      if (foundItemsOnFloorOfGivenType.Count <= prototype.MaxInstancesPerFloor) 
+      {
+        if(foundItemsOnFloorOfGivenType.Count == prototype.MaxInstancesPerFloor)
+        {
+          if (foundItemsOnFloorOfGivenType.Count == 1 && prototype.KeepGrowingSameInstance) {
+            // todo: allow the one instance on this level to keep growing
+
+            return;
+          }
+          return; //don't allow more than the max number
+        }
+        else if (foundItemsOnFloorOfGivenType.Count == 0)
+        {
+          // create new item for adding to collections
+          var newItem = itemFactory.Make(prototype, position: new Slot(startSlotX, floorSlotY), size: new Slot(prototype.Size.X, 1));
+
+          // add to generic collection of items across ALL floors
+          items.Add(newItem);
+
+          // add to collection on given floor
+          itemsOnFloor.Add(newItem);
+
+          // todo: add to collection grouped by type, across all floors
+        }
+      }
+      
     }
 
     private void LayFloor(int floorSlotY, int minSlotX, int maxSlotX)

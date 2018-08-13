@@ -25,6 +25,10 @@ namespace X.ModernDesktop.SimTower.Models.Item
     public int EntranceOffset { get => _EntranceOffset; set => _EntranceOffset = value; }
     public int ExitOffset { get => _ExitOffset; set => _ExitOffset = value; }
 
+    public int MaxInstancesPerFloor => 20;
+
+    public bool KeepGrowingSameInstance => false;
+
     public Item Make()
     {
       throw new NotImplementedException();
