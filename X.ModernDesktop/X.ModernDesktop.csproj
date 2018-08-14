@@ -135,6 +135,9 @@
     <Compile Include="SimTower\Views\Board.xaml.cs">
       <DependentUpon>Board.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SimTower\Views\Elevator.xaml.cs">
+      <DependentUpon>Elevator.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SimTower\Views\Lobby.xaml.cs">
       <DependentUpon>Lobby.xaml</DependentUpon>
     </Compile>
@@ -160,6 +163,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Bruno%27sFamily2015 %2813%29-X2.jpg" />
+    <Content Include="Assets\elevator-bottom.png" />
+    <Content Include="Assets\elevator-compartment-empty.png" />
+    <Content Include="Assets\elevator-middle.png" />
+    <Content Include="Assets\elevator-top.png" />
     <Content Include="Assets\floor.png" />
     <Content Include="Assets\lobby.png" />
     <Content Include="Properties\Default.rd.xml" />
@@ -207,6 +214,10 @@
     <Page Include="SimTower\Views\Board.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SimTower\Views\Elevator.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="SimTower\Views\Lobby.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -17,7 +17,7 @@ namespace X.ModernDesktop.SimTower.Models.Item
 
     public int Price => 20000;
 
-    private Slot _Size = new Slot(8, 2);
+    private Slot _Size = new Slot(1, 3);
     public Slot Size { get => _Size; set => _Size = value; }
 
     public int Icon => (int)IconNumbers.ICON_ELEVATOR;
@@ -31,12 +31,12 @@ namespace X.ModernDesktop.SimTower.Models.Item
 
     public Item Make()
     {
-      throw new NotImplementedException();
+      return new Elevator();
     }
 
     public UIElement MakeUI()
     {
-      throw new NotImplementedException();
+      return new Views.Elevator();
     }
   }
 }

@@ -11,7 +11,6 @@
     d:DesignWidth="400">
 
   <Grid x:Name="layoutRoot" Opacity="{x:Bind SetBackgroundOpacity()}" BorderBrush="#FF040404" >
-    <TextBlock FontSize="8" Text="{Binding Position.Y}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-20,0,0,0"></TextBlock>
     <local:TiledBackground BackgroundImage="ms-appx:///Assets/lobby.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
   </Grid>
 </UserControl>
