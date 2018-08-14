@@ -178,6 +178,13 @@ namespace X.ModernDesktop.SimTower.Models
         {
           if (foundItemsOnFloorOfGivenType.Count == 1 && prototype.KeepGrowingSameInstance) {
             // todo: allow the one instance on this level to keep growing
+            var itemFound = (IPrototype)foundItemsOnFloorOfGivenType[0];
+
+            var x1 = Math.Min(itemFound.Position.X, startSlotX);
+            var x2 = Math.Max(itemFound.Position.X, startSlotX) + 1;
+
+            itemFound.Position = new Slot(x1, itemFound.Position.Y);
+            itemFound.Size = new Slot(x2 - x1, itemFound.Size.Y);
 
             return;
           }
