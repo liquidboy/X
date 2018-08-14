@@ -166,17 +166,57 @@ namespace X.ModernDesktop.SimTower.Models
       
       // create collection to hold items on a given floor
       var itemsOnFloor = itemsByFloor.ContainsKey(floorSlotY) ? itemsByFloor[floorSlotY] : new List<Item.Item>();
+      var itemsOnFloorAbove = itemsByFloor.ContainsKey(floorSlotY+1) ? itemsByFloor[floorSlotY+1] : new List<Item.Item>();
+      var itemsOnFloorBelow = itemsByFloor.ContainsKey(floorSlotY-1) ? itemsByFloor[floorSlotY-1] : new List<Item.Item>();
       if (itemsOnFloor.Count == 0) itemsByFloor.Add(floorSlotY, itemsOnFloor);
 
       // get items on a given floor of prototype's type
       var foundItemsOnFloorOfGivenType = itemsOnFloor.Where(x => ((IPrototype)x).Id == prototype.Id).ToList();
+      var foundItemsOnAboveFloorOfGivenType = itemsOnFloorAbove.Where(x => ((IPrototype)x).Id == prototype.Id).ToList();
+      var foundItemsOnBelowFloorOfGivenType = itemsOnFloorBelow.Where(x => ((IPrototype)x).Id == prototype.Id).ToList();
+
+      // grow elevator up/down =======================================
+      // if can grow y then use above/below and grow in Y direction +/- 1
+      if (prototype.KeepGrowingSameInstanceY && (foundItemsOnAboveFloorOfGivenType.Count > 0 || foundItemsOnBelowFloorOfGivenType.Count > 0))
+      {
+        //todo : handle multiple items (currently only dealing with first one)
+        var itemAbove = foundItemsOnAboveFloorOfGivenType.Count > 0 ? (IPrototype)foundItemsOnAboveFloorOfGivenType.First() : null;
+        var itemBelow = foundItemsOnBelowFloorOfGivenType.Count > 0 ? (IPrototype)foundItemsOnBelowFloorOfGivenType.First() : null;
+
+        if (itemAbove != null && itemBelow != null && itemAbove.Position.X == itemBelow.Position.X && itemBelow.Position.X == startSlotX)
+        {
+          //todo : need to delete one of them
+        }
+        else if ( itemBelow != null) {
+          //todo: grow up in y direction
+          var newSlotY = itemBelow.Position.Y + 1;
+          itemBelow.Size = new Slot(itemBelow.Size.X, itemBelow.Size.Y + 1);
+          itemBelow.Position = new Slot(itemBelow.Position.X, newSlotY);
+          
+          itemsOnFloor.Add((Item.Item)itemBelow);
+        }
+        else if (itemAbove!= null)
+        {
+          //todo: grow down in y direction
+          itemAbove.Size = new Slot(itemAbove.Size.X, itemAbove.Size.Y + 1);
+          itemAbove.Position = new Slot(itemAbove.Position.X, itemAbove.Position.Y);
+
+          itemsOnFloor.Add((Item.Item)itemAbove);
+        }
+
+        return;
+      }
+      //==============================================================
+
+
+
 
       // check MAX rule of prototype per floor, don't allow more than Max
       if (foundItemsOnFloorOfGivenType.Count <= prototype.MaxInstancesPerFloor) 
       {
         if(foundItemsOnFloorOfGivenType.Count == prototype.MaxInstancesPerFloor)
         {
-          if (foundItemsOnFloorOfGivenType.Count == 1 && prototype.KeepGrowingSameInstance) {
+          if (foundItemsOnFloorOfGivenType.Count == 1 && prototype.KeepGrowingSameInstanceX) {
             // todo: allow the one instance on this level to keep growing
             var itemFound = (IPrototype)foundItemsOnFloorOfGivenType[0];
 

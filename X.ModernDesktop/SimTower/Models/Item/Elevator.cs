@@ -27,7 +27,8 @@ namespace X.ModernDesktop.SimTower.Models.Item
 
     public int MaxInstancesPerFloor => 20;
 
-    public bool KeepGrowingSameInstance => false;
+    public bool KeepGrowingSameInstanceX => false;
+    public bool KeepGrowingSameInstanceY => true;
 
     public Item Make()
     {

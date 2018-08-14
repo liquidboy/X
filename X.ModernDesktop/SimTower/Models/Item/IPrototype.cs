@@ -15,7 +15,8 @@ namespace X.ModernDesktop.SimTower.Models.Item
     UIElement Control { get; set; }
     bool IsInVisualTree { get; set; }
     int MaxInstancesPerFloor { get; }
-    bool KeepGrowingSameInstance { get; }
+    bool KeepGrowingSameInstanceX { get; }
+    bool KeepGrowingSameInstanceY { get; }
 
     Item Make();
     UIElement MakeUI();
