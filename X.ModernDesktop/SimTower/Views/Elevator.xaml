@@ -10,7 +10,7 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-  <Grid x:Name="layoutRoot">
+  <Grid x:Name="layoutRoot" local:ElevatorExtensions.Floor="{Binding Position}">
     <Image Source="ms-appx:///Assets/elevator-top.png" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,-40,0,0"></Image>
     <Image Source="ms-appx:///Assets/elevator-bottom.png" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0,0,0,-40"></Image>
     <local:TiledBackground BackgroundImage="ms-appx:///Assets/elevator-middle.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />

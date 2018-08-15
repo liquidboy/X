@@ -24,6 +24,24 @@ namespace X.ModernDesktop.SimTower.Views
     {
       this.InitializeComponent();
     }
+  }
 
+  public static class ElevatorExtensions {
+
+    public static Slot GetFloor(DependencyObject obj)
+    {
+      return (Slot)obj.GetValue(FloorProperty);
+    }
+
+    public static void SetFloor(DependencyObject obj, Slot value)
+    {
+      obj.SetValue(FloorProperty, value);
+    }
+
+    public static readonly DependencyProperty FloorProperty =
+        DependencyProperty.RegisterAttached("Floor", typeof(Slot), typeof(ElevatorExtensions), new PropertyMetadata(0, (d, e) => {
+
+
+        }));
   }
 }
