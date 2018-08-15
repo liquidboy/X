@@ -29,7 +29,6 @@
 
       <Border BorderBrush="Red" Width="{x:Bind GameBoard.SlotDimension.X}" Height="{x:Bind GameBoard.SlotDimension.Y}" Canvas.Left="{Binding CurrentSelection.SlotPositionEnd.X}" Canvas.Top="{Binding CurrentSelection.SlotPositionEnd.Y}" Visibility="{Binding CurrentSelection.IsSelectionVisible}" BorderThickness="2"></Border>
       
-      
     </Canvas>
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">

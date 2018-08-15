@@ -58,7 +58,7 @@ namespace X.ModernDesktop.SimTower.Models
     {
       initBoard(xSlots, ySlots, groundSlotY, renderSurface);
     }
-
+    
     private void initBoard(int xSlots, int ySlots, int groundSlotY, Canvas renderSurface)
     {
       _renderSurface = renderSurface;

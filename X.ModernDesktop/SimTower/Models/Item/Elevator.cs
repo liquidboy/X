@@ -18,7 +18,11 @@ namespace X.ModernDesktop.SimTower.Models.Item
     public int Price => 20000;
 
     private Slot _Size = new Slot(1, 3);
+    private int _currentFloor = 0;
+
     public Slot Size { get => _Size; set => _Size = value; }
+
+    public int CurrentFloor { get => _currentFloor; set => SetDataMarkDirtyAndRaisePropertyChanged(ref _currentFloor, value); }
 
     public int Icon => (int)IconNumbers.ICON_ELEVATOR;
 
