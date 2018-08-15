@@ -1,6 +1,8 @@
-﻿using System;
+﻿using SumoNinjaMonkey.Framework.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
@@ -8,7 +10,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace X.ModernDesktop.SimTower.Models.Item
 {
-  class Item : IDrawable
+  class Item : BindableBase, IDrawable
   {
     internal int _EntranceOffset;
     internal int _ExitOffset;
@@ -20,7 +22,7 @@ namespace X.ModernDesktop.SimTower.Models.Item
     private bool _IsInVisualTree = false;
 
     public bool IsDirty { get => _IsDirty; set => _IsDirty = value; }
-    public Slot Position { get => _position; set => SetDataAndMarkDirty(ref _position, value); }
+    public Slot Position { get => _position; set => SetDataMarkDirtyAndRaisePropertyChanged(ref _position, value); }
     public UIElement Control { get => _control; set => SetDataAndMarkDirty(ref _control, value); }
     public bool IsInVisualTree { get => _IsInVisualTree; set => SetDataAndMarkDirty(ref _IsInVisualTree, value); }
 
@@ -43,6 +45,12 @@ namespace X.ModernDesktop.SimTower.Models.Item
     {
       field = value;
       IsDirty = true;
+    }
+
+    public void SetDataMarkDirtyAndRaisePropertyChanged<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+    {
+      SetDataAndMarkDirty(ref field, value);
+      OnPropertyChanged(propertyName);
     }
   }
 }

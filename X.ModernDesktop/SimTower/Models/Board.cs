@@ -248,7 +248,6 @@ namespace X.ModernDesktop.SimTower.Models
           var newSlotY = itemBelow.Position.Y + 1;
           itemBelow.Size = new Slot(itemBelow.Size.X, itemBelow.Size.Y + 1);
           itemBelow.Position = new Slot(itemBelow.Position.X, newSlotY);
-
           itemsOnFloor.Add((Item.Item)itemBelow);
         }
         else if (itemAbove != null)
@@ -256,7 +255,6 @@ namespace X.ModernDesktop.SimTower.Models
           //todo: grow down in y direction
           itemAbove.Size = new Slot(itemAbove.Size.X, itemAbove.Size.Y + 1);
           itemAbove.Position = new Slot(itemAbove.Position.X, itemAbove.Position.Y);
-
           itemsOnFloor.Add((Item.Item)itemAbove);
         }
 
