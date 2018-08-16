@@ -21,5 +21,7 @@ namespace X.ModernDesktop.SimTower.Models.Item
     Item Make();
     UIElement MakeUI();
 
+    void FirstTimeDraw();
+
   }
 }

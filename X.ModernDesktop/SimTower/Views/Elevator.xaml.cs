@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using X.ModernDesktop.SimTower.Models;
 using X.ModernDesktop.SimTower.Models.Item;
@@ -58,8 +59,10 @@ namespace X.ModernDesktop.SimTower.Views
 
             //set elevator to floor 0
             Image imgCart = (Image)grd.FindName("elCart");
-            ((CompositeTransform)imgCart.RenderTransform).TranslateY = newSlot.Y * 40;
-
+            if (imgCart != null) {
+              ((CompositeTransform)imgCart.RenderTransform).TranslateY = newSlot.Y * 40;
+            }
+            
           }));
 
     #endregion
@@ -104,18 +107,18 @@ namespace X.ModernDesktop.SimTower.Views
 
     public static readonly DependencyProperty NumberOfCartsProperty =
         DependencyProperty.RegisterAttached("NumberOfCarts", typeof(int), typeof(ElevatorExtensions),
-          new PropertyMetadata(1, (d, e) =>
+          new PropertyMetadata(0, (d, e) =>
           {
             Grid grd = (Grid)d;
             IPrototype item = (IPrototype)grd.DataContext;
-            createCarts(grd, (byte)e.NewValue);
+            createCarts(grd, (int)e.NewValue);
           }));
 
     #endregion
 
 
     public static void gotoFloor(int floor, int topFloor, Grid grd) {
-      Storyboard sbMoveElevator = (Storyboard)grd.Resources["sbMoveElevator"];
+      Storyboard sbMoveElevator = (Storyboard)grd.Resources["sbMoveElevator0"];
       DoubleAnimationUsingKeyFrames daukf = (DoubleAnimationUsingKeyFrames)sbMoveElevator.Children[0];
       EasingDoubleKeyFrame edkf = (EasingDoubleKeyFrame)daukf.KeyFrames[0];
 
@@ -124,7 +127,33 @@ namespace X.ModernDesktop.SimTower.Views
     }
 
     public static void createCarts(Grid grd, int noOfCarts) {
+      Grid grdCarts = (Grid)grd.FindName("grdCarts");
+      grdCarts.Children.Clear();
+      grd.Resources.Clear();
 
+      for (var i = 0; i < noOfCarts; i++) {
+        Image img = new Image();
+        img.Name = $"elCart{i}";
+        img.VerticalAlignment = VerticalAlignment.Top;
+        img.Source = new BitmapImage(new Uri("ms-appx:///Assets/elevator-compartment-empty.png"));
+        img.Margin = new Thickness(2, 0, 0, 3);
+        img.RenderTransformOrigin = new Point(0.5, 0.5);
+        img.RenderTransform = new CompositeTransform();
+        img.Projection = new PlaneProjection();
+
+        Storyboard sb = new Storyboard();
+        DoubleAnimationUsingKeyFrames dauk = new DoubleAnimationUsingKeyFrames();
+        dauk.SetValue(Storyboard.TargetNameProperty, $"elCart{i}");
+        dauk.SetValue(Storyboard.TargetPropertyProperty, "(UIElement.RenderTransform).(CompositeTransform.TranslateY)");
+        dauk.KeyFrames.Add(new EasingDoubleKeyFrame() { KeyTime = KeyTime.FromTimeSpan(TimeSpan.Parse("00:00:01")), Value = 0 });
+        sb.Children.Add(dauk);
+        grd.Resources.Add($"sbMoveElevator{i}", sb);
+
+
+        grdCarts.Children.Add(img);
+      }
+
+      
     }
 
   }

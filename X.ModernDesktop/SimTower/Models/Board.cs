@@ -368,6 +368,7 @@ namespace X.ModernDesktop.SimTower.Models
           item.Control = ctlFE;
           _renderSurface.Children.Add(item.Control);
           item.IsInVisualTree = true;
+          ((IPrototype)item).FirstTimeDraw();
         }
       }
       catch

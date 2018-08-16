@@ -39,5 +39,10 @@ namespace X.ModernDesktop.SimTower.Models.Item
     {
       return new Views.Lobby();
     }
+
+    public void FirstTimeDraw()
+    {
+
+    }
   }
 }

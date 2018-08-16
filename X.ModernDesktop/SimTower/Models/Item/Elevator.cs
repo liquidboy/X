@@ -46,5 +46,10 @@ namespace X.ModernDesktop.SimTower.Models.Item
     {
       return new Views.Elevator();
     }
+
+    public void FirstTimeDraw()
+    {
+      NoCarts = 1;
+    }
   }
 }
