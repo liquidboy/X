@@ -19,8 +19,11 @@ namespace X.ModernDesktop.SimTower.Models.Item
 
     private Slot _Size = new Slot(1, 3);
     private int _currentFloor = 0;
+    private int _noCarts =1;
 
     public Slot Size { get => _Size; set => _Size = value; }
+
+    public int NoCarts { get => _noCarts; set => SetDataMarkDirtyAndRaisePropertyChanged(ref _noCarts, value); }
 
     public int CurrentFloor { get => _currentFloor; set => SetDataMarkDirtyAndRaisePropertyChanged(ref _currentFloor, value); }
 

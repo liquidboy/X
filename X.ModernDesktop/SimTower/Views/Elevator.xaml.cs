@@ -28,9 +28,17 @@ namespace X.ModernDesktop.SimTower.Views
     
   }
 
+
+
+
+
+
+
+
+
   public static class ElevatorExtensions {
 
-
+    #region TopFloor
     public static Slot GetTopFloor(DependencyObject obj)
     {
       return (Slot)obj.GetValue(TopFloorProperty);
@@ -54,13 +62,10 @@ namespace X.ModernDesktop.SimTower.Views
 
           }));
 
+    #endregion
 
-
-
-
-
-
-
+    
+    #region CurrentFloor
     public static int GetCurrentFloor(DependencyObject obj)
     {
       return (int)obj.GetValue(CurrentFloorProperty);
@@ -83,9 +88,30 @@ namespace X.ModernDesktop.SimTower.Views
 
           }));
 
+    #endregion
 
 
+    #region NumberOfCarts
+    public static int GetNumberOfCarts(DependencyObject obj)
+    {
+      return (int)obj.GetValue(NumberOfCartsProperty);
+    }
 
+    public static void SetNumberOfCarts(DependencyObject obj, int value)
+    {
+      obj.SetValue(NumberOfCartsProperty, value);
+    }
+
+    public static readonly DependencyProperty NumberOfCartsProperty =
+        DependencyProperty.RegisterAttached("NumberOfCarts", typeof(int), typeof(ElevatorExtensions),
+          new PropertyMetadata(1, (d, e) =>
+          {
+            Grid grd = (Grid)d;
+            IPrototype item = (IPrototype)grd.DataContext;
+            createCarts(grd, (byte)e.NewValue);
+          }));
+
+    #endregion
 
 
     public static void gotoFloor(int floor, int topFloor, Grid grd) {
@@ -95,6 +121,10 @@ namespace X.ModernDesktop.SimTower.Views
 
       edkf.Value = (topFloor - floor) * 40;
       sbMoveElevator.Begin();
+    }
+
+    public static void createCarts(Grid grd, int noOfCarts) {
+
     }
 
   }
