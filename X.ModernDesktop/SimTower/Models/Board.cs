@@ -44,7 +44,7 @@ namespace X.ModernDesktop.SimTower.Models
     private Factory itemFactory;
     List<X.ModernDesktop.SimTower.Models.Item.Item> items;
     Dictionary<int, List<X.ModernDesktop.SimTower.Models.Item.Item>> itemsByFloor;
-    //Dictionary<string, List<X.ModernDesktop.SimTower.Models.Item.Item>> itemsByType;
+    Dictionary<string, List<X.ModernDesktop.SimTower.Models.Item.Item>> itemsByType;
     Dictionary<int, Floor> floorItems;
     private int _floorLevel;
 
@@ -66,7 +66,7 @@ namespace X.ModernDesktop.SimTower.Models
       itemFactory = new Factory();
       items = new List<Item.Item>();
       itemsByFloor = new Dictionary<int, List<Item.Item>>();
-      //itemsByType = new Dictionary<string, List<Item.Item>>();
+      itemsByType = new Dictionary<string, List<Item.Item>>();
       floorItems = new Dictionary<int, Floor>();
 
       SlotsAvailable = new Vector3(xSlots, ySlots, maxZSteps);
@@ -170,6 +170,9 @@ namespace X.ModernDesktop.SimTower.Models
       var itemsOnFloor = itemsByFloor.ContainsKey(floorSlotY) ? itemsByFloor[floorSlotY] : new List<Item.Item>();
       if (itemsOnFloor.Count == 0) itemsByFloor.Add(floorSlotY, itemsOnFloor);
 
+      // create collection to hold items by type
+      if (!itemsByType.ContainsKey(prototype.Id)) itemsByType.Add(prototype.Id, new List<Item.Item>());
+
       // try extending item
       if (ExtendItem(floorSlotY, startSlotX, prototype, itemsOnFloor)) return;
 
@@ -177,8 +180,7 @@ namespace X.ModernDesktop.SimTower.Models
       AddItem(floorSlotY, startSlotX, prototype, itemsOnFloor);
 
     }
-
-
+    
     private void AddItem(int floorSlotY, int startSlotX, IPrototype prototype, List<Item.Item> itemsOnFloor)
     {
       // get items on a given floor of prototype's type
@@ -187,9 +189,10 @@ namespace X.ModernDesktop.SimTower.Models
       // check MAX rule of prototype per floor, don't allow more than Max
       if (foundItemsOnFloorOfGivenType.Count <= prototype.MaxInstancesPerFloor) 
       {
-        if(foundItemsOnFloorOfGivenType.Count == prototype.MaxInstancesPerFloor)
+        if (foundItemsOnFloorOfGivenType.Count == prototype.MaxInstancesPerFloor)
         {
-          if (foundItemsOnFloorOfGivenType.Count == 1 && prototype.KeepGrowingSameInstanceX) {
+          if (foundItemsOnFloorOfGivenType.Count == 1 && prototype.KeepGrowingSameInstanceX)
+          {
             // todo: allow the one instance on this level to keep growing
             var itemFound = (IPrototype)foundItemsOnFloorOfGivenType[0];
 
@@ -203,7 +206,17 @@ namespace X.ModernDesktop.SimTower.Models
           }
           return; //don't allow more than the max number
         }
-        else if (foundItemsOnFloorOfGivenType.Count == 0)
+        //else if (foundItemsOnFloorOfGivenType.Count == 0 &&
+        else if (foundItemsOnFloorOfGivenType.Where(x => x.Position.X == startSlotX).Count() > 0 ) {
+          // laying item on an existing same type of item
+          var existingItems = foundItemsOnFloorOfGivenType.Where(x => x.Position.X == startSlotX);
+          foreach (var item in existingItems) {
+            if (item is Elevator) {
+              ((Elevator)item).NoCarts++;
+            }
+          }
+        }
+        else
         {
           // create new item for adding to collections
           var newItem = itemFactory.Make(prototype, position: new Slot(startSlotX, floorSlotY), size: new Slot(prototype.Size.X, 1));
@@ -214,53 +227,44 @@ namespace X.ModernDesktop.SimTower.Models
           // add to collection on given floor
           itemsOnFloor.Add(newItem);
 
-          // todo: add to collection grouped by type, across all floors
+          // add to collection grouped by type, across all floors
+          itemsByType[prototype.Id].Add(newItem);
         }
       }
       
     }
 
     private bool ExtendItem(int floorSlotY, int startSlotX, IPrototype prototype, List<Item.Item> itemsOnFloor) {
-      
-      // get collection of items on adjacent floors
-      var itemsOnFloorAbove = itemsByFloor.ContainsKey(floorSlotY + 1) ? itemsByFloor[floorSlotY + 1] : new List<Item.Item>();
-      var itemsOnFloorBelow = itemsByFloor.ContainsKey(floorSlotY - 1) ? itemsByFloor[floorSlotY - 1] : new List<Item.Item>();
 
-      // get items on a given floor of prototype's type
-      var foundItemsOnFloorOfGivenType = itemsOnFloor.Where(x => ((IPrototype)x).Id == prototype.Id).ToList();
-      var foundItemsOnAboveFloorOfGivenType = itemsOnFloorAbove.Where(x => ((IPrototype)x).Id == prototype.Id).ToList();
-      var foundItemsOnBelowFloorOfGivenType = itemsOnFloorBelow.Where(x => ((IPrototype)x).Id == prototype.Id).ToList();
+      // get item of same type and on same x
+      if (itemsByType.ContainsKey(prototype.Id)) {
+        var foundItemInXPosition = itemsByType[prototype.Id].Where(x => x.Position.X == startSlotX && prototype.KeepGrowingSameInstanceY);
+        if (foundItemInXPosition.Count() > 0) {
 
-      // if can grow y then use above/below and grow in Y direction +/- 1
-      if (prototype.KeepGrowingSameInstanceY && (foundItemsOnAboveFloorOfGivenType.Count > 0 || foundItemsOnBelowFloorOfGivenType.Count > 0))
-      {
-        //todo : handle multiple items (currently only dealing with first one)
-        var itemAbove = foundItemsOnAboveFloorOfGivenType.Count > 0 ? (IPrototype)foundItemsOnAboveFloorOfGivenType.First() : null;
-        var itemBelow = foundItemsOnBelowFloorOfGivenType.Count > 0 ? (IPrototype)foundItemsOnBelowFloorOfGivenType.First() : null;
+          // extend up ?
+          var foundItemToExtendUp = foundItemInXPosition.Where(x => (x.Position.Y + 1) == floorSlotY);
+          if (foundItemToExtendUp.Count() > 0) {
+            var p = (IPrototype)foundItemToExtendUp.First();
+            var newSlotY = p.Position.Y + 1;
+            p.Size = new Slot(p.Size.X, p.Size.Y + 1);
+            p.Position = new Slot(p.Position.X, newSlotY);
+            itemsOnFloor.Add((Item.Item)p);
+            return true;
+          }
 
-        if (itemAbove != null && itemBelow != null && itemAbove.Position.X == itemBelow.Position.X && itemBelow.Position.X == startSlotX)
-        {
-          //todo : need to delete one of them
+          // extend down ?
+          var foundItemToExtendDown = foundItemInXPosition.Where(x => (x.Position.Y - ((IPrototype)x).Size.Y) == floorSlotY);
+          if (foundItemToExtendDown.Count() > 0)
+          {
+            var p = (IPrototype)foundItemToExtendDown.First();
+            p.Size = new Slot(p.Size.X, p.Size.Y + 1);
+            p.Position = new Slot(p.Position.X, p.Position.Y);
+            itemsOnFloor.Add((Item.Item)p);
+            return true;
+          }
         }
-        else if (itemBelow != null)
-        {
-          //todo: grow up in y direction
-          var newSlotY = itemBelow.Position.Y + 1;
-          itemBelow.Size = new Slot(itemBelow.Size.X, itemBelow.Size.Y + 1);
-          itemBelow.Position = new Slot(itemBelow.Position.X, newSlotY);
-          itemsOnFloor.Add((Item.Item)itemBelow);
-        }
-        else if (itemAbove != null)
-        {
-          //todo: grow down in y direction
-          itemAbove.Size = new Slot(itemAbove.Size.X, itemAbove.Size.Y + 1);
-          itemAbove.Position = new Slot(itemAbove.Position.X, itemAbove.Position.Y);
-          itemsOnFloor.Add((Item.Item)itemAbove);
-        }
-
-        return true;
       }
-
+      
       return false;
     }
 

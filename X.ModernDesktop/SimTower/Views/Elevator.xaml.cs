@@ -87,7 +87,7 @@ namespace X.ModernDesktop.SimTower.Views
             IPrototype item = (IPrototype)grd.DataContext;
             var newFloor = (int)e.NewValue;
 
-            gotoFloor(newFloor, item.Position.Y, grd);
+            gotoFloor(newFloor, item.Position.Y, grd, 0);
 
           }));
 
@@ -111,14 +111,22 @@ namespace X.ModernDesktop.SimTower.Views
           {
             Grid grd = (Grid)d;
             IPrototype item = (IPrototype)grd.DataContext;
-            createCarts(grd, (int)e.NewValue);
+
+            var preCount = (int)e.OldValue;
+            var newCount = (int)e.NewValue;
+            var delta = newCount - preCount;
+
+            if (delta == 1) {
+              addCarts(grd, 1);
+            }
+            
           }));
 
     #endregion
 
 
-    public static void gotoFloor(int floor, int topFloor, Grid grd) {
-      Storyboard sbMoveElevator = (Storyboard)grd.Resources["sbMoveElevator0"];
+    public static void gotoFloor(int floor, int topFloor, Grid grd, int cartId) {
+      Storyboard sbMoveElevator = (Storyboard)grd.Resources[$"sbMoveElevator{cartId}"];
       DoubleAnimationUsingKeyFrames daukf = (DoubleAnimationUsingKeyFrames)sbMoveElevator.Children[0];
       EasingDoubleKeyFrame edkf = (EasingDoubleKeyFrame)daukf.KeyFrames[0];
 
@@ -126,14 +134,15 @@ namespace X.ModernDesktop.SimTower.Views
       sbMoveElevator.Begin();
     }
 
-    public static void createCarts(Grid grd, int noOfCarts) {
+    public static void addCarts(Grid grd, int noOfCarts) {
       Grid grdCarts = (Grid)grd.FindName("grdCarts");
-      grdCarts.Children.Clear();
-      grd.Resources.Clear();
-
+      var currentCartCount = grdCarts.Children.Count();
+      
       for (var i = 0; i < noOfCarts; i++) {
+        var id = currentCartCount + i;
+
         Image img = new Image();
-        img.Name = $"elCart{i}";
+        img.Name = $"elCart{id}";
         img.VerticalAlignment = VerticalAlignment.Top;
         img.Source = new BitmapImage(new Uri("ms-appx:///Assets/elevator-compartment-empty.png"));
         img.Margin = new Thickness(2, 0, 0, 3);
@@ -143,11 +152,11 @@ namespace X.ModernDesktop.SimTower.Views
 
         Storyboard sb = new Storyboard();
         DoubleAnimationUsingKeyFrames dauk = new DoubleAnimationUsingKeyFrames();
-        dauk.SetValue(Storyboard.TargetNameProperty, $"elCart{i}");
+        dauk.SetValue(Storyboard.TargetNameProperty, $"elCart{id}");
         dauk.SetValue(Storyboard.TargetPropertyProperty, "(UIElement.RenderTransform).(CompositeTransform.TranslateY)");
         dauk.KeyFrames.Add(new EasingDoubleKeyFrame() { KeyTime = KeyTime.FromTimeSpan(TimeSpan.Parse("00:00:01")), Value = 0 });
         sb.Children.Add(dauk);
-        grd.Resources.Add($"sbMoveElevator{i}", sb);
+        grd.Resources.Add($"sbMoveElevator{id}", sb);
 
 
         grdCarts.Children.Add(img);
