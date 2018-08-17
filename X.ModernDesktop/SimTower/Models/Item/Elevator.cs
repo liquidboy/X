@@ -37,7 +37,7 @@ namespace X.ModernDesktop.SimTower.Models.Item
     public bool KeepGrowingSameInstanceX => false;
     public bool KeepGrowingSameInstanceY => true;
 
-    public Item Make()
+    public IPrototype Make()
     {
       return new Elevator();
     }
@@ -59,5 +59,7 @@ namespace X.ModernDesktop.SimTower.Models.Item
         NoCarts++;
       }
     }
+
+    
   }
 }

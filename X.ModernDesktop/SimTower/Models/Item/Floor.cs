@@ -31,7 +31,7 @@ namespace X.ModernDesktop.SimTower.Models.Item
     public bool KeepGrowingSameInstanceX => true;
     public bool KeepGrowingSameInstanceY => false;
 
-    public Item Make()
+    public IPrototype Make()
     {
       // todo : make an item and do stuff with it
       return new Floor(); 

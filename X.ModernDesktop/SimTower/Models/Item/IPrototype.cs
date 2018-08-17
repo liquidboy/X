@@ -14,13 +14,14 @@ namespace X.ModernDesktop.SimTower.Models.Item
     int ExitOffset { get; set; }
     UIElement Control { get; set; }
     bool IsInVisualTree { get; set; }
+    bool IsDirty { get; set; }
     int MaxInstancesPerFloor { get; }
     bool KeepGrowingSameInstanceX { get; }
     bool KeepGrowingSameInstanceY { get; }
 
-    Item Make();
+    IPrototype Make();
     UIElement MakeUI();
-
+    void Init();
     void FirstTimeDraw();
 
     void AddToItem(IPrototype itemToAdd);

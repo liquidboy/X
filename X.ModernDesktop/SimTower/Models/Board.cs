@@ -42,9 +42,9 @@ namespace X.ModernDesktop.SimTower.Models
 
     public GameMap gameMap { get; set; }
     private Factory itemFactory;
-    List<X.ModernDesktop.SimTower.Models.Item.Item> items;
-    Dictionary<int, List<X.ModernDesktop.SimTower.Models.Item.Item>> itemsByFloor;
-    Dictionary<string, List<X.ModernDesktop.SimTower.Models.Item.Item>> itemsByType;
+    List<IPrototype> items;
+    Dictionary<int, List<IPrototype>> itemsByFloor;
+    Dictionary<string, List<IPrototype>> itemsByType;
     Dictionary<int, Floor> floorItems;
     private int _floorLevel;
 
@@ -64,9 +64,9 @@ namespace X.ModernDesktop.SimTower.Models
       _renderSurface = renderSurface;
       gameMap = new GameMap();
       itemFactory = new Factory();
-      items = new List<Item.Item>();
-      itemsByFloor = new Dictionary<int, List<Item.Item>>();
-      itemsByType = new Dictionary<string, List<Item.Item>>();
+      items = new List<IPrototype>();
+      itemsByFloor = new Dictionary<int, List<IPrototype>>();
+      itemsByType = new Dictionary<string, List<IPrototype>>();
       floorItems = new Dictionary<int, Floor>();
 
       SlotsAvailable = new Vector3(xSlots, ySlots, maxZSteps);
@@ -167,11 +167,11 @@ namespace X.ModernDesktop.SimTower.Models
       var prototype = itemFactory.prototypesById[itemId];
 
       // create collection to hold items on a given floor
-      var itemsOnFloor = itemsByFloor.ContainsKey(floorSlotY) ? itemsByFloor[floorSlotY] : new List<Item.Item>();
+      var itemsOnFloor = itemsByFloor.ContainsKey(floorSlotY) ? itemsByFloor[floorSlotY] : new List<IPrototype>();
       if (itemsOnFloor.Count == 0) itemsByFloor.Add(floorSlotY, itemsOnFloor);
 
       // create collection to hold items by type
-      if (!itemsByType.ContainsKey(prototype.Id)) itemsByType.Add(prototype.Id, new List<Item.Item>());
+      if (!itemsByType.ContainsKey(prototype.Id)) itemsByType.Add(prototype.Id, new List<IPrototype>());
 
       // try extending item
       if (ExtendItem(floorSlotY, startSlotX, prototype, itemsOnFloor)) return;
@@ -181,10 +181,10 @@ namespace X.ModernDesktop.SimTower.Models
 
     }
     
-    private void AddItem(int floorSlotY, int startSlotX, IPrototype prototype, List<Item.Item> itemsOnFloor)
+    private void AddItem(int floorSlotY, int startSlotX, IPrototype prototype, List<IPrototype> itemsOnFloor)
     {
       // get items on a given floor of prototype's type
-      var foundItemsOnFloorOfGivenType = itemsOnFloor.Where(x => ((IPrototype)x).Id == prototype.Id).ToList();
+      var foundItemsOnFloorOfGivenType = itemsOnFloor.Where(x => x.Id == prototype.Id).ToList();
 
       // check MAX rule of prototype per floor, don't allow more than Max
       if (foundItemsOnFloorOfGivenType.Count <= prototype.MaxInstancesPerFloor) 
@@ -194,7 +194,7 @@ namespace X.ModernDesktop.SimTower.Models
           if (foundItemsOnFloorOfGivenType.Count == 1 && prototype.KeepGrowingSameInstanceX)
           {
             // todo: allow the one instance on this level to keep growing
-            var itemFound = (IPrototype)foundItemsOnFloorOfGivenType[0];
+            var itemFound = foundItemsOnFloorOfGivenType[0];
 
             var x1 = Math.Min(itemFound.Position.X, startSlotX);
             var x2 = Math.Max(itemFound.Position.X, startSlotX) + 1;
@@ -210,7 +210,7 @@ namespace X.ModernDesktop.SimTower.Models
         else if (foundItemsOnFloorOfGivenType.Where(x => x.Position.X == startSlotX).Count() > 0 ) {
           // laying item on an existing item, let the existing item decide what to do
           var existingItems = foundItemsOnFloorOfGivenType.Where(x => x.Position.X == startSlotX);
-          foreach (IPrototype item in existingItems) item.AddToItem(prototype);
+          foreach (var item in existingItems) item.AddToItem(prototype);
         }
         else
         {
@@ -225,12 +225,15 @@ namespace X.ModernDesktop.SimTower.Models
 
           // add to collection grouped by type, across all floors
           itemsByType[prototype.Id].Add(newItem);
+
+          // add to gameMap which is used for transport
+          gameMap.addNode(newItem.Position, newItem);
         }
       }
       
     }
 
-    private bool ExtendItem(int floorSlotY, int startSlotX, IPrototype prototype, List<Item.Item> itemsOnFloor) {
+    private bool ExtendItem(int floorSlotY, int startSlotX, IPrototype prototype, List<IPrototype> itemsOnFloor) {
 
       // get item of same type and on same x
       if (itemsByType.ContainsKey(prototype.Id)) {
@@ -240,22 +243,22 @@ namespace X.ModernDesktop.SimTower.Models
           // extend up ?
           var foundItemToExtendUp = foundItemInXPosition.Where(x => (x.Position.Y + 1) == floorSlotY);
           if (foundItemToExtendUp.Count() > 0) {
-            var p = (IPrototype)foundItemToExtendUp.First();
+            var p = foundItemToExtendUp.First();
             var newSlotY = p.Position.Y + 1;
             p.Size = new Slot(p.Size.X, p.Size.Y + 1);
             p.Position = new Slot(p.Position.X, newSlotY);
-            itemsOnFloor.Add((Item.Item)p);
+            itemsOnFloor.Add(p);
             return true;
           }
 
           // extend down ?
-          var foundItemToExtendDown = foundItemInXPosition.Where(x => (x.Position.Y - ((IPrototype)x).Size.Y) == floorSlotY);
+          var foundItemToExtendDown = foundItemInXPosition.Where(x => (x.Position.Y - x.Size.Y) == floorSlotY);
           if (foundItemToExtendDown.Count() > 0)
           {
-            var p = (IPrototype)foundItemToExtendDown.First();
+            var p = foundItemToExtendDown.First();
             p.Size = new Slot(p.Size.X, p.Size.Y + 1);
             p.Position = new Slot(p.Position.X, p.Position.Y);
-            itemsOnFloor.Add((Item.Item)p);
+            itemsOnFloor.Add(p);
             return true;
           }
         }
@@ -345,7 +348,7 @@ namespace X.ModernDesktop.SimTower.Models
         }
         foreach (var otherItem in items) {
           if (otherItem.IsDirty) {
-            var p = (IPrototype)otherItem;
+            var p = otherItem;
             var ctl = otherItem.IsInVisualTree ? otherItem.Control : p.MakeUI();
             DrawItem(ctl, otherItem, p.Size.X-1, p.Size.Y);
           }
@@ -353,7 +356,7 @@ namespace X.ModernDesktop.SimTower.Models
       }
     }
 
-    private void DrawItem(UIElement uie, Item.Item item, int sizeX, int sizeY) {
+    private void DrawItem(UIElement uie, IPrototype item, int sizeX, int sizeY) {
       var ctlFE = (FrameworkElement)uie;
       try
       {
@@ -368,7 +371,7 @@ namespace X.ModernDesktop.SimTower.Models
           item.Control = ctlFE;
           _renderSurface.Children.Add(item.Control);
           item.IsInVisualTree = true;
-          ((IPrototype)item).FirstTimeDraw();
+          item.FirstTimeDraw();
         }
       }
       catch

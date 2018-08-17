@@ -30,7 +30,7 @@ namespace X.ModernDesktop.SimTower.Models.Item
     public bool KeepGrowingSameInstanceX => true;
     public bool KeepGrowingSameInstanceY => false;
 
-    public Item Make()
+    public IPrototype Make()
     {
       return new Lobby();
     }

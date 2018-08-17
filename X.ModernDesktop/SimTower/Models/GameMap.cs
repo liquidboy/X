@@ -66,7 +66,7 @@ namespace X.ModernDesktop.SimTower.Models
       return null;
     }
 
-    public MapNode addNode(Slot slot, X.ModernDesktop.SimTower.Models.Item.Item item) {
+    public MapNode addNode(Slot slot, IPrototype item) {
       if (item is null) return null;
 
       FloorNode f;
