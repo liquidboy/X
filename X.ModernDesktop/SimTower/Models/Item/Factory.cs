@@ -37,8 +37,9 @@ namespace X.ModernDesktop.SimTower.Models.Item
       prototypes.Add(Elevator.makePrototype<Elevator>());
       prototypes.Add(Floor.makePrototype<Floor>());
       prototypes.Add(Lobby.makePrototype<Lobby>());
+      prototypes.Add(Office.makePrototype<Office>());
 
-      foreach(var prototype in prototypes)
+      foreach (var prototype in prototypes)
       {
         prototypesById.Add(prototype.Id, prototype);
       }

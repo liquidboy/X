@@ -115,6 +115,7 @@
     <Compile Include="SimTower\Models\Item\IDrawable.cs" />
     <Compile Include="SimTower\Models\Item\Factory.cs" />
     <Compile Include="SimTower\Models\Item\Elevator.cs" />
+    <Compile Include="SimTower\Models\Item\Office.cs" />
     <Compile Include="SimTower\Models\Item\Lobby.cs" />
     <Compile Include="SimTower\Models\Item\Floor.cs" />
     <Compile Include="SimTower\Models\FloorNode.cs" />
@@ -137,6 +138,9 @@
     </Compile>
     <Compile Include="SimTower\Views\Elevator.xaml.cs">
       <DependentUpon>Elevator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SimTower\Views\Office.xaml.cs">
+      <DependentUpon>Office.xaml</DependentUpon>
     </Compile>
     <Compile Include="SimTower\Views\Lobby.xaml.cs">
       <DependentUpon>Lobby.xaml</DependentUpon>
@@ -169,6 +173,7 @@
     <Content Include="Assets\elevator-top.png" />
     <Content Include="Assets\floor.png" />
     <Content Include="Assets\lobby.png" />
+    <Content Include="Assets\office-empty.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -216,6 +221,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SimTower\Views\Elevator.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SimTower\Views\Office.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

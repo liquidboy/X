@@ -13,6 +13,7 @@
       <ListBoxItem>floor</ListBoxItem>
       <ListBoxItem>lobby</ListBoxItem>
       <ListBoxItem>elevator</ListBoxItem>
+      <ListBoxItem>office</ListBoxItem>
     </ListBox>
   </StackPanel>
 </Page>
