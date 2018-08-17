@@ -44,5 +44,10 @@ namespace X.ModernDesktop.SimTower.Models.Item
     {
 
     }
+
+    public void AddToItem(IPrototype itemToAdd)
+    {
+
+    }
   }
 }

@@ -51,5 +51,13 @@ namespace X.ModernDesktop.SimTower.Models.Item
     {
       NoCarts = 1;
     }
+
+    public void AddToItem(IPrototype itemToAdd)
+    {
+      if (itemToAdd is Elevator)
+      {
+        NoCarts++;
+      }
+    }
   }
 }

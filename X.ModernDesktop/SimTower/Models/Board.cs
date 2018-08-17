@@ -208,13 +208,9 @@ namespace X.ModernDesktop.SimTower.Models
         }
         //else if (foundItemsOnFloorOfGivenType.Count == 0 &&
         else if (foundItemsOnFloorOfGivenType.Where(x => x.Position.X == startSlotX).Count() > 0 ) {
-          // laying item on an existing same type of item
+          // laying item on an existing item, let the existing item decide what to do
           var existingItems = foundItemsOnFloorOfGivenType.Where(x => x.Position.X == startSlotX);
-          foreach (var item in existingItems) {
-            if (item is Elevator) {
-              ((Elevator)item).NoCarts++;
-            }
-          }
+          foreach (IPrototype item in existingItems) item.AddToItem(prototype);
         }
         else
         {

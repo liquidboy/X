@@ -23,5 +23,7 @@ namespace X.ModernDesktop.SimTower.Models.Item
 
     void FirstTimeDraw();
 
+    void AddToItem(IPrototype itemToAdd);
+
   }
 }
