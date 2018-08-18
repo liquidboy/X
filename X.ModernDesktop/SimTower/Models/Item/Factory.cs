@@ -12,6 +12,7 @@ namespace X.ModernDesktop.SimTower.Models.Item
     ICON_FLOOR = 1,
     ICON_STAIRS = 2,
     ICON_ELEVATOR = 3,
+    ICON_ELEVATOR_SERVICE = 5,
     ICON_OFFICE = 7,
     ICON_FASTFOOD = 11,
     ICON_RESTAURANT = 12,

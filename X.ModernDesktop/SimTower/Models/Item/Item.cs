@@ -25,8 +25,7 @@ namespace X.ModernDesktop.SimTower.Models.Item
     public Slot Position { get => _position; set => SetDataMarkDirtyAndRaisePropertyChanged(ref _position, value); }
     public UIElement Control { get => _control; set => SetDataAndMarkDirty(ref _control, value); }
     public bool IsInVisualTree { get => _IsInVisualTree; set => SetDataAndMarkDirty(ref _IsInVisualTree, value); }
-
-
+    
     public static IPrototype makePrototype<T>()
     {
       //var currentMethod = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using X.ModernDesktop.SimTower.Models.Item;
 
 namespace X.ModernDesktop.SimTower.Models
 {
@@ -10,6 +11,7 @@ namespace X.ModernDesktop.SimTower.Models
   {
     internal Slot position;
     internal MapNode[] neighbours = new MapNode[4];
+    internal IPrototype[] transportItems = new IPrototype[2];
     public int Status = 0;  //1 = delete
 
     internal enum Direction {
@@ -19,16 +21,16 @@ namespace X.ModernDesktop.SimTower.Models
       RIGHT = 3
     }
 
-    bool hasElevator;
-    bool hasServiceElevator;
+    public bool HasElevator { get; set; }
+    public bool HasServiceElevator { get; set; }
 
 
     FloorNode floorNode;
     internal List<MapNode> nodesOnFloor;
 
     public MapNode(FloorNode floor) {
-      hasElevator = false;
-      hasServiceElevator = false;
+      HasElevator = false;
+      HasServiceElevator = false;
       floorNode = floor;
       nodesOnFloor = null;
       init();
@@ -39,6 +41,9 @@ namespace X.ModernDesktop.SimTower.Models
       neighbours[(int)Direction.DOWN] = null;
       neighbours[(int)Direction.LEFT] = null;
       neighbours[(int)Direction.RIGHT] = null;
+
+      transportItems[(int)Direction.UP] = null;
+      transportItems[(int)Direction.DOWN] = null;
     }
 
 

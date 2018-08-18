@@ -7,14 +7,14 @@ using Windows.UI.Xaml;
 
 namespace X.ModernDesktop.SimTower.Models.Item
 {
-  class Elevator : Item, IPrototype
+  class Elevator : Item, IHaulsPeople, IPrototype
   {
     public Elevator() { }
 
     public string Id => "elevator";
 
     public string Name => "Elevator";
-
+    
     public int Price => 20000;
 
     private Slot _Size = new Slot(1, 3);
@@ -60,6 +60,19 @@ namespace X.ModernDesktop.SimTower.Models.Item
       }
     }
 
-    
+    public void AddPerson()
+    {
+      throw new NotImplementedException();
+    }
+
+    public void RemovePerson()
+    {
+      throw new NotImplementedException();
+    }
+
+    public bool ConnectsToFloor(int floor)
+    {
+      return false;
+    }
   }
 }

@@ -121,6 +121,7 @@
     <Compile Include="SimTower\Models\FloorNode.cs" />
     <Compile Include="SimTower\Models\GameMap.cs" />
     <Compile Include="SimTower\Models\Item\Item.cs" />
+    <Compile Include="SimTower\Models\Item\IHaulsPeople.cs" />
     <Compile Include="SimTower\Models\MapNode.cs" />
     <Compile Include="SimTower\Models\Item\IPrototype.cs" />
     <Compile Include="SimTower\Models\SelectedArea.cs" />
