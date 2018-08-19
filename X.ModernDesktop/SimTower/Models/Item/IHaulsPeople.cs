@@ -9,6 +9,7 @@ namespace X.ModernDesktop.SimTower.Models.Item
   interface IHaulsPeople
   {
     bool ConnectsToFloor(int floor);
+    // return Position.Y == floor || (Position.Y + Size.Y - 1) == floor;
     void AddPerson();
     void RemovePerson();
   }

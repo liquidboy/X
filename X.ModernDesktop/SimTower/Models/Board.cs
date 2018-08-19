@@ -40,7 +40,7 @@ namespace X.ModernDesktop.SimTower.Models
 
     private const int maxZSteps = 10;
 
-    public GameMap gameMap { get; set; }
+    public TransportMap gameMap { get; set; }
     private Factory itemFactory;
     List<IPrototype> items;
     Dictionary<int, List<IPrototype>> itemsByFloor;
@@ -62,7 +62,7 @@ namespace X.ModernDesktop.SimTower.Models
     private void initBoard(int xSlots, int ySlots, int groundSlotY, Canvas renderSurface)
     {
       _renderSurface = renderSurface;
-      gameMap = new GameMap();
+      gameMap = new TransportMap();
       itemFactory = new Factory();
       items = new List<IPrototype>();
       itemsByFloor = new Dictionary<int, List<IPrototype>>();
@@ -194,14 +194,13 @@ namespace X.ModernDesktop.SimTower.Models
           if (foundItemsOnFloorOfGivenType.Count == 1 && prototype.KeepGrowingSameInstanceX)
           {
             // todo: allow the one instance on this level to keep growing
-            var itemFound = foundItemsOnFloorOfGivenType[0];
-
-            var x1 = Math.Min(itemFound.Position.X, startSlotX);
-            var x2 = Math.Max(itemFound.Position.X, startSlotX) + 1;
-
-            itemFound.Position = new Slot(x1, itemFound.Position.Y);
-            itemFound.Size = new Slot(x2 - x1, itemFound.Size.Y);
-
+            var fi = foundItemsOnFloorOfGivenType[0];
+            var x1 = Math.Min(fi.Position.X, startSlotX);
+            var x2 = Math.Max(fi.Position.X, startSlotX) + 1;
+            var positionBeforeExtending = fi.Position;
+            fi.Position = new Slot(x1, fi.Position.Y);
+            fi.Size = new Slot(x2 - x1, fi.Size.Y);
+            gameMap.extendNode(positionBeforeExtending, fi);
             return;
           }
           return; //don't allow more than the max number
@@ -243,11 +242,13 @@ namespace X.ModernDesktop.SimTower.Models
           // extend up ?
           var foundItemToExtendUp = foundItemInXPosition.Where(x => (x.Position.Y + 1) == floorSlotY);
           if (foundItemToExtendUp.Count() > 0) {
-            var p = foundItemToExtendUp.First();
-            var newSlotY = p.Position.Y + 1;
-            p.Size = new Slot(p.Size.X, p.Size.Y + 1);
-            p.Position = new Slot(p.Position.X, newSlotY);
-            itemsOnFloor.Add(p);
+            var fi = foundItemToExtendUp.First();
+            var newSlotY = fi.Position.Y + 1;
+            var positionBeforeExtending = fi.Position;
+            fi.Size = new Slot(fi.Size.X, fi.Size.Y + 1);
+            fi.Position = new Slot(fi.Position.X, newSlotY);
+            itemsOnFloor.Add(fi);
+            gameMap.extendNode(positionBeforeExtending, fi);
             return true;
           }
 
@@ -255,10 +256,12 @@ namespace X.ModernDesktop.SimTower.Models
           var foundItemToExtendDown = foundItemInXPosition.Where(x => (x.Position.Y - x.Size.Y) == floorSlotY);
           if (foundItemToExtendDown.Count() > 0)
           {
-            var p = foundItemToExtendDown.First();
-            p.Size = new Slot(p.Size.X, p.Size.Y + 1);
-            p.Position = new Slot(p.Position.X, p.Position.Y);
-            itemsOnFloor.Add(p);
+            var fi = foundItemToExtendDown.First();
+            var positionBeforeExtending = fi.Position;
+            fi.Size = new Slot(fi.Size.X, fi.Size.Y + 1);
+            fi.Position = new Slot(fi.Position.X, fi.Position.Y);
+            itemsOnFloor.Add(fi);
+            gameMap.extendNode(positionBeforeExtending, fi);
             return true;
           }
         }

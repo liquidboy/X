@@ -14,7 +14,7 @@ namespace X.ModernDesktop.SimTower.Models
     internal IPrototype[] transportItems = new IPrototype[2];
     public int Status = 0;  //1 = delete
 
-    internal enum Direction {
+    internal enum Direction :int {
       UP = 0,
       DOWN = 1,
       LEFT = 2,

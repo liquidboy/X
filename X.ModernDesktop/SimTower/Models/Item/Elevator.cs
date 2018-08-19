@@ -72,7 +72,9 @@ namespace X.ModernDesktop.SimTower.Models.Item
 
     public bool ConnectsToFloor(int floor)
     {
-      return false;
+      if (floor < Position.Y || floor >= Position.Y + Size.Y) return false;
+      //return !unservicedFloors.count(floor);
+      return true;
     }
   }
 }

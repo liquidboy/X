@@ -4,58 +4,96 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using X.ModernDesktop.SimTower.Models.Item;
+using static X.ModernDesktop.SimTower.Models.MapNode;
 
 namespace X.ModernDesktop.SimTower.Models
 {
-  class GameMap
+  class TransportMap
   {
-    private SortedDictionary<Slot, MapNode> gameMap;
+    private SortedDictionary<Slot, MapNode> peopleMovementMap;
     private SortedDictionary<int, List<MapNode>> mapNodesByFloor;
     private SortedDictionary<int, FloorNode> floorNodes;
 
-    public GameMap() {
-      gameMap = new SortedDictionary<Slot, MapNode>();
+    public TransportMap() {
+      peopleMovementMap = new SortedDictionary<Slot, MapNode>();
       mapNodesByFloor = new SortedDictionary<int, List<MapNode>>();
       floorNodes = new SortedDictionary<int, FloorNode>();
     }
 
     public void clear()
     {
-      gameMap.Clear();
+      peopleMovementMap.Clear();
       mapNodesByFloor.Clear();
     }
 
-    public void removeNode(Slot slot, X.ModernDesktop.SimTower.Models.Item.Item item)
+    public void removeNode(Slot slot, IPrototype item)
     {
+      return;
       if (item is null) return;
       if (!(item is IHaulsPeople)) return;
-      if (!gameMap.ContainsKey(slot)) return;
+      if (!peopleMovementMap.ContainsKey(slot)) return;
 
-      MapNode n = gameMap[slot];
+      MapNode n = peopleMovementMap[slot];
+
+
+      // Update all neighour links
+      if(item is IHaulsPeople && slot.Y == item.Position.Y){
+        n.neighbours[(int)Direction.UP].neighbours[(int)Direction.DOWN] = null;
+        n.neighbours[(int)Direction.UP].transportItems[(int)Direction.DOWN] = null;
+        n.neighbours[(int)Direction.UP] = null;
+        n.transportItems[(int)Direction.UP] = null;
+      } else if (item is Elevator) {
+        n.HasElevator = false;
+        if (item.Icon == (int)IconNumbers.ICON_ELEVATOR_SERVICE) n.HasServiceElevator = false;
+
+        // Link upper & lower floor node to skip this node
+        if (n.neighbours[(int)Direction.UP] != null) {
+          n.neighbours[(int)Direction.UP].neighbours[(int)Direction.DOWN] = n.neighbours[(int)Direction.DOWN];
+          if (n.neighbours[(int)Direction.DOWN] == null) n.neighbours[(int)Direction.UP].transportItems[(int)Direction.DOWN] = null;
+        }
+
+        if (n.neighbours[(int)Direction.DOWN] != null) {
+          n.neighbours[(int)Direction.DOWN].neighbours[(int)Direction.UP] = n.neighbours[(int)Direction.UP];
+          if (n.neighbours[(int)Direction.UP] == null) n.neighbours[(int)Direction.DOWN].transportItems[(int)Direction.UP] = null;
+        }
+
+        n.neighbours[(int)Direction.UP] = null;
+        n.transportItems[(int)Direction.UP] = null;
+        n.neighbours[(int)Direction.DOWN] = null;
+        n.transportItems[(int)Direction.DOWN] = null;
+      }
+
+
 
       // Delete and erase only if no other overlapping item
-      
-      if (n.neighbours[(int)MapNode.Direction.LEFT]!=null)
-      {
-        n.neighbours[(int)MapNode.Direction.LEFT].neighbours[(int)MapNode.Direction.RIGHT] = n.neighbours[(int)MapNode.Direction.RIGHT];
-      }
+      if (!n.HasElevator && !n.HasServiceElevator && 
+        n.transportItems[(int)Direction.UP] == null && 
+        n.transportItems[(int)Direction.DOWN] == null) {
 
-      if (n.neighbours[(int)MapNode.Direction.RIGHT]!=null)
-      {
-        n.neighbours[(int)MapNode.Direction.RIGHT].neighbours[(int)MapNode.Direction.LEFT] = n.neighbours[(int)MapNode.Direction.LEFT];
-      }
 
-      gameMap.Remove(slot);
-
-      var mnl = mapNodesByFloor[slot.Y];
-      //mnl.Clear();
-      mnl.ForEach(x => {
-        if (x == n) {
-          x.Status = 1; // mark for deletion
+        if (n.neighbours[(int)MapNode.Direction.LEFT] != null)
+        {
+          n.neighbours[(int)MapNode.Direction.LEFT].neighbours[(int)MapNode.Direction.RIGHT] = n.neighbours[(int)MapNode.Direction.RIGHT];
         }
-      });
-      mnl.RemoveAll(x => x.Status == 1); // using status lets delete
-      
+
+        if (n.neighbours[(int)MapNode.Direction.RIGHT] != null)
+        {
+          n.neighbours[(int)MapNode.Direction.RIGHT].neighbours[(int)MapNode.Direction.LEFT] = n.neighbours[(int)MapNode.Direction.LEFT];
+        }
+
+        peopleMovementMap.Remove(slot);
+
+        var mnl = mapNodesByFloor[slot.Y];
+        //mnl.Clear();
+        mnl.ForEach(x => {
+          if (x == n)
+          {
+            x.Status = 1; // mark for deletion
+          }
+        });
+        mnl.RemoveAll(x => x.Status == 1); // using status lets delete
+
+      }
     }
 
     public MapNode findNode(Slot slot, X.ModernDesktop.SimTower.Models.Item.Item item)
@@ -66,6 +104,13 @@ namespace X.ModernDesktop.SimTower.Models
       else return null;
 
       throw new NotImplementedException();
+      return null;
+    }
+
+    public MapNode extendNode(Slot slot, IPrototype item) {
+
+      removeNode(slot, item);
+      addNode(item.Position, item);
       return null;
     }
 
@@ -87,10 +132,10 @@ namespace X.ModernDesktop.SimTower.Models
 
      // Create/Get MapNode for above created floor
       MapNode n;
-      if (!gameMap.ContainsKey(slot))
+      if (!peopleMovementMap.ContainsKey(slot))
       {
         n = new MapNode(f);
-        gameMap[slot] = n;
+        peopleMovementMap[slot] = n;
         n.position = slot;
 
         // Just insert node if list is empty
@@ -114,30 +159,31 @@ namespace X.ModernDesktop.SimTower.Models
             n.neighbours[(int)MapNode.Direction.LEFT] = left;
             left.neighbours[(int)MapNode.Direction.RIGHT] = n;
           }
+
           if (right != null) {
-            n.neighbours[(int)MapNode.Direction.LEFT] = left;
+            n.neighbours[(int)MapNode.Direction.RIGHT] = right;
             right.neighbours[(int)MapNode.Direction.LEFT] = n;
           }
         }
 
       }
       else {
-        n = gameMap[slot];
+        n = peopleMovementMap[slot];
       }
 
 
       if (item is IHaulsPeople && slot.Y == item.Position.Y)
       {
         // If stairlike, automatically create pair node above and link accordingly
-      //  assert(n->neighbours[MapNode::UP] == NULL);
-      //  assert(n->transportItems[MapNode::UP] == NULL);
+        // assert(n->neighbours[MapNode::UP] == NULL);
+        // assert(n->transportItems[MapNode::UP] == NULL);
         MapNode n_upper = addNode(new Slot(slot.X, slot.Y + 1), item);
 
         n.neighbours[(int)MapNode.Direction.UP] = n_upper;
         n.transportItems[(int)MapNode.Direction.UP] = item;
 
-      //  assert(n_upper->neighbours[MapNode::DOWN] == NULL);
-      //  assert(n_upper->transportItems[MapNode::DOWN] == NULL);
+        // assert(n_upper->neighbours[MapNode::DOWN] == NULL);
+        // assert(n_upper->transportItems[MapNode::DOWN] == NULL);
         n_upper.neighbours[(int)MapNode.Direction.DOWN] = n;
         n_upper.transportItems[(int)MapNode.Direction.DOWN] = item;
       }
@@ -153,10 +199,10 @@ namespace X.ModernDesktop.SimTower.Models
           if (e.ConnectsToFloor(i))
           {
             var ep = new Slot(slot.X, i);
-            if (!gameMap.ContainsKey(ep)) addNode(ep, item);
+            if (!peopleMovementMap.ContainsKey(ep)) addNode(ep, item);
             else
             {
-              MapNode upper = gameMap[ep];
+              MapNode upper = peopleMovementMap[ep];
               n.neighbours[(int)MapNode.Direction.UP] = upper;
               n.transportItems[(int)MapNode.Direction.UP] = item;
 
@@ -177,8 +223,8 @@ namespace X.ModernDesktop.SimTower.Models
         {
           if (e.ConnectsToFloor(i))
           {
-      //      assert(gameMap.count(MapNode::Point(p.x, i)) != 0);
-            MapNode lower = gameMap[new Slot(slot.X, i)];
+            // assert(gameMap.count(MapNode::Point(p.x, i)) != 0);
+            MapNode lower = peopleMovementMap[new Slot(slot.X, i)];
             n.neighbours[(int)MapNode.Direction.DOWN] = lower;
             n.transportItems[(int)MapNode.Direction.DOWN] = item;
 
