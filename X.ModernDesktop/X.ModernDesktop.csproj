@@ -149,6 +149,9 @@
     <Compile Include="SimTower\Views\Floor.xaml.cs">
       <DependentUpon>Floor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SimTower\Views\sandbox.xaml.cs">
+      <DependentUpon>sandbox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SimTower\Views\StartMenu.xaml.cs">
       <DependentUpon>StartMenu.xaml</DependentUpon>
     </Compile>
@@ -236,6 +239,10 @@
     <Page Include="SimTower\Views\Floor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SimTower\Views\sandbox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="SimTower\Views\StartMenu.xaml">
       <SubType>Designer</SubType>

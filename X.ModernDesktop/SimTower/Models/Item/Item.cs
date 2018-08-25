@@ -20,12 +20,14 @@ namespace X.ModernDesktop.SimTower.Models.Item
     private Slot _position;
     private UIElement _control;
     private bool _IsInVisualTree = false;
+    private int _ZIndex = 1;
 
     public bool IsDirty { get => _IsDirty; set => _IsDirty = value; }
     public Slot Position { get => _position; set => SetDataMarkDirtyAndRaisePropertyChanged(ref _position, value); }
     public UIElement Control { get => _control; set => SetDataAndMarkDirty(ref _control, value); }
     public bool IsInVisualTree { get => _IsInVisualTree; set => SetDataAndMarkDirty(ref _IsInVisualTree, value); }
-    
+    public int ZIndex { get => _ZIndex; set => SetDataAndMarkDirty(ref _ZIndex, value); }
+
     public static IPrototype makePrototype<T>()
     {
       //var currentMethod = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType;

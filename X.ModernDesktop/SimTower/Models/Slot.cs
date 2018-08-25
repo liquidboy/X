@@ -4,9 +4,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Foundation;
 
 namespace X.ModernDesktop.SimTower.Models
 {
+  
   public class Slot : IComparable<Slot>
   {
     public int X { get; private set; }
@@ -23,7 +25,10 @@ namespace X.ModernDesktop.SimTower.Models
 
     public int CompareTo(Slot other)
     {
-      return Math.Sign(Math.Sqrt(X * X + Y * Y) - Math.Sqrt(other.X * other.X + other.Y * other.Y));
+      //return Math.Sign(Math.Sqrt(X * X + Y * Y) - Math.Sqrt(other.X * other.X + other.Y * other.Y));
+
+      return (X == other.X && Y == other.Y) ? 0 : 1;
+
     }
   }
 }

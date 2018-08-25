@@ -7,6 +7,7 @@ namespace X.ModernDesktop.SimTower.Models.Item
     string Id { get; }
     string Name { get; }
     int Price { get; }
+    int ZIndex { get; }
     Slot Size { get; set; }
     Slot Position { get; set; }
     int Icon { get; }

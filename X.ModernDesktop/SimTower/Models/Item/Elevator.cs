@@ -37,6 +37,8 @@ namespace X.ModernDesktop.SimTower.Models.Item
     public bool KeepGrowingSameInstanceX => false;
     public bool KeepGrowingSameInstanceY => true;
 
+    public new int ZIndex => 10;
+
     public IPrototype Make()
     {
       return new Elevator();
@@ -72,7 +74,8 @@ namespace X.ModernDesktop.SimTower.Models.Item
 
     public bool ConnectsToFloor(int floor)
     {
-      if (floor < Position.Y || floor >= Position.Y + Size.Y) return false;
+      if (!Enumerable.Range(Position.Y - Size.Y , Position.Y).Contains(floor)) return false;
+      //if (floor < Position.Y || floor >= Position.Y + Size.Y) return false;
       //return !unservicedFloors.count(floor);
       return true;
     }

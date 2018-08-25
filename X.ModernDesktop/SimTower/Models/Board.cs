@@ -365,6 +365,7 @@ namespace X.ModernDesktop.SimTower.Models
       {
         ctlFE.Width = (sizeX + 1) * SlotDimension.X;
         ctlFE.Height = sizeY * SlotDimension.Y;
+        ctlFE.SetValue(Canvas.ZIndexProperty, item.ZIndex);
         ctlFE.SetValue(Canvas.LeftProperty, item.Position.X * SlotDimension.X);
         ctlFE.SetValue(Canvas.TopProperty, (AboveGroundSlotsAvailable - item.Position.Y - 1) * SlotDimension.Y);
         ctlFE.DataContext = item;
