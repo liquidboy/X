@@ -53,5 +53,10 @@ namespace X.ModernDesktop.SimTower.Models.Item
       SetDataAndMarkDirty(ref field, value);
       OnPropertyChanged(propertyName);
     }
+    
+    public void UpdateRoutes()
+    {
+
+    }
   }
 }

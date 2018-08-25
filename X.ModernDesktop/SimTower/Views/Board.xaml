@@ -16,8 +16,12 @@
 
       <lv:BackgroundBelowGround x:Name="belowGround" Width="{x:Bind GameBoard.BelowGroundDimension.Z}" Height="{x:Bind GameBoard.BelowGroundDimension.W}" Canvas.Left="{x:Bind GameBoard.BelowGroundDimension.X}" Canvas.Top="{x:Bind GameBoard.BelowGroundDimension.Y}"></lv:BackgroundBelowGround>
 
-      <Canvas x:Name="towerItems" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+      <Canvas x:Name="towerItems" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsHitTestVisible="False">
         
+      </Canvas>
+
+      <Canvas x:Name="transportLayer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
       </Canvas>
 
       <Border BorderBrush="White" Width="{x:Bind GameBoard.SlotDimension.X}" Height="{x:Bind GameBoard.SlotDimension.Y}" Canvas.Left="{Binding CurrentSelection.SlotPositionHover.X}" Canvas.Top="{Binding CurrentSelection.SlotPositionHover.Y}" Visibility="{Binding CurrentSelection.IsHoverVisible}" BorderThickness="2"></Border>

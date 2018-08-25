@@ -24,8 +24,7 @@ namespace X.ModernDesktop.SimTower.Models.Item
     UIElement MakeUI();
     void Init();
     void FirstTimeDraw();
-
     void AddToItem(IPrototype itemToAdd);
-
+    void UpdateRoutes();
   }
 }

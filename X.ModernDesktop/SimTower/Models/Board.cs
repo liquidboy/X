@@ -394,7 +394,11 @@ namespace X.ModernDesktop.SimTower.Models
     }
 
     private void UpdateRoutes() {
-
+      //visualizeRoute.clear();
+      foreach (var item in items)
+      {
+        item.UpdateRoutes();
+      }
     }
 
     private Route FindRoute(IPrototype start, IPrototype destination, bool serviceRoute) {
