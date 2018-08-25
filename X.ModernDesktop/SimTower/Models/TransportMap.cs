@@ -10,13 +10,13 @@ namespace X.ModernDesktop.SimTower.Models
 {
   class TransportMap
   {
-    private SortedDictionary<Slot, MapNode> peopleMovementMap;
+    private SortedDictionary<string, MapNode> peopleMovementMap;
     private SortedDictionary<int, List<MapNode>> mapNodesByFloor;
     private SortedDictionary<int, FloorNode> floorNodes;
 
     public TransportMap()
     {
-      peopleMovementMap = new SortedDictionary<Slot, MapNode>();
+      peopleMovementMap = new SortedDictionary<string, MapNode>();
       mapNodesByFloor = new SortedDictionary<int, List<MapNode>>();
       floorNodes = new SortedDictionary<int, FloorNode>();
     }
@@ -32,9 +32,9 @@ namespace X.ModernDesktop.SimTower.Models
       return;
       if (item is null) return;
       if (!(item is IHaulsPeople)) return;
-      if (!peopleMovementMap.ContainsKey(slot)) return;
+      if (!peopleMovementMap.ContainsKey(slot.ToString())) return;
 
-      MapNode n = peopleMovementMap[slot];
+      MapNode n = peopleMovementMap[slot.ToString()];
 
 
       // Update all neighour links
@@ -88,7 +88,7 @@ namespace X.ModernDesktop.SimTower.Models
           n.neighbours[(int)MapNode.Direction.RIGHT].neighbours[(int)MapNode.Direction.LEFT] = n.neighbours[(int)MapNode.Direction.LEFT];
         }
 
-        peopleMovementMap.Remove(slot);
+        peopleMovementMap.Remove(slot.ToString());
 
         var mnl = mapNodesByFloor[slot.Y];
         //mnl.Clear();
@@ -133,10 +133,10 @@ namespace X.ModernDesktop.SimTower.Models
 
       // Create/Get MapNode for above created floor
       MapNode n;
-      if (!peopleMovementMap.ContainsKey(slot))
+      if (!peopleMovementMap.ContainsKey(slot.ToString()))
       {
         n = new MapNode(f);
-        peopleMovementMap[slot] = n;
+        peopleMovementMap[slot.ToString()] = n;
         n.position = slot;
 
         // Just insert node if list is empty
@@ -175,13 +175,13 @@ namespace X.ModernDesktop.SimTower.Models
       }
       else
       {
-        n = peopleMovementMap[slot];
+        n = peopleMovementMap[slot.ToString()];
       }
 
       return (f, n);
     }
 
-    public MapNode extendNode(Slot slotBeforeExtending, IPrototype itemAfterExtending)
+    public MapNode extendNode(Slot slotBeforeExtending, Slot sizeBeforeExtending, IPrototype itemAfterExtending)
     {
       (FloorNode f, MapNode n) ret = createFloorAndNodeIfApplicable(slotBeforeExtending, itemAfterExtending);
 
@@ -195,10 +195,10 @@ namespace X.ModernDesktop.SimTower.Models
         {
           var topIndex = itemAfterExtending.Position.Y;
 
-          if (!e.ConnectsToFloor(topIndex))
+          if (!e.ConnectsToFloor(topIndex, sizeBeforeExtending.Y))
           {
             var ep = new Slot(itemAfterExtending.Position.X, topIndex);
-            MapNode upper = peopleMovementMap.ContainsKey(ep) ? peopleMovementMap[ep] : addNode(ep, itemAfterExtending);
+            MapNode upper = peopleMovementMap.ContainsKey(ep.ToString()) ? peopleMovementMap[ep.ToString()] : addNode(ep, itemAfterExtending);
 
             ret.n.neighbours[(int)MapNode.Direction.UP] = upper;
             ret.n.transportItems[(int)MapNode.Direction.UP] = itemAfterExtending;
@@ -218,12 +218,12 @@ namespace X.ModernDesktop.SimTower.Models
         { //expanded down
           var bottomIndex = itemAfterExtending.Position.Y - itemAfterExtending.Size.Y + 1;
           var topIndex = bottomIndex+1;
-          if (!e.ConnectsToFloor(bottomIndex))
+          if (!e.ConnectsToFloor(bottomIndex, sizeBeforeExtending.Y))
           {
-            var ep = new Slot(itemAfterExtending.Position.X, bottomIndex);
+            var epLower = new Slot(itemAfterExtending.Position.X, bottomIndex);
             var epUpper = new Slot(itemAfterExtending.Position.X, topIndex);
-            MapNode lower = peopleMovementMap.ContainsKey(ep) ? peopleMovementMap[ep] : addNode(ep, itemAfterExtending);
-            MapNode upper = peopleMovementMap.ContainsKey(epUpper) ? peopleMovementMap[epUpper] : addNode(epUpper, itemAfterExtending);
+            MapNode lower = peopleMovementMap.ContainsKey(epLower.ToString()) ? peopleMovementMap[epLower.ToString()] : addNode(epLower, itemAfterExtending);
+            MapNode upper = peopleMovementMap.ContainsKey(epUpper.ToString()) ? peopleMovementMap[epUpper.ToString()] : addNode(epUpper, itemAfterExtending);
 
             upper.neighbours[(int)MapNode.Direction.DOWN] = lower;
             upper.transportItems[(int)MapNode.Direction.DOWN] = itemAfterExtending;

@@ -40,7 +40,7 @@ namespace X.ModernDesktop.SimTower.Models
 
     private const int maxZSteps = 10;
 
-    public TransportMap gameMap { get; set; }
+    public TransportMap transportMap { get; set; }
     private Factory itemFactory;
     List<IPrototype> items;
     Dictionary<int, List<IPrototype>> itemsByFloor;
@@ -62,7 +62,7 @@ namespace X.ModernDesktop.SimTower.Models
     private void initBoard(int xSlots, int ySlots, int groundSlotY, Canvas renderSurface)
     {
       _renderSurface = renderSurface;
-      gameMap = new TransportMap();
+      transportMap = new TransportMap();
       itemFactory = new Factory();
       items = new List<IPrototype>();
       itemsByFloor = new Dictionary<int, List<IPrototype>>();
@@ -198,9 +198,10 @@ namespace X.ModernDesktop.SimTower.Models
             var x1 = Math.Min(fi.Position.X, startSlotX);
             var x2 = Math.Max(fi.Position.X, startSlotX) + 1;
             var positionBeforeExtending = fi.Position;
+            var sizeBeforeExtending = fi.Size;
             fi.Position = new Slot(x1, fi.Position.Y);
             fi.Size = new Slot(x2 - x1, fi.Size.Y);
-            gameMap.extendNode(positionBeforeExtending, fi);
+            transportMap.extendNode(positionBeforeExtending, sizeBeforeExtending, fi);
             return;
           }
           return; //don't allow more than the max number
@@ -226,7 +227,7 @@ namespace X.ModernDesktop.SimTower.Models
           itemsByType[prototype.Id].Add(newItem);
 
           // add to gameMap which is used for transport
-          gameMap.addNode(newItem.Position, newItem);
+          transportMap.addNode(newItem.Position, newItem);
         }
       }
       
@@ -245,10 +246,11 @@ namespace X.ModernDesktop.SimTower.Models
             var fi = foundItemToExtendUp.First();
             var newSlotY = fi.Position.Y + 1;
             var positionBeforeExtending = fi.Position;
+            var sizeBeforeExtending = fi.Size;
             fi.Size = new Slot(fi.Size.X, fi.Size.Y + 1);
             fi.Position = new Slot(fi.Position.X, newSlotY);
             itemsOnFloor.Add(fi);
-            gameMap.extendNode(positionBeforeExtending, fi);
+            transportMap.extendNode(positionBeforeExtending, sizeBeforeExtending, fi);
             return true;
           }
 
@@ -258,10 +260,11 @@ namespace X.ModernDesktop.SimTower.Models
           {
             var fi = foundItemToExtendDown.First();
             var positionBeforeExtending = fi.Position;
+            var sizeBeforeExtending = fi.Size;
             fi.Size = new Slot(fi.Size.X, fi.Size.Y + 1);
             fi.Position = new Slot(fi.Position.X, fi.Position.Y);
             itemsOnFloor.Add(fi);
-            gameMap.extendNode(positionBeforeExtending, fi);
+            transportMap.extendNode(positionBeforeExtending, sizeBeforeExtending, fi);
             return true;
           }
         }
@@ -296,8 +299,8 @@ namespace X.ModernDesktop.SimTower.Models
         existingFloor.Position = new Slot(x1, floorSlotY);
         existingFloor.Size = new Slot(x2 - x1, 1);
 
-        gameMap.removeNode(existingFloor.Position, existingFloor);
-        gameMap.addNode(existingFloor.Position, existingFloor);
+        transportMap.removeNode(existingFloor.Position, existingFloor);
+        transportMap.addNode(existingFloor.Position, existingFloor);
 
       }
       else { //NEW FLOOR
@@ -306,7 +309,7 @@ namespace X.ModernDesktop.SimTower.Models
         size: new Slot(minMaxFloor.maxSlotXAllowed - minMaxFloor.minSlotXAllowed, 1));
 
         floorItems.Add(floorSlotY, newFloor);
-        gameMap.addNode(newFloor.Position, newFloor);
+        transportMap.addNode(newFloor.Position, newFloor);
       }
     }
 
@@ -356,6 +359,7 @@ namespace X.ModernDesktop.SimTower.Models
             DrawItem(ctl, otherItem, p.Size.X-1, p.Size.Y);
           }
         }
+        //foreach (var mn in gameMap) { }
       }
     }
 

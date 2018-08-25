@@ -20,7 +20,7 @@ namespace X.ModernDesktop.SimTower.Models
     }
     
     public override string ToString() {
-      return $"x: {X} y: {Y}";
+      return $"{X}|{Y}";
     }
 
     public int CompareTo(Slot other)
@@ -28,6 +28,7 @@ namespace X.ModernDesktop.SimTower.Models
       //return Math.Sign(Math.Sqrt(X * X + Y * Y) - Math.Sqrt(other.X * other.X + other.Y * other.Y));
 
       return (X == other.X && Y == other.Y) ? 0 : 1;
+      //return (other == this) ? 0 : 1;
 
     }
   }

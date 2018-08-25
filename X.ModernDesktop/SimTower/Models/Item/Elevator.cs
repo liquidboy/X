@@ -72,11 +72,14 @@ namespace X.ModernDesktop.SimTower.Models.Item
       throw new NotImplementedException();
     }
 
-    public bool ConnectsToFloor(int floor)
+    public bool ConnectsToFloor(int floor, int overrideSizeY = int.MinValue)
     {
-      if (!Enumerable.Range(Position.Y - Size.Y , Position.Y).Contains(floor)) return false;
-      //if (floor < Position.Y || floor >= Position.Y + Size.Y) return false;
-      //return !unservicedFloors.count(floor);
+      //if (!Enumerable.Range(Position.Y - Size.Y , Position.Y).Contains(floor)) return false;
+      ////if (floor < Position.Y || floor >= Position.Y + Size.Y) return false;
+      ////return !unservicedFloors.count(floor);
+      //return true;
+
+      if (floor >= Position.Y || floor <= Position.Y - (overrideSizeY == int.MinValue ? Size.Y : overrideSizeY )) return false;
       return true;
     }
   }
