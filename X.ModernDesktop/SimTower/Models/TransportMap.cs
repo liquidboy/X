@@ -103,14 +103,25 @@ namespace X.ModernDesktop.SimTower.Models
       }
     }
 
-    public MapNode findNode(Slot slot, X.ModernDesktop.SimTower.Models.Item.Item item)
+    public MapNode findNode(Slot slot, IPrototype item)
     {
       if (item is null) return null;
+      if (!(item is IHaulsPeople)) {
+        if (floorNodes.ContainsKey(slot.Y)) return floorNodes[slot.Y];
+        return null;
+      }
 
-      if (floorNodes.ContainsKey(slot.Y)) return floorNodes[slot.Y];
-      else return null;
+      MapNode n = null;
 
-      throw new NotImplementedException();
+      if (!peopleMovementMap.ContainsKey(slot.ToString())) return null;
+      else n = peopleMovementMap[slot.ToString()];
+
+      if (item is Elevator && (!n.HasElevator || (n.transportItems[(int)MapNode.Direction.UP] != item && n.transportItems[(int)MapNode.Direction.DOWN] != item)))
+        return null;
+      else if (item is IHaulsPeople && n.transportItems[(int)MapNode.Direction.UP] != item)
+        return null;
+
+      return n;
     }
 
 
@@ -252,10 +263,10 @@ namespace X.ModernDesktop.SimTower.Models
 
       (FloorNode f, MapNode n) ret = createFloorAndNodeIfApplicable(slot, item);
 
-      //if (ret.n == null) return null;
+      if (ret.n == null) return null;
 
-      //if (item is IHaulsPeople && slot.Y == item.Position.Y)
-      //{
+      if (item is IHaulsPeople && !(item is Elevator) && slot.Y == item.Position.Y)
+      {
       //  // If stairlike, automatically create pair node above and link accordingly
       //  // assert(n->neighbours[MapNode::UP] == NULL);
       //  // assert(n->transportItems[MapNode::UP] == NULL);
@@ -268,11 +279,11 @@ namespace X.ModernDesktop.SimTower.Models
       //  // assert(n_upper->transportItems[MapNode::DOWN] == NULL);
       //  n_upper.neighbours[(int)MapNode.Direction.DOWN] = ret.n;
       //  n_upper.transportItems[(int)MapNode.Direction.DOWN] = item;
-      //}
-      //else if (item is Elevator)
-      //{
-      //  ret.n.HasElevator = true;
-      //  if (item.Icon == (int)IconNumbers.ICON_ELEVATOR_SERVICE) ret.n.HasServiceElevator = true;
+      }
+      else if (item is Elevator)
+      {
+        ret.n.HasElevator = true;
+        if (item.Icon == (int)IconNumbers.ICON_ELEVATOR_SERVICE) ret.n.HasServiceElevator = true;
 
       //  // Link to upper/lower floor node
       //  var e = (Elevator)item;
@@ -328,7 +339,7 @@ namespace X.ModernDesktop.SimTower.Models
       //      break;
       //    }
       //  }
-      //}
+      }
 
       return ret.n;
     }

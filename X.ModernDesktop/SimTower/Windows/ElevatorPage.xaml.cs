@@ -13,26 +13,18 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace X.ModernDesktop.SimTower.Views
-{
-  public sealed partial class Board : UserControl
-  {
-    Models.Board GameBoard { get; set; }
+// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-    public Board()
+namespace X.ModernDesktop.SimTower.Windows
+{
+  /// <summary>
+  /// An empty page that can be used on its own or navigated to within a Frame.
+  /// </summary>
+  public sealed partial class ElevatorPage : Page
+  {
+    public ElevatorPage()
     {
       this.InitializeComponent();
-      this.InitializeBoard();
     }
-
-    private void InitializeBoard() {
-      GameBoard = new Models.Board(20,30,10, towerItems);
-      this.layoutRoot.DataContext = GameBoard;
-    }
-
-    public void SetTool(string tool) {
-      GameBoard.SetTool(tool);
-    }
-    
   }
 }

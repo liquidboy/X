@@ -111,6 +111,7 @@
     <Compile Include="SimTowerPage.xaml.cs">
       <DependentUpon>SimTowerPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SimTower\AStarPathfinder.cs" />
     <Compile Include="SimTower\Models\Board.cs" />
     <Compile Include="SimTower\Models\Item\IDrawable.cs" />
     <Compile Include="SimTower\Models\Item\Factory.cs" />
@@ -119,6 +120,9 @@
     <Compile Include="SimTower\Models\Item\Lobby.cs" />
     <Compile Include="SimTower\Models\Item\Floor.cs" />
     <Compile Include="SimTower\Models\FloorNode.cs" />
+    <Compile Include="SimTower\Models\MapSearchNode.cs" />
+    <Compile Include="SimTower\Models\PathFinder.cs" />
+    <Compile Include="SimTower\Models\Route.cs" />
     <Compile Include="SimTower\Models\TransportMap.cs" />
     <Compile Include="SimTower\Models\Item\Item.cs" />
     <Compile Include="SimTower\Models\Item\IHaulsPeople.cs" />
@@ -161,6 +165,9 @@
     </Compile>
     <Compile Include="SimTower\Windows\CockpitViewPage.xaml.cs">
       <DependentUpon>CockpitViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SimTower\Windows\ElevatorPage.xaml.cs">
+      <DependentUpon>ElevatorPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -253,6 +260,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SimTower\Windows\CockpitViewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SimTower\Windows\ElevatorPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

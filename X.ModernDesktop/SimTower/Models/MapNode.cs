@@ -7,7 +7,7 @@ using X.ModernDesktop.SimTower.Models.Item;
 
 namespace X.ModernDesktop.SimTower.Models
 {
-  class MapNode
+  internal class MapNode
   {
     internal Slot position;
     internal MapNode[] neighbours = new MapNode[4];

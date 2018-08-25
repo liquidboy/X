@@ -40,7 +40,8 @@ namespace X.ModernDesktop.SimTower.Models
 
     private const int maxZSteps = 10;
 
-    public TransportMap transportMap { get; set; }
+    private TransportMap transportMap { get; set; }
+    private PathFinder pathFinder;
     private Factory itemFactory;
     List<IPrototype> items;
     Dictionary<int, List<IPrototype>> itemsByFloor;
@@ -62,6 +63,7 @@ namespace X.ModernDesktop.SimTower.Models
     private void initBoard(int xSlots, int ySlots, int groundSlotY, Canvas renderSurface)
     {
       _renderSurface = renderSurface;
+      pathFinder = new PathFinder();
       transportMap = new TransportMap();
       itemFactory = new Factory();
       items = new List<IPrototype>();
@@ -130,7 +132,6 @@ namespace X.ModernDesktop.SimTower.Models
     {
       CurrentSelection.ChangeSelection(e.GetCurrentPoint((UIElement)sender), SlotDimension);
       CurrentSelection.EndSelection(e.GetCurrentPoint((UIElement)sender), SlotDimension);
-
 
 
       // TEST : draw floor
@@ -390,6 +391,19 @@ namespace X.ModernDesktop.SimTower.Models
 
     public void SetTool(string tool) {
       SelectedTool = tool;
+    }
+
+    private void UpdateRoutes() {
+
+    }
+
+    private Route FindRoute(IPrototype start, IPrototype destination, bool serviceRoute) {
+      var start_point = new Slot(start.Position.X + start.Size.X, start.Position.Y);
+      var end_point = new Slot(destination.Position.X + destination.Size.X, destination.Position.Y);
+
+      MapNode start_mapnode = transportMap.findNode(start_point, start);
+      MapNode destination_mapnode = transportMap.findNode(end_point, destination);
+      return pathFinder.FindRoute(start_mapnode, destination_mapnode, start, destination, serviceRoute);
     }
   }
 }
