@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using X.ModernDesktop.SimTower.Models;
+using X.ModernDesktop.SimTower.Models.PathFinding;
 
 // https://github.com/justinhj/astar-algorithm-cpp/blob/master/cs/AStarPathfinder.cs
 namespace X.ModernDesktop.SimTower

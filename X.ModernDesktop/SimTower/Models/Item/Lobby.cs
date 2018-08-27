@@ -10,6 +10,7 @@ namespace X.ModernDesktop.SimTower.Models.Item
   class Lobby : Item, IPrototype
   {
     public Lobby() { }
+    public Lobby(Board board) { _board = board; }
 
     public string Id => "lobby";
 
@@ -30,9 +31,9 @@ namespace X.ModernDesktop.SimTower.Models.Item
     public bool KeepGrowingSameInstanceX => true;
     public bool KeepGrowingSameInstanceY => false;
 
-    public IPrototype Make()
+    public IPrototype Make(Board board)
     {
-      return new Lobby();
+      return new Lobby(board);
     }
 
     public UIElement MakeUI()
@@ -43,6 +44,12 @@ namespace X.ModernDesktop.SimTower.Models.Item
     public void FirstTimeDraw()
     {
 
+    }
+
+    public new void Init() {
+      if (Position.Y == 0 && _board != null) {
+        _board.mainLobby = this;
+      }
     }
 
     public void AddToItem(IPrototype itemToAdd)

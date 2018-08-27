@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using X.ModernDesktop.SimTower.Models.Item;
-using static X.ModernDesktop.SimTower.Models.MapNode;
+using static X.ModernDesktop.SimTower.Models.PathFinding.MapNode;
 
-namespace X.ModernDesktop.SimTower.Models
+namespace X.ModernDesktop.SimTower.Models.PathFinding
 {
   class TransportMap
   {
@@ -103,7 +103,7 @@ namespace X.ModernDesktop.SimTower.Models
       }
     }
 
-    public MapNode findNode(Slot slot, IPrototype item)
+    public MapNode findNode(Slot slot, Item.Item item)
     {
       if (item is null) return null;
       if (!(item is IHaulsPeople)) {

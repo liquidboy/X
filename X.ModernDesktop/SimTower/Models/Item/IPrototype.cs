@@ -20,7 +20,7 @@ namespace X.ModernDesktop.SimTower.Models.Item
     bool KeepGrowingSameInstanceX { get; }
     bool KeepGrowingSameInstanceY { get; }
 
-    IPrototype Make();
+    IPrototype Make(Board board);
     UIElement MakeUI();
     void Init();
     void FirstTimeDraw();

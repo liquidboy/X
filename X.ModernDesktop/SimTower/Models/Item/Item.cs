@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using X.ModernDesktop.SimTower.Models.PathFinding;
 
 namespace X.ModernDesktop.SimTower.Models.Item
 {
@@ -14,7 +15,7 @@ namespace X.ModernDesktop.SimTower.Models.Item
   {
     internal int _EntranceOffset;
     internal int _ExitOffset;
-
+    internal Board _board;
 
     private bool _IsDirty = false;
     private Slot _position;
@@ -27,6 +28,9 @@ namespace X.ModernDesktop.SimTower.Models.Item
     public UIElement Control { get => _control; set => SetDataAndMarkDirty(ref _control, value); }
     public bool IsInVisualTree { get => _IsInVisualTree; set => SetDataAndMarkDirty(ref _IsInVisualTree, value); }
     public int ZIndex { get => _ZIndex; set => SetDataAndMarkDirty(ref _ZIndex, value); }
+
+    
+    Route lobbyRoute;
 
     public static IPrototype makePrototype<T>()
     {
@@ -56,7 +60,12 @@ namespace X.ModernDesktop.SimTower.Models.Item
     
     public void UpdateRoutes()
     {
-
+      if (_board!=null &&  !(this is IHaulsPeople) && Position.Y != 0)
+      {
+        lobbyRoute = _board.FindRoute(_board.mainLobby, this);
+      } else {
+        lobbyRoute?.Clear();
+      }
     }
   }
 }

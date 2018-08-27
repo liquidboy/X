@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using X.ModernDesktop.SimTower.Models.Item;
 
-namespace X.ModernDesktop.SimTower.Models
+namespace X.ModernDesktop.SimTower.Models.PathFinding
 {
   internal class MapSearchNode
   {
-    public IPrototype parent_item { get; set; }
+    public Item.Item parent_item { get; set; }
 
 
     public Slot start_point { get; set; }

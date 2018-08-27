@@ -10,6 +10,7 @@ namespace X.ModernDesktop.SimTower.Models.Item
   class Office : Item, IPrototype
   {
     public Office() { }
+    public Office(Board board) { _board = board; }
 
     public string Id => "office";
 
@@ -30,9 +31,9 @@ namespace X.ModernDesktop.SimTower.Models.Item
     public bool KeepGrowingSameInstanceX => false;
     public bool KeepGrowingSameInstanceY => false;
 
-    public IPrototype Make()
+    public IPrototype Make(Board board)
     {
-      return new Office();
+      return new Office(board);
     }
 
     public UIElement MakeUI()

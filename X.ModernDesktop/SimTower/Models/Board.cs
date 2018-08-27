@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 using X.ModernDesktop.SimTower.Models.Item;
-
+using X.ModernDesktop.SimTower.Models.PathFinding;
 
 namespace X.ModernDesktop.SimTower.Models
 {
@@ -40,9 +40,9 @@ namespace X.ModernDesktop.SimTower.Models
 
     private const int maxZSteps = 10;
 
-    private TransportMap transportMap { get; set; }
-    private PathFinder pathFinder;
-    private Factory itemFactory;
+    private static TransportMap transportMap { get; set; }
+    private static PathFinder pathFinder;
+    private static Factory itemFactory;
     List<IPrototype> items;
     Dictionary<int, List<IPrototype>> itemsByFloor;
     Dictionary<string, List<IPrototype>> itemsByType;
@@ -50,6 +50,7 @@ namespace X.ModernDesktop.SimTower.Models
     private int _floorLevel;
 
     private Canvas _renderSurface;
+    public Item.Item mainLobby;
 
     public Board()
     {
@@ -65,7 +66,7 @@ namespace X.ModernDesktop.SimTower.Models
       _renderSurface = renderSurface;
       pathFinder = new PathFinder();
       transportMap = new TransportMap();
-      itemFactory = new Factory();
+      itemFactory = new Factory(this);
       items = new List<IPrototype>();
       itemsByFloor = new Dictionary<int, List<IPrototype>>();
       itemsByType = new Dictionary<string, List<IPrototype>>();
@@ -149,7 +150,7 @@ namespace X.ModernDesktop.SimTower.Models
             Math.Min(CurrentSelection.SlotStart.X, CurrentSelection.SlotEnd.X));
           break;
       }
-      
+      UpdateRoutes();
       Draw();
     }
 
@@ -401,9 +402,9 @@ namespace X.ModernDesktop.SimTower.Models
       }
     }
 
-    private Route FindRoute(IPrototype start, IPrototype destination, bool serviceRoute) {
-      var start_point = new Slot(start.Position.X + start.Size.X, start.Position.Y);
-      var end_point = new Slot(destination.Position.X + destination.Size.X, destination.Position.Y);
+    public Route FindRoute(Item.Item start, Item.Item destination, bool serviceRoute = false) {
+      var start_point = new Slot(start.Position.X + ((IPrototype)start).Size.X, start.Position.Y);
+      var end_point = new Slot(destination.Position.X + ((IPrototype)destination).Size.X, destination.Position.Y);
 
       MapNode start_mapnode = transportMap.findNode(start_point, start);
       MapNode destination_mapnode = transportMap.findNode(end_point, destination);

@@ -11,6 +11,7 @@ namespace X.ModernDesktop.SimTower.Models.Item
   class Floor : Item, IPrototype
   {
     public Floor() { }
+    public Floor(Board board) { _board = board; }
 
     public string Id => "floor";
 
@@ -31,10 +32,9 @@ namespace X.ModernDesktop.SimTower.Models.Item
     public bool KeepGrowingSameInstanceX => true;
     public bool KeepGrowingSameInstanceY => false;
 
-    public IPrototype Make()
+    public IPrototype Make(Board board)
     {
-      // todo : make an item and do stuff with it
-      return new Floor(); 
+      return new Floor(board); 
     }
 
     public UIElement MakeUI()

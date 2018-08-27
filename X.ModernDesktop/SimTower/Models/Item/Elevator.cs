@@ -10,6 +10,7 @@ namespace X.ModernDesktop.SimTower.Models.Item
   class Elevator : Item, IHaulsPeople, IPrototype
   {
     public Elevator() { }
+    public Elevator(Board board) { _board = board; }
 
     public string Id => "elevator";
 
@@ -39,9 +40,9 @@ namespace X.ModernDesktop.SimTower.Models.Item
 
     public new int ZIndex => 10;
 
-    public IPrototype Make()
+    public IPrototype Make(Board board)
     {
-      return new Elevator();
+      return new Elevator(board);
     }
 
     public UIElement MakeUI()

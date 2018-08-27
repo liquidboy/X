@@ -26,8 +26,10 @@ namespace X.ModernDesktop.SimTower.Models.Item
   {
     public List<IPrototype> prototypes;
     public Dictionary<string, IPrototype> prototypesById;
+    private Board _board;
 
-    public Factory() {
+    public Factory(Board board) {
+      _board = board;
       prototypes = new List<IPrototype>();
       prototypesById = new Dictionary<string, IPrototype>();
       LoadPrototypes();
@@ -56,7 +58,7 @@ namespace X.ModernDesktop.SimTower.Models.Item
     }
 
     public IPrototype Make(IPrototype prototype, Slot position, Slot size) {
-      IPrototype item = prototype.Make();
+      IPrototype item = prototype.Make(_board);
       item.Position = position;
       if (size != null) {
         ((IPrototype)item).Size = size;

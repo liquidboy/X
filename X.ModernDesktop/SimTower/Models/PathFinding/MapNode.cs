@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using X.ModernDesktop.SimTower.Models.Item;
 
-namespace X.ModernDesktop.SimTower.Models
+namespace X.ModernDesktop.SimTower.Models.PathFinding
 {
   internal class MapNode
   {
