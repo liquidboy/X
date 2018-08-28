@@ -9,7 +9,11 @@ namespace X.ModernDesktop.SimTower.Models.PathFinding
 {
   class PathFinder
   {
-    AStarPathfinder astarsearch;
+    AStarPathfinder astarsearch ;
+
+    public PathFinder() {
+      astarsearch = new AStarPathfinder();
+    }
 
     public Route FindRoute(MapNode start_mapnode, MapNode end_mapnode, Item.Item start_item, Item.Item end_item, bool serviceRoute) {
 

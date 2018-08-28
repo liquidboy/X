@@ -25,7 +25,7 @@ namespace X.ModernDesktop.SimTower.Models.PathFinding
     public bool HasServiceElevator { get; set; }
 
 
-    FloorNode floorNode;
+    public FloorNode floorNode { get; set; }
     internal List<MapNode> nodesOnFloor;
 
     public MapNode(FloorNode floor) {
