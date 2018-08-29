@@ -10,6 +10,7 @@ namespace X.ModernDesktop.SimTower.Models.PathFinding
   class PathFinder
   {
     AStarPathfinder astarsearch ;
+    AStarPathfinder.SearchState SearchState;
 
     public PathFinder() {
       astarsearch = new AStarPathfinder();
@@ -28,12 +29,12 @@ namespace X.ModernDesktop.SimTower.Models.PathFinding
       MapSearchNode nodeEnd = new MapSearchNode(end_mapnode);
       astarsearch.SetStartAndGoalStates(nodeStart, nodeEnd);
 
-      //unsigned int SearchSteps = 0;
-      //do
-      //{
-      //  SearchState = astarsearch.SearchStep();
-      //  SearchSteps++;
-      //} while (SearchState == AStarSearch < MapSearchNode >::SEARCH_STATE_SEARCHING);
+      int SearchSteps = 0;
+      do
+      {
+        SearchState = astarsearch.SearchStep();
+        SearchSteps++;
+      } while (SearchState == AStarPathfinder.SearchState.Searching);
 
       Route r = new Route();
       buildRoute(r, start_item, end_item);
@@ -45,13 +46,60 @@ namespace X.ModernDesktop.SimTower.Models.PathFinding
 
     void clear()
     {
-      //if (SearchState == AStarSearch < MapSearchNode >::SEARCH_STATE_SUCCEEDED) astarsearch.FreeSolutionNodes();
+      if (SearchState == AStarPathfinder.SearchState.Succeeded) astarsearch.FreeSolutionNodes();
       //astarsearch.EnsureMemoryFreed();
     }
 
     void buildRoute(Route r, Item.Item start_item, Item.Item end_item)
     {
+      if (SearchState != AStarPathfinder.SearchState.Succeeded)
+      {
+        r.Clear();
+        return;
+      }
 
+      if (start_item == null || end_item == null)
+      {
+        r.Clear();
+        return;
+      }
+
+      //MapSearchNode end_node = astarsearch.GetSolutionEnd();
+      //MapSearchNode start_node = astarsearch.GetSolutionStart();
+
+      //if (start_node.IsSameState(end_node))
+      //{
+      //  //r.add(start_item, start_node.mapNode.position.Y);
+      //  //r.add(end_item, end_node.mapNode.position.Y);
+      //  return;
+      //}
+
+      //MapSearchNode n = start_node;
+      //MapSearchNode n_child;
+      //r.add(start_item, n.mapNode.position.Y);
+      //n = astarsearch.GetSolutionNext();
+      //while (n != end_node)
+      //{
+      //  n_child = astarsearch.GetSolutionNext();
+      //  Item.Item i = n_child.parent_item;
+      //  if (i != null)
+      //  {
+      //    int toFloor;
+      //    if (i is IHaulsPeople && !(i is Elevator)) toFloor = n_child.mapNode.position.Y;
+      //    else toFloor = n.mapNode.position.Y;
+
+      //    Route::Node & rn_prev = r.nodes.back();
+      //    if (i is Elevator && rn_prev.item->isElevator() && i == rn_prev.item)
+      //    {
+      //      // Moving along same elevator
+      //      rn_prev.toFloor = toFloor;
+      //    }
+      //    else r.add(i, toFloor);
+      //  }
+      //  n = n_child;
+      //};
+      //r.add(end_item, n.mapNode.position.Y);
+      //r.updateScore((int)Math.Abs(end_node.g + end_node.h));
     }
   }
 }
