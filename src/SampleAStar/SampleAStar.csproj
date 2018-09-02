@@ -95,12 +95,16 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AStarExample.cs" />
+    <Compile Include="PathFinding\AStarExample.cs" />
     <Compile Include="AStarPathfinder.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MazeGenerator.cs" />
+    <Compile Include="PathFinding\Map.cs" />
+    <Compile Include="PathFinding\MapSearchNode.cs" />
+    <Compile Include="PathFinding\MazeGenerator.cs" />
+    <Compile Include="PathFinding\NodePosition.cs" />
+    <Compile Include="PathFinding\Path.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VisualNode.xaml.cs">
       <DependentUpon>VisualNode.xaml</DependentUpon>
