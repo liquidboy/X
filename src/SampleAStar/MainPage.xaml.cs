@@ -27,15 +27,21 @@ namespace SampleAStar
     
     private void layoutRoot_Loaded(object sender, RoutedEventArgs e)
     {
+      DrawMazeAndRoute();
+    }
+
+    private void DrawMazeAndRoute() {
+      ClearRoute();
+      DrawMaze();
+      DrawRoute(new Point(2, 4));
+    }
+
+    private void DrawMaze() {
       //GENERATE A MAP
-      var mapDimension = new Point(20, 20);
+      var mapDimension = new Point(30, 30);
       var mazeGenerator = new MazeGenerator(mapDimension);
       var newMap = mazeGenerator.GetGeneratedMazeAsSingleDimensionArray(false);
       Map.Instance.SetMap(mapDimension, newMap);
-
-
-      DrawRoute(new Point(2, 4));
-
     }
 
     private void ClearRoute() {
@@ -79,6 +85,11 @@ namespace SampleAStar
       var positionAsParts = positionAsString.Split(",".ToCharArray());
       ClearRoute();
       DrawRoute(new Point(int.Parse(positionAsParts[0]), int.Parse(positionAsParts[1])));
+    }
+
+    private void butDrawNew_Click(object sender, RoutedEventArgs e)
+    {
+      DrawMazeAndRoute();
     }
   }
 }

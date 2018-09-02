@@ -10,5 +10,6 @@
 
   <Grid Name="layoutRoot" Loaded="layoutRoot_Loaded">
     <Canvas x:Name="cvLayout"></Canvas>
+    <Button Content="Draw New" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="20" x:Name="butDrawNew" Click="butDrawNew_Click" ></Button> 
   </Grid>
 </Page>
