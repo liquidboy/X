@@ -26,9 +26,17 @@ namespace SampleAStar
 
       
     }
-
+    
     private void layoutRoot_Loaded(object sender, RoutedEventArgs e)
     {
+      //GENERATE A MAP
+      var dim = new Point(20, 20);
+      var mazeGenerator = new MazeGenerator(dim);
+      //var newMap = mazeGenerator.GetGeneratedMazeAsSingleDimensionArray();
+      var newMap = mazeGenerator.getTestMap();
+      Map.Instance.SetMap(dim, newMap);
+
+
       DrawRoute(new Point(2, 4));
 
     }
@@ -42,9 +50,9 @@ namespace SampleAStar
 
     private void DrawRoute(Point end) {
       //DRAW MAP
-      for (int y = 0; y < SampleAStar.Map.MAP_HEIGHT; y++)
+      for (int y = 0; y < Map.Instance.MAP_HEIGHT; y++)
       {
-        for (int x = 0; x < SampleAStar.Map.MAP_WIDTH; x++)
+        for (int x = 0; x < Map.Instance.MAP_WIDTH; x++)
         {
           var wh = 40d;
           var pt = new Point(x * wh, y * wh);
@@ -57,7 +65,7 @@ namespace SampleAStar
           vn.Height = wh;
           vn.DrawPosition(x, y);
           vn.SetDot(false);
-          vn.SetWall(SampleAStar.Map.GetMap(x, y));
+          vn.SetWall(Map.Instance.GetMap(x, y));
           vn.SetPosition(x, y);
           vn.NodeClicked += Vn_NodeClicked;
           cvLayout.Children.Add(vn);

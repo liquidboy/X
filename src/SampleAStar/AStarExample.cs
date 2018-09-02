@@ -42,35 +42,22 @@ namespace SampleAStar
 
   public class Map
   {
-    public const int MAP_WIDTH = 20;
-    public const int MAP_HEIGHT = 20;
+    public int MAP_WIDTH = 20;
+    public int MAP_HEIGHT = 20;
 
-    public static int[] map = new int[MAP_WIDTH * MAP_HEIGHT]
-    {
-	// 0001020304050607080910111213141516171819
-		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,   // 00
-		1,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,1,   // 01
-		1,9,9,1,1,9,9,9,1,9,1,9,1,9,1,9,9,9,1,1,   // 02
-		1,9,9,1,1,9,9,9,1,9,1,9,1,9,1,9,9,9,1,1,   // 03
-		1,9,1,1,1,1,9,9,1,9,1,9,1,1,1,1,9,9,1,1,   // 04
-		1,9,1,1,9,1,1,1,1,9,1,1,1,1,9,1,1,1,1,1,   // 05
-		1,9,9,9,9,1,1,1,1,1,1,9,9,9,9,1,1,1,1,1,   // 06
-		1,9,9,9,9,9,9,9,9,1,1,1,9,9,9,9,9,9,9,1,   // 07
-		1,9,1,1,1,1,1,1,1,1,1,9,1,1,1,1,1,1,1,1,   // 08
-		1,9,1,9,9,9,9,9,9,9,1,1,9,9,9,9,9,9,9,1,   // 09
-		1,9,1,1,1,1,9,1,1,9,1,1,1,1,1,1,1,1,1,1,   // 10
-		1,9,9,9,9,9,1,9,1,9,1,9,9,9,9,9,1,1,1,1,   // 11
-		1,9,1,9,1,9,9,9,1,9,1,9,1,9,1,9,9,9,1,1,   // 12
-		1,9,1,9,1,9,9,9,1,9,1,9,1,9,1,9,9,9,1,1,   // 13
-		1,9,1,1,1,1,9,9,1,9,1,9,1,1,1,1,9,9,1,1,   // 14
-		1,9,1,1,9,1,1,1,1,9,1,1,1,1,9,1,1,1,1,1,   // 15
-		1,9,9,9,9,1,1,1,1,1,1,9,9,9,9,1,1,1,1,1,   // 16
-		1,1,9,9,9,9,9,9,9,1,1,1,9,9,9,1,9,9,9,9,   // 17
-		1,9,1,1,1,1,1,1,1,1,1,9,1,1,1,1,1,1,1,1,   // 18
-		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,   // 19
-    };
+    private int[] map;
 
-    public static int GetMap(int x, int y)
+    private static readonly Map instance = new Map();
+    public static Map Instance {
+      get {
+        return instance;
+      }
+    }
+
+    public Map() {
+    }
+
+    public int GetMap(int x, int y)
     {
       if (x < 0 || x >= MAP_WIDTH || y < 0 || y >= MAP_HEIGHT)
       {
@@ -79,7 +66,15 @@ namespace SampleAStar
 
       return map[(y * MAP_WIDTH) + x];
     }
+
+    public void SetMap(Point dimension, int[] newMap) {
+      map = newMap;
+      MAP_WIDTH = (int)dimension.X;
+      MAP_HEIGHT = (int)dimension.Y;
+    }
   }
+
+
 
   public class MapSearchNode
   {
@@ -116,7 +111,7 @@ namespace SampleAStar
     public bool ValidNeigbour(int xOffset, int yOffset)
     {
       // Return true if the node is navigable and within grid bounds
-      return (Map.GetMap(position.x + xOffset, position.y + yOffset) < 9);
+      return (Map.Instance.GetMap(position.x + xOffset, position.y + yOffset) < 9);
     }
 
     void AddNeighbourNode(int xOffset, int yOffset, NodePosition parentPos, AStarPathfinder aStarSearch)
@@ -158,13 +153,15 @@ namespace SampleAStar
     public float GetCost(MapSearchNode successor)
     {
       // Implementation specific
-      return Map.GetMap(successor.position.x, successor.position.y);
+      return Map.Instance.GetMap(successor.position.x, successor.position.y);
     }
 
     public bool IsSameState(MapSearchNode rhs)
     {
       return (position.x == rhs.position.x &&
           position.y == rhs.position.y);
+
+
     }
   }
 
@@ -172,13 +169,14 @@ namespace SampleAStar
   public class AStarExample
   {
     static FrameworkElement _visualGrid;
+
     public static void Start(FrameworkElement fe, Point end)
     {
-      _visualGrid = fe;
+      if (_visualGrid == null) _visualGrid = fe;
       AStarPathfinder pathfinder = new AStarPathfinder();
       Pathfind(new NodePosition(0, 0), new NodePosition((int)end.X, (int)end.Y), pathfinder);
     }
-    
+
     static bool Pathfind(NodePosition startPos, NodePosition goalPos, AStarPathfinder pathfinder)
     {
       // Reset the allocated MapSearchNode pointer
