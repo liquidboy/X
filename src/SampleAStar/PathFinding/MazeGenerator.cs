@@ -33,20 +33,13 @@ namespace SampleAStar
         {
           var indexPosition = (int)(y * dimension.Y) + x;
           ret[indexPosition] = maze[x, y] == 1 ? (int)MazeNodeType.Free : (int)MazeNodeType.NoAccess;
-          if (indexPosition > 200)
-          {
-            var test = ret[indexPosition];
-          }
-
         }
       }
 
       //Buffer.BlockCopy(maze, 0, ret, 0, maze.Length);
       return ret;
       //return maze.Cast<int>().ToArray();
-
     }
-
 
     public MazeGenerator(Point dimension)
     {
