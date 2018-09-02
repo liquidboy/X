@@ -96,7 +96,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="PathFinding\AStarExample.cs" />
-    <Compile Include="AStarPathfinder.cs" />
+    <Compile Include="PathFinding\AStarPathfinder.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

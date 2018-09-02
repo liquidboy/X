@@ -14,15 +14,36 @@ namespace SampleAStar
     private int[,] maze;
     private Point dimension;
 
-    public int[] GetGeneratedMazeAsSingleDimensionArray() {
+    enum MazeNodeType {
+      NoAccess = 9,
+      Free = 1
+    }
 
-      generateMaze();
+    public int[] GetGeneratedMazeAsSingleDimensionArray(bool useTestMap = false) {
+
+      if (useTestMap) {
+        return getTestMap();
+      } else generateMaze();
 
       int[] ret = new int[maze.Length];
-      //ret = maze.Cast<int>();
+
+      for (int y = 0; y < dimension.Y; y++)
+      {
+        for (int x = 0; x < dimension.X; x++)
+        {
+          var indexPosition = (int)(y * dimension.Y) + x;
+          ret[indexPosition] = maze[x, y] == 1 ? (int)MazeNodeType.Free : (int)MazeNodeType.NoAccess;
+          if (indexPosition > 200)
+          {
+            var test = ret[indexPosition];
+          }
+
+        }
+      }
+
       //Buffer.BlockCopy(maze, 0, ret, 0, maze.Length);
-      //return ret;
-      return maze.Cast<int>().ToArray();
+      return ret;
+      //return maze.Cast<int>().ToArray();
 
     }
 
@@ -94,7 +115,7 @@ namespace SampleAStar
       return neighbors;
     }
 
-    public int[] getTestMap()
+    private int[] getTestMap()
     {
       return new int[20 * 20] { 
      // 0001020304050607080910111213141516171819

@@ -23,18 +23,15 @@ namespace SampleAStar
     public MainPage()
     {
       this.InitializeComponent();
-
-      
     }
     
     private void layoutRoot_Loaded(object sender, RoutedEventArgs e)
     {
       //GENERATE A MAP
-      var dim = new Point(20, 20);
-      var mazeGenerator = new MazeGenerator(dim);
-      //var newMap = mazeGenerator.GetGeneratedMazeAsSingleDimensionArray();
-      var newMap = mazeGenerator.getTestMap();
-      Map.Instance.SetMap(dim, newMap);
+      var mapDimension = new Point(20, 20);
+      var mazeGenerator = new MazeGenerator(mapDimension);
+      var newMap = mazeGenerator.GetGeneratedMazeAsSingleDimensionArray(false);
+      Map.Instance.SetMap(mapDimension, newMap);
 
 
       DrawRoute(new Point(2, 4));
