@@ -31,7 +31,7 @@ namespace SampleAStar
       {
         for (int x = 0; x < dimension.X; x++)
         {
-          var indexPosition = (int)(y * dimension.Y) + x;
+          var indexPosition = (int)(y * dimension.X) + x;
           ret[indexPosition] = maze[x, y] == 1 ? (int)MazeNodeType.Free : (int)MazeNodeType.NoAccess;
         }
       }

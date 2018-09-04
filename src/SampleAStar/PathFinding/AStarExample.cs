@@ -15,11 +15,14 @@ namespace SampleAStar
   public class AStarExample
   {
     static FrameworkElement _visualGrid;
+    static AStarPathfinder pathfinder;
 
     public static void Start(FrameworkElement fe, Point end)
     {
       if (_visualGrid == null) _visualGrid = fe;
-      AStarPathfinder pathfinder = new AStarPathfinder();
+      //AStarPathfinder pathfinder = new AStarPathfinder();
+      if (pathfinder == null) pathfinder = new AStarPathfinder();
+
       Pathfind(new NodePosition(0, 0), new NodePosition((int)end.X, (int)end.Y), pathfinder);
     }
 

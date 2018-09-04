@@ -88,7 +88,7 @@ namespace SampleAStar
 
     // Fixed sizes for collections
     readonly int kPreallocatedNodes = 4000;
-    readonly int kPreallocatedMapSearchNodes = 1000;
+    readonly int kPreallocatedMapSearchNodes = 4000;
 
     readonly int kPreallocatedOpenListSlots = 32;
     readonly int kPreallocatedClosedListSlots = 256;
