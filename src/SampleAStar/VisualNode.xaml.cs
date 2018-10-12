@@ -19,7 +19,8 @@ namespace SampleAStar
   public sealed partial class VisualNode : UserControl
   {
     public event EventHandler NodeClicked;
-    private string _position;
+    
+    public string Position { get; set; }
 
     public VisualNode()
     {
@@ -46,10 +47,10 @@ namespace SampleAStar
       }
     }
 
-    public void SetPosition(int x, int y) { _position = $"{x},{y}"; }
+    public void SetPosition(int x, int y) { Position = $"{x},{y}"; }
     private void layoutRoot_PointerReleased(object sender, PointerRoutedEventArgs e)
     {
-      NodeClicked?.Invoke(_position, new EventArgs());
+      NodeClicked?.Invoke(Position, new EventArgs());
     }
   }
 }

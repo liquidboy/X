@@ -216,3 +216,4 @@ src/Samples/Samples.VC.opendb
 /src/Microsoft.UI.Composition.Toolkit/Microsoft.UI.Composition.Toolkit.dll
 /src/Microsoft.UI.Composition.Toolkit/Microsoft.UI.Composition.Toolkit.winmd
 /src/Microsoft.UI.Composition.Toolkit/Microsoft.UI.Composition.Toolkit_h.h
+/src/Microsoft.UI.Composition.Toolkit/Microsoft.UI.Composition*
