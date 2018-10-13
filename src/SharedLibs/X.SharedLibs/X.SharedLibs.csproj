@@ -107,6 +107,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Corelib\Shared\Framework\Services\Controls\UserControlExtensions.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\DataEntity\BaseClass.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\DataEntity\TableRow.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\DataEntity\TableColumn.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\DataEntity\Table.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\DataEntity\TableIndex.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\DataEntity\TableLog.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\DataEntity\TableDatabase.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\DataEntity\eTableType.cs" />
     <Compile Include="Extensions.FirstParty.Settings\Content.xaml.cs">
       <DependentUpon>Content.xaml</DependentUpon>
     </Compile>
