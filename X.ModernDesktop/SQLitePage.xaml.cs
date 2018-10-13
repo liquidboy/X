@@ -20,113 +20,109 @@ namespace X.ModernDesktop
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class SQLitePage: Page
-  {
-    public class OrderHeaderContext : SQLiteDataEntity<OrderHeader> { }
-    public class OrderHeader : BaseEntity
+    public sealed partial class SQLitePage : Page
     {
-      public string Title { get; set; }
-      public DateTime DateStamp { get; set; }
-      public Guid OrderID { get; set; }
-      public long Quantity { get; set; }
-      public double TotalCost { get; set; }
+        public class OrderHeader : BaseEntity
+        {
+            public string Title { get; set; }
+            public DateTime DateStamp { get; set; }
+            public Guid OrderID { get; set; }
+            public long Quantity { get; set; }
+            public double TotalCost { get; set; }
+        }
+
+        public class OrderLiteItem : BaseEntity
+        {
+            public Guid OrderID { get; set; }
+            public long Quantity { get; set; }
+            public string Product { get; set; }
+            public double UnitCost { get; set; }
+            public int OrderHeaderId { get; set; }
+        }
+
+        public class OrderFooter : BaseEntity
+        {
+            public Guid OrderID { get; set; }
+            public string ShippingAddress { get; set; }
+            public string PickupBy { get; set; }
+            public int OrderHeaderId { get; set; }
+        }
+
+
+        public SQLitePage()
+        {
+            this.InitializeComponent();
+
+            TestOrderHeaderModel();
+            TestDynamicUI();
+            InitChrome();
+        }
+
+        private void InitChrome()
+        {
+            ctlHeader.InitChrome(App.Current, ApplicationView.GetForCurrentView());
+        }
+
+        private void TestDynamicUI()
+        {
+
+        }
+
+        public void TestOrderHeaderModel()
+        {
+            this.InitializeComponent();
+
+            AppDatabase.Current.Init();
+            Context.Current.RegisterEntity<OrderHeader>();
+            Context.Current.RegisterEntity<OrderLiteItem>();
+            Context.Current.RegisterEntity<OrderFooter>();
+            
+            //create new
+            var oh = new OrderHeader()
+            {
+                OrderID = Guid.NewGuid(),
+                Title = "test title",
+                DateStamp = DateTime.UtcNow,
+                Quantity = 100,
+                TotalCost = 199.00
+            };
+            var newid = Context.Current.Save(oh);
+
+            var oli = new OrderLiteItem()
+            {
+                Quantity = 1,
+                Product = "XBox Scorpio",
+                UnitCost = 499.00,
+                OrderID = oh.OrderID,
+                OrderHeaderId = newid
+            };
+            Context.Current.Save(oli);
+
+            var of = new OrderFooter()
+            {
+                OrderID = oh.OrderID,
+                PickupBy = "jose",
+                ShippingAddress = "Home",
+                OrderHeaderId = newid
+            };
+            Context.Current.Save(of);
+
+
+            //search
+            var resultOrderHeader = Context.Current.Find<OrderHeader>("id = " + newid);
+            var resultOrderLineItems = Context.Current.Find<OrderLiteItem>("'OrderHeaderId' = " + newid);
+            var resultOrderFooter = Context.Current.Find<OrderFooter>("'ShippingAddress' = 'Home'");
+
+
+            //load 
+            if (Context.Current.Retrieve<OrderHeader>(newid) != null)
+            {
+                //delete
+                Context.Current.Delete<OrderHeader>(newid);
+            }
+
+            //delete
+            Context.Current.DeleteAll<OrderHeader>();
+        }
     }
-
-    public class OrderLiteItemContext : SQLiteDataEntity<OrderLiteItem> { }
-    public class OrderLiteItem : BaseEntity
-    {
-      public Guid OrderID { get; set; }
-      public long Quantity { get; set; }
-      public string Product { get; set; }
-      public double UnitCost { get; set; }
-      public int OrderHeaderId { get; set; }
-    }
-
-    public class OrderFooterContext : SQLiteDataEntity<OrderFooter> { }
-    public class OrderFooter : BaseEntity
-    {
-      public Guid OrderID { get; set; }
-      public string ShippingAddress { get; set; }
-      public string PickupBy { get; set; }
-      public int OrderHeaderId { get; set; }
-    }
-
-
-    public SQLitePage()
-    {
-      this.InitializeComponent();
-
-      TestOrderHeaderModel();
-      TestDynamicUI();
-      InitChrome();
-    }
-
-    private void InitChrome()
-    {
-      ctlHeader.InitChrome(App.Current, ApplicationView.GetForCurrentView());
-    }
-
-    private void TestDynamicUI()
-    {
-
-    }
-
-    public void TestOrderHeaderModel()
-    {
-      this.InitializeComponent();
-
-      AppDatabase.Current.Init();
-
-      var ohctx = new OrderHeaderContext();
-      var olictx = new OrderLiteItemContext();
-      var ofctx = new OrderFooterContext();
-
-      //create new
-      var oh = new OrderHeader()
-      {
-        OrderID = Guid.NewGuid(),
-        Title = "test title",
-        DateStamp = DateTime.UtcNow,
-        Quantity = 100,
-        TotalCost = 199.00
-      };
-      var newid = ohctx.Save(oh);
-
-      var oli = new OrderLiteItem()
-      {
-        Quantity = 1,
-        Product = "XBox Scorpio",
-        UnitCost = 499.00,
-        OrderID = oh.OrderID,
-        OrderHeaderId = newid
-      };
-      olictx.Save(oli);
-
-      var of = new OrderFooter()
-      {
-        OrderID = oh.OrderID,
-        PickupBy = "jose",
-        ShippingAddress = "Home",
-        OrderHeaderId = newid
-      };
-      ofctx.Save(of);
-
-
-      //search
-      var resultOrderHeader = ohctx.Find("id = " + newid);
-      var resultOrderLineItems = olictx.Find("'OrderHeaderId' = " + newid);
-      var resultOrderFooter = ofctx.Find("'ShippingAddress' = 'Home'");
-
-
-      //load 
-      if (ohctx.Retrieve(newid) != null)
-      {
-        //delete
-        ohctx.Delete(newid);
-      }
-
-      //delete
-      ohctx.DeleteAll();
-    }
-  }
 }

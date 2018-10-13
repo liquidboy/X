@@ -26,12 +26,12 @@ namespace X.CoreLib.Shared.Services
             
             if (found != null && found.Count() > 0)
             {
-                this.SqliteDb.Update(item);
+                this.Connection.Update(item);
                 //await mstScene.UpdateAsync(scene);
             }
             else
             {
-                var newId = this.SqliteDb.Insert(item);
+                var newId = this.Connection.Insert(item);
                 //await mstScene.InsertAsync(scene);
             }
 
@@ -47,11 +47,11 @@ namespace X.CoreLib.Shared.Services
 
             if (found != null && found.Count() > 0)
             {
-                this.SqliteDb.Update(item);
+                this.Connection.Update(item);
             }
             else
             {
-                var newId = this.SqliteDb.Insert(item);
+                var newId = this.Connection.Insert(item);
             }
 
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("updating ...") { Identifier = "DB", SourceId = "YoutubeHistoryItem" });
@@ -72,14 +72,14 @@ namespace X.CoreLib.Shared.Services
         public void UpdateYoutubePersistedItemField(int id, string fieldName, object value, bool sendAggregateUpdateMessage = true)
         {
             LoggingService.LogInformation("writing to db 'YoutubePersistedItem'", "AppDatabase.UpdateYoutubePersistedItemField");
-            this.SqliteDb.Execute("UPDATE YoutubePersistedItem set " + fieldName + " = ? where uid = ?", value, id);
+            this.Connection.Execute("UPDATE YoutubePersistedItem set " + fieldName + " = ? where uid = ?", value, id);
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("updating ...") { Identifier = "DB", SourceId = "UIElementState" });
             if (sendAggregateUpdateMessage) Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("") { Identifier = "YOUTUBE", AggregateId = id.ToString(), Action = "UPDATED" });
         }
         public void UpdateYoutubeHistoryItemField(int id, string fieldName, object value, bool sendAggregateUpdateMessage = true)
         {
             LoggingService.LogInformation("writing to db 'YoutubeHistoryItem'", "AppDatabase.UpdateYoutubeHistoryItemField");
-            this.SqliteDb.Execute("UPDATE YoutubeHistoryItem set " + fieldName + " = ? where uid = ?", value, id);
+            this.Connection.Execute("UPDATE YoutubeHistoryItem set " + fieldName + " = ? where uid = ?", value, id);
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("updating ...") { Identifier = "DB", SourceId = "UIElementState" });
             if (sendAggregateUpdateMessage) Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("") { Identifier = "YOUTUBE", AggregateId = id.ToString(), Action = "UPDATED" });
         }
@@ -88,14 +88,14 @@ namespace X.CoreLib.Shared.Services
         public void UpdateYoutubePersistedItemField(string uid, string fieldName, object value, bool sendAggregateUpdateMessage = true)
         {
             LoggingService.LogInformation("writing to db 'YoutubePersistedItem'", "AppDatabase.UpdateYoutubePersistedItemField");
-            this.SqliteDb.Execute("UPDATE YoutubePersistedItem set " + fieldName + " = ? where uid = ?", value, uid);
+            this.Connection.Execute("UPDATE YoutubePersistedItem set " + fieldName + " = ? where uid = ?", value, uid);
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("updating ...") { Identifier = "DB", SourceId = "UIElementState" });
             if (sendAggregateUpdateMessage) Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("") { Identifier = "YOUTUBE", AggregateId = uid.ToString(), Action = "UPDATED" });
         }
         public void UpdateYoutubeHistoryItemField(string uid, string fieldName, object value, bool sendAggregateUpdateMessage = true)
         {
             LoggingService.LogInformation("writing to db 'YoutubeHistoryItem'", "AppDatabase.UpdateYoutubeHistoryItemField");
-            this.SqliteDb.Execute("UPDATE YoutubeHistoryItem set " + fieldName + " = ? where uid = ?", value, uid);
+            this.Connection.Execute("UPDATE YoutubeHistoryItem set " + fieldName + " = ? where uid = ?", value, uid);
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("updating ...") { Identifier = "DB", SourceId = "UIElementState" });
             if (sendAggregateUpdateMessage) Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("") { Identifier = "YOUTUBE", AggregateId = uid.ToString(), Action = "UPDATED" });
         }
@@ -119,7 +119,7 @@ namespace X.CoreLib.Shared.Services
             if (!string.IsNullOrEmpty(grouping))
             {
                 LoggingService.LogInformation("delete from db 'YoutubePersistedItem'", "AppDatabase.DeleteYoutubePersistedItems");
-                this.SqliteDb.Execute("delete from YoutubePersistedItem where Grouping = ?", grouping);
+                this.Connection.Execute("delete from YoutubePersistedItem where Grouping = ?", grouping);
             }
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "DeleteYoutubePersistedItems" });
             
@@ -129,7 +129,7 @@ namespace X.CoreLib.Shared.Services
             if (!string.IsNullOrEmpty(grouping))
             {
                 LoggingService.LogInformation("delete from db 'YoutubeHistoryItem'", "AppDatabase.DeleteYoutubeHistoryItems");
-                this.SqliteDb.Execute("delete from YoutubeHistoryItem where Grouping = ?", grouping);
+                this.Connection.Execute("delete from YoutubeHistoryItem where Grouping = ?", grouping);
             }
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "DeleteYoutubeHistoryItems" });
 
@@ -138,7 +138,7 @@ namespace X.CoreLib.Shared.Services
         {
 
             LoggingService.LogInformation("delete from db 'YoutubePersistedItem'", "AppDatabase.DeleteOldYoutubePersistedItems");
-            this.SqliteDb.Execute("delete from YoutubePersistedItem where Timestamp < ?", oldestTimespan);
+            this.Connection.Execute("delete from YoutubePersistedItem where Timestamp < ?", oldestTimespan);
 
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "DeleteYoutubePersistedItems" });
 
@@ -147,7 +147,7 @@ namespace X.CoreLib.Shared.Services
         {
 
             LoggingService.LogInformation("delete from db 'YoutubePersistedItem'", "AppDatabase.DeleteYoutubeHistoryItems");
-            this.SqliteDb.Execute("delete from YoutubeHistoryItem where Timestamp < ?", oldestTimespan);
+            this.Connection.Execute("delete from YoutubeHistoryItem where Timestamp < ?", oldestTimespan);
 
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "DeleteYoutubeHistoryItems" });
 
@@ -174,73 +174,73 @@ namespace X.CoreLib.Shared.Services
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveYouTubeByGrouping" });
             LoggingService.LogInformation("retrieve from db 'YoutubePersistedItem'", "AppDatabase.RetrieveYouTubeByGrouping");
-            return this.SqliteDb.Query<YoutubePersistedItem>("SELECT * FROM YoutubePersistedItem WHERE Grouping1 = ?", grouping1);
+            return this.Connection.Query<YoutubePersistedItem>("SELECT * FROM YoutubePersistedItem WHERE Grouping1 = ?", grouping1);
         }
         public List<YoutubeHistoryItem> RetrieveYouTubeHistoryByGrouping(string grouping1)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveYouTubeHistoryByGrouping" });
             LoggingService.LogInformation("retrieve from db 'YoutubeHistoryItem'", "AppDatabase.RetrieveYouTubeHistoryByGrouping");
-            return this.SqliteDb.Query<YoutubeHistoryItem>("SELECT * FROM YoutubeHistoryItem WHERE Grouping1 = ?", grouping1);
+            return this.Connection.Query<YoutubeHistoryItem>("SELECT * FROM YoutubeHistoryItem WHERE Grouping1 = ?", grouping1);
         }
         public List<YoutubePersistedItem> RetrieveYoutubePersistedItem(string uniqueid)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveYoutubePersistedItem" });
             LoggingService.LogInformation("retrieve from db 'YoutubePersistedItem'", "AppDatabase.RetrieveYoutubePersistedItem");
-            return this.SqliteDb.Query<YoutubePersistedItem>("SELECT * FROM YoutubePersistedItem WHERE Uid = ?", uniqueid);
+            return this.Connection.Query<YoutubePersistedItem>("SELECT * FROM YoutubePersistedItem WHERE Uid = ?", uniqueid);
         }
         public List<YoutubeHistoryItem> RetrieveYoutubeHistoryItem(string uniqueid)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveYoutubeHistoryItem" });
             LoggingService.LogInformation("retrieve from db 'YoutubeHistoryItem'", "AppDatabase.RetrieveYoutubeHistoryItem");
-            return this.SqliteDb.Query<YoutubeHistoryItem>("SELECT * FROM YoutubeHistoryItem WHERE Uid = ?", uniqueid);
+            return this.Connection.Query<YoutubeHistoryItem>("SELECT * FROM YoutubeHistoryItem WHERE Uid = ?", uniqueid);
         }
         public List<YoutubeHistoryItem> RetrieveYoutubeHistoryItemByID(string id)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveYoutubeHistoryItem" });
             LoggingService.LogInformation("retrieve from db 'YoutubeHistoryItem'", "AppDatabase.RetrieveYoutubeHistoryItem");
-            return this.SqliteDb.Query<YoutubeHistoryItem>("SELECT * FROM YoutubeHistoryItem WHERE id = ?", id);
+            return this.Connection.Query<YoutubeHistoryItem>("SELECT * FROM YoutubeHistoryItem WHERE id = ?", id);
         }
         public List<YoutubePersistedItem> RetrieveYoutubePersistedItem(int id)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveYoutubePersistedItem" });
             LoggingService.LogInformation("retrieve from db 'YoutubePersistedItem'", "AppDatabase.RetrieveYoutubePersistedItem");
-            return this.SqliteDb.Query<YoutubePersistedItem>("SELECT * FROM YoutubePersistedItem WHERE Id = ?", id);
+            return this.Connection.Query<YoutubePersistedItem>("SELECT * FROM YoutubePersistedItem WHERE Id = ?", id);
         }
         public List<YoutubeHistoryItem> RetrieveYoutubeHistoryItem(int id)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveYoutubeHistoryItem" });
             LoggingService.LogInformation("retrieve from db 'YoutubeHistoryItem'", "AppDatabase.RetrieveYoutubeHistoryItem");
-            return this.SqliteDb.Query<YoutubeHistoryItem>("SELECT * FROM YoutubeHistoryItem WHERE Id = ?", id);
+            return this.Connection.Query<YoutubeHistoryItem>("SELECT * FROM YoutubeHistoryItem WHERE Id = ?", id);
         }
         public List<YoutubePersistedItem> RetrieveYoutubePersistedItem(DateTime timestamp)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveYoutubePersistedItem" });
             LoggingService.LogInformation("retrieve from db 'YoutubePersistedItem'", "AppDatabase.RetrieveYoutubePersistedItem");
-            return this.SqliteDb.Query<YoutubePersistedItem>("SELECT * FROM YoutubePersistedItem WHERE timestamp > ?", timestamp);
+            return this.Connection.Query<YoutubePersistedItem>("SELECT * FROM YoutubePersistedItem WHERE timestamp > ?", timestamp);
         }
         public List<YoutubeHistoryItem> RetrieveYoutubeHistoryItem(DateTime timestamp)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveYoutubeHistoryItem" });
             LoggingService.LogInformation("retrieve from db 'YoutubeHistoryItem'", "AppDatabase.RetrieveYoutubeHistoryItem");
-            return this.SqliteDb.Query<YoutubeHistoryItem>("SELECT * FROM YoutubeHistoryItem WHERE timestamp > ?", timestamp);
+            return this.Connection.Query<YoutubeHistoryItem>("SELECT * FROM YoutubeHistoryItem WHERE timestamp > ?", timestamp);
         }
         public List<YoutubePersistedItem> RetrieveYoutubePersistedItemByGrouping(string grouping)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveYoutubePersistedItemByGrouping" });
             LoggingService.LogInformation("retrieve from db 'YoutubePersistedItem'", "AppDatabase.RetrieveYoutubePersistedItemByGrouping");
-            return this.SqliteDb.Query<YoutubePersistedItem>("SELECT * FROM YoutubePersistedItem WHERE Grouping = ?", grouping);
+            return this.Connection.Query<YoutubePersistedItem>("SELECT * FROM YoutubePersistedItem WHERE Grouping = ?", grouping);
         }
         public List<YoutubeHistoryItem> RetrieveYoutubeHistoryItemByGrouping(string grouping)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveYoutubeHistoryItemByGrouping" });
             LoggingService.LogInformation("retrieve from db 'YoutubeHistoryItem'", "AppDatabase.RetrieveYoutubeHistoryItemByGrouping");
-            return this.SqliteDb.Query<YoutubeHistoryItem>("SELECT * FROM YoutubeHistoryItem WHERE Grouping = ?", grouping);
+            return this.Connection.Query<YoutubeHistoryItem>("SELECT * FROM YoutubeHistoryItem WHERE Grouping = ?", grouping);
         }
 
 
         public bool DoesYouTubePersistedItemExist(string UID)
         {
-            var found  = this.SqliteDb.Query<YoutubeHistoryItem>("SELECT * FROM YoutubePersistedItem WHERE Uid = ?", UID);
+            var found  = this.Connection.Query<YoutubeHistoryItem>("SELECT * FROM YoutubePersistedItem WHERE Uid = ?", UID);
             if (found != null && found.Count() > 0)
             {
                 return true;
@@ -250,7 +250,7 @@ namespace X.CoreLib.Shared.Services
         }
         public bool DoesYoutubeHistoryItemExist(string UID, string grouping)
         {
-            var found = this.SqliteDb.Query<YoutubeHistoryItem>("SELECT * FROM YoutubeHistoryItem WHERE Uid = ? and Grouping = ?", UID, grouping);
+            var found = this.Connection.Query<YoutubeHistoryItem>("SELECT * FROM YoutubeHistoryItem WHERE Uid = ? and Grouping = ?", UID, grouping);
             if (found != null && found.Count() > 0)
             {
                 return true;

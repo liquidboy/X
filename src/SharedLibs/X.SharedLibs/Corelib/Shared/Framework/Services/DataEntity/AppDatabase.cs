@@ -12,7 +12,7 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
 {
     public partial class AppDatabase : SqliteDatabase
     {
-        private static AppDatabase database = null;
+        private static AppDatabase _database = null;
 
         public static AppDatabase Current
         {
@@ -21,11 +21,11 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
                 AppDatabase result;
                 lock (lockobj)
                 {
-                    if (database == null)
+                    if (_database == null)
                     {
-                        database = new AppDatabase();
+                        _database = new AppDatabase();
                     }
-                    result = database;
+                    result = _database;
                 }
                 return result;
             }
@@ -34,27 +34,20 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
 
         public Dictionary<string, TableDatabase> Tables;
 
-        private AppDatabase()
-            : base("xapp.db")
-        {
-
-
-        }
+        private AppDatabase(): base("xapp.db") { }
 
         public void Init()
         {
             Tables = new Dictionary<string, TableDatabase>();
-            this.SqliteDb.CreateTable<Table>();
+            this.Connection.CreateTable<Table>();
             refreshTables();
         }
 
         public void Unload()
         {
-
-            database.SqliteDb.Close();
-            database.SqliteDb.Dispose();
-            database = null;
-
+            _database.Connection.Close();
+            _database.Connection.Dispose();
+            _database = null;
         }
 
         public void AddTable(string tableName, string userName)
@@ -71,7 +64,7 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
                 CreatedDate = DateTime.UtcNow.ToUniversalTime()
             };
 
-            this.SqliteDb.Insert(newTable);
+            this.Connection.Insert(newTable);
             try
             {
                 refreshTables();
@@ -85,13 +78,13 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
 
         public bool DoesTableExist(string name)
         {
-            var row = this.SqliteDb.Query<Table>("SELECT * FROM 'Table' WHERE Name = ?", name);
+            var row = this.Connection.Query<Table>("SELECT * FROM 'Table' WHERE Name = ?", name);
             return row.Count() > 0;
         }
 
         private void refreshTables()
         {
-            var tables = this.SqliteDb.Query<Table>("SELECT * FROM 'Table'");
+            var tables = this.Connection.Query<Table>("SELECT * FROM 'Table'");
 
             foreach (var table in tables)
             {

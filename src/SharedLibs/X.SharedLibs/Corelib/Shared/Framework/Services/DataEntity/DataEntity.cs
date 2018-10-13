@@ -5,12 +5,14 @@ using System.Text;
 
 namespace X.CoreLib.Shared.Framework.Services.DataEntity
 {
-    public class BaseEntity {
+    public abstract class BaseEntity{
         public Guid UniqueId { get; set; }
         public int _internalRowId;
+
     }
 
-    public class SQLiteDataEntity<T> where T : BaseEntity, new()
+    public class DataEntity<T>  : IDataEntity<T>
+        where T : BaseEntity, new()
     {
         public string _defaultCreator = "admin";
         private bool _isReadOnly = false;
@@ -18,23 +20,24 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         string _tableName;
         TableDatabase _table;
 
-        public SQLiteDataEntity() { SQLiteDataEntityImpl(true); }
-        public SQLiteDataEntity(bool initDb, bool isReadOnly) { SQLiteDataEntityImpl(initDb, isReadOnly); }
+        public DataEntity() { SQLiteDataEntityImpl(true); }
+        public DataEntity(bool initDb, bool isReadOnly) { SQLiteDataEntityImpl(initDb, isReadOnly); }
         private void SQLiteDataEntityImpl(bool initDb = true, bool isReadOnly = false)
         {
             _tableName = typeof(T).Name;
             _isReadOnly = isReadOnly;
             if (initDb) { InitEntityDatabase(); }
             else { _table = AppDatabase.Current.Tables[_tableName]; }
+            //Context.Current.RegisterEntity<T>();
         }
 
 
-        public static SQLiteDataEntity<T> Create() {
-            return new SQLiteDataEntity<T>();
+        public static DataEntity<T> Create() {
+            return new DataEntity<T>();
         }
-        public static SQLiteDataEntity<T> CreateReadOnly()
+        public static DataEntity<T> CreateReadOnly()
         {
-            return new SQLiteDataEntity<T>(false, true);
+            return new DataEntity<T>(false, true);
         }
 
         //todo: optimization on columns to determine if they changed and thus do a DeleteAllColumns and rebuild
@@ -87,7 +90,7 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
 
                 udo["UniqueId"] = instance.UniqueId.ToString();
 
-                instance._internalRowId = _table.AddRow(udo, _defaultCreator);
+                instance._internalRowId = _table.AddRow(udo.ToString(), _defaultCreator);
             }
             
             return instance._internalRowId;

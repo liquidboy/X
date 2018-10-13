@@ -108,6 +108,8 @@
   <ItemGroup>
     <Compile Include="Corelib\Shared\Framework\Services\Controls\UserControlExtensions.cs" />
     <Compile Include="Corelib\Shared\Framework\Services\DataEntity\BaseClass.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\DataEntity\Context.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\DataEntity\IDataEntity.cs" />
     <Compile Include="Corelib\Shared\Framework\Services\DataEntity\TableRow.cs" />
     <Compile Include="Corelib\Shared\Framework\Services\DataEntity\TableColumn.cs" />
     <Compile Include="Corelib\Shared\Framework\Services\DataEntity\Table.cs" />
@@ -115,6 +117,7 @@
     <Compile Include="Corelib\Shared\Framework\Services\DataEntity\TableLog.cs" />
     <Compile Include="Corelib\Shared\Framework\Services\DataEntity\TableDatabase.cs" />
     <Compile Include="Corelib\Shared\Framework\Services\DataEntity\eTableType.cs" />
+    <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\SqliteDatabaseManager.cs" />
     <Compile Include="Extensions.FirstParty.Settings\Content.xaml.cs">
       <DependentUpon>Content.xaml</DependentUpon>
     </Compile>
@@ -203,7 +206,7 @@
     <Compile Include="Corelib\Shared\Framework\Services\Database\AppDatabase.Twitter.cs" />
     <Compile Include="Corelib\Shared\Framework\Services\Database\AppDatabase.YouTube.cs" />
     <Compile Include="Corelib\Shared\Framework\Services\DataEntity\AppDatabase.cs" />
-    <Compile Include="Corelib\Shared\Framework\Services\DataEntity\SQLiteDataEntity.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\DataEntity\DataEntity.cs" />
     <Compile Include="Corelib\Shared\Framework\Services\DownloadService.cs" />
     <Compile Include="Corelib\Shared\Framework\Services\GestureService.cs" />
     <Compile Include="Corelib\Shared\Framework\Services\NavigationServiceBase.cs" />

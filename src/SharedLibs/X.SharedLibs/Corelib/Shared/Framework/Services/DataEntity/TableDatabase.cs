@@ -17,8 +17,8 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
 
         public TableDatabase(string tableName) : base(tableName + ".tbl")
         {
-            this.SqliteDb.CreateTable<TableRow>();
-            this.SqliteDb.CreateTable<TableColumn>();
+            this.Connection.CreateTable<TableRow>();
+            this.Connection.CreateTable<TableColumn>();
 
             //Log = new TableLog(tableName);
             //Index = new TableIndex(tableName);
@@ -26,16 +26,16 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
 
 
 
-        public int AddRow(dynamic dataAsJson, string userName)
+        public int AddRow(string dataAsJson, string userName)
         {
             var newRow = new TableRow()
             {
-                Data = dataAsJson.ToString(),
+                Data = dataAsJson,
                 Type = (int)eTableType.UserDefined,
                 CreatedBy = userName,
                 CreatedDate = DateTime.UtcNow.ToUniversalTime()
             };
-            this.SqliteDb.Insert(newRow);
+            this.Connection.Insert(newRow);
             return newRow.Id;
         }
 
@@ -57,17 +57,17 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
 
 
 
-            this.SqliteDb.Insert(newColumn);
+            this.Connection.Insert(newColumn);
         }
 
         public bool DoesColumnExist(string name)
         {
-            var row = this.SqliteDb.Query<TableRow>("SELECT * FROM 'TableColumn' WHERE Name = ?", name);
+            var row = this.Connection.Query<TableRow>("SELECT * FROM 'TableColumn' WHERE Name = ?", name);
             return row.Count() > 0;
         }
 
 
-        public dynamic GetEmptyRowAsJson()
+        public JObject GetEmptyRowAsJson()
         {
             dynamic udo = new JObject();
 
@@ -81,32 +81,32 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         }
         public List<TableRow> Find(string whereQuery)
         {
-            return this.SqliteDb.Query<TableRow>("SELECT * FROM TableRow WHERE " + whereQuery);
+            return this.Connection.Query<TableRow>("SELECT * FROM TableRow WHERE " + whereQuery);
         }
         public TableRow GetTableRow(int id)
         {
-            var row = this.SqliteDb.Query<TableRow>("SELECT * FROM TableRow WHERE Id = ?", id);
+            var row = this.Connection.Query<TableRow>("SELECT * FROM TableRow WHERE Id = ?", id);
             return row.SingleOrDefault();
         }
         public dynamic GetRowDataAsJson(int id)
         {
-            var row = this.SqliteDb.Query<TableRow>("SELECT Data FROM TableRow WHERE Id = ?", id);
+            var row = this.Connection.Query<TableRow>("SELECT Data FROM TableRow WHERE Id = ?", id);
             dynamic json = JValue.Parse(row.SingleOrDefault().Data);
             return json;
         }
         public dynamic GetRowDataAsJson(Guid uniqueId)
         {
-            var row = this.SqliteDb.Query<TableRow>("SELECT Data FROM 'TableRow' WHERE UniqueId = ?", uniqueId.ToString());
+            var row = this.Connection.Query<TableRow>("SELECT Data FROM 'TableRow' WHERE UniqueId = ?", uniqueId.ToString());
             dynamic json = JValue.Parse(row.SingleOrDefault().Data);
             return json;
         }
         public List<TableColumn> GetColumns()
         {
-            return this.SqliteDb.Query<TableColumn>("SELECT * FROM 'TableColumn'");
+            return this.Connection.Query<TableColumn>("SELECT * FROM 'TableColumn'");
         }
         public List<TableRow> GetRows()
         {
-            return this.SqliteDb.Query<TableRow>("SELECT * FROM 'TableRow'");
+            return this.Connection.Query<TableRow>("SELECT * FROM 'TableRow'");
         }
         public List<dynamic> GetRowsDataAsJson()
         {
@@ -123,31 +123,31 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         {
             var foundRow = GetTableRow(id);
             foundRow.Data = dataAsJson.ToString();
-            this.SqliteDb.Update(foundRow);
+            this.Connection.Update(foundRow);
         }
         public void UpdateColumn(TableColumn column)
         {
-            this.SqliteDb.Update(column);
+            this.Connection.Update(column);
         }
 
 
 
         public void DeleteColumn(TableColumn column)
         {
-            this.SqliteDb.Delete(column);
+            this.Connection.Delete(column);
         }
         public void DeleteAllColumns()
         {
             //this.DeleteAllRows();
-            this.SqliteDb.DeleteAll<TableColumn>();
+            this.Connection.DeleteAll<TableColumn>();
         }
         public void DeleteAllRows()
         {
-            this.SqliteDb.DeleteAll<TableRow>();
+            this.Connection.DeleteAll<TableRow>();
         }
         public void DeleteRow(int id)
         {
-            this.SqliteDb.Delete(new TableRow() { Id = (int)id });
+            this.Connection.Delete(new TableRow() { Id = (int)id });
         }
 
 

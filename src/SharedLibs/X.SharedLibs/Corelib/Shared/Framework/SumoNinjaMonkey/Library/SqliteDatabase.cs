@@ -5,24 +5,31 @@ namespace SumoNinjaMonkey.Framework
 
     public abstract class SqliteDatabase
     {
-        public static object lockobj = new object();
+        protected static object lockobj = new object();
 
-        public SQLiteConnection SqliteDb { get; }
+        public SQLiteConnection Connection { get; }
+
+        public string Name { get; set; }
+        public string Location { get; set; }
 
         public SqliteDatabase(string dbName){
-            string dbNameAndLocation = System.IO.Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, dbName);
-            this.SqliteDb = new SQLiteConnection(dbNameAndLocation); 
+            Name = dbName;
+            Location = System.IO.Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, dbName);
+            if (!SqliteDatabaseManager.Current.DoesDatabaseExist(dbName)) {
+                this.Connection = new SQLiteConnection(Location);
+                SqliteDatabaseManager.Current.RegisterDatabase(dbName, this);
+            }
         }
 
         public void ExecuteStatement(string sql)
         {
             
-            if (this.SqliteDb != null && !this.SqliteDb.IsInTransaction)
+            if (this.Connection != null && !this.Connection.IsInTransaction)
             {
                 
                 //Statement statement = this._sqlitedb.PrepareStatement(sql);
                 //statement.Execute();
-                this.SqliteDb.Execute(sql);
+                this.Connection.Execute(sql);
                 
             }
         }

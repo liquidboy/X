@@ -25,7 +25,7 @@ namespace X.CoreLib.Shared.Services
         {
             LoggingService.LogInformation("writing to db 'TableDashboard'", "AppDatabase.AddDashboardItem");
 
-            this.SqliteDb.Insert(new TableDasboard()
+            this.Connection.Insert(new TableDasboard()
             {
                 Left = left,
                 Top = top,
@@ -44,7 +44,7 @@ namespace X.CoreLib.Shared.Services
         public void AddFolderItem(string title, int ordinal, string metroIcon)
         {
             LoggingService.LogInformation("writing to db 'FolderItem'", "AppDatabase.AddFolderItem");
-            this.SqliteDb.Insert(new FolderItem()
+            this.Connection.Insert(new FolderItem()
             {
                 Title = title,
                 MetroIcon = metroIcon,
@@ -56,7 +56,7 @@ namespace X.CoreLib.Shared.Services
         public void AddMenuItem(string title, int ordinal, string metroIcon, int groupId, string id1)
         {
             LoggingService.LogInformation("writing to db 'FolderItem'", "AppDatabase.AddMenuItem");
-            this.SqliteDb.Insert(new MenuItem()
+            this.Connection.Insert(new MenuItem()
             {
                 Title = title,
                 MetroIcon = metroIcon,
@@ -75,12 +75,12 @@ namespace X.CoreLib.Shared.Services
             if (found != null && found.Count() > 0)
             {
                 found[0].Value = value;
-                this.SqliteDb.Update(found[0]);
+                this.Connection.Update(found[0]);
                 //await mstSolution.UpdateAsync(solution);
             }
             else
             {
-                this.SqliteDb.Insert(new AppState()
+                this.Connection.Insert(new AppState()
                 {
                     Name = name,
                     Value = value
@@ -99,12 +99,12 @@ namespace X.CoreLib.Shared.Services
                 found[0].Data = data;
                 found[0].TimeStamp = timeStamp;
                 found[0].Url = url;
-                this.SqliteDb.Update(found[0]);
+                this.Connection.Update(found[0]);
                
             }
             else
             {
-                this.SqliteDb.Insert(new CacheCallResponse()
+                this.Connection.Insert(new CacheCallResponse()
                 { 
                     Data = data,
                     TimeStamp = timeStamp,
@@ -117,7 +117,7 @@ namespace X.CoreLib.Shared.Services
         private void AddUIElementState(string aggregateId, string scene, double left, double top, double scale, double width, double height, bool isRenderable, int? layoutStyle, int? layoutOrientation)
         {
             LoggingService.LogInformation("writing to db 'UIElementState'", "AppDatabase.AddUIElementState");
-            this.SqliteDb.Insert(new UIElementState()
+            this.Connection.Insert(new UIElementState()
             {
                 AggregateId = aggregateId,
                 Scene = scene,
@@ -140,12 +140,12 @@ namespace X.CoreLib.Shared.Services
             if (found != null && found.Count() > 0)
             {
                 found[0].TimeStamp = searchRequest.TimeStamp;
-                this.SqliteDb.Update(found[0]);
+                this.Connection.Update(found[0]);
                 //await mstSolution.UpdateAsync(solution);
             }
             else
             {
-                this.SqliteDb.Insert(searchRequest);
+                this.Connection.Insert(searchRequest);
             }
 
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("inserting ...") { Identifier = "DB", SourceId = "SearchRequest" });
@@ -158,12 +158,12 @@ namespace X.CoreLib.Shared.Services
             if (found != null && found.Count() > 0)
             {
                 found[0].TimeStamp = groupsRequest.TimeStamp;
-                this.SqliteDb.Update(found[0]);
+                this.Connection.Update(found[0]);
                 //await mstSolution.UpdateAsync(solution);
             }
             else
             {
-                this.SqliteDb.Insert(groupsRequest);
+                this.Connection.Insert(groupsRequest);
             }
 
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("inserting ...") { Identifier = "DB", SourceId = "SearchRequest" });
@@ -187,7 +187,7 @@ namespace X.CoreLib.Shared.Services
                 if (layoutStyle != null) found[0].LayoutStyle = (int)layoutStyle;
                 if (layoutOrientation != null) found[0].LayoutOrientation = (int)layoutOrientation;
 
-                this.SqliteDb.Update(found[0]);
+                this.Connection.Update(found[0]);
             }
             else
             {
@@ -206,12 +206,12 @@ namespace X.CoreLib.Shared.Services
 
             if (found != null && found.Count() > 0)
             {
-                this.SqliteDb.Update(solution);
+                this.Connection.Update(solution);
                 //await mstSolution.UpdateAsync(solution);
             }
             else
             {
-                var newId = this.SqliteDb.Insert(solution);
+                var newId = this.Connection.Insert(solution);
                 //await mstSolution.InsertAsync(solution);
 
             }
@@ -228,12 +228,12 @@ namespace X.CoreLib.Shared.Services
 
             if (found != null && found.Count() > 0)
             {
-                this.SqliteDb.Update(project);
+                this.Connection.Update(project);
                 //await mstProject.UpdateAsync(project);
             }
             else
             {
-                var newId = this.SqliteDb.Insert(project);
+                var newId = this.Connection.Insert(project);
                 //await mstProject.InsertAsync(project);
             }
 
@@ -249,12 +249,12 @@ namespace X.CoreLib.Shared.Services
 
             if (found != null && found.Count() > 0)
             {
-                this.SqliteDb.Update(scene);
+                this.Connection.Update(scene);
                 //await mstScene.UpdateAsync(scene);
             }
             else
             {
-                var newId = this.SqliteDb.Insert(scene);
+                var newId = this.Connection.Insert(scene);
                 //await mstScene.InsertAsync(scene);
             }
 
@@ -267,21 +267,21 @@ namespace X.CoreLib.Shared.Services
         public void UpdateSolutionField(string aggregateId, string fieldName, object fieldValue, bool sendAggregateUpdateMessage = true)
         {
             LoggingService.LogInformation("writing to db 'Solution'", "AppDatabase.UpdateSolutionField");
-            this.SqliteDb.Execute("UPDATE Solution set " + fieldName + " = ? where aggregateId = ?", fieldValue, aggregateId);
+            this.Connection.Execute("UPDATE Solution set " + fieldName + " = ? where aggregateId = ?", fieldValue, aggregateId);
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("updating ...") { Identifier = "DB", SourceId = "Solution" });
             if (sendAggregateUpdateMessage) Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("") { Identifier = "AGGREGATE", AggregateId = aggregateId, Action = "UPDATED" });
         }
         public void UpdateProjectField(string aggregateId, string fieldName, object fieldValue, bool sendAggregateUpdateMessage = true)
         {
             LoggingService.LogInformation("writing to db 'Project'", "AppDatabase.UpdateProjectField");
-            this.SqliteDb.Execute("UPDATE Project set " + fieldName + " = ? where aggregateId = ?", fieldValue, aggregateId);
+            this.Connection.Execute("UPDATE Project set " + fieldName + " = ? where aggregateId = ?", fieldValue, aggregateId);
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("updating ...") { Identifier = "DB", SourceId = "Project" });
             if (sendAggregateUpdateMessage) Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("") { Identifier = "AGGREGATE", AggregateId = aggregateId, Action = "UPDATED" });
         }
         public void UpdateSceneField(string aggregateId, string fieldName, object fieldValue, bool sendAggregateUpdateMessage = true)
         {
             LoggingService.LogInformation("writing to db 'Scene'", "AppDatabase.UpdateSceneField");
-            this.SqliteDb.Execute("UPDATE Scene set " + fieldName + " = ? where aggregateId = ?", fieldValue, aggregateId);
+            this.Connection.Execute("UPDATE Scene set " + fieldName + " = ? where aggregateId = ?", fieldValue, aggregateId);
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("updating ...") { Identifier = "DB", SourceId = "Scene" });
             if (sendAggregateUpdateMessage) Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("") { Identifier = "AGGREGATE", AggregateId = aggregateId, Action = "UPDATED" });
         }
@@ -289,7 +289,7 @@ namespace X.CoreLib.Shared.Services
         public void UpdateUIElementStateField(string aggregateId, string fieldName, object value, bool sendAggregateUpdateMessage = true)
         {
             LoggingService.LogInformation("writing to db 'UIElementState'", "AppDatabase.UpdateUIElementStateField");
-            this.SqliteDb.Execute("UPDATE UIElementState set " + fieldName + " = ? where aggregateId = ?", value, aggregateId);
+            this.Connection.Execute("UPDATE UIElementState set " + fieldName + " = ? where aggregateId = ?", value, aggregateId);
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("updating ...") { Identifier = "DB", SourceId = "UIElementState" });
             if (sendAggregateUpdateMessage) Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("") { Identifier = "AGGREGATE", AggregateId = aggregateId, Action = "UPDATED" });
 
@@ -308,7 +308,7 @@ namespace X.CoreLib.Shared.Services
             if (id != null)
             {
                 LoggingService.LogInformation("delete from db 'DashboardItem'", "AppDatabase.DeleteDashboardItem");
-                this.SqliteDb.Delete(new TableDasboard() { Id = (int)id });
+                this.Connection.Delete(new TableDasboard() { Id = (int)id });
             }
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "DeleteDashboardItem" });
         }
@@ -317,7 +317,7 @@ namespace X.CoreLib.Shared.Services
             if (id != null)
             {
                 LoggingService.LogInformation("delete from db 'FolderItem'", "AppDatabase.DeleteFolderItem");
-                this.SqliteDb.Delete(new FolderItem() { Id = (int)id });
+                this.Connection.Delete(new FolderItem() { Id = (int)id });
             }
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "DeleteFolderItem" });
         }
@@ -326,14 +326,14 @@ namespace X.CoreLib.Shared.Services
             if (id != null)
             {
                 LoggingService.LogInformation("delete from db 'MenuItem'", "AppDatabase.DeleteMenuItem");
-                this.SqliteDb.Delete(new MenuItem() { Id = (int)id });
+                this.Connection.Delete(new MenuItem() { Id = (int)id });
             }
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "DeleteMenuItem" });
         }
         public void DeleteMenuItems()
         {
             LoggingService.LogInformation("delete * 'MenuItem'", "AppDatabase.DeleteMenuItems");
-            this.SqliteDb.DeleteAll<MenuItem>();
+            this.Connection.DeleteAll<MenuItem>();
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "MenuItems" });
         }
         public void DeleteAppState(int? id)
@@ -341,7 +341,7 @@ namespace X.CoreLib.Shared.Services
             if (id != null)
             {
                 LoggingService.LogInformation("delete from db 'AppState'", "AppDatabase.DeleteAppState");
-                this.SqliteDb.Delete(new AppState() { Id = (int)id });
+                this.Connection.Delete(new AppState() { Id = (int)id });
             }
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "AppState" });
         }
@@ -350,7 +350,7 @@ namespace X.CoreLib.Shared.Services
             if (!string.IsNullOrEmpty(name))
             {
                 LoggingService.LogInformation("delete from db 'AppState'", "AppDatabase.DeleteAppState");
-                this.SqliteDb.Execute("delete from AppState where name = ?", name);
+                this.Connection.Execute("delete from AppState where name = ?", name);
 
             }
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "AppState" });
@@ -358,7 +358,7 @@ namespace X.CoreLib.Shared.Services
         public void DeleteAppStates()
         {
             LoggingService.LogInformation("delete * 'AppState'", "AppDatabase.DeleteAppState");
-            this.SqliteDb.DeleteAll<AppState>();
+            this.Connection.DeleteAll<AppState>();
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "AppStates" });
         }
         public void DeleteCacheCallResponse(int? id)
@@ -366,14 +366,14 @@ namespace X.CoreLib.Shared.Services
             if (id != null)
             {
                 LoggingService.LogInformation("delete from db 'CacheCallResponse'", "AppDatabase.DeleteCacheCallResponse");
-                this.SqliteDb.Delete(new CacheCallResponse() { Id = (int)id });
+                this.Connection.Delete(new CacheCallResponse() { Id = (int)id });
             }
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "CacheCallResponse" });
         }
         public void DeleteCacheCallResponses()
         {
             LoggingService.LogInformation("delete * 'CacheCallResponse'", "AppDatabase.DeleteCacheCallResponse");
-            this.SqliteDb.DeleteAll<CacheCallResponse>();
+            this.Connection.DeleteAll<CacheCallResponse>();
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "CacheCallResponses" });
         }
         public void DeleteUIElementState(int? id)
@@ -381,7 +381,7 @@ namespace X.CoreLib.Shared.Services
             if (id != null)
             {
                 LoggingService.LogInformation("delete from db 'UIElementState'", "AppDatabase.DeleteUIElementState");
-                this.SqliteDb.Delete(new UIElementState() { Id = (int)id });
+                this.Connection.Delete(new UIElementState() { Id = (int)id });
             }
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "UIElementState" });
         }
@@ -390,9 +390,9 @@ namespace X.CoreLib.Shared.Services
             if (!string.IsNullOrEmpty(aggregateId))
             {
                 LoggingService.LogInformation("delete from db 'UIElementState'", "AppDatabase.DeleteUIElementState");
-                this.SqliteDb.Execute("delete from UIElementState where grouping1 = ?", aggregateId);
-                this.SqliteDb.Execute("delete from UIElementState where grouping2 = ?", aggregateId);
-                this.SqliteDb.Execute("delete from UIElementState where aggregateId = ?", aggregateId);
+                this.Connection.Execute("delete from UIElementState where grouping1 = ?", aggregateId);
+                this.Connection.Execute("delete from UIElementState where grouping2 = ?", aggregateId);
+                this.Connection.Execute("delete from UIElementState where aggregateId = ?", aggregateId);
             }
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "UIElementState" });
             if (sendAggregateDeleteMessage) Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("") { Identifier = "AGGREGATE", AggregateId = aggregateId, Action = "DELETED" });
@@ -402,7 +402,7 @@ namespace X.CoreLib.Shared.Services
             if (id != null)
             {
                 LoggingService.LogInformation("delete from db 'Solution'", "AppDatabase.DeleteSolution");
-                this.SqliteDb.Delete(new Solution() { Id = (int)id });
+                this.Connection.Delete(new Solution() { Id = (int)id });
                 //mstSolution.DeleteAsync(new Solution() { Id = (int)id });
             }
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "Solution" });
@@ -417,7 +417,7 @@ namespace X.CoreLib.Shared.Services
                 var found = RetrieveSolution(aggregateId);
                 //mstSolution.DeleteAsync(found.First());
 
-                this.SqliteDb.Execute("delete from Solution where aggregateId = ?", aggregateId);
+                this.Connection.Execute("delete from Solution where aggregateId = ?", aggregateId);
             }
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "Solution" });
             if (sendAggregateDeleteMessage) Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("") { Identifier = "AGGREGATE", AggregateId = aggregateId, Action = "DELETED" });
@@ -427,7 +427,7 @@ namespace X.CoreLib.Shared.Services
             if (!string.IsNullOrEmpty(grouping1))
             {
                 LoggingService.LogInformation("delete from db 'Solution'", "AppDatabase.DeleteSolutions");
-                this.SqliteDb.Execute("delete from Solution where Grouping1 = ?", grouping1);
+                this.Connection.Execute("delete from Solution where Grouping1 = ?", grouping1);
             }
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "Solution" });
             //if (sendAggregateDeleteMessage) Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("") { Identifier = "AGGREGATE", AggregateId = aggregateId, Action = "DELETED" });
@@ -437,7 +437,7 @@ namespace X.CoreLib.Shared.Services
             if (id != null)
             {
                 LoggingService.LogInformation("delete from db 'Project'", "AppDatabase.DeleteProject");
-                this.SqliteDb.Delete(new Project() { Id = (int)id });
+                this.Connection.Delete(new Project() { Id = (int)id });
                 //mstProject.DeleteAsync(new Project() { Id = (int)id });
             }
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "Project" });
@@ -452,7 +452,7 @@ namespace X.CoreLib.Shared.Services
                 var found = RetrieveProject(aggregateId);
                 //mstProject.DeleteAsync(found.First());
 
-                this.SqliteDb.Execute("delete from Project where aggregateId = ?", aggregateId);
+                this.Connection.Execute("delete from Project where aggregateId = ?", aggregateId);
             }
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "Project" });
             if (sendAggregateDeleteMessage) Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("") { Identifier = "AGGREGATE", AggregateId = aggregateId, Action = "DELETED" });
@@ -462,7 +462,7 @@ namespace X.CoreLib.Shared.Services
             if (!string.IsNullOrEmpty(grouping1))
             {
                 LoggingService.LogInformation("delete from db 'Project'", "AppDatabase.DeleteProjects");
-                this.SqliteDb.Execute("delete from Project where Grouping1 = ?", grouping1);
+                this.Connection.Execute("delete from Project where Grouping1 = ?", grouping1);
             }
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "Project" });
             //if (sendAggregateDeleteMessage) Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("") { Identifier = "AGGREGATE", AggregateId = aggregateId, Action = "DELETED" });
@@ -472,7 +472,7 @@ namespace X.CoreLib.Shared.Services
             if (id != null)
             {
                 LoggingService.LogInformation("delete from db 'Scene'", "AppDatabase.DeleteScene");
-                this.SqliteDb.Delete(new Scene() { Id = (int)id });
+                this.Connection.Delete(new Scene() { Id = (int)id });
                 //mstScene.DeleteAsync(new Scene() { Id = (int)id });
             }
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "Scene" });
@@ -487,7 +487,7 @@ namespace X.CoreLib.Shared.Services
                 var found = RetrieveScene(aggregateId);
                 //mstScene.DeleteAsync(found.First());
 
-                this.SqliteDb.Execute("delete from Scene where aggregateId = ?", aggregateId);
+                this.Connection.Execute("delete from Scene where aggregateId = ?", aggregateId);
             }
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "Scene" });
             if (sendAggregateDeleteMessage) Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("") { Identifier = "AGGREGATE", AggregateId = aggregateId, Action = "DELETED" });
@@ -497,14 +497,14 @@ namespace X.CoreLib.Shared.Services
             if (id != null)
             {
                 LoggingService.LogInformation("delete from db 'SearchRequest'", "AppDatabase.DeleteSearchRequest");
-                this.SqliteDb.Delete(new SearchRequest() { Id = (int)id });
+                this.Connection.Delete(new SearchRequest() { Id = (int)id });
             }
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "SearchRequest" });
         }
         public void DeleteSearchRequests()
         {
             LoggingService.LogInformation("delete * 'SearchRequest'", "AppDatabase.DeleteSearchRequest");
-            this.SqliteDb.DeleteAll<SearchRequest>();
+            this.Connection.DeleteAll<SearchRequest>();
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "SearchRequests" });
         }
         public void DeleteGroupsRequest(int? id)
@@ -512,14 +512,14 @@ namespace X.CoreLib.Shared.Services
             if (id != null)
             {
                 LoggingService.LogInformation("delete from db 'GroupsRequest'", "AppDatabase.DeleteGroupsRequest");
-                this.SqliteDb.Delete(new GroupsRequest() { Id = (int)id });
+                this.Connection.Delete(new GroupsRequest() { Id = (int)id });
             }
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "GroupsRequest" });
         }
         public void DeleteGroupsRequests()
         {
             LoggingService.LogInformation("delete * 'GroupsRequest'", "AppDatabase.DeleteGroupsRequest");
-            this.SqliteDb.DeleteAll<GroupsRequest>();
+            this.Connection.DeleteAll<GroupsRequest>();
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "GroupsRequests" });
         }
 
@@ -531,43 +531,43 @@ namespace X.CoreLib.Shared.Services
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveDashboard" });
             LoggingService.LogInformation("retrieve from db 'TableDashboard'", "AppDatabase.RetrieveDashboard");
-            return this.SqliteDb.Query<TableDasboard>("SELECT Id, Ordinal, Left, Top, Width, Height, Column, Row FROM TableDasboard");
+            return this.Connection.Query<TableDasboard>("SELECT Id, Ordinal, Left, Top, Width, Height, Column, Row FROM TableDasboard");
         }
         public List<FolderItem> RetrieveFolders()
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveFolders" });
             LoggingService.LogInformation("retrieve from db 'FolderItem'", "AppDatabase.RetrieveFolders");
-            return this.SqliteDb.Query<FolderItem>("SELECT Id, Ordinal, Title, MetroIcon FROM FolderItem");
+            return this.Connection.Query<FolderItem>("SELECT Id, Ordinal, Title, MetroIcon FROM FolderItem");
         }
         public List<MenuItem> RetrieveMenuItems()
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveMenuItems" });
             LoggingService.LogInformation("retrieve from db 'FolderItem'", "AppDatabase.RetrieveMenuItems");
-            return this.SqliteDb.Query<MenuItem>("SELECT Id, Ordinal, Title, MetroIcon, GroupId, Id1 FROM MenuItem");
+            return this.Connection.Query<MenuItem>("SELECT Id, Ordinal, Title, MetroIcon, GroupId, Id1 FROM MenuItem");
         }
         public List<AppState> RetrieveAppStates()
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveAppStates" });
             LoggingService.LogInformation("retrieve from db 'AppState'", "AppDatabase.RetrieveAppStates");
-            return this.SqliteDb.Query<AppState>("SELECT Id, Name, Value FROM AppState");
+            return this.Connection.Query<AppState>("SELECT Id, Name, Value FROM AppState");
         }
         public List<CacheCallResponse> CacheCallResponses()
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveCacheCallResponses" });
             LoggingService.LogInformation("retrieve from db 'CacheCallResponse'", "AppDatabase.RetrieveCacheCallResponses");
-            return this.SqliteDb.Query<CacheCallResponse>("SELECT Id, Url, Data, TimeStamp FROM CacheCallResponse");
+            return this.Connection.Query<CacheCallResponse>("SELECT Id, Url, Data, TimeStamp FROM CacheCallResponse");
         }
         public async Task<List<SearchRequest>> RetrieveSearchRequests(int limit)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveSearchRequests" });
             LoggingService.LogInformation("retrieve from db 'SearchRequest'", "AppDatabase.RetrieveSearchRequests");
-            return this.SqliteDb.Query<SearchRequest>("SELECT * FROM SearchRequest order by TimeStamp desc LIMIT " + limit);
+            return this.Connection.Query<SearchRequest>("SELECT * FROM SearchRequest order by TimeStamp desc LIMIT " + limit);
         }
         public async Task<List<GroupsRequest>> RetrieveGroupsRequests(int limit)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveGroupsRequests" });
             LoggingService.LogInformation("retrieve from db 'GroupsRequest'", "AppDatabase.RetrieveGroupsRequests");
-            return this.SqliteDb.Query<GroupsRequest>("SELECT * FROM GroupsRequest order by TimeStamp desc LIMIT " + limit);
+            return this.Connection.Query<GroupsRequest>("SELECT * FROM GroupsRequest order by TimeStamp desc LIMIT " + limit);
         }
 
 
@@ -575,55 +575,55 @@ namespace X.CoreLib.Shared.Services
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveFolder" });
             LoggingService.LogInformation("retrieve from db 'FolderItem'", "AppDatabase.RetrieveFolder");
-            return this.SqliteDb.Query<FolderItem>("SELECT Id, Ordinal, Title, MetroIcon FROM FolderItem WHERE Id = ?", id);
+            return this.Connection.Query<FolderItem>("SELECT Id, Ordinal, Title, MetroIcon FROM FolderItem WHERE Id = ?", id);
         }
         public List<AppState> RetrieveAppState(int id)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveAppState" });
             LoggingService.LogInformation("retrieve from db 'AppState'", "AppDatabase.RetrieveAppState");
-            return this.SqliteDb.Query<AppState>("SELECT Id, Name, Value FROM AppState WHERE Id = ?", id);
+            return this.Connection.Query<AppState>("SELECT Id, Name, Value FROM AppState WHERE Id = ?", id);
         }
         public List<AppState> RetrieveAppState(string name)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveAppState" });
             LoggingService.LogInformation("retrieve from db 'AppState'", "AppDatabase.RetrieveAppState");
-            return this.SqliteDb.Query<AppState>("SELECT * FROM AppState WHERE Name = ?", name);
+            return this.Connection.Query<AppState>("SELECT * FROM AppState WHERE Name = ?", name);
         }
         public List<CacheCallResponse> RetrieveCacheCallResponse(int id)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveCacheCallResponse" });
             LoggingService.LogInformation("retrieve from db 'CacheCallResponse'", "AppDatabase.RetrieveCacheCallResponse");
-            return this.SqliteDb.Query<CacheCallResponse>("SELECT Id, Url, Data, TimeStamp FROM CacheCallResponse WHERE Id = ?", id);
+            return this.Connection.Query<CacheCallResponse>("SELECT Id, Url, Data, TimeStamp FROM CacheCallResponse WHERE Id = ?", id);
         }
         public List<CacheCallResponse> RetrieveCacheCallResponse(string url)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveCacheCallResponse" });
             LoggingService.LogInformation("retrieve from db 'CacheCallResponse'", "AppDatabase.RetrieveCacheCallResponse");
-            return this.SqliteDb.Query<CacheCallResponse>("SELECT * FROM CacheCallResponse WHERE Url = ?", url);
+            return this.Connection.Query<CacheCallResponse>("SELECT * FROM CacheCallResponse WHERE Url = ?", url);
         }
         public List<SearchRequest> RetrieveSearchRequest(int id)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveSearchRequest" });
             LoggingService.LogInformation("retrieve from db 'SearchRequest'", "AppDatabase.RetrieveSearchRequest");
-            return this.SqliteDb.Query<SearchRequest>("SELECT * FROM AppState WHERE Id = ?", id);
+            return this.Connection.Query<SearchRequest>("SELECT * FROM AppState WHERE Id = ?", id);
         }
         public List<SearchRequest> RetrieveSearchRequest(string term, int type)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveSearchRequest" });
             LoggingService.LogInformation("retrieve from db 'SearchRequest'", "AppDatabase.RetrieveSearchRequest");
-            return this.SqliteDb.Query<SearchRequest>("SELECT * FROM SearchRequest WHERE Term = ? and Type = ?", term, type);
+            return this.Connection.Query<SearchRequest>("SELECT * FROM SearchRequest WHERE Term = ? and Type = ?", term, type);
         }
         public List<GroupsRequest> RetrieveGroupsRequest(int id)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveGroupsRequest" });
             LoggingService.LogInformation("retrieve from db 'GroupsRequest'", "AppDatabase.RetrieveGroupsRequest");
-            return this.SqliteDb.Query<GroupsRequest>("SELECT * FROM AppState WHERE Id = ?", id);
+            return this.Connection.Query<GroupsRequest>("SELECT * FROM AppState WHERE Id = ?", id);
         }
         public List<GroupsRequest> RetrieveGroupsRequest(string term, int type)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveGroupsRequest" });
             LoggingService.LogInformation("retrieve from db 'GroupsRequest'", "AppDatabase.RetrieveGroupsRequest");
-            return this.SqliteDb.Query<GroupsRequest>("SELECT * FROM GroupsRequest WHERE Term = ? and Type = ?", term, type);
+            return this.Connection.Query<GroupsRequest>("SELECT * FROM GroupsRequest WHERE Term = ? and Type = ?", term, type);
         }
 
 
@@ -633,46 +633,46 @@ namespace X.CoreLib.Shared.Services
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveUIElementState" });
             LoggingService.LogInformation("retrieve from db 'UIElementState'", "AppDatabase.RetrieveUIElementState");
-            return this.SqliteDb.Query<UIElementState>("SELECT " + _fields_UIElementState + "  FROM UIElementState WHERE Id = ?", id);
+            return this.Connection.Query<UIElementState>("SELECT " + _fields_UIElementState + "  FROM UIElementState WHERE Id = ?", id);
         }
 
         public List<UIElementState> RetrieveUIElementState(string aggregateId)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveUIElementState" });
             LoggingService.LogInformation("retrieve from db 'UIElementState'", "AppDatabase.RetrieveUIElementState");
-            return this.SqliteDb.Query<UIElementState>("SELECT " + _fields_UIElementState + " FROM UIElementState WHERE AggregateId = ?", aggregateId);
+            return this.Connection.Query<UIElementState>("SELECT " + _fields_UIElementState + " FROM UIElementState WHERE AggregateId = ?", aggregateId);
         }
 
         public List<UIElementState> RetrieveUIElementStatesByGrouping(string aggregateId)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveUIElementStatesByGrouping" });
             LoggingService.LogInformation("retrieve from db 'UIElementState'", "AppDatabase.RetrieveUIElementStatesByGrouping");
-            return this.SqliteDb.Query<UIElementState>("SELECT " + _fields_UIElementState + " FROM UIElementState WHERE Grouping1 = ?", aggregateId);
+            return this.Connection.Query<UIElementState>("SELECT " + _fields_UIElementState + " FROM UIElementState WHERE Grouping1 = ?", aggregateId);
         }
         public List<UIElementState> RetrieveUIElementStatesByScene(string sceneAggregateId)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveUIElementStatesByScene" });
             LoggingService.LogInformation("retrieve from db 'UIElementState'", "AppDatabase.RetrieveUIElementStatesByScene");
-            return this.SqliteDb.Query<UIElementState>("SELECT " + _fields_UIElementState + " FROM UIElementState WHERE Scene = ?", sceneAggregateId);
+            return this.Connection.Query<UIElementState>("SELECT " + _fields_UIElementState + " FROM UIElementState WHERE Scene = ?", sceneAggregateId);
         }
 
         public List<Solution> RetrieveSolution(int id)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveSolution" });
             LoggingService.LogInformation("retrieve from db 'Solution'", "AppDatabase.RetrieveSolution");
-            return this.SqliteDb.Query<Solution>("SELECT * FROM Solution WHERE ID = ?", id);
+            return this.Connection.Query<Solution>("SELECT * FROM Solution WHERE ID = ?", id);
         }
         public List<Solution> RetrieveSolution(string aggregateId)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveSolution" });
             LoggingService.LogInformation("retrieve from db 'Solution'", "AppDatabase.RetrieveSolution");
-            return this.SqliteDb.Query<Solution>("SELECT * FROM Solution WHERE AggregateId = ?", aggregateId);
+            return this.Connection.Query<Solution>("SELECT * FROM Solution WHERE AggregateId = ?", aggregateId);
         }
         public List<Solution> RetrieveSolutionsByGrouping(string aggregateId)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveSolutionsByGrouping" });
             LoggingService.LogInformation("retrieve from db 'Solution'", "AppDatabase.RetrieveSolutionsByGrouping");
-            return this.SqliteDb.Query<Solution>("SELECT * FROM Solution WHERE Grouping1 = ?", aggregateId);
+            return this.Connection.Query<Solution>("SELECT * FROM Solution WHERE Grouping1 = ?", aggregateId);
         }
 
 
@@ -680,37 +680,37 @@ namespace X.CoreLib.Shared.Services
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveProject" });
             LoggingService.LogInformation("retrieve from db 'Project'", "AppDatabase.RetrieveProject");
-            return this.SqliteDb.Query<Project>("SELECT * FROM Project WHERE ID = ?", id);
+            return this.Connection.Query<Project>("SELECT * FROM Project WHERE ID = ?", id);
         }
         public List<Project> RetrieveProject(string aggregateId)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveProject" });
             LoggingService.LogInformation("retrieve from db 'Project'", "AppDatabase.RetrieveProject");
-            return this.SqliteDb.Query<Project>("SELECT * FROM Project WHERE AggregateId = ?", aggregateId);
+            return this.Connection.Query<Project>("SELECT * FROM Project WHERE AggregateId = ?", aggregateId);
         }
         public List<Project> RetrieveProjectsByGrouping(string aggregateId)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveProjectsByGrouping" });
             LoggingService.LogInformation("retrieve from db 'Project'", "AppDatabase.RetrieveProjectsByGrouping");
-            return this.SqliteDb.Query<Project>("SELECT * FROM Project WHERE Grouping1 = ?", aggregateId);
+            return this.Connection.Query<Project>("SELECT * FROM Project WHERE Grouping1 = ?", aggregateId);
         }
         public List<Scene> RetrieveScene(int id)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveScene" });
             LoggingService.LogInformation("retrieve from db 'Scene'", "AppDatabase.RetrieveScene");
-            return this.SqliteDb.Query<Scene>("SELECT * FROM Scene WHERE ID = ?", id);
+            return this.Connection.Query<Scene>("SELECT * FROM Scene WHERE ID = ?", id);
         }
         public List<Scene> RetrieveScene(string aggregateId)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveScene" });
             LoggingService.LogInformation("retrieve from db 'Scene'", "AppDatabase.RetrieveScene");
-            return this.SqliteDb.Query<Scene>("SELECT * FROM Scene WHERE AggregateId = ?", aggregateId);
+            return this.Connection.Query<Scene>("SELECT * FROM Scene WHERE AggregateId = ?", aggregateId);
         }
         public List<Scene> RetrieveScenesByGrouping(string aggregateId)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveScenesByGrouping" });
             LoggingService.LogInformation("retrieve from db 'Scene'", "AppDatabase.RetrieveScenesByGrouping");
-            return this.SqliteDb.Query<Scene>("SELECT * FROM Scene WHERE Grouping1 = ?", aggregateId);
+            return this.Connection.Query<Scene>("SELECT * FROM Scene WHERE Grouping1 = ?", aggregateId);
         }
 
 
@@ -725,7 +725,7 @@ namespace X.CoreLib.Shared.Services
             if (found != null && found.Count == 1)
             {
                 found[0].Value = value;
-                this.SqliteDb.Update(found[0]);
+                this.Connection.Update(found[0]);
             }
             else
             {
@@ -754,7 +754,7 @@ namespace X.CoreLib.Shared.Services
             {
                 found[0].Data = data;
                 found[0].TimeStamp = timeStamp;
-                this.SqliteDb.Update(found[0]);
+                this.Connection.Update(found[0]);
             }
             else
             {
@@ -794,7 +794,7 @@ namespace X.CoreLib.Shared.Services
                 found[0].MediaUserName = searchRequest.MediaUserName;
                 found[0].CacheCallResponseUrl = searchRequest.CacheCallResponseUrl;
 
-                this.SqliteDb.Update(found[0]);
+                this.Connection.Update(found[0]);
             }
             else
             {
@@ -837,7 +837,7 @@ namespace X.CoreLib.Shared.Services
                 found[0].PoolCount = groupsRequest.PoolCount;
                 found[0].MemberCount = groupsRequest.MemberCount;
 
-                this.SqliteDb.Update(found[0]);
+                this.Connection.Update(found[0]);
             }
             else
             {

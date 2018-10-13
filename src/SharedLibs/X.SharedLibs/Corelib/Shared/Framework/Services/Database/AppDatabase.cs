@@ -41,32 +41,32 @@ namespace X.CoreLib.Shared.Services
             : base("App.db")
         {
 
-            this.SqliteDb.CreateTable<TableDasboard>();
-            this.SqliteDb.CreateTable<FolderItem>();
-            this.SqliteDb.CreateTable<MenuItem>();
-            this.SqliteDb.CreateTable<AppState>();
-            this.SqliteDb.CreateTable<UIElementState>();
-            this.SqliteDb.CreateTable<Solution>();
-            this.SqliteDb.CreateTable<Project>();
-            this.SqliteDb.CreateTable<Scene>();
-            this.SqliteDb.CreateTable<CacheCallResponse>();
-            this.SqliteDb.CreateTable<SearchRequest>();
-            this.SqliteDb.CreateTable<GroupsRequest>();
+            this.Connection.CreateTable<TableDasboard>();
+            this.Connection.CreateTable<FolderItem>();
+            this.Connection.CreateTable<MenuItem>();
+            this.Connection.CreateTable<AppState>();
+            this.Connection.CreateTable<UIElementState>();
+            this.Connection.CreateTable<Solution>();
+            this.Connection.CreateTable<Project>();
+            this.Connection.CreateTable<Scene>();
+            this.Connection.CreateTable<CacheCallResponse>();
+            this.Connection.CreateTable<SearchRequest>();
+            this.Connection.CreateTable<GroupsRequest>();
 
-            this.SqliteDb.CreateTable<YoutubePersistedItem>();
-            this.SqliteDb.CreateTable<YoutubeHistoryItem>();
+            this.Connection.CreateTable<YoutubePersistedItem>();
+            this.Connection.CreateTable<YoutubeHistoryItem>();
 
 
             //this.SqliteDb.DropTable<TwitterPersistedItem>();
-            this.SqliteDb.CreateTable<TwitterPersistedItem>();
+            this.Connection.CreateTable<TwitterPersistedItem>();
         }
 
 
         public void Unload()
         {
             
-            database.SqliteDb.Close();
-            database.SqliteDb.Dispose();
+            database.Connection.Close();
+            database.Connection.Dispose();
             database = null;
 
         }
@@ -100,7 +100,7 @@ namespace X.CoreLib.Shared.Services
             
             if(found!=null){
                 found.Value = value;
-                this.SqliteDb.Update(found);
+                this.Connection.Update(found);
             }
         }
 
@@ -128,7 +128,7 @@ namespace X.CoreLib.Shared.Services
 
             var o = this.AppStates.Count();
 
-            this.SqliteDb.Query<AppState>("DELETE FROM AppState");
+            this.Connection.Query<AppState>("DELETE FROM AppState");
 
             AddAppState(((int)AppSystemDataEnums.PrimaryAccentColor).ToString(), "39,118,255,255");  //R,G,B,A
             AddAppState(((int)AppSystemDataEnums.SecondaryAccentColor).ToString(), "255,0,185,255"); //R,G,B,A

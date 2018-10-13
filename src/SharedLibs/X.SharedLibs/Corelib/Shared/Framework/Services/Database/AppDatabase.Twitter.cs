@@ -26,11 +26,11 @@ namespace X.CoreLib.Shared.Services
 
             if (found != null && found.Count() > 0)
             {
-                this.SqliteDb.Update(item);
+                this.Connection.Update(item);
             }
             else
             {
-                var newId = this.SqliteDb.Insert(item);
+                var newId = this.Connection.Insert(item);
             }
 
             Messenger.Default.Send(new GeneralSystemWideMessage("updating ...") { Identifier = "DB", SourceId = "TwitterPersistedItem" });
@@ -47,7 +47,7 @@ namespace X.CoreLib.Shared.Services
         public void UpdateTwitterPersistedItemField(int id, string fieldName, object value, bool sendAggregateUpdateMessage = true)
         {
             LoggingService.LogInformation("writing to db 'TwitterPersistedItem'", "AppDatabase.UpdateTwitterPersistedItemField");
-            this.SqliteDb.Execute("UPDATE TwitterPersistedItem set " + fieldName + " = ? where uid = ?", value, id);
+            this.Connection.Execute("UPDATE TwitterPersistedItem set " + fieldName + " = ? where uid = ?", value, id);
             Messenger.Default.Send(new GeneralSystemWideMessage("updating ...") { Identifier = "DB", SourceId = "UIElementState" });
             if (sendAggregateUpdateMessage) Messenger.Default.Send(new GeneralSystemWideMessage("") { Identifier = "TWITTER", AggregateId = id.ToString(), Action = "UPDATED" });
         }
@@ -55,7 +55,7 @@ namespace X.CoreLib.Shared.Services
         public void UpdateTwitterPersistedItemField(string uid, string fieldName, object value, bool sendAggregateUpdateMessage = true)
         {
             LoggingService.LogInformation("writing to db 'TwitterPersistedItem'", "AppDatabase.UpdateTwitterPersistedItemField");
-            this.SqliteDb.Execute("UPDATE TwitterPersistedItem set " + fieldName + " = ? where uid = ?", value, uid);
+            this.Connection.Execute("UPDATE TwitterPersistedItem set " + fieldName + " = ? where uid = ?", value, uid);
             Messenger.Default.Send(new GeneralSystemWideMessage("updating ...") { Identifier = "DB", SourceId = "UIElementState" });
             if (sendAggregateUpdateMessage) Messenger.Default.Send(new GeneralSystemWideMessage("") { Identifier = "TWITTER", AggregateId = uid.ToString(), Action = "UPDATED" });
         }
@@ -63,7 +63,7 @@ namespace X.CoreLib.Shared.Services
         public void UpdateTwitterPersistedItemField(long twitterId, string fieldName, object value, bool sendAggregateUpdateMessage = true)
         {
             LoggingService.LogInformation("writing to db 'TwitterPersistedItem'", "AppDatabase.UpdateTwitterPersistedItemField");
-            this.SqliteDb.Execute("UPDATE TwitterPersistedItem set " + fieldName + " = ? where twitterId = ?", value, twitterId);
+            this.Connection.Execute("UPDATE TwitterPersistedItem set " + fieldName + " = ? where twitterId = ?", value, twitterId);
             Messenger.Default.Send(new GeneralSystemWideMessage("updating ...") { Identifier = "DB", SourceId = "UIElementState" });
             if (sendAggregateUpdateMessage) Messenger.Default.Send(new GeneralSystemWideMessage("") { Identifier = "TWITTER", AggregateId = twitterId.ToString(), Action = "UPDATED" });
         }
@@ -82,7 +82,7 @@ namespace X.CoreLib.Shared.Services
             if (!string.IsNullOrEmpty(grouping1))
             {
                 LoggingService.LogInformation("delete from db 'TwitterPersistedItem'", "AppDatabase.DeleteTwitterPersistedItems");
-                this.SqliteDb.Execute("delete from TwitterPersistedItem where Grouping1 = ?", grouping1);
+                this.Connection.Execute("delete from TwitterPersistedItem where Grouping1 = ?", grouping1);
             }
             Messenger.Default.Send(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "DeleteTwitterPersistedItems" });
 
@@ -92,7 +92,7 @@ namespace X.CoreLib.Shared.Services
         {
 
             LoggingService.LogInformation("delete from db 'TwitterPersistedItem'", "AppDatabase.DeleteOldTwitterPersistedItems");
-            this.SqliteDb.Execute("delete from TwitterPersistedItem where Timestamp < ?", oldestTimespan);
+            this.Connection.Execute("delete from TwitterPersistedItem where Timestamp < ?", oldestTimespan);
 
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "DeleteTwitterPersistedItems" });
 
@@ -101,7 +101,7 @@ namespace X.CoreLib.Shared.Services
         {
 
             LoggingService.LogInformation("delete from db 'TwitterPersistedItem'", "AppDatabase.DeleteTwitterPersistedItems");
-            this.SqliteDb.Execute("delete from TwitterPersistedItem where TwitterId = ?", twitterId);
+            this.Connection.Execute("delete from TwitterPersistedItem where TwitterId = ?", twitterId);
             
             Messenger.Default.Send(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "DeleteTwitterPersistedItems" });
 
@@ -110,7 +110,7 @@ namespace X.CoreLib.Shared.Services
         {
 
             LoggingService.LogInformation("delete from db 'TwitterPersistedItem'", "AppDatabase.DeleteTwitterPersistedItems");
-            this.SqliteDb.Execute("delete from TwitterPersistedItem where Id = ?", id);
+            this.Connection.Execute("delete from TwitterPersistedItem where Id = ?", id);
 
             Messenger.Default.Send(new GeneralSystemWideMessage("deleting ...") { Identifier = "DB", SourceId = "DeleteTwitterPersistedItems" });
 
@@ -132,19 +132,19 @@ namespace X.CoreLib.Shared.Services
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveTwitterByGrouping" });
             LoggingService.LogInformation("retrieve from db 'TwitterPersistedItem'", "AppDatabase.RetrieveTwitterByGrouping");
-            return this.SqliteDb.Query<TwitterPersistedItem>("SELECT * FROM TwitterPersistedItem WHERE Grouping1 = ?", grouping1);
+            return this.Connection.Query<TwitterPersistedItem>("SELECT * FROM TwitterPersistedItem WHERE Grouping1 = ?", grouping1);
         }
         public List<TwitterPersistedItem> RetrieveTwitterPersistedItem(int id)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveTwitterPersistedItem" });
             LoggingService.LogInformation("retrieve from db 'TwitterPersistedItem'", "AppDatabase.RetrieveTwitterPersistedItem");
-            return this.SqliteDb.Query<TwitterPersistedItem>("SELECT * FROM TwitterPersistedItem WHERE Id = ?", id);
+            return this.Connection.Query<TwitterPersistedItem>("SELECT * FROM TwitterPersistedItem WHERE Id = ?", id);
         }
         public List<TwitterPersistedItem> RetrieveTwitterPersistedItem(long twitterId)
         {
             Messenger.Default.Send<GeneralSystemWideMessage>(new GeneralSystemWideMessage("retrieving ...") { Identifier = "DB", SourceId = "RetrieveTwitterPersistedItem" });
             LoggingService.LogInformation("retrieve from db 'TwitterPersistedItem'", "AppDatabase.RetrieveTwitterPersistedItem");
-            return this.SqliteDb.Query<TwitterPersistedItem>("SELECT * FROM TwitterPersistedItem WHERE TwitterId = ?", twitterId);
+            return this.Connection.Query<TwitterPersistedItem>("SELECT * FROM TwitterPersistedItem WHERE TwitterId = ?", twitterId);
         }
 
 

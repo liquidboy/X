@@ -33,7 +33,7 @@ namespace SumoNinjaMonkey.Framework.Services
             _dtSave.Interval = TimeSpan.FromSeconds(60); //attempt
             _dtSave.Tick += (o, a) => { 
                 _dtSave.Stop();
-                if (!_db.SqliteDb.IsInTransaction)
+                if (!_db.Connection.IsInTransaction)
                 {
                     PersistLoggingInformation();
                 }
@@ -42,7 +42,7 @@ namespace SumoNinjaMonkey.Framework.Services
 
             _db = db;
 
-            _db.SqliteDb.CreateTable<LogMessage>();
+            _db.Connection.CreateTable<LogMessage>();
             
             _isInitialized = true;
 
@@ -61,7 +61,7 @@ namespace SumoNinjaMonkey.Framework.Services
         }
 
         public async static Task<bool> Clear() {
-            if (_db!=null && !_db.SqliteDb.IsInTransaction)
+            if (_db!=null && !_db.Connection.IsInTransaction)
             {
                 await ClearLoggingInformationAsync();
             }
@@ -150,7 +150,7 @@ namespace SumoNinjaMonkey.Framework.Services
                 {
                     //foreach (var item in LoggingMessages)
                     //{
-                    _db.SqliteDb.InsertAll(LoggingMessages);
+                    _db.Connection.InsertAll(LoggingMessages);
                     //_db.SqliteDb.Commit();
                     //}
                 }
@@ -191,7 +191,7 @@ namespace SumoNinjaMonkey.Framework.Services
                 _isSavingToDb = true;
                 try
                 {
-                    _db.SqliteDb.DeleteAll<LogMessage>();
+                    _db.Connection.DeleteAll<LogMessage>();
 
                     
                 }
