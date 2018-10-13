@@ -19,13 +19,13 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
             get
             {
                 AppDatabase result;
-                lock (SqliteDatabase.lockobj)
+                lock (lockobj)
                 {
-                    if (AppDatabase.database == null)
+                    if (database == null)
                     {
-                        AppDatabase.database = new AppDatabase();
+                        database = new AppDatabase();
                     }
-                    result = AppDatabase.database;
+                    result = database;
                 }
                 return result;
             }
