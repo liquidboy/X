@@ -7,7 +7,7 @@ namespace SumoNinjaMonkey.Framework
     {
         protected static object lockobj = new object();
 
-        public SQLiteConnection Connection { get; }
+        public SQLiteConnection Connection { get; private set; }
 
         public string Name { get; set; }
         public string Location { get; set; }
@@ -32,6 +32,14 @@ namespace SumoNinjaMonkey.Framework
                 this.Connection.Execute(sql);
                 
             }
+        }
+
+        public void Close() {
+            Connection.Close();
+            Connection = null;
+            Name = string.Empty;
+            System.IO.File.Delete(Location);
+            Location = string.Empty;
         }
 
         

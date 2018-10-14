@@ -8,8 +8,6 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
     public abstract class BaseEntity{
         public Guid UniqueId { get; set; }
         public int _internalRowId;
-        public int _internalEntityId;
-
     }
 
     public class DataEntity<T>  : IDataEntity<T>
@@ -66,9 +64,8 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
 
             if (instance._internalRowId > 0)
             {
-                //update
+                //update tablerow
                 var udo = _table.GetRowDataAsJson(instance._internalRowId);
-
                 var props = typeof(T).GetTypeInfo().DeclaredProperties;
                 foreach (var prop in props)
                 {
@@ -76,27 +73,35 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
                 }
                 udo["UniqueId"] = instance.UniqueId.ToString();
                 _table.UpdateRowData(instance._internalRowId, udo);
-                _table.UpdateEntity(instance._internalEntityId, instance);
+
+                //update entity
+                _table.UpdateEntity(instance.UniqueId, instance);
             }
             else
             {
-                //add
-
+                //add tablerow
                 var udo = _table.GetEmptyRowAsJson();
-
                 var props = typeof(T).GetTypeInfo().DeclaredProperties;
                 foreach (var prop in props)
                 {
                     udo[prop.Name] = prop.GetValue(instance, null).ToString();
                 }
-
                 udo["UniqueId"] = instance.UniqueId.ToString();
-
                 instance._internalRowId = _table.AddRow(udo.ToString(), _defaultCreator);
-                instance._internalEntityId = _table.AddEntity(instance);
+
+                //add entity
+                _table.AddEntity(instance);
             }
             
             return instance._internalRowId;
+        }
+        public T RetrieveEntity(Guid id)
+        {
+            return _table.GetEntity<T>(id);
+        }
+        public T RetrieveEntity(string where)
+        {
+            return _table.GetEntity<T>(where);
         }
         public T Retrieve(int id)
         {

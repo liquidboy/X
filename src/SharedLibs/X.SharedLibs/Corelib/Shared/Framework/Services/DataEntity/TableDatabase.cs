@@ -40,12 +40,11 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         }
 
         public int AddEntity<T>(T newEntity) {
-            this.Connection.CreateTable<T>();
+            this.Connection.CreateTable<T>(CreateFlags.FullTextSearch4);
             var createdEntityId = this.Connection.Insert(newEntity);
             return createdEntityId;
         }
-
-
+        
         public void AddColumn(string name, string userName)
         {
             var exists = DoesColumnExist(name);
@@ -71,7 +70,22 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
             return row.Count() > 0;
         }
 
-
+        public T GetEntity<T>(Guid uniqueId) where T : new()
+        {
+            //var resultsCount = this.Connection.Table<T>().Count();
+            var name = typeof(T).Name;
+            var qry = $"SELECT * FROM '{name}' WHERE uniqueid = '{uniqueId}'";
+            var found = Connection.Query<T>(qry);
+            return found.FirstOrDefault();
+        }
+        public T GetEntity<T>(string where) where T : new()
+        {
+            //var resultsCount = this.Connection.Table<T>().Count();
+            var name = typeof(T).Name;
+            var qry = $"SELECT * FROM '{name}' WHERE {where}";
+            var found = Connection.Query<T>(qry);
+            return found.FirstOrDefault();
+        }
         public JObject GetEmptyRowAsJson()
         {
             dynamic udo = new JObject();
@@ -134,7 +148,7 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
             foundRow.Data = dataAsJson.ToString();
             this.Connection.Update(foundRow);
         }
-        public void UpdateEntity<T>(int id, T entityToUpdate)
+        public void UpdateEntity<T>(Guid id, T entityToUpdate)
         {
             this.Connection.Update(entityToUpdate);
         }

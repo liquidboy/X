@@ -65,14 +65,21 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
             return retrieveContext<T>().Save(entityToSave);
         }
 
-        public T Retrieve<T>(int idToRetrieve) {
-            return retrieveContext<T>().Retrieve(idToRetrieve);
-        }
-
-        public int Find<T>(string query)
+        //public T Retrieve<T>(int idToRetrieve) {
+        //    return retrieveContext<T>().Retrieve(idToRetrieve);
+        //}
+        public T RetrieveEntity<T>(Guid idToRetrieve)
         {
-            return retrieveContext<T>().Find(query);
+            return retrieveContext<T>().RetrieveEntity(idToRetrieve);
         }
+        public T RetrieveEntity<T>(string where)
+        {
+            return retrieveContext<T>().RetrieveEntity(where);
+        }
+        //public int Find<T>(string query)
+        //{
+        //    return retrieveContext<T>().Find(query);
+        //}
 
         //public int Find<T>(string query, params object[] args) where T : new()
         //{

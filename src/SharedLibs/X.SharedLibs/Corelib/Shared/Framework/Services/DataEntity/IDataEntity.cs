@@ -9,6 +9,8 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
     public interface IDataEntity<T>
     {
         int Save(T instance);
+        T RetrieveEntity(Guid id);
+        T RetrieveEntity(string where);
         T Retrieve(int id);
         int Find(string whereQuery);
         int FindAll();

@@ -37,7 +37,24 @@ namespace SumoNinjaMonkey.Framework
         }
         private SqliteDatabaseManager(string instanceName){ _databases = new Dictionary<string, SqliteDatabase>(); }
 
-         
+        public void DeleteDatabase(string dbName) {
+            if (DoesDatabaseExist(dbName))
+            {
+                var db = _databases[dbName];
+                db.Close();
+                _databases.Remove(dbName);
+            }
+        }
+
+        public void DeleteAllDatabases()
+        {
+            string[] keys = new string[_databases.Keys.Count];
+            _databases.Keys.CopyTo(keys, 0) ;
+            foreach(var dbName in keys)
+            {
+                DeleteDatabase(dbName);
+            }
+        }
     }
      
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SumoNinjaMonkey.Framework;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -109,15 +110,15 @@ namespace X.ModernDesktop
 
 
             //search
-            var resultOrderHeader = Context.Current.Find<OrderHeader>("id = " + newid);
+            var resultOrderHeader = Context.Current.RetrieveEntity<OrderHeader>(oh.UniqueId);
+            var olifound = Context.Current.RetrieveEntity<OrderLiteItem>(oli.UniqueId);
             //var resultOrderLineItems = Context.Current.Find<OrderLiteItem>($"Select * from OrderLite where 'OrderHeaderId' = ?", newid);
-            var resultOrderLineItems2 = Context.Current.Find<OrderLiteItem>("id = " + newid2);
-            var resultOrderFooter = Context.Current.Find<OrderFooter>("'ShippingAddress' = 'Home'");
-            var resultOrderFooter2 = Context.Current.Find<OrderFooter>("id = " + newid3);
+            var resultOrderFooter = Context.Current.RetrieveEntity<OrderFooter>(of.UniqueId);
+            var resultOrderFooter2 = Context.Current.RetrieveEntity<OrderFooter>($"shippingaddress='Home'");
 
 
             //load 
-            if (Context.Current.Retrieve<OrderHeader>(newid) != null)
+            if (Context.Current.RetrieveEntity<OrderHeader>(oh.UniqueId) != null)
             {
                 //delete
                 Context.Current.Delete<OrderHeader>(newid);
@@ -125,6 +126,10 @@ namespace X.ModernDesktop
 
             //delete
             Context.Current.DeleteAll<OrderHeader>();
+
+            //delete from manager
+            SqliteDatabaseManager.Current.DeleteAllDatabases();
+
         }
     }
 }
