@@ -39,49 +39,53 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
             // var typesFound = ReflectiveEnumerator.GetEnumerableOfType<BaseEntity>();
         }
         
-        public bool DoesEntityExist(string name) { return _entities.ContainsKey(name); }
-        public void RegisterEntity<T>()
+        public bool DoesContextExist(string name) { return _entities.ContainsKey(name); }
+        public bool DoesContextExist<T>() { return _entities.ContainsKey(typeof(T).Name); }
+
+        public void RegisterContext<T>()
         {
             //eg. inline c# looks like this
             //      public class OrderHeaderContext : DataEntity<OrderHeader> { }
             //codify it looks like ...
-            var name = typeof(T).Name;
-            if (!DoesEntityExist(name)) {
+
+            if (!DoesContextExist<T>()) {
                 var d1 = typeof(DataEntity<>);
                 Type[] typeArgs = { typeof(T) };
                 var makeme = d1.MakeGenericType(typeArgs);
                 object o = Activator.CreateInstance(makeme);
-                _entities.Add(name, o);
+                _entities.Add(typeof(T).Name, o);
             }
         }
 
-        public int Save<T>(T entityToSave) {
-            var name = typeof(T).Name;
-            dynamic ctx = _entities[name];
-            return ctx.Save(entityToSave);
-        }
-        public T Retrieve<T>(int idToRetrieve) {
-            var name = typeof(T).Name;
-            dynamic ctx = _entities[name];
-            return ctx.Retrieve(idToRetrieve);
-        }
-        public int Find<T>(string query)
-        {
-            var name = typeof(T).Name;
-            dynamic ctx = _entities[name];
-            return ctx.Find(query);
-        }
-        public void DeleteAll<T>() {
-            var name = typeof(T).Name;
-            dynamic ctx = _entities[name];
-            ctx.DeleteAll();
-        }
-        public void Delete<T>(int idToDelete) {
-            var name = typeof(T).Name;
-            dynamic ctx = _entities[name];
-            ctx.Delete(idToDelete);
+        private IDataEntity<T> retrieveContext<T>() {
+            return (IDataEntity<T>)_entities[typeof(T).Name];
         }
 
+        public int Save<T>(T entityToSave) {
+            return retrieveContext<T>().Save(entityToSave);
+        }
+
+        public T Retrieve<T>(int idToRetrieve) {
+            return retrieveContext<T>().Retrieve(idToRetrieve);
+        }
+
+        public int Find<T>(string query)
+        {
+            return retrieveContext<T>().Find(query);
+        }
+
+        //public int Find<T>(string query, params object[] args) where T : new()
+        //{
+        //    return retrieveContext<T>().Find<T>(query, args);
+        //}
+
+        public void DeleteAll<T>() {
+            retrieveContext<T>().DeleteAll();
+        }
+
+        public void Delete<T>(int idToDelete) {
+            retrieveContext<T>().Delete(idToDelete);
+        }
     }
 
 

@@ -73,9 +73,9 @@ namespace X.ModernDesktop
             this.InitializeComponent();
 
             AppDatabase.Current.Init();
-            Context.Current.RegisterEntity<OrderHeader>();
-            Context.Current.RegisterEntity<OrderLiteItem>();
-            Context.Current.RegisterEntity<OrderFooter>();
+            Context.Current.RegisterContext<OrderHeader>();
+            Context.Current.RegisterContext<OrderLiteItem>();
+            Context.Current.RegisterContext<OrderFooter>();
             
             //create new
             var oh = new OrderHeader()
@@ -96,7 +96,7 @@ namespace X.ModernDesktop
                 OrderID = oh.OrderID,
                 OrderHeaderId = newid
             };
-            Context.Current.Save(oli);
+            var newid2 = Context.Current.Save(oli);
 
             var of = new OrderFooter()
             {
@@ -105,13 +105,15 @@ namespace X.ModernDesktop
                 ShippingAddress = "Home",
                 OrderHeaderId = newid
             };
-            Context.Current.Save(of);
+            var newid3 = Context.Current.Save(of);
 
 
             //search
             var resultOrderHeader = Context.Current.Find<OrderHeader>("id = " + newid);
-            var resultOrderLineItems = Context.Current.Find<OrderLiteItem>("'OrderHeaderId' = " + newid);
+            //var resultOrderLineItems = Context.Current.Find<OrderLiteItem>($"Select * from OrderLite where 'OrderHeaderId' = ?", newid);
+            var resultOrderLineItems2 = Context.Current.Find<OrderLiteItem>("id = " + newid2);
             var resultOrderFooter = Context.Current.Find<OrderFooter>("'ShippingAddress' = 'Home'");
+            var resultOrderFooter2 = Context.Current.Find<OrderFooter>("id = " + newid3);
 
 
             //load 

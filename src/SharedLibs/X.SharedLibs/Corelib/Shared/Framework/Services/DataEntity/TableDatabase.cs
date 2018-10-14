@@ -39,6 +39,11 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
             return newRow.Id;
         }
 
+        public int AddEntity<T>(T newEntity) {
+            this.Connection.CreateTable<T>();
+            var createdEntityId = this.Connection.Insert(newEntity);
+            return createdEntityId;
+        }
 
 
         public void AddColumn(string name, string userName)
@@ -83,6 +88,10 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         {
             return this.Connection.Query<TableRow>("SELECT * FROM TableRow WHERE " + whereQuery);
         }
+        //public List<T> Find<T>(string whereQuery, params object[] args) where T : new()
+        //{
+        //    return Connection.Query<T>(whereQuery, args);
+        //}
         public TableRow GetTableRow(int id)
         {
             var row = this.Connection.Query<TableRow>("SELECT * FROM TableRow WHERE Id = ?", id);
@@ -124,6 +133,10 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
             var foundRow = GetTableRow(id);
             foundRow.Data = dataAsJson.ToString();
             this.Connection.Update(foundRow);
+        }
+        public void UpdateEntity<T>(int id, T entityToUpdate)
+        {
+            this.Connection.Update(entityToUpdate);
         }
         public void UpdateColumn(TableColumn column)
         {

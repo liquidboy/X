@@ -8,6 +8,7 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
     public abstract class BaseEntity{
         public Guid UniqueId { get; set; }
         public int _internalRowId;
+        public int _internalEntityId;
 
     }
 
@@ -75,6 +76,7 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
                 }
                 udo["UniqueId"] = instance.UniqueId.ToString();
                 _table.UpdateRowData(instance._internalRowId, udo);
+                _table.UpdateEntity(instance._internalEntityId, instance);
             }
             else
             {
@@ -91,6 +93,7 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
                 udo["UniqueId"] = instance.UniqueId.ToString();
 
                 instance._internalRowId = _table.AddRow(udo.ToString(), _defaultCreator);
+                instance._internalEntityId = _table.AddEntity(instance);
             }
             
             return instance._internalRowId;
