@@ -41,7 +41,13 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
             _entities = new Dictionary<string, object>();
             // todo :   use reflection to go through ALL classes that inherity abstract class BaseEntity
             //          and Register that entity
-            // var typesFound = ReflectiveEnumerator.GetEnumerableOfType<BaseEntity>();
+            var typesFound = ReflectiveEnumerator.GetEnumerableOfType<BaseEntity>();
+            foreach (var type in typesFound) {                
+                MethodInfo method = typeof(DBContext).GetMethod("RegisterContext");
+                MethodInfo generic = method.MakeGenericMethod(type.GetType());
+                generic.Invoke(this, null);
+            }
+            
         }
         
         public bool DoesContextExist(string name) { return _entities.ContainsKey(name); }
@@ -108,13 +114,26 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         public static IEnumerable<T> GetEnumerableOfType<T>(params object[] constructorArgs) where T : class
         {
             List<T> objects = new List<T>();
-            foreach (Type type in
-                //Assembly.GetAssembly(typeof(T)).GetTypes()  <== ONLY THIS ASSEMBLY
-                AppDomain.CurrentDomain.GetAssemblies().SelectMany(a=> a.GetTypes())  // <== ACROSS ALL LOADED ASSEMBLIES
-                .Where(myType => myType.IsClass && !myType.IsAbstract && myType.IsSubclassOf(typeof(T))))
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
-                objects.Add((T)Activator.CreateInstance(type, constructorArgs));
+                try {
+                    foreach (var type in assembly.GetTypes()
+                        .Where(myType => myType.IsClass && !myType.IsAbstract && myType.IsSubclassOf(typeof(T))))
+                    {
+                        objects.Add((T)Activator.CreateInstance(type, constructorArgs));
+                    }
+                }
+                catch { }
             }
+            
+
+            //foreach (Type type in
+            //    //Assembly.GetAssembly(typeof(T)).GetTypes()  <== ONLY THIS ASSEMBLY
+            //    AppDomain.CurrentDomain.GetAssemblies().SelectMany(a=> a.GetTypes())  // <== ACROSS ALL LOADED ASSEMBLIES
+            //    .Where(myType => myType.IsClass && !myType.IsAbstract && myType.IsSubclassOf(typeof(T))))
+            //{
+            //    objects.Add((T)Activator.CreateInstance(type, constructorArgs));
+            //}
             //objects.Sort();
             return objects;
         }

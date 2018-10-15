@@ -61,9 +61,10 @@ namespace X.ModernDesktop
             this.InitializeComponent();
 
             AppDatabase.Current.Init();
-            DBContext.Current.RegisterContext<OrderHeader>();
-            DBContext.Current.RegisterContext<OrderLiteItem>();
-            DBContext.Current.RegisterContext<OrderFooter>();
+            //done in context constructor now via reflection
+            //DBContext.Current.RegisterContext<OrderHeader>();
+            //DBContext.Current.RegisterContext<OrderLiteItem>();
+            //DBContext.Current.RegisterContext<OrderFooter>();
             
             //create new
             var oh = new OrderHeader()
