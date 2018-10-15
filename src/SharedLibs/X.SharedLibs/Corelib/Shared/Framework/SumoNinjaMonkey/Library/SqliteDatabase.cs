@@ -15,9 +15,9 @@ namespace SumoNinjaMonkey.Framework
         public SqliteDatabase(string dbName){
             Name = dbName;
             Location = System.IO.Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, dbName);
-            if (!SqliteDatabaseManager.Current.DoesDatabaseExist(dbName)) {
+            if (!DBManager.Current.DoesDatabaseExist(dbName)) {
                 this.Connection = new SQLiteConnection(Location);
-                SqliteDatabaseManager.Current.RegisterDatabase(dbName, this);
+                DBManager.Current.RegisterDatabase(dbName, this);
             }
         }
 

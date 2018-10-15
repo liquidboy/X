@@ -10,7 +10,7 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
     {
         int Save(T instance);
         T RetrieveEntity(Guid id);
-        T RetrieveEntity(string where);
+        List<T> RetrieveEntities(string where);
         T Retrieve(int id);
         int Find(string whereQuery);
         int FindAll();

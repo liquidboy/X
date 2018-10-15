@@ -78,13 +78,12 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
             var found = Connection.Query<T>(qry);
             return found.FirstOrDefault();
         }
-        public T GetEntity<T>(string where) where T : new()
+        public List<T> GetEntities<T>(string where) where T : new()
         {
             //var resultsCount = this.Connection.Table<T>().Count();
             var name = typeof(T).Name;
             var qry = $"SELECT * FROM '{name}' WHERE {where}";
-            var found = Connection.Query<T>(qry);
-            return found.FirstOrDefault();
+            return Connection.Query<T>(qry);
         }
         public JObject GetEmptyRowAsJson()
         {

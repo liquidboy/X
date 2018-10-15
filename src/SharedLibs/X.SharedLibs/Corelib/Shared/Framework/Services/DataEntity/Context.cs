@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SumoNinjaMonkey.Framework;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using X.CoreLib.SQLite;
@@ -7,21 +9,22 @@ using X.CoreLib.SQLite;
 namespace X.CoreLib.Shared.Framework.Services.DataEntity
 {
 
-    public class Context
+    [DefaultProperty("Current")]
+    public class DBContext
     {
-        private static Context _instance = null;
+        private static DBContext _instance = null;
         private static object lockobj = new object();
 
-        public static Context Current
+        public static DBContext Current
         {
             get
             {
-                Context result;
+                DBContext result;
                 lock (lockobj)
                 {
                     if (_instance == null)
                     {
-                        _instance = new Context("xappdbs");
+                        _instance = new DBContext("xappdbs");
                     }
                     result = _instance;
                 }
@@ -29,9 +32,11 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
             }
         }
 
+        public DBManager Manager { get { return DBManager.Current; } }
+
         private Dictionary<string, object> _entities;
 
-        private Context(string instanceName)
+        private DBContext(string instanceName)
         {
             _entities = new Dictionary<string, object>();
             // todo :   use reflection to go through ALL classes that inherity abstract class BaseEntity
@@ -72,9 +77,9 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         {
             return retrieveContext<T>().RetrieveEntity(idToRetrieve);
         }
-        public T RetrieveEntity<T>(string where)
+        public List<T> RetrieveEntities<T>(string where)
         {
-            return retrieveContext<T>().RetrieveEntity(where);
+            return retrieveContext<T>().RetrieveEntities(where);
         }
         //public int Find<T>(string query)
         //{

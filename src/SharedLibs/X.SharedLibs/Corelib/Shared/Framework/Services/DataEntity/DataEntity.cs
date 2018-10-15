@@ -99,9 +99,9 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         {
             return _table.GetEntity<T>(id);
         }
-        public T RetrieveEntity(string where)
+        public List<T> RetrieveEntities(string where)
         {
-            return _table.GetEntity<T>(where);
+            return _table.GetEntities<T>(where);
         }
         public T Retrieve(int id)
         {

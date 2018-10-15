@@ -4,21 +4,21 @@ using X.CoreLib.SQLite;
 namespace SumoNinjaMonkey.Framework
 {
 
-    public class SqliteDatabaseManager
+    public class DBManager
     {
-        private static SqliteDatabaseManager _instance = null;
+        private static DBManager _instance = null;
         private static object lockobj = new object();
 
-        public static SqliteDatabaseManager Current
+        public static DBManager Current
         {
             get
             {
-                SqliteDatabaseManager result;
+                DBManager result;
                 lock (lockobj)
                 {
                     if (_instance == null)
                     {
-                        _instance = new SqliteDatabaseManager("xappdbs");
+                        _instance = new DBManager("xappdbs");
                     }
                     result = _instance;
                 }
@@ -35,7 +35,7 @@ namespace SumoNinjaMonkey.Framework
                 _databases.Add(dbName, db);
             }
         }
-        private SqliteDatabaseManager(string instanceName){ _databases = new Dictionary<string, SqliteDatabase>(); }
+        private DBManager(string instanceName){ _databases = new Dictionary<string, SqliteDatabase>(); }
 
         public void DeleteDatabase(string dbName) {
             if (DoesDatabaseExist(dbName))

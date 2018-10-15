@@ -1,19 +1,6 @@
-﻿using SumoNinjaMonkey.Framework;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using System;
 using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using X.CoreLib.Shared.Framework.Services.DataEntity;
 
 namespace X.ModernDesktop
@@ -74,9 +61,9 @@ namespace X.ModernDesktop
             this.InitializeComponent();
 
             AppDatabase.Current.Init();
-            Context.Current.RegisterContext<OrderHeader>();
-            Context.Current.RegisterContext<OrderLiteItem>();
-            Context.Current.RegisterContext<OrderFooter>();
+            DBContext.Current.RegisterContext<OrderHeader>();
+            DBContext.Current.RegisterContext<OrderLiteItem>();
+            DBContext.Current.RegisterContext<OrderFooter>();
             
             //create new
             var oh = new OrderHeader()
@@ -87,7 +74,7 @@ namespace X.ModernDesktop
                 Quantity = 100,
                 TotalCost = 199.00
             };
-            var newid = Context.Current.Save(oh);
+            var newid = DBContext.Current.Save(oh);
 
             var oli = new OrderLiteItem()
             {
@@ -97,7 +84,7 @@ namespace X.ModernDesktop
                 OrderID = oh.OrderID,
                 OrderHeaderId = newid
             };
-            var newid2 = Context.Current.Save(oli);
+            var newid2 = DBContext.Current.Save(oli);
 
             var of = new OrderFooter()
             {
@@ -106,29 +93,29 @@ namespace X.ModernDesktop
                 ShippingAddress = "Home",
                 OrderHeaderId = newid
             };
-            var newid3 = Context.Current.Save(of);
+            var newid3 = DBContext.Current.Save(of);
 
 
             //search
-            var resultOrderHeader = Context.Current.RetrieveEntity<OrderHeader>(oh.UniqueId);
-            var olifound = Context.Current.RetrieveEntity<OrderLiteItem>(oli.UniqueId);
+            var resultOrderHeader = DBContext.Current.RetrieveEntity<OrderHeader>(oh.UniqueId);
+            var olifound = DBContext.Current.RetrieveEntity<OrderLiteItem>(oli.UniqueId);
             //var resultOrderLineItems = Context.Current.Find<OrderLiteItem>($"Select * from OrderLite where 'OrderHeaderId' = ?", newid);
-            var resultOrderFooter = Context.Current.RetrieveEntity<OrderFooter>(of.UniqueId);
-            var resultOrderFooter2 = Context.Current.RetrieveEntity<OrderFooter>($"shippingaddress='Home'");
-
+            var resultOrderFooter = DBContext.Current.RetrieveEntity<OrderFooter>(of.UniqueId);
+            var resultOrderFooter2 = DBContext.Current.RetrieveEntities<OrderFooter>($"shippingaddress='Home'");
+            
 
             //load 
-            if (Context.Current.RetrieveEntity<OrderHeader>(oh.UniqueId) != null)
+            if (DBContext.Current.RetrieveEntity<OrderHeader>(oh.UniqueId) != null)
             {
                 //delete
-                Context.Current.Delete<OrderHeader>(newid);
+                DBContext.Current.Delete<OrderHeader>(newid);
             }
 
             //delete
-            Context.Current.DeleteAll<OrderHeader>();
+            DBContext.Current.DeleteAll<OrderHeader>();
 
             //delete from manager
-            SqliteDatabaseManager.Current.DeleteAllDatabases();
+            DBContext.Current.Manager.DeleteAllDatabases();
 
         }
     }
