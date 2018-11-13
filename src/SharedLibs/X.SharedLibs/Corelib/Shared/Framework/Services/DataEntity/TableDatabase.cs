@@ -40,7 +40,8 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         }
 
         public int AddEntity<T>(T newEntity) {
-            this.Connection.CreateTable<T>(CreateFlags.FullTextSearch4);
+            //this.Connection.CreateTable<T>(CreateFlags.FullTextSearch4);
+            this.Connection.CreateTable<T>();
             var createdEntityId = this.Connection.Insert(newEntity);
             return createdEntityId;
         }
