@@ -1,28 +1,40 @@
-﻿#pragma once
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+//
+// Licensed under the MIT License. See LICENSE.txt in the project root for license information.
 
-#include "CompositionImageOptions.g.h"
+#pragma once
 
-namespace winrt::Microsoft::UI::Composition::Toolkit::implementation
-{
-    struct CompositionImageOptions : CompositionImageOptionsT<CompositionImageOptions>
+namespace Microsoft {
+namespace UI {
+namespace Composition {
+namespace Toolkit {
+
+    // Wrapper class that can be provided to the CompositionImage creation functions
+    // to specify the desired size of the decoded bitmap.
+    [Windows::Foundation::Metadata::WebHostHidden]
+    public ref class CompositionImageOptions sealed
     {
-        CompositionImageOptions() = default;
+    public:
+        CompositionImageOptions();
 
-        int32_t DecodeWidth();
-        void DecodeWidth(int32_t value);
-        int32_t DecodeHeight();
-        void DecodeHeight(int32_t value);
+        property int DecodeWidth
+        {
+            int get();
+            void set(int);
+        };
+
+        property int DecodeHeight
+        {
+            int get();
+            void set(int);
+        };
 
     private:
-
-        int m_decodeWidth{};
-        int m_decodeHeight{};
+        int _decodeWidth;
+        int _decodeHeight;
     };
-}
 
-namespace winrt::Microsoft::UI::Composition::Toolkit::factory_implementation
-{
-    struct CompositionImageOptions : CompositionImageOptionsT<CompositionImageOptions, implementation::CompositionImageOptions>
-    {
-    };
-}
+} // Toolkit
+} // Composition
+} // UI
+} // Microsoft

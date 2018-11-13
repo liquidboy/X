@@ -1,67 +1,112 @@
-﻿#include "pch.h"
-#include "CompositionImageFactory.h"
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+//
+// Licensed under the MIT License. See LICENSE.txt in the project root for license information.
+
+#include "pch.h"
+#include "CompositionGraphicsDevice.h"
 #include "CompositionImageOptions.h"
 #include "CompositionImage.h"
-#include "CompositionGraphicsDevice.h"
+#include "CompositionImageFactory.h"
 
-namespace winrt::Microsoft::UI::Composition::Toolkit::implementation
+namespace Microsoft {
+namespace UI {
+namespace Composition {
+namespace Toolkit {
+
+// Returns a CompositionImageFactory that can be used to create CompositionImages
+// associated with a particular Compositor instance. A reference should be kept to
+// the returned factory for the lifetime of the composition images created by the
+// factory.
+CompositionImageFactory^ CompositionImageFactory::CreateCompositionImageFactory(Compositor^ compositor)
 {
-    using namespace Windows::Foundation;
-    using namespace Windows::UI::Composition;
-
-    CompositionImageFactory::CompositionImageFactory(
-        Compositor const& compositor,
-        Toolkit::CompositionGraphicsDevice const& device) :
-        m_compositor(compositor),
-        m_device(device)
+    if (compositor == nullptr)
     {
+        __abi_ThrowIfFailed(E_INVALIDARG);
     }
 
-    Toolkit::CompositionImage CompositionImageFactory::CreateImageFromUri(Windows::Foundation::Uri const& uri)
-    {
-        return CreateImageFromUri(uri, make<CompositionImageOptions>());
-    }
-
-    Toolkit::CompositionImage CompositionImageFactory::CreateImageFromUri(Windows::Foundation::Uri const& uri, Toolkit::CompositionImageOptions const& options)
-    {
-        auto image = make<CompositionImage>();
-
-        from_abi<CompositionImage, Toolkit::ICompositionImage>(image)->Initialize(m_compositor, m_device, uri, nullptr, options);
-
-        return image;
-    }
-
-    Toolkit::CompositionImage CompositionImageFactory::CreateImageFromFile(Windows::Storage::StorageFile const& file)
-    {
-        return CreateImageFromFile(file, make<CompositionImageOptions>());
-    }
-
-    Toolkit::CompositionImage CompositionImageFactory::CreateImageFromFile(Windows::Storage::StorageFile const& file, Toolkit::CompositionImageOptions const& options)
-    {
-        auto image = make<CompositionImage>();
-
-        from_abi<CompositionImage, Toolkit::ICompositionImage>(image)->Initialize(m_compositor, m_device, nullptr, file, options);
-
-        return image;
-    }
-
-    Toolkit::CompositionImage CompositionImageFactory::CreateImageFromPixels(array_view<uint8_t const> pixels, int32_t pixelWidth, int32_t pixelHeight)
-    {
-        auto image = make<CompositionImage>();
-
-        from_abi<CompositionImage, Toolkit::ICompositionImage>(image)->Initialize(m_compositor, m_device, pixels, pixelWidth, pixelHeight);
-
-        return image;
-    }
-
-    Toolkit::CompositionImageFactory CompositionImageFactory::CreateCompositionImageFactory(Windows::UI::Composition::Compositor const& compositor)
-    {
-        if (compositor == nullptr)
-        {
-            throw hresult_invalid_argument();
-        }
-
-        Toolkit::CompositionGraphicsDevice device = make<CompositionGraphicsDevice>(compositor);
-        return make<CompositionImageFactory>(compositor, device);
-    }
+    CompositionGraphicsDevice^ device = CompositionGraphicsDevice::CreateCompositionGraphicsDevice(compositor);
+    return ref new CompositionImageFactory(compositor, device);
 }
+
+CompositionImageFactory::CompositionImageFactory(Compositor^ compositor, CompositionGraphicsDevice^ graphicsDevice) :
+    _compositor(compositor),
+    _graphicsDevice(graphicsDevice)
+{
+}
+
+// Creates a CompositionImage given a Uri that represents a packaged resource (ms-appx:///)
+// a application data resource (ms-appdata:///) or an http(s) resource (http:// or https://)
+// Does not support creating a CompositionImage from a Uri with the file scheme, instead
+// a StorageFile object should be passed as an argument to CreateImageFromFile.
+CompositionImage^ CompositionImageFactory::CreateImageFromUri(Windows::Foundation::Uri^ uri)
+{
+    CompositionImageOptions^ options = ref new CompositionImageOptions();
+    options->DecodeHeight = 0;
+    options->DecodeWidth = 0;
+
+    return CreateImageFromUri(uri, options);
+}
+
+// Functions similarly to CreateImageFromUri with the exception that any options provided
+// by the CompositionImageOptions are used to initialize the CompositionImage.
+CompositionImage^ CompositionImageFactory::CreateImageFromUri(Windows::Foundation::Uri^ uri, CompositionImageOptions^ options)
+{
+    SIZE szDecode = { 0, 0 };
+    if (options)
+    {
+        szDecode.cx = (ULONG)options->DecodeWidth;
+        szDecode.cy = (ULONG)options->DecodeHeight;
+    }
+
+    return CompositionImage::CreateCompositionImage(
+        _compositor,
+        _graphicsDevice,
+        uri,
+        nullptr,
+        options);
+}
+
+// Creates a CompositionImage given a StorageFile.
+CompositionImage^ CompositionImageFactory::CreateImageFromFile(StorageFile^ file)
+{
+    CompositionImageOptions^ options = ref new CompositionImageOptions();
+    options->DecodeHeight = 0;
+    options->DecodeWidth = 0;
+
+    return CreateImageFromFile(file, options);
+}
+
+// Functions similarly to CreateImageFromFile with the exception that any options provided
+// by the CompositionImageOptions are used to initialize the CompositionImage.
+CompositionImage^ CompositionImageFactory::CreateImageFromFile(StorageFile^ file, CompositionImageOptions^ options)
+{
+    SIZE szDecode = { 0, 0 };
+    if (options)
+    {
+        szDecode.cx = (ULONG)options->DecodeWidth;
+        szDecode.cy = (ULONG)options->DecodeHeight;
+    }
+
+    return CompositionImage::CreateCompositionImage(
+        _compositor,
+        _graphicsDevice,
+        nullptr,
+        file,
+        options);
+}
+
+// Creates a CompositionImage given a pixels buffer.
+CompositionImage^ CompositionImageFactory::CreateImageFromPixels(const Array<byte>^ pixels, int pixelWidth, int pixelHeight)
+{
+    return CompositionImage::CreateCompositionImage(
+        _compositor,
+        _graphicsDevice,
+        pixels,
+        pixelWidth,
+        pixelHeight);
+}
+
+}  // namespace Toolkit
+}  // namespace Composition
+}  // namespace UI
+}  // namespace Microsoft

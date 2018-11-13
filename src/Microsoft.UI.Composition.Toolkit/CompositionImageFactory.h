@@ -1,35 +1,49 @@
-﻿#pragma once
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+//
+// Licensed under the MIT License. See LICENSE.txt in the project root for license information.
 
-#include "CompositionImageFactory.g.h"
+#pragma once
 
-namespace winrt::Microsoft::UI::Composition::Toolkit::implementation
-{
-    struct CompositionImageFactory : CompositionImageFactoryT<CompositionImageFactory>
+namespace Microsoft {
+namespace UI {
+namespace Composition {
+namespace Toolkit {
+
+    [Windows::Foundation::Metadata::WebHostHidden]
+    public ref class CompositionImageFactory sealed
     {
-        CompositionImageFactory(Windows::UI::Composition::Compositor const& compositor, Toolkit::CompositionGraphicsDevice const& device);
+    public:
+        static CompositionImageFactory^ CreateCompositionImageFactory(
+            Compositor^ compositor);
 
-        Toolkit::CompositionImage CreateImageFromUri(Windows::Foundation::Uri const& uri);
+        CompositionImage^ CreateImageFromUri(Uri^ uri);
 
-        Toolkit::CompositionImage CreateImageFromUri(Windows::Foundation::Uri const& uri, Toolkit::CompositionImageOptions const& options);
+        CompositionImage^ CreateImageFromUri(
+            Uri^ uri,
+            CompositionImageOptions^ options);
 
-        Toolkit::CompositionImage CreateImageFromFile(Windows::Storage::StorageFile const& file);
+        CompositionImage^ CreateImageFromFile(StorageFile^ file);
 
-        Toolkit::CompositionImage CreateImageFromFile(Windows::Storage::StorageFile const& file, Toolkit::CompositionImageOptions const& options);
+        CompositionImage^ CreateImageFromFile(
+            StorageFile^ file,
+            CompositionImageOptions^ options);
 
-        Toolkit::CompositionImage CreateImageFromPixels(array_view<uint8_t const> pixels, int32_t pixelWidth, int32_t pixelHeight);
-
-        static Toolkit::CompositionImageFactory CreateCompositionImageFactory(Windows::UI::Composition::Compositor const& compositor);
+        CompositionImage^ CreateImageFromPixels(
+            const Array<byte>^ pixels,
+            int pixelWidth,
+            int pixelHeight);
 
     private:
+        CompositionImageFactory(
+            Compositor^ compositor,
+            CompositionGraphicsDevice^ graphicsDevice);
 
-        Windows::UI::Composition::Compositor m_compositor{ nullptr };
-        Toolkit::CompositionGraphicsDevice m_device{ nullptr };
+    private:
+        CompositionGraphicsDevice^ _graphicsDevice;
+        Compositor^ _compositor;
     };
-}
 
-namespace winrt::Microsoft::UI::Composition::Toolkit::factory_implementation
-{
-    struct CompositionImageFactory : CompositionImageFactoryT<CompositionImageFactory, implementation::CompositionImageFactory>
-    {
-    };
-}
+} // Toolkit
+} // Composition
+} // UI
+} // Microsoft

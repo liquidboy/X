@@ -1,454 +1,683 @@
-﻿#include "pch.h"
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+//
+// Licensed under the MIT License. See LICENSE.txt in the project root for license information.
+
+#include "pch.h"
+
+#include "WICBitmapSource.h"
+
+#include "CompositionImageOptions.h"
+#include "CompositionGraphicsDevice.h"
 #include "CompositionImage.h"
 
-struct __declspec(uuid("905a0fef-bc53-11df-8c49-001e4fc686da")) IBufferByteAccess : ::IUnknown
+namespace Microsoft {
+namespace UI {
+namespace Composition {
+namespace Toolkit {
+
+CompositionImage::CompositionImage(
+    Compositor^ compositor,
+    CompositionGraphicsDevice^ graphicsDevice,
+    Windows::Foundation::Uri^ uri,
+    StorageFile^ file,
+    CompositionImageOptions^ options) :
+    _compositor(compositor),
+    _imageOptions(options),
+    _graphicsDevice(graphicsDevice),
+    _uri(uri),
+    _file(file)
 {
-    virtual HRESULT __stdcall Buffer(uint8_t** value) = 0;
+    if (options != nullptr)
+    {
+        _sizeDecode.cx = options->DecodeWidth;
+        _sizeDecode.cy = options->DecodeHeight;
+    }
+}
+
+CompositionImage::CompositionImage(
+    Compositor^ compositor,
+    CompositionGraphicsDevice^ graphicsDevice,
+    const Array<byte>^ pixels,
+    int pixelWidth,
+    int pixelHeight) :
+    _compositor(compositor),
+    _graphicsDevice(graphicsDevice)
+{
+    _sizeDecode.cx = pixelWidth;
+    _sizeDecode.cy = pixelHeight;
+}
+
+// Creates a CompostionImage given a byte[] buffer and pixel width and height.
+CompositionImage^ CompositionImage::CreateCompositionImage(
+    Compositor^ compositor,
+    CompositionGraphicsDevice^ graphicsDevice,
+    const Array<byte>^ pixels,
+    int pixelWidth,
+    int pixelHeight)
+{
+    if (pixels == nullptr)
+    {
+        ERR(E_INVALIDARG, L"CompositionImage requires a buffer to be created.");
+        __abi_ThrowIfFailed(E_INVALIDARG);
+    }
+
+    CompositionImage^ image = ref new CompositionImage(
+        compositor,
+        graphicsDevice,
+        pixels,
+        pixelWidth,
+        pixelHeight);
+
+    //
+    // Create the underlying composition drawing surface using the given graphics device
+    //
+    Windows::Foundation::Size initialPixelSize;
+    initialPixelSize.Width = static_cast<float>(pixelWidth);
+    initialPixelSize.Height = static_cast<float>(pixelHeight);
+
+    ICompositionSurface^ surface = graphicsDevice->CreateDrawingSurface(
+        initialPixelSize,
+        DirectXPixelFormat::B8G8R8A8UIntNormalized,
+        DirectXAlphaMode::Premultiplied);
+
+    image->_sizeCompositionSurface = image->_sizeDecode;
+    image->_compositionSurface =
+        reinterpret_cast<ABI::Windows::UI::Composition::ICompositionDrawingSurface*>(surface);
+
+    __abi_ThrowIfFailed(image->_compositionSurface.As(&image->_compositionSurfaceInterop));
+
+    //
+    // Register for device lost since we must redraw the bitmap into the composition surface
+    // in the case the graphics device is reset.
+    //
+    graphicsDevice->DeviceLost += ref new CompositionGraphicsDeviceLostEventHandler(
+        image,
+        &CompositionImage::HandleGraphicsDeviceLost);
+
+    //
+    // Create a bitmap and draw this bitmap on surfece.
+    //
+    image->DrawBitmapOnSurface(pixels, pixelWidth, pixelHeight);
+
+    return image;
+}
+
+// Creates a CompostionImage given a Uri or a StorageFile object, only one should be provided.
+CompositionImage^ CompositionImage::CreateCompositionImage(
+    Compositor^ compositor,
+    CompositionGraphicsDevice^ graphicsDevice,
+    Windows::Foundation::Uri^ uri,
+    StorageFile^ file,
+    CompositionImageOptions^ options)
+{
+    if (uri != nullptr && file != nullptr)
+    {
+        ERR(E_INVALIDARG, L"CompositionImage cannot be created with both a file and uri.");
+        __abi_ThrowIfFailed(E_INVALIDARG);
+    }
+
+    if (uri == nullptr && file == nullptr)
+    {
+        ERR(E_INVALIDARG, L"CompositionImage requires either a file or uri to be created.");
+        __abi_ThrowIfFailed(E_INVALIDARG);
+    }
+
+    CompositionImage^ image = ref new CompositionImage(
+        compositor,
+        graphicsDevice,
+        uri,
+        file,
+        options);
+
+    //
+    // Create the underlying composition drawing surface using the given graphics device
+    //
+    Windows::Foundation::Size initialPixelSize;
+    initialPixelSize.Width = static_cast<float>(image->_sizeDecode.cx);
+    initialPixelSize.Height = static_cast<float>(image->_sizeDecode.cy);
+
+    ICompositionSurface^ surface = graphicsDevice->CreateDrawingSurface(
+        initialPixelSize,
+        DirectXPixelFormat::B8G8R8A8UIntNormalized,
+        DirectXAlphaMode::Premultiplied);
+
+    image->_sizeCompositionSurface = image->_sizeDecode;
+    image->_compositionSurface =
+        reinterpret_cast<ABI::Windows::UI::Composition::ICompositionDrawingSurface*>(surface);
+
+    __abi_ThrowIfFailed(image->_compositionSurface.As(&image->_compositionSurfaceInterop));
+
+    //
+    // Register for device lost since we must redraw the bitmap into the composition surface
+    // in the case the graphics device is reset.
+    //
+    graphicsDevice->DeviceLost += ref new CompositionGraphicsDeviceLostEventHandler(
+        image,
+        &CompositionImage::HandleGraphicsDeviceLost);
+
+    //
+    // Kick off the image load operation so that the image will download and decode in the background.
+    //
+    image->_loadAsyncAction = image->LoadImageAsync();
+
+    return image;
+}
+
+// Abstracts the actual download of the image and drawing into the underlying surface.
+// An async action is scheduled as a result of calling LoadImageAsync and
+// its result should be obtained vby registering for the ImageLoaded event.
+IAsyncAction^ CompositionImage::LoadImageAsync()
+{
+    //
+    // Downloading, decoding, and then drawing the bitmap could take some time so create an async operation
+    // to perform this action synchronously off the caller's thread.
+    //
+    return create_async([this]() -> void
+    {
+        //
+        // Load the Buffer from the Uri or StorageFile that backs this composition image.
+        //
+        IBuffer^ imageRawBuffer = nullptr;
+        if (_uri != nullptr)
+        {
+            imageRawBuffer = LoadImageFromUri(_uri);
+        }
+        else if (_file != nullptr)
+        {
+            imageRawBuffer = LoadImageFromFile(_file);
+        }
+
+        if (imageRawBuffer == nullptr)
+        {
+            ReportImageLoaded(CompositionImageLoadStatus::FileAccessError);
+            return;
+        }
+
+        //
+        // Decode the buffer into an IWICBitmapSource
+        //
+        ComPtr<IWICBitmapSource> bitmapSource = DecodeBufferIntoBitmap(imageRawBuffer, _sizeDecode);
+        if (bitmapSource == nullptr)
+        {
+            // If for some reason the DecodeBufferIntoBitmap failed report a decode error to ImageLoaded.
+            ReportImageLoaded(CompositionImageLoadStatus::DecodeError);
+            return;
+        }
+
+        //
+        // Update the size of the loaded bitmap now that it's decoded
+        //
+        UINT cxSizeBitmap;
+        UINT cySizeBitmap;
+        HRESULT hr = bitmapSource->GetSize(&cxSizeBitmap, &cySizeBitmap);
+        if (FAILED(hr))
+        {
+            ERR(hr, L"Failed to get the size of the decoded bitmap");
+            ReportImageLoaded(CompositionImageLoadStatus::Other);
+            return;
+        }
+
+        _sizeBitmapSource.cx = cxSizeBitmap;
+        _sizeBitmapSource.cy = cySizeBitmap;
+
+        //
+        // Draw the bitmap into the composition surface that backs this CompositionImage
+        //
+        hr = DrawBitmapOnSurface(bitmapSource);
+        if (FAILED(hr))
+        {
+            ERR(hr, L"Failed to draw bitmap on drawing surface.");
+
+            // Only report an image load error in the case we get a return value other than
+            // DXGI_ERROR_DEVICE_REMOVED since those error cases are handled by the DeviceLost
+            // callback which is recover the image load on the new device.
+            if (hr != DXGI_ERROR_DEVICE_REMOVED)
+            {
+                ReportImageLoaded(CompositionImageLoadStatus::NotEnoughResources);
+            }
+
+            return;
+        }
+
+        ReportImageLoaded(CompositionImageLoadStatus::Success);
+    });
 };
 
-namespace winrt::Microsoft::UI::Composition::Toolkit::implementation
+// Loads the raw image contents from the Uri synchronously and returns the resulting IBuffer
+// which contains the raw image contents.
+IBuffer^ CompositionImage::LoadImageFromUri(Uri^ uri)
 {
-    using namespace Windows::Foundation;
-    using namespace Windows::Storage;
-    using namespace Windows::Storage::Streams;
-    using namespace Windows::UI::Composition;
-    using namespace Windows::Graphics::DirectX;
+    task_completion_event<IBuffer^> fileLoaded;
+    task<StorageFile^> fileLoadTask;
 
-    void CompositionImage::Initialize(
-        Compositor const& compositor,
-        CompositionGraphicsDevice const& graphicsDevice,
-        Uri const& uri,
-        StorageFile const& file,
-        Toolkit::CompositionImageOptions const& options)
+    if (uri != nullptr)
     {
-        WINRT_ASSERT(_compositor == nullptr);
-
-        if (uri != nullptr && file != nullptr)
+        if ((uri->SchemeName == L"http") ||
+            (uri->SchemeName == L"https"))
         {
-            throw hresult_invalid_argument(L"CompositionImage cannot be created with both a file and uri.");
+            fileLoadTask =
+                create_task(StorageFile::CreateStreamedFileFromUriAsync(uri->Extension, uri, nullptr));
         }
-
-        if (uri == nullptr && file == nullptr)
+        else if (uri->SchemeName == L"file")
         {
-            throw hresult_invalid_argument(L"CompositionImage requires either a file or uri to be created.");
-        }
-
-        _compositor = compositor;
-        _graphicsDevice = graphicsDevice;
-        _uri = uri;
-        _file = file;
-        _imageOptions = options;
-
-        if (options != nullptr)
-        {
-            _sizeDecode.cx = options.DecodeWidth();
-            _sizeDecode.cy = options.DecodeHeight();
-        }
-
-        Windows::Foundation::Size initialPixelSize{ static_cast<float>(_sizeDecode.cx),static_cast<float>(_sizeDecode.cy) };
-
-        _compositionSurface = graphicsDevice.CreateDrawingSurface(
-            initialPixelSize,
-            DirectXPixelFormat::B8G8R8A8UIntNormalized,
-            DirectXAlphaMode::Premultiplied);
-
-        _sizeCompositionSurface = _sizeDecode;
-        _compositionSurface.as(_compositionSurfaceInterop);
-
-        graphicsDevice.DeviceLost([&, ref = static_cast<Toolkit::CompositionImage>(*this)](auto&&)
-        {
-            if (_loadAsyncAction != nullptr)
-            {
-                _loadAsyncAction.Cancel();
-            }
-
-            _loadAsyncAction = LoadImageAsync();
-        });
-
-        _loadAsyncAction = LoadImageAsync();
-    }
-
-    void CompositionImage::Initialize(
-        Compositor const& compositor,
-        CompositionGraphicsDevice const& graphicsDevice,
-        array_view<byte const> pixels,
-        int pixelWidth,
-        int pixelHeight)
-    {
-        if (pixels.empty())
-        {
-            throw hresult_invalid_argument(L"CompositionImage requires a buffer to be created.");
-        }
-
-        _compositor = compositor;
-        _graphicsDevice = graphicsDevice;
-        _sizeDecode.cx = pixelWidth;
-        _sizeDecode.cy = pixelHeight;
-
-        Windows::Foundation::Size initialPixelSize;
-        initialPixelSize.Width = static_cast<float>(pixelWidth);
-        initialPixelSize.Height = static_cast<float>(pixelHeight);
-
-        _compositionSurface = graphicsDevice.CreateDrawingSurface(
-            initialPixelSize,
-            DirectXPixelFormat::B8G8R8A8UIntNormalized,
-            DirectXAlphaMode::Premultiplied);
-
-        _compositionSurface.as(_compositionSurfaceInterop);
-
-        graphicsDevice.DeviceLost([&, ref = static_cast<Toolkit::CompositionImage>(*this)](auto&&)
-        {
-            if (_loadAsyncAction != nullptr)
-            {
-                _loadAsyncAction.Cancel();
-            }
-
-            _loadAsyncAction = LoadImageAsync();
-        });
-
-        DrawBitmapOnSurface(pixels, pixelWidth, pixelHeight);
-    }
-
-    IAsyncAction CompositionImage::LoadImageAsync()
-    {
-        try
-        {
-            IBuffer imageRawBuffer;
-
-            if (_uri != nullptr)
-            {
-                StorageFile file{ nullptr };
-                hstring const schemeName = _uri.SchemeName();
-
-                if (schemeName == L"http" || schemeName == L"https")
-                {
-                    file = co_await StorageFile::CreateStreamedFileFromUriAsync(_uri.Extension(), _uri, nullptr);
-                }
-                else if (schemeName == L"file")
-                {
-                    throw hresult_invalid_argument(L"Uri cannot have the file scheme, use CreateCompositionImageFromFile instead.");
-                }
-                else
-                {
-                    file = co_await StorageFile::GetFileFromApplicationUriAsync(_uri);
-                }
-
-                imageRawBuffer = co_await LoadImageFromFileAsync(file);
-            }
-            else if (_file != nullptr)
-            {
-                imageRawBuffer = co_await LoadImageFromFileAsync(_file);
-            }
-
-            com_ptr<IWICBitmapSource> bitmapSource = DecodeBufferIntoBitmap(imageRawBuffer, _sizeDecode);
-
-            UINT cxSizeBitmap;
-            UINT cySizeBitmap;
-            check_hresult(bitmapSource->GetSize(&cxSizeBitmap, &cySizeBitmap));
-
-            _sizeBitmapSource.cx = cxSizeBitmap;
-            _sizeBitmapSource.cy = cySizeBitmap;
-
-            DrawBitmapOnSurface(bitmapSource.get());
-
-            _imageLoaded(*this, CompositionImageLoadStatus::Success);
-        }
-        catch (hresult_error const&)
-        {
-            _imageLoaded(*this, CompositionImageLoadStatus::Other);
-
-        }
-    }
-
-    IAsyncOperation<IBuffer> CompositionImage::LoadImageFromFileAsync(StorageFile const file)
-    {
-        IRandomAccessStream stream = co_await file.OpenAsync(FileAccessMode::Read);
-
-        DataReader reader(stream);
-
-        uint32_t const numBytesLoaded = co_await reader.LoadAsync(static_cast<uint32_t>(stream.Size()));
-
-        return reader.ReadBuffer(numBytesLoaded);
-    }
-
-    com_ptr<IWICBitmapSource> CompositionImage::DecodeBufferIntoBitmap(IBuffer const& imageRawBuffer, SIZE sizeDecode)
-    {
-        com_ptr<IWICStream> wicStream;
-        com_ptr<IWICBitmapDecoder> bitmapDecoder;
-        com_ptr<IWICBitmapFrameDecode> bitmapFrame;
-        com_ptr<IWICBitmapSource> bitmapSource;
-        com_ptr<IWICBitmapSourceTransform> sourceTransform;
-
-        GUID pixelFormat = GUID_NULL;
-
-        UINT cxImage = 0;
-        UINT cyImage = 0;
-        UINT cxScaled = 0;
-        UINT cyScaled = 0;
-
-        com_ptr<IWICImagingFactory> imagingFactory;
-
-        check_hresult(CoCreateInstance(
-            CLSID_WICImagingFactory,
-            NULL,
-            CLSCTX_INPROC_SERVER,
-            IID_IWICImagingFactory,
-            imagingFactory.put_void()
-        ));
-
-        unsigned int bufferLength = imageRawBuffer.Length();
-        com_ptr<IBufferByteAccess> byteAccess = imageRawBuffer.as<IBufferByteAccess>();
-
-        BYTE* bytes = nullptr;
-        check_hresult(byteAccess->Buffer(&bytes));
-
-        check_hresult(imagingFactory->CreateStream(wicStream.put()));
-        check_hresult(wicStream->InitializeFromMemory(bytes, bufferLength));
-
-        check_hresult(imagingFactory->CreateDecoderFromStream(
-            wicStream.get(),
-            NULL,
-            WICDecodeMetadataCacheOnDemand,
-            bitmapDecoder.put()));
-
-        check_hresult(bitmapDecoder->GetFrame(0, bitmapFrame.put()));
-        bitmapSource = bitmapFrame;
-
-        check_hresult(bitmapSource->GetPixelFormat(&pixelFormat));
-
-        REFWICPixelFormatGUID desiredPixelFormat = GUID_WICPixelFormat32bppPBGRA;
-
-        check_hresult(bitmapSource->GetSize(&cxImage, &cyImage));
-
-        if (sizeDecode.cx == 0)
-        {
-            sizeDecode.cx = cxImage;
-        }
-
-        if (sizeDecode.cy == 0)
-        {
-            sizeDecode.cy = cyImage;
-        }
-
-        if ((cxImage > (UINT)sizeDecode.cx) ||
-            (cyImage > (UINT)sizeDecode.cy))
-        {
-            if ((sizeDecode.cx * cyImage) < (sizeDecode.cy * cxImage))
-            {
-                cxScaled = sizeDecode.cx;
-                cyScaled = cxScaled * cyImage / cxImage;
-            }
-            else
-            {
-                cyScaled = sizeDecode.cy;
-                cxScaled = cyScaled * cxImage / cyImage;
-            }
+            ERR(E_INVALIDARG, L"Uri cannot have the file scheme, use CreateCompositionImageFromFile instead.");
         }
         else
         {
-            cxScaled = cxImage;
-            cyScaled = cyImage;
+            fileLoadTask = create_task(StorageFile::GetFileFromApplicationUriAsync(uri));
         }
 
-        cxScaled = max(1u, cxScaled);
-        cyScaled = max(1u, cyScaled);
-
-        if (cxImage >= INT_MAX || cyImage >= INT_MAX)
+        fileLoadTask.then([fileLoaded](StorageFile^ file)
         {
-            throw hresult_invalid_argument(L"Image size is too large to decode.");
-        }
+            fileLoaded.set(LoadImageFromFile(file));
+        });
+    }
 
-        if ((pixelFormat != GUID_NULL) && (pixelFormat != desiredPixelFormat))
+    return create_task(fileLoaded).get();
+}
+
+// Opens a StorageFile and reads its contents into the returned IBuffer synchronously.
+IBuffer^ CompositionImage::LoadImageFromFile(StorageFile^ file)
+{
+    task_completion_event<IBuffer^> fileLoaded;
+
+    auto fileLoadTask = create_task(file->OpenAsync(FileAccessMode::Read)).then(
+            [file, fileLoaded](task<IRandomAccessStream^> task)
+    {
+        IRandomAccessStream^ readStream = task.get();
+        unsigned long long size = readStream->Size;
+
+        DataReader^ dataReader = ref new DataReader(readStream);
+        return create_task(dataReader->LoadAsync(static_cast<UINT32>(size))).then(
+            [dataReader, fileLoaded](unsigned int numBytesLoaded)
         {
-            com_ptr<IWICFormatConverter> formatConverter;
+            IBuffer^ imageRawBuffer = dataReader->ReadBuffer(numBytesLoaded);
 
-            check_hresult(imagingFactory->CreateFormatConverter(formatConverter.put()));
+            // As a best practice, explicitly close the dataReader resource as soon as it is no longer needed.
+            delete dataReader;
 
-            check_hresult(formatConverter->Initialize(
-                bitmapSource.get(),               // Input bitmap to convert
-                desiredPixelFormat,               // Destination pixel format
-                WICBitmapDitherTypeNone,          // Specified dither pattern
-                NULL,                             // Specify a particular palette
-                0.0f,                             // Alpha threshold
-                WICBitmapPaletteTypeCustom        // Palette translation type
-            ));
+            fileLoaded.set(imageRawBuffer);
+        });
+    });
 
-            bitmapSource = formatConverter;
-        }
+    return create_task(fileLoaded).get();
+}
 
-        if ((cxScaled != cxImage) || (cyScaled != cyImage))
+// Decodes the image respresented by the raw data contained in imageRawBuffer into a bitmap synchronously.
+ComPtr<IWICBitmapSource> CompositionImage::DecodeBufferIntoBitmap(IBuffer^ imageRawBuffer, SIZE sizeDecode)
+{
+    HRESULT hr = S_OK;
+    bool succeeded = false;
+
+    ComPtr<IBufferByteAccess> byteBuffer;
+    ComPtr<IWICStream> wicStream;
+    ComPtr<IWICImagingFactory> imagingFactory;
+    ComPtr<IWICBitmapDecoder> bitmapDecoder;
+    ComPtr<IWICBitmapFrameDecode> bitmapFrame;
+    ComPtr<IWICBitmapSource> bitmapSource;
+    ComPtr<IWICBitmapSourceTransform> sourceTransform;
+
+    GUID pixelFormat = GUID_NULL;
+
+    UINT cxImage = 0;
+    UINT cyImage = 0;
+    UINT cxScaled = 0;
+    UINT cyScaled = 0;
+
+    FAILHARD(CoCreateInstance(
+        CLSID_WICImagingFactory,
+        NULL,
+        CLSCTX_INPROC_SERVER,
+        IID_IWICImagingFactory,
+        (LPVOID*)&imagingFactory
+        ));
+
+    unsigned int bufferLength = imageRawBuffer->Length;
+    ComPtr<IInspectable> inspectableSavedBits(reinterpret_cast<IInspectable*>(imageRawBuffer));
+    ComPtr<IBufferByteAccess> byteAccess;
+    IFC(inspectableSavedBits.As(&byteAccess));
+
+    BYTE* bytes = nullptr;
+    IFC(byteAccess->Buffer(&bytes));
+
+    IFC(imagingFactory->CreateStream(wicStream.GetAddressOf()));
+    IFC(wicStream->InitializeFromMemory(bytes, bufferLength));
+
+    hr = imagingFactory->CreateDecoderFromStream(
+        wicStream.Get(),
+        NULL,
+        WICDecodeMetadataCacheOnDemand,
+        &bitmapDecoder);
+    IFC(hr);
+
+    //
+    // Initialize bitmapFrame with the original image frame. bitmapSource
+    // is updated throughout this function as additional transforms
+    // (scaling, conversion, cropping, etc) are added to the image prior
+    // to the actual decoding.
+    //
+    IFC(bitmapDecoder->GetFrame(0, &bitmapFrame));
+
+    bitmapSource = bitmapFrame;
+
+    //
+    // Determine if source image may have an alpha channel
+    //
+    IFC(bitmapSource->GetPixelFormat(&pixelFormat));
+
+    //
+    // If there's no alpha channel, all pixels can be assumed to be opaque, allowing
+    // converting to 32bppPBGRA instead of 32bppBGRA. This allows WIC scalers
+    // to skip premultiplying and unpremultiplying.
+    //
+    REFWICPixelFormatGUID desiredPixelFormat = GUID_WICPixelFormat32bppPBGRA;
+
+    //
+    // Compute the size that the image should be resized to, and the
+    // subrect that should be cropped out.
+    //
+    IFC(bitmapSource->GetSize(&cxImage, &cyImage));
+
+    //
+    // It's safe to use these without a lock, since this is the only thread
+    // that can access them.
+    //
+    if (sizeDecode.cx == 0)
+    {
+        sizeDecode.cx = cxImage;
+    }
+
+    if (sizeDecode.cy == 0)
+    {
+        sizeDecode.cy = cyImage;
+    }
+
+    // Do nothing if decode size is greater than the actual size.
+    if ((cxImage > (UINT)sizeDecode.cx) ||
+        (cyImage > (UINT)sizeDecode.cy))
+    {
+        //
+        // Need to reduce both dimensions by the same %; use the one that
+        // will maximize shrinkage to ensure the image <= max specified.
+        //
+        if ((sizeDecode.cx * cyImage) < (sizeDecode.cy * cxImage))
         {
-            com_ptr<IWICBitmapScaler> scaler;
+            // Maximize the width and then scale the height.
+            cxScaled = sizeDecode.cx;
+            cyScaled = cxScaled * cyImage / cxImage;
+        }
+        else
+        {
+            // Maximize the height and then scale the width.
+            cyScaled = sizeDecode.cy;
+            cxScaled = cyScaled * cxImage / cyImage;
+        }
+    }
+    else
+    {
+        cxScaled = cxImage;
+        cyScaled = cyImage;
+    }
 
-            check_hresult(imagingFactory->CreateBitmapScaler(scaler.put()));
+    // We cannot decode to a dimension of zero.
+    cxScaled = max(1u, cxScaled);
+    cyScaled = max(1u, cyScaled);
 
-            WICBitmapInterpolationMode interpolationMode = WICBitmapInterpolationModeFant;
+    if (cxImage >= INT_MAX || cyImage >= INT_MAX)
+    {
+        ERR(E_INVALIDARG, L"Image size is too large to decode.");
+        IFC(E_INVALIDARG);
+    }
 
-            if ((cxScaled * 2 >= cxImage) && (cyScaled * 2 >= cyImage))
-            {
-                interpolationMode = WICBitmapInterpolationModeLinear;
-            }
+    //
+    // Convert pixel format if needed. These converters are chained, so if the bitmap
+    // is getting a source transform, this wraps the transformer, otherwise the default
+    // image.
+    //
+    if ((pixelFormat != GUID_NULL) && (pixelFormat != desiredPixelFormat))
+    {
+        ComPtr<IWICFormatConverter> formatConverter;
 
-            check_hresult(scaler->Initialize(
-                bitmapSource.get(),
-                cxScaled,
-                cyScaled,
-                interpolationMode));
+        IFC(imagingFactory->CreateFormatConverter(&formatConverter));
+        hr = formatConverter->Initialize(
+            bitmapSource.Get(),               // Input bitmap to convert
+            desiredPixelFormat,               // Destination pixel format
+            WICBitmapDitherTypeNone,          // Specified dither pattern
+            NULL,                             // Specify a particular palette
+            0.0f,                             // Alpha threshold
+            WICBitmapPaletteTypeCustom        // Palette translation type
+            );
+        IFC(hr);
 
-            bitmapSource = scaler;
+        bitmapSource = formatConverter;
+    }
+
+    //
+    // Scale the image if necessary.
+    //
+    if ((cxScaled != cxImage) || (cyScaled != cyImage))
+    {
+        ComPtr<IWICBitmapScaler> scaler;
+
+        IFC(imagingFactory->CreateBitmapScaler(&scaler));
+
+        WICBitmapInterpolationMode interpolationMode = WICBitmapInterpolationModeFant;
+
+        if ((cxScaled * 2 >= cxImage) && (cyScaled * 2 >= cyImage))
+        {
+            //
+            // If upscaling, or if downscaling less than 50%, use Linear interpolation
+            // which is faster than Fant and will provide similar quality for these cases.
+            //
+
+            interpolationMode = WICBitmapInterpolationModeLinear;
         }
 
+        hr = scaler->Initialize(
+            bitmapSource.Get(),
+            cxScaled,
+            cyScaled,
+            interpolationMode);
+        IFC(hr);
+
+        bitmapSource = scaler;
+    }
+
+    succeeded = true;
+
+Cleanup:
+    if (succeeded)
+    {
         return bitmapSource;
     }
 
-    void CompositionImage::DrawBitmapOnSurface(IWICBitmapSource* bitmapSource)
+    return nullptr;
+}
+
+HRESULT CompositionImage::DrawBitmapOnSurface(const Array<byte>^ buffer, int pixelWidth, int pixelHeight)
+{
+    HRESULT hr = S_OK;
+    ComPtr<ID2D1DeviceContext> d2d1DeviceContext;
+    ComPtr<ID2D1Bitmap> d2d1BitmapSource;
+    ComPtr<ID2D1BitmapRenderTarget> compatibleRenderTarget;
+
+    // Keep track of whether or not BeginDraw was called successfully on our backing surface so
+    // that we know in the Cleanup whether or not to call EndDraw.
+    bool drawingBegun = false;
+
+    // CompositionGraphicsDevice only allows one surface to be active (i.e. BeginDraw has been called but not EndDraw) so
+    // we acquire the drawing lock so that all drawing onto composition surfaces created by the CompositionGraphicsDevice
+    // happen synchronously with no overlap.
+    _graphicsDevice->AcquireDrawingLock();
+
+    RECT rect;
+    rect.left = 0;
+    rect.top = 0;
+    rect.right = pixelWidth;
+    rect.bottom = pixelHeight;
+    POINT offset;
+
+    IFC(_compositionSurfaceInterop->BeginDraw(
+        &rect,
+        IID_PPV_ARGS(&d2d1DeviceContext),
+        &offset));
+    drawingBegun = true;
+
+    IFC(d2d1DeviceContext->CreateCompatibleRenderTarget(&compatibleRenderTarget));
+
+    //
+    // Create bitmap and options.
+    //
+    D2D1_SIZE_U d2d1Size = D2D1::SizeU(pixelWidth, pixelHeight);
+
+    D2D1_BITMAP_PROPERTIES bitmapProperties = 
+        D2D1::BitmapProperties(
+            D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED));
+
+    hr = compatibleRenderTarget->CreateBitmap(d2d1Size, buffer->Data, d2d1Size.width * 4, &bitmapProperties, &d2d1BitmapSource);
+    if (FAILED(hr))
     {
-        com_ptr<ID2D1DeviceContext> d2d1DeviceContext;
-        com_ptr<ID2D1Bitmap> d2d1BitmapSource;
-        com_ptr<ID2D1BitmapRenderTarget> compatibleRenderTarget;
-
-        bool drawingBegun = false;
-
-        _graphicsDevice.AcquireDrawingLock();
-
-        if ((_sizeCompositionSurface.cx != _sizeBitmapSource.cx) ||
-            (_sizeCompositionSurface.cx != _sizeBitmapSource.cy))
-        {
-            HRESULT hr = _compositionSurfaceInterop->Resize(_sizeBitmapSource);
-            if (FAILED(hr))
-            {
-                throw hresult_error(hr, L"Failed to resize composition image surface.");
-            }
-
-            _sizeCompositionSurface = _sizeBitmapSource;
-        }
-
-        RECT rect;
-        rect.left = 0;
-        rect.top = 0;
-        rect.right = _sizeBitmapSource.cx;
-        rect.bottom = _sizeBitmapSource.cy;
-        POINT offset;
-
-        check_hresult(_compositionSurfaceInterop->BeginDraw(
-            &rect,
-            __uuidof(d2d1DeviceContext),
-            d2d1DeviceContext.put_void(),
-            &offset));
-        drawingBegun = true;
-
-        check_hresult(d2d1DeviceContext->CreateCompatibleRenderTarget(compatibleRenderTarget.put()));
-
-        check_hresult(compatibleRenderTarget->CreateBitmapFromWicBitmap(
-            bitmapSource,
-            nullptr,
-            d2d1BitmapSource.put()));
-
-        D2D1_RECT_F destRect;
-        destRect.left = static_cast<float>(offset.x);
-        destRect.top = static_cast<float>(offset.y);
-        destRect.right = static_cast<float>(destRect.left + _sizeBitmapSource.cx);
-        destRect.bottom = static_cast<float>(destRect.top + _sizeBitmapSource.cy);
-
-        D2D1_RECT_F sourceRect;
-        sourceRect.left = 0;
-        sourceRect.top = 0;
-        sourceRect.right = static_cast<float>(_sizeBitmapSource.cx);
-        sourceRect.bottom = static_cast<float>(_sizeBitmapSource.cy);
-
-        d2d1DeviceContext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_COPY);
-        d2d1DeviceContext->DrawBitmap(
-            d2d1BitmapSource.get(),
-            &destRect,
-            1.0f,
-            D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
-            &sourceRect);
-
-        WINRT_VERIFY_(S_OK, _compositionSurfaceInterop->EndDraw());
-
-        _graphicsDevice.ReleaseDrawingLock();
+        ERR(hr, L"Failed to create bitmap form pixels.");
+        IFC(hr);
     }
 
-    void CompositionImage::DrawBitmapOnSurface(array_view<byte const> buffer, int pixelWidth, int pixelHeight)
+    D2D1_RECT_F d2d1Rect;
+    d2d1Rect.left = static_cast<float>(offset.x);
+    d2d1Rect.top = static_cast<float>(offset.y);
+    d2d1Rect.right = static_cast<float>(d2d1Rect.left + pixelWidth);
+    d2d1Rect.bottom = static_cast<float>(d2d1Rect.top + pixelHeight);
+
+    d2d1DeviceContext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_COPY);
+    d2d1DeviceContext->DrawBitmap(
+        d2d1BitmapSource.Get(),
+        &d2d1Rect,
+        1.0f,
+        D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
+        &d2d1Rect);
+
+Cleanup:
+    if (drawingBegun)
     {
-        com_ptr<ID2D1DeviceContext> d2d1DeviceContext;
-        com_ptr<ID2D1Bitmap> d2d1BitmapSource;
-        com_ptr<ID2D1BitmapRenderTarget> compatibleRenderTarget;
+        HRESULT endDrawHr = _compositionSurfaceInterop->EndDraw();
+        if (FAILED(endDrawHr))
+        {
+            ERR(endDrawHr, L"Failed to EndDraw");
+        }
+    }
 
-        bool drawingBegun = false;
+    _graphicsDevice->ReleaseDrawingLock();
 
-        _graphicsDevice.AcquireDrawingLock();
+    return hr;
+}
 
-        RECT rect;
-        rect.left = 0;
-        rect.top = 0;
-        rect.right = pixelWidth;
-        rect.bottom = pixelHeight;
-        POINT offset;
+// Draws the given bitmap on the ICompositionSurface represented by this CompositionImage synchronously.
+// This is thread-safe since it only accesses members under the CompositionGraphicsDevice drawing lock.
+HRESULT CompositionImage::DrawBitmapOnSurface(ComPtr<IWICBitmapSource>& bitmapSource)
+{
+    HRESULT hr = S_OK;
+    ComPtr<ID2D1DeviceContext> d2d1DeviceContext;
+    ComPtr<ID2D1Bitmap> d2d1BitmapSource;
+    ComPtr<ID2D1BitmapRenderTarget> compatibleRenderTarget;
 
-        check_hresult(_compositionSurfaceInterop->BeginDraw(
-            &rect,
-            __uuidof(d2d1DeviceContext),
-            d2d1DeviceContext.put_void(),
-            &offset));
-        drawingBegun = true;
+    // Keep track of whether or not BeginDraw was called successfully on our backing surface so
+    // that we know in the Cleanup whether or not to call EndDraw.
+    bool drawingBegun = false;
 
-        check_hresult(d2d1DeviceContext->CreateCompatibleRenderTarget(compatibleRenderTarget.put()));
+    // CompositionGraphicsDevice only allows one surface to be active (i.e. BeginDraw has been called but not EndDraw) so
+    // we acquire the drawing lock so that all drawing onto composition surfaces created by the CompositionGraphicsDevice
+    // happen synchronously with no overlap.
+    _graphicsDevice->AcquireDrawingLock();
 
-        D2D1_SIZE_U d2d1Size = D2D1::SizeU(pixelWidth, pixelHeight);
-
-        D2D1_BITMAP_PROPERTIES bitmapProperties =
-            D2D1::BitmapProperties(
-                D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED));
-
-        HRESULT hr = compatibleRenderTarget->CreateBitmap(d2d1Size, buffer.data(), d2d1Size.width * 4, &bitmapProperties, d2d1BitmapSource.put());
+    // Resize the composition drawing surface to match the size of the bitmap if needed.
+    if ((_sizeCompositionSurface.cx != _sizeBitmapSource.cx) ||
+        (_sizeCompositionSurface.cx != _sizeBitmapSource.cy))
+    {
+        hr = _compositionSurfaceInterop->Resize(_sizeBitmapSource);
         if (FAILED(hr))
         {
-            throw hresult_error(hr, L"Failed to create bitmap form pixels.");
+            ERR(hr, L"Failed to resize composition image surface.");
+            IFC(hr);
         }
 
-        D2D1_RECT_F d2d1Rect;
-        d2d1Rect.left = static_cast<float>(offset.x);
-        d2d1Rect.top = static_cast<float>(offset.y);
-        d2d1Rect.right = static_cast<float>(d2d1Rect.left + pixelWidth);
-        d2d1Rect.bottom = static_cast<float>(d2d1Rect.top + pixelHeight);
-
-        d2d1DeviceContext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_COPY);
-
-        d2d1DeviceContext->DrawBitmap(
-            d2d1BitmapSource.get(),
-            &d2d1Rect,
-            1.0f,
-            D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
-            &d2d1Rect);
-
-        WINRT_VERIFY_(S_OK, _compositionSurfaceInterop->EndDraw());
-
-        _graphicsDevice.ReleaseDrawingLock();
-
+        _sizeCompositionSurface = _sizeBitmapSource;
     }
 
-    event_token CompositionImage::ImageLoaded(CompositionImageLoadedEventHandler const& handler)
-    {
-        return _imageLoaded.add(handler);
-    }
+    RECT rect;
+    rect.left = 0;
+    rect.top = 0;
+    rect.right = _sizeBitmapSource.cx;
+    rect.bottom = _sizeBitmapSource.cy;
+    POINT offset;
 
-    void CompositionImage::ImageLoaded(event_token const& token)
-    {
-        _imageLoaded.remove(token);
-    }
+    IFC(_compositionSurfaceInterop->BeginDraw(
+        &rect,
+        IID_PPV_ARGS(&d2d1DeviceContext),
+        &offset));
+    drawingBegun = true;
 
-    Windows::Foundation::Size CompositionImage::Size()
+    IFC(d2d1DeviceContext->CreateCompatibleRenderTarget(&compatibleRenderTarget));
+
+    IFC(compatibleRenderTarget->CreateBitmapFromWicBitmap(
+        bitmapSource.Get(),
+        nullptr,
+        d2d1BitmapSource.GetAddressOf()));
+
+    D2D1_RECT_F destRect;
+    destRect.left = static_cast<float>(offset.x);
+    destRect.top = static_cast<float>(offset.y);
+    destRect.right = static_cast<float>(destRect.left + _sizeBitmapSource.cx);
+    destRect.bottom = static_cast<float>(destRect.top + _sizeBitmapSource.cy);
+
+    D2D1_RECT_F sourceRect;
+    sourceRect.left = 0;
+    sourceRect.top = 0;
+    sourceRect.right = static_cast<float>(_sizeBitmapSource.cx);
+    sourceRect.bottom = static_cast<float>(_sizeBitmapSource.cy);
+
+    d2d1DeviceContext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_COPY);
+    d2d1DeviceContext->DrawBitmap(
+        d2d1BitmapSource.Get(),
+        &destRect,
+        1.0f,
+        D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
+        &sourceRect);
+
+Cleanup:
+    if (drawingBegun)
     {
-        return
+        HRESULT endDrawHr = _compositionSurfaceInterop->EndDraw();
+        if (FAILED(endDrawHr))
         {
-            static_cast<float>(_sizeBitmapSource.cx),
-            static_cast<float>(_sizeBitmapSource.cy)
-        };
+            ERR(endDrawHr, L"Failed to EndDraw");
+        }
     }
 
-    Windows::UI::Composition::ICompositionSurface CompositionImage::Surface()
-    {
-        return _compositionSurface;
-    }
+    _graphicsDevice->ReleaseDrawingLock();
+
+    return hr;
 }
+
+// In the case that the CompositionGraphicsDevice that was used by this CompositionImage
+// to create our ICompositionSurface is lost, we need to redraw the contents of the bitmap
+// to the ICompositionSurface.
+void CompositionImage::HandleGraphicsDeviceLost(CompositionGraphicsDevice^ sender)
+{
+    if (_loadAsyncAction != nullptr)
+    {
+        _loadAsyncAction->Cancel();
+        _loadAsyncAction = nullptr;
+    }
+
+    _loadAsyncAction = LoadImageAsync();
+}
+
+// Fires the ImageLoaded event give the CompositionImageLoadStatus.
+void CompositionImage::ReportImageLoaded(CompositionImageLoadStatus status)
+{
+    ImageLoaded(this, status);
+}
+
+}  // namespace Toolkit
+}  // namespace Composition
+}  // namespace UI
+}  // namespace Microsoft

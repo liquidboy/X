@@ -1,52 +1,70 @@
-﻿#pragma once
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+//
+// Licensed under the MIT License. See LICENSE.txt in the project root for license information.
 
-#include "CompositionGraphicsDevice.g.h"
+#pragma once
 
-namespace winrt::Microsoft::UI::Composition::Toolkit::implementation
-{
-    struct CompositionGraphicsDevice : CompositionGraphicsDeviceT<CompositionGraphicsDevice>
+namespace Microsoft {
+namespace UI {
+namespace Composition {
+namespace Toolkit {
+
+    // Forward declare for CompositionGraphicsDeviceLostEventHandler delegate.
+    ref class CompositionGraphicsDevice;
+
+    public delegate void CompositionGraphicsDeviceLostEventHandler(CompositionGraphicsDevice^ sender);
+
+    [Windows::Foundation::Metadata::Internal]
+    [Windows::Foundation::Metadata::WebHostHidden]
+    public ref class CompositionGraphicsDevice sealed
     {
-        CompositionGraphicsDevice(Windows::UI::Composition::Compositor const& compositor);
-        ~CompositionGraphicsDevice();
+    public:
+        static CompositionGraphicsDevice^ CreateCompositionGraphicsDevice(Compositor^ compositor);
 
-        event_token DeviceLost(CompositionGraphicsDeviceLostEventHandler const& handler);
-        void DeviceLost(event_token const& token);
+        // Called anytime the underlying D3D11Device is lost allowing the event handler to redraw
+        // any device specific resources.
+        event CompositionGraphicsDeviceLostEventHandler^ DeviceLost;
 
-        Windows::UI::Composition::ICompositionSurface CreateDrawingSurface(
-            Windows::Foundation::Size const& sizePixels,
-            Windows::Graphics::DirectX::DirectXPixelFormat const& pixelFormat,
-            Windows::Graphics::DirectX::DirectXAlphaMode const& alphaMode);
+        ICompositionSurface^ CreateDrawingSurface(
+            Size sizePixels,
+            DirectXPixelFormat pixelFormat,
+            DirectXAlphaMode alphaMode);
 
         void AcquireDrawingLock();
-        void ReleaseDrawingLock();
-        void Close();
 
-        static Toolkit::CompositionGraphicsDevice CreateCompositionGraphicsDevice(Windows::UI::Composition::Compositor const& compositor);
+        void ReleaseDrawingLock();
+
+        virtual ~CompositionGraphicsDevice();
 
     private:
+        CompositionGraphicsDevice(Compositor^ compositor);
 
-        void InitializeDX();
+        HRESULT InitializeGraphicsDevice();
+
+        HRESULT InitializeDX();
+
         void UninitializeDX();
-        static void __stdcall OnDeviceLostCallback(PTP_CALLBACK_INSTANCE, PVOID context, PTP_WAIT, TP_WAIT_RESULT);
 
-        Windows::UI::Composition::Compositor m_compositor;
-        agile_event<CompositionGraphicsDeviceLostEventHandler> m_deviceLost;
+        HRESULT AttachDeviceLostHandler();
 
-        com_ptr<::IUnknown> _graphicsFactoryBackingDXDevice;
-        Windows::UI::Composition::CompositionGraphicsDevice _igraphicsDevice{ nullptr };
-        com_ptr<ID3D11Device4> _d3dDevice4;
-        HANDLE _deviceLostEvent{ nullptr };
-        DWORD  _deviceLostRegistrationCookie{};
-        PTP_WAIT _threadPoolWait{ nullptr };
+        static void CALLBACK OnDeviceLostCallback(PTP_CALLBACK_INSTANCE, PVOID context, PTP_WAIT, TP_WAIT_RESULT);
+
+    private:
+        Compositor^ _compositor;
+
+        // Any changes to member variables should be made while holding _stateLock.
+        ComPtr<IUnknown> _graphicsFactoryBackingDXDevice;
+        ComPtr<ABI::Windows::UI::Composition::ICompositionGraphicsDevice> _igraphicsDevice;
+        ComPtr<ID3D11Device4> _d3dDevice4;
+        HANDLE _deviceLostEvent;
+        DWORD  _deviceLostRegistrationCookie;
+        PTP_WAIT _threadPoolWait;
 
         std::mutex _stateLock;
         std::mutex _drawingLock;
-    };
-}
+};
 
-namespace winrt::Microsoft::UI::Composition::Toolkit::factory_implementation
-{
-    struct CompositionGraphicsDevice : CompositionGraphicsDeviceT<CompositionGraphicsDevice, implementation::CompositionGraphicsDevice>
-    {
-    };
-}
+} // Toolkit
+} // Composition
+} // UI
+} // Microsoft
