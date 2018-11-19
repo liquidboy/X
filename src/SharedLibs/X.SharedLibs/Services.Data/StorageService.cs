@@ -17,13 +17,13 @@ namespace X.Services.Data
                 }
             }
 
-            lock (StorageDatabaseAzure.lockobj)
-            {
-                if (AzureStorage == null)
-                {
-                    AzureStorage = new StorageDatabaseAzure();
-                }
-            }
+            //lock (StorageDatabaseAzure.lockobj)
+            //{
+            //    if (AzureStorage == null)
+            //    {
+            //        AzureStorage = new StorageDatabaseAzure();
+            //    }
+            //}
         }
 
         public StorageDatabaseAzure AzureStorage { get; set; }

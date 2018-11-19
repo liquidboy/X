@@ -12,43 +12,43 @@ namespace X.NeonShell.Features
         {
             this.InitializeComponent();
 
-            InitData();
+            //InitData();
         }
         
-        private void InitData() {
-            AppDatabase.Current.Init();
-            //var screenCtx = ScreenContext.CreateReadOnly();
-            var screenCtx = ScreenContext.Create();
+        //private void InitData() {
+        //    AppDatabase.Current.Init();
+        //    //var screenCtx = ScreenContext.CreateReadOnly();
+        //    var screenCtx = ScreenContext.Create();
 
-            //create new
-            var oh = new Screen()
-            {
-                ScreenID = Guid.NewGuid(),
-                Title = "test screen",
-                DateStamp = DateTime.UtcNow,
-            };
-            var newid = screenCtx.Save(oh);
+        //    //create new
+        //    var oh = new Screen()
+        //    {
+        //        ScreenID = Guid.NewGuid(),
+        //        Title = "test screen",
+        //        DateStamp = DateTime.UtcNow,
+        //    };
+        //    var newid = screenCtx.Save(oh);
 
-            oh.Title = "updated title";
-            newid = screenCtx.Save(oh);
+        //    oh.Title = "updated title";
+        //    newid = screenCtx.Save(oh);
 
 
-            var count = screenCtx.FindAll();
-            if (count > 0) {
-                tbCounter.Text = count.ToString();
-            }
+        //    var count = screenCtx.FindAll();
+        //    if (count > 0) {
+        //        tbCounter.Text = count.ToString();
+        //    }
 
-            //load newly added
-            if (screenCtx.Retrieve(newid) != null)
-            {
-                //delete newly added
-                screenCtx.Delete(newid);
-            }
+        //    //load newly added
+        //    if (screenCtx.Retrieve(newid) != null)
+        //    {
+        //        //delete newly added
+        //        screenCtx.Delete(newid);
+        //    }
 
-            //delete
-            screenCtx.DeleteAll();
+        //    //delete
+        //    screenCtx.DeleteAll();
 
-        }
+        //}
     }
 
 }

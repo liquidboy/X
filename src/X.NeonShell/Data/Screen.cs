@@ -10,5 +10,5 @@ namespace X.NeonShell.Data
         public Guid ScreenID { get; set; }
     }
 
-    public class ScreenContext : SQLiteDataEntity<Screen> { }
+    //public class ScreenContext : SQLiteDataEntity<Screen> { }
 }

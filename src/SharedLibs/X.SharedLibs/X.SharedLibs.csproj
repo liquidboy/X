@@ -1327,10 +1327,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.UI.Composition.Toolkit, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Microsoft.UI.Composition.Toolkit\Microsoft.UI.Composition.Toolkit.winmd</HintPath>
-    </Reference>
+    <ProjectReference Include="..\..\Microsoft.UI.Composition.Toolkit\Microsoft.UI.Composition.Toolkit.vcxproj">
+      <Project>{08a7d060-593a-4978-8dcc-b2029aca7c95}</Project>
+      <Name>Microsoft.UI.Composition.Toolkit</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Composition.Toolkit;
+﻿//using Microsoft.UI.Composition.Toolkit;
+using Microsoft.UI.Composition.Toolkit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,7 @@ namespace CoreLib.Effects
 
         public static CompositionImageFactory CreateCompositionImageFactory(Compositor compositor)
         {
+            
             return CompositionImageFactory.CreateCompositionImageFactory(compositor);
         }
 
