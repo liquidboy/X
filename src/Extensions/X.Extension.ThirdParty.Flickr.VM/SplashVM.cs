@@ -9,11 +9,14 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Windows.Security.Authentication.Web;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using X.CoreLib.GenericMessages;
 using X.Services.Data;
 using X.UI.LiteTab;
@@ -45,9 +48,10 @@ namespace X.Extension.ThirdParty.Flickr.VM
         Visibility _IsLoginVisible = Visibility.Collapsed;
         Visibility _IsAPIKeyVisible = Visibility.Collapsed;
         Visibility _IsTabsVisible = Visibility.Collapsed;
+        Visibility _IsWebviewVisible = Visibility.Collapsed;
         Visibility _IsFavouritesVisible = Visibility.Visible;
         Visibility _IsPublicVisible = Visibility.Collapsed;
-
+        
 
         public Visibility IsPublicVisible { get { return _IsPublicVisible; } set { _IsPublicVisible = value; RaisePropertyChanged(); } }
         public Visibility IsFavouritesVisible { get { return _IsFavouritesVisible; } set { _IsFavouritesVisible = value; RaisePropertyChanged(); } }
@@ -55,6 +59,11 @@ namespace X.Extension.ThirdParty.Flickr.VM
         public Visibility IsAPIKeyVisible { get { return _IsAPIKeyVisible; } set { _IsAPIKeyVisible = value; RaisePropertyChanged(); } }
         public Person LoggedInUser { get { return _LoggedInUser; } set { _LoggedInUser = value; RaisePropertyChanged(); } }
         public Visibility IsTabsVisible { get { return _IsTabsVisible; } set { _IsTabsVisible = value; RaisePropertyChanged(); } }
+        public Visibility IsWebviewVisible { get { return _IsWebviewVisible; } set { _IsWebviewVisible = value; RaisePropertyChanged(); } }
+
+        Uri _WebviewSource;
+        public Uri WebviewSource { get { return _WebviewSource; } set { _WebviewSource = value; RaisePropertyChanged(); } }
+
 
         public List<Tab> Tabs { get; set; } = new List<Tab>();
 
@@ -97,10 +106,13 @@ namespace X.Extension.ThirdParty.Flickr.VM
                 }));
             }
         }
+        
 
-
-
-
+    
+        private void WebviewNavigationCompleted(Windows.UI.Xaml.Controls.WebView sender, WebViewNavigationCompletedEventArgs args)
+        {
+            
+        }
 
 
         public SplashVM() {
@@ -110,6 +122,9 @@ namespace X.Extension.ThirdParty.Flickr.VM
             LoadMessangerRegistrations();
             GetAPIData();
             PopulatePassportData();
+
+            //var foundParent = VisualTreeHelper.GetParent(Window.Current.Content);
+            //var foundWv = ((FrameworkElement)foundParent).FindName("wv");
         }
 
         private void LoadMessangerRegistrations() {
@@ -211,14 +226,27 @@ namespace X.Extension.ThirdParty.Flickr.VM
 
         private async void AttemptFlickrLogin()
         {
+            _flickr.ApiKey = apiKey.APIKey;
+            _flickr.ApiSecret = apiKey.APISecret;
+
+            FlickrNet.Flickr flickr = new FlickrNet.Flickr(apiKey.APIKey, apiKey.APISecret);
+            var requestToken = await flickr.OAuthGetRequestTokenAsync(apiKey.APICallbackUrl);
+
+            var authUrl = flickr.OAuthCalculateAuthorizationUrl(requestToken.Result.Token, AuthLevel.Read);
+
+            IsWebviewVisible = Visibility.Visible;
+            WebviewSource = new Uri(authUrl);
+        }
+
+        private async void AttemptFlickrLoginOld()
+        {
             //apiKey = ctlApiEditor.APIKey;
 
             try
             {
                 _flickr.ApiKey = apiKey.APIKey;
                 _flickr.ApiSecret = apiKey.APISecret;
-
-
+                
                 // Acquiring a request token
                 TimeSpan SinceEpoch = DateTime.UtcNow - new DateTime(1970, 1, 1);
                 Random Rand = new Random();

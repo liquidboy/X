@@ -731,6 +731,7 @@
     <Compile Include="UI.UserCard\CircularCard.cs" />
     <Compile Include="UI.UserCard\RightToFlowDirectionConverter.cs" />
     <Compile Include="UI.UserCard\SmallCard.cs" />
+    <Compile Include="UI.WebView\WebAuthView.cs" />
     <Compile Include="UI.ZoomCanvas\Canvas.cs" />
     <Compile Include="Viewers\Direct2D\D2DRenderer.cs" />
     <Compile Include="Viewers\DotnetCLI\CommandLine.xaml.cs">

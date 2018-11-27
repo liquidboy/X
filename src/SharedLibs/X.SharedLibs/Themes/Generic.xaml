@@ -20,6 +20,7 @@
     xmlns:uirt="using:X.UI.RichTab"
     xmlns:uitb="using:X.UI.Toolbar"
     xmlns:uiuc="using:X.UI.UserCard"
+    xmlns:uiwv="using:X.UI.WebView"
     xmlns:uizc="using:X.UI.ZoomCanvas"
     xmlns:uivw="using:X.Viewer"
     xmlns:uiece="using:X.Extensions.UIComponentExtensions"
@@ -4137,6 +4138,24 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+
+
+    <!-- =========== -->
+    <!-- UI.WebView -->
+    <!-- =========== -->
+    <Style TargetType="uiwv:WebAuthView" >
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="uiwv:WebAuthView">
+            <Grid x:Name="root" >
+            <WebView x:Name="wvMain" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="{Binding Source}"></WebView>
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
 
 
     <!-- =========== -->

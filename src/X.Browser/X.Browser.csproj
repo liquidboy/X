@@ -188,6 +188,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Extensions\X.Extension.ThirdParty.Flickr.VM\X.Extension.ThirdParty.Flickr.VM.csproj">
+      <Project>{93951c5e-af5d-4f2a-8cb4-cf24025c0cc5}</Project>
+      <Name>X.Extension.ThirdParty.Flickr.VM</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharedLibs\X.Extensions.ThirdParty.GitX\X.Extensions.ThirdParty.GitX.csproj">
       <Project>{fd5c1993-3366-4f69-8fea-d6738b2cffa7}</Project>
       <Name>X.Extensions.ThirdParty.GitX</Name>
