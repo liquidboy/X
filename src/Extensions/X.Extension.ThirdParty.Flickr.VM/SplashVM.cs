@@ -64,6 +64,8 @@ namespace X.Extension.ThirdParty.Flickr.VM
         Uri _WebviewSource;
         public Uri WebviewSource { get { return _WebviewSource; } set { _WebviewSource = value; RaisePropertyChanged(); } }
 
+        string _status;
+        public string Status { get { return _status; } set { _status = value; RaisePropertyChanged(); ProcessStatus(value); } }
 
         public List<Tab> Tabs { get; set; } = new List<Tab>();
 
@@ -230,13 +232,77 @@ namespace X.Extension.ThirdParty.Flickr.VM
             _flickr.ApiSecret = apiKey.APISecret;
 
             FlickrNet.Flickr flickr = new FlickrNet.Flickr(apiKey.APIKey, apiKey.APISecret);
-            var requestToken = await flickr.OAuthGetRequestTokenAsync(apiKey.APICallbackUrl);
 
-            var authUrl = flickr.OAuthCalculateAuthorizationUrl(requestToken.Result.Token, AuthLevel.Read);
+            var requestToken = await flickr.OAuthGetRequestTokenAsync(apiKey.APICallbackUrl);
+            RequestToken = new OAuthRequestToken() { Token = requestToken.Result.Token, TokenSecret = requestToken.Result.TokenSecret };
+
+            var authUrl = flickr.OAuthCalculateAuthorizationUrl(RequestToken.Token, AuthLevel.Read);
 
             IsWebviewVisible = Visibility.Visible;
             WebviewSource = new Uri(authUrl);
         }
+
+
+        private void ProcessStatus(string status)
+        {
+            if (status.Contains("oauth_token") && status.Contains("oauth_verifier")) {
+                var resultTask = ProcessOAuthResponseAsync(status);
+                resultTask.ContinueWith(task => {
+
+                });
+            }
+        }
+
+        private async Task ProcessOAuthResponseAsync(string oAuthResponseContainingString) {
+            string oauth_token = null;
+            string xoauth_verifier = null;
+
+            string cleanOAuthResponseContainingString = oAuthResponseContainingString.Substring(0, 1) == "?" ? oAuthResponseContainingString.Substring(1, oAuthResponseContainingString.Length-1) : oAuthResponseContainingString;
+            string[] keyValPairs = cleanOAuthResponseContainingString.Split('&');
+
+            for (int i = 0; i < keyValPairs.Length; i++)
+            {
+                String[] splits = keyValPairs[i].Split('=');
+                switch (splits[0])
+                {
+                    case "oauth_token":
+                        oauth_token = splits[1];
+                        break;
+                    case "oauth_verifier":
+                        xoauth_verifier = splits[1];
+                        break;
+                }
+            }
+
+            if (oauth_token != null)
+            {
+                var rat = await _flickr.OAuthGetAccessTokenAsync(RequestToken, xoauth_verifier);
+                if (!rat.HasError)
+                {
+                    AccessToken = rat.Result;
+
+                    var dm = new PassportDataModel();
+                    dm.Token = AccessToken.Token;
+                    dm.TokenSecret = AccessToken.TokenSecret;
+                    dm.Verifier = xoauth_verifier;
+                    dm.PassType = GroupingType;
+
+                    dm.UserId = AccessToken.UserId;
+                    dm.UserName = AccessToken.Username;
+                    dm.FullName = AccessToken.FullName;
+                    dm.ScreenName = AccessToken.ScreenName;
+
+                    dm.APIKeyFKID = apiKey.Id;
+                    
+                    StorageService.Instance.Storage.Insert(dm);
+
+                    PopulatePassportData();
+                }
+
+               
+            }
+        }
+
 
         private async void AttemptFlickrLoginOld()
         {

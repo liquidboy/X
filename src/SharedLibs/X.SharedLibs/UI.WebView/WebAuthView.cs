@@ -26,6 +26,14 @@ namespace X.UI.WebView
         }
         public static readonly DependencyProperty SourceProperty = DependencyProperty.Register("Source", typeof(Uri), typeof(WebAuthView), new PropertyMetadata(null));
 
+        public string Status
+        {
+            get { return (string)GetValue(StatusProperty); }
+            set { SetValue(StatusProperty, value); }
+        }
+        public static readonly DependencyProperty StatusProperty = DependencyProperty.Register("Status", typeof(string), typeof(WebAuthView), new PropertyMetadata(null));
+
+
 
         public WebAuthView()
         {
@@ -76,7 +84,7 @@ namespace X.UI.WebView
 
         private void _wvMain_NavigationCompleted(Windows.UI.Xaml.Controls.WebView sender, WebViewNavigationCompletedEventArgs args)
         {
-            
+            Status = args.Uri.Query;
         }
     }
 }
