@@ -114,7 +114,7 @@
       <Name>X.SharedLibs</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\SharedLibs\XBoxMusicClient\Contract\Contract.csproj">
-      <Project>{63F094AA-6C64-4947-83B1-678758CA8AA2}</Project>
+      <Project>{75CCC780-A75A-485E-B31B-D188BB045D2F}</Project>
       <Name>Contract</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\SharedLibs\XBoxMusicClient\XboxMusicClient\XBoxMusicClientUWP\XBoxMusicClientUWP.csproj">

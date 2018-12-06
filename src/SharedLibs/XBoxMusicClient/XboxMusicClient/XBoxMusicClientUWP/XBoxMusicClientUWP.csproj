@@ -116,18 +116,18 @@
     <EmbeddedResource Include="Properties\XBoxMusicClientUWP.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Contract\Contract.csproj">
-      <Project>{63f094aa-6c64-4947-83b1-678758ca8aa2}</Project>
-      <Name>Contract</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.1.5</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>9.0.1</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Contract\Contract.csproj">
+      <Project>{75CCC780-A75A-485E-B31B-D188BB045D2F}</Project>
+      <Name>Contract</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">
     <VisualStudioVersion>15.0</VisualStudioVersion>
