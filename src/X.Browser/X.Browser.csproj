@@ -192,6 +192,14 @@
       <Project>{93951c5e-af5d-4f2a-8cb4-cf24025c0cc5}</Project>
       <Name>X.Extension.ThirdParty.Flickr.VM</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Extensions\X.Extension.ThirdParty.FlickrComments.VM\X.Extension.ThirdParty.FlickrComments.VM.csproj">
+      <Project>{e4b8d2de-d762-4fee-9426-d2f3ee788694}</Project>
+      <Name>X.Extension.ThirdParty.FlickrComments.VM</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Extensions\X.Extension.ThirdParty.FlickrHistory.VM\X.Extension.ThirdParty.FlickrHistory.VM.csproj">
+      <Project>{09299550-a738-48db-9feb-9267794a6874}</Project>
+      <Name>X.Extension.ThirdParty.FlickrHistory.VM</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharedLibs\X.Extensions.ThirdParty.GitX\X.Extensions.ThirdParty.GitX.csproj">
       <Project>{fd5c1993-3366-4f69-8fea-d6738b2cffa7}</Project>
       <Name>X.Extensions.ThirdParty.GitX</Name>
