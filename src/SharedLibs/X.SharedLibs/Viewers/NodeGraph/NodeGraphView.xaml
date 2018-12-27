@@ -16,11 +16,15 @@
         
     </UserControl.Resources>
     <Grid x:Name="layoutRoot" Background="White" PointerWheelChanged="layoutRoot_PointerWheelChanged" PointerPressed="layoutRoot_PointerPressed" PointerReleased="layoutRoot_PointerReleased" PointerMoved="layoutRoot_PointerMoved">
+        <xuizc:Canvas x:Name="nodeGraphZoomContainer" >
+            <Canvas x:Name="nodeGraphCanvas">
+                <Canvas.RenderTransform>
+                    <CompositeTransform></CompositeTransform>
+                </Canvas.RenderTransform>
+            </Canvas>
+        </xuizc:Canvas>
         <!--<Grid.Clip>
             <RectangleGeometry Rect="{Binding ElementName=root, Converter={StaticResource UIElementAsClipConverter}}"/>
         </Grid.Clip>-->
-        
-        <Canvas x:Name="cvMainAdorner" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RenderTransformOrigin="0.5,0.5"></Canvas>
-        
     </Grid>
 </UserControl>

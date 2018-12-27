@@ -21,9 +21,6 @@ namespace X.Viewer.NodeGraph
     {
         public event EventHandler<ContentViewEventArgs> SendMessage;
 
-
-        UI.ZoomCanvas.Canvas cvMainContainer;
-        Windows.UI.Xaml.Controls.Canvas cvMain;
         bool IsMouseDown = false;
 
         public NodeGraphView()
@@ -42,30 +39,15 @@ namespace X.Viewer.NodeGraph
 
         public void Load()
         {
-            //changed to creating zcanvas by code rather than xaml, it was causing a memory leak
-            cvMainContainer = new UI.ZoomCanvas.Canvas() { HorizontalAlignment = HorizontalAlignment.Stretch, VerticalAlignment = VerticalAlignment.Stretch, Background = new SolidColorBrush(Colors.White), RenderTransformOrigin = new Point(0, 0) };
-            cvMain = new Windows.UI.Xaml.Controls.Canvas() { HorizontalAlignment = HorizontalAlignment.Stretch, VerticalAlignment = VerticalAlignment.Stretch, Background = new SolidColorBrush(Colors.White), RenderTransformOrigin = new Point(0.5d, 0.5d) };
-            cvMain.RenderTransform = new CompositeTransform() { ScaleX = 1, ScaleY = 1, TranslateX = 0, TranslateY = 0 };
-            cvMainContainer.Content = cvMain;
-            layoutRoot.Children.Insert(0, cvMainContainer);
+            //var ct = nodeGraphCanvas.RenderTransform as CompositeTransform;
+            //nodeGraphZoomContainer.Scale = ct.ScaleX;
 
-            var ct = cvMain.RenderTransform as CompositeTransform;
-            cvMainContainer.Scale = ct.ScaleX;
-
-            cvMain.Children.Add(new Windows.UI.Xaml.Shapes.Rectangle() { Width = 100, Height = 100, Fill = new SolidColorBrush(Colors.Red) });
-
+            //sample node visual
+            nodeGraphCanvas.Children.Add(new Windows.UI.Xaml.Shapes.Rectangle() { Width = 100, Height = 100, Fill = new SolidColorBrush(Colors.Red) });
         }
 
         public void Unload()
         {
-
-            cvMainContainer.Content = null;
-            cvMain.RenderTransform = null;
-            cvMain = null;
-
-            layoutRoot.Children.Remove(cvMainContainer);
-            //cvMainContainer.Content = null;
-            cvMainContainer = null;
         }
 
 
@@ -81,9 +63,7 @@ namespace X.Viewer.NodeGraph
 
         private void layoutRoot_PointerWheelChanged(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-
-
-            cvMainContainer.Zoom(sender, e);
+            nodeGraphZoomContainer.Zoom(sender, e);
         }
 
         PointerPoint ptStart;  //artboard moving
@@ -105,9 +85,7 @@ namespace X.Viewer.NodeGraph
             ptDifYStart = ptDifY;
 
         }
-
-
-
+        
         double ptDifX = 0;
         double ptDifY = 0;
 
@@ -120,11 +98,11 @@ namespace X.Viewer.NodeGraph
             if (!IsMouseDown) return;
 
             //moving artboard
-            var ct = cvMain.RenderTransform as CompositeTransform;
+            var ct = nodeGraphCanvas.RenderTransform as CompositeTransform;
 
            
-            ptDifX = ptDifXStart + ((ptStart.Position.X - ptEnd.Position.X) / cvMainContainer.Scale);
-            ptDifY = ptDifYStart + ((ptStart.Position.Y - ptEnd.Position.Y) / cvMainContainer.Scale);
+            ptDifX = ptDifXStart + ((ptStart.Position.X - ptEnd.Position.X) / nodeGraphZoomContainer.Scale);
+            ptDifY = ptDifYStart + ((ptStart.Position.Y - ptEnd.Position.Y) / nodeGraphZoomContainer.Scale);
 
 
             ct.TranslateX = -1 * ptDifX;
