@@ -754,6 +754,10 @@
       <DependentUpon>MediaControls.xaml</DependentUpon>
     </Compile>
     <Compile Include="Viewers\MediaView\MediaElementRenderer.cs" />
+    <Compile Include="Viewers\NodeGraph\NodeGraphRenderer.cs" />
+    <Compile Include="Viewers\NodeGraph\NodeGraphView.xaml.cs">
+      <DependentUpon>NodeGraphView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Viewers\SketchFlow\Controls\MenuFlyoutPathItem.cs" />
     <Compile Include="Viewers\SketchFlow\Controls\PageContent.xaml.cs">
       <DependentUpon>PageContent.xaml</DependentUpon>
@@ -1100,6 +1104,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Viewers\MediaView\MediaControls.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\NodeGraph\NodeGraphView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

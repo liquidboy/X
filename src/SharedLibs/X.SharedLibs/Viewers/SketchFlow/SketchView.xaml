@@ -28,9 +28,9 @@
         <lc:UIElementAsClipConverter x:Key="UIElementAsClipConverter"></lc:UIElementAsClipConverter>
     </UserControl.Resources>
     <Grid x:Name="layoutRoot" Background="White" PointerWheelChanged="layoutRoot_PointerWheelChanged" PointerPressed="layoutRoot_PointerPressed" PointerReleased="layoutRoot_PointerReleased" PointerMoved="layoutRoot_PointerMoved">
-        <Grid.Clip>
+        <!--<Grid.Clip>
             <RectangleGeometry Rect="{Binding ElementName=root, Converter={StaticResource UIElementAsClipConverter}}"/>
-        </Grid.Clip>
+        </Grid.Clip>-->
         
         <Canvas x:Name="cvMainAdorner" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RenderTransformOrigin="0.5,0.5"></Canvas>
         <controls:Toolbar x:Name="toolbar" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,20,0" PerformAction="toolbar_PerformAction" ></controls:Toolbar>

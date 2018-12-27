@@ -14,18 +14,15 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using X.SharedLibs.Windows;
+using X.Direct.Views;
 
-namespace X.ModernDesktop
+namespace X.Direct
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
     sealed partial class App : Application
     {
-
-        public static WindowEventAggregator windowsEventAggregator = new WindowEventAggregator();
-
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -70,7 +67,7 @@ namespace X.ModernDesktop
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
-                    rootFrame.Navigate(typeof(EntityManagerPage), e.Arguments);
+                    rootFrame.Navigate(typeof(Home), e.Arguments);
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();

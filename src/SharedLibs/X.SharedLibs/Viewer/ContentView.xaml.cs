@@ -91,6 +91,7 @@ namespace X.Viewer
                 else if (uriNew.Contains(".tile")) cv.Renderer = new Tiles.TileRenderer();
                 else if (uriNew.Contains(".dotnet")) cv.Renderer = new DotnetCLI.DotnetCLIRenderer();
                 else if (uriNew.Contains(".map")) cv.Renderer = new MapView.MapViewRenderer();
+                else if (uriNew.Contains(".ng")) cv.Renderer = new NodeGraph.NodeGraphRenderer();
                 else if (uriNew.Contains(".sketch")) cv.Renderer = new SketchFlow.SketchFlowRenderer();
                 else if (uriNew.Contains(".urho")) cv.Renderer = new UrhoSharp.UrhoRenderer();
                 // else if (uriNew.Contains(".flickr")) cv.Renderer = new Flickr.FlickrRenderer();
