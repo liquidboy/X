@@ -43,7 +43,8 @@ namespace X.Viewer.NodeGraph
             //nodeGraphZoomContainer.Scale = ct.ScaleX;
 
             //sample node visual
-            nodeGraphCanvas.Children.Add(new Windows.UI.Xaml.Shapes.Rectangle() { Width = 100, Height = 100, Fill = new SolidColorBrush(Colors.Red) });
+            //nodeGraphCanvas.Children.Add(new Windows.UI.Xaml.Shapes.Rectangle() { Width = 100, Height = 100, Fill = new SolidColorBrush(Colors.Red) });
+            InitializeExampleNodes(nodeGraphCanvas);
         }
 
         public void Unload()
