@@ -66,6 +66,7 @@ namespace X.Viewer.NodeGraph
         IDictionary<string, Node> _nodes;
         List<NodeLink> _links;
         UIElement _uiNodeGraphXamlRoot;
+        Panel _uiNodeGraphPanelXamlRoot;
 
         private void InitializeExampleNodes(UIElement uiNodeGraphRoot) {
             _uiNodeGraphXamlRoot = uiNodeGraphRoot;
@@ -94,21 +95,32 @@ namespace X.Viewer.NodeGraph
             double slotDiameter = 2 * slotRadius;
 
             if (_uiNodeGraphXamlRoot is Panel) {
-                Panel xamlRoot = (Panel)_uiNodeGraphXamlRoot;
+                _uiNodeGraphPanelXamlRoot = (Panel)_uiNodeGraphXamlRoot;
 
                 //draw nodes
                 foreach (var node in _nodes) {
+
+                    //node-container
+                    var newNodeGroup = new Canvas()
+                    {
+                        Width = node.Value.Size.Width,
+                        Height = node.Value.Size.Height
+                    };
+                    newNodeGroup.SetValue(Canvas.LeftProperty, node.Value.Position.X);
+                    newNodeGroup.SetValue(Canvas.TopProperty, node.Value.Position.Y);
+                    newNodeGroup.PointerEntered += NewNodeGroup_PointerEntered;
+                    newNodeGroup.PointerExited += NewNodeGroup_PointerExited;
+
+                    //node in node-container
                     var newNodeUIElement = new Windows.UI.Xaml.Shapes.Rectangle() {
                         Name = node.Key,
                         Fill = new SolidColorBrush(node.Value.Color),
                         Width = node.Value.Size.Width,
                         Height = node.Value.Size.Height
                     };
-                    newNodeUIElement.SetValue(Canvas.LeftProperty, node.Value.Position.X);
-                    newNodeUIElement.SetValue(Canvas.TopProperty, node.Value.Position.Y);
-                    xamlRoot.Children.Add(newNodeUIElement);
+                    newNodeGroup.Children.Add(newNodeUIElement);
 
-                    //draw slots
+                    //node-slots in node-container
                     for (int slotIndex = 0; slotIndex < node.Value.InputSlotCount; slotIndex++) {
                         var slotPosition = node.Value.GetInputSlotPosition(slotIndex);
                         var newSlotUIElement = new Windows.UI.Xaml.Shapes.Ellipse()
@@ -117,9 +129,9 @@ namespace X.Viewer.NodeGraph
                             Height = slotDiameter,
                             Fill = new SolidColorBrush(Colors.Black)
                         };
-                        newSlotUIElement.SetValue(Canvas.LeftProperty, slotPosition.X - slotRadius);
-                        newSlotUIElement.SetValue(Canvas.TopProperty, slotPosition.Y - slotRadius);
-                        xamlRoot.Children.Add(newSlotUIElement);
+                        newSlotUIElement.SetValue(Canvas.LeftProperty, slotPosition.X - slotRadius - node.Value.Position.X);
+                        newSlotUIElement.SetValue(Canvas.TopProperty, slotPosition.Y - slotRadius - node.Value.Position.Y);
+                        newNodeGroup.Children.Add(newSlotUIElement);
                     }
 
                     for (int slotIndex = 0; slotIndex < node.Value.OutputSlotCount; slotIndex++)
@@ -131,50 +143,68 @@ namespace X.Viewer.NodeGraph
                             Height = slotDiameter,
                             Fill = new SolidColorBrush(Colors.Black)
                         };
-                        newSlotUIElement.SetValue(Canvas.LeftProperty, slotPosition.X - slotRadius);
-                        newSlotUIElement.SetValue(Canvas.TopProperty, slotPosition.Y - slotRadius);
-                        xamlRoot.Children.Add(newSlotUIElement);
+                        newSlotUIElement.SetValue(Canvas.LeftProperty, slotPosition.X - slotRadius - node.Value.Position.X);
+                        newSlotUIElement.SetValue(Canvas.TopProperty, slotPosition.Y - slotRadius - node.Value.Position.Y);
+                        newNodeGroup.Children.Add(newSlotUIElement);
                     }
+
+                    _uiNodeGraphPanelXamlRoot.Children.Add(newNodeGroup);
                 }
 
 
-                //draw links between the nodes
+                //node-slot-links between the node-slots
                 foreach (var link in _links)
                 {
-                    Node inputNode = _nodes[link.InputNodeKey];
-                    Node outputNode = _nodes[link.OutputNodeKey];
-
-                    InputSlotPosition inputSlotPosition = inputNode.GetInputSlotPosition(link.InputSlotIndex);
-                    OutputSlotPosition outputSlotPosition = outputNode.GetOutputSlotPosition(link.OutputSlotIndex);
-
-                    PathFigure pthFigure = new PathFigure();
-                    pthFigure.StartPoint = inputSlotPosition; //output point of link
-
-                    BezierSegment bezierSegment = new BezierSegment() {
-                        Point1 = new Point(inputSlotPosition.X - 50, inputSlotPosition.Y),
-                        Point2 = new Point(outputSlotPosition.X + 50, outputSlotPosition.Y),
-                        Point3 = outputSlotPosition
-                    };
-
-                    PathSegmentCollection myPathSegmentCollection = new PathSegmentCollection();
-                    myPathSegmentCollection.Add(bezierSegment);
-
-                    pthFigure.Segments = myPathSegmentCollection;
-
-                    PathFigureCollection pthFigureCollection = new PathFigureCollection();
-                    pthFigureCollection.Add(pthFigure);
-
-                    PathGeometry pthGeometry = new PathGeometry();
-                    pthGeometry.Figures = pthFigureCollection;
-
-                    Path arcPath = new Path();
-                    arcPath.Stroke = new SolidColorBrush(Colors.Orange);
-                    arcPath.StrokeThickness = 1;
-                    arcPath.Data = pthGeometry;
-                    xamlRoot.Children.Add(arcPath);
+                    DrawNodeSlotLink(link);
                 }
                 
             }
+        }
+
+
+        private void DrawNodeSlotLink(NodeLink nodeLink) {
+            Node inputNode = _nodes[nodeLink.InputNodeKey];
+            Node outputNode = _nodes[nodeLink.OutputNodeKey];
+
+            InputSlotPosition inputSlotPosition = inputNode.GetInputSlotPosition(nodeLink.InputSlotIndex);
+            OutputSlotPosition outputSlotPosition = outputNode.GetOutputSlotPosition(nodeLink.OutputSlotIndex);
+
+            PathFigure pthFigure = new PathFigure();
+            pthFigure.StartPoint = inputSlotPosition; //output point of link
+
+            BezierSegment bezierSegment = new BezierSegment()
+            {
+                Point1 = new Point(inputSlotPosition.X - 50, inputSlotPosition.Y),
+                Point2 = new Point(outputSlotPosition.X + 50, outputSlotPosition.Y),
+                Point3 = outputSlotPosition
+            };
+
+            PathSegmentCollection myPathSegmentCollection = new PathSegmentCollection();
+            myPathSegmentCollection.Add(bezierSegment);
+
+            pthFigure.Segments = myPathSegmentCollection;
+
+            PathFigureCollection pthFigureCollection = new PathFigureCollection();
+            pthFigureCollection.Add(pthFigure);
+
+            PathGeometry pthGeometry = new PathGeometry();
+            pthGeometry.Figures = pthFigureCollection;
+
+            Path arcPath = new Path();
+            arcPath.Stroke = new SolidColorBrush(Colors.Orange);
+            arcPath.StrokeThickness = 1;
+            arcPath.Data = pthGeometry;
+            _uiNodeGraphPanelXamlRoot.Children.Add(arcPath);
+        }
+
+        private void NewNodeGroup_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            
+        }
+
+        private void NewNodeGroup_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            
         }
     }
 }
