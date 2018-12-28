@@ -9,26 +9,25 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
+using NodePosition = Windows.Foundation.Point;
+using InputSlotPosition = Windows.Foundation.Point;
+using OutputSlotPosition = Windows.Foundation.Point;
 
 namespace X.Viewer.NodeGraph
 {
     public partial class NodeGraphView
     {
         private struct Node {
-            public int ID;
-            public string Name;
-            public Point Position;
+            public string Key;
+            public NodePosition Position;
             public Size Size;
-            public float Value;
             public Color Color;
             public int InputSlotCount;
             public int OutputSlotCount;
 
-            public Node(int id, string name, Point position, float value, Color color, int inputSlotCount, int outputSlotCount) {
-                ID = id;
-                Name = name;
+            public Node(string key, NodePosition position, Color color, int inputSlotCount, int outputSlotCount) {
+                Key = key;
                 Position = position;
-                Value = value;
                 Color = color;
                 InputSlotCount = inputSlotCount;
                 OutputSlotCount = outputSlotCount;
@@ -42,50 +41,50 @@ namespace X.Viewer.NodeGraph
 
                 Size = new Size(width, Math.Max(inputHeight, outputHeight));
             }
-            public Point GetInputSlotPosition(int slotNo) {
-                return new Point(Position.X, Position.Y + ((slotNo + 1) * (Size.Height / (InputSlotCount + 1))));
+            public InputSlotPosition GetInputSlotPosition(int slotNo) {
+                return new InputSlotPosition(Position.X, Position.Y + ((slotNo + 1) * (Size.Height / (InputSlotCount + 1))));
             }
-            public Point GetOutputSlotPosition(int slotNo) {
-                return new Point(Position.X + Size.Width, Position.Y + ((slotNo + 1) * (Size.Height / (OutputSlotCount + 1))));
+            public OutputSlotPosition GetOutputSlotPosition(int slotNo) {
+                return new OutputSlotPosition(Position.X + Size.Width, Position.Y + ((slotNo + 1) * (Size.Height / (OutputSlotCount + 1))));
             }
         }
 
         private struct NodeLink {
-            public int InputNodeIndex;
+            public string InputNodeKey;
             public int InputSlotIndex;
-            public int OutputNodeIndex;
+            public string OutputNodeKey;
             public int OutputSlotIndex;
 
-            public NodeLink(int inputNodeIndex, int inputSlotIndex, int outputNodeIndex, int outputSlotIndex) {
-                InputNodeIndex = inputNodeIndex;
+            public NodeLink(string outputNodeKey, int outputSlotIndex, string inputNodeKey, int inputSlotIndex) {
+                InputNodeKey = inputNodeKey;
                 InputSlotIndex = inputSlotIndex;
-                OutputNodeIndex = outputNodeIndex;
+                OutputNodeKey = outputNodeKey;
                 OutputSlotIndex = outputSlotIndex;
             }
         }
 
-        List<Node> _nodes;
+        IDictionary<string, Node> _nodes;
         List<NodeLink> _links;
         UIElement _uiNodeGraphXamlRoot;
 
         private void InitializeExampleNodes(UIElement uiNodeGraphRoot) {
             _uiNodeGraphXamlRoot = uiNodeGraphRoot;
-            _nodes = new List<Node>();
+            _nodes = new Dictionary<string, Node>();
             _links = new List<NodeLink>();
 
-            _nodes.Add(new Node(0, "Node1", new Point(100, 100), 0.5f, Colors.Red, 1, 1));
-            _nodes.Add(new Node(1, "Node2", new Point(100, 300), 0.42f, Colors.Green, 1, 1));
-            _nodes.Add(new Node(2, "Node3", new Point(400, 190), 1.0f, Colors.Yellow, 2, 2));
-            _nodes.Add(new Node(3, "Node4", new Point(400, 0), 1.6f, Colors.Purple, 1, 1));
-            _nodes.Add(new Node(4, "Node5", new Point(700, 100), 0.8f, Colors.Blue, 2, 1));
-            _nodes.Add(new Node(5, "Node6", new Point(400, 400), 1.2f, Colors.Black, 1, 1));
+            _nodes.Add("Node1", new Node("Node1", new NodePosition(100, 100), Colors.Red, 1, 1));
+            _nodes.Add("Node2", new Node("Node2", new NodePosition(100, 300), Colors.Green, 1, 1));
+            _nodes.Add("Node3", new Node("Node3", new NodePosition(400, 190), Colors.Yellow, 2, 2));
+            _nodes.Add("Node4", new Node("Node4", new NodePosition(400, 0), Colors.Purple, 1, 1));
+            _nodes.Add("Node5", new Node("Node5", new NodePosition(700, 100), Colors.Blue, 2, 1));
+            _nodes.Add("Node6", new Node("Node6", new NodePosition(400, 400), Colors.Black, 1, 1));
 
-            _links.Add(new NodeLink(2, 0, 0, 0));
-            _links.Add(new NodeLink(2, 1, 1, 0));
-            _links.Add(new NodeLink(4, 0, 3, 0));
-            _links.Add(new NodeLink(4, 0, 2, 0));
-            _links.Add(new NodeLink(4, 0, 2, 1));
-            _links.Add(new NodeLink(4, 1, 5, 0));
+            _links.Add(new NodeLink("Node1", 0, "Node3", 0));
+            _links.Add(new NodeLink("Node2", 0, "Node3", 1));
+            _links.Add(new NodeLink("Node4", 0, "Node5", 0));
+            _links.Add(new NodeLink("Node3", 0, "Node5", 0));
+            _links.Add(new NodeLink("Node3", 1, "Node5", 0));
+            _links.Add(new NodeLink("Node6", 0, "Node5", 1));
 
             DrawNodes();
         }
@@ -97,24 +96,24 @@ namespace X.Viewer.NodeGraph
                 //draw nodes
                 foreach (var node in _nodes) {
                     var newNodeUIElement = new Windows.UI.Xaml.Shapes.Rectangle() {
-                        Name = $"node{node.ID}",
-                        Fill = new SolidColorBrush(node.Color),
-                        Width = node.Size.Width,
-                        Height = node.Size.Height
+                        Name = node.Key,
+                        Fill = new SolidColorBrush(node.Value.Color),
+                        Width = node.Value.Size.Width,
+                        Height = node.Value.Size.Height
                     };
-                    newNodeUIElement.SetValue(Canvas.LeftProperty, node.Position.X);
-                    newNodeUIElement.SetValue(Canvas.TopProperty, node.Position.Y);
+                    newNodeUIElement.SetValue(Canvas.LeftProperty, node.Value.Position.X);
+                    newNodeUIElement.SetValue(Canvas.TopProperty, node.Value.Position.Y);
                     xamlRoot.Children.Add(newNodeUIElement);
                 }
 
                 //draw links between the nodes
                 foreach (var link in _links)
                 {
-                    Node inputNode = _nodes[link.InputNodeIndex];
-                    Node outputNode = _nodes[link.OutputNodeIndex];
+                    Node inputNode = _nodes[link.InputNodeKey];
+                    Node outputNode = _nodes[link.OutputNodeKey];
 
-                    Point p1 = inputNode.GetInputSlotPosition(link.InputSlotIndex);
-                    Point p2 = outputNode.GetOutputSlotPosition(link.OutputSlotIndex);
+                    InputSlotPosition p1 = inputNode.GetInputSlotPosition(link.InputSlotIndex);
+                    OutputSlotPosition p2 = outputNode.GetOutputSlotPosition(link.OutputSlotIndex);
 
                     PathFigure pthFigure = new PathFigure();
                     pthFigure.StartPoint = p1; //output point of link
