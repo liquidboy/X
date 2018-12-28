@@ -77,7 +77,7 @@ namespace X.Viewer.NodeGraph
             _nodes.Add("Node3", new Node("Node3", new NodePosition(400, 190), Colors.Yellow, 2, 2));
             _nodes.Add("Node4", new Node("Node4", new NodePosition(400, 0), Colors.Purple, 1, 1));
             _nodes.Add("Node5", new Node("Node5", new NodePosition(700, 100), Colors.Blue, 2, 1));
-            _nodes.Add("Node6", new Node("Node6", new NodePosition(400, 400), Colors.Black, 1, 1));
+            _nodes.Add("Node6", new Node("Node6", new NodePosition(400, 400), Colors.Pink, 1, 1));
 
             _links.Add(new NodeLink("Node1", 0, "Node3", 0));
             _links.Add(new NodeLink("Node2", 0, "Node3", 1));
@@ -90,6 +90,9 @@ namespace X.Viewer.NodeGraph
         }
 
         private void DrawNodes() {
+            double slotRadius = 5;
+            double slotDiameter = 2 * slotRadius;
+
             if (_uiNodeGraphXamlRoot is Panel) {
                 Panel xamlRoot = (Panel)_uiNodeGraphXamlRoot;
 
@@ -104,7 +107,36 @@ namespace X.Viewer.NodeGraph
                     newNodeUIElement.SetValue(Canvas.LeftProperty, node.Value.Position.X);
                     newNodeUIElement.SetValue(Canvas.TopProperty, node.Value.Position.Y);
                     xamlRoot.Children.Add(newNodeUIElement);
+
+                    //draw slots
+                    for (int slotIndex = 0; slotIndex < node.Value.InputSlotCount; slotIndex++) {
+                        var slotPosition = node.Value.GetInputSlotPosition(slotIndex);
+                        var newSlotUIElement = new Windows.UI.Xaml.Shapes.Ellipse()
+                        {
+                            Width = slotDiameter,
+                            Height = slotDiameter,
+                            Fill = new SolidColorBrush(Colors.Black)
+                        };
+                        newSlotUIElement.SetValue(Canvas.LeftProperty, slotPosition.X - slotRadius);
+                        newSlotUIElement.SetValue(Canvas.TopProperty, slotPosition.Y - slotRadius);
+                        xamlRoot.Children.Add(newSlotUIElement);
+                    }
+
+                    for (int slotIndex = 0; slotIndex < node.Value.OutputSlotCount; slotIndex++)
+                    {
+                        var slotPosition = node.Value.GetOutputSlotPosition(slotIndex);
+                        var newSlotUIElement = new Windows.UI.Xaml.Shapes.Ellipse()
+                        {
+                            Width = slotDiameter,
+                            Height = slotDiameter,
+                            Fill = new SolidColorBrush(Colors.Black)
+                        };
+                        newSlotUIElement.SetValue(Canvas.LeftProperty, slotPosition.X - slotRadius);
+                        newSlotUIElement.SetValue(Canvas.TopProperty, slotPosition.Y - slotRadius);
+                        xamlRoot.Children.Add(newSlotUIElement);
+                    }
                 }
+
 
                 //draw links between the nodes
                 foreach (var link in _links)
@@ -112,16 +144,17 @@ namespace X.Viewer.NodeGraph
                     Node inputNode = _nodes[link.InputNodeKey];
                     Node outputNode = _nodes[link.OutputNodeKey];
 
-                    InputSlotPosition p1 = inputNode.GetInputSlotPosition(link.InputSlotIndex);
-                    OutputSlotPosition p2 = outputNode.GetOutputSlotPosition(link.OutputSlotIndex);
+                    InputSlotPosition inputSlotPosition = inputNode.GetInputSlotPosition(link.InputSlotIndex);
+                    OutputSlotPosition outputSlotPosition = outputNode.GetOutputSlotPosition(link.OutputSlotIndex);
 
                     PathFigure pthFigure = new PathFigure();
-                    pthFigure.StartPoint = p1; //output point of link
+                    pthFigure.StartPoint = inputSlotPosition; //output point of link
 
-                    BezierSegment bezierSegment = new BezierSegment();
-                    bezierSegment.Point1 = new Point(p1.X - 50, p1.Y);
-                    bezierSegment.Point2 = new Point(p2.X + 50, p2.Y);
-                    bezierSegment.Point3 = p2;
+                    BezierSegment bezierSegment = new BezierSegment() {
+                        Point1 = new Point(inputSlotPosition.X - 50, inputSlotPosition.Y),
+                        Point2 = new Point(outputSlotPosition.X + 50, outputSlotPosition.Y),
+                        Point3 = outputSlotPosition
+                    };
 
                     PathSegmentCollection myPathSegmentCollection = new PathSegmentCollection();
                     myPathSegmentCollection.Add(bezierSegment);
