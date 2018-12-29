@@ -70,8 +70,8 @@ namespace X.Viewer.NodeGraph
         List<NodeLink> _links;
         UIElement _uiNodeGraphXamlRoot;
         Panel _uiNodeGraphPanelXamlRoot;
-        bool _isNodeSelected = false;
-        string _selectedNodeKey;
+        bool _isNodeFocusedOn = false;
+        string _focusedNodeKey;
         Point _selectedNodePosition;
 
         private void InitializeExampleNodes(UIElement uiNodeGraphRoot) {
@@ -180,7 +180,7 @@ namespace X.Viewer.NodeGraph
             InputSlotPosition inputSlotPosition = inputNode.GetInputSlotPosition(nodeLink.InputSlotIndex);
             OutputSlotPosition outputSlotPosition = outputNode.GetOutputSlotPosition(nodeLink.OutputSlotIndex);
 
-            // find if it exists to change it
+            // find node-slot-link if it exists and then update it
             var foundUIElement = _uiNodeGraphPanelXamlRoot.FindName(nodeLink.UniqueId);
             if (foundUIElement != null) {
                 PathGeometry pthGeometryFound = (PathGeometry)((Path)foundUIElement).Data;
@@ -194,9 +194,8 @@ namespace X.Viewer.NodeGraph
                 return;
             }
 
-            //create new node slot link
-            PathFigure pthFigure = new PathFigure();
-            pthFigure.StartPoint = inputSlotPosition; //output point of link
+            //create new node-slot-link
+            PathFigure pthFigure = new PathFigure() { StartPoint = inputSlotPosition };
 
             BezierSegment bezierSegment = new BezierSegment()
             {
@@ -205,50 +204,51 @@ namespace X.Viewer.NodeGraph
                 Point3 = outputSlotPosition
             };
 
-            PathSegmentCollection myPathSegmentCollection = new PathSegmentCollection();
-            myPathSegmentCollection.Add(bezierSegment);
-
-            pthFigure.Segments = myPathSegmentCollection;
+            pthFigure.Segments = new PathSegmentCollection();
+            pthFigure.Segments.Add(bezierSegment);
 
             PathFigureCollection pthFigureCollection = new PathFigureCollection();
             pthFigureCollection.Add(pthFigure);
 
-            PathGeometry pthGeometry = new PathGeometry();
-            pthGeometry.Figures = pthFigureCollection;
-
-            Path arcPath = new Path();
-            arcPath.Name = nodeLink.UniqueId;
-            arcPath.Stroke = new SolidColorBrush(Colors.Orange);
-            arcPath.StrokeThickness = 1;
-            arcPath.Data = pthGeometry;
+            Path arcPath = new Path()
+            {
+                Name = nodeLink.UniqueId,
+                Stroke = new SolidColorBrush(Colors.Orange),
+                StrokeThickness = 1,
+                Data = new PathGeometry() { Figures = pthFigureCollection }
+            };
             _uiNodeGraphPanelXamlRoot.Children.Add(arcPath);
         }
 
         private void NewNodeGroup_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            _selectedNodeKey = "";
-            _isNodeSelected = false;
-
+            _focusedNodeKey = "";
+            _isNodeFocusedOn = false;
         }
         
         private void NewNodeGroup_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            //Console.WriteLine("pointer entered");
-            Canvas canvas = (Canvas)sender;
-            _selectedNodeKey = canvas.Name;
-            _selectedNodePosition = new NodePosition((double)canvas.GetValue(Canvas.LeftProperty), (double)canvas.GetValue(Canvas.TopProperty));
-            _isNodeSelected = true;
+            _isNodeFocusedOn = true;
+            _focusedNodeKey = ((Canvas)sender).Name;
+            UpdateFocusedNode();
+        }
+
+        private void UpdateFocusedNode() {
+            if (_isNodeFocusedOn) {
+                var foundNodeUIElement = (Canvas)_uiNodeGraphPanelXamlRoot.FindName(_focusedNodeKey);
+                _selectedNodePosition = new NodePosition((double)foundNodeUIElement.GetValue(Canvas.LeftProperty), (double)foundNodeUIElement.GetValue(Canvas.TopProperty));
+            }
         }
 
         private void MoveNodeContainer(Vector2 distanceToMove, double scale) {
             //update new node position
-            var foundNode = _nodes[_selectedNodeKey];
+            var foundNode = _nodes[_focusedNodeKey];
             foundNode.Position.X = _selectedNodePosition.X + (distanceToMove.X / scale);
             foundNode.Position.Y = _selectedNodePosition.Y + (distanceToMove.Y / scale);
-            _nodes[_selectedNodeKey] = foundNode; //force immutable element to be updated
+            _nodes[_focusedNodeKey] = foundNode; //force immutable element to be updated
 
             //update node position
-            var foundNodeUIElement = (Canvas)_uiNodeGraphPanelXamlRoot.FindName(_selectedNodeKey);
+            var foundNodeUIElement = (Canvas)_uiNodeGraphPanelXamlRoot.FindName(_focusedNodeKey);
             foundNodeUIElement.SetValue(Canvas.LeftProperty, foundNode.Position.X);
             foundNodeUIElement.SetValue(Canvas.TopProperty, foundNode.Position.Y);
 
@@ -256,7 +256,7 @@ namespace X.Viewer.NodeGraph
             foreach (var link in _links)
             {
                 //need to update links ?????  I want to use Windows Composition eventually
-                if(link.InputNodeKey.Equals(_selectedNodeKey) || link.OutputNodeKey.Equals(_selectedNodeKey))
+                if(link.InputNodeKey.Equals(_focusedNodeKey) || link.OutputNodeKey.Equals(_focusedNodeKey))
                     DrawNodeSlotLink(link);
             }
         }

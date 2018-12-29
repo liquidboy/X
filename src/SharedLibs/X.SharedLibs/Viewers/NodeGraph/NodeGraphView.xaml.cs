@@ -86,6 +86,7 @@ namespace X.Viewer.NodeGraph
             ptDifXStart = ptDifX;
             ptDifYStart = ptDifY;
 
+            UpdateFocusedNode();
         }
         
         double ptDifX = 0;
@@ -94,7 +95,6 @@ namespace X.Viewer.NodeGraph
 
         private void layoutRoot_PointerMoved(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-
             var ptEnd = e.GetCurrentPoint(null);
             
             if (!IsMouseDown) return;
@@ -106,7 +106,7 @@ namespace X.Viewer.NodeGraph
             Debug.WriteLine($"board cursor position : {e.GetCurrentPoint(null).RawPosition}");
             
 
-            if (_isNodeSelected) {
+            if (_isNodeFocusedOn) {
                 //move node
                 var distanceBetween2Points = Vector2.Subtract(ptEnd.Position.ToVector2(), ptStart.Position.ToVector2());
                 MoveNodeContainer(distanceBetween2Points, nodeGraphZoomContainer.Scale);
