@@ -12,6 +12,8 @@ using Windows.UI.Xaml.Shapes;
 using NodePosition = Windows.Foundation.Point;
 using InputSlotPosition = Windows.Foundation.Point;
 using OutputSlotPosition = Windows.Foundation.Point;
+using System.Diagnostics;
+using System.Numerics;
 
 namespace X.Viewer.NodeGraph
 {
@@ -61,12 +63,17 @@ namespace X.Viewer.NodeGraph
                 OutputNodeKey = outputNodeKey;
                 OutputSlotIndex = outputSlotIndex;
             }
+            public string UniqueId{ get{ return $"nsl_{InputNodeKey}_{InputSlotIndex}_{OutputNodeKey}_{OutputSlotIndex}"; } }
         }
 
         IDictionary<string, Node> _nodes;
         List<NodeLink> _links;
         UIElement _uiNodeGraphXamlRoot;
         Panel _uiNodeGraphPanelXamlRoot;
+        bool _isNodeSelected = false;
+        string _selectedNodeKey;
+        string _selectedUIElementNodeName;
+        Point _selectedNodePosition;
 
         private void InitializeExampleNodes(UIElement uiNodeGraphRoot) {
             _uiNodeGraphXamlRoot = uiNodeGraphRoot;
@@ -116,6 +123,7 @@ namespace X.Viewer.NodeGraph
             //node-container
             var newNodeGroup = new Canvas()
             {
+                Name = $"nc_{node.Key}",
                 Width = node.Size.Width,
                 Height = node.Size.Height
             };
@@ -127,7 +135,7 @@ namespace X.Viewer.NodeGraph
             //node in node-container
             var newNodeUIElement = new Windows.UI.Xaml.Shapes.Rectangle()
             {
-                Name = node.Key,
+                Name = $"n_{node.Key}",
                 Fill = new SolidColorBrush(node.Color),
                 Width = node.Size.Width,
                 Height = node.Size.Height
@@ -166,6 +174,11 @@ namespace X.Viewer.NodeGraph
             _uiNodeGraphPanelXamlRoot.Children.Add(newNodeGroup);
         }
 
+        //private void NewNodeGroup_PointerMoved(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        //{
+        //    Debug.WriteLine($"node cursor position : {e.GetCurrentPoint(null).RawPosition}");
+        //}
+
         private void DrawNodeSlotLink(NodeLink nodeLink) {
             Node inputNode = _nodes[nodeLink.InputNodeKey];
             Node outputNode = _nodes[nodeLink.OutputNodeKey];
@@ -173,6 +186,21 @@ namespace X.Viewer.NodeGraph
             InputSlotPosition inputSlotPosition = inputNode.GetInputSlotPosition(nodeLink.InputSlotIndex);
             OutputSlotPosition outputSlotPosition = outputNode.GetOutputSlotPosition(nodeLink.OutputSlotIndex);
 
+            // find if it exists to change it
+            var foundUIElement = _uiNodeGraphPanelXamlRoot.FindName(nodeLink.UniqueId);
+            if (foundUIElement != null) {
+                PathGeometry pthGeometryFound = (PathGeometry)((Path)foundUIElement).Data;
+                PathFigure pthFigureFound = pthGeometryFound.Figures.First();
+                BezierSegment bezierSegmentFound = (BezierSegment)pthFigureFound.Segments.First();
+
+                pthFigureFound.StartPoint = inputSlotPosition;
+                bezierSegmentFound.Point1 = new Point(inputSlotPosition.X - 50, inputSlotPosition.Y);
+                bezierSegmentFound.Point2 = new Point(outputSlotPosition.X + 50, outputSlotPosition.Y);
+                bezierSegmentFound.Point3 = outputSlotPosition;
+                return;
+            }
+
+            //create new node slot link
             PathFigure pthFigure = new PathFigure();
             pthFigure.StartPoint = inputSlotPosition; //output point of link
 
@@ -195,6 +223,7 @@ namespace X.Viewer.NodeGraph
             pthGeometry.Figures = pthFigureCollection;
 
             Path arcPath = new Path();
+            arcPath.Name = nodeLink.UniqueId;
             arcPath.Stroke = new SolidColorBrush(Colors.Orange);
             arcPath.StrokeThickness = 1;
             arcPath.Data = pthGeometry;
@@ -203,12 +232,47 @@ namespace X.Viewer.NodeGraph
 
         private void NewNodeGroup_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            
-        }
+            _selectedNodeKey = "";
+            _selectedUIElementNodeName = "";
+            _isNodeSelected = false;
 
+        }
+        
         private void NewNodeGroup_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
+            //Console.WriteLine("pointer entered");
+            Canvas canvas = (Canvas)sender;
+            _selectedNodeKey = canvas.Name.Replace("nc_", string.Empty);
+            _selectedUIElementNodeName = canvas.Name;
+            _selectedNodePosition = new NodePosition((double)canvas.GetValue(Canvas.LeftProperty), (double)canvas.GetValue(Canvas.TopProperty));
+            _isNodeSelected = true;
+        }
+
+        private void MoveNodeContainer(Vector2 distanceToMove) {
+            Canvas foundNodeUIElement = (Canvas)_uiNodeGraphPanelXamlRoot.FindName(_selectedUIElementNodeName);
+            //double left = (double)foundNodeUIElement.GetValue(Canvas.LeftProperty);
+            //double top = (double)foundNodeUIElement.GetValue(Canvas.TopProperty);
+
+            var foundNode = _nodes[_selectedNodeKey];
+            foundNode.Position.X = _selectedNodePosition.X + distanceToMove.X;
+            foundNode.Position.Y = _selectedNodePosition.Y + distanceToMove.Y;
+            Debug.WriteLine($"node position 1: {foundNode.Position}");
+
+            _nodes[_selectedNodeKey] = foundNode;
+
+            var foundNode2 = _nodes[_selectedNodeKey];
+            Debug.WriteLine($"node position 2: {foundNode2.Position}");
             
+            foundNodeUIElement.SetValue(Canvas.LeftProperty, foundNode.Position.X);
+            foundNodeUIElement.SetValue(Canvas.TopProperty, foundNode.Position.Y);
+
+            //node-slot-links between the node-slots
+            foreach (var link in _links)
+            {
+                //need to update links ?????  I want to use Windows Composition eventually
+                if(link.InputNodeKey.Equals(_selectedNodeKey) || link.OutputNodeKey.Equals(_selectedNodeKey))
+                    DrawNodeSlotLink(link);
+            }
         }
     }
 }

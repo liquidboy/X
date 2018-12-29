@@ -14,6 +14,7 @@ using Windows.UI;
 using Windows.Foundation;
 using X.Services.Data;
 using X.UI.ZoomCanvas;
+using System.Diagnostics;
 
 namespace X.Viewer.NodeGraph
 {
@@ -101,13 +102,24 @@ namespace X.Viewer.NodeGraph
             //moving artboard
             var ct = nodeGraphCanvas.RenderTransform as CompositeTransform;
 
-           
-            ptDifX = ptDifXStart + ((ptStart.Position.X - ptEnd.Position.X) / nodeGraphZoomContainer.Scale);
-            ptDifY = ptDifYStart + ((ptStart.Position.Y - ptEnd.Position.Y) / nodeGraphZoomContainer.Scale);
 
+            Debug.WriteLine($"board cursor position : {e.GetCurrentPoint(null).RawPosition}");
+            
 
-            ct.TranslateX = -1 * ptDifX;
-            ct.TranslateY = -1 * ptDifY;
+            if (_isNodeSelected) {
+                //move node
+                var distanceBetween2Points = Vector2.Subtract(ptEnd.Position.ToVector2(), ptStart.Position.ToVector2());
+                MoveNodeContainer(distanceBetween2Points);
+                //Debug.WriteLine($"ptStart : {ptStart.Position}  difX : {tempPtDifX}  difY : {tempPtDifY}");
+                Debug.WriteLine($"ptStart : {ptStart.Position}  ptEnd : {ptEnd.Position} ");
+                Debug.WriteLine($"vector distance : {distanceBetween2Points} ");
+            } else {
+                ptDifX = ptDifXStart + ((ptStart.Position.X - ptEnd.Position.X) / nodeGraphZoomContainer.Scale);
+                ptDifY = ptDifYStart + ((ptStart.Position.Y - ptEnd.Position.Y) / nodeGraphZoomContainer.Scale);
+                
+                ct.TranslateX = -1 * ptDifX;
+                ct.TranslateY = -1 * ptDifY;
+            }
             
         }
     }
