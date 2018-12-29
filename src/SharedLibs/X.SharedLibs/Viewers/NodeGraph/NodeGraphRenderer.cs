@@ -1,35 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Graphics.Display;
 using Windows.Graphics.Imaging;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
-using X.Viewer.NodeGraph;
 
 namespace X.Viewer.NodeGraph
 {
     public class NodeGraphRenderer : IContentRenderer
     {
-        FrameworkElement _renderElement;
-
-        public FrameworkElement RenderElement
-        {
-            get
-            {
-                return _renderElement;
-            }
-
-            set
-            {
-                _renderElement = value;
-            }
-        }
+        public FrameworkElement RenderElement { get; set; }
 
         public string Uri { get; set; }
 
@@ -38,7 +21,7 @@ namespace X.Viewer.NodeGraph
         public async Task CaptureThumbnail(InMemoryRandomAccessStream ms)
         {
             var renderTargetBitmap = new RenderTargetBitmap();
-            await renderTargetBitmap.RenderAsync(_renderElement);
+            await renderTargetBitmap.RenderAsync(RenderElement);
 
             var pixels = await renderTargetBitmap.GetPixelsAsync();
 
@@ -59,9 +42,9 @@ namespace X.Viewer.NodeGraph
 
         public void Load()
         {
-            if (_renderElement == null) {
-                _renderElement = new NodeGraphView();
-                var cvre = _renderElement as IContentView;
+            if (RenderElement == null) {
+                RenderElement = new NodeGraphView();
+                var cvre = RenderElement as IContentView;
                 cvre.SendMessage += SendMessageThru;
                 cvre.Load();
             }
@@ -69,12 +52,12 @@ namespace X.Viewer.NodeGraph
 
         public void Unload()
         {
-            if (_renderElement != null) {
-                var cvre = _renderElement as IContentView;
+            if (RenderElement != null) {
+                var cvre = RenderElement as IContentView;
                 cvre.SendMessage -= SendMessageThru;
                 cvre.Unload();
                 cvre = null;
-                _renderElement = null;
+                RenderElement = null;
             }
         }
 

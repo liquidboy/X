@@ -15,12 +15,9 @@ namespace X.Viewer.NodeGraph
         public void DrawNodeGraph() {
 
             if (_isRendererInitialized) {
-                //draw nodes
                 foreach (var node in _nodes) {
                     RenderNode(node.Value);
                 }
-
-                //node-slot-links between the node-slots
                 foreach (var link in _links)
                 {
                     RenderNodeSlotLink(link);
@@ -29,7 +26,6 @@ namespace X.Viewer.NodeGraph
         }
 
         public void DrawNodeSlotLink(string key) {
-            //update node-slot-links positions between the node-slots
             foreach (var link in _links)
             {
                 //need to update links ?????  I want to use Windows Composition eventually

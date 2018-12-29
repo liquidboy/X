@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using NodePosition = Windows.Foundation.Point;
@@ -27,7 +23,7 @@ namespace X.Viewer.NodeGraph
 
         public void InitializeRenderer(UIElement uiNodeGraphRoot)
         {   
-            if (uiNodeGraphRoot is Panel)
+            if (!_isRendererInitialized && uiNodeGraphRoot is Panel)
             {
                 _uiNodeGraphXamlRoot = uiNodeGraphRoot;
                 _uiNodeGraphPanelXamlRoot = (Panel)_uiNodeGraphXamlRoot;
@@ -151,7 +147,6 @@ namespace X.Viewer.NodeGraph
                     ((FrameworkElement)x).Tag != null && 
                     ((FrameworkElement)x).Tag.ToString().Equals("nc"));
                 if (foundNC != null) {
-                    //_isNodeFocusedOn = true;
                     var uiCurrentFocusedNode = (FrameworkElement)foundNC.FirstOrDefault();
                     _selectedNodeStartDragPosition = new NodePosition((double)uiCurrentFocusedNode.GetValue(Canvas.LeftProperty), (double)uiCurrentFocusedNode.GetValue(Canvas.TopProperty));
                     _selectedNodeKey = uiCurrentFocusedNode.Name;
