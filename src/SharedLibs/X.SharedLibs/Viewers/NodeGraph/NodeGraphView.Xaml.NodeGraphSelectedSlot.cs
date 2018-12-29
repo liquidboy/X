@@ -17,9 +17,11 @@ namespace X.Viewer.NodeGraph
         string _selectedSlotNodeKey;
         int _selectedSlotIndex;
         bool _selectedSlotIsInputSlot;
+        
+        public bool IsSlotSelected => !string.IsNullOrEmpty(_selectedSlotNodeKey);
 
         public void SetSelectedSlot(Point point) {
-            if (!string.IsNullOrEmpty(_selectedSlotNodeKey)) return; //only one slot can be selected at any given time for now
+            if (IsSlotSelected) return; //only one slot can be selected at any given time for now
 
             var slotUnderPoint = TryToFindSlotUnderPoint(point);
             if (slotUnderPoint.FoundSlot) {

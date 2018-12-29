@@ -14,14 +14,14 @@ namespace X.Viewer.NodeGraph
         }
 
         public void PointingCompleted(Point point) {
-            if (!string.IsNullOrEmpty(_selectedSlotNodeKey))
+            if (IsSlotSelected)
             {
                 CompleteGhostLink(point);
                 ClearGhostLink();
                 ClearSelectedSlot(point);
             }
 
-            if (!string.IsNullOrEmpty(_selectedNodeKey))
+            if (IsNodeSelected)
             {
                 ClearSelectedNode();
             }
@@ -32,13 +32,13 @@ namespace X.Viewer.NodeGraph
         public void PointerUpdated(Vector2 distanceToMove, double scale) {
             _shouldStopPropogatingPointerMoved = false;
 
-            if (!string.IsNullOrEmpty(_selectedSlotNodeKey))
+            if (IsSlotSelected)
             {
                 //join slots
                 MoveSelectedSlot(distanceToMove, nodeGraphZoomContainer.Scale);
                 _shouldStopPropogatingPointerMoved = true;
             }
-            else if (!string.IsNullOrEmpty(_selectedNodeKey))
+            else if (IsNodeSelected)
             {
                 //move node
                 MoveSelectedNode(distanceToMove, nodeGraphZoomContainer.Scale);

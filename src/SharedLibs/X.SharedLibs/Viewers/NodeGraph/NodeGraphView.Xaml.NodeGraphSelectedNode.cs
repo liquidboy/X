@@ -13,8 +13,10 @@ namespace X.Viewer.NodeGraph
         Point _selectedNodeStartDragPosition;
         string _selectedNodeKey;
 
+        public bool IsNodeSelected => !string.IsNullOrEmpty(_selectedNodeKey);
+
         public void SetSelectedNode(Point point) {
-            if (!string.IsNullOrEmpty(_selectedSlotNodeKey)) return; // short circuit if SLOT is selected
+            if (IsSlotSelected) return; // short circuit if SLOT is selected
 
             var foundElementsUnderPoint = VisualTreeHelper.FindElementsInHostCoordinates(point, _uiNodeGraphXamlRoot);
             if (foundElementsUnderPoint != null && foundElementsUnderPoint.Count() > 0)
