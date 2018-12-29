@@ -36,7 +36,8 @@ namespace X.Viewer.NodeGraph
 
             InitializeRenderer(nodeGraphCanvas);
             InitializeNodeGraph();
-            SetupLargeExampleNodes();
+            SetupExampleNodes();
+            //SetupLargeExampleNodes();
         }
 
         private void SetupLargeExampleNodes()
