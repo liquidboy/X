@@ -12,7 +12,7 @@ using System.Numerics;
 
 namespace X.Viewer.NodeGraph
 {
-    public partial class NodeGraphView : INodeGraphRenderer
+    public partial class NodeGraphView : INodeGraphRenderer, INodeGraphSelectedNode
     {
         bool _isRendererInitialized;
         UIElement _uiNodeGraphXamlRoot;
