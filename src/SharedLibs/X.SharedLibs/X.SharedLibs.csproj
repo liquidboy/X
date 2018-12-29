@@ -754,6 +754,10 @@
       <DependentUpon>MediaControls.xaml</DependentUpon>
     </Compile>
     <Compile Include="Viewers\MediaView\MediaElementRenderer.cs" />
+    <Compile Include="Viewers\NodeGraph\NodeLink.cs" />
+    <Compile Include="Viewers\NodeGraph\Node.cs" />
+    <Compile Include="Viewers\NodeGraph\INodeGraphRenderer.cs" />
+    <Compile Include="Viewers\NodeGraph\INodeGraph.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphRenderer.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.Graph.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.xaml.cs">

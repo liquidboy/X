@@ -46,7 +46,7 @@ namespace X.Viewer.NodeGraph
             //sample node visual
             //nodeGraphCanvas.Children.Add(new Windows.UI.Xaml.Shapes.Rectangle() { Width = 100, Height = 100, Fill = new SolidColorBrush(Colors.Red) });
             InitializeRenderer(nodeGraphCanvas);
-            InitializeExampleNodes();
+            InitializeNodeGraph();
         }
 
         public void Unload()

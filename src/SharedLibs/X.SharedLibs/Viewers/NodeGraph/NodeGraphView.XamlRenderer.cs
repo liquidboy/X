@@ -16,7 +16,7 @@ using System.Numerics;
 
 namespace X.Viewer.NodeGraph
 {
-    public partial class NodeGraphView
+    public partial class NodeGraphView : INodeGraphRenderer
     {
         bool _isRendererInitialized;
         UIElement _uiNodeGraphXamlRoot;
@@ -25,7 +25,7 @@ namespace X.Viewer.NodeGraph
         Point _selectedNodeStartDragPosition;
         string _selectedNodeKey;
 
-        private void InitializeRenderer(UIElement uiNodeGraphRoot)
+        public void InitializeRenderer(UIElement uiNodeGraphRoot)
         {   
             if (uiNodeGraphRoot is Panel)
             {
@@ -36,7 +36,7 @@ namespace X.Viewer.NodeGraph
             
         }
 
-        private void DrawNode(Node node)
+        public void RenderNode(Node node)
         {
             double slotRadius = 5;
             double slotDiameter = 2 * slotRadius;
@@ -94,7 +94,7 @@ namespace X.Viewer.NodeGraph
             _uiNodeGraphPanelXamlRoot.Children.Add(newNodeGroup);
         }
 
-        private void DrawNodeSlotLink(NodeLink nodeLink)
+        public void RenderNodeSlotLink(NodeLink nodeLink)
         {
             Node inputNode = _nodes[nodeLink.InputNodeKey];
             Node outputNode = _nodes[nodeLink.OutputNodeKey];
@@ -143,7 +143,7 @@ namespace X.Viewer.NodeGraph
             _uiNodeGraphPanelXamlRoot.Children.Add(arcPath);
         }
 
-        private void CheckIfNodeIsPressed(Point point) {
+        public void CheckIfNodeIsPressed(Point point) {
             var foundElementsUnderPoint = VisualTreeHelper.FindElementsInHostCoordinates(point, _uiNodeGraphXamlRoot);
             if (foundElementsUnderPoint != null && foundElementsUnderPoint.Count() > 0)
             {
@@ -159,32 +159,27 @@ namespace X.Viewer.NodeGraph
             }
         }
 
-        private void ClearSelectedNode() {
-            //_isNodeFocusedOn = false;
+        public void ClearSelectedNode() {
             _selectedNodeKey = string.Empty;
         }
 
 
-        private void MoveNode(Vector2 distanceToMove, double scale)
+        public void MoveNode(Vector2 distanceToMove, double scale)
         {
             //update new node position
-            var nodeKey = _selectedNodeKey;
-            var foundNode = _nodes[nodeKey];
-            foundNode.Position.X = _selectedNodeStartDragPosition.X + (distanceToMove.X / scale);
-            foundNode.Position.Y = _selectedNodeStartDragPosition.Y + (distanceToMove.Y / scale);
-            _nodes[nodeKey] = foundNode; //force immutable element to be updated
+            var updatedNode = UpdateNodePosition(_selectedNodeKey, _selectedNodeStartDragPosition.X + (distanceToMove.X / scale), _selectedNodeStartDragPosition.Y + (distanceToMove.Y / scale));
 
             //update node position
-            var foundNodeUIElement = (Canvas)_uiNodeGraphPanelXamlRoot.FindName(nodeKey);
-            foundNodeUIElement.SetValue(Canvas.LeftProperty, foundNode.Position.X);
-            foundNodeUIElement.SetValue(Canvas.TopProperty, foundNode.Position.Y);
+            var foundNodeUIElement = (Canvas)_uiNodeGraphPanelXamlRoot.FindName(_selectedNodeKey);
+            foundNodeUIElement.SetValue(Canvas.LeftProperty, updatedNode.Position.X);
+            foundNodeUIElement.SetValue(Canvas.TopProperty, updatedNode.Position.Y);
 
             //update node-slot-links positions between the node-slots
             foreach (var link in _links)
             {
                 //need to update links ?????  I want to use Windows Composition eventually
-                if (link.InputNodeKey.Equals(nodeKey) || link.OutputNodeKey.Equals(nodeKey))
-                    DrawNodeSlotLink(link);
+                if (link.InputNodeKey.Equals(_selectedNodeKey) || link.OutputNodeKey.Equals(_selectedNodeKey))
+                    RenderNodeSlotLink(link);
             }
         }
     }
