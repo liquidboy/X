@@ -1,20 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Numerics;
 using Windows.UI.Input;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Shapes;
-using X.Viewer.SketchFlow.Controls;
-using X.Viewer.SketchFlow.Controls.Stamps;
 using Windows.UI;
-using Windows.Foundation;
-using X.Services.Data;
-using X.UI.ZoomCanvas;
 using System.Diagnostics;
+using NodePosition = Windows.Foundation.Point;
 
 namespace X.Viewer.NodeGraph
 {
@@ -26,10 +19,8 @@ namespace X.Viewer.NodeGraph
 
         public NodeGraphView()
         {
-            this.InitializeComponent();
-
-            this.Loaded += NodeGraphView_Loaded;
-
+            InitializeComponent();
+            Loaded += NodeGraphView_Loaded;
         }
 
 
@@ -43,10 +34,28 @@ namespace X.Viewer.NodeGraph
             //var ct = nodeGraphCanvas.RenderTransform as CompositeTransform;
             //nodeGraphZoomContainer.Scale = ct.ScaleX;
 
-            //sample node visual
-            //nodeGraphCanvas.Children.Add(new Windows.UI.Xaml.Shapes.Rectangle() { Width = 100, Height = 100, Fill = new SolidColorBrush(Colors.Red) });
             InitializeRenderer(nodeGraphCanvas);
             InitializeNodeGraph();
+            SetupExampleNodes();
+        }
+        
+        private void SetupExampleNodes()
+        {
+            _nodes.Add("Node1", new Node("Node1", new NodePosition(100, 100), Colors.Red, 1, 1));
+            _nodes.Add("Node2", new Node("Node2", new NodePosition(100, 300), Colors.Green, 1, 1));
+            _nodes.Add("Node3", new Node("Node3", new NodePosition(400, 190), Colors.Yellow, 2, 2));
+            _nodes.Add("Node4", new Node("Node4", new NodePosition(400, 0), Colors.Purple, 1, 1));
+            _nodes.Add("Node5", new Node("Node5", new NodePosition(700, 100), Colors.Blue, 2, 1));
+            _nodes.Add("Node6", new Node("Node6", new NodePosition(400, 400), Colors.Pink, 1, 1));
+
+            _links.Add(new NodeLink("Node1", 0, "Node3", 0));
+            _links.Add(new NodeLink("Node2", 0, "Node3", 1));
+            _links.Add(new NodeLink("Node4", 0, "Node5", 0));
+            _links.Add(new NodeLink("Node3", 0, "Node5", 0));
+            _links.Add(new NodeLink("Node3", 1, "Node5", 0));
+            _links.Add(new NodeLink("Node6", 0, "Node5", 1));
+
+            DrawNodes();
         }
 
         public void Unload()
@@ -109,9 +118,9 @@ namespace X.Viewer.NodeGraph
                 //move node
                 var distanceBetween2Points = Vector2.Subtract(ptEnd.Position.ToVector2(), ptStart.Position.ToVector2());
                 MoveNode(distanceBetween2Points, nodeGraphZoomContainer.Scale);
-                //Debug.WriteLine($"ptStart : {ptStart.Position}  ptEnd : {ptEnd.Position} ");
-                //Debug.WriteLine($"vector distance : {distanceBetween2Points} ");
-            } else {
+                Debug.WriteLine($"vector distance : {distanceBetween2Points}  ptStart : {ptStart.Position}  ptEnd : {ptEnd.Position} ");
+            }
+            else {
                 //move board
                 ptDifX = ptDifXStart + ((ptStart.Position.X - ptEnd.Position.X) / nodeGraphZoomContainer.Scale);
                 ptDifY = ptDifYStart + ((ptStart.Position.Y - ptEnd.Position.Y) / nodeGraphZoomContainer.Scale);
