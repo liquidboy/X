@@ -755,16 +755,17 @@
     </Compile>
     <Compile Include="Viewers\MediaView\MediaElementRenderer.cs" />
     <Compile Include="Viewers\NodeGraph\INodeGraphSelectedNode.cs" />
+    <Compile Include="Viewers\NodeGraph\NodeGraphView.Xaml.NodeGraphSelectedNode.cs" />
     <Compile Include="Viewers\NodeGraph\NodeLink.cs" />
     <Compile Include="Viewers\NodeGraph\Node.cs" />
     <Compile Include="Viewers\NodeGraph\INodeGraphRenderer.cs" />
     <Compile Include="Viewers\NodeGraph\INodeGraph.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphRenderer.cs" />
-    <Compile Include="Viewers\NodeGraph\NodeGraphView.Graph.cs" />
+    <Compile Include="Viewers\NodeGraph\NodeGraphView.NodeGraph.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.xaml.cs">
       <DependentUpon>NodeGraphView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Viewers\NodeGraph\NodeGraphView.XamlRenderer.cs" />
+    <Compile Include="Viewers\NodeGraph\NodeGraphView.Xaml.NodeGraphRenderer.cs" />
     <Compile Include="Viewers\SketchFlow\Controls\MenuFlyoutPathItem.cs" />
     <Compile Include="Viewers\SketchFlow\Controls\PageContent.xaml.cs">
       <DependentUpon>PageContent.xaml</DependentUpon>

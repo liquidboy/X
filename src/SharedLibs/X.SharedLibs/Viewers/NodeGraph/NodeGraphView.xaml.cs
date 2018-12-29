@@ -46,7 +46,15 @@ namespace X.Viewer.NodeGraph
             _nodes.Add("Node3", new Node("Node3", new NodePosition(400, 190), Colors.Yellow, 2, 2));
             _nodes.Add("Node4", new Node("Node4", new NodePosition(400, 0), Colors.Purple, 1, 1));
             _nodes.Add("Node5", new Node("Node5", new NodePosition(700, 100), Colors.Blue, 2, 1));
-            _nodes.Add("Node6", new Node("Node6", new NodePosition(400, 400), Colors.Pink, 1, 1));
+            _nodes.Add("Node6", new Node("Node6", new NodePosition(400, 400), Colors.Pink, 1, 2));
+            _nodes.Add("Node7", new Node("Node7", new NodePosition(700, 600), Colors.AliceBlue, 5, 8));
+            _nodes.Add("Node8", new Node("Node8", new NodePosition(700, 1000), Colors.Aquamarine, 3, 1));
+            _nodes.Add("Node9", new Node("Node9", new NodePosition(1000, 500), Colors.Beige, 2, 2));
+            _nodes.Add("Node10", new Node("Node10", new NodePosition(1000, 800), Colors.Bisque, 3, 2));
+            _nodes.Add("Node11", new Node("Node11", new NodePosition(1100, 200), Colors.Brown, 2, 3));
+            _nodes.Add("Node12", new Node("Node12", new NodePosition(1300, 500), Colors.Coral, 2, 2));
+            _nodes.Add("Node13", new Node("Node13", new NodePosition(1300, 700), Colors.DarkGoldenrod, 2, 3));
+
 
             _links.Add(new NodeLink("Node1", 0, "Node3", 0));
             _links.Add(new NodeLink("Node2", 0, "Node3", 1));
@@ -54,6 +62,16 @@ namespace X.Viewer.NodeGraph
             _links.Add(new NodeLink("Node3", 0, "Node5", 0));
             _links.Add(new NodeLink("Node3", 1, "Node5", 0));
             _links.Add(new NodeLink("Node6", 0, "Node5", 1));
+            _links.Add(new NodeLink("Node6", 0, "Node7", 0));
+            _links.Add(new NodeLink("Node6", 1, "Node8", 0));
+            _links.Add(new NodeLink("Node5", 0, "Node11", 0));
+            _links.Add(new NodeLink("Node7", 0, "Node11", 1));
+            _links.Add(new NodeLink("Node7", 1, "Node9", 0));
+            _links.Add(new NodeLink("Node7", 2, "Node9", 1));
+            _links.Add(new NodeLink("Node7", 3, "Node10", 0));
+            _links.Add(new NodeLink("Node8", 0, "Node10", 1));
+            _links.Add(new NodeLink("Node10", 0, "Node12", 0));
+            _links.Add(new NodeLink("Node10", 1, "Node13", 0));
 
             DrawNodeGraph();
         }

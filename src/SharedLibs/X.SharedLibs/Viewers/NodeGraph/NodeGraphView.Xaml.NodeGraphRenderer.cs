@@ -1,26 +1,21 @@
 ﻿using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using NodePosition = Windows.Foundation.Point;
 using InputSlotPosition = Windows.Foundation.Point;
 using OutputSlotPosition = Windows.Foundation.Point;
 using Windows.UI.Xaml.Media;
 using Windows.UI;
 using Windows.Foundation;
 using Windows.UI.Xaml.Shapes;
-using System.Numerics;
 
 namespace X.Viewer.NodeGraph
 {
-    public partial class NodeGraphView : INodeGraphRenderer, INodeGraphSelectedNode
+    public partial class NodeGraphView : INodeGraphRenderer
     {
         bool _isRendererInitialized;
         UIElement _uiNodeGraphXamlRoot;
         Panel _uiNodeGraphPanelXamlRoot;
         
-        Point _selectedNodeStartDragPosition;
-        string _selectedNodeKey;
-
         public void InitializeRenderer(UIElement uiNodeGraphRoot)
         {   
             if (!_isRendererInitialized && uiNodeGraphRoot is Panel)
@@ -137,41 +132,6 @@ namespace X.Viewer.NodeGraph
                 Data = new PathGeometry() { Figures = pthFigureCollection }
             };
             _uiNodeGraphPanelXamlRoot.Children.Add(arcPath);
-        }
-
-        public void SetSelectedNode(Point point) {
-            var foundElementsUnderPoint = VisualTreeHelper.FindElementsInHostCoordinates(point, _uiNodeGraphXamlRoot);
-            if (foundElementsUnderPoint != null && foundElementsUnderPoint.Count() > 0)
-            {
-                var foundNC = foundElementsUnderPoint.Where(x => x is FrameworkElement && 
-                    ((FrameworkElement)x).Tag != null && 
-                    ((FrameworkElement)x).Tag.ToString().Equals("nc"));
-                if (foundNC != null) {
-                    var uiCurrentFocusedNode = (FrameworkElement)foundNC.FirstOrDefault();
-                    _selectedNodeStartDragPosition = new NodePosition((double)uiCurrentFocusedNode.GetValue(Canvas.LeftProperty), (double)uiCurrentFocusedNode.GetValue(Canvas.TopProperty));
-                    _selectedNodeKey = uiCurrentFocusedNode.Name;
-                }
-            }
-        }
-
-        public void ClearSelectedNode() {
-            _selectedNodeKey = string.Empty;
-        }
-
-
-        public void MoveSelectedNode(Vector2 distanceToMove, double scale)
-        {
-            //update new node position
-            var updatedNode = UpdateNodePosition(_selectedNodeKey, _selectedNodeStartDragPosition.X + (distanceToMove.X / scale), _selectedNodeStartDragPosition.Y + (distanceToMove.Y / scale));
-
-            //update node position
-            var foundNodeUIElement = (Canvas)_uiNodeGraphPanelXamlRoot.FindName(_selectedNodeKey);
-            foundNodeUIElement.SetValue(Canvas.LeftProperty, updatedNode.Position.X);
-            foundNodeUIElement.SetValue(Canvas.TopProperty, updatedNode.Position.Y);
-
-            //update node-slot-links positions between the node-slots
-            DrawNodeSlotLink(_selectedNodeKey);
-
         }
     }
 }
