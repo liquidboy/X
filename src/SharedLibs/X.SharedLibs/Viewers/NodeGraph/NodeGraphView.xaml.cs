@@ -76,18 +76,18 @@ namespace X.Viewer.NodeGraph
         {
             IsMouseDown = true;
             ptStart = e.GetCurrentPoint(null);
-
+            CheckIfNodeIsPressed(e.GetCurrentPoint(null).Position);
 
         }
 
         private void layoutRoot_PointerReleased(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
             IsMouseDown = false;
-            
+
             ptDifXStart = ptDifX;
             ptDifYStart = ptDifY;
-
-            UpdateFocusOnNode();
+            
+            ClearSelectedNode();
         }
         
         double ptDifX = 0;
@@ -102,19 +102,17 @@ namespace X.Viewer.NodeGraph
 
             //moving artboard
             var ct = nodeGraphCanvas.RenderTransform as CompositeTransform;
-
-
+            
             Debug.WriteLine($"board cursor position : {e.GetCurrentPoint(null).RawPosition}");
             
-
-            if (_isNodeFocusedOn) {
+            if (!string.IsNullOrEmpty(_selectedNodeKey)) {
                 //move node
                 var distanceBetween2Points = Vector2.Subtract(ptEnd.Position.ToVector2(), ptStart.Position.ToVector2());
                 MoveNode(distanceBetween2Points, nodeGraphZoomContainer.Scale);
-                //Debug.WriteLine($"ptStart : {ptStart.Position}  difX : {tempPtDifX}  difY : {tempPtDifY}");
-                Debug.WriteLine($"ptStart : {ptStart.Position}  ptEnd : {ptEnd.Position} ");
-                Debug.WriteLine($"vector distance : {distanceBetween2Points} ");
+                //Debug.WriteLine($"ptStart : {ptStart.Position}  ptEnd : {ptEnd.Position} ");
+                //Debug.WriteLine($"vector distance : {distanceBetween2Points} ");
             } else {
+                //move board
                 ptDifX = ptDifXStart + ((ptStart.Position.X - ptEnd.Position.X) / nodeGraphZoomContainer.Scale);
                 ptDifY = ptDifYStart + ((ptStart.Position.Y - ptEnd.Position.Y) / nodeGraphZoomContainer.Scale);
                 

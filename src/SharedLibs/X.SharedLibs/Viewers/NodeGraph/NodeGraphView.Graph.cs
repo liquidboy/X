@@ -68,8 +68,7 @@ namespace X.Viewer.NodeGraph
 
         IDictionary<string, Node> _nodes;
         List<NodeLink> _links;
-
-
+        
         private void InitializeExampleNodes() {
             _nodes = new Dictionary<string, Node>();
             _links = new List<NodeLink>();

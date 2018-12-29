@@ -22,11 +22,8 @@ namespace X.Viewer.NodeGraph
         UIElement _uiNodeGraphXamlRoot;
         Panel _uiNodeGraphPanelXamlRoot;
         
-
-        bool _isNodeFocusedOn = false;
-        FrameworkElement _uiCurrentFocusedNode;
-        //string _focusedNodeKey;
-        Point _selectedNodePosition;
+        Point _selectedNodeStartDragPosition;
+        string _selectedNodeKey;
 
         private void InitializeRenderer(UIElement uiNodeGraphRoot)
         {   
@@ -49,13 +46,12 @@ namespace X.Viewer.NodeGraph
             {
                 Name = node.Key,
                 Width = node.Size.Width,
-                Height = node.Size.Height
+                Height = node.Size.Height,
+                Tag = "nc"
             };
             newNodeGroup.SetValue(Canvas.LeftProperty, node.Position.X);
             newNodeGroup.SetValue(Canvas.TopProperty, node.Position.Y);
-            newNodeGroup.PointerEntered += Node_PointerEntered;
-            newNodeGroup.PointerExited += Node_PointerExited;
-
+            
             //node in node-container
             var newNodeUIElement = new Windows.UI.Xaml.Shapes.Rectangle()
             {
@@ -147,35 +143,35 @@ namespace X.Viewer.NodeGraph
             _uiNodeGraphPanelXamlRoot.Children.Add(arcPath);
         }
 
-        private void UpdateFocusOnNode()
-        {
-            if (_isNodeFocusedOn)
+        private void CheckIfNodeIsPressed(Point point) {
+            var foundElementsUnderPoint = VisualTreeHelper.FindElementsInHostCoordinates(point, _uiNodeGraphXamlRoot);
+            if (foundElementsUnderPoint != null && foundElementsUnderPoint.Count() > 0)
             {
-                _selectedNodePosition = new NodePosition((double)_uiCurrentFocusedNode.GetValue(Canvas.LeftProperty), (double)_uiCurrentFocusedNode.GetValue(Canvas.TopProperty));
+                var foundNC = foundElementsUnderPoint.Where(x => x is FrameworkElement && 
+                    ((FrameworkElement)x).Tag != null && 
+                    ((FrameworkElement)x).Tag.ToString().Equals("nc"));
+                if (foundNC != null) {
+                    //_isNodeFocusedOn = true;
+                    var uiCurrentFocusedNode = (FrameworkElement)foundNC.FirstOrDefault();
+                    _selectedNodeStartDragPosition = new NodePosition((double)uiCurrentFocusedNode.GetValue(Canvas.LeftProperty), (double)uiCurrentFocusedNode.GetValue(Canvas.TopProperty));
+                    _selectedNodeKey = uiCurrentFocusedNode.Name;
+                }
             }
         }
 
-        private void Node_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            //_focusedNodeKey = "";
-            _isNodeFocusedOn = false;
+        private void ClearSelectedNode() {
+            //_isNodeFocusedOn = false;
+            _selectedNodeKey = string.Empty;
         }
 
-        private void Node_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            _isNodeFocusedOn = true;
-            //_focusedNodeKey = ((Canvas)sender).Name;
-            _uiCurrentFocusedNode = (FrameworkElement)sender;
-            UpdateFocusOnNode();
-        }
-        
+
         private void MoveNode(Vector2 distanceToMove, double scale)
         {
             //update new node position
-            var nodeKey = _uiCurrentFocusedNode.Name;
+            var nodeKey = _selectedNodeKey;
             var foundNode = _nodes[nodeKey];
-            foundNode.Position.X = _selectedNodePosition.X + (distanceToMove.X / scale);
-            foundNode.Position.Y = _selectedNodePosition.Y + (distanceToMove.Y / scale);
+            foundNode.Position.X = _selectedNodeStartDragPosition.X + (distanceToMove.X / scale);
+            foundNode.Position.Y = _selectedNodeStartDragPosition.Y + (distanceToMove.Y / scale);
             _nodes[nodeKey] = foundNode; //force immutable element to be updated
 
             //update node position
