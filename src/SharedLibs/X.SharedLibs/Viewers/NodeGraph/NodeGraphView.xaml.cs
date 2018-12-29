@@ -109,7 +109,7 @@ namespace X.Viewer.NodeGraph
             if (_isNodeSelected) {
                 //move node
                 var distanceBetween2Points = Vector2.Subtract(ptEnd.Position.ToVector2(), ptStart.Position.ToVector2());
-                MoveNodeContainer(distanceBetween2Points);
+                MoveNodeContainer(distanceBetween2Points, nodeGraphZoomContainer.Scale);
                 //Debug.WriteLine($"ptStart : {ptStart.Position}  difX : {tempPtDifX}  difY : {tempPtDifY}");
                 Debug.WriteLine($"ptStart : {ptStart.Position}  ptEnd : {ptEnd.Position} ");
                 Debug.WriteLine($"vector distance : {distanceBetween2Points} ");

@@ -248,25 +248,19 @@ namespace X.Viewer.NodeGraph
             _isNodeSelected = true;
         }
 
-        private void MoveNodeContainer(Vector2 distanceToMove) {
-            Canvas foundNodeUIElement = (Canvas)_uiNodeGraphPanelXamlRoot.FindName(_selectedUIElementNodeName);
-            //double left = (double)foundNodeUIElement.GetValue(Canvas.LeftProperty);
-            //double top = (double)foundNodeUIElement.GetValue(Canvas.TopProperty);
-
+        private void MoveNodeContainer(Vector2 distanceToMove, double scale) {
+            //update new node position
             var foundNode = _nodes[_selectedNodeKey];
-            foundNode.Position.X = _selectedNodePosition.X + distanceToMove.X;
-            foundNode.Position.Y = _selectedNodePosition.Y + distanceToMove.Y;
-            Debug.WriteLine($"node position 1: {foundNode.Position}");
+            foundNode.Position.X = _selectedNodePosition.X + (distanceToMove.X / scale);
+            foundNode.Position.Y = _selectedNodePosition.Y + (distanceToMove.Y / scale);
+            _nodes[_selectedNodeKey] = foundNode; //force immutable element to be updated
 
-            _nodes[_selectedNodeKey] = foundNode;
-
-            var foundNode2 = _nodes[_selectedNodeKey];
-            Debug.WriteLine($"node position 2: {foundNode2.Position}");
-            
+            //update node position
+            var foundNodeUIElement = (Canvas)_uiNodeGraphPanelXamlRoot.FindName(_selectedUIElementNodeName);
             foundNodeUIElement.SetValue(Canvas.LeftProperty, foundNode.Position.X);
             foundNodeUIElement.SetValue(Canvas.TopProperty, foundNode.Position.Y);
 
-            //node-slot-links between the node-slots
+            //update node-slot-links positions between the node-slots
             foreach (var link in _links)
             {
                 //need to update links ?????  I want to use Windows Composition eventually
