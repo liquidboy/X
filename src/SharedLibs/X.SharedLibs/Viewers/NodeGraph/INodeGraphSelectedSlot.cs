@@ -9,6 +9,11 @@ namespace X.Viewer.NodeGraph
     {
         void SetSelectedSlot(Point point);
         void ClearSelectedSlot();
-        void MoveSelectedSlot(Vector2 distanceToMove, double scale);   
+        void MoveSelectedSlot(Vector2 distanceToMove, double scale);
+
+        void CompleteGhostLink();
+        void DestroyGhostLink();
+        void StartGhostLink(Point startPosition);
+        void UpdateGhostLink(Point startPosition, double movedX, double movedY);
     }
 }

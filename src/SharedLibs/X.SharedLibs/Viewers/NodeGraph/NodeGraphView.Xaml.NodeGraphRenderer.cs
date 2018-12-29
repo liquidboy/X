@@ -100,10 +100,10 @@ namespace X.Viewer.NodeGraph
 
             // find node-slot-link if it exists and then update it
             var foundUIElement = _uiNodeGraphPanelXamlRoot.FindName(nodeLink.UniqueId);
-            if (TryRenderExistingNodeSlotLink(nodeLink.UniqueId, inputSlotPosition, outputSlotPosition)) return;
+            if (TryUpdateExistingNodeSlotLink(nodeLink.UniqueId, inputSlotPosition, outputSlotPosition)) return;
             
             //create new node-slot-link
-            RenderNewNodeSlotLink(nodeLink.UniqueId, inputSlotPosition, outputSlotPosition);
+            CreateNewNodeSlotLink(nodeLink.UniqueId, inputSlotPosition, outputSlotPosition);
         }
 
         (bool ElementFound, UIElement Element) HasNodeSlotLinkAlreadyBeenRendered(string id) {
@@ -112,7 +112,7 @@ namespace X.Viewer.NodeGraph
             return (false, null);
         }
 
-        bool TryRenderExistingNodeSlotLink(string id, InputSlotPosition inputSlotPosition, OutputSlotPosition outputSlotPosition) {
+        bool TryUpdateExistingNodeSlotLink(string id, InputSlotPosition inputSlotPosition, OutputSlotPosition outputSlotPosition) {
             var findingUIElement = HasNodeSlotLinkAlreadyBeenRendered(id);
             if (findingUIElement.ElementFound)
             {
@@ -130,7 +130,7 @@ namespace X.Viewer.NodeGraph
             return false;
         }
 
-        void RenderNewNodeSlotLink(string id, InputSlotPosition inputSlotPosition, OutputSlotPosition outputSlotPosition)
+        void CreateNewNodeSlotLink(string id, InputSlotPosition inputSlotPosition, OutputSlotPosition outputSlotPosition)
         {
             if (HasNodeSlotLinkAlreadyBeenRendered(id).ElementFound) return;
 
@@ -159,5 +159,6 @@ namespace X.Viewer.NodeGraph
             };
             _uiNodeGraphPanelXamlRoot.Children.Add(arcPath);
         }
+
     }
 }

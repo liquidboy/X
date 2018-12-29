@@ -22,7 +22,7 @@ namespace X.Viewer.NodeGraph
         public void PointerUpdated(Vector2 distanceToMove, double scale) {
             _shouldStopPropogatingPointerMoved = false;
 
-            if (!string.IsNullOrEmpty(_selectedSlotKey))
+            if (!string.IsNullOrEmpty(_selectedSlotNodeKey))
             {
                 //join slots
                 MoveSelectedSlot(distanceToMove, nodeGraphZoomContainer.Scale);

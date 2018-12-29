@@ -14,7 +14,7 @@ namespace X.Viewer.NodeGraph
         string _selectedNodeKey;
 
         public void SetSelectedNode(Point point) {
-            if (!string.IsNullOrEmpty(_selectedSlotKey)) return; // short circuit if SLOT is selected
+            if (!string.IsNullOrEmpty(_selectedSlotNodeKey)) return; // short circuit if SLOT is selected
 
             var foundElementsUnderPoint = VisualTreeHelper.FindElementsInHostCoordinates(point, _uiNodeGraphXamlRoot);
             if (foundElementsUnderPoint != null && foundElementsUnderPoint.Count() > 0)
