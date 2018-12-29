@@ -100,8 +100,22 @@ namespace X.Viewer.NodeGraph
 
             // find node-slot-link if it exists and then update it
             var foundUIElement = _uiNodeGraphPanelXamlRoot.FindName(nodeLink.UniqueId);
-            if (foundUIElement != null)
+            if (TryRenderExistingNodeSlotLink(nodeLink.UniqueId, inputSlotPosition, outputSlotPosition)) return;
+            
+            //create new node-slot-link
+            RenderNewNodeSlotLink(nodeLink.UniqueId, inputSlotPosition, outputSlotPosition);
+        }
+
+        bool HasNodeSlotLinkAlreadyBeenRendered(string id) {
+            var foundUIElement = _uiNodeGraphPanelXamlRoot.FindName(id);
+            if (foundUIElement != null) return true;
+            return false;
+        }
+
+        bool TryRenderExistingNodeSlotLink(string id, InputSlotPosition inputSlotPosition, OutputSlotPosition outputSlotPosition) {
+            if (HasNodeSlotLinkAlreadyBeenRendered(id))
             {
+                var foundUIElement = _uiNodeGraphPanelXamlRoot.FindName(id);
                 PathGeometry pthGeometryFound = (PathGeometry)((Path)foundUIElement).Data;
                 PathFigure pthFigureFound = pthGeometryFound.Figures.First();
                 BezierSegment bezierSegmentFound = (BezierSegment)pthFigureFound.Segments.First();
@@ -110,10 +124,16 @@ namespace X.Viewer.NodeGraph
                 bezierSegmentFound.Point1 = new Point(inputSlotPosition.X - 50, inputSlotPosition.Y);
                 bezierSegmentFound.Point2 = new Point(outputSlotPosition.X + 50, outputSlotPosition.Y);
                 bezierSegmentFound.Point3 = outputSlotPosition;
-                return;
+                return true;
             }
 
-            //create new node-slot-link
+            return false;
+        }
+
+        void RenderNewNodeSlotLink(string id, InputSlotPosition inputSlotPosition, OutputSlotPosition outputSlotPosition)
+        {
+            if (HasNodeSlotLinkAlreadyBeenRendered(id)) return;
+
             PathFigure pthFigure = new PathFigure() { StartPoint = inputSlotPosition };
 
             BezierSegment bezierSegment = new BezierSegment()
@@ -131,7 +151,7 @@ namespace X.Viewer.NodeGraph
 
             Path arcPath = new Path()
             {
-                Name = nodeLink.UniqueId,
+                Name = id,
                 Stroke = new SolidColorBrush(Colors.Orange),
                 StrokeThickness = 1,
                 Data = new PathGeometry() { Figures = pthFigureCollection },

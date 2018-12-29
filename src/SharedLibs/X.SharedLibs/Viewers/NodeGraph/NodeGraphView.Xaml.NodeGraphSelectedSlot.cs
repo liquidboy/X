@@ -17,6 +17,7 @@ namespace X.Viewer.NodeGraph
         bool _selectedSlotIsInputSlot;
 
         public void SetSelectedSlot(Point point) {
+            if (!string.IsNullOrEmpty(_selectedSlotKey)) return; //only one slot can be selected at any given time for now
             var foundElementsUnderPoint = VisualTreeHelper.FindElementsInHostCoordinates(point, _uiNodeGraphXamlRoot);
             if (foundElementsUnderPoint != null && foundElementsUnderPoint.Count() > 0)
             {
@@ -31,6 +32,7 @@ namespace X.Viewer.NodeGraph
                     else
                         _selectedSlotStartDragPosition = new OutputSlotPosition((double)uiCurrentFocusedNode.GetValue(Canvas.LeftProperty), (double)uiCurrentFocusedNode.GetValue(Canvas.TopProperty));
                     _selectedSlotKey = uiCurrentFocusedNode.Name;
+                    ShowGhostNodeSlotLine();
                 }
             }
         }
@@ -43,6 +45,10 @@ namespace X.Viewer.NodeGraph
         public void MoveSelectedSlot(Vector2 distanceToMove, double scale)
         {
             Debug.WriteLine($"vector distance : {distanceToMove}  scale : {scale} ");
+        }
+
+        private void ShowGhostNodeSlotLine() {
+
         }
     }
 }
