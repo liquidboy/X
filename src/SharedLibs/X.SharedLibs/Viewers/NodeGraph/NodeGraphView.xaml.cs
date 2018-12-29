@@ -36,9 +36,29 @@ namespace X.Viewer.NodeGraph
 
             InitializeRenderer(nodeGraphCanvas);
             InitializeNodeGraph();
-            SetupExampleNodes();
+            SetupLargeExampleNodes();
         }
-        
+
+        private void SetupLargeExampleNodes()
+        {
+            //100 failed
+            //50 was slow
+            //20 was slow but acceptable
+            //10 was good
+
+            var dimensionToTest = 10;
+
+            for (int y = 0; y < dimensionToTest; y++)
+            {
+                for (int x = 0; x < dimensionToTest; x++) {
+                    var key = $"Node{x}-{y}";
+                    _nodes.Add(key, new Node(key, new NodePosition(x * 200, y * 200), Colors.LightGray, 2, 2));
+                }
+            }
+
+            DrawNodeGraph();
+        }
+
         private void SetupExampleNodes()
         {
             _nodes.Add("Node1", new Node("Node1", new NodePosition(100, 100), Colors.Red, 1, 1));
