@@ -72,7 +72,6 @@ namespace X.Viewer.NodeGraph
         Panel _uiNodeGraphPanelXamlRoot;
         bool _isNodeSelected = false;
         string _selectedNodeKey;
-        string _selectedUIElementNodeName;
         Point _selectedNodePosition;
 
         private void InitializeExampleNodes(UIElement uiNodeGraphRoot) {
@@ -123,7 +122,7 @@ namespace X.Viewer.NodeGraph
             //node-container
             var newNodeGroup = new Canvas()
             {
-                Name = $"nc_{node.Key}",
+                Name = node.Key,
                 Width = node.Size.Width,
                 Height = node.Size.Height
             };
@@ -173,11 +172,6 @@ namespace X.Viewer.NodeGraph
 
             _uiNodeGraphPanelXamlRoot.Children.Add(newNodeGroup);
         }
-
-        //private void NewNodeGroup_PointerMoved(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
-        //{
-        //    Debug.WriteLine($"node cursor position : {e.GetCurrentPoint(null).RawPosition}");
-        //}
 
         private void DrawNodeSlotLink(NodeLink nodeLink) {
             Node inputNode = _nodes[nodeLink.InputNodeKey];
@@ -233,7 +227,6 @@ namespace X.Viewer.NodeGraph
         private void NewNodeGroup_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
             _selectedNodeKey = "";
-            _selectedUIElementNodeName = "";
             _isNodeSelected = false;
 
         }
@@ -242,8 +235,7 @@ namespace X.Viewer.NodeGraph
         {
             //Console.WriteLine("pointer entered");
             Canvas canvas = (Canvas)sender;
-            _selectedNodeKey = canvas.Name.Replace("nc_", string.Empty);
-            _selectedUIElementNodeName = canvas.Name;
+            _selectedNodeKey = canvas.Name;
             _selectedNodePosition = new NodePosition((double)canvas.GetValue(Canvas.LeftProperty), (double)canvas.GetValue(Canvas.TopProperty));
             _isNodeSelected = true;
         }
@@ -256,7 +248,7 @@ namespace X.Viewer.NodeGraph
             _nodes[_selectedNodeKey] = foundNode; //force immutable element to be updated
 
             //update node position
-            var foundNodeUIElement = (Canvas)_uiNodeGraphPanelXamlRoot.FindName(_selectedUIElementNodeName);
+            var foundNodeUIElement = (Canvas)_uiNodeGraphPanelXamlRoot.FindName(_selectedNodeKey);
             foundNodeUIElement.SetValue(Canvas.LeftProperty, foundNode.Position.X);
             foundNodeUIElement.SetValue(Canvas.TopProperty, foundNode.Position.Y);
 
