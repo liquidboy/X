@@ -49,7 +49,8 @@ namespace X.Viewer.NodeGraph
                 Name = $"n_{node.Key}",
                 Fill = new SolidColorBrush(node.Color),
                 Width = node.Size.Width,
-                Height = node.Size.Height
+                Height = node.Size.Height,
+                Tag = "n"
             };
             newNodeGroup.Children.Add(newNodeUIElement);
 
@@ -59,9 +60,11 @@ namespace X.Viewer.NodeGraph
                 var slotPosition = node.GetInputSlotPosition(slotIndex);
                 var newSlotUIElement = new Windows.UI.Xaml.Shapes.Ellipse()
                 {
+                    Name = $"nsi_{node.Key}_{slotIndex}",
                     Width = slotDiameter,
                     Height = slotDiameter,
-                    Fill = new SolidColorBrush(Colors.Black)
+                    Fill = new SolidColorBrush(Colors.Black),
+                    Tag = "nsi"
                 };
                 newSlotUIElement.SetValue(Canvas.LeftProperty, slotPosition.X - slotRadius - node.Position.X);
                 newSlotUIElement.SetValue(Canvas.TopProperty, slotPosition.Y - slotRadius - node.Position.Y);
@@ -73,9 +76,11 @@ namespace X.Viewer.NodeGraph
                 var slotPosition = node.GetOutputSlotPosition(slotIndex);
                 var newSlotUIElement = new Windows.UI.Xaml.Shapes.Ellipse()
                 {
+                    Name = $"nso_{node.Key}_{slotIndex}",
                     Width = slotDiameter,
                     Height = slotDiameter,
-                    Fill = new SolidColorBrush(Colors.Black)
+                    Fill = new SolidColorBrush(Colors.Black),
+                    Tag = "nso"
                 };
                 newSlotUIElement.SetValue(Canvas.LeftProperty, slotPosition.X - slotRadius - node.Position.X);
                 newSlotUIElement.SetValue(Canvas.TopProperty, slotPosition.Y - slotRadius - node.Position.Y);
@@ -129,7 +134,8 @@ namespace X.Viewer.NodeGraph
                 Name = nodeLink.UniqueId,
                 Stroke = new SolidColorBrush(Colors.Orange),
                 StrokeThickness = 1,
-                Data = new PathGeometry() { Figures = pthFigureCollection }
+                Data = new PathGeometry() { Figures = pthFigureCollection },
+                Tag = "nsl"
             };
             _uiNodeGraphPanelXamlRoot.Children.Add(arcPath);
         }

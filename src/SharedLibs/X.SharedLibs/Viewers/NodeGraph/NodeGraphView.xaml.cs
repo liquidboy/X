@@ -124,8 +124,7 @@ namespace X.Viewer.NodeGraph
         {
             IsMouseDown = true;
             ptStart = e.GetCurrentPoint(null);
-            SetSelectedNode(e.GetCurrentPoint(null).Position);
-
+            PointingStarted(ptStart.Position);
         }
 
         private void layoutRoot_PointerReleased(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
@@ -134,8 +133,8 @@ namespace X.Viewer.NodeGraph
 
             ptDifXStart = ptDifX;
             ptDifYStart = ptDifY;
-            
-            ClearSelectedNode();
+
+            PointingCompleted(e.GetCurrentPoint(null).Position);
         }
         
         double ptDifX = 0;
@@ -152,21 +151,19 @@ namespace X.Viewer.NodeGraph
             var ct = nodeGraphCanvas.RenderTransform as CompositeTransform;
             
             Debug.WriteLine($"board cursor position : {e.GetCurrentPoint(null).RawPosition}");
+
+            //process event by node graph 
+            var distanceBetween2Points = Vector2.Subtract(ptEnd.Position.ToVector2(), ptStart.Position.ToVector2());
+            PointerUpdated(distanceBetween2Points, nodeGraphZoomContainer.Scale);
+            if (_shouldStopPropogatingPointerMoved) return;
             
-            if (!string.IsNullOrEmpty(_selectedNodeKey)) {
-                //move node
-                var distanceBetween2Points = Vector2.Subtract(ptEnd.Position.ToVector2(), ptStart.Position.ToVector2());
-                MoveSelectedNode(distanceBetween2Points, nodeGraphZoomContainer.Scale);
-                Debug.WriteLine($"vector distance : {distanceBetween2Points}  ptStart : {ptStart.Position}  ptEnd : {ptEnd.Position} ");
-            }
-            else {
-                //move board
-                ptDifX = ptDifXStart + ((ptStart.Position.X - ptEnd.Position.X) / nodeGraphZoomContainer.Scale);
-                ptDifY = ptDifYStart + ((ptStart.Position.Y - ptEnd.Position.Y) / nodeGraphZoomContainer.Scale);
+            //move board
+            ptDifX = ptDifXStart + ((ptStart.Position.X - ptEnd.Position.X) / nodeGraphZoomContainer.Scale);
+            ptDifY = ptDifYStart + ((ptStart.Position.Y - ptEnd.Position.Y) / nodeGraphZoomContainer.Scale);
                 
-                ct.TranslateX = -1 * ptDifX;
-                ct.TranslateY = -1 * ptDifY;
-            }
+            ct.TranslateX = -1 * ptDifX;
+            ct.TranslateY = -1 * ptDifY;
+            
             
         }
     }

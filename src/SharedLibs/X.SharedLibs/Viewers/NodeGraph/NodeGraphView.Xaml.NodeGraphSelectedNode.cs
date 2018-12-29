@@ -14,12 +14,13 @@ namespace X.Viewer.NodeGraph
         string _selectedNodeKey;
 
         public void SetSelectedNode(Point point) {
+            if (!string.IsNullOrEmpty(_selectedSlotKey)) return; // short circuit if SLOT is selected
+
             var foundElementsUnderPoint = VisualTreeHelper.FindElementsInHostCoordinates(point, _uiNodeGraphXamlRoot);
             if (foundElementsUnderPoint != null && foundElementsUnderPoint.Count() > 0)
             {
                 var foundNC = foundElementsUnderPoint.Where(x => x is FrameworkElement && 
-                    ((FrameworkElement)x).Tag != null && 
-                    ((FrameworkElement)x).Tag.ToString().Equals("nc"));
+                    ((FrameworkElement)x).Tag != null && ((FrameworkElement)x).Tag.ToString().Equals("nc"));
                 if (foundNC != null && foundNC.Count() > 0) {
                     var uiCurrentFocusedNode = (FrameworkElement)foundNC.FirstOrDefault();
                     _selectedNodeStartDragPosition = new NodePosition((double)uiCurrentFocusedNode.GetValue(Canvas.LeftProperty), (double)uiCurrentFocusedNode.GetValue(Canvas.TopProperty));
