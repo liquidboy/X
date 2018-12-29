@@ -129,7 +129,12 @@ namespace X.Viewer.NodeGraph
 
             return false;
         }
-
+        void TryRemoveNodeSlotLink(string id) {
+            var findingSlot = HasNodeSlotLinkAlreadyBeenRendered(id);
+            if (findingSlot.ElementFound) {
+                _uiNodeGraphPanelXamlRoot.Children.Remove(findingSlot.Element);
+            }
+        }
         void CreateNewNodeSlotLink(string id, InputSlotPosition inputSlotPosition, OutputSlotPosition outputSlotPosition)
         {
             if (HasNodeSlotLinkAlreadyBeenRendered(id).ElementFound) return;

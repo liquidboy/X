@@ -17,6 +17,7 @@ namespace X.Viewer.NodeGraph
             if (!string.IsNullOrEmpty(_selectedSlotNodeKey))
             {
                 CompleteGhostLink(point);
+                ClearGhostLink();
                 ClearSelectedSlot(point);
             }
 

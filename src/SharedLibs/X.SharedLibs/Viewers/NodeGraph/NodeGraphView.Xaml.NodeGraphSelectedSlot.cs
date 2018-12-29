@@ -64,6 +64,9 @@ namespace X.Viewer.NodeGraph
                 RenderNodeSlotLink(nodeLink);
             }
         }
+        public void ClearGhostLink() {
+            TryRemoveNodeSlotLink("gl");
+        }
         public void UpdateGhostLink(Point startPosition, double movedX, double movedY) {
             Debug.WriteLine($"slot update ghost startPosition : {startPosition} movedx: {movedX} movedy: {movedY}");
             
