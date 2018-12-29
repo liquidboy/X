@@ -8,11 +8,10 @@ namespace X.Viewer.NodeGraph
     public interface INodeGraphSelectedSlot
     {
         void SetSelectedSlot(Point point);
-        void ClearSelectedSlot();
+        void ClearSelectedSlot(Point point);
         void MoveSelectedSlot(Vector2 distanceToMove, double scale);
 
-        void CompleteGhostLink();
-        void DestroyGhostLink();
+        void CompleteGhostLink(Point point);
         void StartGhostLink(Point startPosition);
         void UpdateGhostLink(Point startPosition, double movedX, double movedY);
     }

@@ -14,8 +14,17 @@ namespace X.Viewer.NodeGraph
         }
 
         public void PointingCompleted(Point point) {
-            ClearSelectedSlot();
-            ClearSelectedNode();
+            if (!string.IsNullOrEmpty(_selectedSlotNodeKey))
+            {
+                CompleteGhostLink(point);
+                ClearSelectedSlot(point);
+            }
+
+            if (!string.IsNullOrEmpty(_selectedNodeKey))
+            {
+                ClearSelectedNode();
+            }
+
             _shouldStopPropogatingPointerMoved = false;
         }
 

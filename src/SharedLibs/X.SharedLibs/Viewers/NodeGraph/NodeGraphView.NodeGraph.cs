@@ -45,5 +45,13 @@ namespace X.Viewer.NodeGraph
         public Node FindNode(string key) {
             return _nodes[key];
         }
+
+        public void AddNodeToGraph(Node node) {
+            _nodes.Add(node.Key, node);
+        }
+
+        public void AddLinkToGraph(NodeLink nodeLink) {
+            _links.Add(nodeLink);
+        }
     }
 }
