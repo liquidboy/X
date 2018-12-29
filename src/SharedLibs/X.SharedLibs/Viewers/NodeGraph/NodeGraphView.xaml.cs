@@ -45,7 +45,8 @@ namespace X.Viewer.NodeGraph
 
             //sample node visual
             //nodeGraphCanvas.Children.Add(new Windows.UI.Xaml.Shapes.Rectangle() { Width = 100, Height = 100, Fill = new SolidColorBrush(Colors.Red) });
-            InitializeExampleNodes(nodeGraphCanvas);
+            InitializeRenderer(nodeGraphCanvas);
+            InitializeExampleNodes();
         }
 
         public void Unload()
@@ -86,7 +87,7 @@ namespace X.Viewer.NodeGraph
             ptDifXStart = ptDifX;
             ptDifYStart = ptDifY;
 
-            UpdateFocusedNode();
+            UpdateFocusOnNode();
         }
         
         double ptDifX = 0;
@@ -109,7 +110,7 @@ namespace X.Viewer.NodeGraph
             if (_isNodeFocusedOn) {
                 //move node
                 var distanceBetween2Points = Vector2.Subtract(ptEnd.Position.ToVector2(), ptStart.Position.ToVector2());
-                MoveNodeContainer(distanceBetween2Points, nodeGraphZoomContainer.Scale);
+                MoveNode(distanceBetween2Points, nodeGraphZoomContainer.Scale);
                 //Debug.WriteLine($"ptStart : {ptStart.Position}  difX : {tempPtDifX}  difY : {tempPtDifY}");
                 Debug.WriteLine($"ptStart : {ptStart.Position}  ptEnd : {ptEnd.Position} ");
                 Debug.WriteLine($"vector distance : {distanceBetween2Points} ");

@@ -759,6 +759,7 @@
     <Compile Include="Viewers\NodeGraph\NodeGraphView.xaml.cs">
       <DependentUpon>NodeGraphView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Viewers\NodeGraph\NodeGraphView.XamlRenderer.cs" />
     <Compile Include="Viewers\SketchFlow\Controls\MenuFlyoutPathItem.cs" />
     <Compile Include="Viewers\SketchFlow\Controls\PageContent.xaml.cs">
       <DependentUpon>PageContent.xaml</DependentUpon>
