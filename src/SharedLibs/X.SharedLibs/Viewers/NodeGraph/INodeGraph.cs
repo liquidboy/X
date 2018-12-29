@@ -1,5 +1,6 @@
 ﻿namespace X.Viewer.NodeGraph
 {
+    // this knows nothing about the rendering technology
     public interface INodeGraph
     {
         void InitializeNodeGraph();
