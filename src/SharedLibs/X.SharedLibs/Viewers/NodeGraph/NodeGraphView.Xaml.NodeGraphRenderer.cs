@@ -106,17 +106,17 @@ namespace X.Viewer.NodeGraph
             RenderNewNodeSlotLink(nodeLink.UniqueId, inputSlotPosition, outputSlotPosition);
         }
 
-        bool HasNodeSlotLinkAlreadyBeenRendered(string id) {
-            var foundUIElement = _uiNodeGraphPanelXamlRoot.FindName(id);
-            if (foundUIElement != null) return true;
-            return false;
+        (bool ElementFound, UIElement Element) HasNodeSlotLinkAlreadyBeenRendered(string id) {
+            var foundUIElement = (UIElement)_uiNodeGraphPanelXamlRoot.FindName(id);
+            if (foundUIElement != null) return (true, foundUIElement);
+            return (false, null);
         }
 
         bool TryRenderExistingNodeSlotLink(string id, InputSlotPosition inputSlotPosition, OutputSlotPosition outputSlotPosition) {
-            if (HasNodeSlotLinkAlreadyBeenRendered(id))
+            var findingUIElement = HasNodeSlotLinkAlreadyBeenRendered(id);
+            if (findingUIElement.ElementFound)
             {
-                var foundUIElement = _uiNodeGraphPanelXamlRoot.FindName(id);
-                PathGeometry pthGeometryFound = (PathGeometry)((Path)foundUIElement).Data;
+                PathGeometry pthGeometryFound = (PathGeometry)((Path)findingUIElement.Element).Data;
                 PathFigure pthFigureFound = pthGeometryFound.Figures.First();
                 BezierSegment bezierSegmentFound = (BezierSegment)pthFigureFound.Segments.First();
 
@@ -132,7 +132,7 @@ namespace X.Viewer.NodeGraph
 
         void RenderNewNodeSlotLink(string id, InputSlotPosition inputSlotPosition, OutputSlotPosition outputSlotPosition)
         {
-            if (HasNodeSlotLinkAlreadyBeenRendered(id)) return;
+            if (HasNodeSlotLinkAlreadyBeenRendered(id).ElementFound) return;
 
             PathFigure pthFigure = new PathFigure() { StartPoint = inputSlotPosition };
 
