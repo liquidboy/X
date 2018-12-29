@@ -96,8 +96,8 @@ namespace X.Viewer.NodeGraph
 
         public void RenderNodeSlotLink(NodeLink nodeLink)
         {
-            Node inputNode = _nodes[nodeLink.InputNodeKey];
-            Node outputNode = _nodes[nodeLink.OutputNodeKey];
+            Node inputNode = FindNode(nodeLink.InputNodeKey);
+            Node outputNode = FindNode(nodeLink.OutputNodeKey);
 
             InputSlotPosition inputSlotPosition = inputNode.GetInputSlotPosition(nodeLink.InputSlotIndex);
             OutputSlotPosition outputSlotPosition = outputNode.GetOutputSlotPosition(nodeLink.OutputSlotIndex);
@@ -143,7 +143,7 @@ namespace X.Viewer.NodeGraph
             _uiNodeGraphPanelXamlRoot.Children.Add(arcPath);
         }
 
-        public void CheckIfNodeIsPressed(Point point) {
+        public void SetSelectedNode(Point point) {
             var foundElementsUnderPoint = VisualTreeHelper.FindElementsInHostCoordinates(point, _uiNodeGraphXamlRoot);
             if (foundElementsUnderPoint != null && foundElementsUnderPoint.Count() > 0)
             {
@@ -164,7 +164,7 @@ namespace X.Viewer.NodeGraph
         }
 
 
-        public void MoveNode(Vector2 distanceToMove, double scale)
+        public void MoveSelectedNode(Vector2 distanceToMove, double scale)
         {
             //update new node position
             var updatedNode = UpdateNodePosition(_selectedNodeKey, _selectedNodeStartDragPosition.X + (distanceToMove.X / scale), _selectedNodeStartDragPosition.Y + (distanceToMove.Y / scale));
@@ -175,12 +175,8 @@ namespace X.Viewer.NodeGraph
             foundNodeUIElement.SetValue(Canvas.TopProperty, updatedNode.Position.Y);
 
             //update node-slot-links positions between the node-slots
-            foreach (var link in _links)
-            {
-                //need to update links ?????  I want to use Windows Composition eventually
-                if (link.InputNodeKey.Equals(_selectedNodeKey) || link.OutputNodeKey.Equals(_selectedNodeKey))
-                    RenderNodeSlotLink(link);
-            }
+            DrawNodeSlotLink(_selectedNodeKey);
+
         }
     }
 }

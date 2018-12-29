@@ -55,7 +55,7 @@ namespace X.Viewer.NodeGraph
             _links.Add(new NodeLink("Node3", 1, "Node5", 0));
             _links.Add(new NodeLink("Node6", 0, "Node5", 1));
 
-            DrawNodes();
+            DrawNodeGraph();
         }
 
         public void Unload()
@@ -85,7 +85,7 @@ namespace X.Viewer.NodeGraph
         {
             IsMouseDown = true;
             ptStart = e.GetCurrentPoint(null);
-            CheckIfNodeIsPressed(e.GetCurrentPoint(null).Position);
+            SetSelectedNode(e.GetCurrentPoint(null).Position);
 
         }
 
@@ -117,7 +117,7 @@ namespace X.Viewer.NodeGraph
             if (!string.IsNullOrEmpty(_selectedNodeKey)) {
                 //move node
                 var distanceBetween2Points = Vector2.Subtract(ptEnd.Position.ToVector2(), ptStart.Position.ToVector2());
-                MoveNode(distanceBetween2Points, nodeGraphZoomContainer.Scale);
+                MoveSelectedNode(distanceBetween2Points, nodeGraphZoomContainer.Scale);
                 Debug.WriteLine($"vector distance : {distanceBetween2Points}  ptStart : {ptStart.Position}  ptEnd : {ptEnd.Position} ");
             }
             else {

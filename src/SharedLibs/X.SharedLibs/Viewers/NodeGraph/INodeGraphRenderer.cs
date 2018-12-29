@@ -14,8 +14,8 @@ namespace X.Viewer.NodeGraph
         void InitializeRenderer(UIElement uiNodeGraphRoot);
         void RenderNode(Node node);
         void RenderNodeSlotLink(NodeLink nodeLink);
-        void CheckIfNodeIsPressed(Point point);
+        void SetSelectedNode(Point point);
         void ClearSelectedNode();
-        void MoveNode(Vector2 distanceToMove, double scale);   
+        void MoveSelectedNode(Vector2 distanceToMove, double scale);   
     }
 }
