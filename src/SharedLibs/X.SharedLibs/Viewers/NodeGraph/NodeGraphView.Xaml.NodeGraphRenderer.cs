@@ -103,7 +103,7 @@ namespace X.Viewer.NodeGraph
             if (TryUpdateExistingNodeSlotLink(nodeLink.UniqueId, inputSlotPosition, outputSlotPosition)) return;
             
             //create new node-slot-link
-            CreateNewNodeSlotLink(nodeLink.UniqueId, inputSlotPosition, outputSlotPosition);
+            CreateNewNodeSlotLink(nodeLink.UniqueId, inputSlotPosition, outputSlotPosition, Colors.Orange);
         }
 
         (bool ElementFound, UIElement Element) HasNodeSlotLinkAlreadyBeenRendered(string id) {
@@ -135,7 +135,7 @@ namespace X.Viewer.NodeGraph
                 _uiNodeGraphPanelXamlRoot.Children.Remove(findingSlot.Element);
             }
         }
-        void CreateNewNodeSlotLink(string id, InputSlotPosition inputSlotPosition, OutputSlotPosition outputSlotPosition)
+        void CreateNewNodeSlotLink(string id, InputSlotPosition inputSlotPosition, OutputSlotPosition outputSlotPosition, Color color)
         {
             if (HasNodeSlotLinkAlreadyBeenRendered(id).ElementFound) return;
 
@@ -157,7 +157,7 @@ namespace X.Viewer.NodeGraph
             Path arcPath = new Path()
             {
                 Name = id,
-                Stroke = new SolidColorBrush(Colors.Orange),
+                Stroke = new SolidColorBrush(color),
                 StrokeThickness = 1,
                 Data = new PathGeometry() { Figures = pthFigureCollection },
                 Tag = "nsl"

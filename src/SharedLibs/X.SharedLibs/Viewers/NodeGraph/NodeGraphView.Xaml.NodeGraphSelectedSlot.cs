@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Media;
 using Windows.Foundation;
 using System.Numerics;
 using System.Diagnostics;
+using Windows.UI;
 
 namespace X.Viewer.NodeGraph
 {
@@ -49,7 +50,7 @@ namespace X.Viewer.NodeGraph
 
         public void StartGhostLink(Point startPosition) {
             Debug.WriteLine($"slot start ghost startPosition : {startPosition}");
-            CreateNewNodeSlotLink("gl", startPosition, startPosition);
+            CreateNewNodeSlotLink("gl", startPosition, startPosition, Colors.LightGray);
         }
         public void CompleteGhostLink(Point point) {
             var slotUnderPoint = TryToFindSlotUnderPoint(point);
