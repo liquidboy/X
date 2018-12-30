@@ -36,8 +36,8 @@ namespace X.Viewer.NodeGraph
 
         public Node UpdateNodePosition(string key, double positionX, double positionY) {
             var foundNode = _nodes[key];
-            foundNode.Position.X = positionX;
-            foundNode.Position.Y = positionY;
+            foundNode.PositionX = positionX;
+            foundNode.PositionY = positionY;
             _nodes[key] = foundNode; //force immutable element to be updated
             return foundNode;
         }

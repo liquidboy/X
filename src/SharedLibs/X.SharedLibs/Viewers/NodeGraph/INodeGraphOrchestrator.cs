@@ -10,5 +10,8 @@ namespace X.Viewer.NodeGraph
         void PointingStarted(Point point);
         void PointingCompleted(Point point);
         void PointerUpdated(Vector2 distanceToMove, double scale);
+
+        bool LoadGraph(string guid);
+        void SetupExampleGraph(string size);
     }
 }

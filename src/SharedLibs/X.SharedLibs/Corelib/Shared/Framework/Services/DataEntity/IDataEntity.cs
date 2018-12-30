@@ -11,11 +11,13 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         int Save(T instance);
         T RetrieveEntity(Guid id);
         List<T> RetrieveEntities(string where);
+        List<T> RetrieveAllEntities();
         T Retrieve(int id);
         int Find(string whereQuery);
         int FindAll();
         void Delete(T instance);
         void Delete(int id);
         void DeleteAll();
+        void DeleteAllEntities();
     }
 }

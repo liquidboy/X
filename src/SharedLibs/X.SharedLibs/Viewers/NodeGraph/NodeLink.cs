@@ -1,12 +1,15 @@
-﻿namespace X.Viewer.NodeGraph
-{
-    public struct NodeLink
-    {
-        public string InputNodeKey;
-        public int InputSlotIndex;
-        public string OutputNodeKey;
-        public int OutputSlotIndex;
+﻿using X.CoreLib.Shared.Framework.Services.DataEntity;
 
+namespace X.Viewer.NodeGraph
+{
+    public class NodeLink : BaseEntity
+    {
+        public string InputNodeKey { get; set; }
+        public int InputSlotIndex { get; set; }
+        public string OutputNodeKey { get; set; }
+        public int OutputSlotIndex { get; set; }
+
+        public NodeLink() { }
         public NodeLink(string outputNodeKey, int outputSlotIndex, string inputNodeKey, int inputSlotIndex)
         {
             InputNodeKey = inputNodeKey;

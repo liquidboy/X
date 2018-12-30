@@ -754,9 +754,11 @@
       <DependentUpon>MediaControls.xaml</DependentUpon>
     </Compile>
     <Compile Include="Viewers\MediaView\MediaElementRenderer.cs" />
+    <Compile Include="Viewers\NodeGraph\INodeGraphStorage.cs" />
     <Compile Include="Viewers\NodeGraph\INodeGraphOrchestrator.cs" />
     <Compile Include="Viewers\NodeGraph\INodeGraphSelectedSlot.cs" />
     <Compile Include="Viewers\NodeGraph\INodeGraphSelectedNode.cs" />
+    <Compile Include="Viewers\NodeGraph\NodeGraphView.Storage.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.Xaml.NodeGraphOrchestrator.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.Xaml.NodeGraphSelectedSlot.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.Xaml.NodeGraphSelectedNode.cs" />

@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI;
 using Windows.Foundation;
 using Windows.UI.Xaml.Shapes;
+using System;
 
 namespace X.Viewer.NodeGraph
 {
@@ -36,20 +37,20 @@ namespace X.Viewer.NodeGraph
             var newNodeGroup = new Canvas()
             {
                 Name = node.Key,
-                Width = node.Size.Width,
-                Height = node.Size.Height,
+                Width = node.Width,
+                Height = node.Height,
                 Tag = "nc"
             };
-            newNodeGroup.SetValue(Canvas.LeftProperty, node.Position.X);
-            newNodeGroup.SetValue(Canvas.TopProperty, node.Position.Y);
-            
+            newNodeGroup.SetValue(Canvas.LeftProperty, node.PositionX);
+            newNodeGroup.SetValue(Canvas.TopProperty, node.PositionY);
+
             //node in node-container
             var newNodeUIElement = new Windows.UI.Xaml.Shapes.Rectangle()
             {
                 Name = $"n_{node.Key}",
-                Fill = new SolidColorBrush(node.Color),
-                Width = node.Size.Width,
-                Height = node.Size.Height,
+                Fill = new SolidColorBrush((Color)(typeof(Colors)).GetProperty(node.Color).GetValue(null)),
+                Width = node.Width,
+                Height = node.Height,
                 Tag = "n"
             };
             newNodeGroup.Children.Add(newNodeUIElement);
@@ -66,8 +67,8 @@ namespace X.Viewer.NodeGraph
                     Fill = new SolidColorBrush(Colors.Black),
                     Tag = "nsi"
                 };
-                newSlotUIElement.SetValue(Canvas.LeftProperty, slotPosition.X - slotRadius - node.Position.X);
-                newSlotUIElement.SetValue(Canvas.TopProperty, slotPosition.Y - slotRadius - node.Position.Y);
+                newSlotUIElement.SetValue(Canvas.LeftProperty, slotPosition.X - slotRadius - node.PositionX);
+                newSlotUIElement.SetValue(Canvas.TopProperty, slotPosition.Y - slotRadius - node.PositionY);
                 newNodeGroup.Children.Add(newSlotUIElement);
             }
 
@@ -82,8 +83,8 @@ namespace X.Viewer.NodeGraph
                     Fill = new SolidColorBrush(Colors.Black),
                     Tag = "nso"
                 };
-                newSlotUIElement.SetValue(Canvas.LeftProperty, slotPosition.X - slotRadius - node.Position.X);
-                newSlotUIElement.SetValue(Canvas.TopProperty, slotPosition.Y - slotRadius - node.Position.Y);
+                newSlotUIElement.SetValue(Canvas.LeftProperty, slotPosition.X - slotRadius - node.PositionX);
+                newSlotUIElement.SetValue(Canvas.TopProperty, slotPosition.Y - slotRadius - node.PositionY);
                 newNodeGroup.Children.Add(newSlotUIElement);
             }
 

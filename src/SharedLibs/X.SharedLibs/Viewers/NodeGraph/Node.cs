@@ -1,46 +1,50 @@
 ﻿using System;
-using NodePosition = Windows.Foundation.Point;
 using InputSlotPosition = Windows.Foundation.Point;
 using OutputSlotPosition = Windows.Foundation.Point;
-using Windows.Foundation;
-using Windows.UI;
+using X.CoreLib.Shared.Framework.Services.DataEntity;
 
 namespace X.Viewer.NodeGraph
 {
-    public struct Node
+    public class Node : BaseEntity
     {
-        public string Key;
-        public NodePosition Position;
-        public Size Size;
-        public Color Color;
-        public int InputSlotCount;
-        public int OutputSlotCount;
+        public string Key { get; set; }
+        public double PositionX { get; set; }
+        public double PositionY { get; set; }
+        public double Width { get; set; }
+        public double Height { get; set; }
+        public string Color { get; set; }
+        public int InputSlotCount { get; set; }
+        public int OutputSlotCount { get; set; }
 
-        public Node(string key, NodePosition position, Color color, int inputSlotCount, int outputSlotCount)
+        public Node() { }
+        public Node(string key, double positionX, double positionY, string color, int inputSlotCount, int outputSlotCount)
         {
             Key = key;
-            Position = position;
+            PositionX = positionX;
+            PositionY = positionY;
             Color = color;
             InputSlotCount = inputSlotCount;
             OutputSlotCount = outputSlotCount;
+            Width = 0;
+            Height = 0;
             CalculateSize();
         }
         private void CalculateSize()
         {
-            double inputHeight, outputHeight, width;
+            double inputHeight, outputHeight;
             inputHeight = 50d + ((InputSlotCount - 1) * 20d) + 50d;
             outputHeight = 50d + ((OutputSlotCount - 1) * 20d) + 50d;
-            width = 150;
 
-            Size = new Size(width, Math.Max(inputHeight, outputHeight));
+            Width = 150; // = new Size(width, Math.Max(inputHeight, outputHeight));
+            Height = Math.Max(inputHeight, outputHeight);
         }
         public InputSlotPosition GetInputSlotPosition(int slotNo)
         {
-            return new InputSlotPosition(Position.X, Position.Y + ((slotNo + 1) * (Size.Height / (InputSlotCount + 1))));
+            return new InputSlotPosition(PositionX, PositionY + ((slotNo + 1) * (Height / (InputSlotCount + 1))));
         }
         public OutputSlotPosition GetOutputSlotPosition(int slotNo)
         {
-            return new OutputSlotPosition(Position.X + Size.Width, Position.Y + ((slotNo + 1) * (Size.Height / (OutputSlotCount + 1))));
+            return new OutputSlotPosition(PositionX + Width, PositionY + ((slotNo + 1) * (Height / (OutputSlotCount + 1))));
         }
     }
 }

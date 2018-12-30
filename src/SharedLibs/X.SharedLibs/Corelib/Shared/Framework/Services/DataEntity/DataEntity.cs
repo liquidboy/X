@@ -6,6 +6,7 @@ using System.Text;
 namespace X.CoreLib.Shared.Framework.Services.DataEntity
 {
     public abstract class BaseEntity{
+        [SQLite.PrimaryKey]
         public Guid UniqueId { get; set; }
         public int _internalRowId;
     }
@@ -60,25 +61,28 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         {
             if (_isReadOnly) return 0;
             
-            if (instance.UniqueId == Guid.Empty) instance.UniqueId = Guid.NewGuid();
-
-            if (instance._internalRowId > 0)
+            
+            if (instance.UniqueId != Guid.Empty)
             {
                 //update tablerow
-                var udo = _table.GetRowDataAsJson(instance._internalRowId);
-                var props = typeof(T).GetTypeInfo().DeclaredProperties;
-                foreach (var prop in props)
-                {
-                    udo[prop.Name] = prop.GetValue(instance, null).ToString();
+                if (instance._internalRowId > 0) {
+                    var udo = _table.GetRowDataAsJson(instance._internalRowId);
+                    var props = typeof(T).GetTypeInfo().DeclaredProperties;
+                    foreach (var prop in props)
+                    {
+                        udo[prop.Name] = prop.GetValue(instance, null).ToString();
+                    }
+                    udo["UniqueId"] = instance.UniqueId.ToString();
+                    _table.UpdateRowData(instance._internalRowId, udo);
                 }
-                udo["UniqueId"] = instance.UniqueId.ToString();
-                _table.UpdateRowData(instance._internalRowId, udo);
 
                 //update entity
                 _table.UpdateEntity(instance.UniqueId, instance);
             }
             else
             {
+                if (instance.UniqueId == Guid.Empty) instance.UniqueId = Guid.NewGuid();
+                
                 //add tablerow
                 var udo = _table.GetEmptyRowAsJson();
                 var props = typeof(T).GetTypeInfo().DeclaredProperties;
@@ -102,6 +106,10 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         public List<T> RetrieveEntities(string where)
         {
             return _table.GetEntities<T>(where);
+        }
+        public List<T> RetrieveAllEntities()
+        {
+            return _table.GetAllEntities<T>();
         }
         public T Retrieve(int id)
         {
@@ -171,6 +179,10 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         public void DeleteAll()
         {
             _table.DeleteAllRows();
+        }
+        public void DeleteAllEntities()
+        {
+            _table.DeleteAllEntities<T>();
         }
 
         private void clear(T instance)

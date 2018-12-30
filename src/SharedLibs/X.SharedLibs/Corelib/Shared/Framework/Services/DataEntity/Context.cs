@@ -87,6 +87,10 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         {
             return retrieveContext<T>().RetrieveEntities(where);
         }
+        public List<T> RetrieveAllEntities<T>()
+        {
+            return retrieveContext<T>().RetrieveAllEntities();
+        }
         //public int Find<T>(string query)
         //{
         //    return retrieveContext<T>().Find(query);
@@ -99,6 +103,7 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
 
         public void DeleteAll<T>() {
             retrieveContext<T>().DeleteAll();
+            retrieveContext<T>().DeleteAllEntities();
         }
 
         public void Delete<T>(int idToDelete) {

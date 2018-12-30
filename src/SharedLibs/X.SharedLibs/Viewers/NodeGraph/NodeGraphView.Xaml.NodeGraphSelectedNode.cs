@@ -43,8 +43,8 @@ namespace X.Viewer.NodeGraph
 
             //update node position
             var foundNodeUIElement = (Canvas)_uiNodeGraphPanelXamlRoot.FindName(_selectedNodeKey);
-            foundNodeUIElement.SetValue(Canvas.LeftProperty, updatedNode.Position.X);
-            foundNodeUIElement.SetValue(Canvas.TopProperty, updatedNode.Position.Y);
+            foundNodeUIElement.SetValue(Canvas.LeftProperty, updatedNode.PositionX);
+            foundNodeUIElement.SetValue(Canvas.TopProperty, updatedNode.PositionY);
 
             //update node-slot-links positions between the node-slots
             DrawNodeSlotLink(_selectedNodeKey);

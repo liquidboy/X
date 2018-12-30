@@ -86,6 +86,15 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
             var qry = $"SELECT * FROM '{name}' WHERE {where}";
             return Connection.Query<T>(qry);
         }
+        public List<T> GetAllEntities<T>() where T : new()
+        {
+            //var resultsCount = this.Connection.Table<T>().Count();
+            var name = typeof(T).Name;
+            var qry = $"SELECT ROWID as _rowId, * FROM '{name}'";
+            try { 
+                return Connection.Query<T>(qry);
+            }catch{ return null; }
+        }
         public JObject GetEmptyRowAsJson()
         {
             dynamic udo = new JObject();
@@ -97,6 +106,10 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
             }
 
             return udo;
+        }
+        public void DeleteAllEntities<T>()
+        {
+            this.Connection.DeleteAll<T>();
         }
         public List<TableRow> Find(string whereQuery)
         {
