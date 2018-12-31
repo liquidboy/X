@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using X.CoreLib.Shared.Framework.Services.DataEntity;
+﻿using System.Collections.Generic;
 
 namespace X.Viewer.NodeGraph
 {

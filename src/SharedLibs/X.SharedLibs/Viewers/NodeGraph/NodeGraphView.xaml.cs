@@ -5,8 +5,6 @@ using System.Linq;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using System.Diagnostics;
-using Windows.Foundation;
-using System.Collections.Generic;
 
 namespace X.Viewer.NodeGraph
 {
