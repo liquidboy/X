@@ -12,6 +12,6 @@ namespace X.Viewer.NodeGraph
         void PointerUpdated(Vector2 distanceToMove, double scale);
 
         bool LoadGraph(string guid);
-        void SetupExampleGraph(string size);
+        SavedGraph SetupExampleGraph(string size);
     }
 }

@@ -15,9 +15,10 @@ namespace X.Viewer.NodeGraph
         public string Color { get; set; }
         public int InputSlotCount { get; set; }
         public int OutputSlotCount { get; set; }
+        public string Grouping { get; set; }
 
         public Node() { }
-        public Node(string key, double positionX, double positionY, string color, int inputSlotCount, int outputSlotCount)
+        public Node(string key, double positionX, double positionY, string color, int inputSlotCount, int outputSlotCount, string grouping)
         {
             Key = key;
             PositionX = positionX;
@@ -27,6 +28,7 @@ namespace X.Viewer.NodeGraph
             OutputSlotCount = outputSlotCount;
             Width = 0;
             Height = 0;
+            Grouping = grouping;
             CalculateSize();
         }
         private void CalculateSize()

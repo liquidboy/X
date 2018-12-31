@@ -13,6 +13,7 @@ namespace X.Viewer.NodeGraph
         public event EventHandler<ContentViewEventArgs> SendMessage;
 
         bool IsMouseDown = false;
+        string _graphLoaded;
 
         public NodeGraphView()
         {
@@ -24,13 +25,15 @@ namespace X.Viewer.NodeGraph
             //var ct = nodeGraphCanvas.RenderTransform as CompositeTransform;
             //nodeGraphZoomContainer.Scale = ct.ScaleX;
             InitializeStorage();
-            //ResetStorage();
             InitializeRenderer(nodeGraphCanvas);
             InitializeNodeGraph();
-            
-            var found = LoadGraph("default");
-            if (!found) {
-                SetupExampleGraph("small");
+
+            var foundGraphs = RetrieveGraphs();
+            if (foundGraphs != null) {
+                if (foundGraphs.Count == 0) {
+                    foundGraphs.Add(SetupExampleGraph("small"));
+                }
+                cbSavedGraphs.ItemsSource = foundGraphs;
             }
         }     
         
@@ -72,7 +75,6 @@ namespace X.Viewer.NodeGraph
             ptDifYStart = ptDifY;
 
             PointingCompleted(e.GetCurrentPoint(null).Position);
-            SaveGraph("default", "default");
         }
         
         double ptDifX = 0;
@@ -101,8 +103,35 @@ namespace X.Viewer.NodeGraph
                 
             ct.TranslateX = -1 * ptDifX;
             ct.TranslateY = -1 * ptDifY;
+        }
+
+
+
+
+
+
+
+        private void ButClear_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
             
-            
+        }
+
+        private void ButSave_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            SaveGraph(_graphLoaded);
+        }
+
+        private void ButLoad_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+            var cbi = (Guid)cbSavedGraphs.SelectedValue;
+            var found = LoadGraph(cbi.ToString());
+            if (!found) _graphLoaded = cbi.ToString();
+        }
+
+        private void ButClearStorage_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            ClearStorage();
         }
     }
 

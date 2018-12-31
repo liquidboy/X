@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using X.CoreLib.Shared.Framework.Services.DataEntity;
 
 namespace X.Viewer.NodeGraph
@@ -11,32 +12,50 @@ namespace X.Viewer.NodeGraph
         {
             DBContext.Current.DeleteAll<Node>();
             DBContext.Current.DeleteAll<NodeLink>();
+            DBContext.Current.DeleteAll<SavedGraph>();
         }
-        
-        public void SaveGraph(string guid, string name)
-        {
+
+        public SavedGraph SaveGraph(string guid) => SaveGraph(guid, string.Empty);
+        public SavedGraph SaveGraph(string guid, string name) {
+            var graph = new SavedGraph(name, DateTime.UtcNow, DateTime.UtcNow);
+            graph.UniqueId = Guid.Parse(guid);
+            if (string.IsNullOrEmpty(guid) || guid.Equals(Guid.Empty.ToString()))
+            {
+                Save(graph);
+                foreach (var node in _nodes) node.Value.Grouping = graph.UniqueId.ToString();
+                foreach (var link in _links) link.Grouping = graph.UniqueId.ToString();
+            }
             foreach (var node in _nodes) Save(node.Value);
             foreach (var link in _links) Save(link);
+            return graph;
         }
+
         public void Save(Node node) => DBContext.Current.Save(node);
         public void Save(NodeLink link) => DBContext.Current.Save(link);
+        public void Save(SavedGraph graph) => DBContext.Current.Save(graph);
 
+        public List<SavedGraph> RetrieveGraphs() => DBContext.Current.RetrieveAllEntities<SavedGraph>();
         public (bool GraphFound, List<Node> Nodes, List<NodeLink> NodeLinks) RetrieveGraph(string guid)
         {
             List<NodeLink> returnNodeLinks = new List<NodeLink>();
-            if (DBContext.Current.DoesContextExist<NodeLink>())
-            {
-                var foundNodeLinks = DBContext.Current.RetrieveAllEntities<NodeLink>();
-                if (foundNodeLinks != null) returnNodeLinks.AddRange(foundNodeLinks);
-            }
             List<Node> returnNodes = new List<Node>();
-            if (DBContext.Current.DoesContextExist<Node>())
-            {
-                var foundNodes = DBContext.Current.RetrieveAllEntities<Node>();
-                if (foundNodes != null) returnNodes?.AddRange(foundNodes);
+            var foundGraph = DBContext.Current.RetrieveEntity<SavedGraph>(Guid.Parse(guid));
+            if (foundGraph != null) {
+                if (DBContext.Current.DoesContextExist<NodeLink>())
+                {
+                    var foundNodeLinks = DBContext.Current.RetrieveEntities<NodeLink>($"grouping='{guid}'");
+                    if (foundNodeLinks != null) returnNodeLinks.AddRange(foundNodeLinks);
+                }
+                
+                if (DBContext.Current.DoesContextExist<Node>())
+                {
+                    var foundNodes = DBContext.Current.RetrieveEntities<Node>($"grouping='{guid}'");
+                    if (foundNodes != null) returnNodes?.AddRange(foundNodes);
+                }
             }
             return ((returnNodes.Count > 0 || returnNodeLinks.Count > 0), returnNodes, returnNodeLinks);
         }
 
+        
     }
 }

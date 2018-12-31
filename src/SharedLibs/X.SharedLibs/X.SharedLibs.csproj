@@ -762,6 +762,7 @@
     <Compile Include="Viewers\NodeGraph\NodeGraphView.Xaml.NodeGraphOrchestrator.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.Xaml.NodeGraphSelectedSlot.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.Xaml.NodeGraphSelectedNode.cs" />
+    <Compile Include="Viewers\NodeGraph\SavedGraph.cs" />
     <Compile Include="Viewers\NodeGraph\NodeLink.cs" />
     <Compile Include="Viewers\NodeGraph\Node.cs" />
     <Compile Include="Viewers\NodeGraph\INodeGraphRenderer.cs" />

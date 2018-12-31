@@ -26,5 +26,19 @@
         <!--<Grid.Clip>
             <RectangleGeometry Rect="{Binding ElementName=root, Converter={StaticResource UIElementAsClipConverter}}"/>
         </Grid.Clip>-->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+            <ComboBox x:Name="cbSavedGraphs" SelectedValuePath="UniqueId" Width="300">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"></TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button x:Name="butLoad" Content="Load" Click="ButLoad_Click"></Button>
+            <Button x:Name="butSave" Content="Save" Click="ButSave_Click"></Button>
+            <Button x:Name="butClear" Content="Clear" Click="ButClear_Click"></Button>
+            
+            <Button x:Name="butClearStorage" Content="Clear Storage" Click="ButClearStorage_Click" Margin="30,0,0,0"></Button>
+        </StackPanel>
     </Grid>
 </UserControl>
