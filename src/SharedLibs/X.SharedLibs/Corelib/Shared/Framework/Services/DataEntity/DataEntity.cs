@@ -45,16 +45,6 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         {
             AppDatabase.Current.AddTable(_tableName, _defaultCreator);
             _table = AppDatabase.Current.Tables[_tableName];
-
-            _table.DeleteAllColumns();  //note: we delete all columns and rebuild them from the current class to ensure new columns exist
-
-            var props = typeof(T).GetTypeInfo().DeclaredProperties;
-            foreach (var prop in props)
-            {
-                _table.AddColumn(prop.Name, _defaultCreator);
-            }
-
-            _table.AddColumn("UniqueId", _defaultCreator);
         }
 
         public int Save(T instance)
@@ -64,36 +54,11 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
             
             if (instance.UniqueId != Guid.Empty)
             {
-                //update tablerow
-                if (instance._internalRowId > 0) {
-                    var udo = _table.GetRowDataAsJson(instance._internalRowId);
-                    var props = typeof(T).GetTypeInfo().DeclaredProperties;
-                    foreach (var prop in props)
-                    {
-                        udo[prop.Name] = prop.GetValue(instance, null).ToString();
-                    }
-                    udo["UniqueId"] = instance.UniqueId.ToString();
-                    _table.UpdateRowData(instance._internalRowId, udo);
-                }
-
-                //update entity
                 _table.UpdateEntity(instance.UniqueId, instance);
             }
             else
             {
                 if (instance.UniqueId == Guid.Empty) instance.UniqueId = Guid.NewGuid();
-                
-                //add tablerow
-                var udo = _table.GetEmptyRowAsJson();
-                var props = typeof(T).GetTypeInfo().DeclaredProperties;
-                foreach (var prop in props)
-                {
-                    udo[prop.Name] = prop.GetValue(instance, null).ToString();
-                }
-                udo["UniqueId"] = instance.UniqueId.ToString();
-                instance._internalRowId = _table.AddRow(udo.ToString(), _defaultCreator);
-
-                //add entity
                 _table.AddEntity(instance);
             }
             
@@ -111,75 +76,6 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         {
             return _table.GetAllEntities<T>();
         }
-        public T Retrieve(int id)
-        {
-            T obj = new T();
-
-            // clear();
-
-            try
-            {
-                var udo = _table.GetRowDataAsJson(id);
-
-                obj._internalRowId = id;
-                
-                var props = typeof(T).GetTypeInfo().DeclaredProperties;
-                foreach (var prop in props)
-                {
-                    switch (prop.PropertyType.Name)
-                    {
-                        case "String": prop.SetValue(obj, (string)udo[prop.Name]); break;
-                        case "Guid": prop.SetValue(obj, Guid.Parse((string)udo[prop.Name])); break;
-                        case "DateTime": prop.SetValue(obj, DateTime.Parse((string)udo[prop.Name])); break;
-                        case "Long": prop.SetValue(obj, long.Parse((string)udo[prop.Name])); break;
-                        case "Int": prop.SetValue(obj, int.Parse((string)udo[prop.Name])); break;
-                        case "Double": prop.SetValue(obj, Double.Parse((string)udo[prop.Name])); break;
-                    }
-                }
-                obj.UniqueId = Guid.Parse((string)udo["UniqueId"]);
-
-                return obj;
-            }
-            catch (Exception ex)
-            {
-                obj._internalRowId = 0;
-                obj.UniqueId = Guid.Empty;
-            }
-
-            return obj;
-        }
-
-        public List<TableRow> FindResult;
-        public int Find(string whereQuery)
-        {
-            FindResult = _table.Find(whereQuery);
-            return FindResult.Count;
-        }
-        public int FindAll()
-        {
-            FindResult = _table.GetRows();
-            return FindResult.Count;
-        }
-        public void Delete(T instance)
-        {
-            if (_isReadOnly) return;
-
-            if (instance._internalRowId > 0)
-            {
-                _table.DeleteRow(instance._internalRowId);
-            }
-
-            clear(instance);
-        }
-        public void Delete(int id)
-        {
-            if (_isReadOnly) return;
-            _table.DeleteRow(id);
-        }
-        public void DeleteAll()
-        {
-            _table.DeleteAllRows();
-        }
         public void DeleteAllEntities()
         {
             _table.DeleteAllEntities<T>();
@@ -195,6 +91,36 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
 
             instance._internalRowId = 0;
             instance.UniqueId = Guid.Empty;
+        }
+
+        public T Retrieve(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Find(string whereQuery)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int FindAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(T instance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteAll()
+        {
+            throw new NotImplementedException();
         }
     }
 }

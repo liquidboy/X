@@ -110,11 +110,7 @@
     <Compile Include="Corelib\Shared\Framework\Services\DataEntity\BaseClass.cs" />
     <Compile Include="Corelib\Shared\Framework\Services\DataEntity\Context.cs" />
     <Compile Include="Corelib\Shared\Framework\Services\DataEntity\IDataEntity.cs" />
-    <Compile Include="Corelib\Shared\Framework\Services\DataEntity\TableRow.cs" />
-    <Compile Include="Corelib\Shared\Framework\Services\DataEntity\TableColumn.cs" />
     <Compile Include="Corelib\Shared\Framework\Services\DataEntity\Table.cs" />
-    <Compile Include="Corelib\Shared\Framework\Services\DataEntity\TableIndex.cs" />
-    <Compile Include="Corelib\Shared\Framework\Services\DataEntity\TableLog.cs" />
     <Compile Include="Corelib\Shared\Framework\Services\DataEntity\TableDatabase.cs" />
     <Compile Include="Corelib\Shared\Framework\Services\DataEntity\eTableType.cs" />
     <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\SqliteDatabaseManager.cs" />
