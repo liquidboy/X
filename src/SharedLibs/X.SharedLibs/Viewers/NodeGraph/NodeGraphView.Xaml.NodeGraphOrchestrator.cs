@@ -110,6 +110,7 @@ namespace X.Viewer.NodeGraph
             ClearNodeOrSlot(new Point(0, 0));
             ClearGraph();
             ClearRenderer();
+            ClearSelectedGraph();
         }
 
         void ClearNodeOrSlot(Point point)

@@ -5,6 +5,8 @@ using System.Linq;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using System.Diagnostics;
+using Windows.Foundation;
+using System.Collections.Generic;
 
 namespace X.Viewer.NodeGraph
 {
@@ -13,7 +15,7 @@ namespace X.Viewer.NodeGraph
         public event EventHandler<ContentViewEventArgs> SendMessage;
 
         bool IsMouseDown = false;
-        string _graphLoaded;
+        
 
         public NodeGraphView()
         {
@@ -27,14 +29,7 @@ namespace X.Viewer.NodeGraph
             InitializeStorage();
             InitializeRenderer(nodeGraphCanvas);
             InitializeNodeGraph();
-
-            var foundGraphs = RetrieveGraphs();
-            if (foundGraphs != null) {
-                if (foundGraphs.Count == 0) {
-                    foundGraphs.Add(SetupExampleGraph("small"));
-                }
-                cbSavedGraphs.ItemsSource = foundGraphs;
-            }
+            InitializeGraphSelector(RetrieveGraphs());           
         }     
         
         public void Unload()
@@ -110,7 +105,6 @@ namespace X.Viewer.NodeGraph
 
 
 
-
         private void ButClear_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             ClearBoard();
@@ -118,21 +112,20 @@ namespace X.Viewer.NodeGraph
 
         private void ButSave_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            SaveGraph(_graphLoaded);
+            SaveGraph(_selectedGraph);
         }
 
         private void ButLoad_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
-            var cbi = (Guid)cbSavedGraphs.SelectedValue;
-            var found = LoadGraph(cbi.ToString());
-            if (found) _graphLoaded = cbi.ToString();
+            GraphSelected(((Guid)cbSavedGraphs.SelectedValue).ToString());
         }
 
         private void ButClearStorage_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             ClearStorage();
         }
+
+
     }
 
 
