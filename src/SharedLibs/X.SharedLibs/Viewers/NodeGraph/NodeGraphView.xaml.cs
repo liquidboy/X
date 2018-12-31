@@ -113,7 +113,7 @@ namespace X.Viewer.NodeGraph
 
         private void ButClear_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            
+            ClearBoard();
         }
 
         private void ButSave_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -126,7 +126,7 @@ namespace X.Viewer.NodeGraph
 
             var cbi = (Guid)cbSavedGraphs.SelectedValue;
             var found = LoadGraph(cbi.ToString());
-            if (!found) _graphLoaded = cbi.ToString();
+            if (found) _graphLoaded = cbi.ToString();
         }
 
         private void ButClearStorage_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)

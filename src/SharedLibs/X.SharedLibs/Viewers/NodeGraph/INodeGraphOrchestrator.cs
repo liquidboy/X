@@ -13,5 +13,6 @@ namespace X.Viewer.NodeGraph
 
         bool LoadGraph(string guid);
         SavedGraph SetupExampleGraph(string size);
+        void ClearBoard();
     }
 }

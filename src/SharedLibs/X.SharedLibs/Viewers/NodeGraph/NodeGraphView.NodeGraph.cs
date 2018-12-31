@@ -53,5 +53,10 @@ namespace X.Viewer.NodeGraph
         public void AddLinkToGraph(NodeLink nodeLink) {
             _links.Add(nodeLink);
         }
+
+        public void ClearGraph() {
+            _nodes.Clear();
+            _links.Clear();
+        }
     }
 }

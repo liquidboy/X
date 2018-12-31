@@ -10,5 +10,6 @@
         Node FindNode(string key);
         void AddNodeToGraph(Node node);
         void AddLinkToGraph(NodeLink nodeLink);
+        void ClearGraph();
     }
 }

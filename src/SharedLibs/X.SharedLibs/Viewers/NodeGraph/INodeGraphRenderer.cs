@@ -9,5 +9,6 @@ namespace X.Viewer.NodeGraph
         void InitializeRenderer(UIElement uiNodeGraphRoot);
         void RenderNode(Node node);
         void RenderNodeSlotLink(NodeLink nodeLink);
+        void ClearRenderer();
     }
 }

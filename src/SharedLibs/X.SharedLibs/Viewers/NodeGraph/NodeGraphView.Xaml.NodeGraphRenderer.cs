@@ -25,7 +25,6 @@ namespace X.Viewer.NodeGraph
                 _uiNodeGraphPanelXamlRoot = (Panel)_uiNodeGraphXamlRoot;
                 _isRendererInitialized = true;
             }
-            
         }
 
         public void RenderNode(Node node)
@@ -166,5 +165,9 @@ namespace X.Viewer.NodeGraph
             _uiNodeGraphPanelXamlRoot.Children.Add(arcPath);
         }
 
+        public void ClearRenderer()
+        {
+            _uiNodeGraphPanelXamlRoot.Children.Clear();
+        }
     }
 }

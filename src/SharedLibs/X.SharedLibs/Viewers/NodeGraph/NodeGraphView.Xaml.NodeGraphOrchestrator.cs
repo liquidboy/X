@@ -15,18 +15,7 @@ namespace X.Viewer.NodeGraph
         }
 
         public void PointingCompleted(Point point) {
-            if (IsSlotSelected)
-            {
-                CompleteGhostLink(point);
-                ClearGhostLink();
-                ClearSelectedSlot(point);
-            }
-
-            if (IsNodeSelected)
-            {
-                ClearSelectedNode();
-            }
-
+            ClearNodeOrSlot(point);
             _shouldStopPropogatingPointerMoved = false;
         }
 
@@ -114,6 +103,29 @@ namespace X.Viewer.NodeGraph
             DrawNodeGraph();
 
             return newGraph;
+        }
+
+        public void ClearBoard()
+        {
+            ClearNodeOrSlot(new Point(0, 0));
+            ClearGraph();
+            ClearRenderer();
+        }
+
+        void ClearNodeOrSlot(Point point)
+        {
+            if (IsSlotSelected)
+            {
+                CompleteGhostLink(point);
+                ClearGhostLink();
+                ClearSelectedSlot(point);
+            }
+
+            if (IsNodeSelected)
+            {
+                ClearSelectedNode();
+            }
+            
         }
     }
 }
