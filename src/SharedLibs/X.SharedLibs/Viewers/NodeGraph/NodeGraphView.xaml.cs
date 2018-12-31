@@ -27,6 +27,7 @@ namespace X.Viewer.NodeGraph
             InitializeStorage();
             InitializeRenderer(nodeGraphCanvas);
             InitializeNodeGraph();
+            InitializeCompositor(nodeGraphCanvas);
             InitializeGraphSelector(RetrieveGraphs());           
         }     
         

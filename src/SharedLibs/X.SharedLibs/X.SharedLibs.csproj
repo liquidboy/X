@@ -750,12 +750,14 @@
       <DependentUpon>MediaControls.xaml</DependentUpon>
     </Compile>
     <Compile Include="Viewers\MediaView\MediaElementRenderer.cs" />
+    <Compile Include="Viewers\NodeGraph\INodeGraphCompositor.cs" />
     <Compile Include="Viewers\NodeGraph\INodeGraphSelector.cs" />
     <Compile Include="Viewers\NodeGraph\INodeGraphStorage.cs" />
     <Compile Include="Viewers\NodeGraph\INodeGraphOrchestrator.cs" />
     <Compile Include="Viewers\NodeGraph\INodeGraphSelectedSlot.cs" />
     <Compile Include="Viewers\NodeGraph\INodeGraphSelectedNode.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.GraphSelector.cs" />
+    <Compile Include="Viewers\NodeGraph\NodeGraphView.Compositor.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.Storage.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.Xaml.NodeGraphOrchestrator.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.Xaml.NodeGraphSelectedSlot.cs" />
@@ -1349,6 +1351,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\WindowsUIDevLabs\SamplesCommon\SamplesCommon.csproj">
+      <Project>{0B6A4830-D1FF-4018-BAA2-7257EB4579FE}</Project>
+      <Name>SamplesCommon</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Microsoft.UI.Composition.Toolkit\Microsoft.UI.Composition.Toolkit.vcxproj">
       <Project>{08a7d060-593a-4978-8dcc-b2029aca7c95}</Project>
       <Name>Microsoft.UI.Composition.Toolkit</Name>
