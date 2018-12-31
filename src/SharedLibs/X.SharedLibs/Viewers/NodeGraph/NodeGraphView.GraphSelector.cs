@@ -21,12 +21,13 @@ namespace X.Viewer.NodeGraph
         public void ClearSelectedGraph()
         {
             _selectedGraph = string.Empty;
+            cbSavedGraphs.SelectedIndex = -1;
         }
 
         public void GraphSelected(string guid)
         {
             var found = LoadGraph(guid);
-            if (found) _selectedGraph = guid;
+            if (found) _selectedGraph = guid;   
         }
     }
 }
