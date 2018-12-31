@@ -6,6 +6,7 @@ namespace X.Viewer.NodeGraph
     {
         string _selectedGraph;
 
+        public bool IsGraphSelected => !string.IsNullOrEmpty(_selectedGraph);
         public void InitializeGraphSelector(List<SavedGraph> graphs)
         {
             if (graphs != null)

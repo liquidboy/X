@@ -12,7 +12,7 @@ namespace X.Viewer.NodeGraph
     {
         public event EventHandler<ContentViewEventArgs> SendMessage;
 
-        bool IsMouseDown = false;
+        bool IsPointerDown = false;
         
 
         public NodeGraphView()
@@ -55,14 +55,14 @@ namespace X.Viewer.NodeGraph
         double ptDifYStart = 0;
         private void layoutRoot_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            IsMouseDown = true;
+            IsPointerDown = true;
             ptStart = e.GetCurrentPoint(null);
             PointingStarted(ptStart.Position);
         }
 
         private void layoutRoot_PointerReleased(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            IsMouseDown = false;
+            IsPointerDown = false;
 
             ptDifXStart = ptDifX;
             ptDifYStart = ptDifY;
@@ -78,7 +78,7 @@ namespace X.Viewer.NodeGraph
         {
             var ptEnd = e.GetCurrentPoint(null);
             
-            if (!IsMouseDown) return;
+            if (!IsPointerDown) return;
 
             //moving artboard
             var ct = nodeGraphCanvas.RenderTransform as CompositeTransform;
@@ -110,19 +110,21 @@ namespace X.Viewer.NodeGraph
 
         private void ButSave_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            SaveGraph(_selectedGraph);
+            if (IsGraphSelected) SaveGraph(_selectedGraph);
+            else {
+                //create new graph
+            }
         }
 
         private void ButLoad_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            GraphSelected(((Guid)cbSavedGraphs.SelectedValue).ToString());
+            if (!IsGraphSelected) GraphSelected(((Guid)cbSavedGraphs.SelectedValue).ToString());
         }
 
         private void ButClearStorage_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             ClearStorage();
         }
-
 
     }
 
