@@ -45,9 +45,7 @@ namespace X.Viewer.NodeGraph
                 ElementCompositionPreview.SetElementChildVisual(parentRootOfVisual, nodeVisual.ContainerVisual);
 
                 //get input sources and pass them to effect graph
-                object[] sources = new object[nodeNodeLinkModel.Node.InputSlotCount];
-                if (nodeNodeLinkModel.InputNodeLinks.Count > 0) sources[0] = nodeNodeLinkModel.InputNodeLinks[0];
-                nodeVisual.Brush = CreateGraphicsBrush(compositor, nodeType, sources);
+                nodeVisual.Brush = CreateGraphicsBrush(compositor, nodeType, nodeNodeLinkModel.InputNodeLinks.ToArray());
                 ResizeSpriteBrush(fe.ActualWidth - 20, fe.ActualHeight - 20, nodeVisual.SpriteVisual);
                 nodeVisual.SpriteVisual.Brush = nodeVisual.Brush;
 
@@ -92,6 +90,7 @@ namespace X.Viewer.NodeGraph
                     var imageAspectRatio = (imageSize.Width == 0 && imageSize.Height == 0) ? 1 : imageSize.Width / imageSize.Height;
                     return brushNoEffect;
                 case NodeType.AlphaMaskEffect:
+                    if (inputSlotSources.Length != 2) return null;
                     var desc = new CompositeEffect
                     {
                         Mode = CanvasComposite.DestinationIn,
@@ -108,8 +107,12 @@ namespace X.Viewer.NodeGraph
                         desc, 
                         new[] { "MaskTransform.TransformMatrix" }
                         ).CreateBrush();
-                    brushAlphaMask.SetSourceParameter("Image", (CompositionBrush)inputSlotSources[0]); //m_noEffectBrush);
-                    brushAlphaMask.SetSourceParameter("Mask", (CompositionBrush)inputSlotSources[1]); //CreateBrushFromAsset("CircleMask.png"));
+
+                    var source1 = (NodeLink)inputSlotSources[0];
+                    var source2 = (NodeLink)inputSlotSources[1];
+                    
+                    brushAlphaMask.SetSourceParameter("Image", (CompositionBrush)_nodeVisuals[source1.OutputNodeKey].Brush); 
+                    brushAlphaMask.SetSourceParameter("Mask", (CompositionBrush)_nodeVisuals[source2.OutputNodeKey].Brush);
                     return brushAlphaMask;
                 default:
                     throw new NotImplementedException();

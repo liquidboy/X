@@ -52,10 +52,10 @@ namespace X.Viewer.NodeGraph
             if (size == "small") {
                 
                 AddNodeToGraph(new Node("Node1", 100, 100, defaultWidth, "WhiteSmoke", 0, 1, defaultGuid, (int)NodeType.TextboxValue));
-                AddNodeToGraph(new Node("Node2", 100, 300, defaultWidth, "WhiteSmoke", 1, 1, defaultGuid, (int)NodeType.Empty));
-                AddNodeToGraph(new Node("Node3", 400, 190, defaultWidth, "WhiteSmoke", 2, 2, defaultGuid, (int)NodeType.ImageEffect));
-                AddNodeToGraph(new Node("Node4", 400, 0, defaultWidth, "WhiteSmoke", 1, 1, defaultGuid, (int)NodeType.Empty));
-                AddNodeToGraph(new Node("Node5", 700, 100, defaultWidth, "WhiteSmoke", 2, 1, defaultGuid, (int)NodeType.Empty));
+                AddNodeToGraph(new Node("Node2", 100, 300, defaultWidth, "WhiteSmoke", 0, 1, defaultGuid, (int)NodeType.TextboxValue));
+                AddNodeToGraph(new Node("Node3", 400, 190, defaultWidth, "WhiteSmoke", 1, 1, defaultGuid, (int)NodeType.ImageEffect));
+                AddNodeToGraph(new Node("Node4", 400, 0, defaultWidth, "WhiteSmoke", 1, 1, defaultGuid, (int)NodeType.ImageEffect));
+                AddNodeToGraph(new Node("Node5", 700, 100, defaultWidth, "WhiteSmoke", 2, 1, defaultGuid, (int)NodeType.AlphaMaskEffect));
                 AddNodeToGraph(new Node("Node6", 400, 400, defaultWidth, "WhiteSmoke", 1, 2, defaultGuid, (int)NodeType.Empty));
                 AddNodeToGraph(new Node("Node7", 700, 600, defaultWidth, "WhiteSmoke", 5, 8, defaultGuid, (int)NodeType.Empty));
                 AddNodeToGraph(new Node("Node8", 700, 1000, defaultWidth, "WhiteSmoke", 3, 1, defaultGuid, (int)NodeType.Empty));
@@ -67,11 +67,11 @@ namespace X.Viewer.NodeGraph
 
 
                 AddLinkToGraph(new NodeLink("Node1", 0, "Node3", 0, defaultGuid));
-                AddLinkToGraph(new NodeLink("Node2", 0, "Node3", 1, defaultGuid));
-                AddLinkToGraph(new NodeLink("Node4", 0, "Node5", 0, defaultGuid));
+                AddLinkToGraph(new NodeLink("Node2", 0, "Node4", 0, defaultGuid));
+                AddLinkToGraph(new NodeLink("Node4", 0, "Node5", 1, defaultGuid));
                 AddLinkToGraph(new NodeLink("Node3", 0, "Node5", 0, defaultGuid));
-                AddLinkToGraph(new NodeLink("Node3", 1, "Node5", 0, defaultGuid));
-                AddLinkToGraph(new NodeLink("Node6", 0, "Node5", 1, defaultGuid));
+                
+
                 AddLinkToGraph(new NodeLink("Node6", 0, "Node7", 0, defaultGuid));
                 AddLinkToGraph(new NodeLink("Node6", 1, "Node8", 0, defaultGuid));
                 AddLinkToGraph(new NodeLink("Node5", 0, "Node11", 0, defaultGuid));
