@@ -32,7 +32,7 @@ namespace X.Viewer.NodeGraph
             _nodeVisuals = new Dictionary<string, NodeVisual>();
         }
 
-        public void CreateNodeVisual(string nodeKey, UIElement parentRootOfVisual, EffectType effectType)
+        public void CreateNodeVisual(string nodeKey, UIElement parentRootOfVisual, NodeType effectType)
         {
             FrameworkElement fe = (FrameworkElement)parentRootOfVisual;
             var compositor = ElementCompositionPreview.GetElementVisual(parentRootOfVisual).Compositor;
@@ -45,7 +45,7 @@ namespace X.Viewer.NodeGraph
 
             //todo : get input slots sources and put into array to build the effect
             object[] sources = new object[] { "xxx.jpg" };
-            nodeVisual.Brush = CreateGraphicsEffect(compositor, effectType, sources);
+            nodeVisual.Brush = CreateGraphicsBrush(compositor, effectType, sources);
             ResizeSpriteBrush(fe.ActualWidth-20, fe.ActualHeight-20, nodeVisual.SpriteVisual);
             nodeVisual.SpriteVisual.Brush = nodeVisual.Brush;
 
@@ -76,15 +76,15 @@ namespace X.Viewer.NodeGraph
 
 
 
-        private CompositionBrush CreateGraphicsEffect(Compositor compositor, EffectType effectType, object[] inputSlotSources) {
+        private CompositionBrush CreateGraphicsBrush(Compositor compositor, NodeType effectType, object[] inputSlotSources) {
 
             switch (effectType) {
-                case EffectType.ImageNoEffect:
+                case NodeType.ImageEffect:
                     Size imageSize;
                     var brushNoEffect = CreateBrushFromAsset(compositor, (string)inputSlotSources[0], out imageSize);
                     var imageAspectRatio = (imageSize.Width == 0 && imageSize.Height == 0) ? 1 : imageSize.Width / imageSize.Height;
                     return brushNoEffect;
-                case EffectType.AlphaMask:
+                case NodeType.AlphaMaskEffect:
                     var desc = new CompositeEffect
                     {
                         Mode = CanvasComposite.DestinationIn,

@@ -89,10 +89,7 @@ namespace X.Viewer.NodeGraph
             }
 
             //node-visual, created at the end after the node's full dimensions are realized
-            if (node.Key == "Node3")
-            {
-                CreateNodeVisual(node.Key, newNodeUIElement, (EffectType)node.EffectType);
-            }
+            CreateNodeVisual(node.Key, newNodeUIElement, (NodeType)node.EffectType);
 
             _uiNodeGraphPanelXamlRoot.Children.Add(newNodeGroup);
         }
