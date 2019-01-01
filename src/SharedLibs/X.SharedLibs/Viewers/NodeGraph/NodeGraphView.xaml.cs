@@ -98,7 +98,7 @@ namespace X.Viewer.NodeGraph
             ct.TranslateX = -1 * ptDifX;
             ct.TranslateY = -1 * ptDifY;
         }
-
+        
 
 
 

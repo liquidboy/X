@@ -27,5 +27,6 @@ namespace X.Viewer.NodeGraph
     {
         void InitializeCompositor(UIElement rootVisualElement);
         void CreateNodeVisual(string nodeKey, UIElement parentRootOfVisual, EffectType effectType);
+        void ClearCompositor();
     }
 }

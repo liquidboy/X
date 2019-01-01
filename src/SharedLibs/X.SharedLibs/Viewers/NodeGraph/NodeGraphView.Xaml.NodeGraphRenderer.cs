@@ -54,6 +54,11 @@ namespace X.Viewer.NodeGraph
             };
             newNodeGroup.Children.Add(newNodeUIElement);
 
+            //create nodevisual
+            if (node.Key == "Node1") {
+                CreateNodeVisual(node.Key, newNodeUIElement, EffectType.NoEffect);
+            }
+            
             //node-slots in node-container
             for (int slotIndex = 0; slotIndex < node.InputSlotCount; slotIndex++)
             {

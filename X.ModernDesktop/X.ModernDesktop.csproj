@@ -177,7 +177,12 @@
     <None Include="X.ModernDesktop_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Bruno%27sFamily2015 %2813%29-X2.jpg" />
+    <Content Include="Assets\xxx.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Bruno%27sFamily2015 %2813%29-X2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\elevator-bottom.png" />
     <Content Include="Assets\elevator-compartment-empty.png" />
     <Content Include="Assets\elevator-middle.png" />
