@@ -38,6 +38,7 @@ namespace X.Viewer.NodeGraph
                 Name = node.Key,
                 Width = node.Width,
                 Height = node.Height,
+                //Background = new SolidColorBrush(Colors.Red),
                 Tag = "nc"
             };
             newNodeGroup.SetValue(Canvas.LeftProperty, node.PositionX);
@@ -53,11 +54,6 @@ namespace X.Viewer.NodeGraph
                 Tag = "n"
             };
             newNodeGroup.Children.Add(newNodeUIElement);
-
-            //create nodevisual
-            if (node.Key == "Node1") {
-                CreateNodeVisual(node.Key, newNodeUIElement, EffectType.NoEffect);
-            }
             
             //node-slots in node-container
             for (int slotIndex = 0; slotIndex < node.InputSlotCount; slotIndex++)
@@ -90,6 +86,12 @@ namespace X.Viewer.NodeGraph
                 newSlotUIElement.SetValue(Canvas.LeftProperty, slotPosition.X - slotRadius - node.PositionX);
                 newSlotUIElement.SetValue(Canvas.TopProperty, slotPosition.Y - slotRadius - node.PositionY);
                 newNodeGroup.Children.Add(newSlotUIElement);
+            }
+
+            //node-visual, created at the end after the node's full dimensions are realized
+            if (node.Key == "Node3")
+            {
+                CreateNodeVisual(node.Key, newNodeUIElement, EffectType.NoEffect);
             }
 
             _uiNodeGraphPanelXamlRoot.Children.Add(newNodeGroup);

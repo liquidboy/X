@@ -119,7 +119,7 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
 
         public void DeleteAll()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

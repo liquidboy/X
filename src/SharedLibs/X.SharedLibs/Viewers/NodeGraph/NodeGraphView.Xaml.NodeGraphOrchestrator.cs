@@ -49,19 +49,19 @@ namespace X.Viewer.NodeGraph
         {
             var defaultGuid = Guid.Empty.ToString();
             if (size == "small") {
-                AddNodeToGraph(new Node("Node1", 100, 100, "Red", 1, 1, defaultGuid));
-                AddNodeToGraph(new Node("Node2", 100, 300, "Green", 1, 1, defaultGuid));
-                AddNodeToGraph(new Node("Node3", 400, 190, "Yellow", 2, 2, defaultGuid));
-                AddNodeToGraph(new Node("Node4", 400, 0, "Purple", 1, 1, defaultGuid));
-                AddNodeToGraph(new Node("Node5", 700, 100, "Blue", 2, 1, defaultGuid));
-                AddNodeToGraph(new Node("Node6", 400, 400, "Pink", 1, 2, defaultGuid));
-                AddNodeToGraph(new Node("Node7", 700, 600, "AliceBlue", 5, 8, defaultGuid));
-                AddNodeToGraph(new Node("Node8", 700, 1000, "Aquamarine", 3, 1, defaultGuid));
-                AddNodeToGraph(new Node("Node9", 1000, 500, "Beige", 2, 2, defaultGuid));
-                AddNodeToGraph(new Node("Node10", 1000, 800, "Bisque", 3, 2, defaultGuid));
-                AddNodeToGraph(new Node("Node11", 1100, 200, "Brown", 2, 3, defaultGuid));
-                AddNodeToGraph(new Node("Node12", 1300, 500, "Coral", 2, 2, defaultGuid));
-                AddNodeToGraph(new Node("Node13", 1300, 700, "DarkGoldenrod", 2, 3, defaultGuid));
+                AddNodeToGraph(new Node("Node1", 100, 100, "WhiteSmoke", 0, 1, defaultGuid));
+                AddNodeToGraph(new Node("Node2", 100, 300, "WhiteSmoke", 1, 1, defaultGuid));
+                AddNodeToGraph(new Node("Node3", 400, 190, "WhiteSmoke", 2, 2, defaultGuid));
+                AddNodeToGraph(new Node("Node4", 400, 0, "WhiteSmoke", 1, 1, defaultGuid));
+                AddNodeToGraph(new Node("Node5", 700, 100, "WhiteSmoke", 2, 1, defaultGuid));
+                AddNodeToGraph(new Node("Node6", 400, 400, "WhiteSmoke", 1, 2, defaultGuid));
+                AddNodeToGraph(new Node("Node7", 700, 600, "WhiteSmoke", 5, 8, defaultGuid));
+                AddNodeToGraph(new Node("Node8", 700, 1000, "WhiteSmoke", 3, 1, defaultGuid));
+                AddNodeToGraph(new Node("Node9", 1000, 500, "WhiteSmoke", 2, 2, defaultGuid));
+                AddNodeToGraph(new Node("Node10", 1000, 800, "WhiteSmoke", 3, 2, defaultGuid));
+                AddNodeToGraph(new Node("Node11", 1100, 200, "WhiteSmoke", 2, 3, defaultGuid));
+                AddNodeToGraph(new Node("Node12", 1300, 500, "WhiteSmoke", 2, 2, defaultGuid));
+                AddNodeToGraph(new Node("Node13", 1300, 700, "WhiteSmoke", 2, 3, defaultGuid));
 
 
                 AddLinkToGraph(new NodeLink("Node1", 0, "Node3", 0, defaultGuid));
@@ -93,7 +93,7 @@ namespace X.Viewer.NodeGraph
                 {
                     for (int x = 0; x < dimensionToTest; x++)
                     {
-                        AddNodeToGraph(new Node($"Node{x}-{y}", x * 200, y * 200, "LightGray", 2, 2, defaultGuid));
+                        AddNodeToGraph(new Node($"Node{x}-{y}", x * 200, y * 200, "WhiteSmoke", 2, 2, defaultGuid));
                     }
                 }
             }

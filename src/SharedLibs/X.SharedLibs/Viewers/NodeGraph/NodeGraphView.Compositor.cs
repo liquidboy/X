@@ -45,33 +45,38 @@ namespace X.Viewer.NodeGraph
 
             //todo : get input slots sources and put into array to build the effect
             object[] sources = new object[] { "xxx.jpg" };
-            nodeVisual.Brush = GetGraphicsEffect(compositor, effectType, sources);
-            ResizeSpriteBrush(fe.ActualWidth, fe.ActualHeight, nodeVisual.SpriteVisual, 1);
+            nodeVisual.Brush = CreateGraphicsEffect(compositor, effectType, sources);
+            ResizeSpriteBrush(fe.ActualWidth-20, fe.ActualHeight-20, nodeVisual.SpriteVisual);
             nodeVisual.SpriteVisual.Brush = nodeVisual.Brush;
+
             nodeVisual.ContainerVisual.Children.InsertAtTop(nodeVisual.SpriteVisual);
-
-
-
+            
             _nodeVisuals.Add(nodeKey, nodeVisual);
         }
 
-        private void ResizeSpriteBrush(double visibleWidth, double visibleHeight, SpriteVisual spriteVisual, double imageAspectRatio)
+        private void ResizeSpriteBrush(double availableWidth, double availableHeight, SpriteVisual spriteVisual)
         {
-            double newWidth = visibleWidth;
-            double newHeight = visibleHeight;
+            //double newWidth = visibleWidth;
+            //double newHeight = visibleHeight;
 
-            //newWidth = newHeight * imageAspectRatio;
-            //if (newWidth > visibleWidth)
-            //{
-            //    newWidth = visibleWidth;
-            //    newHeight = newWidth / imageAspectRatio;
-            //}
+            //spriteVisual.Offset = new Vector3(0f, 0f, 0.0f);
+            //spriteVisual.Size = new Vector2((float)newWidth, (float)newHeight);
 
-            spriteVisual.Offset = new Vector3(0f, 0f, 0.0f);
+            double newWidth = availableWidth;
+            double newHeight = availableHeight;
+            double imageAspectRatio = availableWidth / availableHeight;
+
+            //newWidth = availableWidth * imageAspectRatio;
+            //newHeight = newHeight * imageAspectRatio;
+
+            spriteVisual.Offset = new Vector3(10f, 10.0f, 0.0f);
             spriteVisual.Size = new Vector2((float)newWidth, (float)newHeight);
         }
 
-        private CompositionBrush GetGraphicsEffect(Compositor compositor, EffectType effectType, object[] inputSlotSources) {
+
+
+
+        private CompositionBrush CreateGraphicsEffect(Compositor compositor, EffectType effectType, object[] inputSlotSources) {
 
             switch (effectType) {
                 case EffectType.NoEffect:
@@ -121,7 +126,6 @@ namespace X.Viewer.NodeGraph
                 nodeVisual.Value.SpriteVisual = null;
                 nodeVisual.Value.Brush.Dispose();
                 nodeVisual.Value.Brush = null;
-                _nodeVisuals.Remove(nodeVisual.Key);
             }
             _nodeVisuals.Clear();
         }
