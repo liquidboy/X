@@ -66,8 +66,8 @@ namespace X.Viewer.NodeGraph
                 AddNodeToGraph(new Node("Node13", 1300, 700, defaultWidth, "WhiteSmoke", 2, 3, defaultGuid, (int)NodeType.Empty));
 
 
-                AddLinkToGraph(new NodeLink("Node1", 0, "Node3", 0, defaultGuid));
-                AddLinkToGraph(new NodeLink("Node2", 0, "Node4", 0, defaultGuid));
+                AddLinkToGraph(new NodeLink("Node1", 0, "Node3", 0, defaultGuid, "x-ferns.jpg"));
+                AddLinkToGraph(new NodeLink("Node2", 0, "Node4", 0, defaultGuid, "x-mask-circle.png"));
                 AddLinkToGraph(new NodeLink("Node4", 0, "Node5", 1, defaultGuid));
                 AddLinkToGraph(new NodeLink("Node3", 0, "Node5", 0, defaultGuid));
                 
