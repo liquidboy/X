@@ -54,6 +54,7 @@ namespace X.Viewer.NodeGraph
 
 
 
+
             //node-slots in node-container (appears underneath those rendered after)
             for (int slotIndex = 0; slotIndex < node.InputSlotCount; slotIndex++)
             {
@@ -118,8 +119,24 @@ namespace X.Viewer.NodeGraph
             newNodeUIElement.Tag = "n";
 
             newNodeGroup.Children.Add(newNodeUIElement);
+
+
+
+
+            //node-title
+            if (node.Title != null) {
+                var titleUIElement = new TextBlock()
+                {
+                    Text = node.Title,
+                    FontSize = 14,
+                    Foreground = new SolidColorBrush(Colors.LightGray)
+                };
+                titleUIElement.SetValue(Canvas.LeftProperty, 0);
+                titleUIElement.SetValue(Canvas.TopProperty, -25);
+                newNodeGroup.Children.Add(titleUIElement);
+            }
             
-            
+
 
             //node-visual, created at the end after the node's full dimensions are realized
             CreateNodeVisual(nodeNodeLinkVM, newNodeUIElement, (NodeType)node.NodeType);

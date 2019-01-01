@@ -61,8 +61,8 @@ namespace X.Viewer.NodeGraph
                 var slotNodeKey = nameParts[1];
                 var slotIndex = int.Parse(nameParts[2]);
                 var nodeLink = _selectedSlotIsInputSlot ? 
-                    new NodeLink(slotNodeKey, slotIndex, _selectedSlotNodeKey, _selectedSlotIndex, "ghost-temporary"): 
-                    new NodeLink(_selectedSlotNodeKey, _selectedSlotIndex, slotNodeKey, slotIndex, "ghost-temporary");
+                    new NodeLink(slotNodeKey, slotIndex, _selectedSlotNodeKey, _selectedSlotIndex, SelectedGraphGuid) : 
+                    new NodeLink(_selectedSlotNodeKey, _selectedSlotIndex, slotNodeKey, slotIndex, SelectedGraphGuid);
                 AddLinkToGraph(nodeLink);
                 RenderNodeSlotLink(nodeLink);
             }

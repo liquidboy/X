@@ -111,7 +111,7 @@ namespace X.Viewer.NodeGraph
 
         private void ButSave_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (IsGraphSelected) SaveGraph(_selectedGraph);
+            if (IsGraphSelected) SaveGraph(_selectedGraphGuid);
             else {
                 //create new graph
             }
@@ -119,7 +119,7 @@ namespace X.Viewer.NodeGraph
 
         private void ButLoad_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (!IsGraphSelected) GraphSelected(((Guid)cbSavedGraphs.SelectedValue).ToString());
+            if (!IsGraphSelected) OnGraphSelected(((Guid)cbSavedGraphs.SelectedValue).ToString());
         }
 
         private void ButClearStorage_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)

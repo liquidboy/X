@@ -20,7 +20,7 @@ namespace X.Viewer.NodeGraph
         SepiaEffect,
         TemperatureAndTintEffect,
         Transform2DEffect,
-        ImageEffect,
+        TextureAsset,
 
         TextboxValue = 1001, // >=1000 are controls
     }

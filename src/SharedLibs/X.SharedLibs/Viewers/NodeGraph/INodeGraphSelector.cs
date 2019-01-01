@@ -8,6 +8,7 @@ namespace X.Viewer.NodeGraph
         bool IsGraphSelected { get; }
         void InitializeGraphSelector(List<SavedGraph> graphs);
         void ClearSelectedGraph();
-        void GraphSelected(string guid);
+        void OnGraphSelected(string guid);
+        string SelectedGraphGuid { get; }
     }
 }

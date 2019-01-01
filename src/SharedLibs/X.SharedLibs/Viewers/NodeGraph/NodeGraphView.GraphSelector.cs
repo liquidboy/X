@@ -4,9 +4,10 @@ namespace X.Viewer.NodeGraph
 {
     public partial class NodeGraphView : INodeGraphSelector
     {
-        string _selectedGraph;
+        string _selectedGraphGuid;
 
-        public bool IsGraphSelected => !string.IsNullOrEmpty(_selectedGraph);
+        public string SelectedGraphGuid => _selectedGraphGuid;
+        public bool IsGraphSelected => !string.IsNullOrEmpty(_selectedGraphGuid);
         public void InitializeGraphSelector(List<SavedGraph> graphs)
         {
             if (graphs != null)
@@ -21,14 +22,14 @@ namespace X.Viewer.NodeGraph
 
         public void ClearSelectedGraph()
         {
-            _selectedGraph = string.Empty;
+            _selectedGraphGuid = string.Empty;
             cbSavedGraphs.SelectedIndex = -1;
         }
 
-        public void GraphSelected(string guid)
+        public void OnGraphSelected(string guid)
         {
             var found = LoadGraph(guid);
-            if (found) _selectedGraph = guid;   
+            if (found) _selectedGraphGuid = guid;   
         }
     }
 }

@@ -84,13 +84,14 @@ namespace X.Viewer.NodeGraph
         private CompositionBrush CreateGraphicsBrush(Compositor compositor, NodeType effectType, object[] inputSlotSources) {
 
             switch (effectType) {
-                case NodeType.ImageEffect:
+                case NodeType.TextureAsset:
+                    if (inputSlotSources.Length == 0) return null;
                     Size imageSize;
                     var brushNoEffect = CreateBrushFromAsset(compositor, (string)((NodeLink)inputSlotSources[0]).Value1, out imageSize);
                     var imageAspectRatio = (imageSize.Width == 0 && imageSize.Height == 0) ? 1 : imageSize.Width / imageSize.Height;
                     return brushNoEffect;
                 case NodeType.AlphaMaskEffect:
-                    if (inputSlotSources.Length != 2) return null;
+                    if (inputSlotSources.Length < 2) return null;
                     var desc = new CompositeEffect
                     {
                         Mode = CanvasComposite.DestinationIn,
@@ -130,11 +131,11 @@ namespace X.Viewer.NodeGraph
         public void ClearCompositor()
         {
             foreach (var nodeVisual in _nodeVisuals) {
-                nodeVisual.Value.ContainerVisual.Dispose();
+                nodeVisual.Value.ContainerVisual?.Dispose();
                 nodeVisual.Value.ContainerVisual = null; 
-                nodeVisual.Value.SpriteVisual.Dispose();
+                nodeVisual.Value.SpriteVisual?.Dispose();
                 nodeVisual.Value.SpriteVisual = null;
-                nodeVisual.Value.Brush.Dispose();
+                nodeVisual.Value.Brush?.Dispose();
                 nodeVisual.Value.Brush = null;
             }
             _nodeVisuals.Clear();
