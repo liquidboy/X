@@ -79,7 +79,7 @@ namespace X.Viewer.NodeGraph
         private CompositionBrush CreateGraphicsEffect(Compositor compositor, EffectType effectType, object[] inputSlotSources) {
 
             switch (effectType) {
-                case EffectType.NoEffect:
+                case EffectType.ImageNoEffect:
                     Size imageSize;
                     var brushNoEffect = CreateBrushFromAsset(compositor, (string)inputSlotSources[0], out imageSize);
                     var imageAspectRatio = (imageSize.Width == 0 && imageSize.Height == 0) ? 1 : imageSize.Width / imageSize.Height;

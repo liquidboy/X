@@ -4,7 +4,9 @@ namespace X.Viewer.NodeGraph
 {
     public enum EffectType
     {
-        NoEffect,
+        Empty,
+        ImageNoEffect,
+
         AlphaMask,
         Arithmetic,
         Blend,
