@@ -16,7 +16,7 @@ namespace X.Viewer.NodeGraph
         public int InputSlotCount { get; set; }
         public int OutputSlotCount { get; set; }
         public string Grouping { get; set; }
-        public int EffectType { get; set; }
+        public int NodeType { get; set; }
 
         public Node() { }
         public Node(string key, double positionX, double positionY, double initialWidth, string color, int inputSlotCount, int outputSlotCount, string grouping, int effectType)
@@ -30,7 +30,7 @@ namespace X.Viewer.NodeGraph
             Width = initialWidth;
             Height = 0;
             Grouping = grouping;
-            EffectType = effectType;
+            NodeType = effectType;
             CalculateSize();
         }
         private void CalculateSize()

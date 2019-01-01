@@ -6,7 +6,7 @@ namespace X.Viewer.NodeGraph
     {
         Empty,
        
-        AlphaMaskEffect = 100, // >=100 & <=1000 are effects
+        AlphaMaskEffect = 101, // >=100 & <=1000 are effects
         ArithmeticEffect,
         BlendEffect,
         ColorSourceEffect,
@@ -22,7 +22,7 @@ namespace X.Viewer.NodeGraph
         Transform2DEffect,
         ImageEffect,
 
-        TextboxValue = 1000, // >=1000 are controls
+        TextboxValue = 1001, // >=1000 are controls
     }
 
     public interface INodeGraphCompositor

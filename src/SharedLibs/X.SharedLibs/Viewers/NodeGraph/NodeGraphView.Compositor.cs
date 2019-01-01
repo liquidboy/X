@@ -32,26 +32,34 @@ namespace X.Viewer.NodeGraph
             _nodeVisuals = new Dictionary<string, NodeVisual>();
         }
 
-        public void CreateNodeVisual(string nodeKey, UIElement parentRootOfVisual, NodeType effectType)
+        public void CreateNodeVisual(string nodeKey, UIElement parentRootOfVisual, NodeType nodeType)
         {
+            var nodeTypeInt = (int)nodeType;
             FrameworkElement fe = (FrameworkElement)parentRootOfVisual;
-            var compositor = ElementCompositionPreview.GetElementVisual(parentRootOfVisual).Compositor;
-            var nodeVisual = new NodeVisual()
+            var nodeVisual = new NodeVisual();
+
+            if (nodeTypeInt > 100 && nodeTypeInt <= 1000) { //EFFECT NODES
+                var compositor = ElementCompositionPreview.GetElementVisual(parentRootOfVisual).Compositor;
+
+                nodeVisual.ContainerVisual = compositor.CreateContainerVisual();
+                nodeVisual.SpriteVisual = compositor.CreateSpriteVisual();
+
+                ElementCompositionPreview.SetElementChildVisual(parentRootOfVisual, nodeVisual.ContainerVisual);
+
+                //todo : get input slots sources and put into array to build the effect
+                object[] sources = new object[] { "xxx.jpg" };
+                nodeVisual.Brush = CreateGraphicsBrush(compositor, nodeType, sources);
+                ResizeSpriteBrush(fe.ActualWidth - 20, fe.ActualHeight - 20, nodeVisual.SpriteVisual);
+                nodeVisual.SpriteVisual.Brush = nodeVisual.Brush;
+
+                nodeVisual.ContainerVisual.Children.InsertAtTop(nodeVisual.SpriteVisual);
+                _nodeVisuals.Add(nodeKey, nodeVisual);
+            } else if (nodeTypeInt > 1000) //VALUE NODES
             {
-                ContainerVisual = compositor.CreateContainerVisual(),
-                SpriteVisual = compositor.CreateSpriteVisual()
-            };
-            ElementCompositionPreview.SetElementChildVisual(parentRootOfVisual, nodeVisual.ContainerVisual);
+                
+            }
 
-            //todo : get input slots sources and put into array to build the effect
-            object[] sources = new object[] { "xxx.jpg" };
-            nodeVisual.Brush = CreateGraphicsBrush(compositor, effectType, sources);
-            ResizeSpriteBrush(fe.ActualWidth-20, fe.ActualHeight-20, nodeVisual.SpriteVisual);
-            nodeVisual.SpriteVisual.Brush = nodeVisual.Brush;
-
-            nodeVisual.ContainerVisual.Children.InsertAtTop(nodeVisual.SpriteVisual);
             
-            _nodeVisuals.Add(nodeKey, nodeVisual);
         }
 
         private void ResizeSpriteBrush(double availableWidth, double availableHeight, SpriteVisual spriteVisual)
@@ -104,9 +112,9 @@ namespace X.Viewer.NodeGraph
                     brushAlphaMask.SetSourceParameter("Image", (CompositionBrush)inputSlotSources[0]); //m_noEffectBrush);
                     brushAlphaMask.SetSourceParameter("Mask", (CompositionBrush)inputSlotSources[1]); //CreateBrushFromAsset("CircleMask.png"));
                     return brushAlphaMask;
+                default:
+                    throw new NotImplementedException();
             }
-
-            return null;
         }
 
         private CompositionSurfaceBrush CreateBrushFromAsset(Compositor compositor, string name, out Size size)

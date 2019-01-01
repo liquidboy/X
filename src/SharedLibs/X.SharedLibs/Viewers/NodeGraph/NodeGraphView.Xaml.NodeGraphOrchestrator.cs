@@ -51,12 +51,12 @@ namespace X.Viewer.NodeGraph
             var defaultGuid = Guid.Empty.ToString();
             if (size == "small") {
                 
-                AddNodeToGraph(new Node("Node1", 100, 100, defaultWidth, "WhiteSmoke", 0, 1, defaultGuid, (int)NodeType.Empty));
+                AddNodeToGraph(new Node("Node1", 100, 100, defaultWidth, "WhiteSmoke", 0, 1, defaultGuid, (int)NodeType.TextboxValue));
                 AddNodeToGraph(new Node("Node2", 100, 300, defaultWidth, "WhiteSmoke", 1, 1, defaultGuid, (int)NodeType.Empty));
                 AddNodeToGraph(new Node("Node3", 400, 190, defaultWidth, "WhiteSmoke", 2, 2, defaultGuid, (int)NodeType.ImageEffect));
                 AddNodeToGraph(new Node("Node4", 400, 0, defaultWidth, "WhiteSmoke", 1, 1, defaultGuid, (int)NodeType.Empty));
                 AddNodeToGraph(new Node("Node5", 700, 100, defaultWidth, "WhiteSmoke", 2, 1, defaultGuid, (int)NodeType.Empty));
-                AddNodeToGraph(new Node("Node6", 400, 400, defaultWidth, "WhiteSmoke", 1, 2, defaultGuid, (int)NodeType.ImageEffect));
+                AddNodeToGraph(new Node("Node6", 400, 400, defaultWidth, "WhiteSmoke", 1, 2, defaultGuid, (int)NodeType.Empty));
                 AddNodeToGraph(new Node("Node7", 700, 600, defaultWidth, "WhiteSmoke", 5, 8, defaultGuid, (int)NodeType.Empty));
                 AddNodeToGraph(new Node("Node8", 700, 1000, defaultWidth, "WhiteSmoke", 3, 1, defaultGuid, (int)NodeType.Empty));
                 AddNodeToGraph(new Node("Node9", 1000, 500, defaultWidth, "WhiteSmoke", 2, 2, defaultGuid, (int)NodeType.Empty));
