@@ -17,6 +17,7 @@ namespace X.Viewer.NodeGraph
         public int OutputSlotCount { get; set; }
         public string Grouping { get; set; }
         public int NodeType { get; set; }
+        public string Value1 { get; set; }
 
         public Node() { }
         public Node(string key, double positionX, double positionY, double initialWidth, string color, int inputSlotCount, int outputSlotCount, string grouping, int nodeType)

@@ -8,6 +8,6 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
     <Grid Background="{Binding Color}">
-        <TextBox FontSize="14" TextWrapping="Wrap" Margin="15"></TextBox>
+        <TextBox FontSize="14" TextWrapping="Wrap" Margin="15" Text="{Binding Value1, Mode=TwoWay}"></TextBox>
     </Grid>
 </UserControl>
