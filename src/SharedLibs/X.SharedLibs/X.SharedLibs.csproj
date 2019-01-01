@@ -750,6 +750,7 @@
       <DependentUpon>MediaControls.xaml</DependentUpon>
     </Compile>
     <Compile Include="Viewers\MediaView\MediaElementRenderer.cs" />
+    <Compile Include="Viewers\NodeGraph\NodeType.cs" />
     <Compile Include="Viewers\NodeGraph\INodeGraphCompositor.cs" />
     <Compile Include="Viewers\NodeGraph\INodeGraphSelector.cs" />
     <Compile Include="Viewers\NodeGraph\INodeGraphStorage.cs" />
@@ -762,6 +763,9 @@
     <Compile Include="Viewers\NodeGraph\NodeGraphView.Xaml.NodeGraphOrchestrator.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.Xaml.NodeGraphSelectedSlot.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.Xaml.NodeGraphSelectedNode.cs" />
+    <Compile Include="Viewers\NodeGraph\NodeTypeComponents\TextboxValue.xaml.cs">
+      <DependentUpon>TextboxValue.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Viewers\NodeGraph\SavedGraph.cs" />
     <Compile Include="Viewers\NodeGraph\NodeLink.cs" />
     <Compile Include="Viewers\NodeGraph\Node.cs" />
@@ -1125,6 +1129,10 @@
     <Page Include="Viewers\NodeGraph\NodeGraphView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\NodeGraph\NodeTypeComponents\TextboxValue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Viewers\SketchFlow\Controls\PageContent.xaml">
       <Generator>MSBuild:Compile</Generator>

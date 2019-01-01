@@ -19,7 +19,7 @@ namespace X.Viewer.NodeGraph
         public int NodeType { get; set; }
 
         public Node() { }
-        public Node(string key, double positionX, double positionY, double initialWidth, string color, int inputSlotCount, int outputSlotCount, string grouping, int effectType)
+        public Node(string key, double positionX, double positionY, double initialWidth, string color, int inputSlotCount, int outputSlotCount, string grouping, int nodeType)
         {
             Key = key;
             PositionX = positionX;
@@ -30,7 +30,7 @@ namespace X.Viewer.NodeGraph
             Width = initialWidth;
             Height = 0;
             Grouping = grouping;
-            NodeType = effectType;
+            NodeType = nodeType;
             CalculateSize();
         }
         private void CalculateSize()

@@ -8,6 +8,7 @@ using Windows.UI;
 using Windows.Foundation;
 using Windows.UI.Xaml.Shapes;
 using System;
+using X.Viewer.NodeGraph.NodeTypeComponents;
 
 namespace X.Viewer.NodeGraph
 {
@@ -45,14 +46,33 @@ namespace X.Viewer.NodeGraph
             newNodeGroup.SetValue(Canvas.TopProperty, node.PositionY);
 
             //node in node-container
-            var newNodeUIElement = new Windows.UI.Xaml.Shapes.Rectangle()
+            FrameworkElement newNodeUIElement = null;
+            if (node.NodeType > 100 && node.NodeType < 1000) //EFFECTS
             {
-                Name = $"n_{node.Key}",
-                Fill = new SolidColorBrush((Color)(typeof(Colors)).GetProperty(node.Color).GetValue(null)),
-                Width = node.Width,
-                Height = node.Height,
-                Tag = "n"
-            };
+                newNodeUIElement = new Windows.UI.Xaml.Shapes.Rectangle()
+                {
+                    Fill = new SolidColorBrush((Color)(typeof(Colors)).GetProperty(node.Color).GetValue(null))
+                };
+            }
+            else if (node.NodeType > 1000 && node.NodeType < 2000) //VALUES
+            {
+                newNodeUIElement = new TextboxValue() {
+                    DataContext = node
+                };
+            }
+            else {
+                // no idea what this node is so just make it a rectangle for now
+                newNodeUIElement = new Windows.UI.Xaml.Shapes.Rectangle()
+                {
+                    Fill = new SolidColorBrush((Color)(typeof(Colors)).GetProperty(node.Color).GetValue(null))
+                };
+            }
+
+            newNodeUIElement.Name = $"n_{node.Key}";
+            newNodeUIElement.Width = node.Width;
+            newNodeUIElement.Height = node.Height;
+            newNodeUIElement.Tag = "n";
+
             newNodeGroup.Children.Add(newNodeUIElement);
             
             //node-slots in node-container
