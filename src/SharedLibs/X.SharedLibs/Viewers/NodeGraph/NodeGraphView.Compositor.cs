@@ -5,10 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using Windows.Foundation;
-using Windows.Graphics.Effects;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Hosting;
 
 namespace X.Viewer.NodeGraph
@@ -32,7 +30,7 @@ namespace X.Viewer.NodeGraph
             _nodeVisuals = new Dictionary<string, NodeVisual>();
         }
 
-        public void CreateNodeVisual(string nodeKey, UIElement parentRootOfVisual, NodeType nodeType)
+        public void CreateNodeVisual(NodeNodeLinkModel nodeNodeLinkModel, UIElement parentRootOfVisual, NodeType nodeType)
         {
             var nodeTypeInt = (int)nodeType;
             FrameworkElement fe = (FrameworkElement)parentRootOfVisual;
@@ -46,14 +44,15 @@ namespace X.Viewer.NodeGraph
 
                 ElementCompositionPreview.SetElementChildVisual(parentRootOfVisual, nodeVisual.ContainerVisual);
 
-                //todo : get input slots sources and put into array to build the effect
-                object[] sources = new object[] { "xxx.jpg" };
+                //get input sources and pass them to effect graph
+                object[] sources = new object[nodeNodeLinkModel.Node.InputSlotCount];
+                if (nodeNodeLinkModel.InputNodeLinks.Count > 0) sources[0] = nodeNodeLinkModel.InputNodeLinks[0];
                 nodeVisual.Brush = CreateGraphicsBrush(compositor, nodeType, sources);
                 ResizeSpriteBrush(fe.ActualWidth - 20, fe.ActualHeight - 20, nodeVisual.SpriteVisual);
                 nodeVisual.SpriteVisual.Brush = nodeVisual.Brush;
 
                 nodeVisual.ContainerVisual.Children.InsertAtTop(nodeVisual.SpriteVisual);
-                _nodeVisuals.Add(nodeKey, nodeVisual);
+                _nodeVisuals.Add(nodeNodeLinkModel.Node.Key, nodeVisual);
             } else if (nodeTypeInt > 1000) //VALUE NODES
             {
                 
@@ -89,7 +88,7 @@ namespace X.Viewer.NodeGraph
             switch (effectType) {
                 case NodeType.ImageEffect:
                     Size imageSize;
-                    var brushNoEffect = CreateBrushFromAsset(compositor, (string)inputSlotSources[0], out imageSize);
+                    var brushNoEffect = CreateBrushFromAsset(compositor, (string)((NodeLink)inputSlotSources[0]).Value1, out imageSize);
                     var imageAspectRatio = (imageSize.Width == 0 && imageSize.Height == 0) ? 1 : imageSize.Width / imageSize.Height;
                     return brushNoEffect;
                 case NodeType.AlphaMaskEffect:

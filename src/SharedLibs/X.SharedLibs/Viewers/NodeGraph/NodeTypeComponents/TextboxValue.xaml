@@ -7,7 +7,7 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-    <Grid Background="{Binding Color}">
-        <TextBox FontSize="14" TextWrapping="Wrap" Margin="15" Text="{Binding Value1, Mode=TwoWay}"></TextBox>
+    <Grid Background="{Binding Node.Color}">
+        <TextBox FontSize="14" TextWrapping="Wrap" Margin="15" Text="{Binding OutputNodeLinks[0].Value1, Mode=TwoWay}"></TextBox>
     </Grid>
 </UserControl>

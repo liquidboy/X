@@ -1,4 +1,4 @@
-﻿using Windows.Foundation;
+﻿using System.Collections.Generic;
 using Windows.UI.Xaml;
 
 namespace X.Viewer.NodeGraph
@@ -7,7 +7,7 @@ namespace X.Viewer.NodeGraph
     public interface INodeGraphRenderer
     {
         void InitializeRenderer(UIElement uiNodeGraphRoot);
-        void RenderNode(Node node);
+        void RenderNode(Node node, List<NodeLink> relatedLinks);
         void RenderNodeSlotLink(NodeLink nodeLink);
         void ClearRenderer();
     }

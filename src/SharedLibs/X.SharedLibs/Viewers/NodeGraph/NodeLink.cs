@@ -9,6 +9,7 @@ namespace X.Viewer.NodeGraph
         public string OutputNodeKey { get; set; }
         public int OutputSlotIndex { get; set; }
         public string Grouping { get; set; }
+        public string Value1 { get; set; }
 
         public NodeLink() { }
         public NodeLink(string outputNodeKey, int outputSlotIndex, string inputNodeKey, int inputSlotIndex, string grouping)

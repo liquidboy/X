@@ -7,8 +7,8 @@ using Windows.UI.Xaml.Media;
 using Windows.UI;
 using Windows.Foundation;
 using Windows.UI.Xaml.Shapes;
-using System;
 using X.Viewer.NodeGraph.NodeTypeComponents;
+using System.Collections.Generic;
 
 namespace X.Viewer.NodeGraph
 {
@@ -28,10 +28,17 @@ namespace X.Viewer.NodeGraph
             }
         }
 
-        public void RenderNode(Node node)
+        public void RenderNode(Node node, List<NodeLink> relatedLinks)
         {
             double slotRadius = 5;
             double slotDiameter = 2 * slotRadius;
+
+            var nodeNodeLinkVM = new NodeNodeLinkModel() {
+                Node = node,
+                InputNodeLinks = relatedLinks.Where(x => x.InputNodeKey == node.Key).OrderBy(x=>x.InputSlotIndex).ToList(),
+                OutputNodeLinks = relatedLinks.Where(x => x.OutputNodeKey == node.Key).OrderBy(x => x.OutputSlotIndex).ToList()
+            };
+
 
             //node-container
             var newNodeGroup = new Canvas()
@@ -45,37 +52,9 @@ namespace X.Viewer.NodeGraph
             newNodeGroup.SetValue(Canvas.LeftProperty, node.PositionX);
             newNodeGroup.SetValue(Canvas.TopProperty, node.PositionY);
 
-            //node in node-container
-            FrameworkElement newNodeUIElement = null;
-            if (node.NodeType > 100 && node.NodeType < 1000) //EFFECTS
-            {
-                newNodeUIElement = new Windows.UI.Xaml.Shapes.Rectangle()
-                {
-                    Fill = new SolidColorBrush((Color)(typeof(Colors)).GetProperty(node.Color).GetValue(null))
-                };
-            }
-            else if (node.NodeType > 1000 && node.NodeType < 2000) //VALUES
-            {
-                newNodeUIElement = new TextboxValue() {
-                    DataContext = node
-                };
-            }
-            else {
-                // no idea what this node is so just make it a rectangle for now
-                newNodeUIElement = new Windows.UI.Xaml.Shapes.Rectangle()
-                {
-                    Fill = new SolidColorBrush((Color)(typeof(Colors)).GetProperty(node.Color).GetValue(null))
-                };
-            }
 
-            newNodeUIElement.Name = $"n_{node.Key}";
-            newNodeUIElement.Width = node.Width;
-            newNodeUIElement.Height = node.Height;
-            newNodeUIElement.Tag = "n";
 
-            newNodeGroup.Children.Add(newNodeUIElement);
-            
-            //node-slots in node-container
+            //node-slots in node-container (appears underneath those rendered after)
             for (int slotIndex = 0; slotIndex < node.InputSlotCount; slotIndex++)
             {
                 var slotPosition = node.GetInputSlotPosition(slotIndex);
@@ -108,8 +87,42 @@ namespace X.Viewer.NodeGraph
                 newNodeGroup.Children.Add(newSlotUIElement);
             }
 
+            
+
+            //node in node-container
+            FrameworkElement newNodeUIElement = null;
+            if (node.NodeType > 100 && node.NodeType < 1000) //EFFECTS
+            {
+                newNodeUIElement = new Windows.UI.Xaml.Shapes.Rectangle()
+                {
+                    Fill = new SolidColorBrush((Color)(typeof(Colors)).GetProperty(node.Color).GetValue(null))
+                };
+            }
+            else if (node.NodeType > 1000 && node.NodeType < 2000) //VALUES
+            {
+                newNodeUIElement = new TextboxValue() {
+                    DataContext = nodeNodeLinkVM
+                };
+            }
+            else {
+                // no idea what this node is so just make it a rectangle for now
+                newNodeUIElement = new Windows.UI.Xaml.Shapes.Rectangle()
+                {
+                    Fill = new SolidColorBrush((Color)(typeof(Colors)).GetProperty(node.Color).GetValue(null))
+                };
+            }
+
+            newNodeUIElement.Name = $"n_{node.Key}";
+            newNodeUIElement.Width = node.Width;
+            newNodeUIElement.Height = node.Height;
+            newNodeUIElement.Tag = "n";
+
+            newNodeGroup.Children.Add(newNodeUIElement);
+            
+            
+
             //node-visual, created at the end after the node's full dimensions are realized
-            CreateNodeVisual(node.Key, newNodeUIElement, (NodeType)node.NodeType);
+            CreateNodeVisual(nodeNodeLinkVM, newNodeUIElement, (NodeType)node.NodeType);
 
             _uiNodeGraphPanelXamlRoot.Children.Add(newNodeGroup);
         }

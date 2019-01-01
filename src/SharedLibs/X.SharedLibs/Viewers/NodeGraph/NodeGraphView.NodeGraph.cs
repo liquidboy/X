@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace X.Viewer.NodeGraph
 {
@@ -15,12 +16,15 @@ namespace X.Viewer.NodeGraph
         public void DrawNodeGraph() {
 
             if (_isRendererInitialized) {
-                foreach (var node in _nodes) {
-                    RenderNode(node.Value);
-                }
+
                 foreach (var link in _links)
                 {
                     RenderNodeSlotLink(link);
+                }
+                foreach (var node in _nodes)
+                {
+                    var foundLinks = _links.Where(x => x.InputNodeKey == node.Key || x.OutputNodeKey == node.Key).ToList();
+                    RenderNode(node.Value, foundLinks);
                 }
             }
         }
