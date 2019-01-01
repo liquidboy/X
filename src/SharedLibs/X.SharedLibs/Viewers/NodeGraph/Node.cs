@@ -18,7 +18,7 @@ namespace X.Viewer.NodeGraph
         public string Grouping { get; set; }
 
         public Node() { }
-        public Node(string key, double positionX, double positionY, string color, int inputSlotCount, int outputSlotCount, string grouping)
+        public Node(string key, double positionX, double positionY, double initialWidth, string color, int inputSlotCount, int outputSlotCount, string grouping)
         {
             Key = key;
             PositionX = positionX;
@@ -26,7 +26,7 @@ namespace X.Viewer.NodeGraph
             Color = color;
             InputSlotCount = inputSlotCount;
             OutputSlotCount = outputSlotCount;
-            Width = 0;
+            Width = initialWidth;
             Height = 0;
             Grouping = grouping;
             CalculateSize();
@@ -37,7 +37,7 @@ namespace X.Viewer.NodeGraph
             inputHeight = 50d + ((InputSlotCount - 1) * 20d) + 50d;
             outputHeight = 50d + ((OutputSlotCount - 1) * 20d) + 50d;
 
-            Width = 150; // = new Size(width, Math.Max(inputHeight, outputHeight));
+            //Width = 150; // = new Size(width, Math.Max(inputHeight, outputHeight));
             Height = Math.Max(inputHeight, outputHeight);
         }
         public InputSlotPosition GetInputSlotPosition(int slotNo)
