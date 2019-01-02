@@ -101,12 +101,9 @@ namespace X.Viewer.NodeGraph
                         desc, 
                         new[] { "MaskTransform.TransformMatrix" }
                         ).CreateBrush();
-
-                    var source1 = (NodeLink)inputSlotSources[0];
-                    var source2 = (NodeLink)inputSlotSources[1];
                     
-                    brushAlphaMask.SetSourceParameter("Image", (CompositionBrush)_nodeVisuals[source1.OutputNodeKey].Brush); 
-                    brushAlphaMask.SetSourceParameter("Mask", (CompositionBrush)_nodeVisuals[source2.OutputNodeKey].Brush);
+                    brushAlphaMask.SetSourceParameter("Image", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush); 
+                    brushAlphaMask.SetSourceParameter("Mask", _nodeVisuals[((NodeLink)inputSlotSources[1]).OutputNodeKey].Brush);
                     return brushAlphaMask;
                 case NodeType.GrayscaleEffect:
                     var grayscaleEffectDesc = new GrayscaleEffect
@@ -120,6 +117,21 @@ namespace X.Viewer.NodeGraph
 
                     brushGrayscale.SetSourceParameter("Image", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);
                     return brushGrayscale;
+                case NodeType.HueRotationEffect:
+                    var hueRotationEffectDesc = new HueRotationEffect
+                    {
+                        Name = "effect",
+                        Source = new CompositionEffectSourceParameter("Image")
+                    };
+                    var brushHueRotationEffect = compositor.CreateEffectFactory(
+                        hueRotationEffectDesc,
+                        new[] { "effect.Angle" }
+                    ).CreateBrush();
+                    brushHueRotationEffect.SetSourceParameter("Image", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);
+                    var hueEffectAngle = ((NodeLink)inputSlotSources[1]).Value1;
+                    if (string.IsNullOrEmpty(hueEffectAngle)) hueEffectAngle = "0";
+                    brushHueRotationEffect.Properties.InsertScalar("effect.Angle",(float)(float.Parse(hueEffectAngle) * Math.PI * 2));
+                    return brushHueRotationEffect;
                 default:
                     throw new NotImplementedException();
             }

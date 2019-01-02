@@ -119,7 +119,8 @@ namespace X.Viewer.NodeGraph
 
         private void ButLoad_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (!IsGraphSelected) OnGraphSelected(((Guid)cbSavedGraphs.SelectedValue).ToString());
+            var newValue = cbSavedGraphs.SelectedValue;
+            if (newValue != null && !IsGraphSelected) OnGraphSelected(((Guid)newValue).ToString());
         }
 
         private void ButClearStorage_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
