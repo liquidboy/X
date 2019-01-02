@@ -127,7 +127,22 @@ namespace X.Viewer.NodeGraph
                         ).CreateBrush();
                     localUpdateGraphicsBrush(compositor, effectType, inputSlotSources, brushAlphaMask);
                     return brushAlphaMask;
+                case NodeType.ContrastEffect:
+                    // Changes the contrast of an image.
+                    if (inputSlotSources.Length == 0) return null;
+                    var contrastEffectDesc = new ContrastEffect
+                    {
+                        Name = "effect",
+                        Source = new CompositionEffectSourceParameter("Image")
+                    };
+                    var brushContrastEffect = compositor.CreateEffectFactory(
+                        contrastEffectDesc,
+                        new[] { "effect.Contrast" }
+                    ).CreateBrush();
+                    localUpdateGraphicsBrush(compositor, effectType, inputSlotSources, brushContrastEffect);
+                    return brushContrastEffect;
                 case NodeType.GrayscaleEffect:
+                    if (inputSlotSources.Length == 0) return null;
                     var grayscaleEffectDesc = new GrayscaleEffect
                     {
                         Name = "effect",
@@ -139,6 +154,7 @@ namespace X.Viewer.NodeGraph
                     localUpdateGraphicsBrush(compositor, effectType, inputSlotSources, brushGrayscale);
                     return brushGrayscale;
                 case NodeType.HueRotationEffect:
+                    if (inputSlotSources.Length == 0) return null;
                     var hueRotationEffectDesc = new HueRotationEffect
                     {
                         Name = "effect",
@@ -169,6 +185,13 @@ namespace X.Viewer.NodeGraph
                     var alphaMaskEffectBrush = (CompositionEffectBrush)brushToUpdate;
                     alphaMaskEffectBrush.SetSourceParameter("Image", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);
                     alphaMaskEffectBrush.SetSourceParameter("Mask", _nodeVisuals[((NodeLink)inputSlotSources[1]).OutputNodeKey].Brush);
+                    return;
+                case NodeType.ContrastEffect:
+                    var brushContrastEffect = (CompositionEffectBrush)brushToUpdate;
+                    brushContrastEffect.SetSourceParameter("Image", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);
+                    var contrastValue = ((NodeLink)inputSlotSources[1]).Value1;
+                    if (string.IsNullOrEmpty(contrastValue)) contrastValue = "0";
+                    brushContrastEffect.Properties.InsertScalar("effect.Contrast", (float)(float.Parse(contrastValue)));
                     return;
                 case NodeType.GrayscaleEffect:
                     var brushGrayscale = (CompositionEffectBrush)brushToUpdate;

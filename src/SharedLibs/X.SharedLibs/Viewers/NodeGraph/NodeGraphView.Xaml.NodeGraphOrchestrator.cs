@@ -61,8 +61,9 @@ namespace X.Viewer.NodeGraph
 
                 AddNodeToGraph(new Node("Node7", 700, 600, defaultWidth, "WhiteSmoke", 2, 1, defaultGuid, (int)NodeType.HueRotationEffect, "Hue Rotation"));
                 AddNodeToGraph(new Node("Node8", 700, 800, 300d, "WhiteSmoke", 0, 1, defaultGuid, (int)NodeType.SliderValue, "Value"));
-                //AddNodeToGraph(new Node("Node8", 700, 1000, defaultWidth, "WhiteSmoke", 3, 1, defaultGuid, (int)NodeType.Empty));
-                //AddNodeToGraph(new Node("Node9", 1000, 500, defaultWidth, "WhiteSmoke", 2, 2, defaultGuid, (int)NodeType.Empty));
+
+                AddNodeToGraph(new Node("Node9", 700, 1000, defaultWidth, "WhiteSmoke", 2, 1, defaultGuid, (int)NodeType.ContrastEffect, "Contrast"));
+                AddNodeToGraph(new Node("Node10", 1000, 500, defaultWidth, "WhiteSmoke", 0, 1, defaultGuid, (int)NodeType.SliderValue, "Value"));
                 //AddNodeToGraph(new Node("Node10", 1000, 800, defaultWidth, "WhiteSmoke", 3, 2, defaultGuid, (int)NodeType.Empty));
                 //AddNodeToGraph(new Node("Node11", 1100, 200, defaultWidth, "WhiteSmoke", 2, 3, defaultGuid, (int)NodeType.Empty));
                 //AddNodeToGraph(new Node("Node12", 1300, 500, defaultWidth, "WhiteSmoke", 2, 2, defaultGuid, (int)NodeType.Empty));
