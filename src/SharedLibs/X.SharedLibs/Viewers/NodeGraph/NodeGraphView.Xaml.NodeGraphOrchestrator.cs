@@ -56,32 +56,39 @@ namespace X.Viewer.NodeGraph
                 AddNodeToGraph(new Node("Node3", 400, 190, defaultWidth, "WhiteSmoke", 1, 1, defaultGuid, (int)NodeType.TextureAsset, "Texture Asset"));
                 AddNodeToGraph(new Node("Node4", 400, 0, defaultWidth, "WhiteSmoke", 1, 1, defaultGuid, (int)NodeType.TextureAsset, "Texture Asset"));
                 AddNodeToGraph(new Node("Node5", 700, 100, defaultWidth, "WhiteSmoke", 2, 1, defaultGuid, (int)NodeType.AlphaMaskEffect, "Alpha Mask"));
-                AddNodeToGraph(new Node("Node6", 400, 400, defaultWidth, "WhiteSmoke", 1, 2, defaultGuid, (int)NodeType.Empty));
-                AddNodeToGraph(new Node("Node7", 700, 600, defaultWidth, "WhiteSmoke", 5, 8, defaultGuid, (int)NodeType.Empty));
-                AddNodeToGraph(new Node("Node8", 700, 1000, defaultWidth, "WhiteSmoke", 3, 1, defaultGuid, (int)NodeType.Empty));
-                AddNodeToGraph(new Node("Node9", 1000, 500, defaultWidth, "WhiteSmoke", 2, 2, defaultGuid, (int)NodeType.Empty));
-                AddNodeToGraph(new Node("Node10", 1000, 800, defaultWidth, "WhiteSmoke", 3, 2, defaultGuid, (int)NodeType.Empty));
-                AddNodeToGraph(new Node("Node11", 1100, 200, defaultWidth, "WhiteSmoke", 2, 3, defaultGuid, (int)NodeType.Empty));
-                AddNodeToGraph(new Node("Node12", 1300, 500, defaultWidth, "WhiteSmoke", 2, 2, defaultGuid, (int)NodeType.Empty));
-                AddNodeToGraph(new Node("Node13", 1300, 700, defaultWidth, "WhiteSmoke", 2, 3, defaultGuid, (int)NodeType.Empty));
+                
+                AddNodeToGraph(new Node("Node6", 400, 400, defaultWidth, "WhiteSmoke", 1, 1, defaultGuid, (int)NodeType.GrayscaleEffect, "Grayscale Effect"));
+
+                //AddNodeToGraph(new Node("Node7", 700, 600, defaultWidth, "WhiteSmoke", 5, 8, defaultGuid, (int)NodeType.Empty));
+                //AddNodeToGraph(new Node("Node8", 700, 1000, defaultWidth, "WhiteSmoke", 3, 1, defaultGuid, (int)NodeType.Empty));
+                //AddNodeToGraph(new Node("Node9", 1000, 500, defaultWidth, "WhiteSmoke", 2, 2, defaultGuid, (int)NodeType.Empty));
+                //AddNodeToGraph(new Node("Node10", 1000, 800, defaultWidth, "WhiteSmoke", 3, 2, defaultGuid, (int)NodeType.Empty));
+                //AddNodeToGraph(new Node("Node11", 1100, 200, defaultWidth, "WhiteSmoke", 2, 3, defaultGuid, (int)NodeType.Empty));
+                //AddNodeToGraph(new Node("Node12", 1300, 500, defaultWidth, "WhiteSmoke", 2, 2, defaultGuid, (int)NodeType.Empty));
+                //AddNodeToGraph(new Node("Node13", 1300, 700, defaultWidth, "WhiteSmoke", 2, 3, defaultGuid, (int)NodeType.Empty));
+
+
+
+
+
 
 
                 AddLinkToGraph(new NodeLink("Node1", 0, "Node3", 0, defaultGuid, "x-ferns.jpg"));
-                //AddLinkToGraph(new NodeLink("Node2", 0, "Node4", 0, defaultGuid, "x-mask-circle.png"));
-                //AddLinkToGraph(new NodeLink("Node4", 0, "Node5", 1, defaultGuid));
+                AddLinkToGraph(new NodeLink("Node2", 0, "Node4", 0, defaultGuid, "x-mask-circle.png"));
+                AddLinkToGraph(new NodeLink("Node4", 0, "Node5", 1, defaultGuid));
                 AddLinkToGraph(new NodeLink("Node3", 0, "Node5", 0, defaultGuid));
-                
 
-                AddLinkToGraph(new NodeLink("Node6", 0, "Node7", 0, defaultGuid));
-                AddLinkToGraph(new NodeLink("Node6", 1, "Node8", 0, defaultGuid));
-                AddLinkToGraph(new NodeLink("Node5", 0, "Node11", 0, defaultGuid));
-                AddLinkToGraph(new NodeLink("Node7", 0, "Node11", 1, defaultGuid));
-                AddLinkToGraph(new NodeLink("Node7", 1, "Node9", 0, defaultGuid));
-                AddLinkToGraph(new NodeLink("Node7", 2, "Node9", 1, defaultGuid));
-                AddLinkToGraph(new NodeLink("Node7", 3, "Node10", 0, defaultGuid));
-                AddLinkToGraph(new NodeLink("Node8", 0, "Node10", 1, defaultGuid));
-                AddLinkToGraph(new NodeLink("Node10", 0, "Node12", 0, defaultGuid));
-                AddLinkToGraph(new NodeLink("Node10", 1, "Node13", 0, defaultGuid));
+                AddLinkToGraph(new NodeLink("Node5", 0, "Node6", 0, defaultGuid));
+
+                //AddLinkToGraph(new NodeLink("Node6", 1, "Node8", 0, defaultGuid));
+                //AddLinkToGraph(new NodeLink("Node5", 0, "Node11", 0, defaultGuid));
+                //AddLinkToGraph(new NodeLink("Node7", 0, "Node11", 1, defaultGuid));
+                //AddLinkToGraph(new NodeLink("Node7", 1, "Node9", 0, defaultGuid));
+                //AddLinkToGraph(new NodeLink("Node7", 2, "Node9", 1, defaultGuid));
+                //AddLinkToGraph(new NodeLink("Node7", 3, "Node10", 0, defaultGuid));
+                //AddLinkToGraph(new NodeLink("Node8", 0, "Node10", 1, defaultGuid));
+                //AddLinkToGraph(new NodeLink("Node10", 0, "Node12", 0, defaultGuid));
+                //AddLinkToGraph(new NodeLink("Node10", 1, "Node13", 0, defaultGuid));
             }
             else {
                 //100 failed

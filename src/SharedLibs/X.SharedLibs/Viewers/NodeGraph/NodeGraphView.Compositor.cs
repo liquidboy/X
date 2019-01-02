@@ -108,6 +108,18 @@ namespace X.Viewer.NodeGraph
                     brushAlphaMask.SetSourceParameter("Image", (CompositionBrush)_nodeVisuals[source1.OutputNodeKey].Brush); 
                     brushAlphaMask.SetSourceParameter("Mask", (CompositionBrush)_nodeVisuals[source2.OutputNodeKey].Brush);
                     return brushAlphaMask;
+                case NodeType.GrayscaleEffect:
+                    var grayscaleEffectDesc = new GrayscaleEffect
+                    {
+                        Name = "effect",
+                        Source = new CompositionEffectSourceParameter("Image")
+                    };
+                    var brushGrayscale = compositor.CreateEffectFactory(
+                        grayscaleEffectDesc
+                    ).CreateBrush();
+
+                    brushGrayscale.SetSourceParameter("Image", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);
+                    return brushGrayscale;
                 default:
                     throw new NotImplementedException();
             }
