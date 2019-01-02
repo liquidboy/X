@@ -62,32 +62,14 @@ namespace X.Viewer.NodeGraph
             for (int slotIndex = 0; slotIndex < node.InputSlotCount; slotIndex++)
             {
                 var slotPosition = node.GetInputSlotPosition(slotIndex);
-                var newSlotUIElement = new Windows.UI.Xaml.Shapes.Ellipse()
-                {
-                    Name = $"nsi_{node.Key}_{slotIndex}",
-                    Width = slotDiameter,
-                    Height = slotDiameter,
-                    Fill = new SolidColorBrush(Colors.Black),
-                    Tag = "nsi"
-                };
-                newSlotUIElement.SetValue(Canvas.LeftProperty, slotPosition.X - slotRadius - node.PositionX);
-                newSlotUIElement.SetValue(Canvas.TopProperty, slotPosition.Y - slotRadius - node.PositionY);
+                var newSlotUIElement = CreateSlotUI("nsi", node, slotIndex, slotPosition, slotDiameter, slotRadius, Colors.Black, true, Colors.LightGray);
                 newNodeGroup.Children.Add(newSlotUIElement);
             }
 
             for (int slotIndex = 0; slotIndex < node.OutputSlotCount; slotIndex++)
             {
                 var slotPosition = node.GetOutputSlotPosition(slotIndex);
-                var newSlotUIElement = new Windows.UI.Xaml.Shapes.Ellipse()
-                {
-                    Name = $"nso_{node.Key}_{slotIndex}",
-                    Width = slotDiameter,
-                    Height = slotDiameter,
-                    Fill = new SolidColorBrush(Colors.Black),
-                    Tag = "nso"
-                };
-                newSlotUIElement.SetValue(Canvas.LeftProperty, slotPosition.X - slotRadius - node.PositionX);
-                newSlotUIElement.SetValue(Canvas.TopProperty, slotPosition.Y - slotRadius - node.PositionY);
+                var newSlotUIElement = CreateSlotUI("tag", node, slotIndex, slotPosition, slotDiameter, slotRadius, Colors.Black, false, Colors.LightGray);
                 newNodeGroup.Children.Add(newSlotUIElement);
             }
 
@@ -153,6 +135,49 @@ namespace X.Viewer.NodeGraph
             _uiNodeGraphPanelXamlRoot.Children.Add(newNodeGroup);
         }
 
+        UIElement CreateSlotUI(string tag, Node node, int slotIndex,Point slotPosition, double slotDiameter, double slotRadius, Color slotColor, bool isInputSlot, Color labelColor) {
+            var slotContainer = new Canvas();
+            slotContainer.SetValue(Canvas.LeftProperty, slotPosition.X - slotRadius - node.PositionX);
+            slotContainer.SetValue(Canvas.TopProperty, slotPosition.Y - slotRadius - node.PositionY);
+
+            //dot
+            var newSlotUIElement = new Windows.UI.Xaml.Shapes.Ellipse()
+            {
+                Name = $"{tag}_{node.Key}_{slotIndex}",
+                Width = slotDiameter,
+                Height = slotDiameter,
+                Fill = new SolidColorBrush(slotColor),
+                Tag = tag
+            };
+            slotContainer.Children.Add(newSlotUIElement);
+
+            //text
+            if (isInputSlot) {
+                if (!string.IsNullOrEmpty(node.InputSlotLabels)) {
+                    var labels = node.InputSlotLabels.Split(",".ToCharArray());
+                    if (labels.Length > 0 && labels.Length >= slotIndex) {
+                        var labelText = labels[slotIndex];
+                        if (!string.IsNullOrEmpty(labelText)) {
+                            var label = new TextBlock()
+                            {
+                                Text = labelText,
+                                Foreground = new SolidColorBrush(labelColor),
+                                FontSize = 12
+                            };
+                            //label.HorizontalAlignment = HorizontalAlignment.Left;
+                            slotContainer.Children.Add(label);
+
+                            label.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity)); // framework to calculate width/height of label so i can use ActualWidth
+                            label.Margin = new Thickness((label.ActualWidth * -1) - 10, -5, 0, 0);
+                            //label.Arrange(new Rect(textBlock.DesiredSize));
+                        }
+                    }
+                }
+            }
+            
+            return slotContainer;
+        }
+        
         (bool ElementFound, UIElement Element) HasNodeAlreadyBeenRendered(string id)
         {
             var foundUIElement = (UIElement)_uiNodeGraphPanelXamlRoot.FindName(id);
