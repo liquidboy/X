@@ -135,10 +135,11 @@ namespace X.Viewer.NodeGraph
                 titleUIElement.SetValue(Canvas.TopProperty, -25);
                 newNodeGroup.Children.Add(titleUIElement);
             }
-            
+
 
 
             //node-visual, created at the end after the node's full dimensions are realized
+            //await DispatcherHelper.ExecuteOnUIThreadAsync(()=> CreateNodeVisual(nodeNodeLinkVM, newNodeUIElement, (NodeType)node.NodeType), Windows.UI.Core.CoreDispatcherPriority.Normal);
             CreateNodeVisual(nodeNodeLinkVM, newNodeUIElement, (NodeType)node.NodeType);
 
             _uiNodeGraphPanelXamlRoot.Children.Add(newNodeGroup);

@@ -1,10 +1,10 @@
 ﻿using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
-using SamplesCommon;
+using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
-using Windows.Foundation;
+using System.Threading.Tasks;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Hosting;
@@ -34,6 +34,8 @@ namespace X.Viewer.NodeGraph
         {
             var nodeTypeInt = (int)nodeType;
             FrameworkElement fe = (FrameworkElement)parentRootOfVisual;
+            
+            var nodeVisuals = new Dictionary<string, NodeVisual>();
             var nodeVisual = new NodeVisual();
 
             if (nodeTypeInt > 100 && nodeTypeInt <= 1000) { //EFFECT NODES
@@ -44,13 +46,14 @@ namespace X.Viewer.NodeGraph
 
                 ElementCompositionPreview.SetElementChildVisual(parentRootOfVisual, nodeVisual.ContainerVisual);
 
-                //get input sources and pass them to effect graph
+                //get input sources and pass them to effect graph 
                 nodeVisual.Brush = CreateGraphicsBrush(compositor, nodeType, nodeNodeLinkModel.InputNodeLinks.ToArray());
+                
                 ResizeSpriteBrush(fe.ActualWidth - 20, fe.ActualHeight - 20, nodeVisual.SpriteVisual);
                 nodeVisual.SpriteVisual.Brush = nodeVisual.Brush;
-
                 nodeVisual.ContainerVisual.Children.InsertAtTop(nodeVisual.SpriteVisual);
                 _nodeVisuals.Add(nodeNodeLinkModel.Node.Key, nodeVisual);
+
             } else if (nodeTypeInt > 1000) //VALUE NODES
             {
                 
@@ -61,18 +64,9 @@ namespace X.Viewer.NodeGraph
 
         private void ResizeSpriteBrush(double availableWidth, double availableHeight, SpriteVisual spriteVisual)
         {
-            //double newWidth = visibleWidth;
-            //double newHeight = visibleHeight;
-
-            //spriteVisual.Offset = new Vector3(0f, 0f, 0.0f);
-            //spriteVisual.Size = new Vector2((float)newWidth, (float)newHeight);
-
             double newWidth = availableWidth;
             double newHeight = availableHeight;
             double imageAspectRatio = availableWidth / availableHeight;
-
-            //newWidth = availableWidth * imageAspectRatio;
-            //newHeight = newHeight * imageAspectRatio;
 
             spriteVisual.Offset = new Vector3(10f, 10.0f, 0.0f);
             spriteVisual.Size = new Vector2((float)newWidth, (float)newHeight);
@@ -86,9 +80,7 @@ namespace X.Viewer.NodeGraph
             switch (effectType) {
                 case NodeType.TextureAsset:
                     if (inputSlotSources.Length == 0) return null;
-                    Size imageSize;
-                    var brushNoEffect = CreateBrushFromAsset(compositor, (string)((NodeLink)inputSlotSources[0]).Value1, out imageSize);
-                    var imageAspectRatio = (imageSize.Width == 0 && imageSize.Height == 0) ? 1 : imageSize.Width / imageSize.Height;
+                    var brushNoEffect = CreateBrushFromAsset(compositor, (string)((NodeLink)inputSlotSources[0]).Value1);
                     return brushNoEffect;
                 case NodeType.AlphaMaskEffect:
                     if (inputSlotSources.Length < 2) return null;
@@ -120,25 +112,33 @@ namespace X.Viewer.NodeGraph
             }
         }
 
-        private CompositionSurfaceBrush CreateBrushFromAsset(Compositor compositor, string name, out Size size)
+        private CompositionSurfaceBrush CreateBrushFromAsset(Compositor compositor, string name)
         {
-            ImageLoader.Initialize(compositor);
-            CompositionDrawingSurface surface = ImageLoader.Instance.LoadFromUri(new Uri("ms-appx:///Assets/" + name)).Surface;
-            size = surface.Size;
+            //ImageLoader.Initialize(compositor);
+            //CompositionDrawingSurface surface = ImageLoader.Instance.LoadFromUri(new Uri("ms-appx:///Assets/" + name)).Surface;
+            
+            SurfaceLoader.Initialize(compositor);
+            var task = Task.Run(() => SurfaceLoader.LoadFromUri(new Uri("ms-appx:///Assets/" + name)));
+            task.Wait();
+            var surface = task.Result;
+            
             return compositor.CreateSurfaceBrush(surface);
         }
 
         public void ClearCompositor()
         {
-            foreach (var nodeVisual in _nodeVisuals) {
+            foreach (var nodeVisual in _nodeVisuals)
+            {
                 nodeVisual.Value.ContainerVisual?.Dispose();
-                nodeVisual.Value.ContainerVisual = null; 
+                nodeVisual.Value.ContainerVisual = null;
                 nodeVisual.Value.SpriteVisual?.Dispose();
                 nodeVisual.Value.SpriteVisual = null;
                 nodeVisual.Value.Brush?.Dispose();
                 nodeVisual.Value.Brush = null;
             }
             _nodeVisuals.Clear();
+
+            SurfaceLoader.Uninitialize();
         }
     }
 }
