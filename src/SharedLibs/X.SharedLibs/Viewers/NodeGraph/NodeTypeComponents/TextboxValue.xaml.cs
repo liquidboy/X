@@ -15,8 +15,9 @@ using Windows.UI.Xaml.Navigation;
 
 namespace X.Viewer.NodeGraph.NodeTypeComponents
 {
-    public sealed partial class TextboxValue : UserControl
+    public sealed partial class TextboxValue : UserControl, INodeTypeComponent
     {
+        public event EventHandler NodeTypeValueChanged;
         public TextboxValue()
         {
             this.InitializeComponent();

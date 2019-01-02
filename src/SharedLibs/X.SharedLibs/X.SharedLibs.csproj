@@ -750,6 +750,7 @@
       <DependentUpon>MediaControls.xaml</DependentUpon>
     </Compile>
     <Compile Include="Viewers\MediaView\MediaElementRenderer.cs" />
+    <Compile Include="Viewers\NodeGraph\NodeTypeComponents\INodeTypeComponent.cs" />
     <Compile Include="Viewers\NodeGraph\NodeTypeComponents\SliderValue.xaml.cs">
       <DependentUpon>SliderValue.xaml</DependentUpon>
     </Compile>

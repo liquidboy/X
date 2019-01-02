@@ -8,6 +8,6 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
     <Grid Background="{Binding Node.Color}">
-        <Slider Margin="15,35,15,0" Minimum="0" Maximum="1" StepFrequency="0.1" Value="{Binding OutputNodeLinks[0].Value1, Mode=TwoWay}" ></Slider>
+        <Slider Margin="15,35,15,0" Minimum="0" Maximum="1" StepFrequency="0.1" Value="{Binding OutputNodeLinks[0].Value1, Mode=TwoWay}" ValueChanged="Slider_ValueChanged" ></Slider>
     </Grid>
 </UserControl>

@@ -15,11 +15,20 @@ using Windows.UI.Xaml.Navigation;
 
 namespace X.Viewer.NodeGraph.NodeTypeComponents
 {
-    public sealed partial class SliderValue : UserControl
+    public sealed partial class SliderValue : UserControl, INodeTypeComponent
     {
+        public event EventHandler NodeTypeValueChanged;
         public SliderValue()
         {
             this.InitializeComponent();
+        }
+
+        private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            if (NodeTypeValueChanged != null) {
+                NodeNodeLinkModel vm = (NodeNodeLinkModel)((FrameworkElement)sender).DataContext;
+                NodeTypeValueChanged.Invoke(vm.OutputNodeLinks[0].InputNodeKey, EventArgs.Empty);
+            }
         }
     }
 }

@@ -28,6 +28,9 @@ namespace X.Viewer.NodeGraph
             }
         }
 
+        // ==========
+        // NODE
+        // ==========
         public void RenderNode(Node node, List<NodeLink> relatedLinks)
         {
             double slotRadius = 5;
@@ -102,10 +105,13 @@ namespace X.Viewer.NodeGraph
             else if (node.NodeType > 1000 && node.NodeType < 2000) //VALUES
             {
                 var nodeType = (NodeType)node.NodeType;
+                
                 switch (nodeType) {
                     case NodeType.TextboxValue: newNodeUIElement = new TextboxValue() { DataContext = nodeNodeLinkVM }; break;
                     case NodeType.SliderValue: newNodeUIElement = new SliderValue() { DataContext = nodeNodeLinkVM }; break;
                 }
+                INodeTypeComponent nodeTypeComponent = newNodeUIElement as INodeTypeComponent;
+                nodeTypeComponent.NodeTypeValueChanged += NodeTypeComponent_NodeTypeValueChanged;
             }
             else {
                 // no idea what this node is so just make it a rectangle for now
@@ -147,6 +153,28 @@ namespace X.Viewer.NodeGraph
             _uiNodeGraphPanelXamlRoot.Children.Add(newNodeGroup);
         }
 
+        (bool ElementFound, UIElement Element) HasNodeAlreadyBeenRendered(string id)
+        {
+            var foundUIElement = (UIElement)_uiNodeGraphPanelXamlRoot.FindName(id);
+            if (foundUIElement != null) return (true, foundUIElement);
+            return (false, null);
+        }
+
+
+        bool TryUpdateExistingNode(NodeNodeLinkModel nodeNodeLinkModel) {
+            var findingUIElement = HasNodeAlreadyBeenRendered(nodeNodeLinkModel.Node.Key);
+            if (findingUIElement.ElementFound && nodeNodeLinkModel != null && nodeNodeLinkModel.Node != null)
+            {
+                UpdateNodeVisual(nodeNodeLinkModel, findingUIElement.Element);
+            }
+            return false;
+        }
+
+
+
+        // ==========
+        // NODE-SLOT-LINK
+        // ==========
         public void RenderNodeSlotLink(NodeLink nodeLink)
         {
             Node inputNode = FindNode(nodeLink.InputNodeKey);
@@ -224,7 +252,38 @@ namespace X.Viewer.NodeGraph
 
         public void ClearRenderer()
         {
+            foreach (var child in _uiNodeGraphPanelXamlRoot.Children) {
+                if (child is INodeTypeComponent) {
+                    var nodeTypeComponent = (INodeTypeComponent)child;
+                    nodeTypeComponent.NodeTypeValueChanged -= NodeTypeComponent_NodeTypeValueChanged;
+                }
+            }
             _uiNodeGraphPanelXamlRoot.Children.Clear();
+        }
+
+
+
+
+        // ==========
+        // PRIVATE
+        // ==========
+
+        private void NodeTypeComponent_NodeTypeValueChanged(object sender, System.EventArgs e)
+        {
+            if (sender != null) {
+                var nodeKeyToUpdate = sender as string;
+                var foundNode = FindNode(nodeKeyToUpdate);
+                if (foundNode != null) {
+                    var foundLinks = _links.Where(x => x.InputNodeKey == foundNode.Key || x.OutputNodeKey == foundNode.Key).ToList();
+                    var nodeNodeLinkVM = new NodeNodeLinkModel()
+                    {
+                        Node = foundNode,
+                        InputNodeLinks = foundLinks.Where(x => x.InputNodeKey == foundNode.Key).OrderBy(x => x.InputSlotIndex).ToList(),
+                        OutputNodeLinks = foundLinks.Where(x => x.OutputNodeKey == foundNode.Key).OrderBy(x => x.OutputSlotIndex).ToList()
+                    };
+                    TryUpdateExistingNode(nodeNodeLinkVM);
+                }
+            }
         }
     }
 }
