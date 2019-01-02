@@ -101,9 +101,11 @@ namespace X.Viewer.NodeGraph
             }
             else if (node.NodeType > 1000 && node.NodeType < 2000) //VALUES
             {
-                newNodeUIElement = new TextboxValue() {
-                    DataContext = nodeNodeLinkVM
-                };
+                var nodeType = (NodeType)node.NodeType;
+                switch (nodeType) {
+                    case NodeType.TextboxValue: newNodeUIElement = new TextboxValue() { DataContext = nodeNodeLinkVM }; break;
+                    case NodeType.SliderValue: newNodeUIElement = new SliderValue() { DataContext = nodeNodeLinkVM }; break;
+                }
             }
             else {
                 // no idea what this node is so just make it a rectangle for now

@@ -60,7 +60,7 @@ namespace X.Viewer.NodeGraph
                 AddNodeToGraph(new Node("Node6", 400, 400, defaultWidth, "WhiteSmoke", 1, 1, defaultGuid, (int)NodeType.GrayscaleEffect, "Grayscale"));
 
                 AddNodeToGraph(new Node("Node7", 700, 600, defaultWidth, "WhiteSmoke", 2, 1, defaultGuid, (int)NodeType.HueRotationEffect, "Hue Rotation"));
-                AddNodeToGraph(new Node("Node8", 700, 800, defaultWidth, "WhiteSmoke", 0, 1, defaultGuid, (int)NodeType.TextboxValue, "Value"));
+                AddNodeToGraph(new Node("Node8", 700, 800, 300d, "WhiteSmoke", 0, 1, defaultGuid, (int)NodeType.SliderValue, "Value"));
                 //AddNodeToGraph(new Node("Node8", 700, 1000, defaultWidth, "WhiteSmoke", 3, 1, defaultGuid, (int)NodeType.Empty));
                 //AddNodeToGraph(new Node("Node9", 1000, 500, defaultWidth, "WhiteSmoke", 2, 2, defaultGuid, (int)NodeType.Empty));
                 //AddNodeToGraph(new Node("Node10", 1000, 800, defaultWidth, "WhiteSmoke", 3, 2, defaultGuid, (int)NodeType.Empty));

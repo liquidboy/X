@@ -49,7 +49,6 @@ namespace X.Viewer.NodeGraph
 
                     ResizeSpriteBrush(nodeVisual.AssociatedObject.ActualWidth - 20, nodeVisual.AssociatedObject.ActualHeight - 20, spriteVisualNew);
                     spriteVisualNew.Brush = nodeVisual.Brush;
-                    //nodeVisual.ContainerVisual.Children.InsertAtTop(nodeVisual.SpriteVisual);
                 }
                     
                 _nodeVisuals.Add(nodeNodeLinkModel.Node.Key, nodeVisual);

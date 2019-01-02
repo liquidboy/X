@@ -23,5 +23,6 @@ namespace X.Viewer.NodeGraph
         TextureAsset,
 
         TextboxValue = 1001, // >=1000 are controls
+        SliderValue = 1002
     }
 }
