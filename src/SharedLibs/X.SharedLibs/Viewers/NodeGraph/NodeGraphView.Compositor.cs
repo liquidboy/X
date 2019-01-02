@@ -16,14 +16,7 @@ namespace X.Viewer.NodeGraph
         Compositor _rootCompositor;
         
         IDictionary<string, NodeVisual> _nodeVisuals;
-        
-        public class NodeVisual {
-            public string NodeKey { get; set; }
-            public ContainerVisual ContainerVisual;
-            public SpriteVisual SpriteVisual;
-            public CompositionBrush Brush;
-        }
-        
+                
         public void InitializeCompositor(UIElement rootVisualElement)
         {
             _rootCompositor = ElementCompositionPreview.GetElementVisual(rootVisualElement).Compositor;
@@ -32,26 +25,33 @@ namespace X.Viewer.NodeGraph
 
         public void CreateNodeVisual(NodeNodeLinkModel nodeNodeLinkModel, UIElement parentRootOfVisual, NodeType nodeType)
         {
+            var nodeVisual = new NodeVisual();
             var nodeTypeInt = (int)nodeType;
-            FrameworkElement fe = (FrameworkElement)parentRootOfVisual;
+            nodeVisual.AssociatedObject = (FrameworkElement)parentRootOfVisual;
             
             var nodeVisuals = new Dictionary<string, NodeVisual>();
-            var nodeVisual = new NodeVisual();
+            
 
             if (nodeTypeInt > 100 && nodeTypeInt <= 1000) { //EFFECT NODES
-                var compositor = ElementCompositionPreview.GetElementVisual(parentRootOfVisual).Compositor;
+                var compositor = ElementCompositionPreview.GetElementVisual(nodeVisual.AssociatedObject).Compositor;
 
-                nodeVisual.ContainerVisual = compositor.CreateContainerVisual();
-                nodeVisual.SpriteVisual = compositor.CreateSpriteVisual();
+                // check to see if the visual already has an effect applied.
+                var spriteVisualFound = ElementCompositionPreview.GetElementChildVisual(nodeVisual.AssociatedObject) as SpriteVisual;
+                var foundBrush = spriteVisualFound?.Brush as CompositionEffectBrush;
+                if (foundBrush == null)
+                {
+                    var spriteVisualNew = compositor.CreateSpriteVisual();
 
-                ElementCompositionPreview.SetElementChildVisual(parentRootOfVisual, nodeVisual.ContainerVisual);
+                    ElementCompositionPreview.SetElementChildVisual(nodeVisual.AssociatedObject, spriteVisualNew);
 
-                //get input sources and pass them to effect graph 
-                nodeVisual.Brush = CreateGraphicsBrush(compositor, nodeType, nodeNodeLinkModel.InputNodeLinks.ToArray());
-                
-                ResizeSpriteBrush(fe.ActualWidth - 20, fe.ActualHeight - 20, nodeVisual.SpriteVisual);
-                nodeVisual.SpriteVisual.Brush = nodeVisual.Brush;
-                nodeVisual.ContainerVisual.Children.InsertAtTop(nodeVisual.SpriteVisual);
+                    //get input sources and pass them to effect graph 
+                    nodeVisual.Brush = CreateGraphicsBrush(compositor, nodeType, nodeNodeLinkModel.InputNodeLinks.ToArray());
+
+                    ResizeSpriteBrush(nodeVisual.AssociatedObject.ActualWidth - 20, nodeVisual.AssociatedObject.ActualHeight - 20, spriteVisualNew);
+                    spriteVisualNew.Brush = nodeVisual.Brush;
+                    //nodeVisual.ContainerVisual.Children.InsertAtTop(nodeVisual.SpriteVisual);
+                }
+                    
                 _nodeVisuals.Add(nodeNodeLinkModel.Node.Key, nodeVisual);
 
             } else if (nodeTypeInt > 1000) //VALUE NODES
@@ -129,10 +129,13 @@ namespace X.Viewer.NodeGraph
         {
             foreach (var nodeVisual in _nodeVisuals)
             {
-                nodeVisual.Value.ContainerVisual?.Dispose();
-                nodeVisual.Value.ContainerVisual = null;
-                nodeVisual.Value.SpriteVisual?.Dispose();
-                nodeVisual.Value.SpriteVisual = null;
+                var spriteVisual = ElementCompositionPreview.GetElementChildVisual(nodeVisual.Value.AssociatedObject) as SpriteVisual;
+                var brush = spriteVisual?.Brush as CompositionEffectBrush;
+                if (brush != null)
+                {
+                    spriteVisual.Brush = null;
+                }
+
                 nodeVisual.Value.Brush?.Dispose();
                 nodeVisual.Value.Brush = null;
             }
