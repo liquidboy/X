@@ -14,7 +14,9 @@ namespace X.Viewer.NodeGraph
             {
                 if (graphs.Count == 0)
                 {
-                    graphs.Add(SetupExampleGraph("small"));
+                    var newDefaultGraph = SetupExampleGraph("small");
+                    graphs.Add(newDefaultGraph);
+                    SetSelectedGraph(newDefaultGraph.UniqueId.ToString());
                 }
                 cbSavedGraphs.ItemsSource = graphs;
             }
@@ -29,7 +31,11 @@ namespace X.Viewer.NodeGraph
         public void OnGraphSelected(string guid)
         {
             var found = LoadGraph(guid);
-            if (found) _selectedGraphGuid = guid;   
+            if (found) SetSelectedGraph(guid);
+        }
+
+        public void SetSelectedGraph(string guid) {
+            _selectedGraphGuid = guid;
         }
     }
 }

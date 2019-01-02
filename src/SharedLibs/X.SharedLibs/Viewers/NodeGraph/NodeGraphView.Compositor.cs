@@ -80,8 +80,9 @@ namespace X.Viewer.NodeGraph
             switch (effectType) {
                 case NodeType.TextureAsset:
                     if (inputSlotSources.Length == 0) return null;
-                    var brushNoEffect = CreateBrushFromAsset(compositor, (string)((NodeLink)inputSlotSources[0]).Value1);
-                    return brushNoEffect;
+                    var assetName = ((NodeLink)inputSlotSources[0]).Value1;
+                    if (string.IsNullOrEmpty(assetName)) return null;
+                    return CreateBrushFromAsset(compositor, assetName);
                 case NodeType.AlphaMaskEffect:
                     if (inputSlotSources.Length < 2) return null;
                     var desc = new CompositeEffect

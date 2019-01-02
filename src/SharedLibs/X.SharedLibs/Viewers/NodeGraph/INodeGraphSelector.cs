@@ -10,5 +10,6 @@ namespace X.Viewer.NodeGraph
         void ClearSelectedGraph();
         void OnGraphSelected(string guid);
         string SelectedGraphGuid { get; }
+        void SetSelectedGraph(string guid);
     }
 }
