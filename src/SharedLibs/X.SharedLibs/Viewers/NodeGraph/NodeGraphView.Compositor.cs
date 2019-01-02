@@ -29,7 +29,20 @@ namespace X.Viewer.NodeGraph
                 var nodeVisual = _nodeVisuals[nodeNodeLinkModel.Node.Key];
                 if (nodeVisual != null) {
                     var compositor = ElementCompositionPreview.GetElementVisual(nodeVisual.AssociatedObject).Compositor;
-                    localUpdateGraphicsBrush(compositor, (NodeType)nodeNodeLinkModel.Node.NodeType, nodeNodeLinkModel.InputNodeLinks.ToArray(), nodeVisual.Brush);
+                    var effectType = (NodeType)nodeNodeLinkModel.Node.NodeType;
+                    switch (effectType)
+                    {
+                        case NodeType.TextureAsset:
+                            var spriteVisualFound = ElementCompositionPreview.GetElementChildVisual(nodeVisual.AssociatedObject) as SpriteVisual;
+                            if (spriteVisualFound != null) ClearNodeVisual(nodeVisual);
+                            nodeVisual.Brush = CreateGraphicsBrush(compositor, effectType, nodeNodeLinkModel.InputNodeLinks.ToArray());
+                            ResizeSpriteBrush(nodeVisual.AssociatedObject.ActualWidth - 20, nodeVisual.AssociatedObject.ActualHeight - 20, spriteVisualFound);
+                            spriteVisualFound.Brush = nodeVisual.Brush;
+                            break;
+                        default:
+                            localUpdateGraphicsBrush(compositor, effectType, nodeNodeLinkModel.InputNodeLinks.ToArray(), nodeVisual.Brush);
+                            break;
+                    }
                 }
             }
         }
@@ -148,6 +161,9 @@ namespace X.Viewer.NodeGraph
             switch (effectType)
             {
                 case NodeType.TextureAsset:
+                    //var assetName = ((NodeLink)inputSlotSources[0]).Value1;
+                    //if (string.IsNullOrEmpty(assetName)) return;
+                    //brushToUpdate = CreateBrushFromAsset(compositor, assetName);
                     return;
                 case NodeType.AlphaMaskEffect:
                     var alphaMaskEffectBrush = (CompositionEffectBrush)brushToUpdate;
@@ -181,32 +197,39 @@ namespace X.Viewer.NodeGraph
         {
             //ImageLoader.Initialize(compositor);
             //CompositionDrawingSurface surface = ImageLoader.Instance.LoadFromUri(new Uri("ms-appx:///Assets/" + name)).Surface;
+            try {
+                SurfaceLoader.Initialize(compositor);
+                var task = Task.Run(() => SurfaceLoader.LoadFromUri(new Uri("ms-appx:///Assets/" + name)));
+                task.Wait();
+                var surface = task.Result;
+
+                return compositor.CreateSurfaceBrush(surface);
+            }
+            catch { return null; }
             
-            SurfaceLoader.Initialize(compositor);
-            var task = Task.Run(() => SurfaceLoader.LoadFromUri(new Uri("ms-appx:///Assets/" + name)));
-            task.Wait();
-            var surface = task.Result;
-            
-            return compositor.CreateSurfaceBrush(surface);
         }
 
         public void ClearCompositor()
         {
             foreach (var nodeVisual in _nodeVisuals)
             {
-                var spriteVisual = ElementCompositionPreview.GetElementChildVisual(nodeVisual.Value.AssociatedObject) as SpriteVisual;
-                var brush = spriteVisual?.Brush as CompositionEffectBrush;
-                if (brush != null)
-                {
-                    spriteVisual.Brush = null;
-                }
-
-                nodeVisual.Value.Brush?.Dispose();
-                nodeVisual.Value.Brush = null;
+                ClearNodeVisual(nodeVisual.Value);
             }
             _nodeVisuals.Clear();
 
             SurfaceLoader.Uninitialize();
+        }
+
+        private void ClearNodeVisual(NodeVisual nodeVisual) {
+            var spriteVisual = ElementCompositionPreview.GetElementChildVisual(nodeVisual.AssociatedObject) as SpriteVisual;
+            var brush = spriteVisual?.Brush as CompositionEffectBrush;
+            if (brush != null)
+            {
+                spriteVisual.Brush = null;
+            }
+
+            nodeVisual.Brush?.Dispose();
+            nodeVisual.Brush = null;
         }
     }
 }

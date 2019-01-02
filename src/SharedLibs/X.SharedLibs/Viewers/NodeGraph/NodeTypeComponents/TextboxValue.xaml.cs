@@ -22,5 +22,14 @@ namespace X.Viewer.NodeGraph.NodeTypeComponents
         {
             this.InitializeComponent();
         }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (NodeTypeValueChanged != null)
+            {
+                NodeNodeLinkModel vm = (NodeNodeLinkModel)((FrameworkElement)sender).DataContext;
+                NodeTypeValueChanged.Invoke(vm.OutputNodeLinks[0].InputNodeKey, EventArgs.Empty);
+            }
+        }
     }
 }

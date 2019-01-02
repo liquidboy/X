@@ -8,6 +8,6 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
     <Grid Background="{Binding Node.Color}">
-        <TextBox FontSize="14" TextWrapping="Wrap" Margin="15" Text="{Binding OutputNodeLinks[0].Value1, Mode=TwoWay}"></TextBox>
+        <TextBox FontSize="14" TextWrapping="Wrap" Margin="15" Text="{Binding OutputNodeLinks[0].Value1, Mode=TwoWay}" LostFocus="TextBox_LostFocus"></TextBox>
     </Grid>
 </UserControl>
