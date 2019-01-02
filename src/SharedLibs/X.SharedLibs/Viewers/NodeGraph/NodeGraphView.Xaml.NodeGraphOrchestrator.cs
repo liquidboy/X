@@ -51,23 +51,23 @@ namespace X.Viewer.NodeGraph
             var defaultGuid = Guid.Empty.ToString();
             if (size == "small") {
                 
-                AddNodeToGraph(new Node("Node1", 100, 100, defaultWidth, "WhiteSmoke", 0, 1, defaultGuid, (int)NodeType.TextboxValue, "Value"));
-                AddNodeToGraph(new Node("Node2", 100, 300, defaultWidth, "WhiteSmoke", 0, 1, defaultGuid, (int)NodeType.TextboxValue, "Value"));
-                AddNodeToGraph(new Node("Node3", 400, 190, defaultWidth, "WhiteSmoke", 1, 1, defaultGuid, (int)NodeType.TextureAsset, "Texture Asset"));
-                AddNodeToGraph(new Node("Node4", 400, 0, defaultWidth, "WhiteSmoke", 1, 1, defaultGuid, (int)NodeType.TextureAsset, "Texture Asset"));
-                AddNodeToGraph(new Node("Node5", 700, 100, defaultWidth, "WhiteSmoke", 2, 1, defaultGuid, (int)NodeType.AlphaMaskEffect, "Alpha Mask"));
+                AddNodeToGraph(new Node("Node1", 100, 100, defaultWidth, "WhiteSmoke", 0, "", 1, "", defaultGuid, (int)NodeType.TextboxValue, "Value"));
+                AddNodeToGraph(new Node("Node2", 100, 300, defaultWidth, "WhiteSmoke", 0, "", 1, "", defaultGuid, (int)NodeType.TextboxValue, "Value"));
+                AddNodeToGraph(new Node("Node3", 400, 190, defaultWidth, "WhiteSmoke", 1, "filename", 1, "image", defaultGuid, (int)NodeType.TextureAsset, "Texture Asset"));
+                AddNodeToGraph(new Node("Node4", 400, 0, defaultWidth, "WhiteSmoke", 1, "filename", 1, "image", defaultGuid, (int)NodeType.TextureAsset, "Texture Asset"));
+                AddNodeToGraph(new Node("Node5", 700, 100, defaultWidth, "WhiteSmoke", 2, "source,mask", 1, "", defaultGuid, (int)NodeType.AlphaMaskEffect, "Alpha Mask"));
                 
-                AddNodeToGraph(new Node("Node6", 400, 400, defaultWidth, "WhiteSmoke", 1, 1, defaultGuid, (int)NodeType.GrayscaleEffect, "Grayscale"));
+                AddNodeToGraph(new Node("Node6", 400, 400, defaultWidth, "WhiteSmoke", 1, "source", 1, "", defaultGuid, (int)NodeType.GrayscaleEffect, "Grayscale"));
 
-                AddNodeToGraph(new Node("Node7", 700, 600, defaultWidth, "WhiteSmoke", 2, 1, defaultGuid, (int)NodeType.HueRotationEffect, "Hue Rotation"));
-                AddNodeToGraph(new Node("Node8", 700, 800, 300d, "WhiteSmoke", 0, 1, defaultGuid, (int)NodeType.SliderValue, "Value"));
+                AddNodeToGraph(new Node("Node7", 700, 600, defaultWidth, "WhiteSmoke", 2, "source,angle", 1, "", defaultGuid, (int)NodeType.HueRotationEffect, "Hue Rotation"));
+                AddNodeToGraph(new Node("Node8", 700, 800, 300d, "WhiteSmoke", 0, "", 1, "", defaultGuid, (int)NodeType.SliderValue, "Value", 0d, 1d, 0.1d));
 
-                AddNodeToGraph(new Node("Node9", 700, 1000, defaultWidth, "WhiteSmoke", 2, 1, defaultGuid, (int)NodeType.ContrastEffect, "Contrast"));
-                AddNodeToGraph(new Node("Node10", 1000, 500, defaultWidth, "WhiteSmoke", 0, 1, defaultGuid, (int)NodeType.SliderValue, "Value"));
-                //AddNodeToGraph(new Node("Node10", 1000, 800, defaultWidth, "WhiteSmoke", 3, 2, defaultGuid, (int)NodeType.Empty));
-                //AddNodeToGraph(new Node("Node11", 1100, 200, defaultWidth, "WhiteSmoke", 2, 3, defaultGuid, (int)NodeType.Empty));
-                //AddNodeToGraph(new Node("Node12", 1300, 500, defaultWidth, "WhiteSmoke", 2, 2, defaultGuid, (int)NodeType.Empty));
-                //AddNodeToGraph(new Node("Node13", 1300, 700, defaultWidth, "WhiteSmoke", 2, 3, defaultGuid, (int)NodeType.Empty));
+                AddNodeToGraph(new Node("Node9", 700, 1000, defaultWidth, "WhiteSmoke", 2, "source,contrast", 1, "", defaultGuid, (int)NodeType.ContrastEffect, "Contrast"));
+                AddNodeToGraph(new Node("Node10", 1000, 500, defaultWidth, "WhiteSmoke", 0, "", 1, "", defaultGuid, (int)NodeType.SliderValue, "Value", -1d, 1d, 0.1d));
+                //AddNodeToGraph(new Node("Node10", 1000, 800, defaultWidth, "WhiteSmoke", 3, "", 2, "", defaultGuid, (int)NodeType.Empty));
+                //AddNodeToGraph(new Node("Node11", 1100, 200, defaultWidth, "WhiteSmoke", 2, "", 3, "", defaultGuid, (int)NodeType.Empty));
+                //AddNodeToGraph(new Node("Node12", 1300, 500, defaultWidth, "WhiteSmoke", 2, "", 2, "", defaultGuid, (int)NodeType.Empty));
+                //AddNodeToGraph(new Node("Node13", 1300, 700, defaultWidth, "WhiteSmoke", 2, "", 3, "", defaultGuid, (int)NodeType.Empty));
 
 
 
@@ -107,7 +107,7 @@ namespace X.Viewer.NodeGraph
                 {
                     for (int x = 0; x < dimensionToTest; x++)
                     {
-                        AddNodeToGraph(new Node($"Node{x}-{y}", x * 200, y * 200, defaultWidth, "WhiteSmoke", 2, 2, defaultGuid, (int)NodeType.Empty));
+                        AddNodeToGraph(new Node($"Node{x}-{y}", x * 200, y * 200, defaultWidth, "WhiteSmoke", 2,"", 2, "", defaultGuid, (int)NodeType.Empty));
                     }
                 }
             }

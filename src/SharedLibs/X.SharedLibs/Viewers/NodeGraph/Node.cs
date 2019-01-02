@@ -14,25 +14,39 @@ namespace X.Viewer.NodeGraph
         public double Height { get; set; }
         public string Color { get; set; }
         public int InputSlotCount { get; set; }
+        public string InputSlotLabels { get; set; }
         public int OutputSlotCount { get; set; }
+        public string OutputSlotLabels { get; set; }
         public string Grouping { get; set; }
         public int NodeType { get; set; }
         public string Title { get; set; }
+        public double Udfd1 { get; set; }
+        public double Udfd2 { get; set; }
+        public double Udfd3 { get; set; }
 
         public Node() { }
-        public Node(string key, double positionX, double positionY, double initialWidth, string color, int inputSlotCount, int outputSlotCount, string grouping, int nodeType, string title) : 
-            this(key, positionX, positionY, initialWidth, color, inputSlotCount, outputSlotCount, grouping, nodeType)
+        public Node(string key, double positionX, double positionY, double initialWidth, string color, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType, string title, double udfd1, double udfd2, double udfd3) :
+            this(key, positionX, positionY, initialWidth, color, inputSlotCount, inputSlotLabels, outputSlotCount, outputSlotLabels, grouping, nodeType, title)
+        {
+            Udfd1 = udfd1;
+            Udfd2 = udfd2;
+            Udfd3 = udfd3;
+        }
+        public Node(string key, double positionX, double positionY, double initialWidth, string color, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType, string title) : 
+            this(key, positionX, positionY, initialWidth, color, inputSlotCount, inputSlotLabels, outputSlotCount, outputSlotLabels, grouping, nodeType)
         {
             Title = title;
         }
-        public Node(string key, double positionX, double positionY, double initialWidth, string color, int inputSlotCount, int outputSlotCount, string grouping, int nodeType)
+        public Node(string key, double positionX, double positionY, double initialWidth, string color, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType)
         {
             Key = key;
             PositionX = positionX;
             PositionY = positionY;
             Color = color;
             InputSlotCount = inputSlotCount;
+            InputSlotLabels = inputSlotLabels;
             OutputSlotCount = outputSlotCount;
+            OutputSlotLabels = outputSlotLabels;
             Width = initialWidth;
             Height = 0;
             Grouping = grouping;
