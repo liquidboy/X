@@ -26,6 +26,9 @@ namespace X.Viewer.NodeGraph
         SliderValue,
         ToggleValue,
         BlendEffectModeValue,
-        ColorSliderValue
+        ColorSliderValue,
+        ExposureSliderValue
+
     }
 }
+

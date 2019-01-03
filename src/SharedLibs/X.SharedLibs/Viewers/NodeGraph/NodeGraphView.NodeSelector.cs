@@ -67,6 +67,12 @@ namespace X.Viewer.NodeGraph
                 case NodeType.ColorSourceEffect:
                     AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 4, "R,G,B,A", 1, "", groupingGuid, (int)NodeType.ColorSourceEffect, "Color"));
                     break;
+                case NodeType.ExposureSliderValue:
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, 300d, "WhiteSmoke", 0, "", 1, "", groupingGuid, (int)NodeType.SliderValue, "Value", -2d, 2d, 0.1d));
+                    break;
+                case NodeType.ExposureEffect:
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 2, "source,exposure", 1, "", groupingGuid, (int)NodeType.ExposureEffect, "Exposure"));
+                    break;
             }
         }
     }

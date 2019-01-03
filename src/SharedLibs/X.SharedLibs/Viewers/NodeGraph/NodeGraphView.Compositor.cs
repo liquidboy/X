@@ -222,6 +222,17 @@ namespace X.Viewer.NodeGraph
                     ).CreateBrush();
                     UpdateGraphicsBrush(compositor, effectType, inputSlotSources, brushContrastEffect);
                     return brushContrastEffect;
+                case NodeType.ExposureEffect:
+                    var exposureEffectDesc = new ExposureEffect
+                    {
+                        Name = "effect",
+                        Source = new CompositionEffectSourceParameter("Image")
+                    };
+                    var exposureEffectBrush = compositor.CreateEffectFactory(
+                        exposureEffectDesc,
+                        new[] { "effect.Exposure" }
+                    ).CreateBrush();
+                    return exposureEffectBrush;
                 case NodeType.GrayscaleEffect:
                     if (inputSlotSources.Length == 0) return null;
                     var grayscaleEffectDesc = new GrayscaleEffect
@@ -323,6 +334,14 @@ namespace X.Viewer.NodeGraph
                     var contrastValue = ((NodeLink)inputSlotSources[1]).Value1;
                     if (string.IsNullOrEmpty(contrastValue)) contrastValue = "0";
                     brushContrastEffect.Properties.InsertScalar("effect.Contrast", (float)(float.Parse(contrastValue)));
+                    return;
+                case NodeType.ExposureEffect:
+                    var exposureEffectBrush = (CompositionEffectBrush)brushToUpdate;
+                    exposureEffectBrush.SetSourceParameter("Image", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);
+
+                    var exposureValue = ((NodeLink)inputSlotSources[1]).Value1;
+                    if (string.IsNullOrEmpty(exposureValue)) exposureValue = "0";
+                    exposureEffectBrush.Properties.InsertScalar("effect.Exposure", (float)(float.Parse(exposureValue)));
                     return;
                 case NodeType.GrayscaleEffect:
                     var brushGrayscale = (CompositionEffectBrush)brushToUpdate;
