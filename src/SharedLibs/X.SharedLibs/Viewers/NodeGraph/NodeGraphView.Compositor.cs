@@ -13,13 +13,10 @@ namespace X.Viewer.NodeGraph
 {
     public partial class NodeGraphView : INodeGraphCompositor
     {
-        Compositor _rootCompositor;
-        
         IDictionary<string, NodeVisual> _nodeVisuals;
                 
         public void InitializeCompositor(UIElement rootVisualElement)
         {
-            _rootCompositor = ElementCompositionPreview.GetElementVisual(rootVisualElement).Compositor;
             _nodeVisuals = new Dictionary<string, NodeVisual>();
         }
 
@@ -53,7 +50,7 @@ namespace X.Viewer.NodeGraph
                                 try
                                 {
                                     var blendEffectBrush = compositor.CreateEffectFactory(blendEffectDesc).CreateBrush();
-                                    localUpdateGraphicsBrush(compositor, effectType, inputSlotSources, blendEffectBrush);
+                                    UpdateGraphicsBrush(compositor, effectType, inputSlotSources, blendEffectBrush);
                                     nodeVisual.Brush = blendEffectBrush;
                                 }
                                 catch { }
@@ -63,7 +60,7 @@ namespace X.Viewer.NodeGraph
                             spriteVisualFound.Brush = nodeVisual.Brush;
                             break;
                         default:
-                            localUpdateGraphicsBrush(compositor, effectType, nodeNodeLinkModel.InputNodeLinks.ToArray(), nodeVisual.Brush);
+                            UpdateGraphicsBrush(compositor, effectType, nodeNodeLinkModel.InputNodeLinks.ToArray(), nodeVisual.Brush);
                             break;
                     }
                 }
@@ -148,7 +145,7 @@ namespace X.Viewer.NodeGraph
                         desc,
                         new[] { "MaskTransform.TransformMatrix" }
                         ).CreateBrush();
-                    localUpdateGraphicsBrush(compositor, effectType, inputSlotSources, brushAlphaMask);
+                    UpdateGraphicsBrush(compositor, effectType, inputSlotSources, brushAlphaMask);
                     return brushAlphaMask;
                 case NodeType.ArithmeticEffect:
                     if (inputSlotSources.Length < 6) return null;
@@ -169,7 +166,7 @@ namespace X.Viewer.NodeGraph
                             "effect.Offset"
                         }
                     ).CreateBrush();
-                    localUpdateGraphicsBrush(compositor, effectType, inputSlotSources, arithmeticEffectBrush);
+                    UpdateGraphicsBrush(compositor, effectType, inputSlotSources, arithmeticEffectBrush);
                     return arithmeticEffectBrush;
                 case NodeType.BlendEffect:
                     if (inputSlotSources.Length < 3) return null;
@@ -184,7 +181,7 @@ namespace X.Viewer.NodeGraph
                     };
                     try {
                         var blendEffectBrush = compositor.CreateEffectFactory(blendEffectDesc).CreateBrush();
-                        localUpdateGraphicsBrush(compositor, effectType, inputSlotSources, blendEffectBrush);
+                        UpdateGraphicsBrush(compositor, effectType, inputSlotSources, blendEffectBrush);
                         return blendEffectBrush;
                     }
                     catch { }
@@ -201,7 +198,7 @@ namespace X.Viewer.NodeGraph
                         contrastEffectDesc,
                         new[] { "effect.Contrast" }
                     ).CreateBrush();
-                    localUpdateGraphicsBrush(compositor, effectType, inputSlotSources, brushContrastEffect);
+                    UpdateGraphicsBrush(compositor, effectType, inputSlotSources, brushContrastEffect);
                     return brushContrastEffect;
                 case NodeType.GrayscaleEffect:
                     if (inputSlotSources.Length == 0) return null;
@@ -213,7 +210,7 @@ namespace X.Viewer.NodeGraph
                     var brushGrayscale = compositor.CreateEffectFactory(
                         grayscaleEffectDesc
                     ).CreateBrush();
-                    localUpdateGraphicsBrush(compositor, effectType, inputSlotSources, brushGrayscale);
+                    UpdateGraphicsBrush(compositor, effectType, inputSlotSources, brushGrayscale);
                     return brushGrayscale;
                 case NodeType.HueRotationEffect:
                     if (inputSlotSources.Length == 0) return null;
@@ -226,7 +223,7 @@ namespace X.Viewer.NodeGraph
                         hueRotationEffectDesc,
                         new[] { "effect.Angle" }
                     ).CreateBrush();
-                    localUpdateGraphicsBrush(compositor, effectType, inputSlotSources, brushHueRotationEffect);
+                    UpdateGraphicsBrush(compositor, effectType, inputSlotSources, brushHueRotationEffect);
                     return brushHueRotationEffect;
                 default:
                     throw new NotImplementedException();
@@ -234,7 +231,7 @@ namespace X.Viewer.NodeGraph
         }
 
 
-        private void localUpdateGraphicsBrush(Compositor compositor, NodeType effectType, object[] inputSlotSources, CompositionBrush brushToUpdate)
+        private void UpdateGraphicsBrush(Compositor compositor, NodeType effectType, object[] inputSlotSources, CompositionBrush brushToUpdate)
         {
             switch (effectType)
             {
@@ -289,11 +286,6 @@ namespace X.Viewer.NodeGraph
                     brushGrayscale.SetSourceParameter("Image", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);
                     return;
                 case NodeType.HueRotationEffect:
-                    //var hueRotationEffectDesc = new HueRotationEffect
-                    //{
-                    //    Name = "effect",
-                    //    Source = new CompositionEffectSourceParameter("Image")
-                    //};
                     var brushHueRotationEffect = (CompositionEffectBrush)brushToUpdate;
                     brushHueRotationEffect.SetSourceParameter("Image", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);
                     var hueEffectAngle = ((NodeLink)inputSlotSources[1]).Value1;
@@ -309,8 +301,6 @@ namespace X.Viewer.NodeGraph
 
         private CompositionSurfaceBrush CreateBrushFromAsset(Compositor compositor, string name)
         {
-            //ImageLoader.Initialize(compositor);
-            //CompositionDrawingSurface surface = ImageLoader.Instance.LoadFromUri(new Uri("ms-appx:///Assets/" + name)).Surface;
             try {
                 SurfaceLoader.Initialize(compositor);
                 var task = Task.Run(() => SurfaceLoader.LoadFromUri(new Uri("ms-appx:///Assets/" + name)));
@@ -320,7 +310,6 @@ namespace X.Viewer.NodeGraph
                 return compositor.CreateSurfaceBrush(surface);
             }
             catch { return null; }
-            
         }
 
         public void ClearCompositor()
@@ -336,8 +325,7 @@ namespace X.Viewer.NodeGraph
 
         private void ClearNodeVisual(NodeVisual nodeVisual) {
             var spriteVisual = ElementCompositionPreview.GetElementChildVisual(nodeVisual.AssociatedObject) as SpriteVisual;
-            var brush = spriteVisual?.Brush as CompositionEffectBrush;
-            if (brush != null)
+            if (spriteVisual?.Brush is CompositionEffectBrush brush)
             {
                 spriteVisual.Brush = null;
             }

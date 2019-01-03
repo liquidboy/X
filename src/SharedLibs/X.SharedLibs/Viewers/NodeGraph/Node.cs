@@ -53,6 +53,7 @@ namespace X.Viewer.NodeGraph
             NodeType = nodeType;
             CalculateSize();
         }
+
         private void CalculateSize()
         {
             double inputHeight, outputHeight;
