@@ -127,6 +127,27 @@ namespace X.Viewer.NodeGraph
                         ).CreateBrush();
                     localUpdateGraphicsBrush(compositor, effectType, inputSlotSources, brushAlphaMask);
                     return brushAlphaMask;
+                case NodeType.ArithmeticEffect:
+                    if (inputSlotSources.Length < 6) return null;
+                    var arithmeticEffectDesc = new ArithmeticCompositeEffect
+                    {
+                        Name = "effect",
+                        ClampOutput = false,
+                        Source1 = new CompositionEffectSourceParameter("Source1"),
+                        Source2 = new CompositionEffectSourceParameter("Source2")
+                    };
+                    var arithmeticEffectBrush = compositor.CreateEffectFactory(
+                        arithmeticEffectDesc,
+                        new[]
+                        {
+                            "effect.MultiplyAmount",
+                            "effect.Source1Amount",
+                            "effect.Source2Amount",
+                            "effect.Offset"
+                        }
+                    ).CreateBrush();
+                    localUpdateGraphicsBrush(compositor, effectType, inputSlotSources, arithmeticEffectBrush);
+                    return arithmeticEffectBrush;
                 case NodeType.ContrastEffect:
                     // Changes the contrast of an image.
                     if (inputSlotSources.Length == 0) return null;
@@ -177,14 +198,35 @@ namespace X.Viewer.NodeGraph
             switch (effectType)
             {
                 case NodeType.TextureAsset:
-                    //var assetName = ((NodeLink)inputSlotSources[0]).Value1;
-                    //if (string.IsNullOrEmpty(assetName)) return;
-                    //brushToUpdate = CreateBrushFromAsset(compositor, assetName);
+                    //done a layer above as too late here ????
                     return;
                 case NodeType.AlphaMaskEffect:
                     var alphaMaskEffectBrush = (CompositionEffectBrush)brushToUpdate;
                     alphaMaskEffectBrush.SetSourceParameter("Image", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);
                     alphaMaskEffectBrush.SetSourceParameter("Mask", _nodeVisuals[((NodeLink)inputSlotSources[1]).OutputNodeKey].Brush);
+                    return;
+                case NodeType.ArithmeticEffect:
+                    try
+                    {
+                        var arithmeticEffectBrush = (CompositionEffectBrush)brushToUpdate;
+                        arithmeticEffectBrush.SetSourceParameter("Source1", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);
+                        arithmeticEffectBrush.SetSourceParameter("Source2", _nodeVisuals[((NodeLink)inputSlotSources[2]).OutputNodeKey].Brush);
+
+                        var value1 = ((NodeLink)inputSlotSources[4]).Value1;
+                        var value2 = ((NodeLink)inputSlotSources[1]).Value1;
+                        var value3 = ((NodeLink)inputSlotSources[3]).Value1;
+                        var value4 = ((NodeLink)inputSlotSources[5]).Value1;
+                        if (string.IsNullOrEmpty(value1)) value1 = "1";
+                        if (string.IsNullOrEmpty(value2)) value2 = "0";
+                        if (string.IsNullOrEmpty(value3)) value3 = "0";
+                        if (string.IsNullOrEmpty(value4)) value4 = "0";
+                        arithmeticEffectBrush.Properties.InsertScalar("effect.MultiplyAmount", (float)(float.Parse(value1)));
+                        arithmeticEffectBrush.Properties.InsertScalar("effect.Source1Amount", (float)(float.Parse(value2)));
+                        arithmeticEffectBrush.Properties.InsertScalar("effect.Source2Amount", (float)(float.Parse(value3)));
+                        arithmeticEffectBrush.Properties.InsertScalar("effect.Offset", (float)(float.Parse(value4)));
+                    }
+                    catch { };
+                    
                     return;
                 case NodeType.ContrastEffect:
                     var brushContrastEffect = (CompositionEffectBrush)brushToUpdate;

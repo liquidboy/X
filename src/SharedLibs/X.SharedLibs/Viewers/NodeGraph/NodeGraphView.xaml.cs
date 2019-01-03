@@ -28,7 +28,8 @@ namespace X.Viewer.NodeGraph
             InitializeRenderer(nodeGraphCanvas);
             InitializeNodeGraph();
             InitializeCompositor(nodeGraphCanvas);
-            InitializeGraphSelector(RetrieveGraphs());           
+            InitializeGraphSelector(RetrieveGraphs());
+            InitializeNodeSelector();
         }     
         
         public void Unload()
@@ -128,6 +129,11 @@ namespace X.Viewer.NodeGraph
             ClearStorage();
         }
 
+        private void ButAddNode_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            var newValue = cbNodes.SelectionBoxItem;
+            if (newValue != null ) OnNodeTypeSelected((newValue).ToString());
+        }
     }
 
 

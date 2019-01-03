@@ -61,19 +61,16 @@ namespace X.Viewer.NodeGraph
             //node-slots in node-container (appears underneath those rendered after)
             for (int slotIndex = 0; slotIndex < node.InputSlotCount; slotIndex++)
             {
-                var slotPosition = node.GetInputSlotPosition(slotIndex);
-                var newSlotUIElement = CreateSlotUI("nsi", node, slotIndex, slotPosition, slotDiameter, slotRadius, Colors.Black, true, Colors.LightGray);
-                newNodeGroup.Children.Add(newSlotUIElement);
+                newNodeGroup.Children.Add(CreateSlotUI("nsi", node, slotIndex, slotDiameter, slotRadius, Colors.Black, true, Colors.LightGray));
             }
 
             for (int slotIndex = 0; slotIndex < node.OutputSlotCount; slotIndex++)
             {
-                var slotPosition = node.GetOutputSlotPosition(slotIndex);
-                var newSlotUIElement = CreateSlotUI("tag", node, slotIndex, slotPosition, slotDiameter, slotRadius, Colors.Black, false, Colors.LightGray);
-                newNodeGroup.Children.Add(newSlotUIElement);
+                newNodeGroup.Children.Add(CreateSlotUI("nso", node, slotIndex, slotDiameter, slotRadius, Colors.Black, false, Colors.LightGray));
             }
 
-            
+
+
 
             //node in node-container
             FrameworkElement newNodeUIElement = null;
@@ -91,6 +88,7 @@ namespace X.Viewer.NodeGraph
                 switch (nodeType) {
                     case NodeType.TextboxValue: newNodeUIElement = new TextboxValue() { DataContext = nodeNodeLinkVM }; break;
                     case NodeType.SliderValue: newNodeUIElement = new SliderValue() { DataContext = nodeNodeLinkVM }; break;
+                    case NodeType.ToggleValue: newNodeUIElement = new ToggleValue() { DataContext = nodeNodeLinkVM }; break;
                 }
                 INodeTypeComponent nodeTypeComponent = newNodeUIElement as INodeTypeComponent;
                 nodeTypeComponent.NodeTypeValueChanged += NodeTypeComponent_NodeTypeValueChanged;
@@ -135,19 +133,28 @@ namespace X.Viewer.NodeGraph
             _uiNodeGraphPanelXamlRoot.Children.Add(newNodeGroup);
         }
 
-        UIElement CreateSlotUI(string tag, Node node, int slotIndex,Point slotPosition, double slotDiameter, double slotRadius, Color slotColor, bool isInputSlot, Color labelColor) {
-            var slotContainer = new Canvas();
-            slotContainer.SetValue(Canvas.LeftProperty, slotPosition.X - slotRadius - node.PositionX);
-            slotContainer.SetValue(Canvas.TopProperty, slotPosition.Y - slotRadius - node.PositionY);
+        UIElement CreateSlotUI(string tag, Node node, int slotIndex, double slotDiameter, double slotRadius, Color slotColor, bool isInputSlot, Color labelColor) {
+            var slotPosition = isInputSlot ? node.GetInputSlotPosition(slotIndex) : node.GetOutputSlotPosition(slotIndex);
 
-            //dot
-            var newSlotUIElement = new Windows.UI.Xaml.Shapes.Ellipse()
+            var slotContainer = new Canvas()
             {
                 Name = $"{tag}_{node.Key}_{slotIndex}",
                 Width = slotDiameter,
                 Height = slotDiameter,
+                Tag = tag,
+                IsHitTestVisible = true
+            };
+            slotContainer.SetValue(Canvas.LeftProperty, slotPosition.X - slotRadius - node.PositionX);
+            slotContainer.SetValue(Canvas.TopProperty, slotPosition.Y - slotRadius - node.PositionY);
+            
+            //dot
+            var newSlotUIElement = new Windows.UI.Xaml.Shapes.Ellipse()
+            {
+                //Name = $"{tag}_{node.Key}_{slotIndex}",
+                Width = slotDiameter,
+                Height = slotDiameter,
                 Fill = new SolidColorBrush(slotColor),
-                Tag = tag
+                //Tag = tag
             };
             slotContainer.Children.Add(newSlotUIElement);
 

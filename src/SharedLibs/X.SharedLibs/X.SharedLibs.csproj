@@ -750,7 +750,12 @@
       <DependentUpon>MediaControls.xaml</DependentUpon>
     </Compile>
     <Compile Include="Viewers\MediaView\MediaElementRenderer.cs" />
+    <Compile Include="Viewers\NodeGraph\INodeSelector.cs" />
+    <Compile Include="Viewers\NodeGraph\NodeGraphView.NodeSelector.cs" />
     <Compile Include="Viewers\NodeGraph\NodeTypeComponents\INodeTypeComponent.cs" />
+    <Compile Include="Viewers\NodeGraph\NodeTypeComponents\ToggleValue.xaml.cs">
+      <DependentUpon>ToggleValue.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Viewers\NodeGraph\NodeTypeComponents\SliderValue.xaml.cs">
       <DependentUpon>SliderValue.xaml</DependentUpon>
     </Compile>
@@ -1142,6 +1147,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Viewers\NodeGraph\NodeGraphView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\NodeGraph\NodeTypeComponents\ToggleValue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
