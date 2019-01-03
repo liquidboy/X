@@ -27,8 +27,12 @@ namespace X.Viewer.NodeGraph.NodeTypeComponents
         {
             if (NodeTypeValueChanged != null)
             {
-                NodeNodeLinkModel vm = (NodeNodeLinkModel)((FrameworkElement)sender).DataContext;
-                NodeTypeValueChanged.Invoke(vm.OutputNodeLinks[0].InputNodeKey, EventArgs.Empty);
+                try {
+                    NodeNodeLinkModel vm = (NodeNodeLinkModel)((FrameworkElement)sender).DataContext;
+                    NodeTypeValueChanged.Invoke(vm.OutputNodeLinks[0].InputNodeKey, EventArgs.Empty);
+                }
+                catch { }
+                
             }
         }
     }

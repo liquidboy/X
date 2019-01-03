@@ -20,9 +20,6 @@
                 </Canvas.RenderTransform>
             </Canvas>
         </xuizc:Canvas>
-        <!--<Grid.Clip>
-            <RectangleGeometry Rect="{Binding ElementName=root, Converter={StaticResource UIElementAsClipConverter}}"/>
-        </Grid.Clip>-->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
             <ComboBox x:Name="cbSavedGraphs" SelectedValuePath="UniqueId" Width="300">
                 <ComboBox.ItemTemplate>
