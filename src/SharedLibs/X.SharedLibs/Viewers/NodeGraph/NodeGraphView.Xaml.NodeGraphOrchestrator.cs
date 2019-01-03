@@ -73,8 +73,9 @@ namespace X.Viewer.NodeGraph
                 AddNodeToGraph(new Node("Node15", 1500, 900, 150d, "WhiteSmoke", 0, "", 1, "", defaultGuid, (int)NodeType.SliderValue, "Value", -1d, 1d, 0.1d));
                 AddNodeToGraph(new Node("Node16", 1500, 1050, 150d, "WhiteSmoke", 0, "", 1, "", defaultGuid, (int)NodeType.SliderValue, "Value", 0d, 1d, 0.1d));
                 AddNodeToGraph(new Node("Node17", 1500, 1200, 150d, "WhiteSmoke", 0, "", 1, "", defaultGuid, (int)NodeType.SliderValue, "Value", 0d, 1d, 0.1d));
-
-
+                
+                AddNodeToGraph(new Node("Node18", 2000, 300, defaultWidth, "WhiteSmoke", 3, "background,foreground,mode", 1, "", defaultGuid, (int)NodeType.BlendEffect, "Blend"));
+                AddNodeToGraph(new Node("Node19", 1800, 100, 600d, "WhiteSmoke", 0, "", 1, "", defaultGuid, (int)NodeType.BlendEffectModeValue, "Value", 0d, 25d, 1d));
 
 
                 AddLinkToGraph(new NodeLink("Node1", 0, "Node3", 0, defaultGuid, "x-dog.jpg"));

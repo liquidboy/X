@@ -33,9 +33,32 @@ namespace X.Viewer.NodeGraph
                     switch (effectType)
                     {
                         case NodeType.TextureAsset:
+                        case NodeType.BlendEffect:
                             var spriteVisualFound = ElementCompositionPreview.GetElementChildVisual(nodeVisual.AssociatedObject) as SpriteVisual;
                             if (spriteVisualFound != null) ClearNodeVisual(nodeVisual);
-                            nodeVisual.Brush = CreateGraphicsBrush(compositor, effectType, nodeNodeLinkModel.InputNodeLinks.ToArray());
+
+                            if (effectType == NodeType.TextureAsset) {
+                                nodeVisual.Brush = CreateGraphicsBrush(compositor, effectType, nodeNodeLinkModel.InputNodeLinks.ToArray());
+                            } else if (effectType == NodeType.BlendEffect) {
+                                var inputSlotSources = nodeNodeLinkModel.InputNodeLinks.ToArray();
+                                if (inputSlotSources.Length < 3) nodeVisual.Brush = null;
+                                var nl = (NodeLink)inputSlotSources[2];
+                                int.TryParse(nl.Value1, out int bl);
+                                var blendEffectDesc = new BlendEffect
+                                {
+                                    Mode = (BlendEffectMode)Enum.Parse(typeof(BlendEffectMode), bl.ToString()),
+                                    Background = new CompositionEffectSourceParameter("Background"),
+                                    Foreground = new CompositionEffectSourceParameter("Foreground")
+                                };
+                                try
+                                {
+                                    var blendEffectBrush = compositor.CreateEffectFactory(blendEffectDesc).CreateBrush();
+                                    localUpdateGraphicsBrush(compositor, effectType, inputSlotSources, blendEffectBrush);
+                                    nodeVisual.Brush = blendEffectBrush;
+                                }
+                                catch { }
+                            }
+                            
                             ResizeSpriteBrush(nodeVisual.AssociatedObject.ActualWidth - 20, nodeVisual.AssociatedObject.ActualHeight - 20, spriteVisualFound);
                             spriteVisualFound.Brush = nodeVisual.Brush;
                             break;
@@ -122,7 +145,7 @@ namespace X.Viewer.NodeGraph
                         }
                     };
                     var brushAlphaMask = compositor.CreateEffectFactory(
-                        desc, 
+                        desc,
                         new[] { "MaskTransform.TransformMatrix" }
                         ).CreateBrush();
                     localUpdateGraphicsBrush(compositor, effectType, inputSlotSources, brushAlphaMask);
@@ -148,6 +171,24 @@ namespace X.Viewer.NodeGraph
                     ).CreateBrush();
                     localUpdateGraphicsBrush(compositor, effectType, inputSlotSources, arithmeticEffectBrush);
                     return arithmeticEffectBrush;
+                case NodeType.BlendEffect:
+                    if (inputSlotSources.Length < 3) return null;
+                    var nl = (NodeLink)inputSlotSources[2];
+                    int bl = 0; int.TryParse(nl.Value1, out bl);
+                    var blendEffectDesc = new BlendEffect
+                    {
+                        Mode = (BlendEffectMode)Enum.Parse(typeof(BlendEffectMode), bl.ToString()),
+                        //Mode = BlendEffectMode.SoftLight,
+                        Background = new CompositionEffectSourceParameter("Background"),
+                        Foreground = new CompositionEffectSourceParameter("Foreground")
+                    };
+                    try {
+                        var blendEffectBrush = compositor.CreateEffectFactory(blendEffectDesc).CreateBrush();
+                        localUpdateGraphicsBrush(compositor, effectType, inputSlotSources, blendEffectBrush);
+                        return blendEffectBrush;
+                    }
+                    catch { }
+                    return null;
                 case NodeType.ContrastEffect:
                     // Changes the contrast of an image.
                     if (inputSlotSources.Length == 0) return null;
@@ -228,6 +269,14 @@ namespace X.Viewer.NodeGraph
                     catch { };
                     
                     return;
+                case NodeType.BlendEffect:
+                    try {
+                        var blendEffectBrush = (CompositionEffectBrush)brushToUpdate;
+                        blendEffectBrush.SetSourceParameter("Background", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);
+                        blendEffectBrush.SetSourceParameter("Foreground", _nodeVisuals[((NodeLink)inputSlotSources[1]).OutputNodeKey].Brush);
+                    } catch { }
+                    
+                    return;
                 case NodeType.ContrastEffect:
                     var brushContrastEffect = (CompositionEffectBrush)brushToUpdate;
                     brushContrastEffect.SetSourceParameter("Image", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);
@@ -240,11 +289,11 @@ namespace X.Viewer.NodeGraph
                     brushGrayscale.SetSourceParameter("Image", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);
                     return;
                 case NodeType.HueRotationEffect:
-                    var hueRotationEffectDesc = new HueRotationEffect
-                    {
-                        Name = "effect",
-                        Source = new CompositionEffectSourceParameter("Image")
-                    };
+                    //var hueRotationEffectDesc = new HueRotationEffect
+                    //{
+                    //    Name = "effect",
+                    //    Source = new CompositionEffectSourceParameter("Image")
+                    //};
                     var brushHueRotationEffect = (CompositionEffectBrush)brushToUpdate;
                     brushHueRotationEffect.SetSourceParameter("Image", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);
                     var hueEffectAngle = ((NodeLink)inputSlotSources[1]).Value1;
