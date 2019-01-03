@@ -757,6 +757,9 @@
     <Compile Include="Viewers\NodeGraph\NodeTypeComponents\BlendEffectModeValue.xaml.cs">
       <DependentUpon>BlendEffectModeValue.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Viewers\NodeGraph\NodeTypeComponents\ColorSliderValue.xaml.cs">
+      <DependentUpon>ColorSliderValue.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Viewers\NodeGraph\NodeTypeComponents\ToggleValue.xaml.cs">
       <DependentUpon>ToggleValue.xaml</DependentUpon>
     </Compile>
@@ -1155,6 +1158,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Viewers\NodeGraph\NodeTypeComponents\BlendEffectModeValue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\NodeGraph\NodeTypeComponents\ColorSliderValue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

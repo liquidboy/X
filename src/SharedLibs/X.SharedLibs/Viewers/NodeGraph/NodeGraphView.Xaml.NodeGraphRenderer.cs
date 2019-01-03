@@ -90,6 +90,7 @@ namespace X.Viewer.NodeGraph
                     case NodeType.SliderValue: newNodeUIElement = new SliderValue() { DataContext = nodeNodeLinkVM }; break;
                     case NodeType.ToggleValue: newNodeUIElement = new ToggleValue() { DataContext = nodeNodeLinkVM }; break;
                     case NodeType.BlendEffectModeValue: newNodeUIElement = new BlendEffectModeValue() { DataContext = nodeNodeLinkVM }; break;
+                    case NodeType.ColorSliderValue: newNodeUIElement = new ColorSliderValue() { DataContext = nodeNodeLinkVM }; break;
                 }
                 INodeTypeComponent nodeTypeComponent = newNodeUIElement as INodeTypeComponent;
                 nodeTypeComponent.NodeTypeValueChanged += NodeTypeComponent_NodeTypeValueChanged;
@@ -160,28 +161,31 @@ namespace X.Viewer.NodeGraph
             slotContainer.Children.Add(newSlotUIElement);
 
             //text
-            if (isInputSlot) {
-                if (!string.IsNullOrEmpty(node.InputSlotLabels)) {
-                    var labels = node.InputSlotLabels.Split(",".ToCharArray());
-                    if (labels.Length > 0 && labels.Length >= slotIndex) {
-                        var labelText = labels[slotIndex];
-                        if (!string.IsNullOrEmpty(labelText)) {
-                            var label = new TextBlock()
-                            {
-                                Text = labelText,
-                                Foreground = new SolidColorBrush(labelColor),
-                                FontSize = 12
-                            };
-                            //label.HorizontalAlignment = HorizontalAlignment.Left;
-                            slotContainer.Children.Add(label);
+            var labels = new string[0];
+            if (isInputSlot) labels = string.IsNullOrEmpty(node.InputSlotLabels) ? new string[0] : node.InputSlotLabels.Split(",".ToCharArray());
+            else labels = string.IsNullOrEmpty(node.OutputSlotLabels) ? new string[0] : node.OutputSlotLabels.Split(",".ToCharArray());
 
-                            label.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity)); // framework to calculate width/height of label so i can use ActualWidth
-                            label.Margin = new Thickness((label.ActualWidth * -1) - 10, -5, 0, 0);
-                            //label.Arrange(new Rect(textBlock.DesiredSize));
-                        }
-                    }
+            if (labels.Length > 0 && labels.Length >= slotIndex)
+            {
+                var labelText = labels[slotIndex];
+                if (!string.IsNullOrEmpty(labelText))
+                {
+                    var label = new TextBlock()
+                    {
+                        Text = labelText,
+                        Foreground = new SolidColorBrush(labelColor),
+                        FontSize = 12
+                    };
+                    //label.HorizontalAlignment = HorizontalAlignment.Left;
+                    slotContainer.Children.Add(label);
+
+                    label.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity)); // framework to calculate width/height of label so i can use ActualWidth
+                    label.Margin = new Thickness(isInputSlot ? ((label.ActualWidth * -1) - 10) : 20, -4, 0, 0);
+                    //label.Arrange(new Rect(textBlock.DesiredSize));
+                    
                 }
             }
+            
             
             return slotContainer;
         }

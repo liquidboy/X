@@ -61,6 +61,12 @@ namespace X.Viewer.NodeGraph
                 case NodeType.BlendEffectModeValue:
                     AddNodeToGraph(new Node(newId, nodePosX, nodePosY, 600d, "WhiteSmoke", 0, "", 1, "", groupingGuid, (int)NodeType.BlendEffectModeValue, "Value", 0d, 25d, 1d));
                     break;
+                case NodeType.ColorSliderValue:
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, 300d, "WhiteSmoke", 0, "", 4, "R,G,B,A", groupingGuid, (int)NodeType.ColorSliderValue, "Value"));
+                    break;
+                case NodeType.ColorSourceEffect:
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 4, "R,G,B,A", 1, "", groupingGuid, (int)NodeType.ColorSourceEffect, "Color"));
+                    break;
             }
         }
     }

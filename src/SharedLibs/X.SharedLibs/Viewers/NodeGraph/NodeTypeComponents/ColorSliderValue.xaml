@@ -1,0 +1,40 @@
+﻿<UserControl
+    x:Class="X.Viewer.NodeGraph.NodeTypeComponents.ColorSliderValue"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="100"
+    d:DesignWidth="300">
+    <Grid Background="{Binding Node.Color}">
+        <Grid Margin="15">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" HorizontalAlignment="Stretch" Height="30">
+                <TextBlock Text="0" HorizontalAlignment="Left" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <TextBlock Text="255" HorizontalAlignment="Right" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <Slider Margin="30,0,50,0" Minimum="0" Maximum="255" StepFrequency="1" Value="{Binding OutputNodeLinks[0].Value1, Mode=TwoWay}" IsThumbToolTipEnabled="True" HorizontalAlignment="Stretch" ValueChanged="Slider_ValueChanged" Tag="r"></Slider>
+            </Grid>
+            <Grid Grid.Row="1" HorizontalAlignment="Stretch" Height="30">
+                <TextBlock Text="0" HorizontalAlignment="Left" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <TextBlock Text="255" HorizontalAlignment="Right" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <Slider Margin="30,0,50,0" Minimum="0" Maximum="255" StepFrequency="1" Value="{Binding OutputNodeLinks[1].Value1, Mode=TwoWay}" IsThumbToolTipEnabled="True" HorizontalAlignment="Stretch" ValueChanged="Slider_ValueChanged" Tag="g"></Slider>
+            </Grid>
+            <Grid Grid.Row="2" HorizontalAlignment="Stretch" Height="30">
+                <TextBlock Text="0" HorizontalAlignment="Left" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <TextBlock Text="255" HorizontalAlignment="Right" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <Slider Margin="30,0,50,0" Minimum="0" Maximum="255" StepFrequency="1" Value="{Binding OutputNodeLinks[2].Value1, Mode=TwoWay}" IsThumbToolTipEnabled="True" HorizontalAlignment="Stretch" ValueChanged="Slider_ValueChanged" Tag="b"></Slider>
+            </Grid>
+            <Grid Grid.Row="3" HorizontalAlignment="Stretch" Height="30">
+                <TextBlock Text="0" HorizontalAlignment="Left" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <TextBlock Text="255" HorizontalAlignment="Right" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <Slider Margin="30,0,50,0" Minimum="0" Maximum="255" StepFrequency="1" Value="{Binding OutputNodeLinks[3].Value1, Mode=TwoWay}" IsThumbToolTipEnabled="True" HorizontalAlignment="Stretch" ValueChanged="Slider_ValueChanged" Tag="a"></Slider>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

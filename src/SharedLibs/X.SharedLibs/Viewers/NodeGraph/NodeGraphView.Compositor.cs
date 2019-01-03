@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Threading.Tasks;
+using Windows.UI;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Hosting;
@@ -19,55 +20,7 @@ namespace X.Viewer.NodeGraph
         {
             _nodeVisuals = new Dictionary<string, NodeVisual>();
         }
-
-        public void UpdateNodeVisual(NodeNodeLinkModel nodeNodeLinkModel, UIElement parentRootOfVisual) {
-            var nodeTypeInt = (int)nodeNodeLinkModel.Node.NodeType;
-            if (nodeTypeInt > 100 && nodeTypeInt <= 1000) { //EFFECT NODES 
-                var nodeVisual = _nodeVisuals[nodeNodeLinkModel.Node.Key];
-                if (nodeVisual != null) {
-                    var compositor = ElementCompositionPreview.GetElementVisual(nodeVisual.AssociatedObject).Compositor;
-                    var effectType = (NodeType)nodeNodeLinkModel.Node.NodeType;
-                    switch (effectType)
-                    {
-                        case NodeType.TextureAsset:
-                        case NodeType.BlendEffect:
-                            var spriteVisualFound = ElementCompositionPreview.GetElementChildVisual(nodeVisual.AssociatedObject) as SpriteVisual;
-                            if (spriteVisualFound != null) ClearNodeVisual(nodeVisual);
-
-                            if (effectType == NodeType.TextureAsset) {
-                                nodeVisual.Brush = CreateGraphicsBrush(compositor, effectType, nodeNodeLinkModel.InputNodeLinks.ToArray());
-                            } else if (effectType == NodeType.BlendEffect) {
-                                var inputSlotSources = nodeNodeLinkModel.InputNodeLinks.ToArray();
-                                if (inputSlotSources.Length < 3) nodeVisual.Brush = null;
-                                var nl = (NodeLink)inputSlotSources[2];
-                                int.TryParse(nl.Value1, out int bl);
-                                var blendEffectDesc = new BlendEffect
-                                {
-                                    Mode = (BlendEffectMode)Enum.Parse(typeof(BlendEffectMode), bl.ToString()),
-                                    Background = new CompositionEffectSourceParameter("Background"),
-                                    Foreground = new CompositionEffectSourceParameter("Foreground")
-                                };
-                                try
-                                {
-                                    var blendEffectBrush = compositor.CreateEffectFactory(blendEffectDesc).CreateBrush();
-                                    UpdateGraphicsBrush(compositor, effectType, inputSlotSources, blendEffectBrush);
-                                    nodeVisual.Brush = blendEffectBrush;
-                                }
-                                catch { }
-                            }
-                            
-                            ResizeSpriteBrush(nodeVisual.AssociatedObject.ActualWidth - 20, nodeVisual.AssociatedObject.ActualHeight - 20, spriteVisualFound);
-                            spriteVisualFound.Brush = nodeVisual.Brush;
-                            break;
-                        default:
-                            UpdateGraphicsBrush(compositor, effectType, nodeNodeLinkModel.InputNodeLinks.ToArray(), nodeVisual.Brush);
-                            break;
-                    }
-                }
-            }
-        }
-
-
+        
         public void CreateNodeVisual(NodeNodeLinkModel nodeNodeLinkModel, UIElement parentRootOfVisual, NodeType nodeType)
         {
             var nodeVisual = new NodeVisual();
@@ -105,6 +58,63 @@ namespace X.Viewer.NodeGraph
 
             
         }
+        
+        public void UpdateNodeVisual(NodeNodeLinkModel nodeNodeLinkModel, UIElement parentRootOfVisual)
+        {
+            var nodeTypeInt = (int)nodeNodeLinkModel.Node.NodeType;
+            if (nodeTypeInt > 100 && nodeTypeInt <= 1000)
+            { //EFFECT NODES 
+                var nodeVisual = _nodeVisuals[nodeNodeLinkModel.Node.Key];
+                if (nodeVisual != null)
+                {
+                    var compositor = ElementCompositionPreview.GetElementVisual(nodeVisual.AssociatedObject).Compositor;
+                    var effectType = (NodeType)nodeNodeLinkModel.Node.NodeType;
+                    switch (effectType)
+                    {
+                        case NodeType.TextureAsset:
+                        case NodeType.BlendEffect:
+                            var spriteVisualFound = ElementCompositionPreview.GetElementChildVisual(nodeVisual.AssociatedObject) as SpriteVisual;
+                            if (spriteVisualFound != null) ClearNodeVisual(nodeVisual);
+
+                            if (effectType == NodeType.TextureAsset)
+                            {
+                                nodeVisual.Brush = CreateGraphicsBrush(compositor, effectType, nodeNodeLinkModel.InputNodeLinks.ToArray());
+                            }
+                            else if (effectType == NodeType.BlendEffect)
+                            {
+                                var inputSlotSources = nodeNodeLinkModel.InputNodeLinks.ToArray();
+                                if (inputSlotSources.Length < 3) nodeVisual.Brush = null;
+                                var nl = (NodeLink)inputSlotSources[2];
+                                int.TryParse(nl.Value1, out int bl);
+                                var blendEffectDesc = new BlendEffect
+                                {
+                                    Mode = (BlendEffectMode)Enum.Parse(typeof(BlendEffectMode), bl.ToString()),
+                                    Background = new CompositionEffectSourceParameter("Background"),
+                                    Foreground = new CompositionEffectSourceParameter("Foreground")
+                                };
+                                try
+                                {
+                                    var blendEffectBrush = compositor.CreateEffectFactory(blendEffectDesc).CreateBrush();
+                                    UpdateGraphicsBrush(compositor, effectType, inputSlotSources, blendEffectBrush);
+                                    nodeVisual.Brush = blendEffectBrush;
+                                }
+                                catch { }
+                            }
+
+                            ResizeSpriteBrush(nodeVisual.AssociatedObject.ActualWidth - 20, nodeVisual.AssociatedObject.ActualHeight - 20, spriteVisualFound);
+                            spriteVisualFound.Brush = nodeVisual.Brush;
+                            break;
+                        default:
+                            UpdateGraphicsBrush(compositor, effectType, nodeNodeLinkModel.InputNodeLinks.ToArray(), nodeVisual.Brush);
+                            break;
+                    }
+                }
+            }
+        }
+
+
+
+
 
         private void ResizeSpriteBrush(double availableWidth, double availableHeight, SpriteVisual spriteVisual)
         {
@@ -186,6 +196,18 @@ namespace X.Viewer.NodeGraph
                     }
                     catch { }
                     return null;
+                case NodeType.ColorSourceEffect:
+                    if (inputSlotSources.Length < 4) return null;
+                    var colorSourceEffectDesc = new ColorSourceEffect // FloodEffect
+                    {
+                        Name = "effect"
+                    };
+                    var colorSourceEffectBrush = compositor.CreateEffectFactory(
+                        colorSourceEffectDesc,
+                        new[] { "effect.Color" }
+                    ).CreateBrush();
+                    UpdateGraphicsBrush(compositor, effectType, inputSlotSources, colorSourceEffectBrush);
+                    return colorSourceEffectBrush;
                 case NodeType.ContrastEffect:
                     // Changes the contrast of an image.
                     if (inputSlotSources.Length == 0) return null;
@@ -250,18 +272,18 @@ namespace X.Viewer.NodeGraph
                         arithmeticEffectBrush.SetSourceParameter("Source1", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);
                         arithmeticEffectBrush.SetSourceParameter("Source2", _nodeVisuals[((NodeLink)inputSlotSources[2]).OutputNodeKey].Brush);
 
-                        var value1 = ((NodeLink)inputSlotSources[4]).Value1;
-                        var value2 = ((NodeLink)inputSlotSources[1]).Value1;
-                        var value3 = ((NodeLink)inputSlotSources[3]).Value1;
-                        var value4 = ((NodeLink)inputSlotSources[5]).Value1;
-                        if (string.IsNullOrEmpty(value1)) value1 = "1";
-                        if (string.IsNullOrEmpty(value2)) value2 = "0";
-                        if (string.IsNullOrEmpty(value3)) value3 = "0";
-                        if (string.IsNullOrEmpty(value4)) value4 = "0";
-                        arithmeticEffectBrush.Properties.InsertScalar("effect.MultiplyAmount", (float)(float.Parse(value1)));
-                        arithmeticEffectBrush.Properties.InsertScalar("effect.Source1Amount", (float)(float.Parse(value2)));
-                        arithmeticEffectBrush.Properties.InsertScalar("effect.Source2Amount", (float)(float.Parse(value3)));
-                        arithmeticEffectBrush.Properties.InsertScalar("effect.Offset", (float)(float.Parse(value4)));
+                        var multiplyAmountValue = ((NodeLink)inputSlotSources[4]).Value1;
+                        var source1AmountValue = ((NodeLink)inputSlotSources[1]).Value1;
+                        var source2AmountValue = ((NodeLink)inputSlotSources[3]).Value1;
+                        var offsetValue = ((NodeLink)inputSlotSources[5]).Value1;
+                        if (string.IsNullOrEmpty(multiplyAmountValue)) multiplyAmountValue = "1";
+                        if (string.IsNullOrEmpty(source1AmountValue)) source1AmountValue = "0";
+                        if (string.IsNullOrEmpty(source2AmountValue)) source2AmountValue = "0";
+                        if (string.IsNullOrEmpty(offsetValue)) offsetValue = "0";
+                        arithmeticEffectBrush.Properties.InsertScalar("effect.MultiplyAmount", (float)(float.Parse(multiplyAmountValue)));
+                        arithmeticEffectBrush.Properties.InsertScalar("effect.Source1Amount", (float)(float.Parse(source1AmountValue)));
+                        arithmeticEffectBrush.Properties.InsertScalar("effect.Source2Amount", (float)(float.Parse(source2AmountValue)));
+                        arithmeticEffectBrush.Properties.InsertScalar("effect.Offset", (float)(float.Parse(offsetValue)));
                     }
                     catch { };
                     
@@ -273,6 +295,27 @@ namespace X.Viewer.NodeGraph
                         blendEffectBrush.SetSourceParameter("Foreground", _nodeVisuals[((NodeLink)inputSlotSources[1]).OutputNodeKey].Brush);
                     } catch { }
                     
+                    return;
+                case NodeType.ColorSourceEffect:
+                    var colorSourceEffectBrush = (CompositionEffectBrush)brushToUpdate;
+                    var redValue = ((NodeLink)inputSlotSources[0]).Value1;
+                    var greenValue = ((NodeLink)inputSlotSources[1]).Value1;
+                    var blueValue = ((NodeLink)inputSlotSources[2]).Value1;
+                    var alphaValue = ((NodeLink)inputSlotSources[3]).Value1;
+
+                    if (string.IsNullOrEmpty(redValue)) redValue = "0";
+                    if (string.IsNullOrEmpty(greenValue)) greenValue = "0";
+                    if (string.IsNullOrEmpty(blueValue)) blueValue = "0";
+                    if (string.IsNullOrEmpty(alphaValue)) alphaValue = "0";
+                    
+                    var newColor = new Color();
+                    newColor.R = (byte)(int.Parse(redValue));
+                    newColor.G = (byte)(int.Parse(greenValue));
+                    newColor.B = (byte)(int.Parse(blueValue));
+                    newColor.A = (byte)(int.Parse(alphaValue));
+
+                    colorSourceEffectBrush.Properties.InsertColor( "effect.Color", newColor);
+
                     return;
                 case NodeType.ContrastEffect:
                     var brushContrastEffect = (CompositionEffectBrush)brushToUpdate;
@@ -335,3 +378,7 @@ namespace X.Viewer.NodeGraph
         }
     }
 }
+
+
+// d2d supported effects https://docs.microsoft.com/en-us/windows/desktop/direct2d/built-in-effects
+// win2d supported effects https://microsoft.github.io/Win2D/html/N_Microsoft_Graphics_Canvas_Effects.htm

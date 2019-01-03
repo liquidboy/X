@@ -25,6 +25,7 @@ namespace X.Viewer.NodeGraph
         TextboxValue = 1001, // >=1000 are controls
         SliderValue,
         ToggleValue,
-        BlendEffectModeValue
+        BlendEffectModeValue,
+        ColorSliderValue
     }
 }
