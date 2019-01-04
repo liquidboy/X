@@ -177,8 +177,12 @@
     <None Include="X.ModernDesktop_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\x-aurora-small.jpg" />
     <Content Include="Assets\x-aurora.jpg" />
+    <Content Include="Assets\x-city-small.jpg" />
     <Content Include="Assets\x-city.jpg" />
+    <Content Include="Assets\x-ferns-small.jpg" />
+    <Content Include="Assets\x-lake-small.jpg" />
     <Content Include="Assets\x-lake.jpg" />
     <Content Include="Assets\x-mask-circle.png" />
     <Content Include="Assets\x-ferns.jpg" />
