@@ -91,9 +91,9 @@ namespace X.Viewer.NodeGraph
                 case NodeType.TemperatureAndTintEffect:
                     AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 3, "source,temperature,tint", 1, "", groupingGuid, (int)NodeType.TemperatureAndTintEffect, "Temperature " +
                         "Tint"));
-                    newId = $"Node-{Guid.NewGuid().ToString()}";
-                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, 300d, "WhiteSmoke", 0, "", 1, "", groupingGuid, (int)NodeType.SliderValue, "Value", -1d, 1d, 0.1d));
-                    newId = $"Node-{Guid.NewGuid().ToString()}";
+                    break;
+                case NodeType.TintValue:
+                case NodeType.TemperatureValue:
                     AddNodeToGraph(new Node(newId, nodePosX, nodePosY, 300d, "WhiteSmoke", 0, "", 1, "", groupingGuid, (int)NodeType.SliderValue, "Value", -1d, 1d, 0.1d));
                     break;
             }
