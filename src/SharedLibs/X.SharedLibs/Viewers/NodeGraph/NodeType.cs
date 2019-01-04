@@ -28,7 +28,8 @@ namespace X.Viewer.NodeGraph
         BlendEffectModeValue,
         ColorSliderValue,
         ExposureSliderValue,
-        GammaTransferValue
+        GammaTransferValue,
+        CanvasAlphaModeValue
 
     }
 }

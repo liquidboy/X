@@ -15,21 +15,23 @@ using Windows.UI.Xaml.Navigation;
 
 namespace X.Viewer.NodeGraph.NodeTypeComponents
 {
-    public sealed partial class SliderValue : UserControl, INodeTypeComponent
+    public sealed partial class CanvasAlphaModeValue : UserControl, INodeTypeComponent
     {
         public event EventHandler NodeTypeValueChanged;
-        public SliderValue()
+        public CanvasAlphaModeValue()
         {
             this.InitializeComponent();
         }
-
-        private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        
+        private void sldMode_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-            if (NodeTypeValueChanged != null) {
+            if (NodeTypeValueChanged != null)
+            {
                 NodeNodeLinkModel vm = (NodeNodeLinkModel)((FrameworkElement)sender).DataContext;
                 if (vm.OutputNodeLinks.Count > 0) {
                     NodeTypeValueChanged.Invoke(vm.OutputNodeLinks[0].InputNodeKey, EventArgs.Empty);
                 }
+                
             }
         }
     }

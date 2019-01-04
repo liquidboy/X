@@ -73,6 +73,7 @@ namespace X.Viewer.NodeGraph
                     {
                         case NodeType.TextureAsset:
                         case NodeType.BlendEffect:
+                        case NodeType.SepiaEffect:
                             var spriteVisualFound = ElementCompositionPreview.GetElementChildVisual(nodeVisual.AssociatedObject) as SpriteVisual;
                             if (spriteVisualFound != null) ClearNodeVisual(nodeVisual);
 
@@ -84,7 +85,7 @@ namespace X.Viewer.NodeGraph
                             {
                                 var inputSlotSources = nodeNodeLinkModel.InputNodeLinks.ToArray();
                                 if (inputSlotSources.Length < 3) nodeVisual.Brush = null;
-                                var nl = (NodeLink)inputSlotSources[2];
+                                var nl = inputSlotSources[2];
                                 int.TryParse(nl.Value1, out int bl);
                                 var blendEffectDesc = new BlendEffect
                                 {
@@ -97,6 +98,26 @@ namespace X.Viewer.NodeGraph
                                     var blendEffectBrush = compositor.CreateEffectFactory(blendEffectDesc).CreateBrush();
                                     UpdateGraphicsBrush(compositor, effectType, inputSlotSources, blendEffectBrush);
                                     nodeVisual.Brush = blendEffectBrush;
+                                }
+                                catch { }
+                            }
+                            else if (effectType == NodeType.SepiaEffect)
+                            {
+                                var inputSlotSources = nodeNodeLinkModel.InputNodeLinks.ToArray();
+                                if (inputSlotSources.Length < 3) nodeVisual.Brush = null;
+                                var nl = inputSlotSources[2];
+                                int.TryParse(nl.Value1, out int am);
+                                var sepiaEffectDesc = new SepiaEffect
+                                {
+                                    Name = "effect",
+                                    AlphaMode = (CanvasAlphaMode)Enum.Parse(typeof(CanvasAlphaMode), am.ToString()),
+                                    Source = new CompositionEffectSourceParameter("Image")
+                                };
+                                try
+                                {
+                                    var sepiaEffectBrush = compositor.CreateEffectFactory(sepiaEffectDesc, new[] { "effect.Intensity" }).CreateBrush();
+                                    UpdateGraphicsBrush(compositor, effectType, inputSlotSources, sepiaEffectBrush);
+                                    nodeVisual.Brush = sepiaEffectBrush;
                                 }
                                 catch { }
                             }
@@ -185,7 +206,6 @@ namespace X.Viewer.NodeGraph
                     var blendEffectDesc = new BlendEffect
                     {
                         Mode = (BlendEffectMode)Enum.Parse(typeof(BlendEffectMode), bl.ToString()),
-                        //Mode = BlendEffectMode.SoftLight,
                         Background = new CompositionEffectSourceParameter("Background"),
                         Foreground = new CompositionEffectSourceParameter("Foreground")
                     };
@@ -297,6 +317,21 @@ namespace X.Viewer.NodeGraph
                     var invertEffectBrush = compositor.CreateEffectFactory(invertEffectDesc).CreateBrush();
                     UpdateGraphicsBrush(compositor, effectType, inputSlotSources, invertEffectBrush);
                     return invertEffectBrush;
+                case NodeType.SepiaEffect:
+                    if (inputSlotSources.Length < 3) return null;
+                    var nlam = (NodeLink)inputSlotSources[2];
+                    int am = 0; int.TryParse(nlam.Value1, out am);
+                    var sepiaEffectDesc = new SepiaEffect
+                    {
+                      Name = "effect",
+                      AlphaMode = (CanvasAlphaMode)Enum.Parse(typeof(CanvasAlphaMode), am.ToString()),
+                      Source = new CompositionEffectSourceParameter("Image")
+                    };
+                    var sepiaEffectBrush = compositor.CreateEffectFactory(
+                        sepiaEffectDesc,
+                        new[] { "effect.Intensity" }
+                    ).CreateBrush();
+                    return sepiaEffectBrush;
                 default:
                     throw new NotImplementedException();
             }
@@ -441,6 +476,14 @@ namespace X.Viewer.NodeGraph
                 case NodeType.InvertEffect:
                     var invertEffectBrush = (CompositionEffectBrush)brushToUpdate;
                     //invertEffectBrush.SetSourceParameter("Image", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);  <-- causing a crash on 18305
+                    return;
+                case NodeType.SepiaEffect:
+                    var sepiaEffectBrushe = (CompositionEffectBrush)brushToUpdate;
+                    sepiaEffectBrushe.SetSourceParameter("Image", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);
+
+                    var sepiaIntensityValue = ((NodeLink)inputSlotSources[1]).Value1;
+                    if (string.IsNullOrEmpty(sepiaIntensityValue)) hueEffectAngle = "0.5";
+                    sepiaEffectBrushe.Properties.InsertScalar("effect.Intensity", float.Parse(sepiaIntensityValue));
                     return;
                 default:
                     throw new NotImplementedException();

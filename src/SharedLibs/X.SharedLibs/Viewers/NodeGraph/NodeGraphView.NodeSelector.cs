@@ -82,6 +82,12 @@ namespace X.Viewer.NodeGraph
                 case NodeType.InvertEffect:
                     AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 1, "source", 1, "", groupingGuid, (int)NodeType.InvertEffect, "Invert"));
                     break;
+                case NodeType.CanvasAlphaModeValue:
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 0, "", 1, "", groupingGuid, (int)NodeType.CanvasAlphaModeValue, "Value", 0d, 1d, 1d));
+                    break;
+                case NodeType.SepiaEffect:
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 3, "source,intensity,canvas alpha mode", 1, "", groupingGuid, (int)NodeType.SepiaEffect, "Sepia"));
+                    break;
             }
         }
     }

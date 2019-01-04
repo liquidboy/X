@@ -750,9 +750,13 @@
       <DependentUpon>MediaControls.xaml</DependentUpon>
     </Compile>
     <Compile Include="Viewers\MediaView\MediaElementRenderer.cs" />
+    <Compile Include="Viewers\NodeGraph\Converters\CanvasAlphaModeConverter.cs" />
     <Compile Include="Viewers\NodeGraph\Converters\BlendEffectModeConverter.cs" />
     <Compile Include="Viewers\NodeGraph\INodeSelector.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.NodeSelector.cs" />
+    <Compile Include="Viewers\NodeGraph\NodeTypeComponents\CanvasAlphaModeValue.xaml.cs">
+      <DependentUpon>CanvasAlphaModeValue.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Viewers\NodeGraph\NodeTypeComponents\GammaTransferSliderValue.xaml.cs">
       <DependentUpon>GammaTransferSliderValue.xaml</DependentUpon>
     </Compile>
@@ -1157,6 +1161,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Viewers\NodeGraph\NodeGraphView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\NodeGraph\NodeTypeComponents\CanvasAlphaModeValue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
