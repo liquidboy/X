@@ -21,7 +21,7 @@ namespace X.Viewer.NodeGraph
             _nodeVisuals = new Dictionary<string, NodeVisual>();
         }
         
-        public void CreateNodeVisual(NodeNodeLinkModel nodeNodeLinkModel, UIElement parentRootOfVisual, NodeType nodeType)
+        public void CreateNodeVisualUI(NodeNodeLinkModel nodeNodeLinkModel, UIElement parentRootOfVisual, NodeType nodeType)
         {
             var nodeVisual = new NodeVisual();
             var nodeTypeInt = (int)nodeType;
@@ -331,7 +331,40 @@ namespace X.Viewer.NodeGraph
                         sepiaEffectDesc,
                         new[] { "effect.Intensity" }
                     ).CreateBrush();
+                    UpdateGraphicsBrush(compositor, effectType, inputSlotSources, sepiaEffectBrush);
                     return sepiaEffectBrush;
+                case NodeType.TemperatureAndTintEffect:
+                    if (inputSlotSources.Length < 3) return null;
+                    var temperatureAndTintEffectDesc = new TemperatureAndTintEffect
+                    {
+                        Name = "effect",
+                        Source = new CompositionEffectSourceParameter("Image")
+                    };
+                    var temperatureAndTintEffectBrush = compositor.CreateEffectFactory(
+                        temperatureAndTintEffectDesc,
+                        new[]
+                        {
+                            "effect.Temperature",
+                            "effect.Tint"
+                        }
+                    ).CreateBrush();
+                    UpdateGraphicsBrush(compositor, effectType, inputSlotSources, temperatureAndTintEffectBrush);
+                    return temperatureAndTintEffectBrush;
+                //case NodeType.Transform2DEffect:
+                //    var transform2DEffectDesc = new Transform2DEffect
+                //    {
+                //        TransformMatrix = new Matrix3x2(
+                //          -1, 0,
+                //          0, 1,
+                //          m_sprite.Size.X, 0),
+                //        Source = new CompositionEffectSourceParameter("Image")
+                //    };
+                //    var transform2DEffectBrush = m_compositor.CreateEffectFactory(
+                //        transform2DEffectDesc
+                //    ).CreateBrush();
+                //    var transform2DEffectBrush.SetSourceParameter(
+                //        "Image",
+                //        m_noEffectBrush);
                 default:
                     throw new NotImplementedException();
             }
@@ -484,6 +517,18 @@ namespace X.Viewer.NodeGraph
                     var sepiaIntensityValue = ((NodeLink)inputSlotSources[1]).Value1;
                     if (string.IsNullOrEmpty(sepiaIntensityValue)) hueEffectAngle = "0.5";
                     sepiaEffectBrushe.Properties.InsertScalar("effect.Intensity", float.Parse(sepiaIntensityValue));
+                    return;
+                case NodeType.TemperatureAndTintEffect:
+                    var temperatureAndTintEffectBrush = (CompositionEffectBrush)brushToUpdate;
+                    temperatureAndTintEffectBrush.SetSourceParameter("Image", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);
+
+                    var temperatureValue = ((NodeLink)inputSlotSources[1]).Value1;
+                    var tintValue = ((NodeLink)inputSlotSources[2]).Value1;
+                    if (string.IsNullOrEmpty(temperatureValue)) temperatureValue = "0";
+                    if (string.IsNullOrEmpty(tintValue)) tintValue = "0";
+                    temperatureAndTintEffectBrush.Properties.InsertScalar("effect.Temperature", float.Parse(temperatureValue));
+                    temperatureAndTintEffectBrush.Properties.InsertScalar("effect.Tint", float.Parse(tintValue));
+
                     return;
                 default:
                     throw new NotImplementedException();

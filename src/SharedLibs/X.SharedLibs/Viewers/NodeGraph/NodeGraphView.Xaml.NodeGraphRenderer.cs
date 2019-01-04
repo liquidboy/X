@@ -36,14 +36,45 @@ namespace X.Viewer.NodeGraph
             double slotRadius = 5;
             double slotDiameter = 2 * slotRadius;
 
+            //vm if it is needed
             var nodeNodeLinkVM = new NodeNodeLinkModel() {
                 Node = node,
                 InputNodeLinks = relatedLinks.Where(x => x.InputNodeKey == node.Key).OrderBy(x=>x.InputSlotIndex).ToList(),
                 OutputNodeLinks = relatedLinks.Where(x => x.OutputNodeKey == node.Key).OrderBy(x => x.OutputSlotIndex).ToList()
             };
-
-
+            
             //node-container
+            var newNodeGroup = CreateNodeContainerUI(node);
+            
+            //node-slots in node-container (appears underneath those rendered after)
+            for (int slotIndex = 0; slotIndex < node.InputSlotCount; slotIndex++)
+            {
+                newNodeGroup.Children.Add(CreateSlotUI("nsi", node, slotIndex, slotDiameter, slotRadius, Colors.Black, true, Colors.LightGray));
+            }
+
+            for (int slotIndex = 0; slotIndex < node.OutputSlotCount; slotIndex++)
+            {
+                newNodeGroup.Children.Add(CreateSlotUI("nso", node, slotIndex, slotDiameter, slotRadius, Colors.Black, false, Colors.LightGray));
+            }
+            
+            //node in node-container
+            FrameworkElement newNodeUIElement = CreateNodeUI(node, nodeNodeLinkVM);
+            newNodeGroup.Children.Add(newNodeUIElement);
+            
+            //node-title
+            if (node.Title != null) newNodeGroup.Children.Add(CreateNodeTitleUI(node));
+            
+
+
+
+            //node-visual, created at the end after the node's full dimensions are realized
+            //await DispatcherHelper.ExecuteOnUIThreadAsync(()=> CreateNodeVisual(nodeNodeLinkVM, newNodeUIElement, (NodeType)node.NodeType), Windows.UI.Core.CoreDispatcherPriority.Normal);
+            CreateNodeVisualUI(nodeNodeLinkVM, newNodeUIElement, (NodeType)node.NodeType);
+
+            _uiNodeGraphPanelXamlRoot.Children.Add(newNodeGroup);
+        }
+
+        Panel CreateNodeContainerUI(Node node) {
             var newNodeGroup = new Canvas()
             {
                 Name = node.Key,
@@ -55,24 +86,10 @@ namespace X.Viewer.NodeGraph
             newNodeGroup.SetValue(Canvas.LeftProperty, node.PositionX);
             newNodeGroup.SetValue(Canvas.TopProperty, node.PositionY);
 
+            return newNodeGroup;
+        }
 
-
-
-            //node-slots in node-container (appears underneath those rendered after)
-            for (int slotIndex = 0; slotIndex < node.InputSlotCount; slotIndex++)
-            {
-                newNodeGroup.Children.Add(CreateSlotUI("nsi", node, slotIndex, slotDiameter, slotRadius, Colors.Black, true, Colors.LightGray));
-            }
-
-            for (int slotIndex = 0; slotIndex < node.OutputSlotCount; slotIndex++)
-            {
-                newNodeGroup.Children.Add(CreateSlotUI("nso", node, slotIndex, slotDiameter, slotRadius, Colors.Black, false, Colors.LightGray));
-            }
-
-
-
-
-            //node in node-container
+        FrameworkElement CreateNodeUI(Node node, NodeNodeLinkModel nodeNodeLinkVM ) {
             FrameworkElement newNodeUIElement = null;
             if (node.NodeType > 100 && node.NodeType < 1000) //EFFECTS
             {
@@ -84,8 +101,9 @@ namespace X.Viewer.NodeGraph
             else if (node.NodeType > 1000 && node.NodeType < 2000) //VALUES
             {
                 var nodeType = (NodeType)node.NodeType;
-                
-                switch (nodeType) {
+
+                switch (nodeType)
+                {
                     case NodeType.TextboxValue: newNodeUIElement = new TextboxValue() { DataContext = nodeNodeLinkVM }; break;
                     case NodeType.SliderValue: newNodeUIElement = new SliderValue() { DataContext = nodeNodeLinkVM }; break;
                     case NodeType.ToggleValue: newNodeUIElement = new ToggleValue() { DataContext = nodeNodeLinkVM }; break;
@@ -97,7 +115,8 @@ namespace X.Viewer.NodeGraph
                 INodeTypeComponent nodeTypeComponent = newNodeUIElement as INodeTypeComponent;
                 nodeTypeComponent.NodeTypeValueChanged += NodeTypeComponent_NodeTypeValueChanged;
             }
-            else {
+            else
+            {
                 // no idea what this node is so just make it a rectangle for now
                 newNodeUIElement = new Windows.UI.Xaml.Shapes.Rectangle()
                 {
@@ -110,31 +129,19 @@ namespace X.Viewer.NodeGraph
             newNodeUIElement.Height = node.Height;
             newNodeUIElement.Tag = "n";
 
-            newNodeGroup.Children.Add(newNodeUIElement);
+            return newNodeUIElement;
+        }
 
-
-
-
-            //node-title
-            if (node.Title != null) {
-                var titleUIElement = new TextBlock()
-                {
-                    Text = node.Title,
-                    FontSize = 14,
-                    Foreground = new SolidColorBrush(Colors.LightGray)
-                };
-                titleUIElement.SetValue(Canvas.LeftProperty, 0);
-                titleUIElement.SetValue(Canvas.TopProperty, -25);
-                newNodeGroup.Children.Add(titleUIElement);
-            }
-
-
-
-            //node-visual, created at the end after the node's full dimensions are realized
-            //await DispatcherHelper.ExecuteOnUIThreadAsync(()=> CreateNodeVisual(nodeNodeLinkVM, newNodeUIElement, (NodeType)node.NodeType), Windows.UI.Core.CoreDispatcherPriority.Normal);
-            CreateNodeVisual(nodeNodeLinkVM, newNodeUIElement, (NodeType)node.NodeType);
-
-            _uiNodeGraphPanelXamlRoot.Children.Add(newNodeGroup);
+        UIElement CreateNodeTitleUI(Node node) {
+            var titleUIElement = new TextBlock()
+            {
+                Text = node.Title,
+                FontSize = 14,
+                Foreground = new SolidColorBrush(Colors.LightGray)
+            };
+            titleUIElement.SetValue(Canvas.LeftProperty, 0);
+            titleUIElement.SetValue(Canvas.TopProperty, -25);
+            return titleUIElement;
         }
 
         UIElement CreateSlotUI(string tag, Node node, int slotIndex, double slotDiameter, double slotRadius, Color slotColor, bool isInputSlot, Color labelColor) {
