@@ -288,6 +288,15 @@ namespace X.Viewer.NodeGraph
                     ).CreateBrush();
                     UpdateGraphicsBrush(compositor, effectType, inputSlotSources, brushHueRotationEffect);
                     return brushHueRotationEffect;
+                case NodeType.InvertEffect:
+                    var invertEffectDesc = new InvertEffect
+                    {
+                        Name = "effect",
+                        Source = new CompositionEffectSourceParameter("Image")
+                    };
+                    var invertEffectBrush = compositor.CreateEffectFactory(invertEffectDesc).CreateBrush();
+                    UpdateGraphicsBrush(compositor, effectType, inputSlotSources, invertEffectBrush);
+                    return invertEffectBrush;
                 default:
                     throw new NotImplementedException();
             }
@@ -428,6 +437,10 @@ namespace X.Viewer.NodeGraph
                     var hueEffectAngle = ((NodeLink)inputSlotSources[1]).Value1;
                     if (string.IsNullOrEmpty(hueEffectAngle)) hueEffectAngle = "0";
                     brushHueRotationEffect.Properties.InsertScalar("effect.Angle", (float)(float.Parse(hueEffectAngle) * Math.PI * 2));
+                    return;
+                case NodeType.InvertEffect:
+                    var invertEffectBrush = (CompositionEffectBrush)brushToUpdate;
+                    //invertEffectBrush.SetSourceParameter("Image", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);  <-- causing a crash on 18305
                     return;
                 default:
                     throw new NotImplementedException();
