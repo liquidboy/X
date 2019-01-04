@@ -112,7 +112,7 @@ namespace X.Viewer.NodeGraph
                 {
                     for (int x = 0; x < dimensionToTest; x++)
                     {
-                        AddNodeToGraph(new Node($"Node{x}-{y}", x * 200, y * 200, defaultWidth, "WhiteSmoke", 2,"", 2, "", defaultGuid, (int)NodeType.Empty));
+                        AddNodeToGraph(new Node($"Node{x}-{y}", x * 200, y * 200, defaultWidth, "WhiteSmoke", 2,"", 2, "", defaultGuid, (int)NodeType.Empty, string.Empty));
                     }
                 }
             }

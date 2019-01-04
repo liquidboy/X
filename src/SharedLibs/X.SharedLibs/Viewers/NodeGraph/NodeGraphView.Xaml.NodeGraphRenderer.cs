@@ -91,6 +91,7 @@ namespace X.Viewer.NodeGraph
                     case NodeType.ToggleValue: newNodeUIElement = new ToggleValue() { DataContext = nodeNodeLinkVM }; break;
                     case NodeType.BlendEffectModeValue: newNodeUIElement = new BlendEffectModeValue() { DataContext = nodeNodeLinkVM }; break;
                     case NodeType.ColorSliderValue: newNodeUIElement = new ColorSliderValue() { DataContext = nodeNodeLinkVM }; break;
+                    case NodeType.GammaTransferValue: newNodeUIElement = new GammaTransferSliderValue() { DataContext = nodeNodeLinkVM }; break;
                 }
                 INodeTypeComponent nodeTypeComponent = newNodeUIElement as INodeTypeComponent;
                 nodeTypeComponent.NodeTypeValueChanged += NodeTypeComponent_NodeTypeValueChanged;

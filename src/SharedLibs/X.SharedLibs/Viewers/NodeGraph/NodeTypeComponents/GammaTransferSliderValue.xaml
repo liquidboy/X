@@ -1,0 +1,88 @@
+﻿<UserControl
+    x:Class="X.Viewer.NodeGraph.NodeTypeComponents.GammaTransferSliderValue"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="100"
+    d:DesignWidth="300">
+    <Grid Background="{Binding Node.Color}">
+        <Grid Margin="15,23,15,25">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="36"></RowDefinition>
+                <RowDefinition Height="36"></RowDefinition>
+                <RowDefinition Height="36"></RowDefinition>
+                <RowDefinition Height="36"></RowDefinition>
+                <RowDefinition Height="36"></RowDefinition>
+                <RowDefinition Height="36"></RowDefinition>
+                <RowDefinition Height="36"></RowDefinition>
+                <RowDefinition Height="36"></RowDefinition>
+                <RowDefinition Height="36"></RowDefinition>
+                <RowDefinition Height="36"></RowDefinition>
+                <RowDefinition Height="36"></RowDefinition>
+                <RowDefinition Height="36"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" HorizontalAlignment="Stretch">
+                <TextBlock Text="0" HorizontalAlignment="Left" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <TextBlock Text="8" HorizontalAlignment="Right" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <Slider Margin="30,0,50,0" Minimum="0" Maximum="8" StepFrequency="0.1" Value="{Binding OutputNodeLinks[0].Value1, Mode=TwoWay}" IsThumbToolTipEnabled="True" HorizontalAlignment="Stretch" ValueChanged="Slider_ValueChanged" Tag="ramp"></Slider>
+            </Grid>
+            <Grid Grid.Row="1" HorizontalAlignment="Stretch">
+                <TextBlock Text="0" HorizontalAlignment="Left" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <TextBlock Text="8" HorizontalAlignment="Right" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <Slider Margin="30,0,50,0" Minimum="0" Maximum="8" StepFrequency="0.1" Value="{Binding OutputNodeLinks[1].Value1, Mode=TwoWay}" IsThumbToolTipEnabled="True" HorizontalAlignment="Stretch" ValueChanged="Slider_ValueChanged" Tag="rexp"></Slider>
+            </Grid>
+            <Grid Grid.Row="2" HorizontalAlignment="Stretch">
+                <TextBlock Text="0" HorizontalAlignment="Left" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <TextBlock Text="1" HorizontalAlignment="Right" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <Slider Margin="30,0,50,0" Minimum="0" Maximum="1" StepFrequency="0.1" Value="{Binding OutputNodeLinks[2].Value1, Mode=TwoWay}" IsThumbToolTipEnabled="True" HorizontalAlignment="Stretch" ValueChanged="Slider_ValueChanged" Tag="rofs"></Slider>
+            </Grid>
+            <Grid Grid.Row="3" HorizontalAlignment="Stretch">
+                <TextBlock Text="0" HorizontalAlignment="Left" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <TextBlock Text="8" HorizontalAlignment="Right" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <Slider Margin="30,0,50,0" Minimum="0" Maximum="8" StepFrequency="0.1" Value="{Binding OutputNodeLinks[3].Value1, Mode=TwoWay}" IsThumbToolTipEnabled="True" HorizontalAlignment="Stretch" ValueChanged="Slider_ValueChanged" Tag="gamp"></Slider>
+            </Grid>
+            <Grid Grid.Row="4" HorizontalAlignment="Stretch">
+                <TextBlock Text="0" HorizontalAlignment="Left" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <TextBlock Text="8" HorizontalAlignment="Right" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <Slider Margin="30,0,50,0" Minimum="0" Maximum="8" StepFrequency="0.1" Value="{Binding OutputNodeLinks[4].Value1, Mode=TwoWay}" IsThumbToolTipEnabled="True" HorizontalAlignment="Stretch" ValueChanged="Slider_ValueChanged" Tag="gexp"></Slider>
+            </Grid>
+            <Grid Grid.Row="5" HorizontalAlignment="Stretch">
+                <TextBlock Text="0" HorizontalAlignment="Left" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <TextBlock Text="1" HorizontalAlignment="Right" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <Slider Margin="30,0,50,0" Minimum="0" Maximum="1" StepFrequency="0.1" Value="{Binding OutputNodeLinks[5].Value1, Mode=TwoWay}" IsThumbToolTipEnabled="True" HorizontalAlignment="Stretch" ValueChanged="Slider_ValueChanged" Tag="gofs"></Slider>
+            </Grid>
+            <Grid Grid.Row="6" HorizontalAlignment="Stretch">
+                <TextBlock Text="0" HorizontalAlignment="Left" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <TextBlock Text="8" HorizontalAlignment="Right" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <Slider Margin="30,0,50,0" Minimum="0" Maximum="8" StepFrequency="0.1" Value="{Binding OutputNodeLinks[6].Value1, Mode=TwoWay}" IsThumbToolTipEnabled="True" HorizontalAlignment="Stretch" ValueChanged="Slider_ValueChanged" Tag="bamp"></Slider>
+            </Grid>
+            <Grid Grid.Row="7" HorizontalAlignment="Stretch">
+                <TextBlock Text="0" HorizontalAlignment="Left" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <TextBlock Text="8" HorizontalAlignment="Right" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <Slider Margin="30,0,50,0" Minimum="0" Maximum="8" StepFrequency="0.1" Value="{Binding OutputNodeLinks[7].Value1, Mode=TwoWay}" IsThumbToolTipEnabled="True" HorizontalAlignment="Stretch" ValueChanged="Slider_ValueChanged" Tag="bexp"></Slider>
+            </Grid>
+            <Grid Grid.Row="8" HorizontalAlignment="Stretch">
+                <TextBlock Text="0" HorizontalAlignment="Left" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <TextBlock Text="1" HorizontalAlignment="Right" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <Slider Margin="30,0,50,0" Minimum="0" Maximum="1" StepFrequency="0.1" Value="{Binding OutputNodeLinks[8].Value1, Mode=TwoWay}" IsThumbToolTipEnabled="True" HorizontalAlignment="Stretch" ValueChanged="Slider_ValueChanged" Tag="bofs"></Slider>
+            </Grid>
+            <Grid Grid.Row="9" HorizontalAlignment="Stretch">
+                <TextBlock Text="0" HorizontalAlignment="Left" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <TextBlock Text="8" HorizontalAlignment="Right" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <Slider Margin="30,0,50,0" Minimum="0" Maximum="8" StepFrequency="0.1" Value="{Binding OutputNodeLinks[9].Value1, Mode=TwoWay}" IsThumbToolTipEnabled="True" HorizontalAlignment="Stretch" ValueChanged="Slider_ValueChanged" Tag="aamp"></Slider>
+            </Grid>
+            <Grid Grid.Row="10" HorizontalAlignment="Stretch">
+                <TextBlock Text="0" HorizontalAlignment="Left" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <TextBlock Text="8" HorizontalAlignment="Right" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <Slider Margin="30,0,50,0" Minimum="0" Maximum="8" StepFrequency="0.1" Value="{Binding OutputNodeLinks[10].Value1, Mode=TwoWay}" IsThumbToolTipEnabled="True" HorizontalAlignment="Stretch" ValueChanged="Slider_ValueChanged" Tag="aexp"></Slider>
+            </Grid>
+            <Grid Grid.Row="11" HorizontalAlignment="Stretch">
+                <TextBlock Text="0" HorizontalAlignment="Left" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <TextBlock Text="1" HorizontalAlignment="Right" Margin="0,6,0,0" Opacity="0.5" Width="30"></TextBlock>
+                <Slider Margin="30,0,50,0" Minimum="0" Maximum="1" StepFrequency="0.1" Value="{Binding OutputNodeLinks[11].Value1, Mode=TwoWay}" IsThumbToolTipEnabled="True" HorizontalAlignment="Stretch" ValueChanged="Slider_ValueChanged" Tag="aofs"></Slider>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

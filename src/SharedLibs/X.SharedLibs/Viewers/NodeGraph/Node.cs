@@ -12,6 +12,8 @@ namespace X.Viewer.NodeGraph
         public double PositionY { get; set; }
         public double Width { get; set; }
         public double Height { get; set; }
+        public double SlotPadding { get; set; }
+        public double SlotHeaderFooter { get; set; }
         public string Color { get; set; }
         public int InputSlotCount { get; set; }
         public string InputSlotLabels { get; set; }
@@ -26,18 +28,23 @@ namespace X.Viewer.NodeGraph
 
         public Node() { }
         public Node(string key, double positionX, double positionY, double initialWidth, string color, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType, string title, double udfd1, double udfd2, double udfd3) :
-            this(key, positionX, positionY, initialWidth, color, inputSlotCount, inputSlotLabels, outputSlotCount, outputSlotLabels, grouping, nodeType, title)
+            this(key, positionX, positionY, initialWidth, color, inputSlotCount, inputSlotLabels, outputSlotCount, outputSlotLabels, grouping, nodeType, title, 50d, 20d)
         {
             Udfd1 = udfd1;
             Udfd2 = udfd2;
             Udfd3 = udfd3;
         }
-        public Node(string key, double positionX, double positionY, double initialWidth, string color, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType, string title) : 
-            this(key, positionX, positionY, initialWidth, color, inputSlotCount, inputSlotLabels, outputSlotCount, outputSlotLabels, grouping, nodeType)
+        public Node(string key, double positionX, double positionY, double initialWidth, string color, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType, string title) :
+            this(key, positionX, positionY, initialWidth, color, inputSlotCount, inputSlotLabels, outputSlotCount, outputSlotLabels, grouping, nodeType, 50d, 20d)
         {
             Title = title;
         }
-        public Node(string key, double positionX, double positionY, double initialWidth, string color, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType)
+        public Node(string key, double positionX, double positionY, double initialWidth, string color, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType, string title, double slotHeaderFooter, double slotPadding) : 
+            this(key, positionX, positionY, initialWidth, color, inputSlotCount, inputSlotLabels, outputSlotCount, outputSlotLabels, grouping, nodeType, slotHeaderFooter, slotPadding)
+        {
+            Title = title;
+        }
+        public Node(string key, double positionX, double positionY, double initialWidth, string color, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType, double slotHeaderFooter, double slotPadding)
         {
             Key = key;
             PositionX = positionX;
@@ -51,14 +58,16 @@ namespace X.Viewer.NodeGraph
             Height = 0;
             Grouping = grouping;
             NodeType = nodeType;
+            SlotPadding = slotPadding;
+            SlotHeaderFooter = slotHeaderFooter;
             CalculateSize();
         }
 
         private void CalculateSize()
         {
             double inputHeight, outputHeight;
-            inputHeight = 50d + ((InputSlotCount - 1) * 20d) + 50d;
-            outputHeight = 50d + ((OutputSlotCount - 1) * 20d) + 50d;
+            inputHeight = SlotHeaderFooter + ((InputSlotCount - 1) * SlotPadding) + SlotHeaderFooter;
+            outputHeight = SlotHeaderFooter + ((OutputSlotCount - 1) * SlotPadding) + SlotHeaderFooter;
 
             //Width = 150; // = new Size(width, Math.Max(inputHeight, outputHeight));
             Height = Math.Max(inputHeight, outputHeight);

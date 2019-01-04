@@ -753,6 +753,9 @@
     <Compile Include="Viewers\NodeGraph\Converters\BlendEffectModeConverter.cs" />
     <Compile Include="Viewers\NodeGraph\INodeSelector.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.NodeSelector.cs" />
+    <Compile Include="Viewers\NodeGraph\NodeTypeComponents\GammaTransferSliderValue.xaml.cs">
+      <DependentUpon>GammaTransferSliderValue.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Viewers\NodeGraph\NodeTypeComponents\INodeTypeComponent.cs" />
     <Compile Include="Viewers\NodeGraph\NodeTypeComponents\BlendEffectModeValue.xaml.cs">
       <DependentUpon>BlendEffectModeValue.xaml</DependentUpon>
@@ -1158,6 +1161,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Viewers\NodeGraph\NodeTypeComponents\BlendEffectModeValue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\NodeGraph\NodeTypeComponents\GammaTransferSliderValue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

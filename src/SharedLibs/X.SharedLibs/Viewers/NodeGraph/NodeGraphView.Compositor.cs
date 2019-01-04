@@ -245,6 +245,36 @@ namespace X.Viewer.NodeGraph
                     ).CreateBrush();
                     UpdateGraphicsBrush(compositor, effectType, inputSlotSources, brushGrayscale);
                     return brushGrayscale;
+                case NodeType.GammaTransferEffect:
+                    var gammaTransferEffectDesc = new GammaTransferEffect
+                    {
+                        Name = "effect",
+                        RedDisable = false,
+                        GreenDisable = false,
+                        BlueDisable = false,
+                        AlphaDisable = false,
+                        Source = new CompositionEffectSourceParameter("Image")
+                    };
+                    var gammaTransferEffectBrush = compositor.CreateEffectFactory(
+                        gammaTransferEffectDesc,
+                        new[]
+                        {
+                            "effect.RedAmplitude",
+                            "effect.RedExponent",
+                            "effect.RedOffset",
+                            "effect.GreenAmplitude",
+                            "effect.GreenExponent",
+                            "effect.GreenOffset",
+                            "effect.BlueAmplitude",
+                            "effect.BlueExponent",
+                            "effect.BlueOffset",
+                            "effect.AlphaAmplitude",
+                            "effect.AlphaExponent",
+                            "effect.AlphaOffset"
+                        }
+                    ).CreateBrush();
+                    
+                    return gammaTransferEffectBrush;
                 case NodeType.HueRotationEffect:
                     if (inputSlotSources.Length == 0) return null;
                     var hueRotationEffectDesc = new HueRotationEffect
@@ -346,6 +376,51 @@ namespace X.Viewer.NodeGraph
                 case NodeType.GrayscaleEffect:
                     var brushGrayscale = (CompositionEffectBrush)brushToUpdate;
                     brushGrayscale.SetSourceParameter("Image", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);
+                    return;
+                case NodeType.GammaTransferEffect:
+                    var gammaTransferEffectBrush = (CompositionEffectBrush)brushToUpdate;
+                    gammaTransferEffectBrush.SetSourceParameter("Image", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);
+
+
+                    var ramp = ((NodeLink)inputSlotSources[1]).Value1;
+                    var rexp = ((NodeLink)inputSlotSources[2]).Value1;
+                    var rofs = ((NodeLink)inputSlotSources[3]).Value1;
+                    var gamp = ((NodeLink)inputSlotSources[4]).Value1;
+                    var gexp = ((NodeLink)inputSlotSources[5]).Value1;
+                    var gofs = ((NodeLink)inputSlotSources[6]).Value1;
+                    var bamp = ((NodeLink)inputSlotSources[7]).Value1;
+                    var bexp = ((NodeLink)inputSlotSources[8]).Value1;
+                    var bofs = ((NodeLink)inputSlotSources[9]).Value1;
+                    var aamp = ((NodeLink)inputSlotSources[10]).Value1;
+                    var aexp = ((NodeLink)inputSlotSources[11]).Value1;
+                    var aofs = ((NodeLink)inputSlotSources[12]).Value1;
+
+                    if (string.IsNullOrEmpty(ramp)) ramp = "1";
+                    if (string.IsNullOrEmpty(rexp)) rexp = "1";
+                    if (string.IsNullOrEmpty(rofs)) rofs = "0";
+                    if (string.IsNullOrEmpty(gamp)) gamp = "1";
+                    if (string.IsNullOrEmpty(gexp)) gexp = "1";
+                    if (string.IsNullOrEmpty(gofs)) gofs = "0";
+                    if (string.IsNullOrEmpty(bamp)) bamp = "1";
+                    if (string.IsNullOrEmpty(bexp)) bexp = "1";
+                    if (string.IsNullOrEmpty(bofs)) bofs = "0";
+                    if (string.IsNullOrEmpty(aamp)) aamp = "1";
+                    if (string.IsNullOrEmpty(aexp)) aexp = "1";
+                    if (string.IsNullOrEmpty(aofs)) aofs = "0";
+
+                    gammaTransferEffectBrush.Properties.InsertScalar("effect.RedAmplitude", float.Parse(ramp));
+                    gammaTransferEffectBrush.Properties.InsertScalar("effect.RedExponent", float.Parse(rexp));
+                    gammaTransferEffectBrush.Properties.InsertScalar("effect.RedOffset", float.Parse(rofs));
+                    gammaTransferEffectBrush.Properties.InsertScalar("effect.GreenAmplitude", float.Parse(gamp));
+                    gammaTransferEffectBrush.Properties.InsertScalar("effect.GreenExponent", float.Parse(gexp));
+                    gammaTransferEffectBrush.Properties.InsertScalar("effect.GreenOffset", float.Parse(gofs));
+                    gammaTransferEffectBrush.Properties.InsertScalar("effect.BlueAmplitude", float.Parse(bamp));
+                    gammaTransferEffectBrush.Properties.InsertScalar("effect.BlueExponent", float.Parse(bexp));
+                    gammaTransferEffectBrush.Properties.InsertScalar("effect.BlueOffset", float.Parse(bofs));
+                    gammaTransferEffectBrush.Properties.InsertScalar("effect.AlphaAmplitude", float.Parse(aamp));
+                    gammaTransferEffectBrush.Properties.InsertScalar("effect.AlphaExponent", float.Parse(aexp));
+                    gammaTransferEffectBrush.Properties.InsertScalar("effect.AlphaOffset", float.Parse(aofs));
+
                     return;
                 case NodeType.HueRotationEffect:
                     var brushHueRotationEffect = (CompositionEffectBrush)brushToUpdate;
