@@ -111,6 +111,8 @@ namespace X.Viewer.NodeGraph
                     case NodeType.ColorSliderValue: newNodeUIElement = new ColorSliderValue() { DataContext = nodeNodeLinkVM }; break;
                     case NodeType.GammaTransferValue: newNodeUIElement = new GammaTransferSliderValue() { DataContext = nodeNodeLinkVM }; break;
                     case NodeType.CanvasAlphaModeValue: newNodeUIElement = new CanvasAlphaModeValue() { DataContext = nodeNodeLinkVM }; break;
+                    case NodeType.BorderModeValue: newNodeUIElement = new BorderModeValue() { DataContext = nodeNodeLinkVM }; break;
+                    case NodeType.TransformMatrixValue: newNodeUIElement = new TransformMatrixValue() { DataContext = nodeNodeLinkVM }; break;
                 }
                 INodeTypeComponent nodeTypeComponent = newNodeUIElement as INodeTypeComponent;
                 nodeTypeComponent.NodeTypeValueChanged += NodeTypeComponent_NodeTypeValueChanged;

@@ -750,10 +750,14 @@
       <DependentUpon>MediaControls.xaml</DependentUpon>
     </Compile>
     <Compile Include="Viewers\MediaView\MediaElementRenderer.cs" />
+    <Compile Include="Viewers\NodeGraph\Converters\BorderModeConverter.cs" />
     <Compile Include="Viewers\NodeGraph\Converters\CanvasAlphaModeConverter.cs" />
     <Compile Include="Viewers\NodeGraph\Converters\BlendEffectModeConverter.cs" />
     <Compile Include="Viewers\NodeGraph\INodeSelector.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.NodeSelector.cs" />
+    <Compile Include="Viewers\NodeGraph\NodeTypeComponents\BorderModeValue.xaml.cs">
+      <DependentUpon>BorderModeValue.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Viewers\NodeGraph\NodeTypeComponents\CanvasAlphaModeValue.xaml.cs">
       <DependentUpon>CanvasAlphaModeValue.xaml</DependentUpon>
     </Compile>
@@ -772,6 +776,9 @@
     </Compile>
     <Compile Include="Viewers\NodeGraph\NodeTypeComponents\SliderValue.xaml.cs">
       <DependentUpon>SliderValue.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\NodeGraph\NodeTypeComponents\TransformMatrixValue.xaml.cs">
+      <DependentUpon>TransformMatrixValue.xaml</DependentUpon>
     </Compile>
     <Compile Include="Viewers\NodeGraph\NodeVisual.cs" />
     <Compile Include="Viewers\NodeGraph\NodeNodeLinkModel.cs" />
@@ -1164,6 +1171,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Viewers\NodeGraph\NodeTypeComponents\BorderModeValue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Viewers\NodeGraph\NodeTypeComponents\CanvasAlphaModeValue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1189,6 +1200,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Viewers\NodeGraph\NodeTypeComponents\TextboxValue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Viewers\NodeGraph\NodeTypeComponents\TransformMatrixValue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

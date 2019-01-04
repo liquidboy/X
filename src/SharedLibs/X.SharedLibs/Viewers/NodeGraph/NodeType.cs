@@ -29,7 +29,11 @@ namespace X.Viewer.NodeGraph
         ColorSliderValue,
         ExposureSliderValue,
         GammaTransferValue,
-        CanvasAlphaModeValue
+        CanvasAlphaModeValue,
+        TemperatureValue,
+        TintValue,
+        BorderModeValue,
+        TransformMatrixValue
 
     }
 }

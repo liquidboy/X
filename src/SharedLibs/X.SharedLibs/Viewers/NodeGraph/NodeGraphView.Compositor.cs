@@ -74,6 +74,7 @@ namespace X.Viewer.NodeGraph
                         case NodeType.TextureAsset:
                         case NodeType.BlendEffect:
                         case NodeType.SepiaEffect:
+                        case NodeType.Transform2DEffect:
                             var spriteVisualFound = ElementCompositionPreview.GetElementChildVisual(nodeVisual.AssociatedObject) as SpriteVisual;
                             if (spriteVisualFound != null) ClearNodeVisual(nodeVisual);
 
@@ -121,6 +122,30 @@ namespace X.Viewer.NodeGraph
                                 }
                                 catch { }
                             }
+                            else if (effectType == NodeType.Transform2DEffect)
+                            {
+                                var inputSlotSources = nodeNodeLinkModel.InputNodeLinks.ToArray();
+                                if (inputSlotSources.Length < 3) nodeVisual.Brush = null;
+                                var nl = inputSlotSources[2];
+                                int.TryParse(nl.Value1, out int bm);
+                                var transform2DEffectDesc = new Transform2DEffect
+                                {
+                                    Name = "effect",
+                                    Source = new CompositionEffectSourceParameter("Image"),
+                                    TransformMatrix = new Matrix3x2(
+                                      -1, 0,
+                                      0, 1,
+                                      200, 0),//m_sprite.Size.X, 0),
+                                    BorderMode = (EffectBorderMode)Enum.Parse(typeof(EffectBorderMode), bm.ToString()),
+                                };
+                                try
+                                {
+                                    var transform2DEffectBrush = compositor.CreateEffectFactory(transform2DEffectDesc).CreateBrush();
+                                    UpdateGraphicsBrush(compositor, effectType, inputSlotSources, transform2DEffectBrush);
+                                    nodeVisual.Brush = transform2DEffectBrush;
+                                }
+                                catch { }
+                            }
 
                             ResizeSpriteBrush(nodeVisual.AssociatedObject.ActualWidth - 20, nodeVisual.AssociatedObject.ActualHeight - 20, spriteVisualFound);
                             spriteVisualFound.Brush = nodeVisual.Brush;
@@ -132,10 +157,7 @@ namespace X.Viewer.NodeGraph
                 }
             }
         }
-
-
-
-
+        
 
         private void ResizeSpriteBrush(double availableWidth, double availableHeight, SpriteVisual spriteVisual)
         {
@@ -350,21 +372,23 @@ namespace X.Viewer.NodeGraph
                     ).CreateBrush();
                     UpdateGraphicsBrush(compositor, effectType, inputSlotSources, temperatureAndTintEffectBrush);
                     return temperatureAndTintEffectBrush;
-                //case NodeType.Transform2DEffect:
-                //    var transform2DEffectDesc = new Transform2DEffect
-                //    {
-                //        TransformMatrix = new Matrix3x2(
-                //          -1, 0,
-                //          0, 1,
-                //          m_sprite.Size.X, 0),
-                //        Source = new CompositionEffectSourceParameter("Image")
-                //    };
-                //    var transform2DEffectBrush = m_compositor.CreateEffectFactory(
-                //        transform2DEffectDesc
-                //    ).CreateBrush();
-                //    var transform2DEffectBrush.SetSourceParameter(
-                //        "Image",
-                //        m_noEffectBrush);
+                case NodeType.Transform2DEffect:
+                    if (inputSlotSources.Length < 3) return null;
+                    var nlbm = (NodeLink)inputSlotSources[2];
+                    int bm = 0; int.TryParse(nlbm.Value1, out bm);
+                    var transform2DEffectDesc = new Transform2DEffect
+                    {
+                        Name = "effect",
+                        Source = new CompositionEffectSourceParameter("Image"),
+                        TransformMatrix = new Matrix3x2(
+                          -1, 0,
+                          0, 1,
+                          200, 0),//m_sprite.Size.X, 0),
+                        BorderMode = (EffectBorderMode)Enum.Parse(typeof(EffectBorderMode), bm.ToString()),
+                    };
+                    var transform2DEffectBrush = compositor.CreateEffectFactory(transform2DEffectDesc).CreateBrush();
+                    UpdateGraphicsBrush(compositor, effectType, inputSlotSources, transform2DEffectBrush);
+                    return transform2DEffectBrush;
                 default:
                     throw new NotImplementedException();
             }
@@ -528,7 +552,11 @@ namespace X.Viewer.NodeGraph
                     if (string.IsNullOrEmpty(tintValue)) tintValue = "0";
                     temperatureAndTintEffectBrush.Properties.InsertScalar("effect.Temperature", float.Parse(temperatureValue));
                     temperatureAndTintEffectBrush.Properties.InsertScalar("effect.Tint", float.Parse(tintValue));
-
+                    return;
+                case NodeType.Transform2DEffect:
+                    var transform2DEffectBrush = (CompositionEffectBrush)brushToUpdate;
+                    var image = _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush;
+                    if (image is CompositionSurfaceBrush) transform2DEffectBrush.SetSourceParameter("Image", image);
                     return;
                 default:
                     throw new NotImplementedException();

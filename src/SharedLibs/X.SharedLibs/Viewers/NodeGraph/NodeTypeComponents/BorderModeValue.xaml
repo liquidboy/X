@@ -1,0 +1,21 @@
+﻿<UserControl
+    x:Class="X.Viewer.NodeGraph.NodeTypeComponents.BorderModeValue"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:X.Viewer.NodeGraph.Converters"
+    mc:Ignorable="d"
+    d:DesignHeight="100"
+    d:DesignWidth="300">
+    <UserControl.Resources>
+        <converters:BorderModeConverter x:Name="BorderModeConverter"></converters:BorderModeConverter>
+    </UserControl.Resources>
+    <Grid Background="{Binding Node.Color}">
+        <TextBlock Text="{Binding Node.Udfd1}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="15,0,0,15" Opacity="0.5"></TextBlock>
+        <TextBlock Text="{Binding Node.Udfd2}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,15,15" Opacity="0.5"></TextBlock>
+        <!--<TextBlock Text="{Binding OutputNodeLinks[0].Value1, Converter={StaticResource BlendEffectModeConverter}}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,15" Opacity="0.5"></TextBlock>-->
+        <TextBlock Text="{Binding ElementName=sldMode, Path=Value, Converter={StaticResource BorderModeConverter}}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,15" Opacity="0.5"></TextBlock>
+        <Slider x:Name="sldMode" Margin="15,35,15,0" Minimum="{Binding Node.Udfd1}" Maximum="{Binding Node.Udfd2}" StepFrequency="{Binding Node.Udfd3}" Value="{Binding OutputNodeLinks[0].Value1, Mode=TwoWay}" ValueChanged="sldMode_ValueChanged" IsThumbToolTipEnabled="True" ></Slider>
+    </Grid>
+</UserControl>

@@ -96,6 +96,15 @@ namespace X.Viewer.NodeGraph
                 case NodeType.TemperatureValue:
                     AddNodeToGraph(new Node(newId, nodePosX, nodePosY, 300d, "WhiteSmoke", 0, "", 1, "", groupingGuid, (int)NodeType.SliderValue, "Value", -1d, 1d, 0.1d));
                     break;
+                case NodeType.BorderModeValue:
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 0, "", 1, "", groupingGuid, (int)NodeType.BorderModeValue, "Value", 0d, 1d, 1d));
+                    break;
+                case NodeType.Transform2DEffect:
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 5, "source,transform matrix,border mode,interpolation mode,sharpness", 1, "", groupingGuid, (int)NodeType.Transform2DEffect, "Transform2D"));
+                    break;
+                case NodeType.TransformMatrixValue:
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, 400d, "WhiteSmoke", 0, "", 1, "", groupingGuid, (int)NodeType.TransformMatrixValue, "Value"));
+                    break;
             }
         }
     }
