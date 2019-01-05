@@ -79,6 +79,9 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         {
             _table.DeleteAllEntities<T>();
         }
+        public void DeleteEntity(string uniqueId) {
+            _table.DeleteEntity<T>(uniqueId);
+        }
 
         private void clear(T instance)
         {

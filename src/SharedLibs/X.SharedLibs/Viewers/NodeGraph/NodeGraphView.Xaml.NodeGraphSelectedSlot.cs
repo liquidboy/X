@@ -59,6 +59,7 @@ namespace X.Viewer.NodeGraph
             if (slotUnderPoint.FoundSlot) {
                 var nameParts = slotUnderPoint.SlotElement.Name.Split("_");
                 var slotNodeKey = nameParts[1];
+                if (_selectedSlotNodeKey == slotNodeKey) { ClearGhostLink(); return; }
                 var slotIndex = int.Parse(nameParts[2]);
                 var nodeLink = _selectedSlotIsInputSlot ? 
                     new NodeLink(slotNodeKey, slotIndex, _selectedSlotNodeKey, _selectedSlotIndex, SelectedGraphGuid) : 

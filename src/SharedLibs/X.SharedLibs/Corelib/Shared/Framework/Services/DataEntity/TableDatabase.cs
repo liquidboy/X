@@ -57,6 +57,16 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         {
             this.Connection.Update(entityToUpdate);
         }
+
+        public void DeleteEntity<T>(string uniqueId) where T : new()
+        {
+            var name = typeof(T).Name;
+            var qry = $"SELECT * FROM '{name}' WHERE uniqueid='{uniqueId}'";
+            var found = this.Connection.Query<T>(qry);
+           
+            var deletedIt = this.Connection.Delete<T>(found.FirstOrDefault());
+
+        }
         
 
     }

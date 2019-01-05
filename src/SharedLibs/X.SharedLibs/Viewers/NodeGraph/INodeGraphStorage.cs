@@ -15,6 +15,8 @@ namespace X.Viewer.NodeGraph
         void Save(NodeLink link);
         void Save(SavedGraph graph);
 
+        void Delete(NodeLink link);
+
         List<SavedGraph> RetrieveGraphs();
         (bool GraphFound, List<Node> Nodes, List<NodeLink> NodeLinks) RetrieveGraph(string guid);
     }

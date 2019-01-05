@@ -26,13 +26,19 @@ namespace X.Viewer.NodeGraph
                 foreach (var link in _links) link.Grouping = graph.UniqueId.ToString();
             }
             foreach (var node in _nodes) Save(node.Value);
-            foreach (var link in _links) Save(link);
+            foreach (var link in _links)
+            {
+                if (link.DeleteIt) Delete(link);
+                else Save(link);
+            }
             return graph;
         }
 
         public void Save(Node node) => DBContext.Current.Save(node);
         public void Save(NodeLink link) => DBContext.Current.Save(link);
         public void Save(SavedGraph graph) => DBContext.Current.Save(graph);
+
+        public void Delete(NodeLink link) => DBContext.Current.DeleteEntity<NodeLink>(link.UniqueId);
 
         public List<SavedGraph> RetrieveGraphs() => DBContext.Current.RetrieveAllEntities<SavedGraph>();
         public (bool GraphFound, List<Node> Nodes, List<NodeLink> NodeLinks) RetrieveGraph(string guid)

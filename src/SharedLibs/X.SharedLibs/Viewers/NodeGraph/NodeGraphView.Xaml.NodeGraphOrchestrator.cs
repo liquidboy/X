@@ -12,6 +12,7 @@ namespace X.Viewer.NodeGraph
             _shouldStopPropogatingPointerMoved = false;
             SetSelectedSlot(point);
             SetSelectedNode(point);
+            SetSelectedNodeLink(point);
         }
 
         public void PointingCompleted(Point point) {

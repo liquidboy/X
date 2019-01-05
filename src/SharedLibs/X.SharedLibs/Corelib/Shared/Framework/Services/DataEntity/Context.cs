@@ -109,6 +109,10 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         public void Delete<T>(int idToDelete) {
             retrieveContext<T>().Delete(idToDelete);
         }
+
+        public void DeleteEntity<T>(string uniqueId) {
+            retrieveContext<T>().DeleteEntity(uniqueId);
+        }
     }
 
 

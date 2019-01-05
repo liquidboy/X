@@ -62,5 +62,15 @@ namespace X.Viewer.NodeGraph
             _nodes.Clear();
             _links.Clear();
         }
+
+        public void RemoveNodeLinkFromGraph(NodeLink nodeLink)
+        {
+            _links.Remove(nodeLink);
+        }
+
+        public NodeLink FindNodeLink(string uniqueid)
+        {
+            return _links.Where(link => link.UniqueId == uniqueid).FirstOrDefault();
+        }
     }
 }
