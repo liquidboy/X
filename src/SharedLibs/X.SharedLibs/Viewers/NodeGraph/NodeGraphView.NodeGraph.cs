@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace X.Viewer.NodeGraph
@@ -7,10 +8,12 @@ namespace X.Viewer.NodeGraph
     {
         IDictionary<string, Node> _nodes;
         List<NodeLink> _links;
+        List<Guid> _linksToDelete;
 
         public void InitializeNodeGraph() {
             _nodes = new Dictionary<string, Node>();
             _links = new List<NodeLink>();
+            _linksToDelete = new List<Guid>();
         }
 
         public void DrawNodeGraph() {
@@ -61,6 +64,7 @@ namespace X.Viewer.NodeGraph
         public void ClearGraph() {
             _nodes.Clear();
             _links.Clear();
+            _linksToDelete.Clear();
         }
 
         public void RemoveNodeLinkFromGraph(NodeLink nodeLink)
@@ -70,7 +74,12 @@ namespace X.Viewer.NodeGraph
 
         public NodeLink FindNodeLink(string uniqueid)
         {
-            return _links.Where(link => link.UniqueId == uniqueid).FirstOrDefault();
+            return _links.Where(link => link.UniqueName == uniqueid).FirstOrDefault();
+        }
+
+        public void MarkNodeLinkForDeletion(Guid uniqueId)
+        {
+            _linksToDelete.Add(uniqueId);
         }
     }
 }

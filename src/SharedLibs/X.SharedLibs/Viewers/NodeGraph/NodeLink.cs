@@ -10,8 +10,7 @@ namespace X.Viewer.NodeGraph
         public int OutputSlotIndex { get; set; }
         public string Grouping { get; set; }
         public string Value1 { get; set; }
-        public bool DeleteIt;
-
+        
         public NodeLink() { }
         public NodeLink(string outputNodeKey, int outputSlotIndex, string inputNodeKey, int inputSlotIndex, string grouping)
         {
@@ -25,6 +24,6 @@ namespace X.Viewer.NodeGraph
             : this (outputNodeKey, outputSlotIndex, inputNodeKey, inputSlotIndex, grouping) {
             Value1 = value;
         }
-        public string UniqueId { get { return $"nsl_{InputNodeKey}_{InputSlotIndex}_{OutputNodeKey}_{OutputSlotIndex}"; } }
+        public string UniqueName { get { return $"nsl_{InputNodeKey}_{InputSlotIndex}_{OutputNodeKey}_{OutputSlotIndex}"; } }
     }
 }

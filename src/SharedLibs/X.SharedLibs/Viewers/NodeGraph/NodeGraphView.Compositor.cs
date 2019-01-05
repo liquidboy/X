@@ -55,8 +55,6 @@ namespace X.Viewer.NodeGraph
             {
                 
             }
-
-            
         }
         
         public void UpdateNodeVisual(NodeNodeLinkModel nodeNodeLinkModel, UIElement parentRootOfVisual)

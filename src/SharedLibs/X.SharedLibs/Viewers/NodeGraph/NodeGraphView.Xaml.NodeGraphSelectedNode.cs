@@ -48,7 +48,6 @@ namespace X.Viewer.NodeGraph
 
             //update node-slot-links positions between the node-slots
             DrawNodeSlotLink(_selectedNodeKey);
-
         }
     }
 }

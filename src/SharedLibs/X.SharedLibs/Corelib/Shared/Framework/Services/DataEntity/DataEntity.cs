@@ -79,7 +79,7 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         {
             _table.DeleteAllEntities<T>();
         }
-        public void DeleteEntity(string uniqueId) {
+        public void DeleteEntity(Guid uniqueId) {
             _table.DeleteEntity<T>(uniqueId);
         }
 

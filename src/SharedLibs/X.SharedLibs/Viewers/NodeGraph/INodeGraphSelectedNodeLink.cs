@@ -7,7 +7,7 @@ namespace X.Viewer.NodeGraph
     public interface INodeGraphSelectedNodeLink
     {
         bool IsNodeLinkSelected { get; }
-        void SetSelectedNodeLink(Point point);
-        void ClearSelectedNodeLink(Point point);
+        bool SetSelectedNodeLink(Point point, bool currentPointingStarted);
+        void ClearSelectedNodeLink();
     }
 }

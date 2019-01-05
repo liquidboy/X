@@ -5,6 +5,8 @@ using System.Linq;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using System.Diagnostics;
+using Windows.Foundation;
+using Windows.UI.Xaml;
 
 namespace X.Viewer.NodeGraph
 {
@@ -57,9 +59,8 @@ namespace X.Viewer.NodeGraph
         double ptDifYStart = 0;
         private void layoutRoot_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            IsPointerDown = true;
             ptStart = e.GetCurrentPoint(null);
-            PointingStarted(ptStart.Position);
+            IsPointerDown = PointingStarted(ptStart.Position);
         }
 
         private void layoutRoot_PointerReleased(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
@@ -99,10 +100,15 @@ namespace X.Viewer.NodeGraph
             ct.TranslateX = -1 * ptDifX;
             ct.TranslateY = -1 * ptDifY;
         }
-        
 
 
+        private Point GetBoardTranslation() {
+            var ct = nodeGraphCanvas.RenderTransform as CompositeTransform;
+            return new Point(ct.TranslateX, ct.TranslateY);
+        }
 
+        private UIElement GetBoard() { return nodeGraphCanvas; }
+        private double GetBoardScale() { return nodeGraphZoomContainer.Scale; }
 
 
         private void ButClear_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)

@@ -232,11 +232,11 @@ namespace X.Viewer.NodeGraph
             OutputSlotPosition outputSlotPosition = outputNode.GetOutputSlotPosition(nodeLink.OutputSlotIndex);
 
             // find node-slot-link if it exists and then update it
-            var foundUIElement = _uiNodeGraphPanelXamlRoot.FindName(nodeLink.UniqueId);
-            if (TryUpdateExistingNodeSlotLink(nodeLink.UniqueId, inputSlotPosition, outputSlotPosition)) return;
+            var foundUIElement = _uiNodeGraphPanelXamlRoot.FindName(nodeLink.UniqueName);
+            if (TryUpdateExistingNodeSlotLink(nodeLink.UniqueName, inputSlotPosition, outputSlotPosition)) return;
             
             //create new node-slot-link
-            CreateNewNodeSlotLink(nodeLink.UniqueId, inputSlotPosition, outputSlotPosition, Colors.Orange);
+            CreateNewNodeSlotLink(nodeLink.UniqueName, inputSlotPosition, outputSlotPosition, Colors.Orange);
         }
 
         (bool ElementFound, UIElement Element) HasNodeSlotLinkAlreadyBeenRendered(string id) {

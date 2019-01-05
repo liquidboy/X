@@ -28,7 +28,7 @@ namespace X.Viewer.NodeGraph
             foreach (var node in _nodes) Save(node.Value);
             foreach (var link in _links)
             {
-                if (link.DeleteIt) Delete(link);
+                if(_linksToDelete.Contains(link.UniqueId)) Delete(link);
                 else Save(link);
             }
             return graph;

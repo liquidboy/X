@@ -1,4 +1,6 @@
-﻿namespace X.Viewer.NodeGraph
+﻿using System;
+
+namespace X.Viewer.NodeGraph
 {
     // this knows nothing about the rendering technology
     public interface INodeGraph
@@ -12,6 +14,7 @@
         void AddNodeToGraph(Node node);
         void AddLinkToGraph(NodeLink nodeLink);
         void RemoveNodeLinkFromGraph(NodeLink nodeLink);
+        void MarkNodeLinkForDeletion(Guid uniqueId);
         void ClearGraph();
     }
 }

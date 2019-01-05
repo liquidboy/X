@@ -8,11 +8,13 @@ namespace X.Viewer.NodeGraph
     {
         bool _shouldStopPropogatingPointerMoved;
 
-        public void PointingStarted(Point point) {
+        public bool PointingStarted(Point point) {
+            var pointingStarted = true;
             _shouldStopPropogatingPointerMoved = false;
             SetSelectedSlot(point);
             SetSelectedNode(point);
-            SetSelectedNodeLink(point);
+            pointingStarted = SetSelectedNodeLink(point, pointingStarted);
+            return pointingStarted;
         }
 
         public void PointingCompleted(Point point) {
@@ -27,6 +29,10 @@ namespace X.Viewer.NodeGraph
             {
                 //join slots
                 MoveSelectedSlot(distanceToMove, nodeGraphZoomContainer.Scale);
+                _shouldStopPropogatingPointerMoved = true;
+            } else if (IsNodeLinkSelected)
+            {
+                //changing node-link
                 _shouldStopPropogatingPointerMoved = true;
             }
             else if (IsNodeSelected)
@@ -132,7 +138,7 @@ namespace X.Viewer.NodeGraph
             ClearCompositor();
             ClearRenderer();
             ClearSelectedGraph();
-            
+            ClearSelectedNodeLink();
         }
 
         void ClearNodeOrSlot(Point point)

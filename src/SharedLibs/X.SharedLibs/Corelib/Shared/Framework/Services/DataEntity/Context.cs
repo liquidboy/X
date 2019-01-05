@@ -110,8 +110,8 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
             retrieveContext<T>().Delete(idToDelete);
         }
 
-        public void DeleteEntity<T>(string uniqueId) {
-            retrieveContext<T>().DeleteEntity(uniqueId);
+        public void DeleteEntity<T>(Guid guid) {
+            retrieveContext<T>().DeleteEntity(guid);
         }
     }
 

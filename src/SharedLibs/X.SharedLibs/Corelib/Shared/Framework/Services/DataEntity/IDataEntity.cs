@@ -17,7 +17,7 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         int FindAll();
         void Delete(T instance);
         void Delete(int id);
-        void DeleteEntity(string uniqueId);
+        void DeleteEntity(Guid uniqueId);
         void DeleteAll();
         void DeleteAllEntities();
     }

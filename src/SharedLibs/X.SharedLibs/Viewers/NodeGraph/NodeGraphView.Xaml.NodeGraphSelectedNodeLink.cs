@@ -8,6 +8,7 @@ using Windows.Foundation;
 using System.Numerics;
 using System.Diagnostics;
 using Windows.UI;
+using System;
 
 namespace X.Viewer.NodeGraph
 {
@@ -17,16 +18,12 @@ namespace X.Viewer.NodeGraph
 
         public bool IsNodeLinkSelected => !string.IsNullOrEmpty(_selectedNodeLinkKey);
 
-        public void ClearSelectedNodeLink(OutputSlotPosition point)
+        public bool SetSelectedNodeLink(OutputSlotPosition point, bool currentPointingStarted)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public void SetSelectedNodeLink(OutputSlotPosition point)
-        {
-            if (IsSlotSelected) return; // short circuit if SLOT is selected
-            if (IsNodeSelected) return; // short circuit if SLOT is selected
-            if (IsNodeLinkSelected) return; //only one slot can be selected at any given time for now
+            var returnPointingStarted = currentPointingStarted;
+            if (IsSlotSelected) return returnPointingStarted; // short circuit if SLOT is selected
+            if (IsNodeSelected) return returnPointingStarted; // short circuit if SLOT is selected
+            if (IsNodeLinkSelected) return returnPointingStarted; //only one slot can be selected at any given time for now
 
             var nodeLinkUnderPoint = TryToFindNodeLinkUnderPoint(point);
             if (nodeLinkUnderPoint.FoundNodeLink)
@@ -36,10 +33,53 @@ namespace X.Viewer.NodeGraph
                 //var slotIndexStart = int.Parse(nameParts[2]);
                 //var slotNodeKeyEnd = nameParts[3];
                 //var slotIndexEnd = int.Parse(nameParts[4]);
-
+                
                 var foundNodeLink = FindNodeLink(nodeLinkUnderPoint.SlotElement.Name);
-                if (foundNodeLink != null) foundNodeLink.DeleteIt = true;
+                if (foundNodeLink != null)
+                {
+                    returnPointingStarted = false; //we dont want the board to think the pointer was pressed
+                    _selectedNodeLinkKey = nodeLinkUnderPoint.SlotElement.Name;
+
+                    var menuFlyout = new MenuFlyout();
+                    var m = new MenuFlyoutItem() { Text = "Delete", Tag = foundNodeLink.UniqueId }; m.Click += MenuFlyoutItem_Click; menuFlyout.Items.Add(m);
+                    menuFlyout.Closed += MenuFlyout_Closed;
+                    nodeLinkUnderPoint.SlotElement.ContextFlyout = menuFlyout;
+                    var boardTraslation = GetBoardTranslation();
+                    var boardScale = GetBoardScale();
+                    var gt = nodeLinkUnderPoint.SlotElement.TransformToVisual(GetBoard());
+                    var tp = gt.TransformPoint(point);
+                    Debug.WriteLine($"board scale : {boardScale}");
+                    Debug.WriteLine($"board translation : {boardTraslation}");
+                    Debug.WriteLine($"cursor point: {point}");
+                    Debug.WriteLine($"link translation point: {tp}");
+                    menuFlyout.ShowAt(nodeLinkUnderPoint.SlotElement, new InputSlotPosition(Math.Abs(tp.X) - ( boardTraslation.X/ boardScale), Math.Abs(tp.Y) - (boardTraslation.Y / boardScale)));
+                }
             }
+
+            return returnPointingStarted;
+        }
+
+        private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            var menuItem = (MenuFlyoutItem)sender;
+            Debug.WriteLine($"menu clicked: {menuItem.Text} - { menuItem.Tag }");
+            switch (menuItem.Text) {
+                case "Delete":
+                    MarkNodeLinkForDeletion((Guid)menuItem.Tag);
+                    break;
+            }
+
+        }
+
+        private void MenuFlyout_Closed(object sender, object e)
+        {
+            Debug.WriteLine($"menu closed");
+            var menuFlyout = (MenuFlyout)sender;
+            menuFlyout.Closed -= MenuFlyout_Closed;
+
+            foreach (MenuFlyoutItem mi in menuFlyout.Items)  mi.Click -= MenuFlyoutItem_Click;
+            
+            ClearSelectedNodeLink();
         }
 
         private (bool FoundNodeLink, FrameworkElement SlotElement) TryToFindNodeLinkUnderPoint(Point point)
@@ -57,5 +97,11 @@ namespace X.Viewer.NodeGraph
             }
             return (false, null);
         }
+        
+        public void ClearSelectedNodeLink()
+        {
+            _selectedNodeLinkKey = string.Empty;
+        }
+
     }
 }
