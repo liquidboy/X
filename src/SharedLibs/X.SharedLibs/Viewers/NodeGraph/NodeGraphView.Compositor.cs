@@ -124,7 +124,9 @@ namespace X.Viewer.NodeGraph
                             {
                                 var inputSlotSources = nodeNodeLinkModel.InputNodeLinks.ToArray();
                                 if (inputSlotSources.Length < 3) nodeVisual.Brush = null;
+                                var x3 = inputSlotSources[1];
                                 var nl = inputSlotSources[2];
+                                int.TryParse(x3.Value1, out int x3Value);
                                 int.TryParse(nl.Value1, out int bm);
                                 var transform2DEffectDesc = new Transform2DEffect
                                 {
@@ -133,7 +135,7 @@ namespace X.Viewer.NodeGraph
                                     TransformMatrix = new Matrix3x2(
                                       -1, 0,
                                       0, 1,
-                                      200, 0),//m_sprite.Size.X, 0),
+                                      x3Value, 0),//m_sprite.Size.X, 0),
                                     BorderMode = (EffectBorderMode)Enum.Parse(typeof(EffectBorderMode), bm.ToString()),
                                 };
                                 try
@@ -174,12 +176,12 @@ namespace X.Viewer.NodeGraph
 
             switch (effectType) {
                 case NodeType.TextureAsset:
-                    if (inputSlotSources.Length == 0) return null;
+                    if (inputSlotSources.Length < 1) return null;
                     var assetName = ((NodeLink)inputSlotSources[0]).Value1;
                     if (string.IsNullOrEmpty(assetName)) return null;
                     return CreateBrushFromAsset(compositor, assetName);
                 case NodeType.AlphaMaskEffect:
-                    if (inputSlotSources.Length < 2) return null;
+                    if (inputSlotSources.Length < 1) return null;
                     var desc = new CompositeEffect
                     {
                         Mode = CanvasComposite.DestinationIn,
@@ -402,8 +404,19 @@ namespace X.Viewer.NodeGraph
                     return;
                 case NodeType.AlphaMaskEffect:
                     var alphaMaskEffectBrush = (CompositionEffectBrush)brushToUpdate;
-                    alphaMaskEffectBrush.SetSourceParameter("Image", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);
-                    alphaMaskEffectBrush.SetSourceParameter("Mask", _nodeVisuals[((NodeLink)inputSlotSources[1]).OutputNodeKey].Brush);
+                    var nl1 = (NodeLink)inputSlotSources[0];
+                    var nl2 = (NodeLink)inputSlotSources[1];
+                    if (nl1 != null && nl2 != null) {
+                        if (!_nodeVisuals.ContainsKey((nl1).OutputNodeKey)) return;
+                        if (!_nodeVisuals.ContainsKey((nl2).OutputNodeKey)) return;
+
+                        var nv1 = _nodeVisuals[(nl1).OutputNodeKey];
+                        var nv2 = _nodeVisuals[(nl2).OutputNodeKey];
+
+                        if (nv1 != null && nv1.Brush != null) alphaMaskEffectBrush.SetSourceParameter("Image", nv1.Brush);
+                        if (nv2 != null && nv2.Brush != null) alphaMaskEffectBrush.SetSourceParameter("Mask", nv2.Brush);
+
+                    }
                     return;
                 case NodeType.ArithmeticEffect:
                     try
@@ -565,15 +578,15 @@ namespace X.Viewer.NodeGraph
 
         private CompositionSurfaceBrush CreateBrushFromAsset(Compositor compositor, string name)
         {
-            try {
+            //try {
                 SurfaceLoader.Initialize(compositor);
                 var task = Task.Run(() => SurfaceLoader.LoadFromUri(new Uri("ms-appx:///Assets/" + name)));
                 task.Wait();
                 var surface = task.Result;
 
                 return compositor.CreateSurfaceBrush(surface);
-            }
-            catch { return null; }
+            //}
+            //catch { return null; }
         }
 
         public void ClearCompositor()
