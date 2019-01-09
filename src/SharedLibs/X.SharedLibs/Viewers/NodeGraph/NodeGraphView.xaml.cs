@@ -24,6 +24,7 @@ namespace X.Viewer.NodeGraph
 
         public void Load()
         {
+            sharedShadow.Receivers.Add(grdBackground);
             //var ct = nodeGraphCanvas.RenderTransform as CompositeTransform;
             //nodeGraphZoomContainer.Scale = ct.ScaleX;
             InitializeStorage();

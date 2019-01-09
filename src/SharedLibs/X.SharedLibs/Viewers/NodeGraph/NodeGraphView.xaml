@@ -13,6 +13,10 @@
         
     </UserControl.Resources>
     <Grid x:Name="layoutRoot" Background="White" PointerWheelChanged="layoutRoot_PointerWheelChanged" PointerPressed="layoutRoot_PointerPressed" PointerReleased="layoutRoot_PointerReleased" PointerMoved="layoutRoot_PointerMoved">
+        <Grid.Resources>
+            <ThemeShadow x:Name="sharedShadow" />
+        </Grid.Resources>
+        <Grid x:Name="grdBackground" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White"></Grid>
         <xuizc:Canvas x:Name="nodeGraphZoomContainer" >
             <Canvas x:Name="nodeGraphCanvas">
                 <Canvas.RenderTransform>

@@ -9,6 +9,7 @@ using Windows.Foundation;
 using Windows.UI.Xaml.Shapes;
 using X.Viewer.NodeGraph.NodeTypeComponents;
 using System.Collections.Generic;
+using Windows.UI.Xaml.Media.Media3D;
 
 namespace X.Viewer.NodeGraph
 {
@@ -85,6 +86,10 @@ namespace X.Viewer.NodeGraph
             };
             newNodeGroup.SetValue(Canvas.LeftProperty, node.PositionX);
             newNodeGroup.SetValue(Canvas.TopProperty, node.PositionY);
+
+            //shadow caster
+            newNodeGroup.Shadow = sharedShadow;
+            newNodeGroup.Projection = new PlaneProjection() { GlobalOffsetZ = 1 };
 
             return newNodeGroup;
         }
