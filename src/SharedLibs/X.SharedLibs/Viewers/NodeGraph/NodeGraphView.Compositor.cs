@@ -169,10 +169,9 @@ namespace X.Viewer.NodeGraph
             spriteVisual.Size = new Vector2((float)newWidth, (float)newHeight);
         }
 
+        
 
-
-
-        private CompositionBrush CreateGraphicsBrush(Compositor compositor, NodeType effectType, object[] inputSlotSources) {
+        private CompositionBrush CreateGraphicsBrush(Compositor compositor, NodeType effectType, NodeLink[] inputSlotSources) {
 
             switch (effectType) {
                 case NodeType.TextureAsset:
@@ -424,19 +423,11 @@ namespace X.Viewer.NodeGraph
                         var arithmeticEffectBrush = (CompositionEffectBrush)brushToUpdate;
                         arithmeticEffectBrush.SetSourceParameter("Source1", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);
                         arithmeticEffectBrush.SetSourceParameter("Source2", _nodeVisuals[((NodeLink)inputSlotSources[2]).OutputNodeKey].Brush);
-
-                        var multiplyAmountValue = ((NodeLink)inputSlotSources[4]).Value1;
-                        var source1AmountValue = ((NodeLink)inputSlotSources[1]).Value1;
-                        var source2AmountValue = ((NodeLink)inputSlotSources[3]).Value1;
-                        var offsetValue = ((NodeLink)inputSlotSources[5]).Value1;
-                        if (string.IsNullOrEmpty(multiplyAmountValue)) multiplyAmountValue = "1";
-                        if (string.IsNullOrEmpty(source1AmountValue)) source1AmountValue = "0";
-                        if (string.IsNullOrEmpty(source2AmountValue)) source2AmountValue = "0";
-                        if (string.IsNullOrEmpty(offsetValue)) offsetValue = "0";
-                        arithmeticEffectBrush.Properties.InsertScalar("effect.MultiplyAmount", (float)(float.Parse(multiplyAmountValue)));
-                        arithmeticEffectBrush.Properties.InsertScalar("effect.Source1Amount", (float)(float.Parse(source1AmountValue)));
-                        arithmeticEffectBrush.Properties.InsertScalar("effect.Source2Amount", (float)(float.Parse(source2AmountValue)));
-                        arithmeticEffectBrush.Properties.InsertScalar("effect.Offset", (float)(float.Parse(offsetValue)));
+                        
+                        arithmeticEffectBrush.Properties.InsertScalar("effect.MultiplyAmount", float.Parse(getSlotValue(inputSlotSources, 4, "1")));
+                        arithmeticEffectBrush.Properties.InsertScalar("effect.Source1Amount", float.Parse(getSlotValue(inputSlotSources, 1, "0")));
+                        arithmeticEffectBrush.Properties.InsertScalar("effect.Source2Amount", float.Parse(getSlotValue(inputSlotSources, 3, "0")));
+                        arithmeticEffectBrush.Properties.InsertScalar("effect.Offset", float.Parse(getSlotValue(inputSlotSources, 5, "0")));
                     }
                     catch { };
                     
@@ -451,24 +442,13 @@ namespace X.Viewer.NodeGraph
                     return;
                 case NodeType.ColorSourceEffect:
                     var colorSourceEffectBrush = (CompositionEffectBrush)brushToUpdate;
-                    var redValue = ((NodeLink)inputSlotSources[0]).Value1;
-                    var greenValue = ((NodeLink)inputSlotSources[1]).Value1;
-                    var blueValue = ((NodeLink)inputSlotSources[2]).Value1;
-                    var alphaValue = ((NodeLink)inputSlotSources[3]).Value1;
-
-                    if (string.IsNullOrEmpty(redValue)) redValue = "0";
-                    if (string.IsNullOrEmpty(greenValue)) greenValue = "0";
-                    if (string.IsNullOrEmpty(blueValue)) blueValue = "0";
-                    if (string.IsNullOrEmpty(alphaValue)) alphaValue = "0";
-                    
                     var newColor = new Color();
-                    newColor.R = (byte)(int.Parse(redValue));
-                    newColor.G = (byte)(int.Parse(greenValue));
-                    newColor.B = (byte)(int.Parse(blueValue));
-                    newColor.A = (byte)(int.Parse(alphaValue));
+                    newColor.R = (byte)(int.Parse(getSlotValue(inputSlotSources, 0, "0")));
+                    newColor.G = (byte)(int.Parse(getSlotValue(inputSlotSources, 1, "0")));
+                    newColor.B = (byte)(int.Parse(getSlotValue(inputSlotSources, 2, "0")));
+                    newColor.A = (byte)(int.Parse(getSlotValue(inputSlotSources, 3, "0")));
 
                     colorSourceEffectBrush.Properties.InsertColor( "effect.Color", newColor);
-
                     return;
                 case NodeType.ContrastEffect:
                     var brushContrastEffect = (CompositionEffectBrush)brushToUpdate;
@@ -492,46 +472,19 @@ namespace X.Viewer.NodeGraph
                 case NodeType.GammaTransferEffect:
                     var gammaTransferEffectBrush = (CompositionEffectBrush)brushToUpdate;
                     gammaTransferEffectBrush.SetSourceParameter("Image", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);
-
-
-                    var ramp = ((NodeLink)inputSlotSources[1]).Value1;
-                    var rexp = ((NodeLink)inputSlotSources[2]).Value1;
-                    var rofs = ((NodeLink)inputSlotSources[3]).Value1;
-                    var gamp = ((NodeLink)inputSlotSources[4]).Value1;
-                    var gexp = ((NodeLink)inputSlotSources[5]).Value1;
-                    var gofs = ((NodeLink)inputSlotSources[6]).Value1;
-                    var bamp = ((NodeLink)inputSlotSources[7]).Value1;
-                    var bexp = ((NodeLink)inputSlotSources[8]).Value1;
-                    var bofs = ((NodeLink)inputSlotSources[9]).Value1;
-                    var aamp = ((NodeLink)inputSlotSources[10]).Value1;
-                    var aexp = ((NodeLink)inputSlotSources[11]).Value1;
-                    var aofs = ((NodeLink)inputSlotSources[12]).Value1;
-
-                    if (string.IsNullOrEmpty(ramp)) ramp = "1";
-                    if (string.IsNullOrEmpty(rexp)) rexp = "1";
-                    if (string.IsNullOrEmpty(rofs)) rofs = "0";
-                    if (string.IsNullOrEmpty(gamp)) gamp = "1";
-                    if (string.IsNullOrEmpty(gexp)) gexp = "1";
-                    if (string.IsNullOrEmpty(gofs)) gofs = "0";
-                    if (string.IsNullOrEmpty(bamp)) bamp = "1";
-                    if (string.IsNullOrEmpty(bexp)) bexp = "1";
-                    if (string.IsNullOrEmpty(bofs)) bofs = "0";
-                    if (string.IsNullOrEmpty(aamp)) aamp = "1";
-                    if (string.IsNullOrEmpty(aexp)) aexp = "1";
-                    if (string.IsNullOrEmpty(aofs)) aofs = "0";
-
-                    gammaTransferEffectBrush.Properties.InsertScalar("effect.RedAmplitude", float.Parse(ramp));
-                    gammaTransferEffectBrush.Properties.InsertScalar("effect.RedExponent", float.Parse(rexp));
-                    gammaTransferEffectBrush.Properties.InsertScalar("effect.RedOffset", float.Parse(rofs));
-                    gammaTransferEffectBrush.Properties.InsertScalar("effect.GreenAmplitude", float.Parse(gamp));
-                    gammaTransferEffectBrush.Properties.InsertScalar("effect.GreenExponent", float.Parse(gexp));
-                    gammaTransferEffectBrush.Properties.InsertScalar("effect.GreenOffset", float.Parse(gofs));
-                    gammaTransferEffectBrush.Properties.InsertScalar("effect.BlueAmplitude", float.Parse(bamp));
-                    gammaTransferEffectBrush.Properties.InsertScalar("effect.BlueExponent", float.Parse(bexp));
-                    gammaTransferEffectBrush.Properties.InsertScalar("effect.BlueOffset", float.Parse(bofs));
-                    gammaTransferEffectBrush.Properties.InsertScalar("effect.AlphaAmplitude", float.Parse(aamp));
-                    gammaTransferEffectBrush.Properties.InsertScalar("effect.AlphaExponent", float.Parse(aexp));
-                    gammaTransferEffectBrush.Properties.InsertScalar("effect.AlphaOffset", float.Parse(aofs));
+                    
+                    gammaTransferEffectBrush.Properties.InsertScalar("effect.RedAmplitude", float.Parse(getSlotValue(inputSlotSources, 1, "1")));
+                    gammaTransferEffectBrush.Properties.InsertScalar("effect.RedExponent", float.Parse(getSlotValue(inputSlotSources, 2, "1")));
+                    gammaTransferEffectBrush.Properties.InsertScalar("effect.RedOffset", float.Parse(getSlotValue(inputSlotSources, 3, "0")));
+                    gammaTransferEffectBrush.Properties.InsertScalar("effect.GreenAmplitude", float.Parse(getSlotValue(inputSlotSources, 4, "1")));
+                    gammaTransferEffectBrush.Properties.InsertScalar("effect.GreenExponent", float.Parse(getSlotValue(inputSlotSources, 5, "1")));
+                    gammaTransferEffectBrush.Properties.InsertScalar("effect.GreenOffset", float.Parse(getSlotValue(inputSlotSources, 6, "0")));
+                    gammaTransferEffectBrush.Properties.InsertScalar("effect.BlueAmplitude", float.Parse(getSlotValue(inputSlotSources, 7, "1")));
+                    gammaTransferEffectBrush.Properties.InsertScalar("effect.BlueExponent", float.Parse(getSlotValue(inputSlotSources, 8, "1")));
+                    gammaTransferEffectBrush.Properties.InsertScalar("effect.BlueOffset", float.Parse(getSlotValue(inputSlotSources, 9, "0")));
+                    gammaTransferEffectBrush.Properties.InsertScalar("effect.AlphaAmplitude", float.Parse(getSlotValue(inputSlotSources, 10, "1")));
+                    gammaTransferEffectBrush.Properties.InsertScalar("effect.AlphaExponent", float.Parse(getSlotValue(inputSlotSources, 11, "1")));
+                    gammaTransferEffectBrush.Properties.InsertScalar("effect.AlphaOffset", float.Parse(getSlotValue(inputSlotSources, 12, "0")));
 
                     return;
                 case NodeType.HueRotationEffect:
@@ -574,8 +527,12 @@ namespace X.Viewer.NodeGraph
             }
         }
 
-
-
+        private string getSlotValue(object[] inputSlotSources, int index, string defaultIfEmpty) {
+            var found = ((NodeLink)inputSlotSources[index]).Value1;
+            if (string.IsNullOrEmpty(found)) found = "1";
+            return found;
+        }
+        
         private CompositionSurfaceBrush CreateBrushFromAsset(Compositor compositor, string name)
         {
             //try {
