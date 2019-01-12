@@ -783,6 +783,7 @@
     <Compile Include="Viewers\NodeGraph\NodeTypeComponents\TransformMatrixValue.xaml.cs">
       <DependentUpon>TransformMatrixValue.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Viewers\NodeGraph\NodeTypeMetadata.cs" />
     <Compile Include="Viewers\NodeGraph\NodeVisual.cs" />
     <Compile Include="Viewers\NodeGraph\NodeNodeLinkModel.cs" />
     <Compile Include="Viewers\NodeGraph\NodeType.cs" />

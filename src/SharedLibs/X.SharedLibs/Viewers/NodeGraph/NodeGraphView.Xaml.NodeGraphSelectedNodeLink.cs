@@ -28,12 +28,6 @@ namespace X.Viewer.NodeGraph
             var nodeLinkUnderPoint = TryToFindNodeLinkUnderPoint(point);
             if (nodeLinkUnderPoint.FoundNodeLink)
             {
-                //var nameParts = nodeLinkUnderPoint.SlotElement.Name.Split("_");
-                //var slotNodeKeyStart = nameParts[1];
-                //var slotIndexStart = int.Parse(nameParts[2]);
-                //var slotNodeKeyEnd = nameParts[3];
-                //var slotIndexEnd = int.Parse(nameParts[4]);
-                
                 var foundNodeLink = FindNodeLink(nodeLinkUnderPoint.SlotElement.Name);
                 if (foundNodeLink != null)
                 {

@@ -1,11 +1,6 @@
 ﻿using System.Collections.Generic;
-using GalaSoft.MvvmLight.Messaging;
 using System.Linq;
-using Windows.Foundation;
 using System;
-using System.Runtime.Serialization;
-using Newtonsoft.Json.Linq;
-using SumoNinjaMonkey.Framework;
 using X.CoreLib.SQLite;
 
 namespace X.CoreLib.Shared.Framework.Services.DataEntity
@@ -50,24 +45,16 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
                 return _connection.Query<T>(qry);
             }catch{ return new List<T>(); }
         }
-        public void DeleteAllEntities<T>()
-        {
-            this._connection.DeleteAll<T>();
-        }
-        
-        public void UpdateEntity<T>(Guid id, T entityToUpdate)
-        {
-            this._connection.Update(entityToUpdate);
-        }
+        public void DeleteAllEntities<T>() => _connection.DeleteAll<T>();
+        public void UpdateEntity<T>(Guid id, T entityToUpdate) => _connection.Update(entityToUpdate);
 
         public void DeleteEntity<T>(Guid uniqueId) where T : new()
         {
             //var name = typeof(T).Name;
             //var qry = $"SELECT * FROM '{name}' WHERE uniqueid='{uniqueId}'";
             //var found = this.Connection.Query<T>(qry);
-
-            var found = GetEntity<T>(uniqueId);
-            var result = this._connection.Delete<T>(uniqueId);
+            //var found = GetEntity<T>(uniqueId);
+            var result = _connection.Delete<T>(uniqueId);
 
 
         }

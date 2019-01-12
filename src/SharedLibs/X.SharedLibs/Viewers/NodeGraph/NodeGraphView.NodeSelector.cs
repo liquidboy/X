@@ -6,32 +6,32 @@ namespace X.Viewer.NodeGraph
 {
     public partial class NodeGraphView : INodeSelector
     {
-        
+        List<NodeTypeMetadata> _nodeTypeMetadata;
+
         public void InitializeNodeSelector()
         {
+            _nodeTypeMetadata = new List<NodeTypeMetadata>();
             List<ComboBoxItem> cbItems = new List<ComboBoxItem>();
 
             var values = Enum.GetValues(typeof(NodeType));
 
             foreach(var value in values){
-                cbItems.Add(new ComboBoxItem() { Content = Enum.Parse(typeof(NodeType), value.ToString()), Tag = (int)value});
+                NodeType nt = (NodeType)value;
+                _nodeTypeMetadata.Add(new NodeTypeMetadata(nt));
             }
-
-            cbNodes.ItemsSource = cbItems;
-
-
+            
+            cbNodes.ItemsSource = _nodeTypeMetadata;
         }
 
-        public void OnNodeTypeSelected(string nodeTypeName)
+        public void OnNodeTypeSelected(NodeType nodeType)
         {
             var defaultWidth = 200d;
-            var nt = Enum.Parse(typeof(NodeType), nodeTypeName);
             var newId = $"Node-{Guid.NewGuid().ToString()}";
             var nodePosX = 1500d;
             var nodePosY = 1200d;
             var groupingGuid = IsGraphSelected ? SelectedGraphGuid : Guid.Empty.ToString();
 
-            switch (nt) {
+            switch (nodeType) {
                 case NodeType.TextboxValue:
                     AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 0, "", 1, "", groupingGuid, (int)NodeType.TextboxValue, "Value"));
                     break;
@@ -52,6 +52,9 @@ namespace X.Viewer.NodeGraph
                     break;
                 case NodeType.ContrastEffect:
                     AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 2, "source,contrast", 1, "", groupingGuid, (int)NodeType.ContrastEffect, "Contrast"));
+                    break;
+                case NodeType.SaturationEffect:
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 2, "source,contrast", 1, "", groupingGuid, (int)NodeType.SaturationEffect, "Saturation"));
                     break;
                 case NodeType.ArithmeticEffect:
                     AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 6, "source1,source1Amount,source2,source2Amount,multiplyAmount,offset", 1, "", groupingGuid, (int)NodeType.ArithmeticEffect, "Arithmentic Composite")); break;

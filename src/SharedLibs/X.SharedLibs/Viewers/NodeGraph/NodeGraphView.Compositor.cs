@@ -339,6 +339,9 @@ namespace X.Viewer.NodeGraph
                     var invertEffectBrush = compositor.CreateEffectFactory(invertEffectDesc).CreateBrush();
                     UpdateGraphicsBrush(compositor, effectType, inputSlotSources, invertEffectBrush);
                     return invertEffectBrush;
+                case NodeType.SaturationEffect:
+
+                    return null;
                 case NodeType.SepiaEffect:
                     if (inputSlotSources.Length < 3) return null;
                     var nlam = (NodeLink)inputSlotSources[2];
@@ -498,6 +501,9 @@ namespace X.Viewer.NodeGraph
                 case NodeType.InvertEffect:
                     var invertEffectBrush = (CompositionEffectBrush)brushToUpdate;
                     //invertEffectBrush.SetSourceParameter("Image", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);  <-- causing a crash on 18305
+                    return;
+                case NodeType.SaturationEffect:
+
                     return;
                 case NodeType.SepiaEffect:
                     var sepiaEffectBrushe = (CompositionEffectBrush)brushToUpdate;

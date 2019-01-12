@@ -3,6 +3,6 @@
     public interface INodeSelector
     {
         void InitializeNodeSelector();
-        void OnNodeTypeSelected(string nodeTypeName);
+        void OnNodeTypeSelected(NodeType nodeType);
     }
 }

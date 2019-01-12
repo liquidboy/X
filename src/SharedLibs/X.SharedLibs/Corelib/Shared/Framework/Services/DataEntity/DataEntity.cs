@@ -29,15 +29,9 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
             else { _table = AppDatabase.Current.Tables[_tableName]; }
             //Context.Current.RegisterEntity<T>();
         }
-
-
-        public static DataEntity<T> Create() {
-            return new DataEntity<T>();
-        }
-        public static DataEntity<T> CreateReadOnly()
-        {
-            return new DataEntity<T>(false, true);
-        }
+        
+        public static DataEntity<T> Create => new DataEntity<T>();
+        public static DataEntity<T> CreateReadOnly => new DataEntity<T>(false, true);
 
         //todo: optimization on columns to determine if they changed and thus do a DeleteAllColumns and rebuild
         private void InitEntityDatabase()
@@ -63,25 +57,12 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
             
             return instance._internalRowId;
         }
-        public T RetrieveEntity(Guid id)
-        {
-            return _table.GetEntity<T>(id);
-        }
-        public List<T> RetrieveEntities(string where)
-        {
-            return _table.GetEntities<T>(where);
-        }
-        public List<T> RetrieveAllEntities()
-        {
-            return _table.GetAllEntities<T>();
-        }
-        public void DeleteAllEntities()
-        {
-            _table.DeleteAllEntities<T>();
-        }
-        public void DeleteEntity(Guid uniqueId) {
-            _table.DeleteEntity<T>(uniqueId);
-        }
+
+        public T RetrieveEntity(Guid id) => _table.GetEntity<T>(id);
+        public List<T> RetrieveEntities(string where) => _table.GetEntities<T>(where);
+        public List<T> RetrieveAllEntities() => _table.GetAllEntities<T>();
+        public void DeleteAllEntities() => _table.DeleteAllEntities<T>();
+        public void DeleteEntity(Guid uniqueId) => _table.DeleteEntity<T>(uniqueId);
 
         private void clear(T instance)
         {

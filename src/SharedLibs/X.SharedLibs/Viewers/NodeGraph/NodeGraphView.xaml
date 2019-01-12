@@ -42,7 +42,14 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <Button x:Name="butAddNode" Content="Add" Click="ButAddNode_Click" ></Button>
             <ComboBox x:Name="cbNodes" SelectedValuePath="UniqueId" Width="300">
-                
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding FriendlyName}" FontSize="14"></TextBlock>
+                            <TextBlock Text="{Binding FriendlyType}" Margin="10,2,0,0" Foreground="Gray" FontSize="12"></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
             </ComboBox>
         </StackPanel>
     </Grid>
