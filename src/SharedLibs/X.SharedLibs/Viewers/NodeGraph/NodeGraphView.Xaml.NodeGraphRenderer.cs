@@ -46,7 +46,8 @@ namespace X.Viewer.NodeGraph
             
             //node-container
             var newNodeGroup = CreateNodeContainerUI(node);
-            
+            newNodeGroup.DataContext = nodeNodeLinkVM;
+
             //node-slots in node-container (appears underneath those rendered after)
             for (int slotIndex = 0; slotIndex < node.InputSlotCount; slotIndex++)
             {
@@ -59,7 +60,7 @@ namespace X.Viewer.NodeGraph
             }
             
             //node in node-container
-            FrameworkElement newNodeUIElement = CreateNodeUI(node, nodeNodeLinkVM);
+            FrameworkElement newNodeUIElement = CreateNodeUI(node);
             newNodeGroup.Children.Add(newNodeUIElement);
             
             //node-title
@@ -94,7 +95,7 @@ namespace X.Viewer.NodeGraph
             return newNodeGroup;
         }
 
-        FrameworkElement CreateNodeUI(Node node, NodeNodeLinkModel nodeNodeLinkVM ) {
+        FrameworkElement CreateNodeUI(Node node) {
             FrameworkElement newNodeUIElement = null;
             if (node.NodeType > 100 && node.NodeType < 1000) //EFFECTS
             {
@@ -109,15 +110,15 @@ namespace X.Viewer.NodeGraph
 
                 switch (nodeType)
                 {
-                    case NodeType.TextboxValue: newNodeUIElement = new TextboxValue() { DataContext = nodeNodeLinkVM }; break;
-                    case NodeType.SliderValue: newNodeUIElement = new SliderValue() { DataContext = nodeNodeLinkVM }; break;
-                    case NodeType.ToggleValue: newNodeUIElement = new ToggleValue() { DataContext = nodeNodeLinkVM }; break;
-                    case NodeType.BlendEffectModeValue: newNodeUIElement = new BlendEffectModeValue() { DataContext = nodeNodeLinkVM }; break;
-                    case NodeType.ColorSliderValue: newNodeUIElement = new ColorSliderValue() { DataContext = nodeNodeLinkVM }; break;
-                    case NodeType.GammaTransferValue: newNodeUIElement = new GammaTransferSliderValue() { DataContext = nodeNodeLinkVM }; break;
-                    case NodeType.CanvasAlphaModeValue: newNodeUIElement = new CanvasAlphaModeValue() { DataContext = nodeNodeLinkVM }; break;
-                    case NodeType.BorderModeValue: newNodeUIElement = new BorderModeValue() { DataContext = nodeNodeLinkVM }; break;
-                    case NodeType.TransformMatrixValue: newNodeUIElement = new TransformMatrixValue() { DataContext = nodeNodeLinkVM }; break;
+                    case NodeType.TextboxValue: newNodeUIElement = new TextboxValue(); break;
+                    case NodeType.SliderValue: newNodeUIElement = new SliderValue(); break;
+                    case NodeType.ToggleValue: newNodeUIElement = new ToggleValue(); break;
+                    case NodeType.BlendEffectModeValue: newNodeUIElement = new BlendEffectModeValue(); break;
+                    case NodeType.ColorSliderValue: newNodeUIElement = new ColorSliderValue(); break;
+                    case NodeType.GammaTransferValue: newNodeUIElement = new GammaTransferSliderValue(); break;
+                    case NodeType.CanvasAlphaModeValue: newNodeUIElement = new CanvasAlphaModeValue(); break;
+                    case NodeType.BorderModeValue: newNodeUIElement = new BorderModeValue(); break;
+                    case NodeType.TransformMatrixValue: newNodeUIElement = new TransformMatrixValue(); break;
                 }
                 INodeTypeComponent nodeTypeComponent = newNodeUIElement as INodeTypeComponent;
                 nodeTypeComponent.NodeTypeValueChanged += NodeTypeComponent_NodeTypeValueChanged;
@@ -309,6 +310,10 @@ namespace X.Viewer.NodeGraph
                 if (child is INodeTypeComponent) {
                     var nodeTypeComponent = (INodeTypeComponent)child;
                     nodeTypeComponent.NodeTypeValueChanged -= NodeTypeComponent_NodeTypeValueChanged;
+                }
+                var fe = (FrameworkElement)child;
+                if (fe.DataContext != null) {
+                    fe.DataContext = null;
                 }
             }
             _uiNodeGraphPanelXamlRoot.Children.Clear();

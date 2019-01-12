@@ -59,6 +59,7 @@ namespace X.Viewer.NodeGraph
         
         public void UpdateNodeVisual(NodeNodeLinkModel nodeNodeLinkModel, UIElement parentRootOfVisual)
         {
+            if (_nodeVisuals.Count == 0) return;
             var nodeTypeInt = (int)nodeNodeLinkModel.Node.NodeType;
             if (nodeTypeInt > 100 && nodeTypeInt <= 1000)
             { //EFFECT NODES 

@@ -27,6 +27,7 @@ namespace X.Viewer.NodeGraph.NodeTypeComponents
         {
             if (NodeTypeValueChanged != null) {
                 NodeNodeLinkModel vm = (NodeNodeLinkModel)((FrameworkElement)sender).DataContext;
+                if (vm == null) return;
                 FrameworkElement el = (FrameworkElement)sender;
                 var tag = el.Tag as string;
                 var indexToUse = 0;

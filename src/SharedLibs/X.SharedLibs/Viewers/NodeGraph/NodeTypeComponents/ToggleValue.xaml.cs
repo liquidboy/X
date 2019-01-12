@@ -37,6 +37,7 @@ namespace X.Viewer.NodeGraph.NodeTypeComponents
             if (NodeTypeValueChanged != null)
             {
                 NodeNodeLinkModel vm = (NodeNodeLinkModel)((FrameworkElement)sender).DataContext;
+                if (vm == null) return;
                 vm.OutputNodeLinks[0].Value1 = isChecked ? "1" : "0";
                 NodeTypeValueChanged.Invoke(vm.OutputNodeLinks[0].InputNodeKey, EventArgs.Empty);
             }
