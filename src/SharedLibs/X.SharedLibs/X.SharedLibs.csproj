@@ -111,7 +111,8 @@
     <Compile Include="Corelib\Shared\Framework\Services\DataEntity\Context.cs" />
     <Compile Include="Corelib\Shared\Framework\Services\DataEntity\IDataEntity.cs" />
     <Compile Include="Corelib\Shared\Framework\Services\DataEntity\Table.cs" />
-    <Compile Include="Corelib\Shared\Framework\Services\DataEntity\TableDatabase.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\DataEntity\TableSameDatabase.cs" />
+    <Compile Include="Corelib\Shared\Framework\Services\DataEntity\TablePerDatabase.cs" />
     <Compile Include="Corelib\Shared\Framework\Services\DataEntity\eTableType.cs" />
     <Compile Include="Corelib\Shared\Framework\SumoNinjaMonkey\Library\SqliteDatabaseManager.cs" />
     <Compile Include="Extensions.FirstParty.Settings\Content.xaml.cs">

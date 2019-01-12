@@ -17,7 +17,7 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         private bool _isReadOnly = false;
         
         string _tableName;
-        TableDatabase _table;
+        TableSameDatabase _table;
 
         public DataEntity() { SQLiteDataEntityImpl(true); }
         public DataEntity(bool initDb, bool isReadOnly) { SQLiteDataEntityImpl(initDb, isReadOnly); }

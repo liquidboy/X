@@ -32,13 +32,13 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
         }
 
 
-        public Dictionary<string, TableDatabase> Tables;
+        public Dictionary<string, TableSameDatabase> Tables;
 
         private AppDatabase(): base("xapp.db") { }
 
         public void Init()
         {
-            Tables = new Dictionary<string, TableDatabase>();
+            Tables = new Dictionary<string, TableSameDatabase>();
             this.Connection.CreateTable<Table>();
             refreshTables();
         }
@@ -90,7 +90,7 @@ namespace X.CoreLib.Shared.Framework.Services.DataEntity
             {
                 if (!Tables.ContainsKey(table.Name))
                 {
-                    TableDatabase tblDB = new TableDatabase(table.Name);
+                    TableSameDatabase tblDB = new TableSameDatabase(table.Name, this.Connection);
                     Tables.Add(table.Name, tblDB);
                 }
 

@@ -10,9 +10,9 @@ using X.CoreLib.SQLite;
 
 namespace X.CoreLib.Shared.Framework.Services.DataEntity
 {
-    public partial class TableDatabase : SqliteDatabase
+    public partial class TablePerDatabase : SqliteDatabase
     {
-        public TableDatabase(string tableName) : base(tableName + ".tbl")
+        public TablePerDatabase(string tableName) : base(tableName + ".tbl")
         {
             
         }
