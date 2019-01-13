@@ -21,7 +21,7 @@ namespace X.Viewer.NodeGraph
         private string parseFriendlyType()
         {
             if (NodeType.ToString().EndsWith("Effect")) { return "(effect)"; }
-            else if (NodeType.ToString().EndsWith("Value")) { return "(type)"; }
+            else if (NodeType.ToString().EndsWith("Value")) { return "(value)"; }
             else return "";
         }
     }
