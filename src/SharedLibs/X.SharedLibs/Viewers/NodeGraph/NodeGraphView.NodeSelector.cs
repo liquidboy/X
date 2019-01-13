@@ -33,7 +33,7 @@ namespace X.Viewer.NodeGraph
 
             switch (nodeType) {
                 case NodeType.TextboxValue:
-                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 0, "", 1, "", groupingGuid, (int)NodeType.TextboxValue, "Value"));
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 0, "", 1, "", groupingGuid, (int)NodeType.TextboxValue, "Text Value"));
                     break;
                 case NodeType.TextureAsset:
                     AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 1, "filename", 1, "image", groupingGuid, (int)NodeType.TextureAsset, "Texture Asset"));
@@ -62,22 +62,22 @@ namespace X.Viewer.NodeGraph
                     AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 3, "background,foreground,mode", 1, "", groupingGuid, (int)NodeType.BlendEffect, "Blend"));
                     break;
                 case NodeType.BlendEffectModeValue:
-                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, 600d, "WhiteSmoke", 0, "", 1, "", groupingGuid, (int)NodeType.BlendEffectModeValue, "Value", 0d, 25d, 1d));
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, 600d, "WhiteSmoke", 0, "", 1, "", groupingGuid, (int)NodeType.BlendEffectModeValue, "Belnd Mode Value", 0d, 25d, 1d));
                     break;
                 case NodeType.ColorSliderValue:
-                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, 300d, "WhiteSmoke", 0, "", 4, "R,G,B,A", groupingGuid, (int)NodeType.ColorSliderValue, "Value"));
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, 300d, "WhiteSmoke", 0, "", 4, "R,G,B,A", groupingGuid, (int)NodeType.ColorSliderValue, "Color Value"));
                     break;
                 case NodeType.ColorSourceEffect:
                     AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 4, "R,G,B,A", 1, "", groupingGuid, (int)NodeType.ColorSourceEffect, "Color"));
                     break;
                 case NodeType.ExposureSliderValue:
-                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, 300d, "WhiteSmoke", 0, "", 1, "", groupingGuid, (int)NodeType.SliderValue, "Value", -2d, 2d, 0.1d));
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, 300d, "WhiteSmoke", 0, "", 1, "", groupingGuid, (int)NodeType.SliderValue, "Exposure Value", -2d, 2d, 0.1d));
                     break;
                 case NodeType.ExposureEffect:
                     AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 2, "source,exposure", 1, "", groupingGuid, (int)NodeType.ExposureEffect, "Exposure"));
                     break;
                 case NodeType.GammaTransferValue:
-                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, 350d, "WhiteSmoke", 0, "", 12, "red amplitude,red exponent,red offset,green amplitude,green exponent,green offset,blue amplitude,blue exponent,blue offset,alpha amplitude,alpha exponent,alpha offset", groupingGuid, (int)NodeType.GammaTransferValue, "Value", 50d, 35d));
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, 350d, "WhiteSmoke", 0, "", 12, "red amplitude,red exponent,red offset,green amplitude,green exponent,green offset,blue amplitude,blue exponent,blue offset,alpha amplitude,alpha exponent,alpha offset", groupingGuid, (int)NodeType.GammaTransferValue, "Gamma Transfer Value", 50d, 35d));
                     break;
                 case NodeType.GammaTransferEffect:
                     AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 13, "source,red amplitude,red exponent,red offset,green amplitude,green exponent,green offset,blue amplitude,blue exponent,blue offset,alpha amplitude,alpha exponent,alpha offset", 1, "", groupingGuid, (int)NodeType.GammaTransferEffect, "Gamma Transfer"));
@@ -86,7 +86,7 @@ namespace X.Viewer.NodeGraph
                     AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 1, "source", 1, "", groupingGuid, (int)NodeType.InvertEffect, "Invert"));
                     break;
                 case NodeType.CanvasAlphaModeValue:
-                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 0, "", 1, "", groupingGuid, (int)NodeType.CanvasAlphaModeValue, "Value", 0d, 1d, 1d));
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 0, "", 1, "", groupingGuid, (int)NodeType.CanvasAlphaModeValue, "Canvas Alpha Mode Value", 0d, 1d, 1d));
                     break;
                 case NodeType.SepiaEffect:
                     AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 3, "source,intensity,canvas alpha mode", 1, "", groupingGuid, (int)NodeType.SepiaEffect, "Sepia"));
@@ -97,16 +97,16 @@ namespace X.Viewer.NodeGraph
                     break;
                 case NodeType.TintValue:
                 case NodeType.TemperatureValue:
-                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, 300d, "WhiteSmoke", 0, "", 1, "", groupingGuid, (int)NodeType.SliderValue, "Value", -1d, 1d, 0.1d));
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, 300d, "WhiteSmoke", 0, "", 1, "", groupingGuid, (int)NodeType.SliderValue, "Tint/Temp Value", -1d, 1d, 0.1d));
                     break;
                 case NodeType.BorderModeValue:
-                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 0, "", 1, "", groupingGuid, (int)NodeType.BorderModeValue, "Value", 0d, 1d, 1d));
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 0, "", 1, "", groupingGuid, (int)NodeType.BorderModeValue, "Border Mode Value", 0d, 1d, 1d));
                     break;
                 case NodeType.Transform2DEffect:
                     AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 5, "source,transform matrix,border mode,interpolation mode,sharpness", 1, "", groupingGuid, (int)NodeType.Transform2DEffect, "Transform2D"));
                     break;
                 case NodeType.TransformMatrixValue:
-                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, 400d, "WhiteSmoke", 0, "", 1, "", groupingGuid, (int)NodeType.TransformMatrixValue, "Value"));
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, 400d, "WhiteSmoke", 0, "", 1, "", groupingGuid, (int)NodeType.TransformMatrixValue, "Matrix Value"));
                     break;
             }
         }
