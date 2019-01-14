@@ -33,6 +33,8 @@ namespace X.Viewer.NodeGraph
             InitializeCompositor(nodeGraphCanvas);
             InitializeGraphSelector(RetrieveGraphs());
             InitializeNodeSelector();
+
+            cbNodes.ItemsSource = GetNodeTypeMetaData();
         }     
         
         public void Unload()

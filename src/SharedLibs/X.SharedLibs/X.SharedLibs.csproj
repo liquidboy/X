@@ -756,7 +756,7 @@
     <Compile Include="Viewers\NodeGraph\Xaml\Converters\BlendEffectModeConverter.cs" />
     <Compile Include="Viewers\NodeGraph\INodeGraphSelectedNodeLink.cs" />
     <Compile Include="Viewers\NodeGraph\INodeSelector.cs" />
-    <Compile Include="Viewers\NodeGraph\Xaml\NodeGraphView.NodeSelector.cs" />
+    <Compile Include="Viewers\NodeGraph\NodeGraphView.NodeSelector.cs" />
     <Compile Include="Viewers\NodeGraph\Xaml\NodeGraphView.Xaml.NodeGraphSelectedNodeLink.cs" />
     <Compile Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\BorderModeValue.xaml.cs">
       <DependentUpon>BorderModeValue.xaml</DependentUpon>

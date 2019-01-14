@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using Windows.UI.Xaml.Controls;
 
 namespace X.Viewer.NodeGraph
 {
     public partial class NodeGraphView : INodeSelector
     {
-        List<NodeTypeMetadata> _nodeTypeMetadata;
-
+        private static List<NodeTypeMetadata> _nodeTypeMetadata;
+        
         public void InitializeNodeSelector()
         {
             _nodeTypeMetadata = new List<NodeTypeMetadata>();
-            List<ComboBoxItem> cbItems = new List<ComboBoxItem>();
 
             var values = Enum.GetValues(typeof(NodeType));
 
@@ -19,8 +17,12 @@ namespace X.Viewer.NodeGraph
                 NodeType nt = (NodeType)value;
                 _nodeTypeMetadata.Add(new NodeTypeMetadata(nt));
             }
-            
-            cbNodes.ItemsSource = _nodeTypeMetadata;
+        }
+
+        public IEnumerable<NodeTypeMetadata> GetNodeTypeMetaData()
+        {
+            if (_nodeTypeMetadata == null) InitializeNodeSelector();
+            return _nodeTypeMetadata;
         }
 
         public void OnNodeTypeSelected(NodeType nodeType)
