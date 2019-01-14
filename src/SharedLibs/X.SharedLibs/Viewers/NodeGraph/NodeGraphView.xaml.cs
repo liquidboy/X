@@ -149,3 +149,9 @@ namespace X.Viewer.NodeGraph
 
 //http://plnkr.co/edit/II6lgj511fsQ7l0QCoRi?p=preview  <== i used this in the end
 //http://stackoverflow.com/questions/2916081/zoom-in-on-a-point-using-scale-and-translate
+
+
+
+//2D vs Immersive Views
+
+//https://docs.microsoft.com/en-us/windows/mixed-reality/app-views

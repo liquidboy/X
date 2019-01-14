@@ -340,8 +340,7 @@ namespace X.Viewer.NodeGraph
                     UpdateGraphicsBrush(compositor, effectType, inputSlotSources, invertEffectBrush);
                     return invertEffectBrush;
                 case NodeType.SaturationEffect:
-
-                    return null;
+                    throw new NotImplementedException();
                 case NodeType.SepiaEffect:
                     if (inputSlotSources.Length < 3) return null;
                     var nlam = (NodeLink)inputSlotSources[2];
@@ -503,8 +502,7 @@ namespace X.Viewer.NodeGraph
                     //invertEffectBrush.SetSourceParameter("Image", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);  <-- causing a crash on 18305
                     return;
                 case NodeType.SaturationEffect:
-
-                    return;
+                    throw new NotImplementedException();
                 case NodeType.SepiaEffect:
                     var sepiaEffectBrushe = (CompositionEffectBrush)brushToUpdate;
                     sepiaEffectBrushe.SetSourceParameter("Image", _nodeVisuals[((NodeLink)inputSlotSources[0]).OutputNodeKey].Brush);
