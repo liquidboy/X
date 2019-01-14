@@ -1,6 +1,4 @@
-﻿using Windows.UI.Xaml;
-
-namespace X.Viewer.NodeGraph
+﻿namespace X.Viewer.NodeGraph
 {
     public enum NodeType
     {

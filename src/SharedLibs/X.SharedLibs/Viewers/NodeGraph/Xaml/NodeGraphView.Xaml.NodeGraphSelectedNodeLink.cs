@@ -5,9 +5,7 @@ using InputSlotPosition = Windows.Foundation.Point;
 using OutputSlotPosition = Windows.Foundation.Point;
 using Windows.UI.Xaml.Media;
 using Windows.Foundation;
-using System.Numerics;
 using System.Diagnostics;
-using Windows.UI;
 using System;
 
 namespace X.Viewer.NodeGraph

@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using InputSlotPosition = Windows.Foundation.Point;
 using OutputSlotPosition = Windows.Foundation.Point;
 using Windows.UI.Xaml.Media;

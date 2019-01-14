@@ -9,7 +9,6 @@ using Windows.Foundation;
 using Windows.UI.Xaml.Shapes;
 using X.Viewer.NodeGraph.NodeTypeComponents;
 using System.Collections.Generic;
-using Windows.UI.Xaml.Media.Media3D;
 
 namespace X.Viewer.NodeGraph
 {

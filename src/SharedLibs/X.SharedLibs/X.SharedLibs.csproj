@@ -751,68 +751,68 @@
       <DependentUpon>MediaControls.xaml</DependentUpon>
     </Compile>
     <Compile Include="Viewers\MediaView\MediaElementRenderer.cs" />
-    <Compile Include="Viewers\NodeGraph\Converters\BorderModeConverter.cs" />
-    <Compile Include="Viewers\NodeGraph\Converters\CanvasAlphaModeConverter.cs" />
-    <Compile Include="Viewers\NodeGraph\Converters\BlendEffectModeConverter.cs" />
+    <Compile Include="Viewers\NodeGraph\Xaml\Converters\BorderModeConverter.cs" />
+    <Compile Include="Viewers\NodeGraph\Xaml\Converters\CanvasAlphaModeConverter.cs" />
+    <Compile Include="Viewers\NodeGraph\Xaml\Converters\BlendEffectModeConverter.cs" />
     <Compile Include="Viewers\NodeGraph\INodeGraphSelectedNodeLink.cs" />
     <Compile Include="Viewers\NodeGraph\INodeSelector.cs" />
-    <Compile Include="Viewers\NodeGraph\NodeGraphView.NodeSelector.cs" />
-    <Compile Include="Viewers\NodeGraph\NodeGraphView.Xaml.NodeGraphSelectedNodeLink.cs" />
-    <Compile Include="Viewers\NodeGraph\NodeTypeComponents\BorderModeValue.xaml.cs">
+    <Compile Include="Viewers\NodeGraph\Xaml\NodeGraphView.NodeSelector.cs" />
+    <Compile Include="Viewers\NodeGraph\Xaml\NodeGraphView.Xaml.NodeGraphSelectedNodeLink.cs" />
+    <Compile Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\BorderModeValue.xaml.cs">
       <DependentUpon>BorderModeValue.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Viewers\NodeGraph\NodeTypeComponents\CanvasAlphaModeValue.xaml.cs">
+    <Compile Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\CanvasAlphaModeValue.xaml.cs">
       <DependentUpon>CanvasAlphaModeValue.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Viewers\NodeGraph\NodeTypeComponents\GammaTransferSliderValue.xaml.cs">
+    <Compile Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\GammaTransferSliderValue.xaml.cs">
       <DependentUpon>GammaTransferSliderValue.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Viewers\NodeGraph\NodeTypeComponents\INodeTypeComponent.cs" />
-    <Compile Include="Viewers\NodeGraph\NodeTypeComponents\BlendEffectModeValue.xaml.cs">
+    <Compile Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\INodeTypeComponent.cs" />
+    <Compile Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\BlendEffectModeValue.xaml.cs">
       <DependentUpon>BlendEffectModeValue.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Viewers\NodeGraph\NodeTypeComponents\ColorSliderValue.xaml.cs">
+    <Compile Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\ColorSliderValue.xaml.cs">
       <DependentUpon>ColorSliderValue.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Viewers\NodeGraph\NodeTypeComponents\ToggleValue.xaml.cs">
+    <Compile Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\ToggleValue.xaml.cs">
       <DependentUpon>ToggleValue.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Viewers\NodeGraph\NodeTypeComponents\SliderValue.xaml.cs">
+    <Compile Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\SliderValue.xaml.cs">
       <DependentUpon>SliderValue.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Viewers\NodeGraph\NodeTypeComponents\TransformMatrixValue.xaml.cs">
+    <Compile Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\TransformMatrixValue.xaml.cs">
       <DependentUpon>TransformMatrixValue.xaml</DependentUpon>
     </Compile>
     <Compile Include="Viewers\NodeGraph\NodeTypeMetadata.cs" />
-    <Compile Include="Viewers\NodeGraph\NodeVisual.cs" />
+    <Compile Include="Viewers\NodeGraph\Xaml\NodeVisual.cs" />
     <Compile Include="Viewers\NodeGraph\NodeNodeLinkModel.cs" />
     <Compile Include="Viewers\NodeGraph\NodeType.cs" />
-    <Compile Include="Viewers\NodeGraph\INodeGraphCompositor.cs" />
+    <Compile Include="Viewers\NodeGraph\Xaml\INodeGraphCompositor.cs" />
     <Compile Include="Viewers\NodeGraph\INodeGraphSelector.cs" />
     <Compile Include="Viewers\NodeGraph\INodeGraphStorage.cs" />
     <Compile Include="Viewers\NodeGraph\INodeGraphOrchestrator.cs" />
     <Compile Include="Viewers\NodeGraph\INodeGraphSelectedSlot.cs" />
     <Compile Include="Viewers\NodeGraph\INodeGraphSelectedNode.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.GraphSelector.cs" />
-    <Compile Include="Viewers\NodeGraph\NodeGraphView.Compositor.cs" />
+    <Compile Include="Viewers\NodeGraph\Xaml\NodeGraphView.Compositor.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.Storage.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.Xaml.NodeGraphOrchestrator.cs" />
-    <Compile Include="Viewers\NodeGraph\NodeGraphView.Xaml.NodeGraphSelectedSlot.cs" />
-    <Compile Include="Viewers\NodeGraph\NodeGraphView.Xaml.NodeGraphSelectedNode.cs" />
-    <Compile Include="Viewers\NodeGraph\NodeTypeComponents\TextboxValue.xaml.cs">
+    <Compile Include="Viewers\NodeGraph\Xaml\NodeGraphView.Xaml.NodeGraphSelectedSlot.cs" />
+    <Compile Include="Viewers\NodeGraph\Xaml\NodeGraphView.Xaml.NodeGraphSelectedNode.cs" />
+    <Compile Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\TextboxValue.xaml.cs">
       <DependentUpon>TextboxValue.xaml</DependentUpon>
     </Compile>
     <Compile Include="Viewers\NodeGraph\SavedGraph.cs" />
     <Compile Include="Viewers\NodeGraph\NodeLink.cs" />
     <Compile Include="Viewers\NodeGraph\Node.cs" />
-    <Compile Include="Viewers\NodeGraph\INodeGraphRenderer.cs" />
+    <Compile Include="Viewers\NodeGraph\Xaml\INodeGraphRenderer.cs" />
     <Compile Include="Viewers\NodeGraph\INodeGraph.cs" />
-    <Compile Include="Viewers\NodeGraph\NodeGraphRenderer.cs" />
+    <Compile Include="Viewers\NodeGraph\Xaml\NodeGraphRenderer.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.NodeGraph.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.xaml.cs">
       <DependentUpon>NodeGraphView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Viewers\NodeGraph\NodeGraphView.Xaml.NodeGraphRenderer.cs" />
+    <Compile Include="Viewers\NodeGraph\Xaml\NodeGraphView.Xaml.NodeGraphRenderer.cs" />
     <Compile Include="Viewers\SketchFlow\Controls\MenuFlyoutPathItem.cs" />
     <Compile Include="Viewers\SketchFlow\Controls\PageContent.xaml.cs">
       <DependentUpon>PageContent.xaml</DependentUpon>
@@ -1175,39 +1175,39 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Viewers\NodeGraph\NodeTypeComponents\BorderModeValue.xaml">
+    <Page Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\BorderModeValue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Viewers\NodeGraph\NodeTypeComponents\CanvasAlphaModeValue.xaml">
+    <Page Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\CanvasAlphaModeValue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Viewers\NodeGraph\NodeTypeComponents\BlendEffectModeValue.xaml">
+    <Page Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\BlendEffectModeValue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Viewers\NodeGraph\NodeTypeComponents\GammaTransferSliderValue.xaml">
+    <Page Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\GammaTransferSliderValue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Viewers\NodeGraph\NodeTypeComponents\ColorSliderValue.xaml">
+    <Page Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\ColorSliderValue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Viewers\NodeGraph\NodeTypeComponents\ToggleValue.xaml">
+    <Page Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\ToggleValue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Viewers\NodeGraph\NodeTypeComponents\SliderValue.xaml">
+    <Page Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\SliderValue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Viewers\NodeGraph\NodeTypeComponents\TextboxValue.xaml">
+    <Page Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\TextboxValue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Viewers\NodeGraph\NodeTypeComponents\TransformMatrixValue.xaml">
+    <Page Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\TransformMatrixValue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
