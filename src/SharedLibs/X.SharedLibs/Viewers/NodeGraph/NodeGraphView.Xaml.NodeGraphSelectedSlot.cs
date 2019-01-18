@@ -1,8 +1,5 @@
-﻿using System.Linq;
-using Windows.UI.Xaml;
-using InputSlotPosition = Windows.Foundation.Point;
+﻿using InputSlotPosition = Windows.Foundation.Point;
 using OutputSlotPosition = Windows.Foundation.Point;
-using Windows.UI.Xaml.Media;
 using Windows.Foundation;
 using System.Numerics;
 using System.Diagnostics;
@@ -24,8 +21,8 @@ namespace X.Viewer.NodeGraph
 
             var slotUnderPoint = TryToFindSlotUnderPoint(point);
             if (slotUnderPoint.FoundSlot) {
-                var nameParts = slotUnderPoint.SlotElement.Name.Split("_");
-                _selectedSlotIsInputSlot = slotUnderPoint.SlotElement.Tag.Equals("nsi");
+                var nameParts = slotUnderPoint.SlotName.Split("_");
+                _selectedSlotIsInputSlot = slotUnderPoint.SlotTag.Equals("nsi");
                 _selectedSlotNodeKey = nameParts[1];
                 _selectedSlotIndex = int.Parse(nameParts[2]);
                 //_selectedSlotStartDragPosition = new Point((double)uiCurrentFocusedNode.GetValue(Canvas.LeftProperty), (double)uiCurrentFocusedNode.GetValue(Canvas.TopProperty));
@@ -56,7 +53,7 @@ namespace X.Viewer.NodeGraph
         public void CompleteGhostLink(Point point) {
             var slotUnderPoint = TryToFindSlotUnderPoint(point);
             if (slotUnderPoint.FoundSlot) {
-                var nameParts = slotUnderPoint.SlotElement.Name.Split("_");
+                var nameParts = slotUnderPoint.SlotName.Split("_");
                 var slotNodeKey = nameParts[1];
                 if (_selectedSlotNodeKey == slotNodeKey) { ClearGhostLink(); return; }
                 var slotIndex = int.Parse(nameParts[2]);
@@ -75,21 +72,6 @@ namespace X.Viewer.NodeGraph
             
             if(_selectedSlotIsInputSlot) TryUpdateExistingNodeSlotLink("gl", startPosition, new OutputSlotPosition(movedX, movedY));
             else TryUpdateExistingNodeSlotLink("gl", new InputSlotPosition(movedX, movedY), startPosition);
-        }
-
-        private (bool FoundSlot, FrameworkElement SlotElement) TryToFindSlotUnderPoint(Point point) {
-            var foundElementsUnderPoint = VisualTreeHelper.FindElementsInHostCoordinates(point, _uiNodeGraphXamlRoot);
-            if (foundElementsUnderPoint != null && foundElementsUnderPoint.Count() > 0)
-            {
-                var foundNC = foundElementsUnderPoint.Where(x => x is FrameworkElement &&
-                    ((FrameworkElement)x).Tag != null &&
-                    (((FrameworkElement)x).Tag.ToString().Equals("nsi") || ((FrameworkElement)x).Tag.ToString().Equals("nso")));
-                if (foundNC != null && foundNC.Count() > 0)
-                {
-                    return (true, (FrameworkElement)foundNC.FirstOrDefault());
-                }
-            }
-            return (false, null);
         }
     }
 }

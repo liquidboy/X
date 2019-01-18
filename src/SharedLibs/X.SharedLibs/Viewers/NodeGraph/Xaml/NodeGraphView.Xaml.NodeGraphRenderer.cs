@@ -75,6 +75,23 @@ namespace X.Viewer.NodeGraph
             _uiNodeGraphPanelXamlRoot.Children.Add(newNodeGroup);
         }
 
+        public (bool FoundSlot, string SlotName, string SlotTag) TryToFindSlotUnderPoint(Point point)
+        {
+            var foundElementsUnderPoint = VisualTreeHelper.FindElementsInHostCoordinates(point, _uiNodeGraphXamlRoot);
+            if (foundElementsUnderPoint != null && foundElementsUnderPoint.Count() > 0)
+            {
+                var foundNC = foundElementsUnderPoint.Where(x => x is FrameworkElement &&
+                    ((FrameworkElement)x).Tag != null &&
+                    (((FrameworkElement)x).Tag.ToString().Equals("nsi") || ((FrameworkElement)x).Tag.ToString().Equals("nso")));
+                if (foundNC != null && foundNC.Count() > 0)
+                {
+                    var fe = (FrameworkElement)foundNC.FirstOrDefault();
+                    return (true, fe.Name, (fe.Tag is string) ? (string)fe.Tag : null);
+                }
+            }
+            return (false, null, null);
+        }
+
         Panel CreateNodeContainerUI(Node node) {
             var newNodeGroup = new Canvas()
             {
@@ -223,6 +240,9 @@ namespace X.Viewer.NodeGraph
             return false;
         }
 
+
+
+        
 
 
         // ==========
