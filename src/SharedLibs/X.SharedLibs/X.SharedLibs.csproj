@@ -796,8 +796,8 @@
     <Compile Include="Viewers\NodeGraph\NodeGraphView.GraphSelector.cs" />
     <Compile Include="Viewers\NodeGraph\Xaml\NodeGraphView.Compositor.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.Storage.cs" />
-    <Compile Include="Viewers\NodeGraph\NodeGraphView.Xaml.NodeGraphOrchestrator.cs" />
-    <Compile Include="Viewers\NodeGraph\NodeGraphView.Xaml.NodeGraphSelectedSlot.cs" />
+    <Compile Include="Viewers\NodeGraph\NodeGraphView.NodeGraphOrchestrator.cs" />
+    <Compile Include="Viewers\NodeGraph\NodeGraphView.NodeGraphSelectedSlot.cs" />
     <Compile Include="Viewers\NodeGraph\Xaml\NodeGraphView.Xaml.NodeGraphSelectedNode.cs" />
     <Compile Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\TextboxValue.xaml.cs">
       <DependentUpon>TextboxValue.xaml</DependentUpon>
