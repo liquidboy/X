@@ -14,6 +14,7 @@ namespace X.SharedLibsCore.Storage
     public class Store
     {
         MovieService _movieService;
+        ShowService _showService;
 
         protected readonly SemaphoreSlim LoadingSemaphore = new SemaphoreSlim(1, 1);
         protected CancellationTokenSource CancellationLoadingMovies { get; private set; }
@@ -26,30 +27,54 @@ namespace X.SharedLibsCore.Storage
 
             var tmdbService = new TmdbService();
             _movieService = new MovieService(tmdbService);
-            var showService = new ShowService(tmdbService);
+            _showService = new ShowService(tmdbService);
 
             CancellationLoadingMovies = new CancellationTokenSource();
         }
 
         public async Task LoadStore(bool reset = false) {
-            var getMoviesWatcher = new Stopwatch();
+            //await LoadMovies();
+            await LoadShows();
+        }
+
+        public async Task LoadMovies(bool reset = false) {
+            var geResultsWatcher = new Stopwatch();
             await LoadingSemaphore.WaitAsync(CancellationLoadingMovies.Token);
 
-            getMoviesWatcher.Start();
-            var result = await _movieService.GetMoviesAsync(0,
+            geResultsWatcher.Start();
+            var results = await _movieService.GetMoviesAsync(0,
                             30,
                             0d,
                             "seeds",
                             CancellationLoadingMovies.Token);
-            getMoviesWatcher.Stop();
-            var getMoviesEllapsedTime = getMoviesWatcher.ElapsedMilliseconds;
-            if (reset && getMoviesEllapsedTime < 500)
+            geResultsWatcher.Stop();
+            var ellapsedTime = geResultsWatcher.ElapsedMilliseconds;
+            if (reset && ellapsedTime < 500)
             {
                 // Wait for VerticalOffset to reach 0 (animation lasts 500ms)
-                await Task.Delay(500 - (int)getMoviesEllapsedTime, CancellationLoadingMovies.Token);
+                await Task.Delay(500 - (int)ellapsedTime, CancellationLoadingMovies.Token);
             }
         }
-        
+
+        public async Task LoadShows(bool reset = false)
+        {
+            var geResultsWatcher = new Stopwatch();
+            await LoadingSemaphore.WaitAsync(CancellationLoadingMovies.Token);
+
+            geResultsWatcher.Start();
+            var results = await _showService.GetShowsAsync(0,
+                            30,
+                            0d,
+                            "seeds",
+                            CancellationLoadingMovies.Token);
+            geResultsWatcher.Stop();
+            var ellapsedTime = geResultsWatcher.ElapsedMilliseconds;
+            if (reset && ellapsedTime < 500)
+            {
+                // Wait for VerticalOffset to reach 0 (animation lasts 500ms)
+                await Task.Delay(500 - (int)ellapsedTime, CancellationLoadingMovies.Token);
+            }
+        }
     }
 
     public class BloggingContext : DbContext
