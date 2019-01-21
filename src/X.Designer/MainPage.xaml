@@ -7,8 +7,30 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <DataTemplate x:Name="dtMovie">
+            <Grid Width="200" Height="320">
+                <Image Source="{Binding PosterImage}" Stretch="Fill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,40"></Image>
+                <TextBlock Text="{Binding Title}" FontSize="12" Margin="0,280,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"></TextBlock>
+                <TextBlock Text="{Binding Year}" FontSize="10" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Bottom"></TextBlock>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Name="dtTV">
+            <Grid Width="200" Height="320">
+                <Image Source="{Binding Images.Poster}" Stretch="Fill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,40"></Image>
+                <TextBlock Text="{Binding Title}" FontSize="12" Margin="0,280,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"></TextBlock>
+                <TextBlock Text="{Binding Year}" FontSize="10" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Bottom"></TextBlock>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+    <Grid x:Name="layoutRoot" Loaded="LayoutRoot_Loaded">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
+            <Button x:Name="butMovies" Content="Movies" Click="ButMovies_Click"></Button>
+            <Button x:Name="butShows" Content="TV Shows" Margin="10,0,0,0" Click="ButShows_Click"></Button>
+        </StackPanel>
+        <GridView x:Name="grdItems" SelectionChanged="GrdItems_SelectionChanged" Margin="0,50,0,0" ItemTemplate="{StaticResource dtMovie}">
 
-    <Grid>
-        <Button x:Name="butTest" Content="Test" Click="ButTest_Click" ></Button>
+        </GridView>
+        
     </Grid>
 </Page>

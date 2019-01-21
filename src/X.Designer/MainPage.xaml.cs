@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Popcorn.Models.Movie;
+using Popcorn.Models.Shows;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,15 +21,49 @@ namespace X.Designer
 {
     public sealed partial class MainPage : Page
     {
+        Store _store;
+        bool isShowingMovies;
+
         public MainPage()
         {
             this.InitializeComponent();
+
+            _store = new Store();
+        }
+        
+
+        private async void GrdItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (isShowingMovies)
+            {
+                var selectedItem = (MovieLightJson)e.AddedItems[0] ;
+                await _store.LoadMovie(selectedItem.ImdbId);
+            }
+            else {
+                var selectedItem = (ShowLightJson)e.AddedItems[0];
+                await _store.LoadTVShow(selectedItem.ImdbId);
+            }
+
+            
         }
 
-        private async void ButTest_Click(object sender, RoutedEventArgs e)
+        private async void LayoutRoot_Loaded(object sender, RoutedEventArgs e)
         {
-            var store = new Store();
-            await store.LoadStore();
+            await _store.LoadStore();
+        }
+
+        private void ButMovies_Click(object sender, RoutedEventArgs e)
+        {
+            isShowingMovies = true;
+            grdItems.ItemTemplate = dtMovie;
+            grdItems.ItemsSource = _store.Movies;
+        }
+
+        private void ButShows_Click(object sender, RoutedEventArgs e)
+        {
+            isShowingMovies = false;
+            grdItems.ItemTemplate = dtTV;
+            grdItems.ItemsSource = _store.Shows;
         }
     }
 }
