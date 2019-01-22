@@ -51,7 +51,7 @@ namespace Popcorn.Services.Shows.Trailer
                 {
                     try
                     {
-                        var trailer = await ShowService.GetShowTrailerAsync(show, cancellation);
+                        var trailer = await ShowService.GetShowTrailerAsync(show.TmdbId, cancellation);
                         if (!ct.IsCancellationRequested && string.IsNullOrEmpty(trailer))
                         {
                             Logger.Error(

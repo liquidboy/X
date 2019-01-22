@@ -38,13 +38,15 @@ namespace X.Designer
             {
                 var selectedItem = (MovieLightJson)e.AddedItems[0] ;
                 await _store.LoadMovie(selectedItem.ImdbId);
+                grdDetails.DataContext = _store.Movie;
             }
             else {
                 var selectedItem = (ShowLightJson)e.AddedItems[0];
                 await _store.LoadTVShow(selectedItem.ImdbId);
+                grdDetails.DataContext = _store.Show;
             }
 
-            
+            grdDetails.Visibility = Visibility.Visible;
         }
 
         private async void LayoutRoot_Loaded(object sender, RoutedEventArgs e)
@@ -64,6 +66,35 @@ namespace X.Designer
             isShowingMovies = false;
             grdItems.ItemTemplate = dtTV;
             grdItems.ItemsSource = _store.Shows;
+        }
+
+        private void ButCloseDetails_Click(object sender, RoutedEventArgs e)
+        {
+            grdDetails.DataContext = null;
+            grdDetails.Visibility = Visibility.Collapsed;
+        }
+
+        private async void ButWatchTrailer_Click(object sender, RoutedEventArgs e)
+        {
+            //_store.Movie.YtTrailerCode
+            if (isShowingMovies)
+            {
+                var trailerUrl = await _store.LoadMovieTrailer(_store.Movie.ImdbId);
+                meTrailer.Source = new Uri(trailerUrl);
+                grdTrailer.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                var trailerUrl = await _store.LoadShowTrailer(_store.Show.TmdbId);
+                meTrailer.Source = new Uri(trailerUrl);
+                grdTrailer.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void ButCloseTrailer_Click(object sender, RoutedEventArgs e)
+        {
+            meTrailer.Source = null;
+            grdTrailer.Visibility = Visibility.Collapsed;
         }
     }
 }

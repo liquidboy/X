@@ -139,6 +139,45 @@ namespace X.SharedLibsCore.Storage
             LoadingSemaphore.Release();
         }
 
+        public async Task<string> LoadMovieTrailer(string imdbId) {
+            var geResultsWatcher = new Stopwatch();
+            await LoadingSemaphore.WaitAsync(GetCancellationTokenSource(CancellationTokenTypes.Movies).Token);
+
+            geResultsWatcher.Start();
+            var trailer = await _movieService.GetMovieTrailerAsync(imdbId,
+                            GetCancellationTokenSource(CancellationTokenTypes.Movies).Token);
+            geResultsWatcher.Stop();
+            var ellapsedTime = geResultsWatcher.ElapsedMilliseconds;
+            if (ellapsedTime < 500)
+            {
+                // Wait for VerticalOffset to reach 0 (animation lasts 500ms)
+                await Task.Delay(500 - (int)ellapsedTime, GetCancellationTokenSource(CancellationTokenTypes.Movies).Token);
+            }
+            LoadingSemaphore.Release();
+
+            return trailer;
+        }
+
+        public async Task<string> LoadShowTrailer(int tmdbId)
+        {
+            var geResultsWatcher = new Stopwatch();
+            await LoadingSemaphore.WaitAsync(GetCancellationTokenSource(CancellationTokenTypes.Shows).Token);
+
+            geResultsWatcher.Start();
+            var trailer = await _showService.GetShowTrailerAsync(tmdbId,
+                            GetCancellationTokenSource(CancellationTokenTypes.Shows).Token);
+            geResultsWatcher.Stop();
+            var ellapsedTime = geResultsWatcher.ElapsedMilliseconds;
+            if (ellapsedTime < 500)
+            {
+                // Wait for VerticalOffset to reach 0 (animation lasts 500ms)
+                await Task.Delay(500 - (int)ellapsedTime, GetCancellationTokenSource(CancellationTokenTypes.Shows).Token);
+            }
+            LoadingSemaphore.Release();
+
+            return trailer;
+        }
+
         private CancellationTokenSource GetCancellationTokenSource(CancellationTokenTypes type) {
             return CancellationLoading[(int)type];
         }

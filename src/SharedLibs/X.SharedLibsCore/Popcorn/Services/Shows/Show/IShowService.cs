@@ -80,6 +80,6 @@ namespace Popcorn.Services.Shows.Show
         /// <param name="show">The show</param>
         /// <param name="ct">Used to cancel loading trailer</param>
         /// <returns>Video trailer</returns>
-        Task<string> GetShowTrailerAsync(ShowJson show, CancellationToken ct);
+        Task<string> GetShowTrailerAsync(int tmdbId, CancellationToken ct);
     }
 }

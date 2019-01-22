@@ -32,5 +32,32 @@
 
         </GridView>
         
+        <Grid x:Name="grdDetails" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed">
+            <Rectangle Fill="White"></Rectangle>
+            <Image Source="{Binding BackgroundImage}" Stretch="UniformToFill" Opacity="0.9"></Image>
+            <Image Source="{Binding PosterImage}" Stretch="Fill" Width="250" Height="350" Margin="30,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"></Image>
+            
+            <StackPanel Orientation="Vertical" Margin="300,50,50,50">
+                <Border Background="Black" Padding="5,0,5,0" HorizontalAlignment="Left">
+                    <TextBlock Text="{Binding Title}" FontSize="26" Foreground="White" ></TextBlock>
+                </Border>
+                <Border Background="White" Padding="5,0,5,5" Margin="0,20,0,0" HorizontalAlignment="Left">
+                    <TextBlock Text="{Binding DescriptionFull}" FontSize="18" Foreground="Black" TextWrapping="WrapWholeWords" ></TextBlock>
+                </Border>
+                <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                    <Button x:Name="butCloseDetails" Content="Go Back" FontSize="16" Click="ButCloseDetails_Click"></Button>
+                    <Button x:Name="butWatchTrailer" Content="Watch Trailer" FontSize="16" Click="ButWatchTrailer_Click" Margin="10,0,0,0"></Button>
+                </StackPanel>
+            </StackPanel>
+            
+            
+        </Grid>
+
+
+        <Grid x:Name="grdTrailer" Margin="50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Collapsed" Width="400" Height="300">
+            <Rectangle Fill="Black" ></Rectangle>
+            <MediaElement x:Name="meTrailer" Margin="0,0,0,50"></MediaElement>
+            <Button x:Name="butCloseTrailer" Content="Close" Margin="10" FontSize="16" Foreground="White" BorderBrush="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="ButCloseTrailer_Click"></Button>
+        </Grid>
     </Grid>
 </Page>

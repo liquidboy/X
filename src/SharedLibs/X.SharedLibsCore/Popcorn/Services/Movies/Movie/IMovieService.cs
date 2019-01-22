@@ -108,7 +108,7 @@ namespace Popcorn.Services.Movies.Movie
         /// <param name="movie">The movie</param>
         /// <param name="ct">Used to cancel loading trailer</param>
         /// <returns>Video trailer</returns>
-        Task<string> GetMovieTrailerAsync(MovieJson movie, CancellationToken ct);
+        Task<string> GetMovieTrailerAsync(string imdbId, CancellationToken ct);
 
         /// <summary>
         /// Get movies similar async

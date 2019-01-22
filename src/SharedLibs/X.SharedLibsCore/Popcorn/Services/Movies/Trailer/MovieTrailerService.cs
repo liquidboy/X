@@ -54,7 +54,7 @@ namespace Popcorn.Services.Movies.Trailer
                 {
                     try
                     {
-                        var trailer = await MovieService.GetMovieTrailerAsync(movie, cancellation);
+                        var trailer = await MovieService.GetMovieTrailerAsync(movie.ImdbId, cancellation);
                         if (!cancellation.IsCancellationRequested && string.IsNullOrEmpty(trailer))
                         {
                             Logger.Error(

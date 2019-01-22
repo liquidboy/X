@@ -406,7 +406,7 @@ namespace Popcorn.Services.Shows.Show
         /// <param name="show">The show</param>
         /// <param name="ct">Used to cancel loading trailer</param>
         /// <returns>Video trailer</returns>
-        public async Task<string> GetShowTrailerAsync(ShowJson show, CancellationToken ct)
+        public async Task<string> GetShowTrailerAsync(int tmdbId, CancellationToken ct)
         {
             var timeoutPolicy =
                 Policy.TimeoutAsync(DefaultRequestTimeoutInSecond, TimeoutStrategy.Pessimistic);
@@ -418,7 +418,7 @@ namespace Popcorn.Services.Shows.Show
                     var uri = string.Empty;
                     try
                     {
-                        var tmdbVideos = await (await _tmdbService.GetClient).GetTvShowVideosAsync(show.TmdbId);
+                        var tmdbVideos = await (await _tmdbService.GetClient).GetTvShowVideosAsync(tmdbId);
                         if (tmdbVideos != null && tmdbVideos.Results.Any())
                         {
                             var trailer = tmdbVideos.Results.FirstOrDefault();
@@ -462,7 +462,7 @@ namespace Popcorn.Services.Shows.Show
                         watch.Stop();
                         var elapsedMs = watch.ElapsedMilliseconds;
                         Logger.Trace(
-                            $"GetShowTrailerAsync ({show.ImdbId}) in {elapsedMs} milliseconds.");
+                            $"GetShowTrailerAsync ({tmdbId}) in {elapsedMs} milliseconds.");
                     }
 
                     return uri;
