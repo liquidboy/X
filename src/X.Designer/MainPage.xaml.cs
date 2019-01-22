@@ -96,5 +96,10 @@ namespace X.Designer
             meTrailer.Source = null;
             grdTrailer.Visibility = Visibility.Collapsed;
         }
+
+        private void ButWatch_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
