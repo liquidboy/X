@@ -51,6 +51,9 @@ namespace X.Designer
 
         private async void LayoutRoot_Loaded(object sender, RoutedEventArgs e)
         {
+            var myVideos = await Windows.Storage.StorageLibrary.GetLibraryAsync(Windows.Storage.KnownLibraryId.Videos);
+
+            await _store.InitializeFileSystem(myVideos.SaveFolder.Path);
             await _store.LoadStore();
         }
 
@@ -97,8 +100,25 @@ namespace X.Designer
             grdTrailer.Visibility = Visibility.Collapsed;
         }
 
-        private void ButWatch_Click(object sender, RoutedEventArgs e)
+        private async void ButWatch_Click(object sender, RoutedEventArgs e)
         {
+            var myVideos = await Windows.Storage.StorageLibrary.GetLibraryAsync(Windows.Storage.KnownLibraryId.Videos);
+            var xFolder = await myVideos.SaveFolder.CreateFolderAsync("X", Windows.Storage.CreationCollisionOption.OpenIfExists);
+            var fileName = isShowingMovies ? _store.Movie.ImdbId : _store.Show.TmdbId.ToString();
+            var newTorrentFile = await xFolder.CreateFileAsync($"{fileName}.torrent", Windows.Storage.CreationCollisionOption.ReplaceExisting);
+            using (var newFileStream = await newTorrentFile.OpenStreamForWriteAsync()) {
+
+                if (isShowingMovies)
+                {
+                    await _store.WatchMovie(_store.Movie, $"{xFolder.Path}\\{fileName}.torrent",  newFileStream);
+                }
+                else
+                {
+
+                }
+
+            }
+
 
         }
     }

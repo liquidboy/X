@@ -14,6 +14,6 @@ namespace Popcorn.Services.Cache
         string ShowDownloads { get; }
         string MovieTorrentDownloads { get; }
         string Subtitles { get; }
-        string LocalPath { get; }
+        string LocalPath { get; set; }
     }
 }

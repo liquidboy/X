@@ -8,44 +8,47 @@ namespace Popcorn.Services.Cache
 {
     public class CacheService : ICacheService
     {
-        public CacheService(string localPath)
+        public CacheService(string appPath)
         {
-            LocalPath = localPath;
+            _appPath = appPath;
         }
 
         /// <summary>
         /// Directory of assets
         /// </summary>
-        public string Assets => $@"{LocalPath}\Assets\";
+        public string Assets => $@"{LocalPath}\{_appPath}\Assets\";
 
         /// <summary>
         /// Directory of downloaded movies
         /// </summary>
-        public string MovieDownloads => $@"{LocalPath}\Downloads\Movies\";
+        public string MovieDownloads => $@"{LocalPath}\{_appPath}\Downloads\Movies\";
 
         /// <summary>
         /// Directory of dropped files
         /// </summary>
-        public string DropFilesDownloads => $@"{LocalPath}\Downloads\Dropped\";
+        public string DropFilesDownloads => $@"{LocalPath}\{_appPath}\Downloads\Dropped\";
 
         /// <summary>
         /// Directory of downloaded shows
         /// </summary>
-        public string ShowDownloads => $@"{LocalPath}\Downloads\Shows\";
+        public string ShowDownloads => $@"{LocalPath}\{_appPath}\Downloads\Shows\";
 
         /// <summary>
         /// Directory of downloaded movie torrents
         /// </summary>
-        public string MovieTorrentDownloads => $@"{LocalPath}\Torrents\Movies\";
+        public string MovieTorrentDownloads => $@"{LocalPath}\{_appPath}\Torrents\Movies\";
 
         /// <summary>
         /// Subtitles directory
         /// </summary>
-        public string Subtitles => $@"{LocalPath}\Subtitles\";
+        public string Subtitles => $@"{LocalPath}\{_appPath}\Subtitles\";
 
         /// <summary>
         /// Popcorn temp directory
         /// </summary>
-        public string LocalPath { get; }
+        public string LocalPath { get; set; }
+
+        private string _appPath;
+        
     }
 }
