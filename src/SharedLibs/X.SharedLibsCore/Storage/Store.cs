@@ -36,13 +36,13 @@ namespace X.SharedLibsCore.Storage
         
         public ObservableCollection<MovieLightJson> Movies { get; set; }
         public MovieJson Movie { get; set; }
-        public int currentMoviePage = 0;
+        public int currentMoviePage = 1;
         public int MoviesCount { get; set; }
 
 
         public ObservableCollection<ShowLightJson> Shows { get; set; }
         public ShowJson Show { get; set; }
-        public int currentShowPage = 0;
+        public int currentShowPage = 1;
         public int ShowsCount { get; set; }
 
         private enum CancellationTokenTypes {
