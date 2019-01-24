@@ -16,20 +16,21 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using X.SharedLibsCore;
 using X.SharedLibsCore.Storage;
 
 namespace X.Designer
 {
     public sealed partial class MainPage : Page
     {
-        Store _store;
+        StoreFront _store;
         bool isShowingMovies;
 
         public MainPage()
         {
             this.InitializeComponent();
 
-            _store = new Store();
+            _store = new StoreFront();
         }
         
 
