@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NuGet;
+using Popcorn.Comparers;
 using Popcorn.Helpers;
 using Popcorn.Models.Bandwidth;
 using Popcorn.Models.Movie;
@@ -11,6 +13,7 @@ using Popcorn.Services.Tmdb;
 using Popcorn.Utils;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -30,6 +33,18 @@ namespace X.SharedLibsCore.Storage
         protected readonly SemaphoreSlim LoadingSemaphore = new SemaphoreSlim(1, 1);
         protected CancellationTokenSource[] CancellationLoading { get; private set; }
 
+        
+        public ObservableCollection<MovieLightJson> Movies { get; set; }
+        public MovieJson Movie { get; set; }
+        public int currentMoviePage = 0;
+        public int MoviesCount { get; set; }
+
+
+        public ObservableCollection<ShowLightJson> Shows { get; set; }
+        public ShowJson Show { get; set; }
+        public int currentShowPage = 0;
+        public int ShowsCount { get; set; }
+
         private enum CancellationTokenTypes {
             Movies,
             Shows,
@@ -37,7 +52,9 @@ namespace X.SharedLibsCore.Storage
         }
 
         public Store() {
-            
+            Movies = new ObservableCollection<MovieLightJson>();
+            Shows = new ObservableCollection<ShowLightJson>();
+
             _cacheService = new CacheService("X");
             using (var db = new BloggingContext()) {
                 db.Database.Migrate();
@@ -59,34 +76,28 @@ namespace X.SharedLibsCore.Storage
         }
 
         public async Task LoadStore(bool reset = false) {
-
-            
-
             await LoadMovies();
             await LoadTVShows();
         }
 
-        public IEnumerable<MovieLightJson> Movies { get; set; }
-        public MovieJson Movie { get; set; }
-        public int MoviesCount { get; set; }
-        public IEnumerable<ShowLightJson> Shows { get; set; }
-        public ShowJson Show { get; set; }
-        public int ShowsCount { get; set; }
 
-        public async Task LoadMovies(bool reset = false) {
+        
+
+        public async Task LoadMovies(bool reset = false, int noItemsPerPage = 40) {
             var geResultsWatcher = new Stopwatch();
             await LoadingSemaphore.WaitAsync(GetCancellationTokenSource(CancellationTokenTypes.Movies).Token);
 
             geResultsWatcher.Start();
-            var results = await _movieService.GetMoviesAsync(0,
-                            30,
+            var results = await _movieService.GetMoviesAsync(currentMoviePage,
+                            noItemsPerPage,
                             0d,
                             "seeds",
                             GetCancellationTokenSource(CancellationTokenTypes.Movies).Token);
             geResultsWatcher.Stop();
             var ellapsedTime = geResultsWatcher.ElapsedMilliseconds;
-            Movies = results.movies;
+            Movies.AddRange(results.movies.Except(Movies, new MovieLightComparer()));
             MoviesCount = results.nbMovies;
+            currentMoviePage++;
             if (reset && ellapsedTime < 500)
             {
                 // Wait for VerticalOffset to reach 0 (animation lasts 500ms)
@@ -96,21 +107,22 @@ namespace X.SharedLibsCore.Storage
             LoadingSemaphore.Release();
         }
 
-        public async Task LoadTVShows(bool reset = false)
+        public async Task LoadTVShows(bool reset = false, int noItemsPerPage = 40)
         {
             var geResultsWatcher = new Stopwatch();
             await LoadingSemaphore.WaitAsync(GetCancellationTokenSource(CancellationTokenTypes.Shows).Token);
 
             geResultsWatcher.Start();
-            var results = await _showService.GetShowsAsync(0,
-                            30,
+            var results = await _showService.GetShowsAsync(currentShowPage,
+                            noItemsPerPage,
                             0d,
                             "seeds",
                             GetCancellationTokenSource(CancellationTokenTypes.Shows).Token);
             geResultsWatcher.Stop();
             var ellapsedTime = geResultsWatcher.ElapsedMilliseconds;
-            Shows = results.shows;
+            Shows.AddRange(results.shows.Except(Shows, new ShowLightComparer()));
             ShowsCount = results.nbShows;
+            currentShowPage++;
             if (reset && ellapsedTime < 500)
             {
                 // Wait for VerticalOffset to reach 0 (animation lasts 500ms)

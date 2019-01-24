@@ -30,7 +30,7 @@ namespace Popcorn.Services.Movies.Movie
     {
         const int DefaultRequestTimeoutInSecond = 15;
         const string PopcornApi = "https://popcornapi.azurewebsites.net/api";
-        const int MaxMoviesPerPage = 20;
+        const int MaxMoviesPerPage = 40;
         const bool DefaultHdQuality = false;
 
         /// <summary>

@@ -2,6 +2,7 @@
 using Popcorn.Models.Shows;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -34,27 +35,62 @@ namespace X.Designer
 
         private async void GrdItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (isShowingMovies)
-            {
-                var selectedItem = (MovieLightJson)e.AddedItems[0] ;
-                await _store.LoadMovie(selectedItem.ImdbId);
-                grdDetails.DataContext = _store.Movie;
-            }
-            else {
-                var selectedItem = (ShowLightJson)e.AddedItems[0];
-                await _store.LoadTVShow(selectedItem.ImdbId);
-                grdDetails.DataContext = _store.Show;
-            }
+            try {
+                if (isShowingMovies)
+                {
+                    var selectedItem = (MovieLightJson)e.AddedItems[0];
+                    await _store.LoadMovie(selectedItem.ImdbId);
+                    grdDetails.DataContext = _store.Movie;
+                }
+                else
+                {
+                    var selectedItem = (ShowLightJson)e.AddedItems[0];
+                    await _store.LoadTVShow(selectedItem.ImdbId);
+                    grdDetails.DataContext = _store.Show;
+                }
 
-            grdDetails.Visibility = Visibility.Visible;
+                grdDetails.Visibility = Visibility.Visible;
+            }
+            catch (Exception ex){
+                Debug.WriteLine("problem selecting a movie/show (GrdItems_SelectionChanged)");
+            }
         }
 
         private async void LayoutRoot_Loaded(object sender, RoutedEventArgs e)
         {
-            var myVideos = await Windows.Storage.StorageLibrary.GetLibraryAsync(Windows.Storage.KnownLibraryId.Videos);
+            var scrollViewer = grdItems.ChildrenBreadthFirst().OfType<ScrollViewer>().First();
+            scrollViewer.ViewChanged += onGrdItemsViewChanged;
 
+            var myVideos = await Windows.Storage.StorageLibrary.GetLibraryAsync(Windows.Storage.KnownLibraryId.Videos);
             await _store.InitializeFileSystem(myVideos.SaveFolder.Path);
             await _store.LoadStore();
+        }
+        bool isCurrentlyLoading = false;
+        private async void onGrdItemsViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            var sv = (ScrollViewer)sender;
+            //Debug.WriteLine( sv.VerticalOffset);
+            //var totalHeight = sv.VerticalOffset + sv.ViewportHeight;
+
+            var scrollPointToTriggerNextPage =  sv.ScrollableHeight - 300;
+
+            if (sv.VerticalOffset < scrollPointToTriggerNextPage || isCurrentlyLoading)
+            {
+                return;
+            }
+            isCurrentlyLoading = true;
+            
+            if (isShowingMovies)
+            {
+                Debug.WriteLine($"loading page {_store.currentMoviePage}");
+                await _store.LoadMovies();
+            }
+            else
+            {
+                Debug.WriteLine($"loading page {_store.currentShowPage}");
+                await _store.LoadTVShows();
+            }
+            isCurrentlyLoading = false;
         }
 
         private void ButMovies_Click(object sender, RoutedEventArgs e)
@@ -120,6 +156,35 @@ namespace X.Designer
             }
 
 
+        }
+    }
+
+
+
+    public static class ViewHelper
+    {
+        public static IEnumerable<DependencyObject> ChildrenBreadthFirst(this DependencyObject obj, bool includeSelf = false)
+        {
+            if (includeSelf)
+            {
+                yield return obj;
+            }
+
+            var queue = new Queue<DependencyObject>();
+            queue.Enqueue(obj);
+
+            while (queue.Count > 0)
+            {
+                obj = queue.Dequeue();
+                var count = VisualTreeHelper.GetChildrenCount(obj);
+
+                for (var i = 0; i < count; i++)
+                {
+                    var child = VisualTreeHelper.GetChild(obj, i);
+                    yield return child;
+                    queue.Enqueue(child);
+                }
+            }
         }
     }
 }
