@@ -36,25 +36,31 @@ namespace X.SharedLibsCore
 
         
         public ObservableCollection<MovieLightJson> Movies { get; set; }
+        public ObservableCollection<MovieLightJson> MoviesSimilar { get; set; }
         public MovieJson Movie { get; set; }
         public int currentMoviePage = 1;
         public int MoviesCount { get; set; }
 
 
         public ObservableCollection<ShowLightJson> Shows { get; set; }
+        public ObservableCollection<ShowLightJson> ShowsSimilar { get; set; }
         public ShowJson Show { get; set; }
         public int currentShowPage = 1;
         public int ShowsCount { get; set; }
 
         private enum CancellationTokenTypes {
             Movies,
+            MoviesSimilar,
             Shows,
+            ShowsSimilar,
             TotalTypes
         }
 
         public StoreFront() {
             Movies = new ObservableCollection<MovieLightJson>();
+            MoviesSimilar = new ObservableCollection<MovieLightJson>();
             Shows = new ObservableCollection<ShowLightJson>();
+            ShowsSimilar = new ObservableCollection<ShowLightJson>();
 
             _cacheService = new CacheService("X");
             using (var db = new BloggingContext()) {
@@ -140,7 +146,7 @@ namespace X.SharedLibsCore
             geResultsWatcher.Start();
 
             Movie = await _movieService.GetMovieAsync(imdbId, GetCancellationTokenSource(CancellationTokenTypes.Movies).Token);
-
+            
             var ellapsedTime = geResultsWatcher.ElapsedMilliseconds;
             if (ellapsedTime < 500)
             {
@@ -150,7 +156,7 @@ namespace X.SharedLibsCore
 
             LoadingSemaphore.Release();
         }
-
+        
         public async Task LoadTVShow(string imdbId)
         {
             var geResultsWatcher = new Stopwatch();
@@ -210,6 +216,27 @@ namespace X.SharedLibsCore
         }
 
 
+        public async Task LoadSimilarMovies(MovieJson movie)
+        {
+            var geResultsWatcher = new Stopwatch();
+            await LoadingSemaphore.WaitAsync(GetCancellationTokenSource(CancellationTokenTypes.MoviesSimilar).Token);
+
+            geResultsWatcher.Start();
+
+            MoviesSimilar.Clear();
+            var results = await _movieService.GetMoviesSimilarAsync(movie, GetCancellationTokenSource(CancellationTokenTypes.MoviesSimilar).Token);
+            MoviesSimilar.AddRange(results);
+
+            var ellapsedTime = geResultsWatcher.ElapsedMilliseconds;
+            if (ellapsedTime < 500)
+            {
+                // Wait for VerticalOffset to reach 0 (animation lasts 500ms)
+                await Task.Delay(500 - (int)ellapsedTime, GetCancellationTokenSource(CancellationTokenTypes.MoviesSimilar).Token);
+            }
+
+            LoadingSemaphore.Release();
+        }
+        
         public async Task WatchMovie(MovieJson movie, string torrentPath, Stream torrentStream, bool reset = false)
         {
             var geResultsWatcher = new Stopwatch();

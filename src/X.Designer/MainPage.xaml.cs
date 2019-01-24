@@ -42,15 +42,18 @@ namespace X.Designer
                     var selectedItem = (MovieLightJson)e.AddedItems[0];
                     await _store.LoadMovie(selectedItem.ImdbId);
                     grdDetails.DataContext = _store.Movie;
+                    grdDetails.Visibility = Visibility.Visible;
+
+                    await _store.LoadSimilarMovies(_store.Movie);
+                    grdSimilarItems.ItemsSource = _store.MoviesSimilar;
                 }
                 else
                 {
                     var selectedItem = (ShowLightJson)e.AddedItems[0];
                     await _store.LoadTVShow(selectedItem.ImdbId);
                     grdDetails.DataContext = _store.Show;
+                    grdDetails.Visibility = Visibility.Visible;
                 }
-
-                grdDetails.Visibility = Visibility.Visible;
             }
             catch (Exception ex){
                 Debug.WriteLine("problem selecting a movie/show (GrdItems_SelectionChanged)");
