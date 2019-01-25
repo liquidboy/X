@@ -34,6 +34,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "X.SharedLibsCore.Migration"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X.Designer.Wpf", "X.Designer.Wpf\X.Designer.Wpf.csproj", "{18A5C85D-6EE3-4B6D-B8AF-50ECFD955BB9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X.Store.UWP", "X.Store.UWP\X.Store.UWP.csproj", "{60950C69-DB9E-47DB-BABC-CF58D32E7BBE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -296,6 +298,26 @@ Global
 		{18A5C85D-6EE3-4B6D-B8AF-50ECFD955BB9}.Release|x64.Build.0 = Release|Any CPU
 		{18A5C85D-6EE3-4B6D-B8AF-50ECFD955BB9}.Release|x86.ActiveCfg = Release|Any CPU
 		{18A5C85D-6EE3-4B6D-B8AF-50ECFD955BB9}.Release|x86.Build.0 = Release|Any CPU
+		{60950C69-DB9E-47DB-BABC-CF58D32E7BBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60950C69-DB9E-47DB-BABC-CF58D32E7BBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60950C69-DB9E-47DB-BABC-CF58D32E7BBE}.Debug|ARM.ActiveCfg = Debug|ARM
+		{60950C69-DB9E-47DB-BABC-CF58D32E7BBE}.Debug|ARM.Build.0 = Debug|ARM
+		{60950C69-DB9E-47DB-BABC-CF58D32E7BBE}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{60950C69-DB9E-47DB-BABC-CF58D32E7BBE}.Debug|ARM64.Build.0 = Debug|ARM64
+		{60950C69-DB9E-47DB-BABC-CF58D32E7BBE}.Debug|x64.ActiveCfg = Debug|x64
+		{60950C69-DB9E-47DB-BABC-CF58D32E7BBE}.Debug|x64.Build.0 = Debug|x64
+		{60950C69-DB9E-47DB-BABC-CF58D32E7BBE}.Debug|x86.ActiveCfg = Debug|x86
+		{60950C69-DB9E-47DB-BABC-CF58D32E7BBE}.Debug|x86.Build.0 = Debug|x86
+		{60950C69-DB9E-47DB-BABC-CF58D32E7BBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60950C69-DB9E-47DB-BABC-CF58D32E7BBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60950C69-DB9E-47DB-BABC-CF58D32E7BBE}.Release|ARM.ActiveCfg = Release|ARM
+		{60950C69-DB9E-47DB-BABC-CF58D32E7BBE}.Release|ARM.Build.0 = Release|ARM
+		{60950C69-DB9E-47DB-BABC-CF58D32E7BBE}.Release|ARM64.ActiveCfg = Release|ARM64
+		{60950C69-DB9E-47DB-BABC-CF58D32E7BBE}.Release|ARM64.Build.0 = Release|ARM64
+		{60950C69-DB9E-47DB-BABC-CF58D32E7BBE}.Release|x64.ActiveCfg = Release|x64
+		{60950C69-DB9E-47DB-BABC-CF58D32E7BBE}.Release|x64.Build.0 = Release|x64
+		{60950C69-DB9E-47DB-BABC-CF58D32E7BBE}.Release|x86.ActiveCfg = Release|x86
+		{60950C69-DB9E-47DB-BABC-CF58D32E7BBE}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
