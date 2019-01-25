@@ -33,6 +33,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "X.SharedLibsCore.Migration", "SharedLibs\X.SharedLibsCore.Migration\X.SharedLibsCore.Migration.csproj", "{61E5344C-53FD-405A-919C-CA607D6F5369}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X.Designer.Wpf", "X.Designer.Wpf\X.Designer.Wpf.csproj", "{18A5C85D-6EE3-4B6D-B8AF-50ECFD955BB9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{60950C69-DB9E-47DB-BABC-CF58D32E7BBE} = {60950C69-DB9E-47DB-BABC-CF58D32E7BBE}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X.Store.UWP", "X.Store.UWP\X.Store.UWP.csproj", "{60950C69-DB9E-47DB-BABC-CF58D32E7BBE}"
 EndProject
