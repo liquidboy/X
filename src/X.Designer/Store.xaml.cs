@@ -5,38 +5,29 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using X.SharedLibsCore;
-using X.SharedLibsCore.Storage;
 
 namespace X.Designer
 {
-    public sealed partial class MainPage : Page
+    public sealed partial class Store : UserControl
     {
         StoreFront _store;
         bool isShowingMovies;
 
-        public MainPage()
+        public Store()
         {
             this.InitializeComponent();
-
             _store = new StoreFront();
         }
-        
+
 
         private async void GrdItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            try {
+            try
+            {
                 if (isShowingMovies)
                 {
                     var selectedItem = (MovieLightJson)e.AddedItems[0];
@@ -55,7 +46,8 @@ namespace X.Designer
                     grdDetails.Visibility = Visibility.Visible;
                 }
             }
-            catch (Exception ex){
+            catch (Exception ex)
+            {
                 Debug.WriteLine("problem selecting a movie/show (GrdItems_SelectionChanged)");
             }
         }
@@ -76,14 +68,14 @@ namespace X.Designer
             //Debug.WriteLine( sv.VerticalOffset);
             //var totalHeight = sv.VerticalOffset + sv.ViewportHeight;
 
-            var scrollPointToTriggerNextPage =  sv.ScrollableHeight - 300;
+            var scrollPointToTriggerNextPage = sv.ScrollableHeight - 300;
 
             if (sv.VerticalOffset < scrollPointToTriggerNextPage || isCurrentlyLoading)
             {
                 return;
             }
             isCurrentlyLoading = true;
-            
+
             if (isShowingMovies)
             {
                 Debug.WriteLine($"loading page {_store.currentMoviePage}");
@@ -146,7 +138,8 @@ namespace X.Designer
             var xFolder = await myVideos.SaveFolder.CreateFolderAsync("X", Windows.Storage.CreationCollisionOption.OpenIfExists);
             var fileName = isShowingMovies ? _store.Movie.ImdbId : _store.Show.TmdbId.ToString();
             var newTorrentFile = await xFolder.CreateFileAsync($"{fileName}.torrent", Windows.Storage.CreationCollisionOption.ReplaceExisting);
-            using (var newFileStream = await newTorrentFile.OpenStreamForWriteAsync()) {
+            using (var newFileStream = await newTorrentFile.OpenStreamForWriteAsync())
+            {
 
                 if (isShowingMovies)
                 {
@@ -164,14 +157,16 @@ namespace X.Designer
 
         private void ButResizeTrailer_Click(object sender, RoutedEventArgs e)
         {
-            if (grdTrailer.Width == 400) {
+            if (grdTrailer.Width == 400)
+            {
                 grdTrailer.HorizontalAlignment = HorizontalAlignment.Stretch;
                 grdTrailer.VerticalAlignment = VerticalAlignment.Stretch;
                 grdTrailer.Margin = new Thickness(0);
                 grdTrailer.Width = double.NaN;
                 grdTrailer.Height = double.NaN;
             }
-            else {
+            else
+            {
                 grdTrailer.HorizontalAlignment = HorizontalAlignment.Right;
                 grdTrailer.VerticalAlignment = VerticalAlignment.Bottom;
                 grdTrailer.Margin = new Thickness(50);
@@ -182,4 +177,30 @@ namespace X.Designer
     }
 
 
+    public static class ViewHelper
+    {
+        public static IEnumerable<DependencyObject> ChildrenBreadthFirst(this DependencyObject obj, bool includeSelf = false)
+        {
+            if (includeSelf)
+            {
+                yield return obj;
+            }
+
+            var queue = new Queue<DependencyObject>();
+            queue.Enqueue(obj);
+
+            while (queue.Count > 0)
+            {
+                obj = queue.Dequeue();
+                var count = VisualTreeHelper.GetChildrenCount(obj);
+
+                for (var i = 0; i < count; i++)
+                {
+                    var child = VisualTreeHelper.GetChild(obj, i);
+                    yield return child;
+                    queue.Enqueue(child);
+                }
+            }
+        }
+    }
 }

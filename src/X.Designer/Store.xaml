@@ -1,13 +1,14 @@
-﻿<Page
-    x:Class="X.Designer.MainPage"
+﻿<UserControl
+    x:Class="X.Designer.Store"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:X.Designer"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Page.Resources>
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.Resources>
         <DataTemplate x:Name="dtMovie">
             <Grid Width="200" Height="320">
                 <Image Source="{Binding PosterImage}" Stretch="Fill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,40"></Image>
@@ -27,14 +28,14 @@
                 <Image Source="{Binding PosterImage}" Stretch="Fill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0"></Image>
             </Grid>
         </DataTemplate>
-    </Page.Resources>
+    </UserControl.Resources>
     <Grid x:Name="layoutRoot" Loaded="LayoutRoot_Loaded">
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
             <Button x:Name="butMovies" Content="Movies" Click="ButMovies_Click" Style="{StaticResource GeneralTabButtonStyle}"></Button>
             <Button x:Name="butShows" Content="TV Shows" Margin="10,0,0,0" Click="ButShows_Click" Style="{StaticResource GeneralTabButtonStyle}"></Button>
         </StackPanel>
         <GridView x:Name="grdItems" SelectionChanged="GrdItems_SelectionChanged" Margin="0,50,0,0" ItemTemplate="{StaticResource dtMovie}"></GridView>
-        
+
         <Grid x:Name="grdDetails" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed">
             <Rectangle Fill="White"></Rectangle>
             <Image Source="{Binding BackgroundImage}" Stretch="UniformToFill" Opacity="0.9"></Image>
@@ -69,4 +70,4 @@
             <Button x:Name="butCloseTrailer" Content="Close" Margin="10" FontSize="16" Style="{StaticResource GeneralButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="ButCloseTrailer_Click"></Button>
         </Grid>
     </Grid>
-</Page>
+</UserControl>
