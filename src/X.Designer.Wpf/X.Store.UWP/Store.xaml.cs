@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Windows;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -29,22 +30,27 @@ namespace X.Store.UWP
         {
             try
             {
+                grdDetailsMovie.Visibility = Visibility.Collapsed;
+                grdDetailsMovie.DataContext = null;
+                grdDetailsShow.Visibility = Visibility.Collapsed;
+                grdDetailsShow.DataContext = null;
+
                 if (isShowingMovies)
                 {
                     var selectedItem = (MovieLightJson)e.AddedItems[0];
                     await _store.LoadMovie(selectedItem.ImdbId);
-                    grdDetails.DataContext = _store.Movie;
-                    grdDetails.Visibility = Visibility.Visible;
+                    grdDetailsMovie.DataContext = _store.Movie;
+                    grdDetailsMovie.Visibility = Visibility.Visible;
 
                     await _store.LoadSimilarMovies(_store.Movie);
-                    grdSimilarItems.ItemsSource = _store.MoviesSimilar;
+                    grdSimilarItemsMovie.ItemsSource = _store.MoviesSimilar;
                 }
                 else
                 {
                     var selectedItem = (ShowLightJson)e.AddedItems[0];
                     await _store.LoadTVShow(selectedItem.ImdbId);
-                    grdDetails.DataContext = _store.Show;
-                    grdDetails.Visibility = Visibility.Visible;
+                    grdDetailsShow.DataContext = _store.Show;
+                    grdDetailsShow.Visibility = Visibility.Visible;
                 }
             }
             catch (Exception ex)
@@ -106,8 +112,11 @@ namespace X.Store.UWP
 
         private void ButCloseDetails_Click(object sender, RoutedEventArgs e)
         {
-            grdDetails.DataContext = null;
-            grdDetails.Visibility = Visibility.Collapsed;
+            grdDetailsMovie.DataContext = null;
+            grdDetailsMovie.Visibility = Visibility.Collapsed;
+
+            grdDetailsShow.DataContext = null;
+            grdDetailsShow.Visibility = Visibility.Collapsed;
         }
 
         private async void ButWatchTrailer_Click(object sender, RoutedEventArgs e)
@@ -181,7 +190,7 @@ namespace X.Store.UWP
             grdDownload.DataContext = null;
             meDownload.DataContext = null;
 
-            //grdDownload.Visibility = Visibility.Collapsed;
+            grdDownload.Visibility = Visibility.Collapsed;
         }
 
         private void ButResizeDownload_Click(object sender, RoutedEventArgs e)
@@ -202,6 +211,19 @@ namespace X.Store.UWP
                 grdDownload.Width = 400d;
                 grdDownload.Height = 300d;
             }
+        }
+
+        private async void ButPlayDownload_Click(object sender, RoutedEventArgs e)
+        {
+            var uri = (Uri)meDownload.Tag;
+            var url = uri.OriginalString.Replace("file:///", "");
+            var filename = Path.GetFileName(url);
+            var directoryName = Path.GetDirectoryName(url);
+            
+            StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(directoryName);
+            StorageFile file = await folder.GetFileAsync(filename);
+            var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
+            meDownload.SetSource(stream, file.ContentType);
         }
     }
 

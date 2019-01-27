@@ -120,10 +120,12 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="PosterFormatConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Store.xaml.cs">
       <DependentUpon>Store.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BannerFormatConverter.cs" />
     <EmbeddedResource Include="Properties\X.Store.UWP.rd.xml" />
   </ItemGroup>
   <ItemGroup>

@@ -5,6 +5,7 @@
     xmlns:local="using:X.Store.UWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:X.Store.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
@@ -200,7 +201,7 @@
         </StackPanel>
         <GridView x:Name="grdItems" SelectionChanged="GrdItems_SelectionChanged" Margin="0,50,0,0" ItemTemplate="{StaticResource dtMovie}"></GridView>
 
-        <Grid x:Name="grdDetails" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed">
+        <Grid x:Name="grdDetailsMovie" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed">
             <Rectangle Fill="White"></Rectangle>
             <Image Source="{Binding BackgroundImage}" Stretch="UniformToFill" Opacity="0.9"></Image>
             <Rectangle Fill="Black" Opacity="0.3"></Rectangle>
@@ -210,14 +211,14 @@
                 <TextBlock Text="{Binding Title}" FontSize="26" Foreground="White" HorizontalAlignment="Left"></TextBlock>
                 <TextBlock Text="{Binding DescriptionFull}" Margin="0,20,0,0"  FontSize="18" Foreground="White" TextWrapping="WrapWholeWords"></TextBlock>
                 <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
-                    <Button x:Name="butCloseDetails" Content="Go Back" FontSize="16" Click="ButCloseDetails_Click" Style="{StaticResource GeneralButtonStyle}">
+                    <Button x:Name="butCloseDetailsMovie" Content="Go Back" FontSize="16" Click="ButCloseDetails_Click" Style="{StaticResource GeneralButtonStyle}">
                     </Button>
-                    <Button x:Name="butWatchTrailer" Content="Watch Trailer" FontSize="16" Click="ButWatchTrailer_Click" Margin="10,0,0,0" Style="{StaticResource GeneralButtonStyle}"></Button>
-                    <Button x:Name="butWatch" Content="Watch" FontSize="16" Click="ButWatch_Click" Margin="10,0,0,0" Style="{StaticResource GeneralButtonStyle}"></Button>
+                    <Button x:Name="butWatchTrailerMovie" Content="Watch Trailer" FontSize="16" Click="ButWatchTrailer_Click" Margin="10,0,0,0" Style="{StaticResource GeneralButtonStyle}"></Button>
+                    <Button x:Name="butWatchMovie" Content="Watch" FontSize="16" Click="ButWatch_Click" Margin="10,0,0,0" Style="{StaticResource GeneralButtonStyle}"></Button>
                 </StackPanel>
             </StackPanel>
 
-            <ListView x:Name="grdSimilarItems" Margin="50,0,50,50" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="250" ItemTemplate="{StaticResource dtSimilarMovie}">
+            <ListView x:Name="grdSimilarItemsMovie" Margin="50,0,50,50" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="250" ItemTemplate="{StaticResource dtSimilarMovie}">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal"></StackPanel>
@@ -225,7 +226,23 @@
                 </ListView.ItemsPanel>
             </ListView>
         </Grid>
+        <Grid x:Name="grdDetailsShow" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed">
+            <Rectangle Fill="White"></Rectangle>
+            <Image Source="{Binding Images.Banner}" Stretch="UniformToFill" Opacity="0.9"></Image>
+            <Rectangle Fill="Black" Opacity="0.3"></Rectangle>
+            <Image Source="{Binding Images.Poster}" Stretch="Fill" Width="250" Height="350" Margin="30,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"></Image>
 
+            <StackPanel Orientation="Vertical" Margin="300,50,50,50">
+                <TextBlock Text="{Binding Title}" FontSize="26" Foreground="White" HorizontalAlignment="Left"></TextBlock>
+                <TextBlock Text="{Binding Synopsis}" Margin="0,20,0,0"  FontSize="18" Foreground="White" TextWrapping="WrapWholeWords"></TextBlock>
+                <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                    <Button x:Name="butCloseDetailsShow" Content="Go Back" FontSize="16" Click="ButCloseDetails_Click" Style="{StaticResource GeneralButtonStyle}">
+                    </Button>
+                    <Button x:Name="butWatchTrailerShow" Content="Watch Trailer" FontSize="16" Click="ButWatchTrailer_Click" Margin="10,0,0,0" Style="{StaticResource GeneralButtonStyle}"></Button>
+                    <Button x:Name="butWatchShow" Content="Watch" FontSize="16" Click="ButWatch_Click" Margin="10,0,0,0" Style="{StaticResource GeneralButtonStyle}"></Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
 
         <Grid x:Name="grdTrailer" Margin="50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Collapsed" Width="400" Height="300">
             <Rectangle Fill="Black" ></Rectangle>
@@ -236,7 +253,7 @@
 
         <Grid x:Name="grdDownload" Margin="50" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="400" Height="300" Visibility="Collapsed">
             <Rectangle Fill="Black" ></Rectangle>
-            <MediaElement x:Name="meDownload" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="{Binding Source}"></MediaElement>
+            <MediaElement x:Name="meDownload" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Tag="{Binding Source}"></MediaElement>
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="{Binding Seeders}" Foreground="White"></TextBlock>
                 <TextBlock Text="{Binding Peers}" Foreground="White"></TextBlock>
@@ -244,6 +261,7 @@
                 <TextBlock Text="{Binding Progress}" Foreground="White"></TextBlock>
             </StackPanel>
             <Button x:Name="butResizeDownload" Content="Resize" Margin="10" FontSize="16" Style="{StaticResource GeneralButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="ButResizeDownload_Click"></Button>
+            <Button x:Name="butPlayDownload" Content="Play" Margin="10" FontSize="16" Style="{StaticResource GeneralButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="ButPlayDownload_Click"></Button>
             <Button x:Name="butCloseDownload" Content="Close" Margin="10" FontSize="16" Style="{StaticResource GeneralButtonStyle}" HorizontalAlignment="Right" 
                     VerticalAlignment="Bottom" Click="ButCloseDownload_Click"></Button>
         </Grid>
