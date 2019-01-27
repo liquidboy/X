@@ -92,9 +92,36 @@ namespace X.SharedLibsCore
         }
 
 
-        
+        public enum SortBy {
 
-        public async Task LoadMovies(bool reset = false, int noItemsPerPage = 40) {
+            movieGreatest,
+            moviePopular,
+            movieRecent,
+
+            showPopular,
+            showGreatest,
+            showRecent,
+            showUpdated
+        }
+
+
+        private string getSortBy(SortBy sortBy) {
+
+            switch (sortBy) {
+                case SortBy.movieGreatest: return "download_count";
+                case SortBy.moviePopular: return "seeds";
+                case SortBy.movieRecent: return "year";
+
+                case SortBy.showPopular: return "watching";
+                case SortBy.showGreatest: return "votes";
+                case SortBy.showRecent: return "year";
+                case SortBy.showUpdated: return "date_added";
+            }
+
+            return "";
+        }
+
+        public async Task LoadMovies(bool reset = false, int noItemsPerPage = 40, SortBy sortBy = SortBy.moviePopular) {
             var geResultsWatcher = new Stopwatch();
             await LoadingSemaphore.WaitAsync(GetCancellationTokenSource(CancellationTokenTypes.Movies).Token);
 
@@ -102,7 +129,7 @@ namespace X.SharedLibsCore
             var results = await _movieService.GetMoviesAsync(currentMoviePage,
                             noItemsPerPage,
                             0d,
-                            "seeds",
+                            getSortBy(sortBy),
                             GetCancellationTokenSource(CancellationTokenTypes.Movies).Token);
             geResultsWatcher.Stop();
             var ellapsedTime = geResultsWatcher.ElapsedMilliseconds;
@@ -118,7 +145,7 @@ namespace X.SharedLibsCore
             LoadingSemaphore.Release();
         }
 
-        public async Task LoadTVShows(bool reset = false, int noItemsPerPage = 40)
+        public async Task LoadTVShows(bool reset = false, int noItemsPerPage = 40, SortBy sortBy = SortBy.showPopular)
         {
             var geResultsWatcher = new Stopwatch();
             await LoadingSemaphore.WaitAsync(GetCancellationTokenSource(CancellationTokenTypes.Shows).Token);
@@ -127,7 +154,7 @@ namespace X.SharedLibsCore
             var results = await _showService.GetShowsAsync(currentShowPage,
                             noItemsPerPage,
                             0d,
-                            "seeds",
+                            getSortBy(sortBy),
                             GetCancellationTokenSource(CancellationTokenTypes.Shows).Token);
             geResultsWatcher.Stop();
             var ellapsedTime = geResultsWatcher.ElapsedMilliseconds;
