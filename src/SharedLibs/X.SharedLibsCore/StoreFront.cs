@@ -250,8 +250,8 @@ namespace X.SharedLibsCore
             var torrentUrl = movie.Torrents?.FirstOrDefault(torrent => torrent.Quality == "720p")?.Url;
 
 
-            var result = await DownloadFileHelper.DownloadFileTaskAsync(torrentUrl, _cacheService.MovieTorrentDownloads + Movie.ImdbId + ".torrent");
-            //var result = await DownloadFileHelper.DownloadStreamTaskAsync(torrentUrl, torrentStream);
+            //var result = await DownloadFileHelper.DownloadFileTaskAsync(torrentUrl, _cacheService.MovieTorrentDownloads + Movie.ImdbId + ".torrent");
+            var result = await DownloadFileHelper.DownloadStreamTaskAsync(torrentUrl, torrentStream);
 
             var reportDownloadProgress = new Progress<double>(ReportMovieDownloadProgress);
             var reportDownloadRate = new Progress<BandwidthRate>(ReportMovieDownloadRate);

@@ -147,17 +147,13 @@ namespace X.Store.UWP.X_Store_UWP_XamlTypeInfo
 
         private void InitTypeTables()
         {
-            _typeNameTable = new string[4];
+            _typeNameTable = new string[2];
             _typeNameTable[0] = "X.Store.UWP.Store";
             _typeNameTable[1] = "Windows.UI.Xaml.Controls.UserControl";
-            _typeNameTable[2] = "X.Store.UWP.TestPage";
-            _typeNameTable[3] = "Windows.UI.Xaml.Controls.Page";
 
-            _typeTable = new global::System.Type[4];
+            _typeTable = new global::System.Type[2];
             _typeTable[0] = typeof(global::X.Store.UWP.Store);
             _typeTable[1] = typeof(global::Windows.UI.Xaml.Controls.UserControl);
-            _typeTable[2] = typeof(global::X.Store.UWP.TestPage);
-            _typeTable[3] = typeof(global::Windows.UI.Xaml.Controls.Page);
         }
 
         private int LookupTypeIndexByName(string typeName)
@@ -193,7 +189,6 @@ namespace X.Store.UWP.X_Store_UWP_XamlTypeInfo
         }
 
         private object Activate_0_Store() { return new global::X.Store.UWP.Store(); }
-        private object Activate_2_TestPage() { return new global::X.Store.UWP.TestPage(); }
 
         private global::Windows.UI.Xaml.Markup.IXamlType CreateXamlType(int typeIndex)
         {
@@ -213,17 +208,6 @@ namespace X.Store.UWP.X_Store_UWP_XamlTypeInfo
                 break;
 
             case 1:   //  Windows.UI.Xaml.Controls.UserControl
-                xamlType = new global::X.Store.UWP.X_Store_UWP_XamlTypeInfo.XamlSystemBaseType(typeName, type);
-                break;
-
-            case 2:   //  X.Store.UWP.TestPage
-                userType = new global::X.Store.UWP.X_Store_UWP_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_2_TestPage;
-                userType.SetIsLocalType();
-                xamlType = userType;
-                break;
-
-            case 3:   //  Windows.UI.Xaml.Controls.Page
                 xamlType = new global::X.Store.UWP.X_Store_UWP_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
             }

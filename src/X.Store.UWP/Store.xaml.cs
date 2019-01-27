@@ -141,10 +141,9 @@ namespace X.Store.UWP
             var newTorrentFile = await xFolder.CreateFileAsync($"{fileName}.torrent", Windows.Storage.CreationCollisionOption.ReplaceExisting);
             using (var newFileStream = await newTorrentFile.OpenStreamForWriteAsync())
             {
-
                 if (isShowingMovies)
                 {
-                    //await _store.WatchMovie(_store.Movie, $"{xFolder.Path}\\{fileName}.torrent",  newFileStream);
+                    await _store.WatchMovie(_store.Movie, $"{xFolder.Path}\\{fileName}.torrent",  newFileStream);
                 }
                 else
                 {
@@ -152,8 +151,6 @@ namespace X.Store.UWP
                 }
 
             }
-
-
         }
 
         private void ButResizeTrailer_Click(object sender, RoutedEventArgs e)
