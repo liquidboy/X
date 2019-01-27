@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <PackageReference Include="libtorrent-net" Version="4.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.0.0-preview.18572.1" />
     <PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
     <PackageReference Include="NLog" Version="4.5.11" />
     <PackageReference Include="Polly" Version="6.1.2" />
@@ -15,12 +14,6 @@
     <PackageReference Include="TMDbLib.Core2" Version="1.0.0" />
     <PackageReference Include="Utf8Json" Version="1.3.7" />
     <PackageReference Include="VideoLibrary" Version="2.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Migrations\20190119002552_CreateDatabase.Designer.cs">
-      <DependentUpon>20190119002552_CreateDatabase.cs</DependentUpon>
-    </Compile>
   </ItemGroup>
 
 </Project>

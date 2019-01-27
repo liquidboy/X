@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿//using Microsoft.EntityFrameworkCore;
 using NuGet;
 using Popcorn.Comparers;
 using Popcorn.Helpers;
@@ -20,7 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using X.SharedLibsCore.Storage;
+//using X.SharedLibsCore.Storage;
 
 namespace X.SharedLibsCore
 {
@@ -63,9 +63,9 @@ namespace X.SharedLibsCore
             ShowsSimilar = new ObservableCollection<ShowLightJson>();
 
             _cacheService = new CacheService("X");
-            using (var db = new BloggingContext()) {
-                db.Database.Migrate();
-            }
+            //using (var db = new BloggingContext()) {
+            //    db.Database.Migrate();
+            //}
 
             var tmdbService = new TmdbService();
             _movieService = new MovieService(tmdbService);
@@ -250,8 +250,8 @@ namespace X.SharedLibsCore
             var torrentUrl = movie.Torrents?.FirstOrDefault(torrent => torrent.Quality == "720p")?.Url;
 
 
-            //var result = await DownloadFileHelper.DownloadFileTaskAsync(torrentUrl, _cacheService.MovieTorrentDownloads + Movie.ImdbId + ".torrent");
-            var result = await DownloadFileHelper.DownloadStreamTaskAsync(torrentUrl, torrentStream);
+            var result = await DownloadFileHelper.DownloadFileTaskAsync(torrentUrl, _cacheService.MovieTorrentDownloads + Movie.ImdbId + ".torrent");
+            //var result = await DownloadFileHelper.DownloadStreamTaskAsync(torrentUrl, torrentStream);
 
             var reportDownloadProgress = new Progress<double>(ReportMovieDownloadProgress);
             var reportDownloadRate = new Progress<BandwidthRate>(ReportMovieDownloadRate);

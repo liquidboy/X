@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <xamlhost:WindowsXamlHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></xamlhost:WindowsXamlHost>
+        <xamlhost:WindowsXamlHost x:Name="xamlHost" ChildChanged="XamlHost_ChildChanged" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                  InitialTypeName="X.Store.UWP.Store"></xamlhost:WindowsXamlHost>
     </Grid>
 </Window>
