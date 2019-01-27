@@ -143,6 +143,9 @@ namespace X.Store.UWP
             {
                 if (isShowingMovies)
                 {
+                    grdDownload.DataContext = _store.DownloadProgress;
+                    meDownload.DataContext = _store.CurrentDownloadingMove;
+                    grdDownload.Visibility = Visibility.Visible;
                     await _store.WatchMovie(_store.Movie, $"{xFolder.Path}\\{fileName}.torrent",  newFileStream);
                 }
                 else
@@ -170,6 +173,34 @@ namespace X.Store.UWP
                 grdTrailer.Margin = new Thickness(50);
                 grdTrailer.Width = 400d;
                 grdTrailer.Height = 300d;
+            }
+        }
+
+        private void ButCloseDownload_Click(object sender, RoutedEventArgs e)
+        {
+            grdDownload.DataContext = null;
+            meDownload.DataContext = null;
+
+            //grdDownload.Visibility = Visibility.Collapsed;
+        }
+
+        private void ButResizeDownload_Click(object sender, RoutedEventArgs e)
+        {
+            if (grdDownload.Width == 400)
+            {
+                grdDownload.HorizontalAlignment = HorizontalAlignment.Stretch;
+                grdDownload.VerticalAlignment = VerticalAlignment.Stretch;
+                grdDownload.Margin = new Thickness(0);
+                grdDownload.Width = double.NaN;
+                grdDownload.Height = double.NaN;
+            }
+            else
+            {
+                grdDownload.HorizontalAlignment = HorizontalAlignment.Left;
+                grdDownload.VerticalAlignment = VerticalAlignment.Bottom;
+                grdDownload.Margin = new Thickness(50);
+                grdDownload.Width = 400d;
+                grdDownload.Height = 300d;
             }
         }
     }

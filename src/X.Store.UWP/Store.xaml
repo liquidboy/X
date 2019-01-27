@@ -233,5 +233,19 @@
             <Button x:Name="butResizeTrailer" Content="Resize" Margin="10" FontSize="16" Style="{StaticResource GeneralButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="ButResizeTrailer_Click"></Button>
             <Button x:Name="butCloseTrailer" Content="Close" Margin="10" FontSize="16" Style="{StaticResource GeneralButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="ButCloseTrailer_Click"></Button>
         </Grid>
+
+        <Grid x:Name="grdDownload" Margin="50" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="400" Height="300" Visibility="Collapsed">
+            <Rectangle Fill="Black" ></Rectangle>
+            <MediaElement x:Name="meDownload" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="{Binding Source}"></MediaElement>
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="{Binding Seeders}" Foreground="White"></TextBlock>
+                <TextBlock Text="{Binding Peers}" Foreground="White"></TextBlock>
+                <TextBlock Text="{Binding DownloadRate}" Foreground="White"></TextBlock>
+                <TextBlock Text="{Binding Progress}" Foreground="White"></TextBlock>
+            </StackPanel>
+            <Button x:Name="butResizeDownload" Content="Resize" Margin="10" FontSize="16" Style="{StaticResource GeneralButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="ButResizeDownload_Click"></Button>
+            <Button x:Name="butCloseDownload" Content="Close" Margin="10" FontSize="16" Style="{StaticResource GeneralButtonStyle}" HorizontalAlignment="Right" 
+                    VerticalAlignment="Bottom" Click="ButCloseDownload_Click"></Button>
+        </Grid>
     </Grid>
 </UserControl>

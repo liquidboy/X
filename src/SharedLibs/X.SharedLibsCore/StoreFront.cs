@@ -14,9 +14,11 @@ using Popcorn.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -61,6 +63,8 @@ namespace X.SharedLibsCore
             MoviesSimilar = new ObservableCollection<MovieLightJson>();
             Shows = new ObservableCollection<ShowLightJson>();
             ShowsSimilar = new ObservableCollection<ShowLightJson>();
+            DownloadProgress = new DownloadStatus();
+            CurrentDownloadingMove = new DownloadMovie();
 
             _cacheService = new CacheService("X");
             //using (var db = new BloggingContext()) {
@@ -243,7 +247,7 @@ namespace X.SharedLibsCore
             await LoadingSemaphore.WaitAsync(GetCancellationTokenSource(CancellationTokenTypes.Movies).Token);
 
             geResultsWatcher.Start();
-
+            
             //var torrentUrl = movie.WatchInFullHdQuality
             //                ? movie.Torrents?.FirstOrDefault(torrent => torrent.Quality == "1080p")?.Url
             //                : movie.Torrents?.FirstOrDefault(torrent => torrent.Quality == "720p")?.Url;
@@ -261,7 +265,7 @@ namespace X.SharedLibsCore
 
             await _movieDownloadService.Download(Movie, TorrentType.File, MediaType.Movie, torrentPath,
                                 0, 0, reportDownloadProgress,
-                                reportDownloadRate, reportNbSeeders, reportNbPeers, () => { }, () => { },
+                                reportDownloadRate, reportNbSeeders, reportNbPeers, () => { CurrentDownloadingMove.Source = new Uri(Movie.FilePath); }, () => { },
                                 GetCancellationTokenSource(CancellationTokenTypes.Movies));
 
 
@@ -279,23 +283,52 @@ namespace X.SharedLibsCore
             LoadingSemaphore.Release();
         }
 
-        int NbSeeders = 0;
-        private void ReportNbSeeders(int value) => NbSeeders = value;
+        private void ReportNbSeeders(int value) => DownloadProgress.Seeders = value;
 
-        int NbPeers = 0;
-        private void ReportNbPeers(int value) => NbPeers = value;
+        private void ReportNbPeers(int value) => DownloadProgress.Peers = value;
 
-        double MovieDownloadRate;
-        private void ReportMovieDownloadRate(BandwidthRate value) => MovieDownloadRate = value.DownloadRate;
+        private void ReportMovieDownloadRate(BandwidthRate value) => DownloadProgress.DownloadRate = value.DownloadRate;
 
-        double MovieDownloadProgress;
-        private void ReportMovieDownloadProgress(double value) => MovieDownloadProgress = value;
+        private void ReportMovieDownloadProgress(double value) => DownloadProgress.Progress = value;
 
-
+        public DownloadStatus DownloadProgress { get; set; }
+        public DownloadMovie CurrentDownloadingMove { get; set; }
 
         private CancellationTokenSource GetCancellationTokenSource(CancellationTokenTypes type) {
             return CancellationLoading[(int)type];
         }
     }
 
+
+    public class DownloadStatus : INotifyPropertyChanged {
+        private int nbSeeders;
+        public int Seeders { get { return nbSeeders; } set { nbSeeders = value;NotifyPropertyChanged(); } }
+        private int nbPeers;
+        public int Peers { get { return nbPeers; } set { nbPeers = value; NotifyPropertyChanged(); } }
+        private double nbDownloadRate;
+        public double DownloadRate { get { return nbDownloadRate; } set { nbDownloadRate = value; NotifyPropertyChanged(); } }
+        private double nbProgres;
+        public double Progress { get { return nbProgres; } set { nbProgres = value; NotifyPropertyChanged(); } }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+    }
+
+    public class DownloadMovie : INotifyPropertyChanged {
+        private Uri _Source;
+        public Uri Source { get { return _Source; } set { _Source = value; NotifyPropertyChanged(); } }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
 }
