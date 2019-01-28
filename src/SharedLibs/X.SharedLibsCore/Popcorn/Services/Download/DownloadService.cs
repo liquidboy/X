@@ -20,7 +20,7 @@ namespace Popcorn.Services.Download
     /// <typeparam name="T"><see cref="IMediaFile"/></typeparam>
     public class DownloadService<T> : IDownloadService<T> where T : IMediaFile
     {
-        
+
         const double MinimumShowBuffering = 5d;
         const double MinimumMovieBuffering = 5d;
 
@@ -61,64 +61,64 @@ namespace Popcorn.Services.Download
         {
             //return Task.Run(async () =>
             //{
-                Logger.Info($"Start downloading : {torrentPath}");
-                using (var session = new session())
+            Logger.Info($"Start downloading : {torrentPath}");
+            using (var session = new session())
+            {
+                downloadProgress.Report(0d);
+                bandwidthRate.Report(new BandwidthRate
                 {
-                    downloadProgress.Report(0d);
-                    bandwidthRate.Report(new BandwidthRate
-                    {
-                        DownloadRate = 0d,
-                        UploadRate = 0d
-                    });
-                    nbSeeds.Report(0);
-                    nbPeers.Report(0);
-                    string savePath = string.Empty;
-                    switch (mediaType)
-                    {
-                        case MediaType.Movie:
-                            savePath = _cacheService.MovieDownloads;
-                            break;
-                        case MediaType.Show:
-                            savePath = _cacheService.ShowDownloads;
-                            break;
-                        case MediaType.Unkown:
-                            savePath = _cacheService.DropFilesDownloads;
-                            break;
-                    }
+                    DownloadRate = 0d,
+                    UploadRate = 0d
+                });
+                nbSeeds.Report(0);
+                nbPeers.Report(0);
+                string savePath = string.Empty;
+                switch (mediaType)
+                {
+                    case MediaType.Movie:
+                        savePath = _cacheService.MovieDownloads;
+                        break;
+                    case MediaType.Show:
+                        savePath = _cacheService.ShowDownloads;
+                        break;
+                    case MediaType.Unkown:
+                        savePath = _cacheService.DropFilesDownloads;
+                        break;
+                }
 
-                    if (torrentType == TorrentType.File)
+                if (torrentType == TorrentType.File)
+                {
+                    using (var addParams = new add_torrent_params
                     {
-                        using (var addParams = new add_torrent_params
+                        save_path = savePath,
+                        ti = new torrent_info(torrentPath)
+                    })
+                    using (var handle = session.add_torrent(addParams))
+                    {
+                        await HandleDownload(media, savePath, mediaType, uploadLimit, downloadLimit,
+                            downloadProgress,
+                            bandwidthRate, nbSeeds, nbPeers, handle, session, buffered, cancelled, cts);
+                    }
+                }
+                else
+                {
+                    var magnet = new magnet_uri();
+                    using (var error = new error_code())
+                    {
+                        var addParams = new add_torrent_params
                         {
-                            save_path = savePath,
-                            ti = new torrent_info(torrentPath)
-                        })
+                            save_path = savePath
+                        };
+                        magnet.parse_magnet_uri(torrentPath, addParams, error);
                         using (var handle = session.add_torrent(addParams))
                         {
                             await HandleDownload(media, savePath, mediaType, uploadLimit, downloadLimit,
-                                downloadProgress,
-                                bandwidthRate, nbSeeds, nbPeers, handle, session, buffered, cancelled, cts);
-                        }
-                    }
-                    else
-                    {
-                        var magnet = new magnet_uri();
-                        using (var error = new error_code())
-                        {
-                            var addParams = new add_torrent_params
-                            {
-                                save_path = savePath,
-                            };
-                            magnet.parse_magnet_uri(torrentPath, addParams, error);
-                            using (var handle = session.add_torrent(addParams))
-                            {
-                                await HandleDownload(media, savePath, mediaType, uploadLimit, downloadLimit,
-                                    downloadProgress,
-                                    bandwidthRate, nbSeeds, nbPeers, handle, session, buffered, cancelled, cts);
-                            }
+                                downloadProgress, bandwidthRate, nbSeeds, nbPeers, handle, session, buffered, cancelled, cts);
+
                         }
                     }
                 }
+            }
             //});
         }
 
@@ -194,7 +194,7 @@ namespace Popcorn.Services.Download
                         }
 
                         var fileProgressInBytes = handle.file_progress(1)[mediaIndex];
-                        progress = (double) fileProgressInBytes / (double) totalSizeExceptIgnoredFiles * 100d;
+                        progress = (double)fileProgressInBytes / (double)totalSizeExceptIgnoredFiles * 100d;
                         var downRate = Math.Round(status.download_rate / 1024d, 0);
                         var upRate = Math.Round(status.upload_rate / 1024d, 0);
                         nbSeeds.Report(status.num_seeds);
@@ -208,8 +208,8 @@ namespace Popcorn.Services.Download
                             ETA = eta
                         });
 
-                        ((IProgress<double>) prog).Report(progress);
-                        ((IProgress<BandwidthRate>) bandwidth).Report(new BandwidthRate
+                        ((IProgress<double>)prog).Report(progress);
+                        ((IProgress<BandwidthRate>)bandwidth).Report(new BandwidthRate
                         {
                             DownloadRate = downRate,
                             UploadRate = upRate,

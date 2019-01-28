@@ -1,4 +1,5 @@
-﻿using Popcorn.Models.Movie;
+﻿using Popcorn.Models.Episode;
+using Popcorn.Models.Movie;
 using Popcorn.Models.Shows;
 using System;
 using System.Collections.Generic;
@@ -142,29 +143,6 @@ namespace X.Store.UWP
             grdTrailer.Visibility = Visibility.Collapsed;
         }
 
-        private async void ButWatch_Click(object sender, RoutedEventArgs e)
-        {
-            var myVideos = await Windows.Storage.StorageLibrary.GetLibraryAsync(Windows.Storage.KnownLibraryId.Videos);
-            var xFolder = await myVideos.SaveFolder.CreateFolderAsync("X", Windows.Storage.CreationCollisionOption.OpenIfExists);
-            var fileName = isShowingMovies ? _store.Movie.ImdbId : _store.Show.TmdbId.ToString();
-            var newTorrentFile = await xFolder.CreateFileAsync($"{fileName}.torrent", Windows.Storage.CreationCollisionOption.ReplaceExisting);
-            using (var newFileStream = await newTorrentFile.OpenStreamForWriteAsync())
-            {
-                if (isShowingMovies)
-                {
-                    grdDownload.DataContext = _store.DownloadProgress;
-                    meDownload.DataContext = _store.CurrentDownloadingMove;
-                    grdDownload.Visibility = Visibility.Visible;
-                    await _store.WatchMovie(_store.Movie, $"{xFolder.Path}\\{fileName}.torrent",  newFileStream);
-                }
-                else
-                {
-
-                }
-
-            }
-        }
-
         private void ButResizeTrailer_Click(object sender, RoutedEventArgs e)
         {
             if (grdTrailer.Width == 400)
@@ -224,6 +202,42 @@ namespace X.Store.UWP
             StorageFile file = await folder.GetFileAsync(filename);
             var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
             meDownload.SetSource(stream, file.ContentType);
+        }
+
+        private async void ButWatchMovie_Click(object sender, RoutedEventArgs e)
+        {
+            var myVideos = await Windows.Storage.StorageLibrary.GetLibraryAsync(Windows.Storage.KnownLibraryId.Videos);
+            var xFolder = await myVideos.SaveFolder.CreateFolderAsync("X", Windows.Storage.CreationCollisionOption.OpenIfExists);
+            var fileName = isShowingMovies ? _store.Movie.ImdbId : _store.Show.TmdbId.ToString();
+            var newTorrentFile = await xFolder.CreateFileAsync($"{fileName}.torrent", Windows.Storage.CreationCollisionOption.ReplaceExisting);
+            using (var newFileStream = await newTorrentFile.OpenStreamForWriteAsync())
+            {
+                if (isShowingMovies)
+                {
+                    grdDownload.DataContext = _store.DownloadProgress;
+                    meDownload.DataContext = _store.CurrentDownloadingMove;
+                    grdDownload.Visibility = Visibility.Visible;
+                    await _store.WatchMovie(_store.Movie, $"{xFolder.Path}\\{fileName}.torrent", newFileStream);
+                }
+            }
+        }
+
+        private async void ButWatchEpisode_Click(object sender, RoutedEventArgs e)
+        {
+            var episode = (EpisodeShowJson)((Button)sender).DataContext;
+            var myVideos = await Windows.Storage.StorageLibrary.GetLibraryAsync(Windows.Storage.KnownLibraryId.Videos);
+            var xFolder = await myVideos.SaveFolder.CreateFolderAsync("X", Windows.Storage.CreationCollisionOption.OpenIfExists);
+            var fileName = episode.TvdbId.ToString();
+            var newTorrentFile = await xFolder.CreateFileAsync($"{fileName}.torrent", Windows.Storage.CreationCollisionOption.ReplaceExisting);
+            using (var newFileStream = await newTorrentFile.OpenStreamForWriteAsync())
+            {
+
+                grdDownload.DataContext = _store.DownloadProgress;
+                meDownload.DataContext = _store.CurrentDownloadingMove;
+                grdDownload.Visibility = Visibility.Visible;
+                var mediaUrl = episode.Torrents.Torrent_480p.Url;
+                await _store.WatchEpisode(episode , mediaUrl, newFileStream);
+            }
         }
     }
 

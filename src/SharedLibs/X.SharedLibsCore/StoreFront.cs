@@ -3,6 +3,8 @@ using NuGet;
 using Popcorn.Comparers;
 using Popcorn.Helpers;
 using Popcorn.Models.Bandwidth;
+using Popcorn.Models.Episode;
+using Popcorn.Models.Media;
 using Popcorn.Models.Movie;
 using Popcorn.Models.Shows;
 using Popcorn.Services.Cache;
@@ -31,12 +33,13 @@ namespace X.SharedLibsCore
         private readonly MovieService _movieService;
         private readonly ShowService _showService;
         private IDownloadService<MovieJson> _movieDownloadService;
+        private IDownloadService<EpisodeShowJson> _showDownloadService;
         private readonly ICacheService _cacheService;
 
         protected readonly SemaphoreSlim LoadingSemaphore = new SemaphoreSlim(1, 1);
         protected CancellationTokenSource[] CancellationLoading { get; private set; }
 
-        
+
         public ObservableCollection<MovieLightJson> Movies { get; set; }
         public ObservableCollection<MovieLightJson> MoviesSimilar { get; set; }
         public MovieJson Movie { get; set; }
@@ -50,7 +53,8 @@ namespace X.SharedLibsCore
         public int currentShowPage = 1;
         public int ShowsCount { get; set; }
 
-        private enum CancellationTokenTypes {
+        private enum CancellationTokenTypes
+        {
             Movies,
             MoviesSimilar,
             Shows,
@@ -58,7 +62,8 @@ namespace X.SharedLibsCore
             TotalTypes
         }
 
-        public StoreFront() {
+        public StoreFront()
+        {
             Movies = new ObservableCollection<MovieLightJson>();
             MoviesSimilar = new ObservableCollection<MovieLightJson>();
             Shows = new ObservableCollection<ShowLightJson>();
@@ -74,25 +79,30 @@ namespace X.SharedLibsCore
             var tmdbService = new TmdbService();
             _movieService = new MovieService(tmdbService);
             _showService = new ShowService(tmdbService);
-            
+
             CancellationLoading = new CancellationTokenSource[(int)CancellationTokenTypes.TotalTypes];
-            for (int counter = 0; counter < (int)CancellationTokenTypes.TotalTypes; counter++) {
+            for (int counter = 0; counter < (int)CancellationTokenTypes.TotalTypes; counter++)
+            {
                 CancellationLoading[counter] = new CancellationTokenSource();
             }
         }
 
-        public async Task InitializeFileSystem(string movieUrl) {
+        public async Task InitializeFileSystem(string movieUrl)
+        {
             _cacheService.LocalPath = movieUrl;
             _movieDownloadService = new DownloadMovieService<MovieJson>(_cacheService);
+            _showDownloadService = new DownloadShowService<EpisodeShowJson>(_cacheService);
         }
 
-        public async Task LoadStore(bool reset = false) {
+        public async Task LoadStore(bool reset = false)
+        {
             await LoadMovies();
             await LoadTVShows();
         }
 
 
-        public enum SortBy {
+        public enum SortBy
+        {
 
             movieGreatest,
             moviePopular,
@@ -105,9 +115,11 @@ namespace X.SharedLibsCore
         }
 
 
-        private string getSortBy(SortBy sortBy) {
+        private string getSortBy(SortBy sortBy)
+        {
 
-            switch (sortBy) {
+            switch (sortBy)
+            {
                 case SortBy.movieGreatest: return "download_count";
                 case SortBy.moviePopular: return "seeds";
                 case SortBy.movieRecent: return "year";
@@ -121,7 +133,8 @@ namespace X.SharedLibsCore
             return "";
         }
 
-        public async Task LoadMovies(bool reset = false, int noItemsPerPage = 40, SortBy sortBy = SortBy.moviePopular) {
+        public async Task LoadMovies(bool reset = false, int noItemsPerPage = 40, SortBy sortBy = SortBy.moviePopular)
+        {
             var geResultsWatcher = new Stopwatch();
             await LoadingSemaphore.WaitAsync(GetCancellationTokenSource(CancellationTokenTypes.Movies).Token);
 
@@ -170,14 +183,15 @@ namespace X.SharedLibsCore
             LoadingSemaphore.Release();
         }
 
-        public async Task LoadMovie(string imdbId) {
+        public async Task LoadMovie(string imdbId)
+        {
             var geResultsWatcher = new Stopwatch();
             await LoadingSemaphore.WaitAsync(GetCancellationTokenSource(CancellationTokenTypes.Movies).Token);
 
             geResultsWatcher.Start();
 
             Movie = await _movieService.GetMovieAsync(imdbId, GetCancellationTokenSource(CancellationTokenTypes.Movies).Token);
-            
+
             var ellapsedTime = geResultsWatcher.ElapsedMilliseconds;
             if (ellapsedTime < 500)
             {
@@ -187,7 +201,7 @@ namespace X.SharedLibsCore
 
             LoadingSemaphore.Release();
         }
-        
+
         public async Task LoadTVShow(string imdbId)
         {
             var geResultsWatcher = new Stopwatch();
@@ -207,7 +221,8 @@ namespace X.SharedLibsCore
             LoadingSemaphore.Release();
         }
 
-        public async Task<string> LoadMovieTrailer(string imdbId) {
+        public async Task<string> LoadMovieTrailer(string imdbId)
+        {
             var geResultsWatcher = new Stopwatch();
             await LoadingSemaphore.WaitAsync(GetCancellationTokenSource(CancellationTokenTypes.Movies).Token);
 
@@ -268,6 +283,7 @@ namespace X.SharedLibsCore
             LoadingSemaphore.Release();
         }
         
+
         public async Task WatchMovie(MovieJson movie, string torrentPath, Stream torrentStream, bool reset = false)
         {
             var geResultsWatcher = new Stopwatch();
@@ -305,6 +321,39 @@ namespace X.SharedLibsCore
             {
                 // Wait for VerticalOffset to reach 0 (animation lasts 500ms)
                 await Task.Delay(500 - (int)ellapsedTime, GetCancellationTokenSource(CancellationTokenTypes.Movies).Token);
+            }
+
+            LoadingSemaphore.Release();
+        }
+
+        public async Task WatchEpisode(EpisodeShowJson episode, string torrentTemp, Stream torrentStream, bool reset = false)
+        {
+            var geResultsWatcher = new Stopwatch();
+            await LoadingSemaphore.WaitAsync(GetCancellationTokenSource(CancellationTokenTypes.Shows).Token);
+
+            geResultsWatcher.Start();
+
+            var torrentUrl = episode.Torrents?.Torrent_480p.Url;
+
+            //var result = await DownloadFileHelper.DownloadStreamTaskAsync(torrentTemp, torrentStream);
+
+            var reportDownloadProgress = new Progress<double>(ReportMovieDownloadProgress);
+            var reportDownloadRate = new Progress<BandwidthRate>(ReportMovieDownloadRate);
+            var reportNbPeers = new Progress<int>(ReportNbPeers);
+            var reportNbSeeders = new Progress<int>(ReportNbSeeders);
+
+            await _showDownloadService.Download(episode, TorrentType.Magnet, MediaType.Show, torrentUrl,
+                                0, 0, reportDownloadProgress,
+                                reportDownloadRate, reportNbSeeders, reportNbPeers, () => { CurrentDownloadingMove.Source = new Uri(episode.FilePath); }, () => { },
+                                GetCancellationTokenSource(CancellationTokenTypes.Shows));
+
+            geResultsWatcher.Stop();
+            var ellapsedTime = geResultsWatcher.ElapsedMilliseconds;
+
+            if (reset && ellapsedTime < 500)
+            {
+                // Wait for VerticalOffset to reach 0 (animation lasts 500ms)
+                await Task.Delay(500 - (int)ellapsedTime, GetCancellationTokenSource(CancellationTokenTypes.Shows).Token);
             }
 
             LoadingSemaphore.Release();
