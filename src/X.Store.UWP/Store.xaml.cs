@@ -197,11 +197,14 @@ namespace X.Store.UWP
             var url = uri.OriginalString.Replace("file:///", "");
             var filename = Path.GetFileName(url);
             var directoryName = Path.GetDirectoryName(url);
-            
+
             StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(directoryName);
             StorageFile file = await folder.GetFileAsync(filename);
-            var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
+            //var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
+            var stream = await file.OpenReadAsync();
+            meDownload.AutoPlay = true;
             meDownload.SetSource(stream, file.ContentType);
+            //meDownload.Source = uri;
         }
 
         private async void ButWatchMovie_Click(object sender, RoutedEventArgs e)
