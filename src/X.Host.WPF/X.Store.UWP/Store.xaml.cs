@@ -200,7 +200,8 @@ namespace X.Store.UWP
 
             StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(directoryName);
             StorageFile file = await folder.GetFileAsync(filename);
-            var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
+            //var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
+            var stream = await file.OpenReadAsync();
             meDownload.AutoPlay = true;
             meDownload.SetSource(stream, file.ContentType);
             //meDownload.Source = uri;
