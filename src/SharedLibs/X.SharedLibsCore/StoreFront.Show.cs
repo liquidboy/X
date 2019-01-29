@@ -33,8 +33,6 @@ namespace X.SharedLibsCore
         
         private readonly ShowService _showService;
         
-        private IDownloadService<EpisodeShowJson> _showDownloadService;
-        
         public ObservableCollection<ShowLightJson> Shows { get; set; }
         public ObservableCollection<ShowLightJson> ShowsSimilar { get; set; }
         public ShowJson Show { get; set; }
@@ -111,9 +109,15 @@ namespace X.SharedLibsCore
 
             return trailer;
         }
-        
+
+        public async Task InitializeShow() {
+            var downloader = new Downloader() { Key = "show", DownloadServiceShow = new DownloadShowService<EpisodeShowJson>(_cacheService) };
+            Downloaders.Add(downloader);
+        }
+
         public async Task WatchEpisode(EpisodeShowJson episode, string torrentTemp, Stream torrentStream, bool reset = false)
         {
+            var downloader = Downloaders.Where(x => x.Key == "show").FirstOrDefault();
             var geResultsWatcher = new Stopwatch();
             await LoadingSemaphore.WaitAsync(GetCancellationTokenSource(CancellationTokenTypes.Shows).Token);
 
@@ -123,15 +127,12 @@ namespace X.SharedLibsCore
 
             //var result = await DownloadFileHelper.DownloadStreamTaskAsync(torrentTemp, torrentStream);
 
-            var reportDownloadProgress = new Progress<double>(ReportMovieDownloadProgress);
-            var reportDownloadRate = new Progress<BandwidthRate>(ReportMovieDownloadRate);
-            var reportNbPeers = new Progress<int>(ReportNbPeers);
-            var reportNbSeeders = new Progress<int>(ReportNbSeeders);
+            var reportDownloadProgress = new Progress<double>(downloader.ReportMovieDownloadProgress);
+            var reportDownloadRate = new Progress<BandwidthRate>(downloader.ReportMovieDownloadRate);
+            var reportNbPeers = new Progress<int>(downloader.ReportNbPeers);
+            var reportNbSeeders = new Progress<int>(downloader.ReportNbSeeders);
 
-            await _showDownloadService.Download(episode, TorrentType.Magnet, MediaType.Show, torrentUrl,
-                                0, 0, reportDownloadProgress,
-                                reportDownloadRate, reportNbSeeders, reportNbPeers, () => { CurrentDownloadingMove.Source = new Uri(episode.FilePath); }, () => { },
-                                GetCancellationTokenSource(CancellationTokenTypes.Shows));
+            await downloader.DownloadServiceShow.Download(episode, TorrentType.Magnet, MediaType.Show, torrentUrl, 0, 0, reportDownloadProgress, reportDownloadRate, reportNbSeeders, reportNbPeers, () => { CurrentDownloadingMove.Source = new Uri(episode.FilePath); }, () => { }, GetCancellationTokenSource(CancellationTokenTypes.Shows));
 
             geResultsWatcher.Stop();
             var ellapsedTime = geResultsWatcher.ElapsedMilliseconds;

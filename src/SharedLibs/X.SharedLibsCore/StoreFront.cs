@@ -1,4 +1,5 @@
 ﻿//using Microsoft.EntityFrameworkCore;
+using GalaSoft.MvvmLight;
 using NuGet;
 using Popcorn.Comparers;
 using Popcorn.Helpers;
@@ -30,7 +31,7 @@ namespace X.SharedLibsCore
 {
     public partial class StoreFront
     {
-        private readonly ICacheService _cacheService;
+        public readonly ICacheService _cacheService;
         protected readonly SemaphoreSlim LoadingSemaphore = new SemaphoreSlim(1, 1);
         protected CancellationTokenSource[] CancellationLoading { get; private set; }
         
@@ -43,8 +44,35 @@ namespace X.SharedLibsCore
             TotalTypes
         }
 
+
+        public ObservableCollection<Downloader> Downloaders { get; set; }
+        
+        public class Downloader
+        {
+            public string Key { get; set; }
+
+            public DownloadMovieService<MovieJson> DownloadServiceMovie { get; set; }
+            public DownloadShowService<EpisodeShowJson> DownloadServiceShow { get; set; }
+
+            public void ReportNbSeeders(int value) => DownloadProgress.Seeders = value;
+
+            public void ReportNbPeers(int value) => DownloadProgress.Peers = value;
+
+            public void ReportMovieDownloadRate(BandwidthRate value) => DownloadProgress.DownloadRate = value.DownloadRate;
+
+            public void ReportMovieDownloadProgress(double value) => DownloadProgress.Progress = value;
+
+            public DownloadStatus DownloadProgress { get; set; }
+
+            public Downloader() {
+                DownloadProgress = new DownloadStatus();
+            }
+        }
+
         public StoreFront()
         {
+            Downloaders = new ObservableCollection<Downloader>();
+
             var tmdbService = new TmdbService();
             _movieService = new MovieService(tmdbService);
             _showService = new ShowService(tmdbService);
@@ -52,7 +80,7 @@ namespace X.SharedLibsCore
             SetupMovies();
             SetupShows();
 
-            DownloadProgress = new DownloadStatus();
+            //DownloadProgress = new DownloadStatus();
             CurrentDownloadingMove = new DownloadMovie();
 
             _cacheService = new CacheService("X");
@@ -67,8 +95,10 @@ namespace X.SharedLibsCore
         public async Task InitializeFileSystem(string movieUrl)
         {
             _cacheService.LocalPath = movieUrl;
-            _movieDownloadService = new DownloadMovieService<MovieJson>(_cacheService);
-            _showDownloadService = new DownloadShowService<EpisodeShowJson>(_cacheService);
+            await InitializeMovie();
+            await InitializeShow();
+
+
         }
 
         public async Task LoadStore(bool reset = false)
@@ -110,15 +140,6 @@ namespace X.SharedLibsCore
             return "";
         }
         
-        private void ReportNbSeeders(int value) => DownloadProgress.Seeders = value;
-
-        private void ReportNbPeers(int value) => DownloadProgress.Peers = value;
-
-        private void ReportMovieDownloadRate(BandwidthRate value) => DownloadProgress.DownloadRate = value.DownloadRate;
-
-        private void ReportMovieDownloadProgress(double value) => DownloadProgress.Progress = value;
-
-        public DownloadStatus DownloadProgress { get; set; }
         public DownloadMovie CurrentDownloadingMove { get; set; }
 
         private CancellationTokenSource GetCancellationTokenSource(CancellationTokenTypes type) {

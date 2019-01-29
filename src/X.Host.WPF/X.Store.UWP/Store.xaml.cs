@@ -68,6 +68,7 @@ namespace X.Store.UWP
             var myVideos = await Windows.Storage.StorageLibrary.GetLibraryAsync(Windows.Storage.KnownLibraryId.Videos);
             await _store.InitializeFileSystem(myVideos.SaveFolder.Path);
             await _store.LoadStore();
+            downloadItems.ItemsSource = _store.Downloaders;
         }
         bool isCurrentlyLoading = false;
         private async void onGrdItemsViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
@@ -217,7 +218,6 @@ namespace X.Store.UWP
             {
                 if (isShowingMovies)
                 {
-                    grdDownload.DataContext = _store.DownloadProgress;
                     meDownload.DataContext = _store.CurrentDownloadingMove;
                     grdDownload.Visibility = Visibility.Visible;
                     await _store.WatchMovie(_store.Movie, $"{xFolder.Path}\\{fileName}.torrent", newFileStream);
@@ -235,7 +235,6 @@ namespace X.Store.UWP
             using (var newFileStream = await newTorrentFile.OpenStreamForWriteAsync())
             {
 
-                grdDownload.DataContext = _store.DownloadProgress;
                 meDownload.DataContext = _store.CurrentDownloadingMove;
                 grdDownload.Visibility = Visibility.Visible;
                 var mediaUrl = episode.Torrents.Torrent_480p.Url;

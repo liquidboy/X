@@ -32,13 +32,15 @@ namespace X.SharedLibsCore
     {
         private readonly MovieService _movieService;
 
-        private IDownloadService<MovieJson> _movieDownloadService;
+        
 
         public ObservableCollection<MovieLightJson> Movies { get; set; }
         public ObservableCollection<MovieLightJson> MoviesSimilar { get; set; }
         public MovieJson Movie { get; set; }
         public int currentMoviePage = 1;
         public int MoviesCount { get; set; }
+
+
 
 
         private void SetupMovies() {
@@ -131,9 +133,17 @@ namespace X.SharedLibsCore
 
             LoadingSemaphore.Release();
         }
-        
+
+
+        public async Task InitializeMovie()
+        {
+            var downloader = new Downloader() { Key = "movie", DownloadServiceMovie = new DownloadMovieService<MovieJson>(_cacheService) };
+            Downloaders.Add(downloader);
+        }
+
         public async Task WatchMovie(MovieJson movie, string torrentPath, Stream torrentStream, bool reset = false)
         {
+            var downloader = Downloaders.Where(x => x.Key == "movie").FirstOrDefault();
             var geResultsWatcher = new Stopwatch();
             await LoadingSemaphore.WaitAsync(GetCancellationTokenSource(CancellationTokenTypes.Movies).Token);
 
@@ -148,19 +158,14 @@ namespace X.SharedLibsCore
             //var result = await DownloadFileHelper.DownloadFileTaskAsync(torrentUrl, _cacheService.MovieTorrentDownloads + Movie.ImdbId + ".torrent");
             var result = await DownloadFileHelper.DownloadStreamTaskAsync(torrentUrl, torrentStream);
 
-            var reportDownloadProgress = new Progress<double>(ReportMovieDownloadProgress);
-            var reportDownloadRate = new Progress<BandwidthRate>(ReportMovieDownloadRate);
-            var reportNbPeers = new Progress<int>(ReportNbPeers);
-            var reportNbSeeders = new Progress<int>(ReportNbSeeders);
+            var reportDownloadProgress = new Progress<double>(downloader.ReportMovieDownloadProgress);
+            var reportDownloadRate = new Progress<BandwidthRate>(downloader.ReportMovieDownloadRate);
+            var reportNbPeers = new Progress<int>(downloader.ReportNbPeers);
+            var reportNbSeeders = new Progress<int>(downloader.ReportNbSeeders);
 
 
-            await _movieDownloadService.Download(Movie, TorrentType.File, MediaType.Movie, torrentPath,
-                                0, 0, reportDownloadProgress,
-                                reportDownloadRate, reportNbSeeders, reportNbPeers, () => { CurrentDownloadingMove.Source = new Uri(Movie.FilePath); }, () => { },
-                                GetCancellationTokenSource(CancellationTokenTypes.Movies));
-
-
-
+            await downloader.DownloadServiceMovie.Download(Movie, TorrentType.File, MediaType.Movie, torrentPath, 0, 0, reportDownloadProgress, reportDownloadRate, reportNbSeeders, reportNbPeers, () => { CurrentDownloadingMove.Source = new Uri(Movie.FilePath); }, () => { }, GetCancellationTokenSource(CancellationTokenTypes.Movies));
+            
             geResultsWatcher.Stop();
             var ellapsedTime = geResultsWatcher.ElapsedMilliseconds;
             //Movies = results.movies;

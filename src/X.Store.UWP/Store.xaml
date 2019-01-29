@@ -291,12 +291,19 @@
         <Grid x:Name="grdDownload" Margin="50" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="400" Height="300" Visibility="Collapsed">
             <Rectangle Fill="Black" ></Rectangle>
             <MediaElement x:Name="meDownload" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Tag="{Binding Source}"></MediaElement>
-            <StackPanel Orientation="Vertical">
-                <TextBlock Text="{Binding Seeders}" Foreground="White"></TextBlock>
-                <TextBlock Text="{Binding Peers}" Foreground="White"></TextBlock>
-                <TextBlock Text="{Binding DownloadRate}" Foreground="White"></TextBlock>
-                <TextBlock Text="{Binding Progress}" Foreground="White"></TextBlock>
-            </StackPanel>
+            <ItemsControl x:Name="downloadItems">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding DownloadProgress.Seeders}" Foreground="White" Margin="5"></TextBlock>
+                            <TextBlock Text="{Binding DownloadProgress.Peers}" Foreground="White" Margin="5"></TextBlock>
+                            <TextBlock Text="{Binding DownloadProgress.DownloadRate}" Foreground="White" Margin="5"></TextBlock>
+                            <TextBlock Text="{Binding DownloadProgress.Progress}" Foreground="White" Margin="5"></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            
             <Button x:Name="butResizeDownload" Content="Resize" Margin="10" FontSize="16" Style="{StaticResource GeneralButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="ButResizeDownload_Click"></Button>
             <Button x:Name="butPlayDownload" Content="Play" Margin="10" FontSize="16" Style="{StaticResource GeneralButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="ButPlayDownload_Click"></Button>
             <Button x:Name="butCloseDownload" Content="Close" Margin="10" FontSize="16" Style="{StaticResource GeneralButtonStyle}" HorizontalAlignment="Right" 

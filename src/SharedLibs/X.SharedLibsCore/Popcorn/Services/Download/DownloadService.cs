@@ -31,7 +31,7 @@ namespace Popcorn.Services.Download
 
         private readonly ICacheService _cacheService;
 
-        protected DownloadService(ICacheService cacheService)
+        public DownloadService(ICacheService cacheService)
         {
             _cacheService = cacheService;
         }
