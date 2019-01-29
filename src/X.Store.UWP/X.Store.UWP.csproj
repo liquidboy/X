@@ -154,7 +154,7 @@
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <PropertyGroup>
-    <HostFrameworkProject>X.Designer.Wpf</HostFrameworkProject>
+    <HostFrameworkProject>X.Host.WPF</HostFrameworkProject>
   </PropertyGroup>
   <PropertyGroup>
     <!-- Copy source and build output files to hostapp folders -->

@@ -313,7 +313,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="X.Store.UWP\XamlTypeInfo.g.cs.backup" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
