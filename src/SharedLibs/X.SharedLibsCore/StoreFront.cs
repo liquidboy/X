@@ -51,6 +51,8 @@ namespace X.SharedLibsCore
         {
             public string Key { get; set; }
 
+            public Uri ThumbUri { get; set; }
+
             public DownloadMovieService<MovieJson> DownloadServiceMovie { get; set; }
             public DownloadShowService<EpisodeShowJson> DownloadServiceShow { get; set; }
 

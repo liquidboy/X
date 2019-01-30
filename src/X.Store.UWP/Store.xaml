@@ -291,14 +291,24 @@
         <Grid x:Name="grdDownload" Margin="50" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="400" Height="300" Visibility="Collapsed">
             <Rectangle Fill="Black" ></Rectangle>
             <MediaElement x:Name="meDownload" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Tag="{Binding Source}"></MediaElement>
-            <ItemsControl x:Name="downloadItems">
+            
+            <ItemsControl x:Name="downloadItems" Margin="10">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding DownloadProgress.Seeders}" Foreground="White" Margin="5"></TextBlock>
-                            <TextBlock Text="{Binding DownloadProgress.Peers}" Foreground="White" Margin="5"></TextBlock>
-                            <TextBlock Text="{Binding DownloadProgress.DownloadRate}" Foreground="White" Margin="5"></TextBlock>
-                            <TextBlock Text="{Binding DownloadProgress.Progress}" Foreground="White" Margin="5"></TextBlock>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                            <Image Source="{Binding ThumbUri}" Height="90" Width="60"></Image>
+                            <StackPanel Orientation="Vertical" Width="120" Margin="10,5,0,0">
+                                <TextBlock Text="Seeders" Foreground="LightGray" Margin="2" HorizontalAlignment="Right"></TextBlock>
+                                <TextBlock Text="Peers" Foreground="LightGray" Margin="2"  HorizontalAlignment="Right"></TextBlock>
+                                <TextBlock Text="Download Rate" Foreground="LightGray" Margin="2"  HorizontalAlignment="Right"></TextBlock>
+                                <TextBlock Text="Progress" Foreground="LightGray" Margin="2"  HorizontalAlignment="Right"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" Margin="10,5,0,0">
+                                <TextBlock Text="{Binding DownloadProgress.Seeders}" Foreground="White" Margin="2" ></TextBlock>
+                                <TextBlock Text="{Binding DownloadProgress.Peers}" Foreground="White" Margin="2" ></TextBlock>
+                                <TextBlock Text="{Binding DownloadProgress.DownloadRate}" Foreground="White" Margin="2" ></TextBlock>
+                                <TextBlock Text="{Binding DownloadProgress.Progress}" Foreground="White" Margin="2" ></TextBlock>
+                            </StackPanel>
                         </StackPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

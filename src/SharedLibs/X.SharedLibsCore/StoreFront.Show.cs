@@ -123,7 +123,11 @@ namespace X.SharedLibsCore
 
             geResultsWatcher.Start();
 
+            downloader.ThumbUri = new Uri(Show.Images.Poster);
+
             var torrentUrl = episode.Torrents?.Torrent_480p.Url;
+            if (torrentUrl == null) torrentUrl = episode.Torrents?.Torrent_720p.Url;
+            if (torrentUrl == null) torrentUrl = episode.Torrents?.Torrent_1080p.Url;
 
             //var result = await DownloadFileHelper.DownloadStreamTaskAsync(torrentTemp, torrentStream);
 
@@ -131,8 +135,8 @@ namespace X.SharedLibsCore
             var reportDownloadRate = new Progress<BandwidthRate>(downloader.ReportMovieDownloadRate);
             var reportNbPeers = new Progress<int>(downloader.ReportNbPeers);
             var reportNbSeeders = new Progress<int>(downloader.ReportNbSeeders);
-
-            await downloader.DownloadServiceShow.Download(episode, TorrentType.Magnet, MediaType.Show, torrentUrl, 0, 0, reportDownloadProgress, reportDownloadRate, reportNbSeeders, reportNbPeers, () => { CurrentDownloadingMove.Source = new Uri(episode.FilePath); }, () => { }, GetCancellationTokenSource(CancellationTokenTypes.Shows));
+            
+            downloader.DownloadServiceShow.Download(episode, TorrentType.Magnet, MediaType.Show, torrentUrl, 0, 0, reportDownloadProgress, reportDownloadRate, reportNbSeeders, reportNbPeers, () => { CurrentDownloadingMove.Source = new Uri(episode.FilePath); }, () => { }, GetCancellationTokenSource(CancellationTokenTypes.Shows));
 
             geResultsWatcher.Stop();
             var ellapsedTime = geResultsWatcher.ElapsedMilliseconds;

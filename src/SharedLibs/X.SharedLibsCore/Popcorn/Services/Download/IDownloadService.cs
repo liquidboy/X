@@ -17,7 +17,7 @@ namespace Popcorn.Services.Download
         /// Download a torrent
         /// </summary>
         /// <returns><see cref="Task"/></returns>
-        Task Download(T media, TorrentType torrentType, MediaType mediaType, string torrentPath, int uploadLimit, int downloadLimit, IProgress<double> downloadProgress,
+        void Download(T media, TorrentType torrentType, MediaType mediaType, string torrentPath, int uploadLimit, int downloadLimit, IProgress<double> downloadProgress,
             IProgress<BandwidthRate> bandwidthRate, IProgress<int> nbSeeds, IProgress<int> nbPeers, Action buffered, Action cancelled,
             CancellationTokenSource cts);
     }

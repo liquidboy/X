@@ -148,10 +148,9 @@ namespace X.SharedLibsCore
             await LoadingSemaphore.WaitAsync(GetCancellationTokenSource(CancellationTokenTypes.Movies).Token);
 
             geResultsWatcher.Start();
-            
-            //var torrentUrl = movie.WatchInFullHdQuality
-            //                ? movie.Torrents?.FirstOrDefault(torrent => torrent.Quality == "1080p")?.Url
-            //                : movie.Torrents?.FirstOrDefault(torrent => torrent.Quality == "720p")?.Url;
+
+            downloader.ThumbUri = new Uri(Movie.PosterImage);
+
             var torrentUrl = movie.Torrents?.FirstOrDefault(torrent => torrent.Quality == "720p")?.Url;
 
 
@@ -164,7 +163,7 @@ namespace X.SharedLibsCore
             var reportNbSeeders = new Progress<int>(downloader.ReportNbSeeders);
 
 
-            await downloader.DownloadServiceMovie.Download(Movie, TorrentType.File, MediaType.Movie, torrentPath, 0, 0, reportDownloadProgress, reportDownloadRate, reportNbSeeders, reportNbPeers, () => { CurrentDownloadingMove.Source = new Uri(Movie.FilePath); }, () => { }, GetCancellationTokenSource(CancellationTokenTypes.Movies));
+            downloader.DownloadServiceMovie.Download(Movie, TorrentType.File, MediaType.Movie, torrentPath, 0, 0, reportDownloadProgress, reportDownloadRate, reportNbSeeders, reportNbPeers, () => { CurrentDownloadingMove.Source = new Uri(Movie.FilePath); }, () => { }, GetCancellationTokenSource(CancellationTokenTypes.Movies));
             
             geResultsWatcher.Stop();
             var ellapsedTime = geResultsWatcher.ElapsedMilliseconds;
