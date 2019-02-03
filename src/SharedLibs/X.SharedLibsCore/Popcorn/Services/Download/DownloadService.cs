@@ -49,77 +49,86 @@ namespace Popcorn.Services.Download
             throw new NotImplementedException();
         }
 
+        public void Download(T media, TorrentType torrentType, MediaType mediaType, string torrentPath,
+            int uploadLimit, int downloadLimit, IProgress<double> downloadProgress,
+            IProgress<BandwidthRate> bandwidthRate, IProgress<int> nbSeeds, IProgress<int> nbPeers, Action buffered,
+            Action cancelled, CancellationTokenSource cts)
+        {
+            var taskToRun = Task.Run(async() => await DownloadAsync(media, torrentType, mediaType, torrentPath, uploadLimit, downloadLimit, downloadProgress, bandwidthRate, nbSeeds, nbPeers, buffered, cancelled, cts));
+        }
+    
+
         /// <summary>
         /// Download a torrent
         /// </summary>
         /// <returns><see cref="Task"/></returns>
-        public void Download(T media, TorrentType torrentType, MediaType mediaType, string torrentPath,
+        public async Task DownloadAsync(T media, TorrentType torrentType, MediaType mediaType, string torrentPath,
             int uploadLimit, int downloadLimit, IProgress<double> downloadProgress,
             IProgress<BandwidthRate> bandwidthRate, IProgress<int> nbSeeds, IProgress<int> nbPeers, Action buffered,
             Action cancelled,
             CancellationTokenSource cts)
         {
-            Task.Run(async () =>
-            {
-            Logger.Info($"Start downloading : {torrentPath}");
-            using (var session = new session())
-            {
-                downloadProgress.Report(0d);
-                bandwidthRate.Report(new BandwidthRate
+            //Task.Run(async () =>
+            //{
+                Logger.Info($"Start downloading : {torrentPath}");
+                using (var session = new session())
                 {
-                    DownloadRate = 0d,
-                    UploadRate = 0d
-                });
-                nbSeeds.Report(0);
-                nbPeers.Report(0);
-                string savePath = string.Empty;
-                switch (mediaType)
-                {
-                    case MediaType.Movie:
-                        savePath = _cacheService.MovieDownloads;
-                        break;
-                    case MediaType.Show:
-                        savePath = _cacheService.ShowDownloads;
-                        break;
-                    case MediaType.Unkown:
-                        savePath = _cacheService.DropFilesDownloads;
-                        break;
-                }
-
-                if (torrentType == TorrentType.File)
-                {
-                    using (var addParams = new add_torrent_params
+                    downloadProgress.Report(0d);
+                    bandwidthRate.Report(new BandwidthRate
                     {
-                        save_path = savePath,
-                        ti = new torrent_info(torrentPath)
-                    })
-                    using (var handle = session.add_torrent(addParams))
+                        DownloadRate = 0d,
+                        UploadRate = 0d
+                    });
+                    nbSeeds.Report(0);
+                    nbPeers.Report(0);
+                    string savePath = string.Empty;
+                    switch (mediaType)
                     {
-                        await HandleDownload(media, savePath, mediaType, uploadLimit, downloadLimit,
-                            downloadProgress,
-                            bandwidthRate, nbSeeds, nbPeers, handle, session, buffered, cancelled, cts);
+                        case MediaType.Movie:
+                            savePath = _cacheService.MovieDownloads;
+                            break;
+                        case MediaType.Show:
+                            savePath = _cacheService.ShowDownloads;
+                            break;
+                        case MediaType.Unkown:
+                            savePath = _cacheService.DropFilesDownloads;
+                            break;
                     }
-                }
-                else
-                {
-                    var magnet = new magnet_uri();
-                    using (var error = new error_code())
+
+                    if (torrentType == TorrentType.File)
                     {
-                        var addParams = new add_torrent_params
+                        using (var addParams = new add_torrent_params
                         {
-                            save_path = savePath
-                        };
-                        magnet.parse_magnet_uri(torrentPath, addParams, error);
+                            save_path = savePath,
+                            ti = new torrent_info(torrentPath)
+                        })
                         using (var handle = session.add_torrent(addParams))
                         {
                             await HandleDownload(media, savePath, mediaType, uploadLimit, downloadLimit,
-                                downloadProgress, bandwidthRate, nbSeeds, nbPeers, handle, session, buffered, cancelled, cts);
+                                downloadProgress,
+                                bandwidthRate, nbSeeds, nbPeers, handle, session, buffered, cancelled, cts);
+                        }
+                    }
+                    else
+                    {
+                        var magnet = new magnet_uri();
+                        using (var error = new error_code())
+                        {
+                            var addParams = new add_torrent_params
+                            {
+                                save_path = savePath
+                            };
+                            magnet.parse_magnet_uri(torrentPath, addParams, error);
+                            using (var handle = session.add_torrent(addParams))
+                            {
+                                await HandleDownload(media, savePath, mediaType, uploadLimit, downloadLimit,
+                                    downloadProgress, bandwidthRate, nbSeeds, nbPeers, handle, session, buffered, cancelled, cts);
 
+                            }
                         }
                     }
                 }
-            }
-            });
+            //});
         }
 
         /// <summary>
@@ -254,6 +263,13 @@ namespace Popcorn.Services.Download
 
                             break;
                         }
+                    }
+
+                    if (progress == 100) {
+                        cancelled.Invoke();
+                        sw.Stop();
+                        session.remove_torrent(handle, 1);
+                        break;
                     }
 
                     try

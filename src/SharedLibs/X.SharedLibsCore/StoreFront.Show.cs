@@ -135,8 +135,10 @@ namespace X.SharedLibsCore
             var reportDownloadRate = new Progress<BandwidthRate>(downloader.ReportMovieDownloadRate);
             var reportNbPeers = new Progress<int>(downloader.ReportNbPeers);
             var reportNbSeeders = new Progress<int>(downloader.ReportNbSeeders);
-            
-            downloader.DownloadServiceShow.Download(episode, TorrentType.Magnet, MediaType.Show, torrentUrl, 0, 0, reportDownloadProgress, reportDownloadRate, reportNbSeeders, reportNbPeers, () => { CurrentDownloadingMove.Source = new Uri(episode.FilePath); }, () => { }, GetCancellationTokenSource(CancellationTokenTypes.Shows));
+
+            await downloader.DownloadServiceShow.DownloadAsync(episode, TorrentType.Magnet, MediaType.Show, torrentUrl, 0, 0, reportDownloadProgress, reportDownloadRate, reportNbSeeders, reportNbPeers, () => { CurrentDownloadingMove.Source = new Uri(episode.FilePath); }, () => { }, GetCancellationTokenSource(CancellationTokenTypes.Shows));
+
+            //downloader.DownloadServiceShow.Download(episode, TorrentType.Magnet, MediaType.Show, torrentUrl, 0, 0, reportDownloadProgress, reportDownloadRate, reportNbSeeders, reportNbPeers, () => { CurrentDownloadingMove.Source = new Uri(episode.FilePath); }, () => { }, GetCancellationTokenSource(CancellationTokenTypes.Shows));
 
             geResultsWatcher.Stop();
             var ellapsedTime = geResultsWatcher.ElapsedMilliseconds;

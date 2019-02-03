@@ -34,7 +34,7 @@ namespace X.SharedLibsCore
         public readonly ICacheService _cacheService;
         protected readonly SemaphoreSlim LoadingSemaphore = new SemaphoreSlim(1, 1);
         protected CancellationTokenSource[] CancellationLoading { get; private set; }
-        
+
         private enum CancellationTokenTypes
         {
             Movies,

@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="QueueService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Popcorn\Services\QueueService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="libtorrent-net" Version="4.1.0" />
     <PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
     <PackageReference Include="NLog" Version="4.5.11" />

@@ -243,7 +243,7 @@
                 </StackPanel>
             </StackPanel>
 
-            <ListView x:Name="grdSimilarItemsMovie" Margin="50,0,50,50" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="250" ItemTemplate="{StaticResource dtSimilarMovie}">
+            <ListView x:Name="grdSimilarItemsMovie" Margin="50,0,50,50" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="250" ItemTemplate="{StaticResource dtSimilarMovie}" ItemClick="GrdSimilarItemsMovie_ItemClick" IsItemClickEnabled="True" ShowsScrollingPlaceholders="True">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal"></StackPanel>
