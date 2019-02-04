@@ -175,14 +175,14 @@
             </Setter>
         </Style>
         <DataTemplate x:Name="dtMovie">
-            <Grid Width="200" Height="320">
+            <Grid Width="200" Height="340">
                 <Image Source="{Binding PosterImage}" Stretch="Fill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,40"></Image>
                 <TextBlock Text="{Binding Title}" FontSize="12" Margin="0,280,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"></TextBlock>
                 <TextBlock Text="{Binding Year}" FontSize="10" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Bottom"></TextBlock>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Name="dtTV">
-            <Grid Width="200" Height="320">
+            <Grid Width="200" Height="340">
                 <Image Source="{Binding Images.Poster}" Stretch="Fill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,40"></Image>
                 <TextBlock Text="{Binding Title}" FontSize="12" Margin="0,280,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"></TextBlock>
                 <TextBlock Text="{Binding Year}" FontSize="10" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Bottom"></TextBlock>

@@ -31,8 +31,10 @@ namespace X.Store.UWP
         public Store()
         {
             this.InitializeComponent();
-            _queue = new AsyncQueue<IMedia>();
+
             _store = new StoreFront();
+
+            _queue = new AsyncQueue<IMedia>();
             _queueTimer = new DispatcherTimer();
             _queueTimer.Interval = TimeSpan.FromSeconds(5);
             _queueTimer.Tick += _queueTimer_Tick;
@@ -42,7 +44,7 @@ namespace X.Store.UWP
         private async void _queueTimer_Tick(object sender, object e)
         {
             _queueTimer.Stop();
-            
+
             var queueItem = await _queue.DequeueAsync(_queueCT.Token);
             if (queueItem is EpisodeShowJson) { await RequestEpisodeDownload((EpisodeShowJson)queueItem); }
             else if (queueItem is MovieJson) { await RequestMovieDownload((MovieJson)queueItem); }
@@ -52,25 +54,37 @@ namespace X.Store.UWP
 
         private async void GrdItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (isShowingMovies)
+            if (e == null || e.AddedItems == null || e.AddedItems.Count == 0) return;
+
+            try
             {
-                var selectedItem = (MovieLightJson)e.AddedItems[0];
-                await loadDetail(selectedItem, true);
+                
+                if (isShowingMovies)
+                {
+                    var selectedItem = (MovieLightJson)e.AddedItems[0];
+                    await loadDetail(selectedItem, true);
+                }
+                else
+                {
+                    var selectedItem = (ShowLightJson)e.AddedItems[0];
+                    await loadDetail(selectedItem, true);
+                }
+
             }
-            else
-            {
-                var selectedItem = (ShowLightJson)e.AddedItems[0];
-                await loadDetail(selectedItem, true);
-            }   
+            catch (Exception ex) {
+                Debug.WriteLine("problem selecting a movie/show (GrdItems_SelectionChanged)");
+            }
+
         }
-        
+
         private async void GrdSimilarItemsMovie_ItemClick(object sender, ItemClickEventArgs e)
         {
             var movie = (MovieLightJson)e.ClickedItem;
             await loadDetail(movie, false);
         }
 
-        private async Task loadDetail(object jsonObject, bool startFresh) {
+        private async Task loadDetail(object jsonObject, bool startFresh)
+        {
             try
             {
                 if (startFresh)
@@ -80,7 +94,7 @@ namespace X.Store.UWP
                     grdDetailsShow.Visibility = Visibility.Collapsed;
                     grdDetailsShow.DataContext = null;
                 }
-                
+
                 if (jsonObject is MovieLightJson)
                 {
                     var selectedItem = (MovieLightJson)jsonObject;
@@ -101,11 +115,11 @@ namespace X.Store.UWP
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("problem selecting a movie/show (GrdItems_SelectionChanged)");
+                Debug.WriteLine("problem selecting a movie/show (loadDetail)");
             }
         }
 
-        
+
         private async void LayoutRoot_Loaded(object sender, RoutedEventArgs e)
         {
             var scrollViewer = grdItems.ChildrenBreadthFirst().OfType<ScrollViewer>().First();
@@ -169,19 +183,27 @@ namespace X.Store.UWP
 
         private async void ButWatchTrailer_Click(object sender, RoutedEventArgs e)
         {
-            //_store.Movie.YtTrailerCode
-            if (isShowingMovies)
+            try
             {
-                var trailerUrl = await _store.LoadMovieTrailer(_store.Movie.ImdbId);
-                meTrailer.Source = new Uri(trailerUrl);
-                grdTrailer.Visibility = Visibility.Visible;
+                //_store.Movie.YtTrailerCode
+                if (isShowingMovies)
+                {
+                    var trailerUrl = await _store.LoadMovieTrailer(_store.Movie.ImdbId);
+                    meTrailer.Source = new Uri(trailerUrl);
+                    grdTrailer.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    var trailerUrl = await _store.LoadShowTrailer(_store.Show.TmdbId);
+                    meTrailer.Source = new Uri(trailerUrl);
+                    grdTrailer.Visibility = Visibility.Visible;
+                }
+
             }
-            else
-            {
-                var trailerUrl = await _store.LoadShowTrailer(_store.Show.TmdbId);
-                meTrailer.Source = new Uri(trailerUrl);
-                grdTrailer.Visibility = Visibility.Visible;
+            catch (Exception ex) {
+                Debug.WriteLine("problem selecting a movie/show (ButWatchTrailer_Click)");
             }
+
         }
 
         private void ButCloseTrailer_Click(object sender, RoutedEventArgs e)
@@ -287,7 +309,8 @@ namespace X.Store.UWP
         }
 
 
-        private async Task RequestEpisodeDownload(EpisodeShowJson episode) {
+        private async Task RequestEpisodeDownload(EpisodeShowJson episode)
+        {
             var mediaId = episode.TvdbId;
             var mediaUrl = episode.Torrents.Torrent_480p.Url;
             var myVideos = await Windows.Storage.StorageLibrary.GetLibraryAsync(Windows.Storage.KnownLibraryId.Videos);
