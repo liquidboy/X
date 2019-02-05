@@ -265,10 +265,10 @@ namespace Popcorn.Services.Download
                         }
                     }
 
-                    if (progress == 100) {
+                    if (status.is_finished) {
                         cancelled.Invoke();
                         sw.Stop();
-                        session.remove_torrent(handle, 1);
+                        //session.remove_torrent(handle, 1);
                         break;
                     }
 
