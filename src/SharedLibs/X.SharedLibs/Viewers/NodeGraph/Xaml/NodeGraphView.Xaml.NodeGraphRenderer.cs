@@ -139,6 +139,7 @@ namespace X.Viewer.NodeGraph
                     case NodeType.BorderModeValue: newNodeUIElement = new BorderModeValue(); break;
                     case NodeType.TransformMatrixValue: newNodeUIElement = new TransformMatrixValue(); break;
                     case NodeType.PathScene: newNodeUIElement = new PathScene(); break;
+                    case NodeType.XamlFragment: newNodeUIElement = new XamlFragment(); break;
                 }
                 INodeTypeComponent nodeTypeComponent = newNodeUIElement as INodeTypeComponent;
                 nodeTypeComponent.NodeTypeValueChanged += NodeTypeComponent_NodeTypeValueChanged;

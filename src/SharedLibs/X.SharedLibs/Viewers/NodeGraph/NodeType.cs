@@ -33,6 +33,7 @@
         BorderModeValue = 1011,
         TransformMatrixValue = 1012,
         PathScene = 1013,
+        XamlFragment = 1014
 
     }
 }
