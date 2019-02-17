@@ -776,6 +776,9 @@
     <Compile Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\ColorSliderValue.xaml.cs">
       <DependentUpon>ColorSliderValue.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\PathScene.xaml.cs">
+      <DependentUpon>PathScene.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\ToggleValue.xaml.cs">
       <DependentUpon>ToggleValue.xaml</DependentUpon>
     </Compile>
@@ -1194,6 +1197,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\ColorSliderValue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\PathScene.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

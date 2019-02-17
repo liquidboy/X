@@ -31,7 +31,8 @@
         TemperatureValue = 1009,
         TintValue = 1010,
         BorderModeValue = 1011,
-        TransformMatrixValue = 1012
+        TransformMatrixValue = 1012,
+        PathScene = 1013,
 
     }
 }

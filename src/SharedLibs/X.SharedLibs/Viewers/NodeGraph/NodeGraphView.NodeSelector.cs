@@ -110,6 +110,10 @@ namespace X.Viewer.NodeGraph
                 case NodeType.TransformMatrixValue:
                     AddNodeToGraph(new Node(newId, nodePosX, nodePosY, 400d, "WhiteSmoke", 0, "", 1, "", groupingGuid, (int)NodeType.TransformMatrixValue, "Matrix Value"));
                     break;
+
+                case NodeType.PathScene:
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 1, "Path", 1, "", groupingGuid, (int)NodeType.PathScene, "Path Scene"));
+                    break;
             }
         }
     }

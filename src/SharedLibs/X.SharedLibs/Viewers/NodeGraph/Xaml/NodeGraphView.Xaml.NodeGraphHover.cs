@@ -12,13 +12,14 @@ namespace X.Viewer.NodeGraph
     {
 
         FrameworkElement _currentNodeHovering;
+
         public void HoverOverNodeGraph(Point currentPosition, double scale)
         {
             var foundElementsUnderPoint = VisualTreeHelper.FindElementsInHostCoordinates(currentPosition, _uiNodeGraphXamlRoot);
             if (foundElementsUnderPoint != null && foundElementsUnderPoint.Count() > 0)
             {
                 var foundNC = foundElementsUnderPoint.Where(x => x is FrameworkElement &&
-                    ((FrameworkElement)x).Tag != null && ((FrameworkElement)x).Tag.ToString().Equals("nc"));
+                    ((FrameworkElement)x).Tag != null && ((FrameworkElement)x).Tag.ToString().Equals("n"));
                 if (foundNC != null && foundNC.Count() > 0)
                 {
                     if (_currentNodeHovering != null) _currentNodeHovering.Shadow = null;

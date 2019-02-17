@@ -96,8 +96,8 @@ namespace X.Viewer.NodeGraph
             var newNodeGroup = new Canvas()
             {
                 Name = node.Key,
-                Width = node.Width,
-                Height = node.Height,
+                MinWidth = node.Width,
+                MinHeight = node.Height,
                 //Background = new SolidColorBrush(Colors.Red),
                 Tag = "nc"
             };
@@ -135,6 +135,7 @@ namespace X.Viewer.NodeGraph
                     case NodeType.CanvasAlphaModeValue: newNodeUIElement = new CanvasAlphaModeValue(); break;
                     case NodeType.BorderModeValue: newNodeUIElement = new BorderModeValue(); break;
                     case NodeType.TransformMatrixValue: newNodeUIElement = new TransformMatrixValue(); break;
+                    case NodeType.PathScene: newNodeUIElement = new PathScene(); break;
                 }
                 INodeTypeComponent nodeTypeComponent = newNodeUIElement as INodeTypeComponent;
                 nodeTypeComponent.NodeTypeValueChanged += NodeTypeComponent_NodeTypeValueChanged;
@@ -149,8 +150,8 @@ namespace X.Viewer.NodeGraph
             }
 
             newNodeUIElement.Name = $"n_{node.Key}";
-            newNodeUIElement.Width = node.Width;
-            newNodeUIElement.Height = node.Height;
+            newNodeUIElement.MinWidth = node.Width;
+            newNodeUIElement.MinHeight = node.Height;
             newNodeUIElement.Tag = "n";
 
             return newNodeUIElement;
