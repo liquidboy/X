@@ -46,8 +46,21 @@ namespace X.Viewer.NodeGraph
             //node-container
             var newNodeGroup = CreateNodeContainerUI(node);
             newNodeGroup.DataContext = nodeNodeLinkVM;
+            _uiNodeGraphPanelXamlRoot.Children.Add(newNodeGroup);
 
-            //node-slots in node-container (appears underneath those rendered after)
+            //node in node-container
+            FrameworkElement newNodeUIElement = CreateNodeUI(node);
+            newNodeGroup.Children.Add(newNodeUIElement);
+            if (node.NodeType == (int)NodeType.TextboxValue) {
+                newNodeUIElement.UpdateLayout();
+                node.Width = newNodeUIElement.ActualWidth;
+            } 
+
+            //node-title
+            if (node.Title != null) newNodeGroup.Children.Add(CreateNodeTitleUI(node));
+
+
+            //node-slots in node-container
             for (int slotIndex = 0; slotIndex < node.InputSlotCount; slotIndex++)
             {
                 newNodeGroup.Children.Add(CreateSlotUI("nsi", node, slotIndex, slotDiameter, slotRadius, Colors.Black, true, Colors.LightGray));
@@ -57,22 +70,12 @@ namespace X.Viewer.NodeGraph
             {
                 newNodeGroup.Children.Add(CreateSlotUI("nso", node, slotIndex, slotDiameter, slotRadius, Colors.Black, false, Colors.LightGray));
             }
-            
-            //node in node-container
-            FrameworkElement newNodeUIElement = CreateNodeUI(node);
-            newNodeGroup.Children.Add(newNodeUIElement);
-            
-            //node-title
-            if (node.Title != null) newNodeGroup.Children.Add(CreateNodeTitleUI(node));
-            
-
-
 
             //node-visual, created at the end after the node's full dimensions are realized
             //await DispatcherHelper.ExecuteOnUIThreadAsync(()=> CreateNodeVisual(nodeNodeLinkVM, newNodeUIElement, (NodeType)node.NodeType), Windows.UI.Core.CoreDispatcherPriority.Normal);
             CreateNodeVisualUI(nodeNodeLinkVM, newNodeUIElement, (NodeType)node.NodeType);
 
-            _uiNodeGraphPanelXamlRoot.Children.Add(newNodeGroup);
+
         }
 
         public (bool FoundSlot, string SlotName, string SlotTag) TryToFindSlotUnderPoint(Point point)
