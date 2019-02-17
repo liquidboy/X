@@ -9,6 +9,7 @@ namespace X.Viewer.NodeGraph
     {
         bool PointingStarted(Point point);
         void PointingCompleted(Point point);
+        void PointerMovingAndNotPressed(Point currentPoint, double scale);
         void PointerUpdated(Vector2 distanceToMove, double scale);
 
         bool LoadGraph(string guid);

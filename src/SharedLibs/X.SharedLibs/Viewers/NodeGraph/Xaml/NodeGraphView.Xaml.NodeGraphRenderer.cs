@@ -105,7 +105,7 @@ namespace X.Viewer.NodeGraph
             newNodeGroup.SetValue(Canvas.TopProperty, node.PositionY);
 
             //shadow caster
-            newNodeGroup.Shadow = sharedShadow;
+            //newNodeGroup.Shadow = sharedShadow;
             newNodeGroup.Projection = new PlaneProjection() { GlobalOffsetZ = 1 };
 
             return newNodeGroup;

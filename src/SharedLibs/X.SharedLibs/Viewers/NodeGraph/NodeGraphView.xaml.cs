@@ -83,7 +83,9 @@ namespace X.Viewer.NodeGraph
         private void layoutRoot_PointerMoved(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
             var ptEnd = e.GetCurrentPoint(null);
-            
+
+            PointerMovingAndNotPressed(e.GetCurrentPoint(null).Position, nodeGraphZoomContainer.Scale);
+
             if (!IsPointerDown) return;
 
             //moving artboard

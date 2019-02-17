@@ -22,6 +22,10 @@ namespace X.Viewer.NodeGraph
             _shouldStopPropogatingPointerMoved = false;
         }
 
+        public void PointerMovingAndNotPressed(Point currentPoint, double scale) {
+            HoverOverNodeGraph(currentPoint, scale);
+        }
+
         public void PointerUpdated(Vector2 distanceToMove, double scale) {
             _shouldStopPropogatingPointerMoved = false;
 
