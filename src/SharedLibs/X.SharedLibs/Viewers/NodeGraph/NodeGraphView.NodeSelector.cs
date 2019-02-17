@@ -116,7 +116,7 @@ namespace X.Viewer.NodeGraph
                     AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 1, "xaml", 1, "", groupingGuid, (int)NodeType.XamlFragment, "Xaml Fragment"));
                     break;
                 case NodeType.PathScene:
-                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 1, "Path", 1, "", groupingGuid, (int)NodeType.PathScene, "Path Scene"));
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 2, "xaml fragment,path", 1, "", groupingGuid, (int)NodeType.PathScene, "Path Scene"));
                     break;
             }
         }

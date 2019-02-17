@@ -24,31 +24,12 @@ namespace X.Viewer.NodeGraph.NodeTypeComponents
             this.InitializeComponent();
         }
 
-
-
-        //public string PathData
-        //{
-        //    get { return (string)GetValue(PathDataProperty); }
-        //    set { SetValue(PathDataProperty, value); }
-        //}
-
-        //public static readonly DependencyProperty PathDataProperty =
-        //    DependencyProperty.Register("PathData", typeof(string), typeof(PathScene), new PropertyMetadata(string.Empty, (o, a) => {
-
-        //        if (a.NewValue != null)
-        //        {
-
-        //        }
-
-        //    }));
-
-
         private void UserControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
         {
             var nnlm = (NodeNodeLinkModel)args.NewValue;
             try {
                 grdMain.Children.Clear();
-                var xaml = (string)nnlm.InputNodeLinks[0].Value1;
+                var xaml = (string)nnlm.InputNodeLinks[1].Value1;
                 xaml = xaml.Replace("<Path ", @"<Path xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"" ");
                 var newUIElement = XamlReader.Load(xaml);
                 grdMain.Children.Add((UIElement)newUIElement);
@@ -63,26 +44,4 @@ namespace X.Viewer.NodeGraph.NodeTypeComponents
 
     }
 
-
-    public class PathService : DependencyObject
-    {
-
-        public static string GetPathData(DependencyObject obj)
-        {
-            return (string)obj.GetValue(PathDataProperty);
-        }
-
-        public static void SetPathData(DependencyObject obj, string value)
-        {
-            obj.SetValue(PathDataProperty, value);
-        }
-
-        public static readonly DependencyProperty PathDataProperty =
-            DependencyProperty.RegisterAttached("PathData", typeof(string), typeof(PathService), new PropertyMetadata(string.Empty, (o, a) => {
-                if (a.NewValue != null)
-                {
-
-                }
-            }));
-    }
 }

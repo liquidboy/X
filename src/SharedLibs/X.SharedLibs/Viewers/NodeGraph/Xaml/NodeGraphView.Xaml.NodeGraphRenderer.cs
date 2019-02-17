@@ -51,10 +51,10 @@ namespace X.Viewer.NodeGraph
             //node in node-container
             FrameworkElement newNodeUIElement = CreateNodeUI(node);
             newNodeGroup.Children.Add(newNodeUIElement);
-            if (node.NodeType == (int)NodeType.TextboxValue) {
+            //if (node.NodeType == (int)NodeType.TextboxValue) {
                 newNodeUIElement.UpdateLayout();
                 node.Width = newNodeUIElement.ActualWidth;
-            } 
+            //} 
 
             //node-title
             if (node.Title != null) newNodeGroup.Children.Add(CreateNodeTitleUI(node));
