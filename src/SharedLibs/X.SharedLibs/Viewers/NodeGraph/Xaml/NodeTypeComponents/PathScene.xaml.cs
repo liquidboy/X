@@ -45,3 +45,6 @@ namespace X.Viewer.NodeGraph.NodeTypeComponents
     }
 
 }
+
+// https://www.google.com/search?ei=JhJpXKnFA8r_rQHLkoPQAg&q=uwp+animate+along+a+path&oq=uwp+animate+along+a+path&gs_l=psy-ab.3..33i22i29i30.740827.743534..743675...0.0..1.339.4313.0j6j11j2......0....1..gws-wiz.......0i71j0i67j0j0i22i30j33i160.N-C8fbSoAhY
+// https://docs.microsoft.com/en-us/dotnet/framework/wpf/graphics-multimedia/how-to-animate-an-object-along-a-path-double-animation
