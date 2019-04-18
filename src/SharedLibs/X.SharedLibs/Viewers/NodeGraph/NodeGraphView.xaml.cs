@@ -28,6 +28,7 @@ namespace X.Viewer.NodeGraph
             //var ct = nodeGraphCanvas.RenderTransform as CompositeTransform;
             //nodeGraphZoomContainer.Scale = ct.ScaleX;
             InitializeStorage();
+            InitializeGlobalStorage();
             InitializeRenderer(nodeGraphCanvas);
             InitializeNodeGraph();
             InitializeCompositor(nodeGraphCanvas);
