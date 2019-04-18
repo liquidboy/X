@@ -13,6 +13,7 @@ namespace X.Viewer.NodeGraph
             DBContext.Current.DeleteAll<Node>();
             DBContext.Current.DeleteAll<NodeLink>();
             DBContext.Current.DeleteAll<SavedGraph>();
+            DBContext.Current.DeleteAll<CloudNodeType>();
         }
 
         public SavedGraph SaveGraph(string guid) => SaveGraph(guid, string.Empty);
@@ -37,6 +38,7 @@ namespace X.Viewer.NodeGraph
         public void Save(Node node) => DBContext.Current.Save(node);
         public void Save(NodeLink link) => DBContext.Current.Save(link);
         public void Save(SavedGraph graph) => DBContext.Current.Save(graph);
+        public void Save(CloudNodeType cloudNodeType) => DBContext.Current.Save(cloudNodeType);
 
         public void Delete(NodeLink link) => DBContext.Current.DeleteEntity<NodeLink>(link.UniqueId);
 
@@ -61,7 +63,7 @@ namespace X.Viewer.NodeGraph
             }
             return ((returnNodes.Count > 0 || returnNodeLinks.Count > 0), returnNodes, returnNodeLinks);
         }
+        public List<CloudNodeType> RetrieveCloudNodeTypes() => DBContext.Current.RetrieveAllEntities<CloudNodeType>();
 
-        
     }
 }

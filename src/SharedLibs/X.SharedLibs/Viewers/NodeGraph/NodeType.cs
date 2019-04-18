@@ -33,8 +33,9 @@
         BorderModeValue = 1011,
         TransformMatrixValue = 1012,
         PathScene = 1013,
-        XamlFragment = 1014
+        XamlFragment = 1014,
 
+        CloudNodeType = 5000
     }
 }
 

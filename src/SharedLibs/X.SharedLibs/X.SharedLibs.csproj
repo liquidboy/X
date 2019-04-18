@@ -752,6 +752,8 @@
     </Compile>
     <Compile Include="Viewers\MediaView\MediaElementRenderer.cs" />
     <Compile Include="Viewers\NodeGraph\INodeGraphHover.cs" />
+    <Compile Include="Viewers\NodeGraph\CloudNodeTypeMetadata.cs" />
+    <Compile Include="Viewers\NodeGraph\CloudNodeType.cs" />
     <Compile Include="Viewers\NodeGraph\Xaml\Converters\BorderModeConverter.cs" />
     <Compile Include="Viewers\NodeGraph\Xaml\Converters\CanvasAlphaModeConverter.cs" />
     <Compile Include="Viewers\NodeGraph\Xaml\Converters\BlendEffectModeConverter.cs" />
@@ -949,6 +951,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Azure.Mobile.Client">
       <Version>4.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Azure.Storage.Common">
+      <Version>10.0.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.1.9</Version>

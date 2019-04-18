@@ -10,13 +10,26 @@ namespace X.Viewer.NodeGraph
         public void InitializeNodeSelector()
         {
             _nodeTypeMetadata = new List<NodeTypeMetadata>();
+            FillFromNodeTypeEnum();
+            FillFromGlobalStorage();
+        }
 
+        private void FillFromNodeTypeEnum() {
             var values = Enum.GetValues(typeof(NodeType));
-
-            foreach(var value in values){
+            foreach (var value in values)
+            {
                 NodeType nt = (NodeType)value;
-                _nodeTypeMetadata.Add(new NodeTypeMetadata(nt));
+                if (nt != NodeType.CloudNodeType) {
+                    _nodeTypeMetadata.Add(new NodeTypeMetadata(nt));
+                }
             }
+        }
+
+        private void FillFromGlobalStorage() {
+            // todo: pull from cloud and put in sqlite storage (if applicable)
+            _nodeTypeMetadata.Add(new CloudNodeTypeMetadata("Entity", "dots"));
+            _nodeTypeMetadata.Add(new CloudNodeTypeMetadata("Component", "dots"));
+            _nodeTypeMetadata.Add(new CloudNodeTypeMetadata("System", "dots"));
         }
 
         public IEnumerable<NodeTypeMetadata> GetNodeTypeMetaData()
