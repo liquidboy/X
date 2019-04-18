@@ -39,7 +39,7 @@ namespace X.Viewer.NodeGraph
                 if (foundBrush == null)
                 {
                     var spriteVisualNew = compositor.CreateSpriteVisual();
-
+                    // compositor.CreateSpatialVisual
                     ElementCompositionPreview.SetElementChildVisual(nodeVisual.AssociatedObject, spriteVisualNew);
 
                     //get input sources and pass them to effect graph 
