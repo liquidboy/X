@@ -11,16 +11,10 @@ namespace X.Viewer.NodeGraph
         CloudStorageAccount _storageAccount;
         CloudTableClient _tableClient;
 
-        public void InitializeGlobalStorage()
+        public void InitializeGlobalStorage(string connectionString)
         {
-            string storageConnectionString = "xxxx";
-
-            // Retrieve storage account information from connection string.
-            _storageAccount = CloudStorageAccount.Parse(storageConnectionString);
-
-            // Create a table client for interacting with the table service
+            _storageAccount = CloudStorageAccount.Parse(connectionString);
             _tableClient = _storageAccount.CreateCloudTableClient();
-
         }
 
         public async Task<(int Count, IList<CloudNodeTypeEntity> Results)> RetrieveGlobalNodeTypes(string partitionKey)
@@ -36,5 +30,19 @@ namespace X.Viewer.NodeGraph
             catch (Exception ex) { }
             return (0, null);
         }
+
+        public async Task<bool> InitGlobalNodeTypes() {
+            var foundTable = _tableClient.GetTableReference("GlobalNodeType");
+            var typesToCreate = new []{ "Entity", "Component", "System" };
+
+            foreach (var typeToCreate in typesToCreate) {
+                await foundTable.ExecuteAsync(TableOperation.InsertOrReplace(new CloudNodeTypeEntity(typeToCreate, "Dots") { CreatedDate = DateTime.Now, LastUpdated = DateTime.Now }));
+            }
+
+            //    CloudNodeTypeEntity insertedEntity = newEntity.Result as CloudNodeTypeEntity;
+            return true;
+        }
     }
 }
+
+//https://docs.microsoft.com/en-us/azure/cosmos-db/tutorial-develop-table-dotnet

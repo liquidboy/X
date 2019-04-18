@@ -33,53 +33,22 @@ namespace X.Viewer.NodeGraph
             }
         }
 
-        private async Task<bool> FillFromGlobalStorage() {
-            //https://docs.microsoft.com/en-us/azure/cosmos-db/tutorial-develop-table-dotnet
-
-            // todo: pull from cloud and put in sqlite storage (if applicable)
-
-            // Add new clients
-
+        private async Task<bool> FillFromGlobalStorage()
+        {
             var globalData = await RetrieveGlobalNodeTypes("Dots");
+            if (globalData.Count == 0) {
+                _nodeTypeMetadata.Add(new CloudNodeTypeMetadata("Entity", "dots"));
+                _nodeTypeMetadata.Add(new CloudNodeTypeMetadata("Component", "dots"));
+                _nodeTypeMetadata.Add(new CloudNodeTypeMetadata("System", "dots"));
 
-            //var foundTable = tableClient.GetTableReference("GlobalNodeType");
-            try
-            {
-                //TableQuery<CloudNodeTypeEntity> query = new TableQuery<CloudNodeTypeEntity>();
-                //query.Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, "Dots"));
-                //var result = await foundTable.ExecuteQuerySegmentedAsync(query, new TableContinuationToken());
-                
-                if (globalData.Count == 0) {
-                    _nodeTypeMetadata.Add(new CloudNodeTypeMetadata("Entity", "dots"));
-                    _nodeTypeMetadata.Add(new CloudNodeTypeMetadata("Component", "dots"));
-                    _nodeTypeMetadata.Add(new CloudNodeTypeMetadata("System", "dots"));
-
-                    //TableResult newEntity = await foundTable.ExecuteAsync(TableOperation.InsertOrReplace(new CloudNodeTypeEntity("Entity", "Dots") { CreatedDate = DateTime.Now, LastUpdated = DateTime.Now }));
-
-                    //newEntity = await foundTable.ExecuteAsync(TableOperation.InsertOrReplace(new CloudNodeTypeEntity("Component", "Dots") { CreatedDate = DateTime.Now, LastUpdated = DateTime.Now }));
-
-                    //newEntity = await foundTable.ExecuteAsync(TableOperation.InsertOrReplace(new CloudNodeTypeEntity("System", "Dots") { CreatedDate = DateTime.Now, LastUpdated = DateTime.Now }));
-
-                    ////    CloudNodeTypeEntity insertedEntity = newEntity.Result as CloudNodeTypeEntity;
-
-                }
-                else {
-                    foreach (CloudNodeTypeEntity item in globalData.Results)
-                    {
-                        _nodeTypeMetadata.Add(new CloudNodeTypeMetadata(item.RowKey, item.PartitionKey));
-                    }
-                }
-                
+                await InitGlobalNodeTypes();
             }
-            catch (Exception ex)
-            {
-
+            else {
+                foreach (CloudNodeTypeEntity item in globalData.Results)
+                {
+                    _nodeTypeMetadata.Add(new CloudNodeTypeMetadata(item.RowKey, item.PartitionKey));
+                }
             }
-
-
-
-
-
             return true;
         }
 

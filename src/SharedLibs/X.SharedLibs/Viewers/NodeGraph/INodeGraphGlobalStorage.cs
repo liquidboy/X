@@ -5,7 +5,7 @@ namespace X.Viewer.NodeGraph
 {
     public interface INodeGraphGlobalStorage
     {
-        void InitializeGlobalStorage();
+        void InitializeGlobalStorage(string connectionString);
 
         Task<(int Count, IList<CloudNodeTypeEntity> Results)> RetrieveGlobalNodeTypes(string partitionKey);
     }

@@ -13,6 +13,7 @@ namespace X.Viewer.NodeGraph
     public sealed partial class NodeGraphView : UserControl, IContentView
     {
         public event EventHandler<ContentViewEventArgs> SendMessage;
+        string _azureStorageConnectionString = "xxxx";
 
         bool IsPointerDown = false;
         
@@ -28,7 +29,7 @@ namespace X.Viewer.NodeGraph
             //var ct = nodeGraphCanvas.RenderTransform as CompositeTransform;
             //nodeGraphZoomContainer.Scale = ct.ScaleX;
             InitializeStorage();
-            InitializeGlobalStorage();
+            InitializeGlobalStorage(_azureStorageConnectionString);
             InitializeRenderer(nodeGraphCanvas);
             InitializeNodeGraph();
             InitializeCompositor(nodeGraphCanvas);
