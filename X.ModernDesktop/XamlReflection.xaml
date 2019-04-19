@@ -9,7 +9,9 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <ListBox ItemsSource="{x:Bind FilteredControlsCVS.View}" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="300" Margin="0,85,0,0">
+        <TextBox x:Name="tbFilterBy" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Header="Filter by:" TextChanged="{x:Bind TextChanged}" Margin="0,30,0,0" ></TextBox>
+        
+        <ListBox x:Name="lbItems" ItemsSource="{x:Bind FilteredControlsCVS.View}" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="300" Margin="0,85,0,0" SelectionChanged="{x:Bind ItemSelected}">
             <ListBox.ItemTemplate>
                 <DataTemplate x:Name="dtControl">
                     <TextBlock Text="{Binding Name}"></TextBlock>
@@ -17,6 +19,18 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <TextBox x:Name="tbFilterBy" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Header="Filter by:" TextChanged="{x:Bind TextChanged}" Margin="0,30,0,0" ></TextBox>
+        <Grid x:Name="grdSelectedItem" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="400" Margin="500,80,10,10" >
+            <StackPanel>
+            <TextBlock Text="{Binding Namespace}"></TextBlock>
+            <ListBox ItemsSource="{Binding DeclaredMembers}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <ListBox.ItemTemplate>
+                    <DataTemplate >
+                        <TextBlock Text="{Binding Name}"></TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            </StackPanel>
+        </Grid>
+        
     </Grid>
 </Page>
