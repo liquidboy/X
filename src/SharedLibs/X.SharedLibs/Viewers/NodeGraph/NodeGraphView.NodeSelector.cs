@@ -2,7 +2,9 @@
 using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 
 namespace X.Viewer.NodeGraph
 {
@@ -19,7 +21,7 @@ namespace X.Viewer.NodeGraph
 
             //FillFromGlobalStorage().Start();
 
-
+            //FillFromXaml();
         }
 
         private void FillFromNodeTypeEnum() {
@@ -50,6 +52,16 @@ namespace X.Viewer.NodeGraph
                 }
             }
             return true;
+        }
+
+
+        public void FillFromXaml()
+        {
+            Assembly foundControls = Assembly.GetAssembly(typeof(Control));
+            var foundControlTypes = foundControls.GetTypes();
+            foreach (var foundControl in foundControlTypes) {
+                _nodeTypeMetadata.Add(new CloudNodeTypeMetadata(foundControl.Name, foundControl.FullName));
+            }
         }
 
         public IEnumerable<NodeTypeMetadata> GetNodeTypeMetaData()

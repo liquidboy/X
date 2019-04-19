@@ -2,7 +2,9 @@
 using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 
 namespace X.Viewer.NodeGraph
 {
@@ -33,15 +35,17 @@ namespace X.Viewer.NodeGraph
 
         public async Task<bool> InitGlobalNodeTypes() {
             var foundTable = _tableClient.GetTableReference("GlobalNodeType");
-            var typesToCreate = new []{ "Entity", "Component", "System" };
+            var typesToCreate = new []{ "Entity:Dots", "Component:Dots", "System:Dots" };
 
             foreach (var typeToCreate in typesToCreate) {
-                await foundTable.ExecuteAsync(TableOperation.InsertOrReplace(new CloudNodeTypeEntity(typeToCreate, "Dots") { CreatedDate = DateTime.Now, LastUpdated = DateTime.Now }));
+                var parts = typeToCreate.Split(":".ToCharArray());
+                await foundTable.ExecuteAsync(TableOperation.InsertOrReplace(new CloudNodeTypeEntity(parts[0], parts[1]) { CreatedDate = DateTime.Now, LastUpdated = DateTime.Now }));
             }
 
             //    CloudNodeTypeEntity insertedEntity = newEntity.Result as CloudNodeTypeEntity;
             return true;
         }
+
     }
 }
 
