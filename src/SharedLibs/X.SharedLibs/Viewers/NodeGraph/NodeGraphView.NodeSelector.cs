@@ -37,15 +37,25 @@ namespace X.Viewer.NodeGraph
 
         private async Task<bool> FillFromGlobalStorage()
         {
-            var globalData = await RetrieveGlobalNodeTypes("Dots");
+            //var globalData = await RetrieveGlobalNodeTypes("Dots");
+            var globalData = await RetrieveAllGlobalNodeTypes();
             if (globalData.Count == 0) {
-                _nodeTypeMetadata.Add(new CloudNodeTypeMetadata("Entity", "dots"));
-                _nodeTypeMetadata.Add(new CloudNodeTypeMetadata("Component", "dots"));
-                _nodeTypeMetadata.Add(new CloudNodeTypeMetadata("System", "dots"));
-
-                await InitGlobalNodeTypes();
+                var typesToCreate = new[]{
+                    "Entity:Dots", "Component:Dots", "System:Dots",
+                    "Page:Form", "Panel:Form",
+                    "App:MVVM", "Model:MVVM", "View:MVVM", "ViewModel:MVVM", "Locator:MVVM"
+                };
+                foreach (var typeToCreate in typesToCreate) {
+                    var parts = typeToCreate.Split(":".ToCharArray());
+                    _nodeTypeMetadata.Add(new CloudNodeTypeMetadata(parts[0], parts[1]));
+                }
+                await InitGlobalNodeTypes(typesToCreate);
             }
             else {
+                //temp : if we want to recrate the global data
+                //await ClearGlobalNodeTypes();
+                //return true;
+
                 foreach (CloudNodeTypeEntity item in globalData.Results)
                 {
                     _nodeTypeMetadata.Add(new CloudNodeTypeMetadata(item.RowKey, item.PartitionKey));

@@ -33,15 +33,39 @@ namespace X.Viewer.NodeGraph
             return (0, null);
         }
 
-        public async Task<bool> InitGlobalNodeTypes() {
+        public async Task<(int Count, IList<CloudNodeTypeEntity> Results)> RetrieveAllGlobalNodeTypes()
+        {
             var foundTable = _tableClient.GetTableReference("GlobalNodeType");
-            var typesToCreate = new []{ "Entity:Dots", "Component:Dots", "System:Dots" };
-
-            foreach (var typeToCreate in typesToCreate) {
-                var parts = typeToCreate.Split(":".ToCharArray());
-                await foundTable.ExecuteAsync(TableOperation.InsertOrReplace(new CloudNodeTypeEntity(parts[0], parts[1]) { CreatedDate = DateTime.Now, LastUpdated = DateTime.Now }));
+            try
+            {
+                TableQuery<CloudNodeTypeEntity> query = new TableQuery<CloudNodeTypeEntity>();
+                //query.Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, partitionKey));
+                var result = await foundTable.ExecuteQuerySegmentedAsync(query, new TableContinuationToken());
+                return (result.Results.Count, result.Results);
             }
+            catch (Exception ex) { }
+            return (0, null);
+        }
 
+        public async Task<bool> ClearGlobalNodeTypes()
+        {
+            var foundTable = _tableClient.GetTableReference("GlobalNodeType");
+            await foundTable.DeleteIfExistsAsync();
+            return true;
+        }
+
+        public async Task<bool> InitGlobalNodeTypes(string[] typesToCreate) {
+            try {
+                var foundTable = _tableClient.GetTableReference("GlobalNodeType");
+                await foundTable.CreateIfNotExistsAsync();
+                foreach (var typeToCreate in typesToCreate)
+                {
+                    var parts = typeToCreate.Split(":".ToCharArray());
+                    await foundTable.ExecuteAsync(TableOperation.InsertOrReplace(new CloudNodeTypeEntity(parts[0], parts[1]) { CreatedDate = DateTime.Now, LastUpdated = DateTime.Now }));
+                }
+            }
+            catch (Exception ex) { }
+            
             //    CloudNodeTypeEntity insertedEntity = newEntity.Result as CloudNodeTypeEntity;
             return true;
         }
