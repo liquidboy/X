@@ -18,10 +18,6 @@ namespace X.Viewer.NodeGraph
             FillFromNodeTypeEnum();
 
             Task.Run(async () => await FillFromGlobalStorage());
-
-            //FillFromGlobalStorage().Start();
-
-            //FillFromXaml();
         }
 
         private void FillFromNodeTypeEnum() {
@@ -62,16 +58,6 @@ namespace X.Viewer.NodeGraph
                 }
             }
             return true;
-        }
-
-
-        public void FillFromXaml()
-        {
-            Assembly foundControls = Assembly.GetAssembly(typeof(Control));
-            var foundControlTypes = foundControls.GetTypes();
-            foreach (var foundControl in foundControlTypes) {
-                _nodeTypeMetadata.Add(new CloudNodeTypeMetadata(foundControl.Name, foundControl.FullName));
-            }
         }
 
         public IEnumerable<NodeTypeMetadata> GetNodeTypeMetaData()
