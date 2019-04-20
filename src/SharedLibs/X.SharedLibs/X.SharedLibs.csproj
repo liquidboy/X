@@ -756,7 +756,7 @@
     <Compile Include="Viewers\NodeGraph\CloudNodeTypeMetadata.cs" />
     <Compile Include="Viewers\NodeGraph\CloudNodeType.cs" />
     <Compile Include="Viewers\NodeGraph\INodeGraphGlobalStorage.cs" />
-    <Compile Include="Viewers\NodeGraph\NodeGraphView.GlobalStorage.cs" />
+    <Compile Include="Viewers\NodeGraph\NodeGraphGlobalStorage.cs" />
     <Compile Include="Viewers\NodeGraph\Xaml\Converters\BorderModeConverter.cs" />
     <Compile Include="Viewers\NodeGraph\Xaml\Converters\CanvasAlphaModeConverter.cs" />
     <Compile Include="Viewers\NodeGraph\Xaml\Converters\BlendEffectModeConverter.cs" />

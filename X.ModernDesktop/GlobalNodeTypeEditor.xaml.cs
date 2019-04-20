@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using Windows.Foundation;
@@ -18,14 +19,16 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using X.Viewer.NodeGraph;
 
 namespace X.ModernDesktop
 {
 
     public sealed partial class GlobalNodeTypeEditor : Page
     {
-        Assembly _foundControls;
-        Type[] _foundControlTypes;
+        //Assembly _foundControls;
+        //Type[] _foundControlTypes;
+        private static List<NodeTypeMetadata> _nodeTypeMetadata;
 
         public ObservableCollection<ControlMetaData> AllControls { get; set; }
         public CollectionViewSource FilteredControlsCVS { get; set; }
@@ -33,8 +36,13 @@ namespace X.ModernDesktop
 
         public ObservableCollection<ControlMetaData> FilterdControlsEnums { get; set; }
 
+        private string _connectionString = "DefaultEndpointsProtocol=https;AccountName=xapp001;AccountKey=C0FKz9MptMHc1fcELtIcihgPrLfoP8JLIpaANnRt+YWS/8SEBfF8yy60HpJ/m3RN/D6m9CIvIuG9h9ivpsrreA==;EndpointSuffix=core.windows.net";
+
         public GlobalNodeTypeEditor()
         {
+            _nodeTypeMetadata = new List<NodeTypeMetadata>();
+            NodeGraphGlobalStorage.Current.InitializeGlobalStorage(_connectionString);
+
             FilteredControlsCVS = new CollectionViewSource();
             FilteredControlsCVS.IsSourceGrouped = false;
             AllControls = new ObservableCollection<ControlMetaData>();
@@ -45,28 +53,49 @@ namespace X.ModernDesktop
             FilterdControlsEnums = new ObservableCollection<ControlMetaData>();
 
             this.InitializeComponent();
-            
-            FillFromXaml();
+
+
+            //FillFromXaml();
+            Task.Run(async () => await FillFromGlobalStorage()); 
             FilterData("");
         }
 
 
-        public void FillFromXaml()
+        private async Task<bool> FillFromGlobalStorage()
         {
-            _foundControls = Assembly.GetAssembly(typeof(Control));
-            _foundControlTypes = _foundControls.GetTypes();
-            foreach (var foundControl in _foundControlTypes)
-            {
-                var ncmd = new ControlMetaData() { Name = foundControl.Name, FullName = foundControl.FullName };
-                AllControls.Add(ncmd);
-                //_nodeTypeMetadata.Add(new CloudNodeTypeMetadata(foundControl.Name, foundControl.FullName));
-
-                if (foundControl.IsEnum)
+            //var globalData = await RetrieveGlobalNodeTypes("Dots");
+            var globalData = await NodeGraphGlobalStorage.Current.RetrieveAllGlobalNodeTypes();
+            if (globalData.Count > 0) { 
+                
+                foreach (CloudNodeTypeEntity item in globalData.Results)
                 {
+                    _nodeTypeMetadata.Add(new CloudNodeTypeMetadata(item.RowKey, item.PartitionKey, item.InputNodeSlots, item.InputNodeSlotCount, item.OutputNodeSlots, item.OutputNodeSlotCount, item.Color, item.View));
+
+                    var ncmd = new ControlMetaData() { Name = item.RowKey, FullName = $"{item.RowKey} ({item.PartitionKey})" };
+
+                    AllControls.Add(ncmd);
                     FilterdControlsEnums.Add(ncmd);
                 }
             }
+            return true;
         }
+
+        //public void FillFromXaml()
+        //{
+        //    _foundControls = Assembly.GetAssembly(typeof(Control));
+        //    _foundControlTypes = _foundControls.GetTypes();
+        //    foreach (var foundControl in _foundControlTypes)
+        //    {
+        //        var ncmd = new ControlMetaData() { Name = foundControl.Name, FullName = foundControl.FullName };
+        //        AllControls.Add(ncmd);
+        //        //_nodeTypeMetadata.Add(new CloudNodeTypeMetadata(foundControl.Name, foundControl.FullName));
+
+        //        if (foundControl.IsEnum)
+        //        {
+        //            FilterdControlsEnums.Add(ncmd);
+        //        }
+        //    }
+        //}
 
         public void FilterData(string filterBy)
         {
@@ -88,7 +117,9 @@ namespace X.ModernDesktop
         public void ItemSelected() { 
             var cmd = (ControlMetaData)lbItems.SelectedItem;
             if (cmd == null) return;
-            var foundControlType = _foundControlTypes.Where(x => x.Name.Equals(cmd.Name)).FirstOrDefault();
+            var foundControlType = _nodeTypeMetadata
+                .Where(x => x.FriendlyName.Equals(cmd.Name))
+                .FirstOrDefault();
             grdSelectedItem.DataContext = foundControlType;
 
            // var xaml = Clone<Button>(new Button());

@@ -125,7 +125,7 @@ namespace X.Viewer.NodeGraph
                     Fill = new SolidColorBrush((Color)(typeof(Colors)).GetProperty(node.Color).GetValue(null))
                 };
             }
-            else if (node.NodeType > 1000 && node.NodeType < 2000) //VALUES
+            else if (node.NodeType > 1000 && node.NodeType < 10000) //VALUES
             {
                 var nodeType = (NodeType)node.NodeType;
 
