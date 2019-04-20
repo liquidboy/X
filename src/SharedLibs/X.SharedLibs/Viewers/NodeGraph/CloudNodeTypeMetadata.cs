@@ -9,9 +9,11 @@
         public string OutputNodeSlots { get; set; }
         public int InputNodeSlotCount { get; set; }
         public int OutputNodeSlotCount { get; set; }
+        public string Color { get; set; }
+        public string View { get; set; }
 
 
-        public CloudNodeTypeMetadata(string name, string type, string inputNodeSlots, int inputNodeSlotClount, string outputNodeSlots, int outputNodeSlotCount) : base(NodeType.CloudNodeType)
+        public CloudNodeTypeMetadata(string name, string type, string inputNodeSlots, int inputNodeSlotClount, string outputNodeSlots, int outputNodeSlotCount, string color, string view) : base(NodeType.CloudNodeType)
         {
             NodeType = NodeType.CloudNodeType;
             _name = name;
@@ -20,6 +22,8 @@
             InputNodeSlotCount = inputNodeSlotClount;
             OutputNodeSlots = outputNodeSlots;
             OutputNodeSlotCount = outputNodeSlotCount;
+            Color = color;
+            View = view;
 
         }
 

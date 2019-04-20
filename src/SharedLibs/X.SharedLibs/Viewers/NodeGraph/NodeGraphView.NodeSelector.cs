@@ -43,7 +43,7 @@ namespace X.Viewer.NodeGraph
                 };
                 foreach (var typeToCreate in typesToCreate) {
                     var parts = typeToCreate.Split(":".ToCharArray());
-                    _nodeTypeMetadata.Add(new CloudNodeTypeMetadata(parts[0], parts[1], parts[2],int.Parse(parts[3]), parts[4], int.Parse(parts[5])));
+                    _nodeTypeMetadata.Add(new CloudNodeTypeMetadata(parts[0], parts[1], parts[2],int.Parse(parts[3]), parts[4], int.Parse(parts[5]), "WhiteSmoke", string.Empty));
                 }
                 await InitGlobalNodeTypes(typesToCreate);
             }
@@ -54,7 +54,7 @@ namespace X.Viewer.NodeGraph
 
                 foreach (CloudNodeTypeEntity item in globalData.Results)
                 {
-                    _nodeTypeMetadata.Add(new CloudNodeTypeMetadata(item.RowKey, item.PartitionKey, item.InputNodeSlots, item.InputNodeSlotCount, item.OutputNodeSlots, item.OutputNodeSlotCount));
+                    _nodeTypeMetadata.Add(new CloudNodeTypeMetadata(item.RowKey, item.PartitionKey, item.InputNodeSlots, item.InputNodeSlotCount, item.OutputNodeSlots, item.OutputNodeSlotCount, item.Color, item.View));
                 }
             }
             return true;
@@ -164,7 +164,7 @@ namespace X.Viewer.NodeGraph
                     var cloudNodeTypeMetadata = (CloudNodeTypeMetadata)nodeTypeMetadata;
                     var title = $"{cloudNodeTypeMetadata.FriendlyName} ({cloudNodeTypeMetadata.FriendlyType})";
 
-                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", cloudNodeTypeMetadata.InputNodeSlotCount, cloudNodeTypeMetadata.InputNodeSlots, cloudNodeTypeMetadata.OutputNodeSlotCount, cloudNodeTypeMetadata.OutputNodeSlots, groupingGuid, (int)NodeType.CloudNodeType, title));
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, cloudNodeTypeMetadata.Color, cloudNodeTypeMetadata.InputNodeSlotCount, cloudNodeTypeMetadata.InputNodeSlots, cloudNodeTypeMetadata.OutputNodeSlotCount, cloudNodeTypeMetadata.OutputNodeSlots, groupingGuid, (int)NodeType.CloudNodeType, title));
                     break;
             }
 
