@@ -34,7 +34,7 @@ namespace X.Viewer.NodeGraph
         private async Task<bool> FillFromGlobalStorage()
         {
             //var globalData = await RetrieveGlobalNodeTypes("Dots");
-            var globalData = await RetrieveAllGlobalNodeTypes();
+            var globalData = await NodeGraphGlobalStorage.Current.RetrieveAllGlobalNodeTypes();
             if (globalData.Count == 0) {
                 var typesToCreate = new[]{
                     "Entity:Dots:source:1::1", "Component:Dots:source:1::1", "System:Dots:source:1::1",
@@ -45,11 +45,11 @@ namespace X.Viewer.NodeGraph
                     var parts = typeToCreate.Split(":".ToCharArray());
                     _nodeTypeMetadata.Add(new CloudNodeTypeMetadata(parts[0], parts[1], parts[2],int.Parse(parts[3]), parts[4], int.Parse(parts[5]), "WhiteSmoke", string.Empty));
                 }
-                await InitGlobalNodeTypes(typesToCreate);
+                await NodeGraphGlobalStorage.Current.InitGlobalNodeTypes(typesToCreate);
             }
             else {
                 //temp : if we want to recrate the global data
-                //await ClearGlobalNodeTypes();
+                //await NodeGraphGlobalStorage.Current.ClearGlobalNodeTypes();
                 //return true;
 
                 foreach (CloudNodeTypeEntity item in globalData.Results)

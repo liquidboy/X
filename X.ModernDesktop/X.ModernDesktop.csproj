@@ -169,6 +169,9 @@
     <Compile Include="SimTower\Windows\ElevatorPage.xaml.cs">
       <DependentUpon>ElevatorPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GlobalNodeTypeEditor.xaml.cs">
+      <DependentUpon>GlobalNodeTypeEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="XamlReflection.xaml.cs">
       <DependentUpon>XamlReflection.xaml</DependentUpon>
     </Compile>
@@ -284,6 +287,10 @@
     <Page Include="SimTower\Windows\ElevatorPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GlobalNodeTypeEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="XamlReflection.xaml">
       <SubType>Designer</SubType>

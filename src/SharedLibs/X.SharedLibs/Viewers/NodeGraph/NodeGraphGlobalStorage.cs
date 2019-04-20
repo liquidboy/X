@@ -8,11 +8,20 @@ using Windows.UI.Xaml.Controls;
 
 namespace X.Viewer.NodeGraph
 {
-    public partial class NodeGraphView : INodeGraphGlobalStorage
+    public class NodeGraphGlobalStorage: INodeGraphGlobalStorage
     {
         CloudStorageAccount _storageAccount;
         CloudTableClient _tableClient;
 
+        private static NodeGraphGlobalStorage _NodeGraphGlobalStorage;
+        public static NodeGraphGlobalStorage Current {
+            get {
+                if (_NodeGraphGlobalStorage == null) _NodeGraphGlobalStorage = new NodeGraphGlobalStorage();
+                return _NodeGraphGlobalStorage;
+            }
+            private set { }
+        }
+        
         public void InitializeGlobalStorage(string connectionString)
         {
             _storageAccount = CloudStorageAccount.Parse(connectionString);

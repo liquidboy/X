@@ -29,7 +29,7 @@ namespace X.Viewer.NodeGraph
             //var ct = nodeGraphCanvas.RenderTransform as CompositeTransform;
             //nodeGraphZoomContainer.Scale = ct.ScaleX;
             InitializeStorage();
-            InitializeGlobalStorage(_azureStorageConnectionString);
+            NodeGraphGlobalStorage.Current.InitializeGlobalStorage(_azureStorageConnectionString);
             InitializeRenderer(nodeGraphCanvas);
             InitializeNodeGraph();
             InitializeCompositor(nodeGraphCanvas);
