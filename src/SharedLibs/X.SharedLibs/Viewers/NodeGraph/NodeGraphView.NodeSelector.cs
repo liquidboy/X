@@ -37,13 +37,13 @@ namespace X.Viewer.NodeGraph
             var globalData = await RetrieveAllGlobalNodeTypes();
             if (globalData.Count == 0) {
                 var typesToCreate = new[]{
-                    "Entity:Dots", "Component:Dots", "System:Dots",
-                    "Page:Form", "Panel:Form",
-                    "App:MVVM", "Model:MVVM", "View:MVVM", "ViewModel:MVVM", "Locator:MVVM"
+                    "Entity:Dots:source:1::1", "Component:Dots:source:1::1", "System:Dots:source:1::1",
+                    "Page:Form:source:1::1", "Panel:Form:source:1::1",
+                    "App:MVVM:source:1::1", "Model:MVVM:source:1::1", "View:MVVM:source:1::1", "ViewModel:MVVM:source:1::1", "Locator:MVVM:source:1::1", "DomainService:MVVM:source:1::1", "ApplicationService:MVVM:source:1::1", "DataService:MVVM:source:1::0"
                 };
                 foreach (var typeToCreate in typesToCreate) {
                     var parts = typeToCreate.Split(":".ToCharArray());
-                    _nodeTypeMetadata.Add(new CloudNodeTypeMetadata(parts[0], parts[1]));
+                    _nodeTypeMetadata.Add(new CloudNodeTypeMetadata(parts[0], parts[1], parts[2],int.Parse(parts[3]), parts[4], int.Parse(parts[5])));
                 }
                 await InitGlobalNodeTypes(typesToCreate);
             }
@@ -54,7 +54,7 @@ namespace X.Viewer.NodeGraph
 
                 foreach (CloudNodeTypeEntity item in globalData.Results)
                 {
-                    _nodeTypeMetadata.Add(new CloudNodeTypeMetadata(item.RowKey, item.PartitionKey));
+                    _nodeTypeMetadata.Add(new CloudNodeTypeMetadata(item.RowKey, item.PartitionKey, item.InputNodeSlots, item.InputNodeSlotCount, item.OutputNodeSlots, item.OutputNodeSlotCount));
                 }
             }
             return true;
@@ -66,7 +66,7 @@ namespace X.Viewer.NodeGraph
             return _nodeTypeMetadata;
         }
 
-        public void OnNodeTypeSelected(NodeType nodeType)
+        public void OnNodeTypeSelected(NodeTypeMetadata nodeTypeMetadata)
         {
             var defaultWidth = 200d;
             var newId = $"Node-{Guid.NewGuid().ToString()}";
@@ -74,7 +74,7 @@ namespace X.Viewer.NodeGraph
             var nodePosY = 1200d;
             var groupingGuid = IsGraphSelected ? SelectedGraphGuid : Guid.Empty.ToString();
 
-            switch (nodeType) {
+            switch (nodeTypeMetadata.NodeType) {
                 case NodeType.TextboxValue:
                     AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 0, "", 1, "", groupingGuid, (int)NodeType.TextboxValue, "Text Value"));
                     break;
@@ -159,7 +159,16 @@ namespace X.Viewer.NodeGraph
                 case NodeType.PathScene:
                     AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", 2, "xaml fragment,path", 1, "", groupingGuid, (int)NodeType.PathScene, "Path Scene"));
                     break;
+
+                case NodeType.CloudNodeType:
+                    var cloudNodeTypeMetadata = (CloudNodeTypeMetadata)nodeTypeMetadata;
+                    var title = $"CloudNodeType - {cloudNodeTypeMetadata.FriendlyName} ({cloudNodeTypeMetadata.FriendlyType})";
+
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", cloudNodeTypeMetadata.InputNodeSlotCount, cloudNodeTypeMetadata.InputNodeSlots , cloudNodeTypeMetadata.OutputNodeSlotCount, cloudNodeTypeMetadata.OutputNodeSlots, groupingGuid, (int)NodeType.CloudNodeType, title));
+                    break;
             }
+
+            DrawNodeGraph();
         }
     }
 }

@@ -144,8 +144,8 @@ namespace X.Viewer.NodeGraph
 
         private void ButAddNode_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            var newValue = (NodeTypeMetadata)cbNodes.SelectionBoxItem;
-            if (newValue != null ) OnNodeTypeSelected(newValue.NodeType);
+            var nodeSelected = (NodeTypeMetadata)cbNodes.SelectionBoxItem;
+            if (nodeSelected != null ) OnNodeTypeSelected(nodeSelected);
         }
     }
 
