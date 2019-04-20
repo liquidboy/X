@@ -33,6 +33,8 @@ namespace X.Viewer.NodeGraph
         // ==========
         public void RenderNode(Node node, List<NodeLink> relatedLinks)
         {
+            if (!node.IsDirty) return;
+
             double slotRadius = 5;
             double slotDiameter = 2 * slotRadius;
 
@@ -49,7 +51,7 @@ namespace X.Viewer.NodeGraph
             _uiNodeGraphPanelXamlRoot.Children.Add(newNodeGroup);
 
             //node in node-container
-            FrameworkElement newNodeUIElement = CreateNodeUI(node);
+            FrameworkElement newNodeUIElement = CreateNodeUI(node);    // <---- the NodeTypeComponent(UserControl) of the node
             newNodeGroup.Children.Add(newNodeUIElement);
             //if (node.NodeType == (int)NodeType.TextboxValue) {
                 newNodeUIElement.UpdateLayout();
@@ -75,7 +77,7 @@ namespace X.Viewer.NodeGraph
             //await DispatcherHelper.ExecuteOnUIThreadAsync(()=> CreateNodeVisual(nodeNodeLinkVM, newNodeUIElement, (NodeType)node.NodeType), Windows.UI.Core.CoreDispatcherPriority.Normal);
             CreateNodeVisualUI(nodeNodeLinkVM, newNodeUIElement, (NodeType)node.NodeType);
 
-
+            node.IsDirty = false;
         }
 
         public (bool FoundSlot, string SlotName, string SlotTag) TryToFindSlotUnderPoint(Point point)
@@ -140,6 +142,7 @@ namespace X.Viewer.NodeGraph
                     case NodeType.TransformMatrixValue: newNodeUIElement = new TransformMatrixValue(); break;
                     case NodeType.PathScene: newNodeUIElement = new PathScene(); break;
                     case NodeType.XamlFragment: newNodeUIElement = new XamlFragment(); break;
+                    case NodeType.CloudNodeType: newNodeUIElement = new CloudNodeTypeComponent(); break;
                 }
                 INodeTypeComponent nodeTypeComponent = newNodeUIElement as INodeTypeComponent;
                 nodeTypeComponent.NodeTypeValueChanged += NodeTypeComponent_NodeTypeValueChanged;

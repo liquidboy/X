@@ -162,9 +162,9 @@ namespace X.Viewer.NodeGraph
 
                 case NodeType.CloudNodeType:
                     var cloudNodeTypeMetadata = (CloudNodeTypeMetadata)nodeTypeMetadata;
-                    var title = $"CloudNodeType - {cloudNodeTypeMetadata.FriendlyName} ({cloudNodeTypeMetadata.FriendlyType})";
+                    var title = $"{cloudNodeTypeMetadata.FriendlyName} ({cloudNodeTypeMetadata.FriendlyType})";
 
-                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", cloudNodeTypeMetadata.InputNodeSlotCount, cloudNodeTypeMetadata.InputNodeSlots , cloudNodeTypeMetadata.OutputNodeSlotCount, cloudNodeTypeMetadata.OutputNodeSlots, groupingGuid, (int)NodeType.CloudNodeType, title));
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, "WhiteSmoke", cloudNodeTypeMetadata.InputNodeSlotCount, cloudNodeTypeMetadata.InputNodeSlots, cloudNodeTypeMetadata.OutputNodeSlotCount, cloudNodeTypeMetadata.OutputNodeSlots, groupingGuid, (int)NodeType.CloudNodeType, title));
                     break;
             }
 

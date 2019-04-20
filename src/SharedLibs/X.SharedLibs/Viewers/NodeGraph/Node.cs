@@ -25,8 +25,9 @@ namespace X.Viewer.NodeGraph
         public double Udfd1 { get; set; }
         public double Udfd2 { get; set; }
         public double Udfd3 { get; set; }
+        public bool IsDirty { get; set; }
 
-        public Node() { }
+        public Node() { IsDirty = true; }
         public Node(string key, double positionX, double positionY, double initialWidth, string color, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType, string title, double udfd1, double udfd2, double udfd3) :
             this(key, positionX, positionY, initialWidth, color, inputSlotCount, inputSlotLabels, outputSlotCount, outputSlotLabels, grouping, nodeType, title, 50d, 20d)
         {
@@ -38,6 +39,7 @@ namespace X.Viewer.NodeGraph
             this(key, positionX, positionY, initialWidth, color, inputSlotCount, inputSlotLabels, outputSlotCount, outputSlotLabels, grouping, nodeType, 50d, 20d)
         {
             Title = title;
+            IsDirty = true;
         }
         public Node(string key, double positionX, double positionY, double initialWidth, string color, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType, string title, double slotHeaderFooter, double slotPadding) : 
             this(key, positionX, positionY, initialWidth, color, inputSlotCount, inputSlotLabels, outputSlotCount, outputSlotLabels, grouping, nodeType, slotHeaderFooter, slotPadding)
@@ -61,6 +63,7 @@ namespace X.Viewer.NodeGraph
             SlotPadding = slotPadding;
             SlotHeaderFooter = slotHeaderFooter;
             CalculateSize();
+            IsDirty = true;
         }
 
         private void CalculateSize()

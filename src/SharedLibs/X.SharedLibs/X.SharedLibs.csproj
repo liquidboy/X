@@ -781,6 +781,9 @@
     <Compile Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\ColorSliderValue.xaml.cs">
       <DependentUpon>ColorSliderValue.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\CloudNodeTypeComponent.xaml.cs">
+      <DependentUpon>CloudNodeTypeComponent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\XamlFragment.xaml.cs">
       <DependentUpon>XamlFragment.xaml</DependentUpon>
     </Compile>
@@ -1208,6 +1211,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\ColorSliderValue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\CloudNodeTypeComponent.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
