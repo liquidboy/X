@@ -36,12 +36,10 @@ namespace X.ModernDesktop
 
         public ObservableCollection<ControlMetaData> FilterdControlsEnums { get; set; }
 
-        private string _connectionString = "xxxx";
-
         public GlobalNodeTypeEditor()
         {
             _nodeTypeMetadata = new List<NodeTypeMetadata>();
-            NodeGraphGlobalStorage.Current.InitializeGlobalStorage(_connectionString);
+            NodeGraphGlobalStorage.Current.InitializeGlobalStorage(App.AzureConnectionString);
 
             FilteredControlsCVS = new CollectionViewSource();
             FilteredControlsCVS.IsSourceGrouped = false;

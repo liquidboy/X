@@ -12,17 +12,20 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using X.Viewer.NodeGraph;
 
 namespace X.ModernDesktop
 {
 
-  public sealed partial class EntityManagerPage : Page
-  {
-    public EntityManagerPage()
+    public sealed partial class EntityManagerPage : Page
     {
-      this.InitializeComponent();
+        
 
-      ctlViewer.Uri = "viewer://node-graph-application.ng";
+        public EntityManagerPage()
+        {
+            this.InitializeComponent();
+            NodeGraphGlobalStorage.Current.InitializeGlobalStorage(App.AzureConnectionString);
+            ctlViewer.Uri = "viewer://node-graph-application.ng";
+        }
     }
-  }
 }

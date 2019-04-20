@@ -23,7 +23,7 @@ namespace X.ModernDesktop
     /// </summary>
     sealed partial class App : Application
     {
-
+        public static string AzureConnectionString = "xxxx";
         public static WindowEventAggregator windowsEventAggregator = new WindowEventAggregator();
 
         /// <summary>
