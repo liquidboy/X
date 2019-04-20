@@ -36,7 +36,7 @@ namespace X.ModernDesktop
 
         public ObservableCollection<ControlMetaData> FilterdControlsEnums { get; set; }
 
-        private string _connectionString = "DefaultEndpointsProtocol=https;AccountName=xapp001;AccountKey=C0FKz9MptMHc1fcELtIcihgPrLfoP8JLIpaANnRt+YWS/8SEBfF8yy60HpJ/m3RN/D6m9CIvIuG9h9ivpsrreA==;EndpointSuffix=core.windows.net";
+        private string _connectionString = "xxxx";
 
         public GlobalNodeTypeEditor()
         {
@@ -56,8 +56,11 @@ namespace X.ModernDesktop
 
 
             //FillFromXaml();
-            Task.Run(async () => await FillFromGlobalStorage()); 
-            FilterData("");
+            Task.Run(async () => {
+                await FillFromGlobalStorage();
+                await Dispatcher.RunAsync( Windows.UI.Core.CoreDispatcherPriority.Normal, ()=> FilterData(""));  //<-- back to UI
+            }); 
+            
         }
 
 
@@ -76,6 +79,8 @@ namespace X.ModernDesktop
                     AllControls.Add(ncmd);
                     FilterdControlsEnums.Add(ncmd);
                 }
+
+                
             }
             return true;
         }
@@ -126,6 +131,16 @@ namespace X.ModernDesktop
 
         }
 
+        public void SaveSelectedItem()
+        { 
+
+        }
+
+        public void CreateNewItem()
+        {
+
+        }
+        
         public static T Clone<T>(T source)
         {
             //string objXaml = XamlWriter.Save(source); //Serialization

@@ -19,39 +19,20 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <Grid x:Name="grdSelectedItem" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="500,80,10,10" >
+        <Grid x:Name="grdSelectedItem" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="350,80,50,10" >
             <StackPanel>
-                <TextBlock Text="{Binding Namespace}"></TextBlock>
-                <StackPanel Orientation="Horizontal">
-                    <ListBox ItemsSource="{Binding DeclaredProperties}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="250">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate >
-                                <TextBlock Text="{Binding Name}"></TextBlock>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                    <ListBox ItemsSource="{Binding DeclaredEvents}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="250">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate >
-                                <TextBlock Text="{Binding Name}"></TextBlock>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                    <ListBox ItemsSource="{Binding DeclaredMembers}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="250">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate >
-                                <TextBlock Text="{Binding Name}"></TextBlock>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
+                <TextBox Text="{Binding FriendlyName}" Header="Name"></TextBox>
+                <TextBox Text="{Binding FriendlyType}" Header="Type"></TextBox>
+                <TextBox Text="{Binding FriendlyType}" Header="Type"></TextBox>
+                <TextBox Text="{Binding Color}" Header="Color"></TextBox>
+                <TextBox Text="{Binding InputNodeSlotCount}" Header="InputNodeSlotCount"></TextBox>
+                <TextBox Text="{Binding InputNodeSlots}" Header="InputNodeSlots"></TextBox>
+                <TextBox Text="{Binding OutputNodeSlotCount, Mode=TwoWay}" Header="OutputNodeSlotCount"></TextBox>
+                <TextBox Text="{Binding OutputNodeSlots}" Header="OutputNodeSlots"></TextBox>
+                <StackPanel Orientation="Horizontal" Margin="0,15,0,0" >
+                    <Button Content="Save" Click="{x:Bind SaveSelectedItem}"></Button>
+                    <Button Content="Create New" Margin="20,0,0,0" Click="{x:Bind CreateNewItem}"></Button>
                 </StackPanel>
-                <ListBox ItemsSource="{Binding ImplementedInterfaces}" >
-                    <ListBox.ItemTemplate>
-                        <DataTemplate >
-                            <TextBlock Text="{Binding Name}"></TextBlock>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
             </StackPanel>
         </Grid>
         
