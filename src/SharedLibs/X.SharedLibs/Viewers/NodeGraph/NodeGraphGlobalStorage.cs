@@ -86,7 +86,7 @@ namespace X.Viewer.NodeGraph
                 foreach (var typeToCreate in typesToCreate)
                 {
                     var parts = typeToCreate.Split(":".ToCharArray());
-                    await foundTable.ExecuteAsync(TableOperation.InsertOrReplace(new CloudNodeTypeEntity(parts[0], parts[1], parts[2], int.Parse(parts[3]), parts[4], int.Parse(parts[5]), string.Empty, "WhiteSmoke") { CreatedDate = DateTime.Now, LastUpdated = DateTime.Now }));
+                    await foundTable.ExecuteAsync(TableOperation.InsertOrReplace(new CloudNodeTypeEntity(parts[0], parts[1], parts[2], int.Parse(parts[3]), parts[4], int.Parse(parts[5]), string.Empty, "WhiteSmoke", string.Empty, string.Empty) { CreatedDate = DateTime.Now, LastUpdated = DateTime.Now }));
                 }
             }
             catch (Exception ex) { }

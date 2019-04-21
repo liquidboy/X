@@ -17,8 +17,11 @@ namespace X.Viewer.NodeGraph
         public string Color { get; set; }
         public string View { get; set; }
 
+        public string Description { get; set; }
+        public string Icon { get; set; }
+
         public CloudNodeTypeEntity() { }
-        public CloudNodeTypeEntity(string name, string category, string inputNodeSlots, int inputNodeSlotCount, string outputNodeSlots, int outputNodeSlotCount, string view, string color)
+        public CloudNodeTypeEntity(string name, string category, string inputNodeSlots, int inputNodeSlotCount, string outputNodeSlots, int outputNodeSlotCount, string view, string color, string description, string icon)
         {
             PartitionKey = category;
             RowKey = name;
@@ -28,6 +31,8 @@ namespace X.Viewer.NodeGraph
             OutputNodeSlotCount = outputNodeSlotCount;
             View = view;
             Color = color;
+            Description = description;
+            Icon = icon;
         }
     }
 }

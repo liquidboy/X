@@ -43,7 +43,7 @@ namespace X.Viewer.NodeGraph
                 };
                 foreach (var typeToCreate in typesToCreate) {
                     var parts = typeToCreate.Split(":".ToCharArray());
-                    _nodeTypeMetadata.Add(new CloudNodeTypeMetadata(parts[0], parts[1], parts[2],int.Parse(parts[3]), parts[4], int.Parse(parts[5]), "WhiteSmoke", string.Empty));
+                    _nodeTypeMetadata.Add(new CloudNodeTypeMetadata(parts[0], parts[1], parts[2],int.Parse(parts[3]), parts[4], int.Parse(parts[5]), "WhiteSmoke", string.Empty, string.Empty, string.Empty));
                 }
                 await NodeGraphGlobalStorage.Current.InitGlobalNodeTypes(typesToCreate);
             }
@@ -54,7 +54,7 @@ namespace X.Viewer.NodeGraph
 
                 foreach (CloudNodeTypeEntity item in globalData.Results)
                 {
-                    _nodeTypeMetadata.Add(new CloudNodeTypeMetadata(item.RowKey, item.PartitionKey, item.InputNodeSlots, item.InputNodeSlotCount, item.OutputNodeSlots, item.OutputNodeSlotCount, item.Color, item.View));
+                    _nodeTypeMetadata.Add(new CloudNodeTypeMetadata(item.RowKey, item.PartitionKey, item.InputNodeSlots, item.InputNodeSlotCount, item.OutputNodeSlots, item.OutputNodeSlotCount, item.Color, item.View, item.Description, item.Icon));
                 }
             }
             return true;

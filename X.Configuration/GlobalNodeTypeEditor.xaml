@@ -26,12 +26,14 @@
             <StackPanel>
                 <TextBox Text="{Binding RowKey}" Header="Name" IsReadOnly="True" x:Name="tbRowKey"></TextBox>
                 <TextBox Text="{Binding PartitionKey}" Header="Type" IsReadOnly="True" x:Name="tbPartitionKey"></TextBox>
+                <TextBox Text="{Binding Description, Mode=TwoWay}" Header="Description"></TextBox>
+                <TextBox Text="{Binding Icon, Mode=TwoWay}" Header="Icon"></TextBox>
                 <TextBox Text="{Binding Color, Mode=TwoWay}" Header="Color"></TextBox>
                 <TextBox Text="{Binding InputNodeSlotCount, Mode=TwoWay}" Header="InputNodeSlotCount"></TextBox>
                 <TextBox Text="{Binding InputNodeSlots, Mode=TwoWay}" Header="InputNodeSlots"></TextBox>
                 <TextBox Text="{Binding OutputNodeSlotCount, Mode=TwoWay}" Header="OutputNodeSlotCount"></TextBox>
                 <TextBox Text="{Binding OutputNodeSlots, Mode=TwoWay}" Header="OutputNodeSlots"></TextBox>
-                <TextBox Text="{Binding View, Mode=TwoWay}" Header="View" Height="150" TextWrapping="WrapWholeWords"></TextBox>
+                <TextBox Text="{Binding View, Mode=TwoWay}" Header="View" Height="150"></TextBox>
                 <StackPanel Orientation="Horizontal" Margin="0,15,0,0" >
                     <Button Content="Save" Click="{x:Bind SaveSelectedItem}"></Button>
                     <Button Content="Delete" Margin="10,0,0,0" Click="{x:Bind DeleteSelectedItem}"></Button>
