@@ -44,11 +44,20 @@ namespace X.ModernDesktop
 
             this.InitializeComponent();
 
+            LoadPageData();
+        }
+
+        private void LoadPageData()
+        {
+            AllControls.Clear();
+            FilterdControls.Clear();
+
             Task.Run(async () => {
                 await FillFromGlobalStorage();
-                await Dispatcher.RunAsync( Windows.UI.Core.CoreDispatcherPriority.Normal, ()=> FilterData(""));  //<-- back to UI
-            }); 
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => FilterData(""));  //<-- back to UI
+            });
         }
+
 
 
         private async Task<bool> FillFromGlobalStorage()
@@ -83,24 +92,27 @@ namespace X.ModernDesktop
         }
 
         public void ItemSelected() { 
-
             grdSelectedItem.DataContext = lbItems.SelectedItem;
-
         }
 
         public async void SaveSelectedItem()
         {
             await NodeGraphGlobalStorage.Current.SaveGlobalNodeType((CloudNodeTypeEntity)grdSelectedItem.DataContext);
+            LoadPageData();
         }
 
         public void CreateNewItem()
         {
-
+            tbRowKey.IsReadOnly = false;
+            tbRowKey.SetBinding(TextBox.TextProperty, new Binding() { Mode = BindingMode.TwoWay, Path = new PropertyPath("RowKey") });
+            tbPartitionKey.IsReadOnly = false;
+            tbPartitionKey.SetBinding(TextBox.TextProperty, new Binding() { Mode = BindingMode.TwoWay, Path = new PropertyPath("PartitionKey") });
         }
 
-        public void DeleteSelectedItem()
+        public async void DeleteSelectedItem()
         {
-
+            await NodeGraphGlobalStorage.Current.DeleteGlobalNodeType((CloudNodeTypeEntity)grdSelectedItem.DataContext);
+            LoadPageData();
         }
     }
 

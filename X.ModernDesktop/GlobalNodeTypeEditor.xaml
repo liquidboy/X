@@ -24,8 +24,8 @@
 
         <Grid x:Name="grdSelectedItem" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="350,80,50,10" >
             <StackPanel>
-                <TextBox Text="{Binding RowKey}" Header="Name" IsReadOnly="True"></TextBox>
-                <TextBox Text="{Binding PartitionKey}" Header="Type" IsReadOnly="True"></TextBox>
+                <TextBox Text="{Binding RowKey}" Header="Name" IsReadOnly="True" x:Name="tbRowKey"></TextBox>
+                <TextBox Text="{Binding PartitionKey}" Header="Type" IsReadOnly="True" x:Name="tbPartitionKey"></TextBox>
                 <TextBox Text="{Binding Color, Mode=TwoWay}" Header="Color"></TextBox>
                 <TextBox Text="{Binding InputNodeSlotCount, Mode=TwoWay}" Header="InputNodeSlotCount"></TextBox>
                 <TextBox Text="{Binding InputNodeSlots, Mode=TwoWay}" Header="InputNodeSlots"></TextBox>

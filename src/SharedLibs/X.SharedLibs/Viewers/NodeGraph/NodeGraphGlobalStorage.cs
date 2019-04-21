@@ -94,6 +94,15 @@ namespace X.Viewer.NodeGraph
             //    CloudNodeTypeEntity insertedEntity = newEntity.Result as CloudNodeTypeEntity;
             return true;
         }
+        public async Task<bool> DeleteGlobalNodeType(CloudNodeTypeEntity cloudNodeTypeEntity) {
+            try
+            {
+                var foundTable = _tableClient.GetTableReference("GlobalNodeType");
+                await foundTable.ExecuteAsync(TableOperation.Delete(cloudNodeTypeEntity));
+            }
+            catch (Exception ex) { }
+            return true;
+        }
 
         public async Task<bool> SaveGlobalNodeType(CloudNodeTypeEntity cloudNodeTypeEntity) {
 
