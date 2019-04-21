@@ -56,6 +56,22 @@ namespace X.Viewer.NodeGraph
             return (0, null);
         }
 
+        public async Task<(int Count, IList<CloudNodeTypeEntity> Results)> RetrieveGlobalNodeType(string partitionKey, string rowKey)
+        {
+            var foundTable = _tableClient.GetTableReference("GlobalNodeType");
+            try
+            {
+                TableQuery<CloudNodeTypeEntity> query = new TableQuery<CloudNodeTypeEntity>();
+                var filter1 = TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, partitionKey);
+                var filter2 = TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, rowKey);
+                query.Where(TableQuery.CombineFilters(filter1, TableOperators.And , filter2));
+                var result = await foundTable.ExecuteQuerySegmentedAsync(query, new TableContinuationToken());
+                return (result.Results.Count, result.Results);
+            }
+            catch (Exception ex) { }
+            return (0, null);
+        }
+
         public async Task<bool> ClearGlobalNodeTypes()
         {
             var foundTable = _tableClient.GetTableReference("GlobalNodeType");
@@ -76,6 +92,17 @@ namespace X.Viewer.NodeGraph
             catch (Exception ex) { }
             
             //    CloudNodeTypeEntity insertedEntity = newEntity.Result as CloudNodeTypeEntity;
+            return true;
+        }
+
+        public async Task<bool> SaveGlobalNodeType(CloudNodeTypeEntity cloudNodeTypeEntity) {
+
+            try
+            {
+                var foundTable = _tableClient.GetTableReference("GlobalNodeType");
+                await foundTable.ExecuteAsync(TableOperation.InsertOrMerge(cloudNodeTypeEntity));
+            }
+            catch (Exception ex) { }
             return true;
         }
 

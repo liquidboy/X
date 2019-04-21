@@ -28,32 +28,30 @@ namespace X.ModernDesktop
     {
         //Assembly _foundControls;
         //Type[] _foundControlTypes;
-        private static List<NodeTypeMetadata> _nodeTypeMetadata;
+        //private static List<CloudNodeTypeEntity> _nodeTypeMetadata;
 
-        public ObservableCollection<ControlMetaData> AllControls { get; set; }
+        public ObservableCollection<CloudNodeTypeEntity> AllControls { get; set; }
         public CollectionViewSource FilteredControlsCVS { get; set; }
-        public ObservableCollection<ControlMetaData> FilterdControls { get; set; }
+        public ObservableCollection<CloudNodeTypeEntity> FilterdControls { get; set; }
 
-        public ObservableCollection<ControlMetaData> FilterdControlsEnums { get; set; }
+        //public ObservableCollection<ControlMetaData> FilterdControlsEnums { get; set; }
 
         public GlobalNodeTypeEditor()
         {
-            _nodeTypeMetadata = new List<NodeTypeMetadata>();
+            //_nodeTypeMetadata = new List<CloudNodeTypeEntity>();
             NodeGraphGlobalStorage.Current.InitializeGlobalStorage(App.AzureConnectionString);
 
             FilteredControlsCVS = new CollectionViewSource();
             FilteredControlsCVS.IsSourceGrouped = false;
-            AllControls = new ObservableCollection<ControlMetaData>();
+            AllControls = new ObservableCollection<CloudNodeTypeEntity>();
 
-            FilterdControls = new ObservableCollection<ControlMetaData>();
+            FilterdControls = new ObservableCollection<CloudNodeTypeEntity>();
             FilteredControlsCVS.Source = FilterdControls;
 
-            FilterdControlsEnums = new ObservableCollection<ControlMetaData>();
+            //FilterdControlsEnums = new ObservableCollection<ControlMetaData>();
 
             this.InitializeComponent();
 
-
-            //FillFromXaml();
             Task.Run(async () => {
                 await FillFromGlobalStorage();
                 await Dispatcher.RunAsync( Windows.UI.Core.CoreDispatcherPriority.Normal, ()=> FilterData(""));  //<-- back to UI
@@ -70,41 +68,23 @@ namespace X.ModernDesktop
                 
                 foreach (CloudNodeTypeEntity item in globalData.Results)
                 {
-                    _nodeTypeMetadata.Add(new CloudNodeTypeMetadata(item.RowKey, item.PartitionKey, item.InputNodeSlots, item.InputNodeSlotCount, item.OutputNodeSlots, item.OutputNodeSlotCount, item.Color, item.View));
+                    //_nodeTypeMetadata.Add(new CloudNodeTypeMetadata(item.RowKey, item.PartitionKey, item.InputNodeSlots, item.InputNodeSlotCount, item.OutputNodeSlots, item.OutputNodeSlotCount, item.Color, item.View));
 
-                    var ncmd = new ControlMetaData() { Name = item.RowKey, FullName = $"{item.RowKey} ({item.PartitionKey})" };
+                    //var ncmd = new ControlMetaData() { Name = item.RowKey, FullName = $"{item.RowKey} ({item.PartitionKey})" };
 
-                    AllControls.Add(ncmd);
-                    FilterdControlsEnums.Add(ncmd);
+                    AllControls.Add(item);
+                    //FilterdControlsEnums.Add(ncmd);
                 }
-
-                
             }
             return true;
         }
 
-        //public void FillFromXaml()
-        //{
-        //    _foundControls = Assembly.GetAssembly(typeof(Control));
-        //    _foundControlTypes = _foundControls.GetTypes();
-        //    foreach (var foundControl in _foundControlTypes)
-        //    {
-        //        var ncmd = new ControlMetaData() { Name = foundControl.Name, FullName = foundControl.FullName };
-        //        AllControls.Add(ncmd);
-        //        //_nodeTypeMetadata.Add(new CloudNodeTypeMetadata(foundControl.Name, foundControl.FullName));
-
-        //        if (foundControl.IsEnum)
-        //        {
-        //            FilterdControlsEnums.Add(ncmd);
-        //        }
-        //    }
-        //}
 
         public void FilterData(string filterBy)
         {
             var query = from item in AllControls
-                        where item.Name.Contains(filterBy, StringComparison.InvariantCultureIgnoreCase)
-                        orderby item.Name
+                        where item.RowKey.Contains(filterBy, StringComparison.InvariantCultureIgnoreCase)
+                        orderby item.RowKey
                         select item;
 
             FilterdControls?.Clear();
@@ -118,41 +98,43 @@ namespace X.ModernDesktop
         }
 
         public void ItemSelected() { 
-            var cmd = (ControlMetaData)lbItems.SelectedItem;
-            if (cmd == null) return;
-            var foundControlType = _nodeTypeMetadata
-                .Where(x => x.FriendlyName.Equals(cmd.Name))
-                .FirstOrDefault();
-            grdSelectedItem.DataContext = foundControlType;
 
-           // var xaml = Clone<Button>(new Button());
+            grdSelectedItem.DataContext = lbItems.SelectedItem;
 
         }
 
-        public void SaveSelectedItem()
-        { 
-
+        public async void SaveSelectedItem()
+        {
+            var selectedItem = (CloudNodeTypeEntity)grdSelectedItem.DataContext;
+           
+            //entity.Color = selItem.
+            await NodeGraphGlobalStorage.Current.SaveGlobalNodeType(selectedItem);
         }
 
         public void CreateNewItem()
         {
 
         }
-        
-        public static T Clone<T>(T source)
-        {
-            //string objXaml = XamlWriter.Save(source); //Serialization
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
-            StringWriter stringWriter = new StringWriter();
-            serializer.Serialize(stringWriter, source);
-            string objXaml = stringWriter.ToString();
 
-            //StringReader stringReader = new StringReader(objXaml);
-            //XmlReader xmlReader = XmlReader.Create(stringReader);
-            //T t = (T)XamlReader.Load(xmlReader); //Deserialization
-            T t = (T)XamlReader.Load(objXaml); //Deserialization
-            return t;
+        public void DeleteSelectedItem()
+        {
+
         }
+
+        //public static T Clone<T>(T source)
+        //{
+        //    //string objXaml = XamlWriter.Save(source); //Serialization
+        //    XmlSerializer serializer = new XmlSerializer(typeof(T));
+        //    StringWriter stringWriter = new StringWriter();
+        //    serializer.Serialize(stringWriter, source);
+        //    string objXaml = stringWriter.ToString();
+
+        //    //StringReader stringReader = new StringReader(objXaml);
+        //    //XmlReader xmlReader = XmlReader.Create(stringReader);
+        //    //T t = (T)XamlReader.Load(xmlReader); //Deserialization
+        //    T t = (T)XamlReader.Load(objXaml); //Deserialization
+        //    return t;
+        //}
 
         //https://social.msdn.microsoft.com/Forums/vstudio/en-US/de2b3198-74e9-4465-a0e1-7b435014ccdd/is-there-any-way-to-serialize-the-style-?forum=wpf
         //https://blogs.u2u.be/diederik/post/serializing-and-deserializing-data-in-a-windows-store-app

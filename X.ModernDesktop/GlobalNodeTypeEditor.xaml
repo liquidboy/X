@@ -14,24 +14,29 @@
         <ListBox x:Name="lbItems" ItemsSource="{x:Bind FilteredControlsCVS.View}" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="300" Margin="0,85,0,0" SelectionChanged="{x:Bind ItemSelected}">
             <ListBox.ItemTemplate>
                 <DataTemplate x:Name="dtControl">
-                    <TextBlock Text="{Binding Name}"></TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding RowKey}"></TextBlock>
+                        <TextBlock Text="{Binding PartitionKey}"></TextBlock>
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
 
         <Grid x:Name="grdSelectedItem" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="350,80,50,10" >
             <StackPanel>
-                <TextBox Text="{Binding FriendlyName}" Header="Name"></TextBox>
-                <TextBox Text="{Binding FriendlyType}" Header="Type"></TextBox>
-                <TextBox Text="{Binding FriendlyType}" Header="Type"></TextBox>
-                <TextBox Text="{Binding Color}" Header="Color"></TextBox>
-                <TextBox Text="{Binding InputNodeSlotCount}" Header="InputNodeSlotCount"></TextBox>
-                <TextBox Text="{Binding InputNodeSlots}" Header="InputNodeSlots"></TextBox>
+                <TextBox Text="{Binding RowKey}" Header="Name" IsReadOnly="True"></TextBox>
+                <TextBox Text="{Binding PartitionKey}" Header="Type" IsReadOnly="True"></TextBox>
+                <TextBox Text="{Binding Color, Mode=TwoWay}" Header="Color"></TextBox>
+                <TextBox Text="{Binding InputNodeSlotCount, Mode=TwoWay}" Header="InputNodeSlotCount"></TextBox>
+                <TextBox Text="{Binding InputNodeSlots, Mode=TwoWay}" Header="InputNodeSlots"></TextBox>
                 <TextBox Text="{Binding OutputNodeSlotCount, Mode=TwoWay}" Header="OutputNodeSlotCount"></TextBox>
-                <TextBox Text="{Binding OutputNodeSlots}" Header="OutputNodeSlots"></TextBox>
+                <TextBox Text="{Binding OutputNodeSlots, Mode=TwoWay}" Header="OutputNodeSlots"></TextBox>
+                <TextBox Text="{Binding View, Mode=TwoWay}" Header="View" Height="90"></TextBox>
                 <StackPanel Orientation="Horizontal" Margin="0,15,0,0" >
                     <Button Content="Save" Click="{x:Bind SaveSelectedItem}"></Button>
-                    <Button Content="Create New" Margin="20,0,0,0" Click="{x:Bind CreateNewItem}"></Button>
+                    <Button Content="Delete" Margin="10,0,0,0" Click="{x:Bind DeleteSelectedItem}"></Button>
+                    <Button Content="Create New" Margin="10,0,0,0" Click="{x:Bind CreateNewItem}"></Button>
+                    
                 </StackPanel>
             </StackPanel>
         </Grid>
