@@ -9,7 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <TextBox x:Name="tbFilterBy" HorizontalAlignment="Left" VerticalAlignment="Top" Width="290" Header="Filter by:" TextChanged="{x:Bind TextChanged}" Margin="5,0,0,0"></TextBox>
+        <TextBox x:Name="tbFilterBy" HorizontalAlignment="Left" VerticalAlignment="Top" Width="295" Header="Filter by:" TextChanged="{x:Bind TextChanged}" Margin="5,0,0,0"></TextBox>
         
         <ListBox x:Name="lbItems" ItemsSource="{x:Bind FilteredControlsCVS.View}" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="300" Margin="0,60,0,0" SelectionChanged="{x:Bind ItemSelected}">
             <ListBox.ItemTemplate>
@@ -26,7 +26,7 @@
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" >
                 <Button Content="Create New" Margin="0,0,0,0" Click="{x:Bind CreateNewItem}"></Button>
             </StackPanel>
-            <StackPanel Margin="0,45,0,0">
+            <StackPanel Margin="0,35,0,0">
                 <TextBox Text="{Binding RowKey}" Header="Name" IsReadOnly="True" x:Name="tbRowKey"></TextBox>
                 <TextBox Text="{Binding PartitionKey}" Header="Type" IsReadOnly="True" x:Name="tbPartitionKey"></TextBox>
                 <TextBox Text="{Binding Description, Mode=TwoWay}" Header="Description"></TextBox>
