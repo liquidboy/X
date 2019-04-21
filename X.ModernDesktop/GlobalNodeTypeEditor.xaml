@@ -16,7 +16,7 @@
                 <DataTemplate x:Name="dtControl">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding RowKey}"></TextBlock>
-                        <TextBlock Text="{Binding PartitionKey}"></TextBlock>
+                        <TextBlock Text="{Binding PartitionKey}" Margin="10,0,0,0" Foreground="LightGray"></TextBlock>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
