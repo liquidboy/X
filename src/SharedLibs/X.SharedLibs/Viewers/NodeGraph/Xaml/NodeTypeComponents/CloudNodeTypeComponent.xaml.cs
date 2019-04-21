@@ -29,17 +29,16 @@ namespace X.Viewer.NodeGraph.NodeTypeComponents
         {
             var nnlm = (NodeNodeLinkModel)args.NewValue;
             try {
-                grdMain.Children.Clear();
-                //var xaml = (string)nnlm.InputNodeLinks[0].Value1;
-                //xaml = xaml.Replace("<Path ", @"<Path xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"" ");
-                //var newUIElement = XamlReader.Load(xaml);
-                //grdMain.Children.Add((UIElement)newUIElement);
+                if (!string.IsNullOrEmpty(nnlm.Node.Udfs2)) {
+                    grdMain.Children.Clear();
+                    var xaml = $@"<Grid xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"" Margin=""10"">{(string)nnlm.Node.Udfs2}</Grid>";
+                    var newUIElement = XamlReader.Load(xaml);
+                    grdMain.Children.Add((UIElement)newUIElement);
+                }
             }
             catch (Exception ex) {
 
             }
-
-
         }
 
     }

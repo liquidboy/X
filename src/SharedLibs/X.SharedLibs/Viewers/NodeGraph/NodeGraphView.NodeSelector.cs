@@ -164,7 +164,7 @@ namespace X.Viewer.NodeGraph
                     var cloudNodeTypeMetadata = (CloudNodeTypeMetadata)nodeTypeMetadata;
                     var title = $"{cloudNodeTypeMetadata.FriendlyName} ({cloudNodeTypeMetadata.FriendlyType})";
 
-                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, cloudNodeTypeMetadata.Color, cloudNodeTypeMetadata.InputNodeSlotCount, cloudNodeTypeMetadata.InputNodeSlots, cloudNodeTypeMetadata.OutputNodeSlotCount, cloudNodeTypeMetadata.OutputNodeSlots, groupingGuid, (int)NodeType.CloudNodeType, title));
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, cloudNodeTypeMetadata.Color, cloudNodeTypeMetadata.InputNodeSlotCount, cloudNodeTypeMetadata.InputNodeSlots, cloudNodeTypeMetadata.OutputNodeSlotCount, cloudNodeTypeMetadata.OutputNodeSlots, groupingGuid, (int)NodeType.CloudNodeType, title, double.NaN, double.NaN, double.NaN, cloudNodeTypeMetadata.Icon, cloudNodeTypeMetadata.View, string.Empty));
                     break;
             }
 

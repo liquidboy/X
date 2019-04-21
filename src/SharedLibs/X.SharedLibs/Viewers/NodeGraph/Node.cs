@@ -25,9 +25,19 @@ namespace X.Viewer.NodeGraph
         public double Udfd1 { get; set; }
         public double Udfd2 { get; set; }
         public double Udfd3 { get; set; }
+        public string Udfs1 { get; set; }
+        public string Udfs2 { get; set; }
+        public string Udfs3 { get; set; }
         public bool IsDirty { get; set; }
 
         public Node() { IsDirty = true; }
+        public Node(string key, double positionX, double positionY, double initialWidth, string color, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType, string title, double udfd1, double udfd2, double udfd3, string udfs1, string udfs2, string udfs3) :
+            this(key, positionX, positionY, initialWidth, color, inputSlotCount, inputSlotLabels, outputSlotCount, outputSlotLabels, grouping, nodeType, title, udfd1, udfd2, udfd3)
+        {
+            Udfs1 = udfs1;
+            Udfs2 = udfs2;
+            Udfs3 = udfs3;
+        }
         public Node(string key, double positionX, double positionY, double initialWidth, string color, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType, string title, double udfd1, double udfd2, double udfd3) :
             this(key, positionX, positionY, initialWidth, color, inputSlotCount, inputSlotLabels, outputSlotCount, outputSlotLabels, grouping, nodeType, title, 50d, 20d)
         {
