@@ -19,6 +19,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using X.Configuration;
 using X.Viewer.NodeGraph;
 
 namespace X.ModernDesktop
