@@ -36,7 +36,6 @@
                     <Button Content="Save" Click="{x:Bind SaveSelectedItem}"></Button>
                     <Button Content="Delete" Margin="10,0,0,0" Click="{x:Bind DeleteSelectedItem}"></Button>
                     <Button Content="Create New" Margin="10,0,0,0" Click="{x:Bind CreateNewItem}"></Button>
-                    
                 </StackPanel>
             </StackPanel>
         </Grid>
