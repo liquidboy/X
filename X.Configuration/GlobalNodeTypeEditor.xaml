@@ -31,7 +31,7 @@
                 <TextBox Text="{Binding InputNodeSlots, Mode=TwoWay}" Header="InputNodeSlots"></TextBox>
                 <TextBox Text="{Binding OutputNodeSlotCount, Mode=TwoWay}" Header="OutputNodeSlotCount"></TextBox>
                 <TextBox Text="{Binding OutputNodeSlots, Mode=TwoWay}" Header="OutputNodeSlots"></TextBox>
-                <TextBox Text="{Binding View, Mode=TwoWay}" Header="View" Height="90"></TextBox>
+                <TextBox Text="{Binding View, Mode=TwoWay}" Header="View" Height="150" TextWrapping="WrapWholeWords"></TextBox>
                 <StackPanel Orientation="Horizontal" Margin="0,15,0,0" >
                     <Button Content="Save" Click="{x:Bind SaveSelectedItem}"></Button>
                     <Button Content="Delete" Margin="10,0,0,0" Click="{x:Bind DeleteSelectedItem}"></Button>
