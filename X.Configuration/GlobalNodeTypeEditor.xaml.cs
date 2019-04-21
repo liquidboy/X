@@ -78,7 +78,7 @@ namespace X.ModernDesktop
         public void FilterData(string filterBy)
         {
             var query = from item in AllControls
-                        where item.RowKey.Contains(filterBy, StringComparison.InvariantCultureIgnoreCase)
+                        where item.RowKey.Contains(filterBy, StringComparison.InvariantCultureIgnoreCase) || item.PartitionKey.Contains(filterBy, StringComparison.InvariantCultureIgnoreCase)
                         orderby item.RowKey
                         select item;
 
