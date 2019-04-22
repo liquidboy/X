@@ -13,7 +13,7 @@ namespace X.Viewer.NodeGraph
             DBContext.Current.DeleteAll<Node>();
             DBContext.Current.DeleteAll<NodeLink>();
             DBContext.Current.DeleteAll<SavedGraph>();
-            DBContext.Current.DeleteAll<CloudNodeType>();
+            //DBContext.Current.DeleteAll<CloudNodeType>();
         }
 
         public SavedGraph SaveGraph(string guid) => SaveGraph(guid, string.Empty);
