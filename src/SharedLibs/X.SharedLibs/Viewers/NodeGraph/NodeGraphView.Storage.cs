@@ -58,7 +58,11 @@ namespace X.Viewer.NodeGraph
                 if (DBContext.Current.DoesContextExist<Node>())
                 {
                     var foundNodes = DBContext.Current.RetrieveEntities<Node>($"grouping='{guid}'");
-                    if (foundNodes != null) returnNodes?.AddRange(foundNodes);
+                    if (foundNodes != null)
+                    {
+                        foundNodes.ForEach(node => node.IsDirty = true);
+                        returnNodes?.AddRange(foundNodes);
+                    }
                 }
             }
             return ((returnNodes.Count > 0 || returnNodeLinks.Count > 0), returnNodes, returnNodeLinks);
