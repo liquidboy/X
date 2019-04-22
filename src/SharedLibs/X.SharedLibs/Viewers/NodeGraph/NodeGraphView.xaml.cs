@@ -126,6 +126,7 @@ namespace X.Viewer.NodeGraph
             if (IsGraphSelected) SaveGraph(_selectedGraphGuid);
             else {
                 //create new graph
+                SaveGraph(Guid.Empty.ToString());
             }
         }
 

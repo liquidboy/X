@@ -22,6 +22,7 @@ namespace X.Viewer.NodeGraph
             graph.UniqueId = Guid.Parse(guid);
             if (string.IsNullOrEmpty(guid) || guid.Equals(Guid.Empty.ToString()))
             {
+                if (string.IsNullOrEmpty(name)) graph.Name = "[no-name-set]";
                 Save(graph);
                 foreach (var node in _nodes) node.Value.Grouping = graph.UniqueId.ToString();
                 foreach (var link in _links) link.Grouping = graph.UniqueId.ToString();
