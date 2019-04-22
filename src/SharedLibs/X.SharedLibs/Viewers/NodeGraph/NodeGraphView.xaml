@@ -35,8 +35,9 @@
             <Button x:Name="butLoad" Content="Load" Click="ButLoad_Click"></Button>
             <Button x:Name="butSave" Content="Save" Click="ButSave_Click"></Button>
             <Button x:Name="butClear" Content="Clear" Click="ButClear_Click"></Button>
-            
-            <Button x:Name="butClearStorage" Content="Clear Storage" Click="ButClearStorage_Click" Margin="30,0,0,0"></Button>
+
+            <Button x:Name="butResetBoard" Content="Reset zoom/translate" Margin="30,0,0,0" Click="ButResetBoard_Click"></Button>
+            <Button x:Name="butClearStorage" Content="Clear Storage" Click="ButClearStorage_Click" Margin="10,0,0,0"></Button>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">

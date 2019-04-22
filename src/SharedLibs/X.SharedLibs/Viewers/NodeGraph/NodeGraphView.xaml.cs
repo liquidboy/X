@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Media;
 using System.Diagnostics;
 using Windows.Foundation;
 using Windows.UI.Xaml;
+using System.ComponentModel;
 
 namespace X.Viewer.NodeGraph
 {
@@ -14,7 +15,6 @@ namespace X.Viewer.NodeGraph
     {
         public event EventHandler<ContentViewEventArgs> SendMessage;
         bool IsPointerDown = false;
-        
 
         public NodeGraphView()
         {
@@ -79,6 +79,10 @@ namespace X.Viewer.NodeGraph
         double ptDifX = 0;
         double ptDifY = 0;
 
+
+        private void UpdateFeedback() {
+
+        }
 
         private void layoutRoot_PointerMoved(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
@@ -145,6 +149,14 @@ namespace X.Viewer.NodeGraph
         {
             var nodeSelected = (NodeTypeMetadata)cbNodes.SelectionBoxItem;
             if (nodeSelected != null ) OnNodeTypeSelected(nodeSelected);
+        }
+
+        private void ButResetBoard_Click(object sender, RoutedEventArgs e)
+        {
+            //var ct = nodeGraphCanvas.RenderTransform as CompositeTransform;
+            //ct.TranslateX = 0;
+            //ct.TranslateY = 0;
+            nodeGraphZoomContainer.ResetZoom();
         }
     }
 

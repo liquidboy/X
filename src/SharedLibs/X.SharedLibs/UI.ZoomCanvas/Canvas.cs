@@ -60,6 +60,15 @@ namespace X.UI.ZoomCanvas
             _zoom(zoom, mousePoint.X, mousePoint.Y);
         }
 
+        public void ResetZoom() {
+            var ct = _cvMainContainer.RenderTransform as CompositeTransform;
+            ct.TranslateX = 0;
+            ct.TranslateY = 0;
+            ct.ScaleX = 1;
+            ct.ScaleY = 1;
+            Scale = 1;
+        }
+
         private void _zoom(double s, double x, double y)
         {
             //line0.Text = $"scale : {s} x : {x} y : {y}";

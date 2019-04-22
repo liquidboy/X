@@ -70,8 +70,8 @@ namespace X.Viewer.NodeGraph
         {
             var defaultWidth = 200d;
             var newId = $"Node-{Guid.NewGuid().ToString()}";
-            var nodePosX = 1500d;
-            var nodePosY = 1200d;
+            var nodePosX = 0d;
+            var nodePosY = 0d;
             var groupingGuid = IsGraphSelected ? SelectedGraphGuid : Guid.Empty.ToString();
 
             switch (nodeTypeMetadata.NodeType) {
