@@ -79,7 +79,6 @@ namespace X.Viewer.NodeGraph
         double ptDifX = 0;
         double ptDifY = 0;
 
-
         private void UpdateFeedback() {
 
         }
@@ -123,6 +122,7 @@ namespace X.Viewer.NodeGraph
         private void ButClear_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             ClearBoard();
+            ResetBoardPositions();
         }
 
         private void ButSave_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -137,7 +137,10 @@ namespace X.Viewer.NodeGraph
         private void ButLoad_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             var newValue = cbSavedGraphs.SelectedValue;
-            if (newValue != null && !IsGraphSelected) OnGraphSelected(((Guid)newValue).ToString());
+
+            if (newValue != null && !IsGraphSelected) {
+                OnGraphSelected(((Guid)newValue).ToString());
+            }
         }
 
         private void ButClearStorage_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -153,10 +156,19 @@ namespace X.Viewer.NodeGraph
 
         private void ButResetBoard_Click(object sender, RoutedEventArgs e)
         {
-            //var ct = nodeGraphCanvas.RenderTransform as CompositeTransform;
-            //ct.TranslateX = 0;
-            //ct.TranslateY = 0;
+            ResetBoardPositions();
+        }
+
+
+        private void ResetBoardPositions() {
+            var ct = nodeGraphCanvas.RenderTransform as CompositeTransform;
+            ct.TranslateX = 0;
+            ct.TranslateY = 0;
             nodeGraphZoomContainer.ResetZoom();
+            ptDifX = 0;
+            ptDifY = 0;
+            ptDifXStart = 0;
+            ptDifYStart = 0;
         }
     }
 

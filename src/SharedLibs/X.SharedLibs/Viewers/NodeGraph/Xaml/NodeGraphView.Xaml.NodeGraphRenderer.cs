@@ -65,12 +65,12 @@ namespace X.Viewer.NodeGraph
             //node-slots in node-container
             for (int slotIndex = 0; slotIndex < node.InputSlotCount; slotIndex++)
             {
-                newNodeGroup.Children.Add(CreateSlotUI("nsi", node, slotIndex, slotDiameter, slotRadius, Colors.Black, true, Colors.LightGray));
+                newNodeGroup.Children.Add(CreateSlotUI("nsi", node, slotIndex, slotDiameter, slotRadius, Colors.LightGray, true, Colors.LightGray));
             }
 
             for (int slotIndex = 0; slotIndex < node.OutputSlotCount; slotIndex++)
             {
-                newNodeGroup.Children.Add(CreateSlotUI("nso", node, slotIndex, slotDiameter, slotRadius, Colors.Black, false, Colors.LightGray));
+                newNodeGroup.Children.Add(CreateSlotUI("nso", node, slotIndex, slotDiameter, slotRadius, Colors.LightGray, false, Colors.LightGray));
             }
 
             //node-visual, created at the end after the node's full dimensions are realized
@@ -177,6 +177,11 @@ namespace X.Viewer.NodeGraph
         }
 
         UIElement CreateSlotUI(string tag, Node node, int slotIndex, double slotDiameter, double slotRadius, Color slotColor, bool isInputSlot, Color labelColor) {
+
+            if (node.NodeType == (int)NodeType.SliderValue) {
+
+            }
+
             var slotPosition = isInputSlot ? node.GetInputSlotPosition(slotIndex) : node.GetOutputSlotPosition(slotIndex);
 
             var slotContainer = new Canvas()
