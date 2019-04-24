@@ -14,7 +14,10 @@ namespace X.Viewer.NodeGraph
         public double Height { get; set; }
         public double SlotPadding { get; set; }
         public double SlotHeaderFooter { get; set; }
-        public string Color { get; set; }
+        public string Color1 { get; set; }
+        public string Color2 { get; set; }
+        public string Color3 { get; set; }
+        public string Color4 { get; set; }
         public int InputSlotCount { get; set; }
         public string InputSlotLabels { get; set; }
         public int OutputSlotCount { get; set; }
@@ -31,37 +34,40 @@ namespace X.Viewer.NodeGraph
         public bool IsDirty { get; set; }
 
         public Node() { IsDirty = true; }
-        public Node(string key, double positionX, double positionY, double initialWidth, string color, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType, string title, double udfd1, double udfd2, double udfd3, string udfs1, string udfs2, string udfs3) :
-            this(key, positionX, positionY, initialWidth, color, inputSlotCount, inputSlotLabels, outputSlotCount, outputSlotLabels, grouping, nodeType, title, udfd1, udfd2, udfd3)
+        public Node(string key, double positionX, double positionY, double initialWidth, string color1, string color2, string color3, string color4, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType, string title, double udfd1, double udfd2, double udfd3, string udfs1, string udfs2, string udfs3) :
+            this(key, positionX, positionY, initialWidth, color1, color2, color3, color4, inputSlotCount, inputSlotLabels, outputSlotCount, outputSlotLabels, grouping, nodeType, title, udfd1, udfd2, udfd3)
         {
             Udfs1 = udfs1;
             Udfs2 = udfs2;
             Udfs3 = udfs3;
         }
-        public Node(string key, double positionX, double positionY, double initialWidth, string color, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType, string title, double udfd1, double udfd2, double udfd3) :
-            this(key, positionX, positionY, initialWidth, color, inputSlotCount, inputSlotLabels, outputSlotCount, outputSlotLabels, grouping, nodeType, title, 50d, 20d)
+        public Node(string key, double positionX, double positionY, double initialWidth, string color1, string color2, string color3, string color4, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType, string title, double udfd1, double udfd2, double udfd3) :
+            this(key, positionX, positionY, initialWidth, color1, color2, color3, color4, inputSlotCount, inputSlotLabels, outputSlotCount, outputSlotLabels, grouping, nodeType, title, 50d, 20d)
         {
             Udfd1 = udfd1;
             Udfd2 = udfd2;
             Udfd3 = udfd3;
         }
-        public Node(string key, double positionX, double positionY, double initialWidth, string color, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType, string title) :
-            this(key, positionX, positionY, initialWidth, color, inputSlotCount, inputSlotLabels, outputSlotCount, outputSlotLabels, grouping, nodeType, 50d, 20d)
+        public Node(string key, double positionX, double positionY, double initialWidth, string color1, string color2, string color3, string color4, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType, string title) :
+            this(key, positionX, positionY, initialWidth, color1, color2, color3, color4, inputSlotCount, inputSlotLabels, outputSlotCount, outputSlotLabels, grouping, nodeType, 50d, 20d)
         {
             Title = title;
             IsDirty = true;
         }
-        public Node(string key, double positionX, double positionY, double initialWidth, string color, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType, string title, double slotHeaderFooter, double slotPadding) : 
-            this(key, positionX, positionY, initialWidth, color, inputSlotCount, inputSlotLabels, outputSlotCount, outputSlotLabels, grouping, nodeType, slotHeaderFooter, slotPadding)
+        public Node(string key, double positionX, double positionY, double initialWidth, string color1, string color2, string color3, string color4, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType, string title, double slotHeaderFooter, double slotPadding) : 
+            this(key, positionX, positionY, initialWidth, color1, color2, color3, color4, inputSlotCount, inputSlotLabels, outputSlotCount, outputSlotLabels, grouping, nodeType, slotHeaderFooter, slotPadding)
         {
             Title = title;
         }
-        public Node(string key, double positionX, double positionY, double initialWidth, string color, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType, double slotHeaderFooter, double slotPadding)
+        public Node(string key, double positionX, double positionY, double initialWidth, string color1, string color2, string color3, string color4, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType, double slotHeaderFooter, double slotPadding)
         {
             Key = key;
             PositionX = positionX;
             PositionY = positionY;
-            Color = color;
+            Color1 = color1;
+            Color2 = color2;
+            Color3 = color3;
+            Color4 = color4;
             InputSlotCount = inputSlotCount;
             InputSlotLabels = inputSlotLabels;
             OutputSlotCount = outputSlotCount;

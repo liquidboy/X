@@ -7,7 +7,7 @@
     mc:Ignorable="d"
     d:DesignHeight="100"
     d:DesignWidth="300">
-    <Grid Background="{Binding Node.Color}">
+    <Grid Background="{Binding Node.Color1}">
         <Grid Margin="15">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>

@@ -23,7 +23,7 @@ namespace X.ModernDesktop
     /// </summary>
     sealed partial class App : Application
     {
-        public static string AzureConnectionString = "xxxx";
+        public static string AzureConnectionString = "DefaultEndpointsProtocol=https;AccountName=xapp001;AccountKey=C0FKz9MptMHc1fcELtIcihgPrLfoP8JLIpaANnRt+YWS/8SEBfF8yy60HpJ/m3RN/D6m9CIvIuG9h9ivpsrreA==;EndpointSuffix=core.windows.net";
         public static WindowEventAggregator windowsEventAggregator = new WindowEventAggregator();
 
         /// <summary>

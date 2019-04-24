@@ -7,7 +7,7 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-    <Grid Background="{Binding Node.Color}">
+    <Grid Background="{Binding Node.Color1}">
         <TextBox FontSize="14" TextWrapping="Wrap" Margin="15" Text="{Binding OutputNodeLinks[0].Value1, Mode=TwoWay}" LostFocus="TextBox_LostFocus"></TextBox>
     </Grid>
 </UserControl>

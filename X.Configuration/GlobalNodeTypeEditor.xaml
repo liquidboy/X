@@ -32,7 +32,10 @@
                 <TextBox Text="{Binding PartitionKey}" Header="Type" IsReadOnly="True" x:Name="tbPartitionKey"></TextBox>
                 <TextBox Text="{Binding Description, Mode=TwoWay}" Header="Description"></TextBox>
                 <TextBox Text="{Binding Icon, Mode=TwoWay}" Header="Icon"></TextBox>
-                <TextBox Text="{Binding Color, Mode=TwoWay}" Header="Color"></TextBox>
+                <TextBox Text="{Binding Color1, Mode=TwoWay}" Header="Color1"></TextBox>
+                <TextBox Text="{Binding Color2, Mode=TwoWay}" Header="Color2"></TextBox>
+                <TextBox Text="{Binding Color3, Mode=TwoWay}" Header="Color3"></TextBox>
+                <TextBox Text="{Binding Color4, Mode=TwoWay}" Header="Color4"></TextBox>
                 <TextBox Text="{Binding InputNodeSlotCount, Mode=TwoWay}" Header="InputNodeSlotCount"></TextBox>
                 <TextBox Text="{Binding InputNodeSlots, Mode=TwoWay}" Header="InputNodeSlots"></TextBox>
                 <TextBox Text="{Binding OutputNodeSlotCount, Mode=TwoWay}" Header="OutputNodeSlotCount"></TextBox>

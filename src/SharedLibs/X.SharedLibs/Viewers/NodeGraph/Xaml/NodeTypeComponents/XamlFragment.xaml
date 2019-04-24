@@ -9,7 +9,7 @@
     DataContextChanged="UserControl_DataContextChanged"
     d:DesignHeight="300"
     d:DesignWidth="400">
-    <Grid x:Name="grdMain" Background="{Binding Node.Color}" Width="200" Height="200" >
+    <Grid x:Name="grdMain" Background="{Binding Node.Color1}" Width="200" Height="200" >
       <!--
       <Path Fill="Gold" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" >
         <Path.Data>

@@ -9,7 +9,7 @@
     DataContextChanged="UserControl_DataContextChanged"
     d:DesignHeight="300"
     d:DesignWidth="400">
-    <Border BorderThickness="2" CornerRadius="10" BorderBrush="{Binding Node.Color}" Background="White" >
+    <Border BorderThickness="2" CornerRadius="10" BorderBrush="{Binding Node.Color1}" Background="White" >
         <Grid x:Name="grdMain">
             <!--
           <Path Fill="Gold" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" >

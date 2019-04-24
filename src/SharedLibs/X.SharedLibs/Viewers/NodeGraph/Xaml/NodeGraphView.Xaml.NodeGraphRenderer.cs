@@ -31,6 +31,14 @@ namespace X.Viewer.NodeGraph
         // ==========
         // NODE
         // ==========
+        private Color GetColorFromString(string color) {
+            if (string.IsNullOrEmpty(color)) return Colors.LightGray;
+            var nodeColor = (Grid)Windows.UI.Xaml.Markup.XamlReader.Load($@"<Grid xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"" Background=""{color}"" />");
+            var nodeSlotColor = (SolidColorBrush)nodeColor.Background;
+            nodeColor = null;
+            return nodeSlotColor.Color;
+        }
+
         public void RenderNode(Node node, List<NodeLink> relatedLinks)
         {
             if (!node.IsDirty) return;
@@ -65,12 +73,12 @@ namespace X.Viewer.NodeGraph
             //node-slots in node-container
             for (int slotIndex = 0; slotIndex < node.InputSlotCount; slotIndex++)
             {
-                newNodeGroup.Children.Add(CreateSlotUI("nsi", node, slotIndex, slotDiameter, slotRadius, Colors.LightGray, true, Colors.LightGray));
+                newNodeGroup.Children.Add(CreateSlotUI("nsi", node, slotIndex, slotDiameter, slotRadius, true));
             }
 
             for (int slotIndex = 0; slotIndex < node.OutputSlotCount; slotIndex++)
             {
-                newNodeGroup.Children.Add(CreateSlotUI("nso", node, slotIndex, slotDiameter, slotRadius, Colors.LightGray, false, Colors.LightGray));
+                newNodeGroup.Children.Add(CreateSlotUI("nso", node, slotIndex, slotDiameter, slotRadius, false));
             }
 
             //node-visual, created at the end after the node's full dimensions are realized
@@ -122,7 +130,7 @@ namespace X.Viewer.NodeGraph
             {
                 newNodeUIElement = new Windows.UI.Xaml.Shapes.Rectangle()
                 {
-                    Fill = new SolidColorBrush((Color)(typeof(Colors)).GetProperty(node.Color).GetValue(null))
+                    Fill = new SolidColorBrush((Color)(typeof(Colors)).GetProperty(node.Color1).GetValue(null))
                 };
             }
             else if (node.NodeType > 1000 && node.NodeType < 10000) //VALUES
@@ -152,7 +160,7 @@ namespace X.Viewer.NodeGraph
                 // no idea what this node is so just make it a rectangle for now
                 newNodeUIElement = new Windows.UI.Xaml.Shapes.Rectangle()
                 {
-                    Fill = new SolidColorBrush((Color)(typeof(Colors)).GetProperty(node.Color).GetValue(null))
+                    Fill = new SolidColorBrush((Color)(typeof(Colors)).GetProperty(node.Color1).GetValue(null))
                 };
             }
 
@@ -176,12 +184,9 @@ namespace X.Viewer.NodeGraph
             return titleUIElement;
         }
 
-        UIElement CreateSlotUI(string tag, Node node, int slotIndex, double slotDiameter, double slotRadius, Color slotColor, bool isInputSlot, Color labelColor) {
+        UIElement CreateSlotUI(string tag, Node node, int slotIndex, double slotDiameter, double slotRadius, bool isInputSlot) {
 
-            if (node.NodeType == (int)NodeType.SliderValue) {
-
-            }
-
+            var nodeColor = GetColorFromString(node.Color1);
             var slotPosition = isInputSlot ? node.GetInputSlotPosition(slotIndex) : node.GetOutputSlotPosition(slotIndex);
 
             var slotContainer = new Canvas()
@@ -201,7 +206,7 @@ namespace X.Viewer.NodeGraph
                 //Name = $"{tag}_{node.Key}_{slotIndex}",
                 Width = slotDiameter,
                 Height = slotDiameter,
-                Fill = new SolidColorBrush(slotColor),
+                Fill = new SolidColorBrush(nodeColor),
                 //Tag = tag
             };
             slotContainer.Children.Add(newSlotUIElement);
@@ -219,7 +224,7 @@ namespace X.Viewer.NodeGraph
                     var label = new TextBlock()
                     {
                         Text = labelText,
-                        Foreground = new SolidColorBrush(labelColor),
+                        Foreground = new SolidColorBrush(nodeColor),
                         FontSize = 12
                     };
                     //label.HorizontalAlignment = HorizontalAlignment.Left;

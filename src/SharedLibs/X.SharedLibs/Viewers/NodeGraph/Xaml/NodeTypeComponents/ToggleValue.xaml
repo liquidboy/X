@@ -7,7 +7,7 @@
     mc:Ignorable="d"
     d:DesignHeight="100"
     d:DesignWidth="300">
-    <Grid Background="{Binding Node.Color}">
+    <Grid Background="{Binding Node.Color1}">
         <ToggleButton HorizontalAlignment="Center" VerticalAlignment="Center" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked"></ToggleButton>
     </Grid>
 </UserControl>

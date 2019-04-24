@@ -8,7 +8,7 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid Background="{Binding Node.Color}">
+    <Grid Background="{Binding Node.Color1}">
         <TextBlock Text="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="15,0,0,15" Opacity="0.5"></TextBlock>
         <TextBlock Text="400" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,15,15" Opacity="0.5"></TextBlock>
         <Slider Margin="15,35,15,0" Minimum="0" Maximum="400" StepFrequency="1" Value="{Binding OutputNodeLinks[0].Value1, Mode=TwoWay}" ValueChanged="Slider_ValueChanged" IsThumbToolTipEnabled="True" ></Slider>
