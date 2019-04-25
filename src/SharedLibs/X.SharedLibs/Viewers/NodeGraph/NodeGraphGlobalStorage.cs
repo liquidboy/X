@@ -5,13 +5,12 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
+using X.Services.Data;
 
 namespace X.Viewer.NodeGraph
 {
     public class NodeGraphGlobalStorage: INodeGraphGlobalStorage
     {
-        CloudStorageAccount _storageAccount;
-        CloudTableClient _tableClient;
 
         private static NodeGraphGlobalStorage _NodeGraphGlobalStorage;
         public static NodeGraphGlobalStorage Current {
@@ -21,16 +20,15 @@ namespace X.Viewer.NodeGraph
             }
             private set { }
         }
-        
+
         public void InitializeGlobalStorage(string connectionString)
         {
-            _storageAccount = CloudStorageAccount.Parse(connectionString);
-            _tableClient = _storageAccount.CreateCloudTableClient();
+            AzureGlobalStorage.Current.InitializeGlobalStorage(connectionString);
         }
 
         public async Task<(int Count, IList<CloudNodeTypeEntity> Results)> RetrieveGlobalNodeTypes(string partitionKey)
         {
-            var foundTable = _tableClient.GetTableReference("GlobalNodeType");
+            var foundTable = AzureGlobalStorage.Current.TableClient.GetTableReference("GlobalNodeType");
             try
             {
                 TableQuery<CloudNodeTypeEntity> query = new TableQuery<CloudNodeTypeEntity>();
@@ -44,7 +42,7 @@ namespace X.Viewer.NodeGraph
 
         public async Task<(int Count, IList<CloudNodeTypeEntity> Results)> RetrieveAllGlobalNodeTypes()
         {
-            var foundTable = _tableClient.GetTableReference("GlobalNodeType");
+            var foundTable = AzureGlobalStorage.Current.TableClient.GetTableReference("GlobalNodeType");
             try
             {
                 TableQuery<CloudNodeTypeEntity> query = new TableQuery<CloudNodeTypeEntity>();
@@ -58,7 +56,7 @@ namespace X.Viewer.NodeGraph
 
         public async Task<(int Count, IList<CloudNodeTypeEntity> Results)> RetrieveGlobalNodeType(string partitionKey, string rowKey)
         {
-            var foundTable = _tableClient.GetTableReference("GlobalNodeType");
+            var foundTable = AzureGlobalStorage.Current.TableClient.GetTableReference("GlobalNodeType");
             try
             {
                 TableQuery<CloudNodeTypeEntity> query = new TableQuery<CloudNodeTypeEntity>();
@@ -74,14 +72,14 @@ namespace X.Viewer.NodeGraph
 
         public async Task<bool> ClearGlobalNodeTypes()
         {
-            var foundTable = _tableClient.GetTableReference("GlobalNodeType");
+            var foundTable = AzureGlobalStorage.Current.TableClient.GetTableReference("GlobalNodeType");
             await foundTable.DeleteIfExistsAsync();
             return true;
         }
 
         public async Task<bool> InitGlobalNodeTypes(string[] typesToCreate) {
             try {
-                var foundTable = _tableClient.GetTableReference("GlobalNodeType");
+                var foundTable = AzureGlobalStorage.Current.TableClient.GetTableReference("GlobalNodeType");
                 await foundTable.CreateIfNotExistsAsync();
                 foreach (var typeToCreate in typesToCreate)
                 {
@@ -97,7 +95,7 @@ namespace X.Viewer.NodeGraph
         public async Task<bool> DeleteGlobalNodeType(CloudNodeTypeEntity cloudNodeTypeEntity) {
             try
             {
-                var foundTable = _tableClient.GetTableReference("GlobalNodeType");
+                var foundTable = AzureGlobalStorage.Current.TableClient.GetTableReference("GlobalNodeType");
                 await foundTable.ExecuteAsync(TableOperation.Delete(cloudNodeTypeEntity));
             }
             catch (Exception ex) { }
@@ -108,7 +106,7 @@ namespace X.Viewer.NodeGraph
 
             try
             {
-                var foundTable = _tableClient.GetTableReference("GlobalNodeType");
+                var foundTable = AzureGlobalStorage.Current.TableClient.GetTableReference("GlobalNodeType");
                 await foundTable.ExecuteAsync(TableOperation.InsertOrMerge(cloudNodeTypeEntity));
             }
             catch (Exception ex) { }

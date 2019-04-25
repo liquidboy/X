@@ -596,6 +596,7 @@
     <Compile Include="Extensions\NewWindowRequestExtensions\HandleNewWindowAsInlineLink.cs" />
     <Compile Include="Extensions\OSShellExtensions\OSToast.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services.Data\AzureGlobalStorage.cs" />
     <Compile Include="Services.Data\IAzureTableBase.cs" />
     <Compile Include="Services.Data\ISqliteBase.cs" />
     <Compile Include="Services.Data\Models\APIKeyDataModel.cs" />
@@ -743,6 +744,7 @@
       <DependentUpon>Explorer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Viewers\FileExplorer\FileExplorerRenderer.cs" />
+    <Compile Include="Viewers\FileExplorer\FileExplorerGlobalStorage.cs" />
     <Compile Include="Viewers\Flickr\FlickrRenderer.cs" />
     <Compile Include="Viewers\Flickr\FlickrView.xaml.cs">
       <DependentUpon>FlickrView.xaml</DependentUpon>
