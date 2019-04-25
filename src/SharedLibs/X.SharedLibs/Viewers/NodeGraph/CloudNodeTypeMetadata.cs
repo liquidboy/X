@@ -15,8 +15,9 @@
         public string Icon { get; set; }
         public string Header { get; set; }
         public string Footer { get; set; }
+        public string Template { get; set; }
 
-        public CloudNodeTypeMetadata(string name, string type, string inputNodeSlots, int inputNodeSlotClount, string outputNodeSlots, int outputNodeSlotCount, string color1, string color2, string color3, string color4, string view, string description, string icon, string header, string footer) : base(NodeType.CloudNodeType, name, type)
+        public CloudNodeTypeMetadata(string name, string type, string inputNodeSlots, int inputNodeSlotClount, string outputNodeSlots, int outputNodeSlotCount, string color1, string color2, string color3, string color4, string view, string description, string icon, string header, string footer, string template) : base(NodeType.CloudNodeType, name, type)
         {
             NodeType = NodeType.CloudNodeType;
             InputNodeSlots = inputNodeSlots;
@@ -32,6 +33,7 @@
             Icon = icon;
             Header = header;
             Footer = footer;
+            Template = template;
         }
 
     }
