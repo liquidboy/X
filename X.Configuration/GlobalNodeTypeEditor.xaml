@@ -85,7 +85,6 @@
                                        Text="{Binding Header, Mode=TwoWay}" Height="200" BorderBrush="Gray" BorderThickness="2" />
                             <TextBlock Text="note: root element automatically binds to 'node'" Foreground="LightGray"></TextBlock>
                         </StackPanel>
-                        
                     </controls:TabViewItem>
                     <controls:TabViewItem Header="Footer">
                         <StackPanel Orientation="Vertical" Margin="0,2,0,2">
