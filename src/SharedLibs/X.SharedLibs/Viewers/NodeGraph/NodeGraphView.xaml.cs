@@ -127,10 +127,10 @@ namespace X.Viewer.NodeGraph
 
         private void ButSave_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (IsGraphSelected) SaveGraph(_selectedGraphGuid);
+            if (IsGraphSelected) UpdateExistingGraph(_selectedGraphGuid);
             else {
                 //create new graph
-                SaveGraph(Guid.Empty.ToString());
+                CreateNewGraph(Guid.Empty.ToString(), string.Empty, "node-graph");
             }
         }
 

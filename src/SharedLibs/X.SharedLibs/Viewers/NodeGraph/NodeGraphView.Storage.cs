@@ -16,9 +16,18 @@ namespace X.Viewer.NodeGraph
             //DBContext.Current.DeleteAll<CloudNodeType>();
         }
 
-        public SavedGraph SaveGraph(string guid) => SaveGraph(guid, string.Empty);
-        public SavedGraph SaveGraph(string guid, string name) {
-            var graph = new SavedGraph(name, DateTime.UtcNow, DateTime.UtcNow);
+        public SavedGraph CreateNewGraph(string guid, string name, string category)
+        {
+            return CreateOrUpdateGraph(guid, name, category);
+        }
+
+        public SavedGraph UpdateExistingGraph(string guid)
+        {
+            return CreateOrUpdateGraph(guid, string.Empty, string.Empty);
+        }
+
+        private SavedGraph CreateOrUpdateGraph(string guid, string name, string category) {
+            var graph = new SavedGraph(name, DateTime.UtcNow, DateTime.UtcNow, category);
             graph.UniqueId = Guid.Parse(guid);
             if (string.IsNullOrEmpty(guid) || guid.Equals(Guid.Empty.ToString()))
             {

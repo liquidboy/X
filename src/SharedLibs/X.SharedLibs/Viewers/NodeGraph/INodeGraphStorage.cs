@@ -9,8 +9,8 @@ namespace X.Viewer.NodeGraph
         void DeleteStorage();
         void ClearStorage();
 
-        SavedGraph SaveGraph(string guid);
-        SavedGraph SaveGraph(string guid, string name);
+        SavedGraph CreateNewGraph(string guid, string name, string category);
+        SavedGraph UpdateExistingGraph(string guid);
         void Save(Node node);
         void Save(NodeLink link);
         void Save(SavedGraph graph);

@@ -8,13 +8,15 @@ namespace X.Viewer.NodeGraph
         public string Name { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime LastUpdated { get; set; }
+        public string Category { get; set; }
 
         public SavedGraph() { }
-        public SavedGraph(string name, DateTime createdDate, DateTime lastUpdated)
+        public SavedGraph(string name, DateTime createdDate, DateTime lastUpdated, string category)
         {
             Name = name;
             CreatedDate = createdDate;
             LastUpdated = lastUpdated;
+            Category = category;
         }
     }
 }

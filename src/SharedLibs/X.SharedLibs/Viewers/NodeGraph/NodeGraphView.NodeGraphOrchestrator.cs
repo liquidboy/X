@@ -128,7 +128,7 @@ namespace X.Viewer.NodeGraph
                 }
             }
 
-            var newGraph = SaveGraph(defaultGuid, $"default-{size}");
+            var newGraph = CreateNewGraph(defaultGuid, $"default-{size}", "node-graph");
 
             DrawNodeGraph();
 
