@@ -12,18 +12,18 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using X.Viewer.NodeGraph;
 
-namespace X.Assets
+
+namespace X.Viewer.FileExplorer
 {
-    public sealed partial class MainPage : Page
+    public sealed partial class Explorer : UserControl
     {
-        public MainPage()
+
+        public Explorer()
         {
             this.InitializeComponent();
-            NodeGraphGlobalStorage.Current.InitializeGlobalStorage(App.AzureConnectionString);
-            ctlViewer.Uri = "viewer://x-application.fe";
 
         }
+
     }
 }

@@ -739,6 +739,10 @@
     <Compile Include="Viewers\FFMpeg\MediaControls.xaml.cs">
       <DependentUpon>MediaControls.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Viewers\FileExplorer\Explorer.xaml.cs">
+      <DependentUpon>Explorer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\FileExplorer\FileExplorerRenderer.cs" />
     <Compile Include="Viewers\Flickr\FlickrRenderer.cs" />
     <Compile Include="Viewers\Flickr\FlickrView.xaml.cs">
       <DependentUpon>FlickrView.xaml</DependentUpon>
@@ -1175,6 +1179,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Viewers\FFMpeg\MediaControls.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\FileExplorer\Explorer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
