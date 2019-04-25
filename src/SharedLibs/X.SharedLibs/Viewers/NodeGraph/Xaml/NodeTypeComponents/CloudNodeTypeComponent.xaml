@@ -9,17 +9,6 @@
     DataContextChanged="UserControl_DataContextChanged"
     d:DesignHeight="300"
     d:DesignWidth="400">
-    <Border BorderThickness="2" CornerRadius="10" BorderBrush="{Binding Node.Color1}" Background="White" >
-        <Grid x:Name="grdMain">
-            <!--
-          <Path Fill="Gold" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" >
-            <Path.Data>
-              <GeometryGroup>
-                <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50"/>
-                <RectangleGeometry Rect="0,0,100,100" />
-              </GeometryGroup>
-            </Path.Data>
-          </Path>-->      
-        </Grid>
+    <Border x:Name="borderMain" BorderThickness="2" CornerRadius="10" BorderBrush="{Binding Node.Color1}" Background="{Binding Node.Color2}" >
     </Border>
 </UserControl>

@@ -33,15 +33,6 @@
                 <TextBox Text="{Binding PartitionKey}" Header="Type" IsReadOnly="True" x:Name="tbPartitionKey"></TextBox>
                 <TextBox Text="{Binding Description, Mode=TwoWay}" Header="Description"></TextBox>
                 <TextBox Text="{Binding Icon, Mode=TwoWay}" Header="Icon"></TextBox>
-                <TextBox Text="{Binding Color1, Mode=TwoWay}" Header="Color1"></TextBox>
-                <TextBox Text="{Binding Color2, Mode=TwoWay}" Header="Color2"></TextBox>
-                <TextBox Text="{Binding Color3, Mode=TwoWay}" Header="Color3"></TextBox>
-                <TextBox Text="{Binding Color4, Mode=TwoWay}" Header="Color4"></TextBox>
-                <TextBox Text="{Binding InputNodeSlotCount, Mode=TwoWay}" Header="InputNodeSlotCount"></TextBox>
-                <TextBox Text="{Binding InputNodeSlots, Mode=TwoWay}" Header="InputNodeSlots"></TextBox>
-                <TextBox Text="{Binding OutputNodeSlotCount, Mode=TwoWay}" Header="OutputNodeSlotCount"></TextBox>
-                <TextBox Text="{Binding OutputNodeSlots, Mode=TwoWay}" Header="OutputNodeSlots"></TextBox>
-                <!--<TextBox Text="{Binding View, Mode=TwoWay}" Header="View" Height="150"></TextBox>-->
 
                 <controls:TabView x:Name="Tabs"
                                     CanCloseTabs="False"
@@ -57,20 +48,55 @@
                         <x:Double x:Key="TabViewItemHeaderMaxWidth">200</x:Double>
                     </controls:TabView.Resources>
 
+                    <controls:TabViewItem Header="Inputs">
+                        <StackPanel Orientation="Vertical">
+                            <TextBox Text="{Binding InputNodeSlotCount, Mode=TwoWay}" Header="InputNodeSlotCount"></TextBox>
+                            <TextBox Text="{Binding InputNodeSlots, Mode=TwoWay}" Header="InputNodeSlots"></TextBox>
+                        </StackPanel>
+                    </controls:TabViewItem>
+
+                    <controls:TabViewItem Header="Outputs">
+                        <StackPanel Orientation="Vertical">
+                            <TextBox Text="{Binding OutputNodeSlotCount, Mode=TwoWay}" Header="OutputNodeSlotCount"></TextBox>
+                            <TextBox Text="{Binding OutputNodeSlots, Mode=TwoWay}" Header="OutputNodeSlots"></TextBox>
+                        </StackPanel>
+                    </controls:TabViewItem>
+                    
+                    <controls:TabViewItem Header="Colors">
+                        <StackPanel Orientation="Vertical">
+                            <TextBox Text="{Binding Color1, Mode=TwoWay}" Header="Color1"></TextBox>
+                            <TextBox Text="{Binding Color2, Mode=TwoWay}" Header="Color2"></TextBox>
+                            <TextBox Text="{Binding Color3, Mode=TwoWay}" Header="Color3"></TextBox>
+                            <TextBox Text="{Binding Color4, Mode=TwoWay}" Header="Color4"></TextBox>
+                        </StackPanel>
+                    </controls:TabViewItem>
+                    
                     <controls:TabViewItem Header="View">
-                        <monaco:CodeEditor CodeLanguage="xml" Margin="0,2,0,2" 
+                        <StackPanel Orientation="Vertical" Margin="0,2,0,2">
+                            <monaco:CodeEditor CodeLanguage="xml" Margin="0,2,0,2" 
                                        Text="{Binding View, Mode=TwoWay}" Height="200" BorderBrush="Gray" BorderThickness="2" />
+                            <TextBlock Text="note: root element automatically binds to 'node'" Foreground="LightGray"></TextBlock>
+                        </StackPanel>
+                        
                     </controls:TabViewItem>
                     <controls:TabViewItem Header="Header">
-                        <monaco:CodeEditor CodeLanguage="xml" Margin="0,2,0,2" 
+                        <StackPanel Orientation="Vertical" Margin="0,2,0,2">
+                            <monaco:CodeEditor CodeLanguage="xml" Margin="0,2,0,2" 
                                        Text="{Binding Header, Mode=TwoWay}" Height="200" BorderBrush="Gray" BorderThickness="2" />
+                            <TextBlock Text="note: root element automatically binds to 'node'" Foreground="LightGray"></TextBlock>
+                        </StackPanel>
+                        
                     </controls:TabViewItem>
                     <controls:TabViewItem Header="Footer">
-                        <monaco:CodeEditor CodeLanguage="xml" Margin="0,2,0,2" 
+                        <StackPanel Orientation="Vertical" Margin="0,2,0,2">
+                            <monaco:CodeEditor CodeLanguage="xml"
                                        Text="{Binding Footer, Mode=TwoWay}" Height="200" BorderBrush="Gray" BorderThickness="2" />
+                            <TextBlock Text="note: root element automatically binds to 'node'" Foreground="LightGray"></TextBlock>
+                        </StackPanel>
                     </controls:TabViewItem>
                 </controls:TabView>
-
+                
+                
                 <StackPanel Orientation="Horizontal" Margin="0,15,0,0" >
                     <Button Content="Save" Click="{x:Bind SaveSelectedItem}"></Button>
                     <Button Content="Delete" Margin="10,0,0,0" Click="{x:Bind DeleteSelectedItem}"></Button>

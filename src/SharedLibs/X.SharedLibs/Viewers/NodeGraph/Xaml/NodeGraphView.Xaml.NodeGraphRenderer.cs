@@ -180,7 +180,7 @@ namespace X.Viewer.NodeGraph
             var xamlTemplate = isHeader ? node.Udfs3 : node.Udfs4;
             if (string.IsNullOrEmpty(xamlTemplate))
             {
-                var nodeColor = GetColorFromString(node.Color2);
+                var nodeColor = GetColorFromString(node.Color1);
                 var titleUIElement = new TextBlock()
                 {
                     Text = node.Title,
@@ -195,6 +195,7 @@ namespace X.Viewer.NodeGraph
             } else {
                 var xaml = $@"<Grid xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"" Width=""{node.Width}"">{(string)xamlTemplate}</Grid>";
                 var newUIElement = (Grid)XamlReader.Load(xaml);
+                newUIElement.DataContext = node;
                 newUIElement.SetValue(Canvas.LeftProperty, 0);
                 newUIElement.SetValue(Canvas.TopProperty, isHeader ? - 25 : node.Height + 5);
                 return newUIElement;
