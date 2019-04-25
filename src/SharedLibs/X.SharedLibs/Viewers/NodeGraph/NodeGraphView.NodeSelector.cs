@@ -43,7 +43,7 @@ namespace X.Viewer.NodeGraph
                 };
                 foreach (var typeToCreate in typesToCreate) {
                     var parts = typeToCreate.Split(":".ToCharArray());
-                    _nodeTypeMetadata.Add(new CloudNodeTypeMetadata(parts[0], parts[1], parts[2],int.Parse(parts[3]), parts[4], int.Parse(parts[5]), "WhiteSmoke", "WhiteSmoke", "WhiteSmoke", "WhiteSmoke", string.Empty, string.Empty, string.Empty));
+                    _nodeTypeMetadata.Add(new CloudNodeTypeMetadata(parts[0], parts[1], parts[2],int.Parse(parts[3]), parts[4], int.Parse(parts[5]), "WhiteSmoke", "WhiteSmoke", "WhiteSmoke", "WhiteSmoke", string.Empty, string.Empty, string.Empty, string.Empty, string.Empty));
                 }
                 await NodeGraphGlobalStorage.Current.InitGlobalNodeTypes(typesToCreate);
             }
@@ -54,7 +54,7 @@ namespace X.Viewer.NodeGraph
 
                 foreach (CloudNodeTypeEntity item in globalData.Results)
                 {
-                    _nodeTypeMetadata.Add(new CloudNodeTypeMetadata(item.RowKey, item.PartitionKey, item.InputNodeSlots, item.InputNodeSlotCount, item.OutputNodeSlots, item.OutputNodeSlotCount, item.Color1, item.Color2, item.Color3, item.Color4, item.View, item.Description, item.Icon));
+                    _nodeTypeMetadata.Add(new CloudNodeTypeMetadata(item.RowKey, item.PartitionKey, item.InputNodeSlots, item.InputNodeSlotCount, item.OutputNodeSlots, item.OutputNodeSlotCount, item.Color1, item.Color2, item.Color3, item.Color4, item.View, item.Description, item.Icon, item.Header, item.Footer));
                 }
             }
             return true;
@@ -164,7 +164,7 @@ namespace X.Viewer.NodeGraph
                     var cloudNodeTypeMetadata = (CloudNodeTypeMetadata)nodeTypeMetadata;
                     var title = $"{cloudNodeTypeMetadata.FriendlyName} ({cloudNodeTypeMetadata.FriendlyType})";
 
-                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, cloudNodeTypeMetadata.Color1, cloudNodeTypeMetadata.Color2, cloudNodeTypeMetadata.Color3, cloudNodeTypeMetadata.Color4, cloudNodeTypeMetadata.InputNodeSlotCount, cloudNodeTypeMetadata.InputNodeSlots, cloudNodeTypeMetadata.OutputNodeSlotCount, cloudNodeTypeMetadata.OutputNodeSlots, groupingGuid, (int)NodeType.CloudNodeType, title, double.NaN, double.NaN, double.NaN, cloudNodeTypeMetadata.Icon, cloudNodeTypeMetadata.View, string.Empty));
+                    AddNodeToGraph(new Node(newId, nodePosX, nodePosY, defaultWidth, cloudNodeTypeMetadata.Color1, cloudNodeTypeMetadata.Color2, cloudNodeTypeMetadata.Color3, cloudNodeTypeMetadata.Color4, cloudNodeTypeMetadata.InputNodeSlotCount, cloudNodeTypeMetadata.InputNodeSlots, cloudNodeTypeMetadata.OutputNodeSlotCount, cloudNodeTypeMetadata.OutputNodeSlots, groupingGuid, (int)NodeType.CloudNodeType, title, double.NaN, double.NaN, double.NaN, cloudNodeTypeMetadata.Icon, cloudNodeTypeMetadata.View, cloudNodeTypeMetadata.Header, cloudNodeTypeMetadata.Footer));
                     break;
             }
 

@@ -9,6 +9,7 @@ using Windows.Foundation;
 using Windows.UI.Xaml.Shapes;
 using X.Viewer.NodeGraph.NodeTypeComponents;
 using System.Collections.Generic;
+using Windows.UI.Xaml.Markup;
 
 namespace X.Viewer.NodeGraph
 {
@@ -67,7 +68,7 @@ namespace X.Viewer.NodeGraph
             //} 
 
             //node-title
-            if (node.Title != null) newNodeGroup.Children.Add(CreateNodeTitleUI(node));
+            if (node.Title != null) newNodeGroup.Children.Add(CreateNodeHeaderFooterUI(node, true));
 
 
             //node-slots in node-container
@@ -80,6 +81,9 @@ namespace X.Viewer.NodeGraph
             {
                 newNodeGroup.Children.Add(CreateSlotUI("nso", node, slotIndex, slotDiameter, slotRadius, false));
             }
+
+            //node-footer
+            if (node.Title != null) newNodeGroup.Children.Add(CreateNodeHeaderFooterUI(node, false));
 
             //node-visual, created at the end after the node's full dimensions are realized
             //await DispatcherHelper.ExecuteOnUIThreadAsync(()=> CreateNodeVisual(nodeNodeLinkVM, newNodeUIElement, (NodeType)node.NodeType), Windows.UI.Core.CoreDispatcherPriority.Normal);
@@ -172,16 +176,29 @@ namespace X.Viewer.NodeGraph
             return newNodeUIElement;
         }
 
-        UIElement CreateNodeTitleUI(Node node) {
-            var titleUIElement = new TextBlock()
+        UIElement CreateNodeHeaderFooterUI(Node node, bool isHeader) {
+            var xamlTemplate = isHeader ? node.Udfs3 : node.Udfs4;
+            if (string.IsNullOrEmpty(xamlTemplate))
             {
-                Text = node.Title,
-                FontSize = 14,
-                Foreground = new SolidColorBrush(Colors.LightGray)
-            };
-            titleUIElement.SetValue(Canvas.LeftProperty, 0);
-            titleUIElement.SetValue(Canvas.TopProperty, -25);
-            return titleUIElement;
+                var nodeColor = GetColorFromString(node.Color2);
+                var titleUIElement = new TextBlock()
+                {
+                    Text = node.Title,
+                    FontSize = 14,
+                    Width = node.Width,
+                    TextAlignment = isHeader? TextAlignment.Left : TextAlignment.Right,
+                    Foreground = new SolidColorBrush(nodeColor)
+                };
+                titleUIElement.SetValue(Canvas.LeftProperty, 0);
+                titleUIElement.SetValue(Canvas.TopProperty, isHeader ? -25 : node.Height + 5);
+                return titleUIElement;
+            } else {
+                var xaml = $@"<Grid xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"" Width=""{node.Width}"">{(string)xamlTemplate}</Grid>";
+                var newUIElement = (Grid)XamlReader.Load(xaml);
+                newUIElement.SetValue(Canvas.LeftProperty, 0);
+                newUIElement.SetValue(Canvas.TopProperty, isHeader ? - 25 : node.Height + 5);
+                return newUIElement;
+            }
         }
 
         UIElement CreateSlotUI(string tag, Node node, int slotIndex, double slotDiameter, double slotRadius, bool isInputSlot) {

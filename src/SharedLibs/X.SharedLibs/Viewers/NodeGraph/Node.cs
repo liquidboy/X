@@ -31,15 +31,17 @@ namespace X.Viewer.NodeGraph
         public string Udfs1 { get; set; }
         public string Udfs2 { get; set; }
         public string Udfs3 { get; set; }
+        public string Udfs4 { get; set; }
         public bool IsDirty { get; set; }
 
         public Node() { IsDirty = true; }
-        public Node(string key, double positionX, double positionY, double initialWidth, string color1, string color2, string color3, string color4, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType, string title, double udfd1, double udfd2, double udfd3, string udfs1, string udfs2, string udfs3) :
+        public Node(string key, double positionX, double positionY, double initialWidth, string color1, string color2, string color3, string color4, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType, string title, double udfd1, double udfd2, double udfd3, string udfs1, string udfs2, string udfs3, string udfs4) :
             this(key, positionX, positionY, initialWidth, color1, color2, color3, color4, inputSlotCount, inputSlotLabels, outputSlotCount, outputSlotLabels, grouping, nodeType, title, udfd1, udfd2, udfd3)
         {
             Udfs1 = udfs1;
             Udfs2 = udfs2;
             Udfs3 = udfs3;
+            Udfs4 = udfs4;
         }
         public Node(string key, double positionX, double positionY, double initialWidth, string color1, string color2, string color3, string color4, int inputSlotCount, string inputSlotLabels, int outputSlotCount, string outputSlotLabels, string grouping, int nodeType, string title, double udfd1, double udfd2, double udfd3) :
             this(key, positionX, positionY, initialWidth, color1, color2, color3, color4, inputSlotCount, inputSlotLabels, outputSlotCount, outputSlotLabels, grouping, nodeType, title, 50d, 20d)
