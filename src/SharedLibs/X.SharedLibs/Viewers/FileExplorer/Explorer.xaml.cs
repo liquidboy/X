@@ -12,7 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
+using X.Viewer.NodeGraph;
 
 namespace X.Viewer.FileExplorer
 {
@@ -25,5 +25,9 @@ namespace X.Viewer.FileExplorer
 
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            FileExplorerGlobalStorage.Current.TestStorage();
+        }
     }
 }
