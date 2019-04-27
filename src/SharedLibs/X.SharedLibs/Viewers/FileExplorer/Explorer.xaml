@@ -4,12 +4,30 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="window"
+    xmlns:local="using:X.Viewer.FileExplorer"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-    <Grid Background="Orange">
-        <Button Content="Button" Margin="177,140,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+    <UserControl.Resources>
+      
+    </UserControl.Resources>
 
+    <Grid>
+        <TreeView Name="DessertTree" SelectionMode="Single" ItemsSource="{x:Bind DataSource}" Width="300" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="WhiteSmoke">
+            <TreeView.ItemTemplate>
+                <DataTemplate x:DataType="local:Item">
+                    <TreeViewItem ItemsSource="{x:Bind Children}" Content="{x:Bind Folder.Name}"/>
+                </DataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+        <Grid Margin="300,0,0,0">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top">
+                <Button Content="Test Storage" Click="DoTestStorage" HorizontalAlignment="Right"/>
+                <Button Content="Clear Storage" Click="DoClearStorage" Margin="0,10,0,0" HorizontalAlignment="Right"/>
+            </StackPanel>
+            
+        </Grid>
     </Grid>
 </UserControl>
 

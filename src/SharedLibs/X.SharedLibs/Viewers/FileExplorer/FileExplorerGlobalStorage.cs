@@ -12,7 +12,7 @@ using X.Services.Data;
 
 namespace X.Viewer.FileExplorer
 {
-    public class FileExplorerGlobalStorage 
+    public class FileExplorerGlobalStorage
     {
 
         private static FileExplorerGlobalStorage _storage;
@@ -38,14 +38,42 @@ namespace X.Viewer.FileExplorer
             return true;
         }
 
+        private async Task<StorageFolder> GetWorkingFolder() {
+            //return ApplicationData.Current.LocalFolder;
+            //return ApplicationData.Current.TemporaryFolder;
+            var foundFolder = await KnownFolders.GetFolderForUserAsync(null, KnownFolderId.PicturesLibrary);
+            var rootFolder = await foundFolder.CreateFolderAsync("XAssets", CreationCollisionOption.OpenIfExists);
+            return rootFolder;
+        }
 
-
-
-        public async Task<StorageFile> CreateFileAsync(string fileName)
+        public async Task<StorageFile> CreateFileAndReplaceIfExists(string fileName)
         {
-            var storageFolder = ApplicationData.Current.LocalFolder;
+            var storageFolder = await GetWorkingFolder();
             return await storageFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
         }
+
+        public async Task<(bool FileExists, bool FileDoesNotExist, StorageFile FileThatWasFound)> DoesFileExist(string fileName)
+        {
+            var storageFolder = await GetWorkingFolder();
+            var doesFileExist = false;
+            StorageFile foundFile = null;
+            try {
+                foundFile = await storageFolder.GetFileAsync(fileName);
+                doesFileExist = foundFile != null;
+            }
+            catch (Exception ex) {
+                doesFileExist = false;
+            }
+            return (doesFileExist, !doesFileExist, foundFile);
+        }
+
+        public async Task DeleteFile(string fileName)
+        {
+            var storageFolder = await GetWorkingFolder();
+            var foundFile = await CreateFileAndReplaceIfExists(fileName);
+            await foundFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
+        }
+
 
         public async void WriteToFile(StorageFile file, string data) => await FileIO.WriteTextAsync(file, data);
         public async void WriteToFile(StorageFile file, IBuffer data) => await FileIO.WriteBufferAsync(file, data);
@@ -54,15 +82,17 @@ namespace X.Viewer.FileExplorer
 
         public async Task<string> ReadStringFromFile(string fileName)
         {
-            var storageFolder = ApplicationData.Current.LocalFolder;
-            var foundFile = await storageFolder.GetFileAsync(fileName);
-            return await FileIO.ReadTextAsync(foundFile);
+            var storageFolder = await GetWorkingFolder();
+            var doesFileExist = await DoesFileExist(fileName);
+            if (doesFileExist.FileDoesNotExist) return string.Empty;
+            return await FileIO.ReadTextAsync(doesFileExist.FileThatWasFound);
         }
         public async Task<string> ReadStringFromFileViaBuffer(string fileName)
         {
-            var storageFolder = ApplicationData.Current.LocalFolder;
-            var foundFile = await storageFolder.GetFileAsync(fileName);
-            var buffer = await Windows.Storage.FileIO.ReadBufferAsync(foundFile);
+            var storageFolder = await GetWorkingFolder();
+            var doesFileExist = await DoesFileExist(fileName);
+            if (doesFileExist.FileDoesNotExist) return string.Empty;
+            var buffer = await Windows.Storage.FileIO.ReadBufferAsync(doesFileExist.FileThatWasFound);
             string text;
             using (var dataReader = Windows.Storage.Streams.DataReader.FromBuffer(buffer))
             {
@@ -72,9 +102,10 @@ namespace X.Viewer.FileExplorer
         }
         public async Task<string> ReadStringFromFileViaStream(string fileName)
         {
-            var storageFolder = ApplicationData.Current.LocalFolder;
-            var foundFile = await storageFolder.GetFileAsync(fileName);
-            var stream = await foundFile.OpenAsync(Windows.Storage.FileAccessMode.Read);
+            var storageFolder = await GetWorkingFolder();
+            var doesFileExist = await DoesFileExist(fileName);
+            if (doesFileExist.FileDoesNotExist) return string.Empty;
+            var stream = await doesFileExist.FileThatWasFound.OpenAsync(Windows.Storage.FileAccessMode.Read);
             ulong size = stream.Size;
             string text;
             using (var inputStream = stream.GetInputStreamAt(0))
@@ -92,15 +123,17 @@ namespace X.Viewer.FileExplorer
 
         public async Task<IBuffer> ReadBufferFromFile(string fileName)
         {
-            var storageFolder = ApplicationData.Current.LocalFolder;
-            var foundFile = await storageFolder.GetFileAsync(fileName);
-            return await FileIO.ReadBufferAsync(foundFile);
+            var storageFolder = await GetWorkingFolder();
+            var doesFileExist = await DoesFileExist(fileName);
+            if (doesFileExist.FileDoesNotExist) return null;
+            return await FileIO.ReadBufferAsync(doesFileExist.FileThatWasFound);
         }
         public async Task<IBuffer> ReadBufferFromFileViaBuffer(string fileName)
         {
-            var storageFolder = ApplicationData.Current.LocalFolder;
-            var foundFile = await storageFolder.GetFileAsync(fileName);
-            var buffer = await Windows.Storage.FileIO.ReadBufferAsync(foundFile);
+            var storageFolder = await GetWorkingFolder();
+            var doesFileExist = await DoesFileExist(fileName);
+            if (doesFileExist.FileDoesNotExist) return null;
+            var buffer = await Windows.Storage.FileIO.ReadBufferAsync(doesFileExist.FileThatWasFound);
             IBuffer data;
             using (var dataReader = Windows.Storage.Streams.DataReader.FromBuffer(buffer))
             {
@@ -110,9 +143,10 @@ namespace X.Viewer.FileExplorer
         }
         public async Task<IBuffer> ReadBufferFromFileViaStream(string fileName)
         {
-            var storageFolder = ApplicationData.Current.LocalFolder;
-            var foundFile = await storageFolder.GetFileAsync(fileName);
-            var stream = await foundFile.OpenAsync(FileAccessMode.Read);
+            var storageFolder = await GetWorkingFolder();
+            var doesFileExist = await DoesFileExist(fileName);
+            if (doesFileExist.FileDoesNotExist) return null;
+            var stream = await doesFileExist.FileThatWasFound.OpenAsync(FileAccessMode.Read);
             ulong size = stream.Size;
             IBuffer data;
             using (var inputStream = stream.GetInputStreamAt(0))
@@ -129,20 +163,57 @@ namespace X.Viewer.FileExplorer
 
         public async void TestStorage()
         {
-            var fileName = "sample.txt";
+            var fileName = "testing-storage.txt";
 
-            var newFile = await CreateFileAsync(fileName);
+            var doesFileExist = await DoesFileExist(fileName);
+            //Assert wasFileCreated.FileDoesNotExist = true
+
+            var newFile = await CreateFileAndReplaceIfExists(fileName);
+            var wasFileCreated = await DoesFileExist(fileName);
+            //Assert wasFileCreated.FileExists = true
+
+            newFile = await CreateFileAndReplaceIfExists(fileName);
             WriteToFile(newFile, "test1");
-
-            //var existingFile = await ReadStringFromFile(fileName);
+            var existingFile = await ReadStringFromFile(fileName);
             //Assert existingFile == "test1";
 
-            newFile = await CreateFileAsync(fileName);
+            newFile = await CreateFileAndReplaceIfExists(fileName);
             var buffer = CryptographicBuffer.ConvertStringToBinary("test2", BinaryStringEncoding.Utf8);
             WriteToFile(newFile, buffer);
-            //var existingFile = await ReadStringFromFile(fileName);
+            existingFile = await ReadStringFromFile(fileName);
             //Assert existingFile == "test2";
 
+            newFile = await CreateFileAndReplaceIfExists(fileName);
+            WriteToFile(newFile, "test3");
+            existingFile = await ReadStringFromFileViaBuffer(fileName);
+            //Assert existingFile == "test3";
+
+            newFile = await CreateFileAndReplaceIfExists(fileName);
+            WriteToFile(newFile, "test4");
+            existingFile = await ReadStringFromFileViaStream(fileName);
+            //Assert existingFile == "test4";
+
+            newFile = await CreateFileAndReplaceIfExists(fileName);
+            WriteToFile(newFile, "test5");
+            var existingFileBuffer = await ReadBufferFromFile(fileName);
+            existingFile = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, existingFileBuffer);
+            //Assert existingFile == "test5";
+
+            newFile = await CreateFileAndReplaceIfExists(fileName);
+            WriteToFile(newFile, "test6");
+            existingFileBuffer = await ReadBufferFromFileViaBuffer(fileName);
+            existingFile = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, existingFileBuffer);
+            //Assert existingFile == "test6";
+
+            newFile = await CreateFileAndReplaceIfExists(fileName);
+            WriteToFile(newFile, "test7");
+            existingFileBuffer = await ReadBufferFromFileViaStream(fileName);
+            existingFile = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, existingFileBuffer);
+            //Assert existingFile == "test7";
+
+            await DeleteFile(fileName);
+            wasFileCreated = await DoesFileExist(fileName);
+            //Assert wasFileCreated.FileDoesNotExist == true
         }
 
 
@@ -151,3 +222,10 @@ namespace X.Viewer.FileExplorer
 
 // https://docs.microsoft.com/en-us/windows/uwp/files/quickstart-reading-and-writing-files
 //C:\Users\fajar\AppData\Local\Packages\06cbfd52-5681-4c73-b610-b20b50467b75_1v77q6cebkz10\LocalState
+
+// known folders
+// https://docs.microsoft.com/en-us/uwp/api/windows.storage.knownfolders
+
+
+// documents lib
+// https://blogs.msdn.microsoft.com/wsdevsol/2013/05/09/dealing-with-documents-how-not-to-use-the-documentslibrary-capability-in-windows-store-apps/

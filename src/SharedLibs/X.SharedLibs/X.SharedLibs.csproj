@@ -740,11 +740,14 @@
     <Compile Include="Viewers\FFMpeg\MediaControls.xaml.cs">
       <DependentUpon>MediaControls.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Viewers\FileExplorer\Explorer.Storage.cs" />
     <Compile Include="Viewers\FileExplorer\Explorer.xaml.cs">
       <DependentUpon>Explorer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Viewers\FileExplorer\FileExplorerRenderer.cs" />
     <Compile Include="Viewers\FileExplorer\FileExplorerGlobalStorage.cs" />
+    <Compile Include="Viewers\FileExplorer\SavedFolder.cs" />
+    <Compile Include="Viewers\FileExplorer\SavedAsset.cs" />
     <Compile Include="Viewers\Flickr\FlickrRenderer.cs" />
     <Compile Include="Viewers\Flickr\FlickrView.xaml.cs">
       <DependentUpon>FlickrView.xaml</DependentUpon>
