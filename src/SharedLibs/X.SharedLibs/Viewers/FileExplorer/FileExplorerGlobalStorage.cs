@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Windows.Security.Cryptography;
 using Windows.Storage;
+using Windows.Storage.FileProperties;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Controls;
 using X.Services.Data;
@@ -77,6 +78,15 @@ namespace X.Viewer.FileExplorer
 
         public async void WriteToFile(StorageFile file, string data) => await FileIO.WriteTextAsync(file, data);
         public async void WriteToFile(StorageFile file, IBuffer data) => await FileIO.WriteBufferAsync(file, data);
+        public async Task WriteToFile(StorageFile file, StorageFile data) => await data.CopyAndReplaceAsync(file);
+        public async Task WriteToFile(StorageFile file, StorageItemThumbnail data) {
+            Windows.Storage.Streams.Buffer MyBuffer = new Windows.Storage.Streams.Buffer(Convert.ToUInt32(data.Size));
+            IBuffer iBuf = await data.ReadAsync(MyBuffer, MyBuffer.Capacity, InputStreamOptions.None);
+            using (var strm = await file.OpenAsync(FileAccessMode.ReadWrite))
+            {
+                await strm.WriteAsync(iBuf);
+            }    
+        }
 
 
 
@@ -158,6 +168,34 @@ namespace X.Viewer.FileExplorer
                 }
             }
             return data;
+        }
+
+        public async Task<Windows.UI.Xaml.Media.ImageSource> ReadImageSourceFromFileViaStream(string fileName)
+        {
+            var storageFolder = await GetWorkingFolder();
+            var doesFileExist = await DoesFileExist(fileName);
+            if (doesFileExist.FileDoesNotExist) return null;
+            using (var stream = await doesFileExist.FileThatWasFound.OpenAsync(FileAccessMode.Read))
+            //using (var randomAccessStream = await sf.OpenAsync(FileAccessMode.Read))
+            {
+                var result = new Windows.UI.Xaml.Media.Imaging.BitmapImage();
+                await result.SetSourceAsync(stream);
+                return result;
+            }
+        }
+        public async Task<Windows.UI.Xaml.Media.Imaging.WriteableBitmap> ReadWriteableBitmapFromFileViaStream(string fileName)
+        {
+            var storageFolder = await GetWorkingFolder();
+            var doesFileExist = await DoesFileExist(fileName);
+            if (doesFileExist.FileDoesNotExist) return null;
+            ImageProperties properties = await doesFileExist.FileThatWasFound.Properties.GetImagePropertiesAsync();
+            using (var stream = await doesFileExist.FileThatWasFound.OpenAsync(FileAccessMode.Read))
+            //using (var randomAccessStream = await sf.OpenAsync(FileAccessMode.Read))
+            {
+                var result = new Windows.UI.Xaml.Media.Imaging.WriteableBitmap((int)properties.Width, (int)properties.Height);
+                await result.SetSourceAsync(stream);
+                return result;
+            }
         }
 
 

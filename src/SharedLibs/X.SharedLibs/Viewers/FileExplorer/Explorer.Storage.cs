@@ -33,7 +33,7 @@ namespace X.Viewer.FileExplorer
             if (DBContext.Current.DoesContextExist<SavedAsset>())
             {
                 var foundAssets = DBContext.Current.RetrieveEntities<SavedAsset>($"grouping='{guid}'");
-                if (foundAssets != null) return (true, foundAssets);
+                if (foundAssets != null && foundAssets.Count > 0) return (true, foundAssets);
             }
             return (false, null);
         }
