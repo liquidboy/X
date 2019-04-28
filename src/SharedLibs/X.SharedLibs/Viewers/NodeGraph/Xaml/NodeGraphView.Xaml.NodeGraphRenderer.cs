@@ -67,7 +67,7 @@ namespace X.Viewer.NodeGraph
                 node.Width = newNodeUIElement.ActualWidth;
             //} 
 
-            //node-title
+            //node-header (title)
             if (node.Title != null) newNodeGroup.Children.Add(CreateNodeHeaderFooterUI(node, true));
 
 
@@ -83,7 +83,8 @@ namespace X.Viewer.NodeGraph
             }
 
             //node-footer
-            if (node.Title != null) newNodeGroup.Children.Add(CreateNodeHeaderFooterUI(node, false));
+            //if (node.Title != null) newNodeGroup.Children.Add(CreateNodeHeaderFooterUI(node, false));
+            if (node.Title != null && newNodeUIElement is Grid) ((Grid)newNodeUIElement).Children.Add(CreateNodeHeaderFooterUI(node, false));
 
             //node-visual, created at the end after the node's full dimensions are realized
             //await DispatcherHelper.ExecuteOnUIThreadAsync(()=> CreateNodeVisual(nodeNodeLinkVM, newNodeUIElement, (NodeType)node.NodeType), Windows.UI.Core.CoreDispatcherPriority.Normal);
@@ -139,25 +140,30 @@ namespace X.Viewer.NodeGraph
             }
             else if (node.NodeType > 1000 && node.NodeType < 10000) //VALUES
             {
+                FrameworkElement newNodeType = null;
                 var nodeType = (NodeType)node.NodeType;
 
                 switch (nodeType)
                 {
-                    case NodeType.TextboxValue: newNodeUIElement = new TextboxValue(); break;
-                    case NodeType.SliderValue: newNodeUIElement = new SliderValue(); break;
-                    case NodeType.ToggleValue: newNodeUIElement = new ToggleValue(); break;
-                    case NodeType.BlendEffectModeValue: newNodeUIElement = new BlendEffectModeValue(); break;
-                    case NodeType.ColorSliderValue: newNodeUIElement = new ColorSliderValue(); break;
-                    case NodeType.GammaTransferValue: newNodeUIElement = new GammaTransferSliderValue(); break;
-                    case NodeType.CanvasAlphaModeValue: newNodeUIElement = new CanvasAlphaModeValue(); break;
-                    case NodeType.BorderModeValue: newNodeUIElement = new BorderModeValue(); break;
-                    case NodeType.TransformMatrixValue: newNodeUIElement = new TransformMatrixValue(); break;
-                    case NodeType.PathScene: newNodeUIElement = new PathScene(); break;
-                    case NodeType.XamlFragment: newNodeUIElement = new XamlFragment(); break;
-                    case NodeType.CloudNodeType: newNodeUIElement = new CloudNodeTypeComponent(); break;
+                    case NodeType.TextboxValue: newNodeType = new TextboxValue(); break;
+                    case NodeType.SliderValue: newNodeType = new SliderValue(); break;
+                    case NodeType.ToggleValue: newNodeType = new ToggleValue(); break;
+                    case NodeType.BlendEffectModeValue: newNodeType = new BlendEffectModeValue(); break;
+                    case NodeType.ColorSliderValue: newNodeType = new ColorSliderValue(); break;
+                    case NodeType.GammaTransferValue: newNodeType = new GammaTransferSliderValue(); break;
+                    case NodeType.CanvasAlphaModeValue: newNodeType = new CanvasAlphaModeValue(); break;
+                    case NodeType.BorderModeValue: newNodeType = new BorderModeValue(); break;
+                    case NodeType.TransformMatrixValue: newNodeType = new TransformMatrixValue(); break;
+                    case NodeType.PathScene: newNodeType = new PathScene(); break;
+                    case NodeType.XamlFragment: newNodeType = new XamlFragment(); break;
+                    case NodeType.CloudNodeType: newNodeType = new CloudNodeTypeComponent(); break;
                 }
-                INodeTypeComponent nodeTypeComponent = newNodeUIElement as INodeTypeComponent;
+                INodeTypeComponent nodeTypeComponent = newNodeType as INodeTypeComponent;
                 nodeTypeComponent.NodeTypeValueChanged += NodeTypeComponent_NodeTypeValueChanged;
+
+                var container = new Grid();
+                container.Children.Add(newNodeType);
+                newNodeUIElement = container;
             }
             else
             {
@@ -189,15 +195,31 @@ namespace X.Viewer.NodeGraph
                     TextAlignment = isHeader? TextAlignment.Left : TextAlignment.Right,
                     Foreground = new SolidColorBrush(nodeColor)
                 };
-                titleUIElement.SetValue(Canvas.LeftProperty, 0);
-                titleUIElement.SetValue(Canvas.TopProperty, isHeader ? -25 : node.Height + 5);
+                if (isHeader)
+                {
+                    titleUIElement.SetValue(Canvas.LeftProperty, 0);
+                    titleUIElement.SetValue(Canvas.TopProperty, isHeader ? -25 : node.Height + 5);
+                }
+                else {
+                    titleUIElement.HorizontalAlignment = HorizontalAlignment.Right;
+                    titleUIElement.VerticalAlignment = VerticalAlignment.Bottom;
+                    titleUIElement.Margin = new Thickness(0, 0, 0, -20);
+                }
                 return titleUIElement;
             } else {
                 var xaml = $@"<Grid xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"" Width=""{node.Width}"">{(string)xamlTemplate}</Grid>";
                 var newUIElement = (Grid)XamlReader.Load(xaml);
                 newUIElement.DataContext = node;
-                newUIElement.SetValue(Canvas.LeftProperty, 0);
-                newUIElement.SetValue(Canvas.TopProperty, isHeader ? - 25 : node.Height + 5);
+                if (isHeader)
+                {
+                    newUIElement.SetValue(Canvas.LeftProperty, 0);
+                    newUIElement.SetValue(Canvas.TopProperty, isHeader ? -25 : node.Height + 5);
+                }
+                else {
+                    newUIElement.HorizontalAlignment = HorizontalAlignment.Right;
+                    newUIElement.VerticalAlignment = VerticalAlignment.Bottom;
+                    newUIElement.Margin = new Thickness(0, 0, 0, -20);
+                }
                 return newUIElement;
             }
         }
