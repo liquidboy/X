@@ -30,10 +30,20 @@ namespace X.Viewer.NodeGraph.NodeTypeComponents
             var nnlm = (NodeNodeLinkModel)args.NewValue;
             try {
                 if (!string.IsNullOrEmpty(nnlm.Node.Udfs2)) {
-                    var xaml = $@"<Grid xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"" Margin=""1"">{(string)nnlm.Node.Udfs2}</Grid>";
-                    var newUIElement = XamlReader.Load(xaml);
-                    borderMain.Child = (UIElement)newUIElement;
+                    if (nnlm.Node.Udfs2.Contains("xmlns"))
+                    {
+                        var xaml = nnlm.Node.Udfs2.Replace("xmlns", @"xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"" xmlns");
+                        var newUIElement = XamlReader.Load(xaml);
+                        borderMain.Child = (UIElement)newUIElement;
+                    }
+                    else {
+                        var xaml = $@"<Grid xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"" Margin=""1"">{(string)nnlm.Node.Udfs2}</Grid>";
+                        var newUIElement = XamlReader.Load(xaml);
+                        borderMain.Child = (UIElement)newUIElement;
+                    }
                 }
+
+                borderMain.UpdateLayout();
             }
             catch (Exception ex) {
 

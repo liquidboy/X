@@ -675,6 +675,9 @@
     <Compile Include="UI.EffectLayer\IEffectGraph.cs" />
     <Compile Include="UI.EffectLayer\PathToD2DPathGeometryConverter.cs" />
     <Compile Include="UI.EffectLayer\ShadowEffectGraph.cs" />
+    <Compile Include="UI.GLTFViewer\Viewer.xaml.cs">
+      <DependentUpon>Viewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI.LiteDataGrid\LiteDataGrid.cs" />
     <Compile Include="UI.LiteTab\DelegateCommand.cs" />
     <Compile Include="UI.LiteTab\LiteTabSelectedFontSizeConverter.cs" />
@@ -1158,6 +1161,10 @@
     <Page Include="UI.Composition\LightPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI.GLTFViewer\Viewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI.OneBox\ModernUri.xaml">
       <Generator>MSBuild:Compile</Generator>
