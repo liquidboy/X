@@ -164,14 +164,35 @@ namespace X.Viewer.FileExplorer
             var selectedAsset = (ItemAsset)lbAssets.SelectedItem;
             if (selectedAsset != null) {
 
-                if (IsImageType(selectedAsset.Asset.FileType))
+                // save thumb
+                //var thumbFileName = $"{selectedAsset.Asset.UniqueId.ToString()}_thumb{selectedAsset.Asset.FileType}";
+                var thumbFileName = $"{selectedAsset.Asset.UniqueId.ToString()}_thumb.jpg";
+                var newThumbFile = await FileExplorerGlobalStorage.Current.CreateFileAndReplaceIfExists(thumbFileName);
+                using (var newFileStream = await newThumbFile.OpenAsync(Windows.Storage.FileAccessMode.ReadWrite))
                 {
-                    // save thumb
-                    var thumbFileName = $"{selectedAsset.Asset.UniqueId.ToString()}_thumb{selectedAsset.Asset.FileType}";
-                    var newThumbFile = await FileExplorerGlobalStorage.Current.CreateFileAndReplaceIfExists(thumbFileName);
-                    using (var newFileStream = await newThumbFile.OpenAsync(Windows.Storage.FileAccessMode.ReadWrite))
+                    if (IsImageType(selectedAsset.Asset.FileType))
                     {
                         await imgAssetCropper.SaveAsync(newFileStream, Microsoft.Toolkit.Uwp.UI.Controls.BitmapFileFormat.Jpeg, false);
+                    }
+                    else if (IsLotteType(selectedAsset.Asset.FileType))
+                    {
+                        var renderTargetBitmap = new Windows.UI.Xaml.Media.Imaging.RenderTargetBitmap();
+                        await renderTargetBitmap.RenderAsync(lottiePlayer);
+
+                        var pixels = await renderTargetBitmap.GetPixelsAsync();
+
+                        var logicalDpi = Windows.Graphics.Display.DisplayInformation.GetForCurrentView().LogicalDpi;
+                        var encoder = await Windows.Graphics.Imaging.BitmapEncoder.CreateAsync(Windows.Graphics.Imaging.BitmapEncoder.PngEncoderId, newFileStream);
+                        encoder.SetPixelData(
+                            Windows.Graphics.Imaging.BitmapPixelFormat.Bgra8,
+                            Windows.Graphics.Imaging.BitmapAlphaMode.Ignore,
+                            (uint)renderTargetBitmap.PixelWidth,
+                            (uint)renderTargetBitmap.PixelHeight,
+                            logicalDpi,
+                            logicalDpi,
+                            pixels.ToArray());
+
+                        await encoder.FlushAsync();
                     }
                 }
 
@@ -197,8 +218,7 @@ namespace X.Viewer.FileExplorer
                     imgAssetCropper.Source = await FileExplorerGlobalStorage.Current.ReadWriteableBitmapFromFileViaStream(fileName);
                     imgAssetCropper.Visibility = Visibility.Visible;
                     tbContentType.Text = "Thumbnail";
-                }
-                else if (IsLotteType(selectedAsset.Asset.FileType)) {
+                } else if (IsLotteType(selectedAsset.Asset.FileType)) {
                     var doesFileExist = await FileExplorerGlobalStorage.Current.DoesFileExist(fileName);
                     if (doesFileExist.FileExists) {
                         tbContentType.Text = "Lotte";
