@@ -51,12 +51,14 @@ namespace X.Viewer.FileExplorer
                 Save(newGlobalFolder);
                 var newPrivateFolder = new SavedFolder("Private", DateTime.Now, DateTime.Now, string.Empty);
                 Save(newPrivateFolder);
+                var newFontsFolder = new SavedFolder("Fonts", DateTime.Now, DateTime.Now, newPrivateFolder.UniqueId.ToString());
+                Save(newFontsFolder);
                 var newglTFFolder = new SavedFolder("glTF", DateTime.Now, DateTime.Now, newPrivateFolder.UniqueId.ToString());
                 Save(newglTFFolder);
                 var newImagesFolder = new SavedFolder("Images", DateTime.Now, DateTime.Now, newPrivateFolder.UniqueId.ToString());
                 Save(newImagesFolder);
-                var newFontsFolder = new SavedFolder("Fonts", DateTime.Now, DateTime.Now, newPrivateFolder.UniqueId.ToString());
-                Save(newFontsFolder);
+                var newLotteFolder = new SavedFolder("Lotte", DateTime.Now, DateTime.Now, newPrivateFolder.UniqueId.ToString());
+                Save(newLotteFolder);
 
                 found = RetrieveFolders();
             }
@@ -102,6 +104,8 @@ namespace X.Viewer.FileExplorer
                 picker.FileTypeFilter.Add(".jpeg");
                 picker.FileTypeFilter.Add(".png");
                 picker.FileTypeFilter.Add(".gltf");
+                picker.FileTypeFilter.Add(".json");
+                picker.FileTypeFilter.Add(".zip");
 
                 Windows.Storage.StorageFile file = await picker.PickSingleFileAsync();
                 if (file != null)
@@ -159,12 +163,16 @@ namespace X.Viewer.FileExplorer
         {
             var selectedAsset = (ItemAsset)lbAssets.SelectedItem;
             if (selectedAsset != null) {
-                // save thumb
-                var thumbFileName = $"{selectedAsset.Asset.UniqueId.ToString()}_thumb{selectedAsset.Asset.FileType}";
-                var newThumbFile = await FileExplorerGlobalStorage.Current.CreateFileAndReplaceIfExists(thumbFileName);
-                using (var newFileStream = await newThumbFile.OpenAsync(Windows.Storage.FileAccessMode.ReadWrite))
+
+                if (IsImageType(selectedAsset.Asset.FileType))
                 {
-                    await imgAssetCropper.SaveAsync(newFileStream, Microsoft.Toolkit.Uwp.UI.Controls.BitmapFileFormat.Jpeg, false);
+                    // save thumb
+                    var thumbFileName = $"{selectedAsset.Asset.UniqueId.ToString()}_thumb{selectedAsset.Asset.FileType}";
+                    var newThumbFile = await FileExplorerGlobalStorage.Current.CreateFileAndReplaceIfExists(thumbFileName);
+                    using (var newFileStream = await newThumbFile.OpenAsync(Windows.Storage.FileAccessMode.ReadWrite))
+                    {
+                        await imgAssetCropper.SaveAsync(newFileStream, Microsoft.Toolkit.Uwp.UI.Controls.BitmapFileFormat.Jpeg, false);
+                    }
                 }
 
                 // update asset in local storage
@@ -177,10 +185,27 @@ namespace X.Viewer.FileExplorer
         {
             //SelectionChanged = "{x:Bind DoAssetChanged}"
             var selectedAsset = (ItemAsset)lbAssets.SelectedItem;
-            if (selectedAsset != null && IsImageType(selectedAsset.Asset.FileType)) {
+            imgAssetCropper.Visibility = Visibility.Collapsed;
+            tbContentType.Text = "";
+            lottiePlayer.Visibility = Visibility.Collapsed;
+            if (selectedAsset != null) {
                 var fileName = $"{selectedAsset.Asset.UniqueId.ToString()}{selectedAsset.Asset.FileType}";
-                //imgAssetSelected.Source = await FileExplorerGlobalStorage.Current.ReadImageSourceFromFileViaStream(fileName);
-                imgAssetCropper.Source = await FileExplorerGlobalStorage.Current.ReadWriteableBitmapFromFileViaStream(fileName);
+
+                if (IsImageType(selectedAsset.Asset.FileType))
+                {
+                    //imgAssetSelected.Source = await FileExplorerGlobalStorage.Current.ReadImageSourceFromFileViaStream(fileName);
+                    imgAssetCropper.Source = await FileExplorerGlobalStorage.Current.ReadWriteableBitmapFromFileViaStream(fileName);
+                    imgAssetCropper.Visibility = Visibility.Visible;
+                    tbContentType.Text = "Thumbnail";
+                }
+                else if (IsLotteType(selectedAsset.Asset.FileType)) {
+                    var doesFileExist = await FileExplorerGlobalStorage.Current.DoesFileExist(fileName);
+                    if (doesFileExist.FileExists) {
+                        tbContentType.Text = "Lotte";
+                        lottiePlayer.Visibility = Visibility.Visible;
+                        await lottieJsonSource.SetSourceAsync(doesFileExist.FileThatWasFound);
+                    }
+                }
             }
         }
 
@@ -192,6 +217,21 @@ namespace X.Viewer.FileExplorer
                     return true;
                 default: return false;
             }
+        }
+
+        private bool IsLotteType(string contentType)
+        {
+            switch (contentType.ToLower())
+            {
+                case ".json":
+                    return true;
+                default: return false;
+            }
+        }
+
+        private void DoDeleteAsset(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 

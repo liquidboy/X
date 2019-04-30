@@ -5,6 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:xcontrols="using:Microsoft.UI.Xaml.Controls"
+    xmlns:lottie="using:Microsoft.Toolkit.Uwp.UI.Lottie"
     xmlns:local="using:X.Viewer.FileExplorer"
     xmlns:converters="using:CoreLib.Converters"
     mc:Ignorable="d"
@@ -22,7 +24,7 @@
             </TreeView.ItemTemplate>
         </TreeView>
         <Grid Margin="300,0,0,0">
-            <ListBox x:Name="lbAssets" Margin="10,10,0,0" Width="{x:Bind AssetsAreaWidth}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" SelectionChanged="{x:Bind DaAssetChanged}"  >
+            <ListBox x:Name="lbAssets" Margin="10,0,0,0" Width="{x:Bind AssetsAreaWidth}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" SelectionChanged="{x:Bind DaAssetChanged}"  >
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Vertical" ></StackPanel>
@@ -40,23 +42,29 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0">
-                <Button Content="Upload" Click="DoUpload" HorizontalAlignment="Right"/>
-                <Button Content="Test Storage" Click="DoTestStorage" Margin="0,10,0,0" HorizontalAlignment="Right" />
-                <Button Content="Clear Storage" Click="DoClearStorage" Margin="0,10,0,0" HorizontalAlignment="Right"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,0,0">
+                <Button Content="Upload" Click="DoUpload" Margin="0,0,10,0"/>
+                <Button Content="Test Storage" Click="DoTestStorage" Margin="0,0,10,0"/>
+                <Button Content="Clear Storage" Click="DoClearStorage" Margin="0,0,10,0"/>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="20" DataContext="{Binding ElementName=lbAssets, Path=SelectedItem}" >
                 <!--<Image Width="250" HorizontalAlignment="Left" Stretch="UniformToFill" x:Name="imgAssetSelected" Margin="0,0,0,15"></Image>-->
-                <TextBlock Text="Thumbnail"></TextBlock>
+                <TextBlock x:Name="tbContentType" Text="Thumbnail"></TextBlock>
                 <Border BorderBrush="WhiteSmoke" BorderThickness="1" Margin="0,10,0,10">
-                    <controls:ImageCropper x:Name="imgAssetCropper" Width="500"  AspectRatio="1" CropShape="Rectangular" ThumbPlacement="All"/>
+                    <Grid>
+                        <controls:ImageCropper x:Name="imgAssetCropper" Width="500" AspectRatio="1" CropShape="Rectangular" ThumbPlacement="All" Visibility="Collapsed"/>
+                        <xcontrols:AnimatedVisualPlayer x:Name="lottiePlayer" Visibility="Collapsed" Width="500">
+                            <lottie:LottieVisualSource x:Name="lottieJsonSource" UriSource="ms-appx:///AnimatedVisuals/LottieLogo1.json"/>
+                        </xcontrols:AnimatedVisualPlayer>
+                    </Grid>
                 </Border>
                 <TextBox Header="Name" x:Name="tbAssetName" Width="300" HorizontalAlignment="Left" Text="{Binding Asset.Name}" ></TextBox>
                 
                 <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
                     <Button Content="Save" Click="DoUpdateAsset" />
                     <Button Content="Generate Thumbnail" Click="DoGenerateThumbnail" Margin="10,0,0,0" />
+                    <Button Content="Delete" Click="DoDeleteAsset" Margin="10,0,0,0" />
                 </StackPanel>
             </StackPanel>
             
