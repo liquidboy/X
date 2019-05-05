@@ -207,7 +207,7 @@ namespace X.Viewer.FileExplorer
             //SelectionChanged = "{x:Bind DoAssetChanged}"
             var selectedAsset = (ItemAsset)lbAssets.SelectedItem;
             imgAssetCropper.Visibility = Visibility.Collapsed;
-            tbContentType.Text = "";
+
             lottiePlayer.Visibility = Visibility.Collapsed;
             if (selectedAsset != null) {
                 var fileName = $"{selectedAsset.Asset.UniqueId.ToString()}{selectedAsset.Asset.FileType}";
@@ -217,11 +217,10 @@ namespace X.Viewer.FileExplorer
                     //imgAssetSelected.Source = await FileExplorerGlobalStorage.Current.ReadImageSourceFromFileViaStream(fileName);
                     imgAssetCropper.Source = await FileExplorerGlobalStorage.Current.ReadWriteableBitmapFromFileViaStream(fileName);
                     imgAssetCropper.Visibility = Visibility.Visible;
-                    tbContentType.Text = "Thumbnail";
+
                 } else if (IsLotteType(selectedAsset.Asset.FileType)) {
                     var doesFileExist = await FileExplorerGlobalStorage.Current.DoesFileExist(fileName);
                     if (doesFileExist.FileExists) {
-                        tbContentType.Text = "Lotte";
                         lottiePlayer.Visibility = Visibility.Visible;
                         await lottieJsonSource.SetSourceAsync(doesFileExist.FileThatWasFound);
                     }
@@ -252,6 +251,19 @@ namespace X.Viewer.FileExplorer
         private void DoDeleteAsset(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Tabs_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            imgAssetCropper.Visibility = Visibility.Collapsed;
+            lottiePlayer.Visibility = Visibility.Collapsed;
+            if (e.AddedItems.Count > 0) {
+                var tbi = (Microsoft.Toolkit.Uwp.UI.Controls.TabViewItem)e.AddedItems.FirstOrDefault();
+                switch (tbi.Header) {
+                    case "Thumbnail": imgAssetCropper.Visibility = Visibility.Visible; break;
+                    case "Lotte": lottiePlayer.Visibility = Visibility.Visible; break;
+                }
+            }
         }
     }
 

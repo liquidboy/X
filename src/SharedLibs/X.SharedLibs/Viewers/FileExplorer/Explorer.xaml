@@ -16,7 +16,7 @@
         <converters:XAssetThumbnailConverter x:Name="xAssetThumbnailConverter" ></converters:XAssetThumbnailConverter>
     </UserControl.Resources>
     <Grid>
-        <TreeView Name="tvMain" SelectionMode="Single" ItemsSource="{x:Bind DataSource}" Width="300" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="WhiteSmoke" ItemInvoked="TvMain_ItemInvoked">
+        <TreeView Name="tvMain" SelectionMode="Single" ItemsSource="{x:Bind DataSource}" Width="300" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="WhiteSmoke" ItemInvoked="TvMain_ItemInvoked" Margin="0,40,0,0">
             <TreeView.ItemTemplate>
                 <DataTemplate x:DataType="local:Item">
                     <TreeViewItem ItemsSource="{x:Bind Children}" Content="{x:Bind Folder.Name}"/>
@@ -24,7 +24,10 @@
             </TreeView.ItemTemplate>
         </TreeView>
         <Grid Margin="300,0,0,0">
-            <ListBox x:Name="lbAssets" Margin="10,0,0,0" Width="{x:Bind AssetsAreaWidth}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" SelectionChanged="{x:Bind DaAssetChanged}"  >
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0">
+                <Button Content="Upload" Click="DoUpload" Margin="0,0,10,0"/>
+            </StackPanel>
+            <ListBox x:Name="lbAssets" Margin="10,40,0,0" Width="{x:Bind AssetsAreaWidth}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" SelectionChanged="{x:Bind DaAssetChanged}"  >
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Vertical" ></StackPanel>
@@ -43,22 +46,36 @@
                 </ListBox.ItemTemplate>
             </ListBox>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,0,0">
-                <Button Content="Upload" Click="DoUpload" Margin="0,0,10,0"/>
                 <Button Content="Test Storage" Click="DoTestStorage" Margin="0,0,10,0"/>
                 <Button Content="Clear Storage" Click="DoClearStorage" Margin="0,0,10,0"/>
             </StackPanel>
 
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="20" DataContext="{Binding ElementName=lbAssets, Path=SelectedItem}" >
-                <!--<Image Width="250" HorizontalAlignment="Left" Stretch="UniformToFill" x:Name="imgAssetSelected" Margin="0,0,0,15"></Image>-->
-                <TextBlock x:Name="tbContentType" Text="Thumbnail"></TextBlock>
-                <Border BorderBrush="WhiteSmoke" BorderThickness="1" Margin="0,10,0,10">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="540,80,0,0">
+                <controls:TabView x:Name="Tabs" CanCloseTabs="False" IsCloseButtonOverlay="False" CanDragItems="False" CanReorderItems="False" AllowDrop="False"  SelectedTabWidth="200" Header="" SelectionChanged="Tabs_SelectionChanged">
+                    <controls:TabView.Resources>
+                        <x:Double x:Key="TabViewItemHeaderMinHeight">40</x:Double>
+                        <x:Double x:Key="TabViewItemHeaderMinWidth">48</x:Double>
+                        <x:Double x:Key="TabViewItemHeaderMaxWidth">200</x:Double>
+                    </controls:TabView.Resources>
+                    <controls:TabViewItem Header="Thumbnail" />
+                    <controls:TabViewItem Header="Lotte" />
+                </controls:TabView>
+                <Border BorderBrush="WhiteSmoke" BorderThickness="1" Margin="0,0,10,10" HorizontalAlignment="Stretch" VerticalAlignment="Top" >
                     <Grid>
-                        <controls:ImageCropper x:Name="imgAssetCropper" Width="500" AspectRatio="1" CropShape="Rectangular" ThumbPlacement="All" Visibility="Collapsed"/>
-                        <xcontrols:AnimatedVisualPlayer x:Name="lottiePlayer" Visibility="Collapsed" Width="500">
+                        <controls:ImageCropper x:Name="imgAssetCropper" AspectRatio="1" CropShape="Rectangular" ThumbPlacement="All" />
+                        <xcontrols:AnimatedVisualPlayer x:Name="lottiePlayer" Visibility="Collapsed" Width="500" HorizontalAlignment="Left" VerticalAlignment="Top">
                             <lottie:LottieVisualSource x:Name="lottieJsonSource" UriSource="ms-appx:///AnimatedVisuals/LottieLogo1.json"/>
                         </xcontrols:AnimatedVisualPlayer>
                     </Grid>
                 </Border>
+                
+            </StackPanel>
+            
+
+
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="20" DataContext="{Binding ElementName=lbAssets, Path=SelectedItem}" >
+                <!--<Image Width="250" HorizontalAlignment="Left" Stretch="UniformToFill" x:Name="imgAssetSelected" Margin="0,0,0,15"></Image>-->
+                
                 <TextBox Header="Name" x:Name="tbAssetName" Width="300" HorizontalAlignment="Left" Text="{Binding Asset.Name}" ></TextBox>
                 
                 <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
