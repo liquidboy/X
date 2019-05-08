@@ -1,6 +1,6 @@
 ﻿using Windows.Foundation;
 
-namespace X.Viewer.NodeGraph
+namespace X.UI.NodeGraph
 {
     public interface INodeGraphSelectedNodeLink
     {

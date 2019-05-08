@@ -1,4 +1,6 @@
-﻿namespace X.Viewer.NodeGraph
+﻿using X.UI.NodeGraph;
+
+namespace X.UI.NodeGraph
 {
     public class CloudNodeTypeMetadata : NodeTypeMetadata
     {

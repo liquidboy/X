@@ -3,7 +3,7 @@ using InputSlotPosition = Windows.Foundation.Point;
 using OutputSlotPosition = Windows.Foundation.Point;
 using X.CoreLib.Shared.Framework.Services.DataEntity;
 
-namespace X.Viewer.NodeGraph
+namespace X.UI.NodeGraph
 {
     public class Node : BaseEntity
     {

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
+using X.UI.NodeGraph;
 
 namespace X.Viewer.NodeGraph
 {

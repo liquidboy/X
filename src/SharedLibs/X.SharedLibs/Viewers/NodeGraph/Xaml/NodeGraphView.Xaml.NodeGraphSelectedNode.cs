@@ -5,6 +5,7 @@ using NodePosition = Windows.Foundation.Point;
 using Windows.UI.Xaml.Media;
 using Windows.Foundation;
 using System.Numerics;
+using X.UI.NodeGraph;
 
 namespace X.Viewer.NodeGraph
 {

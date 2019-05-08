@@ -1,7 +1,8 @@
 ﻿using System.Numerics;
 using Windows.Foundation;
+using X.Viewer.NodeGraph;
 
-namespace X.Viewer.NodeGraph
+namespace X.UI.NodeGraph
 {
     // this orchestrates events between dependent components
     // - the "selected" events between nodes/slots

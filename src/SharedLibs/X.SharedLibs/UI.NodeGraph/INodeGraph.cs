@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace X.Viewer.NodeGraph
+namespace X.UI.NodeGraph
 {
     // this knows nothing about the rendering technology
     public interface INodeGraph

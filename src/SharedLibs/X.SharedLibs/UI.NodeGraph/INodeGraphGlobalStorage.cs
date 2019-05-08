@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using X.Viewer.NodeGraph;
 
-namespace X.Viewer.NodeGraph
+namespace X.UI.NodeGraph
 {
     public interface INodeGraphGlobalStorage
     {

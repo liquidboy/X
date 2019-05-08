@@ -764,17 +764,17 @@
       <DependentUpon>MediaControls.xaml</DependentUpon>
     </Compile>
     <Compile Include="Viewers\MediaView\MediaElementRenderer.cs" />
-    <Compile Include="Viewers\NodeGraph\CloudNodeTypeEntity.cs" />
-    <Compile Include="Viewers\NodeGraph\INodeGraphHover.cs" />
-    <Compile Include="Viewers\NodeGraph\CloudNodeTypeMetadata.cs" />
-    <Compile Include="Viewers\NodeGraph\CloudNodeType.cs" />
-    <Compile Include="Viewers\NodeGraph\INodeGraphGlobalStorage.cs" />
-    <Compile Include="Viewers\NodeGraph\NodeGraphGlobalStorage.cs" />
+    <Compile Include="UI.NodeGraph\CloudNodeTypeEntity.cs" />
+    <Compile Include="UI.NodeGraph\INodeGraphHover.cs" />
+    <Compile Include="UI.NodeGraph\CloudNodeTypeMetadata.cs" />
+    <Compile Include="UI.NodeGraph\CloudNodeType.cs" />
+    <Compile Include="UI.NodeGraph\INodeGraphGlobalStorage.cs" />
+    <Compile Include="UI.NodeGraph\NodeGraphGlobalStorage.cs" />
     <Compile Include="Viewers\NodeGraph\Xaml\Converters\BorderModeConverter.cs" />
     <Compile Include="Viewers\NodeGraph\Xaml\Converters\CanvasAlphaModeConverter.cs" />
     <Compile Include="Viewers\NodeGraph\Xaml\Converters\BlendEffectModeConverter.cs" />
-    <Compile Include="Viewers\NodeGraph\INodeGraphSelectedNodeLink.cs" />
-    <Compile Include="Viewers\NodeGraph\INodeSelector.cs" />
+    <Compile Include="UI.NodeGraph\INodeGraphSelectedNodeLink.cs" />
+    <Compile Include="UI.NodeGraph\INodeSelector.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.NodeSelector.cs" />
     <Compile Include="Viewers\NodeGraph\Xaml\NodeGraphView.Xaml.NodeGraphHover.cs" />
     <Compile Include="Viewers\NodeGraph\Xaml\NodeGraphView.Xaml.NodeGraphSelectedNodeLink.cs" />
@@ -812,16 +812,16 @@
     <Compile Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\TransformMatrixValue.xaml.cs">
       <DependentUpon>TransformMatrixValue.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Viewers\NodeGraph\NodeTypeMetadata.cs" />
+    <Compile Include="UI.NodeGraph\NodeTypeMetadata.cs" />
     <Compile Include="Viewers\NodeGraph\Xaml\NodeVisual.cs" />
-    <Compile Include="Viewers\NodeGraph\NodeNodeLinkModel.cs" />
-    <Compile Include="Viewers\NodeGraph\NodeType.cs" />
+    <Compile Include="UI.NodeGraph\NodeNodeLinkModel.cs" />
+    <Compile Include="UI.NodeGraph\NodeType.cs" />
     <Compile Include="Viewers\NodeGraph\Xaml\INodeGraphCompositor.cs" />
-    <Compile Include="Viewers\NodeGraph\INodeGraphSelector.cs" />
-    <Compile Include="Viewers\NodeGraph\INodeGraphStorage.cs" />
-    <Compile Include="Viewers\NodeGraph\INodeGraphOrchestrator.cs" />
-    <Compile Include="Viewers\NodeGraph\INodeGraphSelectedSlot.cs" />
-    <Compile Include="Viewers\NodeGraph\INodeGraphSelectedNode.cs" />
+    <Compile Include="UI.NodeGraph\INodeGraphSelector.cs" />
+    <Compile Include="UI.NodeGraph\INodeGraphStorage.cs" />
+    <Compile Include="UI.NodeGraph\INodeGraphOrchestrator.cs" />
+    <Compile Include="UI.NodeGraph\INodeGraphSelectedSlot.cs" />
+    <Compile Include="UI.NodeGraph\INodeGraphSelectedNode.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.GraphSelector.cs" />
     <Compile Include="Viewers\NodeGraph\Xaml\NodeGraphView.Compositor.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.Storage.cs" />
@@ -831,12 +831,12 @@
     <Compile Include="Viewers\NodeGraph\Xaml\NodeTypeComponents\TextboxValue.xaml.cs">
       <DependentUpon>TextboxValue.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Viewers\NodeGraph\SavedGraph.cs" />
-    <Compile Include="Viewers\NodeGraph\NodeLink.cs" />
-    <Compile Include="Viewers\NodeGraph\Node.cs" />
+    <Compile Include="UI.NodeGraph\SavedGraph.cs" />
+    <Compile Include="UI.NodeGraph\NodeLink.cs" />
+    <Compile Include="UI.NodeGraph\Node.cs" />
     <Compile Include="Viewers\NodeGraph\Xaml\INodeGraphRenderer.cs" />
-    <Compile Include="Viewers\NodeGraph\INodeGraph.cs" />
-    <Compile Include="Viewers\NodeGraph\Xaml\NodeGraphRenderer.cs" />
+    <Compile Include="UI.NodeGraph\INodeGraph.cs" />
+    <Compile Include="Viewers\NodeGraph\NodeGraphRenderer.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.NodeGraph.cs" />
     <Compile Include="Viewers\NodeGraph\NodeGraphView.xaml.cs">
       <DependentUpon>NodeGraphView.xaml</DependentUpon>

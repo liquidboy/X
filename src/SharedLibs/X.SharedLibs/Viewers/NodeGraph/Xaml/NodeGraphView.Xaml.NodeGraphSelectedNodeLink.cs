@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Media;
 using Windows.Foundation;
 using System.Diagnostics;
 using System;
+using X.UI.NodeGraph;
 
 namespace X.Viewer.NodeGraph
 {

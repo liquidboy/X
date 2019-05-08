@@ -4,6 +4,7 @@ using Windows.Foundation;
 using System.Numerics;
 using System.Diagnostics;
 using Windows.UI;
+using X.UI.NodeGraph;
 
 namespace X.Viewer.NodeGraph
 {

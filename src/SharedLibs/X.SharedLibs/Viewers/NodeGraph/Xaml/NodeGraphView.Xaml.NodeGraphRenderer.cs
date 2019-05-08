@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Shapes;
 using X.Viewer.NodeGraph.NodeTypeComponents;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Markup;
+using X.UI.NodeGraph;
 
 namespace X.Viewer.NodeGraph
 {

@@ -1,4 +1,4 @@
-﻿namespace X.Viewer.NodeGraph
+﻿namespace X.UI.NodeGraph
 {
     public enum NodeType
     {

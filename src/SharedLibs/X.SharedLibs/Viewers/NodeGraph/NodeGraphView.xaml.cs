@@ -8,6 +8,7 @@ using System.Diagnostics;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using System.ComponentModel;
+using X.UI.NodeGraph;
 
 namespace X.Viewer.NodeGraph
 {

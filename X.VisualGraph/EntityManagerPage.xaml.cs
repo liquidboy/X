@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using X.UI.NodeGraph;
 using X.Viewer.NodeGraph;
 using X.VisualGraph;
 

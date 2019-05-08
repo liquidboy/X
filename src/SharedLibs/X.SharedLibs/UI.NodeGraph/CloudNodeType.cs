@@ -1,7 +1,7 @@
 ﻿using System;
 using X.CoreLib.Shared.Framework.Services.DataEntity;
 
-namespace X.Viewer.NodeGraph
+namespace X.UI.NodeGraph
 {
     public class CloudNodeType : BaseEntity
     {

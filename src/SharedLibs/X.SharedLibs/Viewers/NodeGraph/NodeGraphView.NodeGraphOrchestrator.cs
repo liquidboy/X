@@ -1,6 +1,7 @@
 ﻿using Windows.Foundation;
 using System.Numerics;
 using System;
+using X.UI.NodeGraph;
 
 namespace X.Viewer.NodeGraph
 {

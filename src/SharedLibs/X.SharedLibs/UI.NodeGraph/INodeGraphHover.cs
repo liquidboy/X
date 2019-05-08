@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using Windows.Foundation;
 
-namespace X.Viewer.NodeGraph
+namespace X.UI.NodeGraph
 {
     // this knows about rendering technology BUT is limited to the SELECTED NODE
     public interface INodeGraphHover

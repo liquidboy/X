@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using X.Viewer.NodeGraph;
 
-namespace X.Viewer.NodeGraph
+namespace X.UI.NodeGraph
 {
     // this knows about rendering technology BUT is limited to the SELECTED NODE
     public interface INodeGraphSelector

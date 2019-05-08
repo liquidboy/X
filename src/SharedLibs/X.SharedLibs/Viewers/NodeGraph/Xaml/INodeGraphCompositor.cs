@@ -1,4 +1,5 @@
 ﻿using Windows.UI.Xaml;
+using X.UI.NodeGraph;
 
 namespace X.Viewer.NodeGraph
 {

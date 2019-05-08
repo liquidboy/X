@@ -6,8 +6,9 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using X.Services.Data;
+using X.UI.NodeGraph;
 
-namespace X.Viewer.NodeGraph
+namespace X.UI.NodeGraph
 {
     public class NodeGraphGlobalStorage: INodeGraphGlobalStorage
     {

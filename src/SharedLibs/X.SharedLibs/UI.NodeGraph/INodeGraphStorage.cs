@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using X.Viewer.NodeGraph;
 
-namespace X.Viewer.NodeGraph
+namespace X.UI.NodeGraph
 {
     // this knows only about storing a nodegraph
     public interface INodeGraphStorage

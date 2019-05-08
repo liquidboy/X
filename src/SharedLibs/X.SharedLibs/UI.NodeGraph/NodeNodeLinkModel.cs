@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace X.Viewer.NodeGraph
+namespace X.UI.NodeGraph
 {
     public class NodeNodeLinkModel
     {

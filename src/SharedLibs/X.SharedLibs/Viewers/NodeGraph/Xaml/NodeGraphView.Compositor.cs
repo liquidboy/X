@@ -9,6 +9,7 @@ using Windows.UI;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Hosting;
+using X.UI.NodeGraph;
 
 namespace X.Viewer.NodeGraph
 {
