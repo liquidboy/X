@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage.FileProperties;
@@ -202,14 +203,25 @@ namespace X.Viewer.FileExplorer
             }
         }
 
+        private void ClearContent() {
+            imgAssetCropper.Source = null;
+            imgAssetCropper.Visibility = Visibility.Collapsed;
+            lottieJsonSource.UriSource = null;
+            lottieJsonSource.ClearValue(Microsoft.Toolkit.Uwp.UI.Lottie.LottieVisualSource.UriSourceProperty);
+            lottiePlayer.Visibility = Visibility.Collapsed;
+        }
+
         private async void DaAssetChanged(object sender, RoutedEventArgs e)
         {
             //SelectionChanged = "{x:Bind DoAssetChanged}"
+            ClearContent();
             var selectedAsset = (ItemAsset)lbAssets.SelectedItem;
-            imgAssetCropper.Visibility = Visibility.Collapsed;
+            await LoadAsset(selectedAsset);
+        }
 
-            lottiePlayer.Visibility = Visibility.Collapsed;
-            if (selectedAsset != null) {
+        private async Task LoadAsset(ItemAsset selectedAsset) {
+            if (selectedAsset != null)
+            {
                 var fileName = $"{selectedAsset.Asset.UniqueId.ToString()}{selectedAsset.Asset.FileType}";
 
                 if (IsImageType(selectedAsset.Asset.FileType))
@@ -217,12 +229,17 @@ namespace X.Viewer.FileExplorer
                     //imgAssetSelected.Source = await FileExplorerGlobalStorage.Current.ReadImageSourceFromFileViaStream(fileName);
                     imgAssetCropper.Source = await FileExplorerGlobalStorage.Current.ReadWriteableBitmapFromFileViaStream(fileName);
                     imgAssetCropper.Visibility = Visibility.Visible;
+                    Tabs.SelectedIndex = 0;
 
-                } else if (IsLotteType(selectedAsset.Asset.FileType)) {
+                }
+                else if (IsLotteType(selectedAsset.Asset.FileType))
+                {
                     var doesFileExist = await FileExplorerGlobalStorage.Current.DoesFileExist(fileName);
-                    if (doesFileExist.FileExists) {
+                    if (doesFileExist.FileExists)
+                    {
                         lottiePlayer.Visibility = Visibility.Visible;
                         await lottieJsonSource.SetSourceAsync(doesFileExist.FileThatWasFound);
+                        Tabs.SelectedIndex = 1;
                     }
                 }
             }
@@ -255,9 +272,11 @@ namespace X.Viewer.FileExplorer
 
         private void Tabs_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            imgAssetCropper.Visibility = Visibility.Collapsed;
-            lottiePlayer.Visibility = Visibility.Collapsed;
             if (e.AddedItems.Count > 0) {
+                //ClearContent();
+                //var selectedAsset = (ItemAsset)lbAssets.SelectedItem;
+                //await LoadAsset(selectedAsset);
+
                 var tbi = (Microsoft.Toolkit.Uwp.UI.Controls.TabViewItem)e.AddedItems.FirstOrDefault();
                 switch (tbi.Header) {
                     case "Thumbnail": imgAssetCropper.Visibility = Visibility.Visible; break;
