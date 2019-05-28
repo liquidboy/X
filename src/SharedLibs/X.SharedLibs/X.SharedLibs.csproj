@@ -752,6 +752,9 @@
     <Compile Include="Viewers\FileExplorer\FileExplorerGlobalStorage.cs" />
     <Compile Include="Viewers\FileExplorer\SavedFolder.cs" />
     <Compile Include="Viewers\FileExplorer\SavedAsset.cs" />
+    <Compile Include="Viewers\FileExplorer\ScrapePage.xaml.cs">
+      <DependentUpon>ScrapePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Viewers\Flickr\FlickrRenderer.cs" />
     <Compile Include="Viewers\Flickr\FlickrView.xaml.cs">
       <DependentUpon>FlickrView.xaml</DependentUpon>
@@ -965,6 +968,15 @@
     <EmbeddedResource Include="Properties\X.SharedLibs.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="AngleSharp">
+      <Version>0.13.0-alpha-734</Version>
+    </PackageReference>
+    <PackageReference Include="DynamicData">
+      <Version>6.9.1.2588</Version>
+    </PackageReference>
+    <PackageReference Include="HtmlAgilityPack">
+      <Version>1.11.4</Version>
+    </PackageReference>
     <PackageReference Include="linqtotwitter">
       <Version>5.0.0</Version>
     </PackageReference>
@@ -1204,6 +1216,10 @@
     <Page Include="Viewers\FileExplorer\Explorer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Viewers\FileExplorer\ScrapePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Viewers\Flickr\FlickrView.xaml">
       <Generator>MSBuild:Compile</Generator>

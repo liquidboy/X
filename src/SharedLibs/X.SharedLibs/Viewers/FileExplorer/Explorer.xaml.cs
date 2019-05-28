@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage.FileProperties;
+using Windows.UI.WindowManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
@@ -90,6 +92,12 @@ namespace X.Viewer.FileExplorer
             lbAssets.ItemsSource = col;
         }
 
+        private void TestVisual() {
+
+            //ParticleEmitterVisual
+            //ElementCompositionPreview
+        }
+
         private void DoClearStorage(object sender, RoutedEventArgs e)
         {
             ClearStorage();
@@ -112,8 +120,6 @@ namespace X.Viewer.FileExplorer
                 if (file != null)
                 {
                     var properties = await file.GetBasicPropertiesAsync();
-
-
                     var newAsset = new SavedAsset(file.Name, DateTime.UtcNow, DateTime.UtcNow, _selectedFolder.Folder.UniqueId.ToString(), file.FileType, MapUlongToLong(properties.Size), false);
                     Save(newAsset);
 
@@ -283,6 +289,27 @@ namespace X.Viewer.FileExplorer
                     case "Lotte": lottiePlayer.Visibility = Visibility.Visible; break;
                 }
             }
+        }
+
+        private AppWindow appWindow;
+        private Frame appWindowFrame = new Frame();
+        private async void DoWebScrape(object sender, RoutedEventArgs e)
+        {
+            if (appWindow == null)
+            {
+                // Create a new window
+                appWindow = await AppWindow.TryCreateAsync();
+                // Make sure we release the reference to this window, and release XAML resources, when it's closed
+                appWindow.Closed += delegate { appWindow = null; appWindowFrame.Content = null; };
+                // Navigate the frame to the page we want to show in the new window
+                appWindowFrame.Navigate(typeof(X.SharedLibs.Viewers.FileExplorer.ScrapePage));
+                // Attach the XAML content to our window
+                Windows.UI.Xaml.Hosting.ElementCompositionPreview.SetAppWindowContent(appWindow, appWindowFrame);
+            }
+
+            // Now show the window
+            await appWindow.TryShowAsync();
+
         }
     }
 

@@ -25,7 +25,8 @@
         </TreeView>
         <Grid Margin="300,0,0,0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0">
-                <Button Content="Upload" Click="DoUpload" Margin="0,0,10,0"/>
+                <Button Content="Upload" Click="DoUpload" Margin="0,0,0,0"/>
+                <Button Content="Web" Click="DoWebScrape" Margin="10,0,0,0"/>
             </StackPanel>
             <ListBox x:Name="lbAssets" Margin="10,40,0,0" Width="{x:Bind AssetsAreaWidth}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" SelectionChanged="{x:Bind DaAssetChanged}"  >
                 <ListBox.ItemsPanel>
