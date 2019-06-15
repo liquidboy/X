@@ -11,7 +11,7 @@
     <AssemblyName>X.SharedLibs</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.18362.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.18908.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -755,6 +755,9 @@
     <Compile Include="Viewers\FileExplorer\ScrapePage.xaml.cs">
       <DependentUpon>ScrapePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Viewers\FileExplorer\YouTubePage.xaml.cs">
+      <DependentUpon>YouTubePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Viewers\Flickr\FlickrRenderer.cs" />
     <Compile Include="Viewers\Flickr\FlickrView.xaml.cs">
       <DependentUpon>FlickrView.xaml</DependentUpon>
@@ -968,9 +971,6 @@
     <EmbeddedResource Include="Properties\X.SharedLibs.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AngleSharp">
-      <Version>0.13.0-alpha-734</Version>
-    </PackageReference>
     <PackageReference Include="DynamicData">
       <Version>6.9.1.2588</Version>
     </PackageReference>
@@ -1018,6 +1018,12 @@
     </PackageReference>
     <PackageReference Include="WriteableBitmapEx">
       <Version>1.5.1</Version>
+    </PackageReference>
+    <PackageReference Include="YoutubeExplode">
+      <Version>4.7.2</Version>
+    </PackageReference>
+    <PackageReference Include="YoutubeExplode.Converter">
+      <Version>1.4.2</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -1218,6 +1224,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Viewers\FileExplorer\ScrapePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Viewers\FileExplorer\YouTubePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

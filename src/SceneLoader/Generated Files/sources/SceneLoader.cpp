@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "SceneLoader.h"
 
 namespace winrt::SceneLoaderComponent::implementation

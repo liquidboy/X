@@ -11,8 +11,8 @@
 
     <Grid>
         <TextBox x:Name="tbUri" HorizontalAlignment="Stretch" Height="35" VerticalAlignment="Top" KeyUp="TbUri_KeyUp"  Margin="0,0,80,0"/>
-        <WebView x:Name="wvMain" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,36,355,5"/>
-        <Grid HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0,36,5,5" Width="350">
+        <WebView x:Name="wvMain" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,36,355,35" FrameNavigationCompleted="WvMain_FrameNavigationCompleted" FrameNavigationStarting="WvMain_FrameNavigationStarting" NavigationFailed="WvMain_NavigationFailed" NavigationStarting="WvMain_NavigationStarting"  NavigationCompleted="WvMain_NavigationCompleted"/>
+        <Grid HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0,36,5,35" Width="350">
             <controls:TabView x:Name="Tabs" CanCloseTabs="False" IsCloseButtonOverlay="False" CanDragItems="False" CanReorderItems="False" AllowDrop="False"  SelectedTabWidth="200" Header="" SelectionChanged="Tabs_SelectionChanged" >
                 <controls:TabView.Resources>
                     <x:Double x:Key="TabViewItemHeaderMinHeight">40</x:Double>
@@ -21,10 +21,13 @@
                 </controls:TabView.Resources>
                 <controls:TabViewItem Header="Images" />
                 <controls:TabViewItem Header="Fonts" />
+                <controls:TabViewItem Header="Videos" />
             </controls:TabView>
             <WebView x:Name="wvResults" Margin="0,60,0,0" />
         </Grid>
         
         <Button x:Name="butScrape" Content="Button" HorizontalAlignment="Right" VerticalAlignment="Top" Width="80" Height="30" Click="ButScrape_Click"/>
+
+        <TextBlock x:Name="tbMain" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="30"></TextBlock>
     </Grid>
 </Page>

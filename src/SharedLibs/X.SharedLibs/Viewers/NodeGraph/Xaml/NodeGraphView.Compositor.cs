@@ -7,6 +7,7 @@ using System.Numerics;
 using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Composition;
+using Windows.UI.Composition.Particles;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Hosting;
 using X.UI.NodeGraph;
@@ -34,6 +35,7 @@ namespace X.Viewer.NodeGraph
             if (nodeTypeInt > 100 && nodeTypeInt <= 1000) { //EFFECT NODES
                 var compositor = ElementCompositionPreview.GetElementVisual(nodeVisual.AssociatedObject).Compositor;
 
+                
                 // check to see if the visual already has an effect applied.
                 var spriteVisualFound = ElementCompositionPreview.GetElementChildVisual(nodeVisual.AssociatedObject) as SpriteVisual;
                 var foundBrush = spriteVisualFound?.Brush as CompositionEffectBrush;
