@@ -28,7 +28,9 @@ namespace X.SharedLibs.Viewers.FileExplorer
         public ScrapePage()
         {
             this.InitializeComponent();
+            //ClearStorage();
             SetupWebView();
+            DrawVideos();
         }
         HtmlDocument htmlDoc;
 
@@ -144,6 +146,9 @@ namespace X.SharedLibs.Viewers.FileExplorer
                         var video = await ytclient.GetVideoAsync(id);
                         if (!_videos.Where(x => x.Id == video.Id).Any()) {
                             _videos.Add(video);
+
+                            Save(new SavedVideo(video.Id,video.Author, video.UploadDate.UtcDateTime, video.Title, video.Description, video.Duration.Ticks, video.Thumbnails.MediumResUrl, "recent"));
+
                             tbMain.Text = "video successfully processed ..";
                         }
                         DrawVideos();
@@ -203,10 +208,13 @@ namespace X.SharedLibs.Viewers.FileExplorer
 
         private void DrawVideos() {
             var html = "";
-            foreach (var video in _videos) {
+            var videos = RetrieveVideos();
+            //foreach (var video in _videos) {
+            foreach (var video in videos)
+            {
                 if (video != null)
                 {
-                    var srcUrl = video.Thumbnails.MediumResUrl;
+                    var srcUrl = video.ThumbnailMediumResUrl;
                     html += $"<h3>{video.Title}</h3>";
                     html += $"<h4>{video.Author}</h4>"; 
                     html += $"<img src=\"{srcUrl}\" style=\"width:300px;\" />";
@@ -214,10 +222,11 @@ namespace X.SharedLibs.Viewers.FileExplorer
                     html += $"<br/>";
                 }
             }
-            wvResults.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, ()=> {
-                wvResults.NavigateToString(html);
-            }).GetResults();
-            
+            //wvResults.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, ()=> {
+            //    wvResults.NavigateToString(html);
+            //}).GetResults();
+            wvResults.NavigateToString(html);
+
         }
 
         private void TbUri_KeyUp(object sender, KeyRoutedEventArgs e)
@@ -248,7 +257,7 @@ namespace X.SharedLibs.Viewers.FileExplorer
             }
         }
 
-        private async void WvMain_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
+        private void WvMain_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
         {
             tbMain.Text = "NavigationCompleted ..";
         }

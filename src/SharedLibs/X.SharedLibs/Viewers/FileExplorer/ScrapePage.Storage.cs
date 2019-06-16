@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using X.CoreLib.Shared.Framework.Services.DataEntity;
 
-namespace X.Viewer.FileExplorer
+namespace X.SharedLibs.Viewers.FileExplorer
 {
     public partial class ScrapePage
     {
@@ -27,7 +27,7 @@ namespace X.Viewer.FileExplorer
         public List<SavedVideo> RetrieveVideos() => DBContext.Current.RetrieveAllEntities<SavedVideo>();
         public (bool FoundAssets, List<SavedVideo> SavedVideos) RetrieveVideos(string guid)
         {
-            if (DBContext.Current.DoesContextExist<SavedAsset>())
+            if (DBContext.Current.DoesContextExist<SavedVideo>())
             {
                 var foundAssets = DBContext.Current.RetrieveEntities<SavedVideo>($"grouping='{guid}'");
                 if (foundAssets != null && foundAssets.Count > 0) return (true, foundAssets);
