@@ -25,11 +25,11 @@ namespace X.SharedLibs.Viewers.FileExplorer
         public void Delete(SavedVideo video) => DBContext.Current.DeleteEntity<SavedVideo>(video.UniqueId);
 
         public List<SavedVideo> RetrieveVideos() => DBContext.Current.RetrieveAllEntities<SavedVideo>();
-        public (bool FoundAssets, List<SavedVideo> SavedVideos) RetrieveVideos(string guid)
+        public (bool FoundAssets, List<SavedVideo> SavedVideos) RetrieveVideos(string grouping)
         {
             if (DBContext.Current.DoesContextExist<SavedVideo>())
             {
-                var foundAssets = DBContext.Current.RetrieveEntities<SavedVideo>($"grouping='{guid}'");
+                var foundAssets = DBContext.Current.RetrieveEntities<SavedVideo>($"grouping='{grouping}'");
                 if (foundAssets != null && foundAssets.Count > 0) return (true, foundAssets);
             }
             return (false, null);

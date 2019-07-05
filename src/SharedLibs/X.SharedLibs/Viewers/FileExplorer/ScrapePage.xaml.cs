@@ -73,8 +73,15 @@ namespace X.SharedLibs.Viewers.FileExplorer
             _wvMain.NavigationCompleted += WvMain_NavigationCompleted;
             _wvMain.NavigationFailed += WvMain_NavigationFailed;
             _wvMain.NavigationStarting += WvMain_NavigationStarting;
+            //_wvMain.AllowedScriptNotifyUris = true;
+            _wvMain.ScriptNotify += wvMain_ScriptNotify;
 
             grdWebView.Children.Add(_wvMain);
+        }
+
+        private void wvMain_ScriptNotify(object sender, NotifyEventArgs e)
+        {
+            
         }
 
         //private async Task ParseHtmlAS(string type) {
@@ -107,7 +114,7 @@ namespace X.SharedLibs.Viewers.FileExplorer
                     var imgs = htmlDoc.DocumentNode.SelectNodes("//img");
                     var host = _wvMain.Source.Host;
                     var scheme = _wvMain.Source.Scheme;
-                    var htmlImages = "";
+                    var htmlImages = "<script type=\"text/javascript\">function callApp(param){ window.external.notify(param); }</script>";
                     foreach (var img in imgs)
                     {
                         var src = img.Attributes["src"]?.Value;
@@ -207,7 +214,7 @@ namespace X.SharedLibs.Viewers.FileExplorer
         }
 
         private void DrawVideos() {
-            var html = "";
+            var html = "<script type=\"text/javascript\">function callApp(param){ window.external.notify(param); }</script>";
             var videos = RetrieveVideos();
             //foreach (var video in _videos) {
             foreach (var video in videos)
@@ -218,7 +225,7 @@ namespace X.SharedLibs.Viewers.FileExplorer
                     html += $"<h3>{video.Title}</h3>";
                     html += $"<h4>{video.Author}</h4>"; 
                     html += $"<img src=\"{srcUrl}\" style=\"width:300px;\" />";
-                    html += $"<a href=\"#\">{srcUrl}</a>";
+                    html += $"<a href=\"#\" onclick=\"callApp('{srcUrl}');\">{srcUrl}</a>";
                     html += $"<br/>";
                 }
             }
