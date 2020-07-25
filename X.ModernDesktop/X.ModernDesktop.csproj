@@ -326,11 +326,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.UI.Composition.Toolkit">
-      <HintPath>..\src\Microsoft.UI.Composition.Toolkit\Microsoft.UI.Composition.Toolkit.winmd</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\src\Microsoft.UI.Composition.Toolkit\Microsoft.UI.Composition.Toolkit.vcxproj">
+      <Project>{08a7d060-593a-4978-8dcc-b2029aca7c95}</Project>
+      <Name>Microsoft.UI.Composition.Toolkit</Name>
+    </ProjectReference>
     <ProjectReference Include="..\src\SharedLibs\X.SharedLibs\X.SharedLibs.csproj">
       <Project>{6E375CA3-963D-4586-9A47-CBC69F4AAF89}</Project>
       <Name>X.SharedLibs</Name>
@@ -341,7 +340,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="SQLite.UWP.2015, Version=3.28.0">
+    <SDKReference Include="SQLite.UWP.2015, Version=3.32.3">
       <Name>SQLite for Universal Windows Platform</Name>
     </SDKReference>
   </ItemGroup>
