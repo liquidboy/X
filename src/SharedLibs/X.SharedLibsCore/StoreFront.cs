@@ -53,8 +53,8 @@ namespace X.SharedLibsCore
 
             public Uri ThumbUri { get; set; }
 
-            public DownloadMovieService<MovieJson> DownloadServiceMovie { get; set; }
-            public DownloadShowService<EpisodeShowJson> DownloadServiceShow { get; set; }
+            //public DownloadMovieService<MovieJson> DownloadServiceMovie { get; set; }
+            //public DownloadShowService<EpisodeShowJson> DownloadServiceShow { get; set; }
 
             public void ReportNbSeeders(int value) => DownloadProgress.Seeders = value;
 

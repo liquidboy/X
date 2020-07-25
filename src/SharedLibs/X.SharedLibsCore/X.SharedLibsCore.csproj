@@ -5,7 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Popcorn\Services\Download\DownloadMediaService.cs" />
+    <Compile Remove="Popcorn\Services\Download\DownloadMovieService.cs" />
+    <Compile Remove="Popcorn\Services\Download\DownloadService.cs" />
+    <Compile Remove="Popcorn\Services\Download\DownloadShowService.cs" />
     <Compile Remove="QueueService.cs" />
+    <Compile Remove="StoreFront.cs" />
+    <Compile Remove="StoreFront.Movie.cs" />
+    <Compile Remove="StoreFront.Show.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -13,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="libtorrent-net" Version="4.1.0" />
     <PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
     <PackageReference Include="NLog" Version="4.5.11" />
     <PackageReference Include="Polly" Version="6.1.2" />
