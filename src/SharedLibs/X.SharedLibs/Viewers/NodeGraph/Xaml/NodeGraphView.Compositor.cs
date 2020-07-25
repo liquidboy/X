@@ -7,7 +7,6 @@ using System.Numerics;
 using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Composition;
-using Windows.UI.Composition.Particles;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Hosting;
 using X.UI.NodeGraph;
